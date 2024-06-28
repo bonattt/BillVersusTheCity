@@ -217,9 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e75bd6fe4d58fb40af8be675ff6c945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shoot_point: {fileID: 0}
-  bullet_prefab: {fileID: 0}
+  shoot_point: {fileID: 1612991197}
+  bullet_prefab: {fileID: 729866780372750824, guid: ab101a28dfab9b843a1742e8cb00ac75, type: 3}
   bullet_speed: 35
+  shot_cooldown: 0.1
 --- !u!1 &640303064
 GameObject:
   m_ObjectHideFlags: 0
