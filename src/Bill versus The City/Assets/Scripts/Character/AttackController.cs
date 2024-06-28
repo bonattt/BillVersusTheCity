@@ -10,10 +10,23 @@ public class AttackController : MonoBehaviour
 
     public GameObject bullet_prefab;
 
+    // how fast bullets move when fired
     public float bullet_speed = 35f;
+    // how long must pass from the previous shot before you can shoot again
+    public float shot_cooldown = 0.1f; 
+    
+    // tracks when the last shot was fired, for handling rate-of-fire
+    private float _last_shot_at = 0f;
 
     public void FireAttack(Vector3 attack_direction) {
         // fires an attack with the current weapon
+        if (_last_shot_at + shot_cooldown <= Time.time) {
+            _FireAttack(attack_direction);
+        }
+    }
+
+    private void _FireAttack(Vector3 attack_direction) {
+        _last_shot_at = Time.time;
         GameObject bullet = Instantiate(bullet_prefab) as GameObject;
 
         bullet.transform.position = shoot_point.position;

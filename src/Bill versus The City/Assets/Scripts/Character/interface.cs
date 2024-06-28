@@ -33,3 +33,8 @@ public interface IWeapon {
 
     
 }
+
+
+public interface IBullet {
+    // TODO
+}
