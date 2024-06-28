@@ -21,6 +21,7 @@ public interface ICharStatusSubscriber {
 
 public interface IAttack {
     // TODO
+    public IWeapon weapon { get; set; }
 }
 
 public interface IAttackTarget {
@@ -35,6 +36,6 @@ public interface IWeapon {
 }
 
 
-public interface IBullet {
-    // TODO
+public interface IBullet : IAttack {
+
 }
