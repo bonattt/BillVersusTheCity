@@ -26,3 +26,10 @@ public interface IAttack {
 public interface IAttackTarget {
     // TODO
 }
+
+
+public interface IWeapon {
+    // TODO
+
+    
+}

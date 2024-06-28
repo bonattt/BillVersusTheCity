@@ -7,8 +7,8 @@ public class InputSystem
 {
     public const string MOVE_X = "Horizontal";
     public const string MOVE_Y = "Vertical";
-    public const string LIGHT_ATTACK = "Fire1";
-    public const string READY_ATTACK = "Fire2";
+    public const string ATTACK_INPUT = "Fire1";
+    public const string AIM_ATTACK = "Fire2";
     public const string SPRINT_INPUT = "Shift";
     public const KeyCode PAUSE_MENU_INPUT = KeyCode.Escape;
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
@@ -57,12 +57,18 @@ public class InputSystem
         }
     }
 
-    public bool LightAttackInput() {
-        return Input.GetAxis(LIGHT_ATTACK) != 0;
+    public bool AttackClickInput() {
+        // TODO --- implement this
+        StaticLogger.Warning("AttackClickInput has a placeholder implementation");
+        return Input.GetAxis(ATTACK_INPUT) != 0;
+    }
+    
+    public bool AttackHoldInput() {
+        return Input.GetAxis(ATTACK_INPUT) != 0;
     }
 
-    public bool ReadyAttackInput() {
-        return Input.GetAxis(READY_ATTACK) != 0;
+    public bool AimAttackInput() {
+        return Input.GetAxis(AIM_ATTACK) != 0;
     }
 
     public bool SprintInput() {

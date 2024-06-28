@@ -9,8 +9,9 @@ public enum CharacterActionKey {
 
 public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber
 {
-    private CharacterController controller;
-    private ICharacterStatus char_status;
+    protected CharacterController controller;
+    protected AttackController attack_controller;
+    protected ICharacterStatus char_status;
 
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
@@ -27,12 +28,14 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber
         char_status = status;
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();
+        attack_controller = GetComponent<AttackController>();
     }
 
     // Update is called once per frame
     void Update()
     {   
         Move();
+        TryToAttack();
     }
 
     private void Move() {
@@ -40,6 +43,12 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber
         // else {
         //     MoveWithAction();
         // }
+    }
+
+    private void TryToAttack() {
+        if (AttackInput() && CanAttack()) {
+            attack_controller.FireAttack(LookVector());
+        }
     }
     
     // public void SetMovementAction(IMovementAction action) {
@@ -117,7 +126,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber
 
     public abstract Vector3 LookTarget();  // Vector3 position to look at.
 
-    public virtual bool MakeMainAttack() {
+    public virtual bool AttackInput() {
         // Indicates that a main attack should be made this frame.
         return false;
     }

@@ -13,6 +13,10 @@ public class PlayerMovement : CharCtrl
     public float move_y = 0f;
     
 
+    public override bool AttackInput() {
+        return InputSystem.current.AttackClickInput();
+    }
+
     public override Vector3 LookTarget() {
         Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
         Vector3 look_target = new Vector3(mouse_pos.x, transform.position.y, mouse_pos.z);
