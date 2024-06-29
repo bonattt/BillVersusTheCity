@@ -12,4 +12,9 @@ using UnityEngine;
     public override Vector3 LookTarget() {
         return new Vector3(0, 0, 0);
     }
+
+    protected override void CharacterDeath() {
+        base.CharacterDeath();
+        Destroy(gameObject);
+    }
 }

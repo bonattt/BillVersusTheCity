@@ -47,7 +47,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
 
     private void TryToAttack() {
         if (AttackInput() && CanAttack()) {
-            attack_controller.FireAttack(LookVector());
+            attack_controller.FireAttack(ShootVector());
         }
     }
     
@@ -125,6 +125,10 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     }
 
     public abstract Vector3 LookTarget();  // Vector3 position to look at.
+
+    public virtual Vector3 ShootVector() {
+        return LookVector();
+    }
 
     public virtual bool AttackInput() {
         // Indicates that a main attack should be made this frame.

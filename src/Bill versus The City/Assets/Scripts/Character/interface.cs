@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 public interface ICharacterStatus {
@@ -28,7 +31,7 @@ public interface IAttack {
 }
 
 public interface IBullet : IAttack {
-
+    public void ResolveHit(GameObject hit);
 }
 
 public interface IAttackTarget {

@@ -38,16 +38,18 @@ public class Bullet : MonoBehaviour, IBullet
         ResolveHit(other.gameObject);
     }
 
-    private void ResolveHit(GameObject hit) {
+    public void ResolveHit(GameObject hit) {
         IAttackTarget target = hit.GetComponent<IAttackTarget>();
         if(target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
+            Debug.LogWarning("bullet ignores collision with the one who shot it!");
         }
         else if (target != null) {
             DamageResolver.ResolveAttack(this, target);
             DestroyProjectile();
         } 
         else {
+            Debug.Log("hit non-target");
             DestroyProjectile();
         }
 
