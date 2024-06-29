@@ -5,6 +5,7 @@ using UnityEngine;
 public class AttackController : MonoBehaviour
 {
     public IWeapon current_weapon;
+    public IAttackTarget attacker = null;
 
     public Transform shoot_point; // bullets start here
 
@@ -27,10 +28,14 @@ public class AttackController : MonoBehaviour
 
     private void _FireAttack(Vector3 attack_direction) {
         _last_shot_at = Time.time;
-        GameObject bullet = Instantiate(bullet_prefab) as GameObject;
+        GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
 
-        bullet.transform.position = shoot_point.position;
+        bullet_obj.transform.position = shoot_point.position;
         Vector3 velocity = attack_direction.normalized * bullet_speed;
-        bullet.GetComponent<Rigidbody>().velocity = velocity;
+        bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
+
+        Bullet bullet = bullet_obj.GetComponent<Bullet>();
+        bullet.attack_damage = 10f;
+        bullet.attacker = attacker;
     }
 }

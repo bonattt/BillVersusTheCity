@@ -21,11 +21,19 @@ public interface ICharStatusSubscriber {
 
 public interface IAttack {
     // TODO
-    public IWeapon weapon { get; set; }
+    public IAttackTarget attacker { get; }
+    public float attack_damage { get; }
+    public float armor_damage { get; }
+
+}
+
+public interface IBullet : IAttack {
+
 }
 
 public interface IAttackTarget {
     // TODO
+    public ICharacterStatus GetStatus();
 }
 
 
@@ -33,9 +41,4 @@ public interface IWeapon {
     // TODO
 
     
-}
-
-
-public interface IBullet : IAttack {
-
 }

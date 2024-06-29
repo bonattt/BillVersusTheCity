@@ -7,7 +7,7 @@ public enum CharacterActionKey {
     sprint,
 }
 
-public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber
+public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTarget
 {
     protected CharacterController controller;
     protected AttackController attack_controller;
@@ -157,5 +157,9 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber
     protected virtual void CharacterDeath() {
         Debug.LogWarning($"Character '{gameObject.name}' has died!");
         // TODO ---
+    }
+
+    public ICharacterStatus GetStatus() {
+        return this.char_status;
     }
 }

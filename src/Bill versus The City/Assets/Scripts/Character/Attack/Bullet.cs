@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IBullet
 {
-    public IWeapon weapon { get; set; }
+    
+    public IAttackTarget attacker { get; set; }
+    public float attack_damage { get; set; }
+    public float armor_damage { get; set; }
+
     public float time_to_live = 30f;
     private float start_time;
     private Rigidbody rb; 
@@ -22,7 +26,34 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         if (start_time + time_to_live <= Time.time) {
-            Destroy(this.gameObject);
+            DestroyProjectile();
         }
+    }
+
+    void OnCollisionEnter(Collision other) {
+        ResolveHit(other.gameObject);
+    }
+
+    void OnTriggerEnter(Collider other) {
+        ResolveHit(other.gameObject);
+    }
+
+    private void ResolveHit(GameObject hit) {
+        IAttackTarget target = hit.GetComponent<IAttackTarget>();
+        if(target != null && target == this.attacker) {
+            // do nothing, don't collide with the attacker
+        }
+        else if (target != null) {
+            DamageResolver.ResolveAttack(this, target);
+            DestroyProjectile();
+        } 
+        else {
+            DestroyProjectile();
+        }
+
+    }
+
+    private void DestroyProjectile() {
+        Destroy(this.gameObject);
     }
 }
