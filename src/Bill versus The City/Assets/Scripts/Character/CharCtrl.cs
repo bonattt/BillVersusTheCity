@@ -172,4 +172,8 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     public ICharacterStatus GetStatus() {
         return this.char_status;
     }
+
+    public GameObject GetHitTarget() {
+        return this.gameObject;
+    }
 }

@@ -25,18 +25,20 @@ public interface ICharStatusSubscriber {
 public interface IAttack {
     // TODO
     public IAttackTarget attacker { get; }
-    public float attack_damage { get; }
+    public float attack_damage_min { get; }
+    public float attack_damage_max { get; }
     public float armor_damage { get; }
 
 }
 
 public interface IBullet : IAttack {
-    public void ResolveHit(GameObject hit);
+    public void ResolveHit(GameObject hit, Vector3 point);
 }
 
 public interface IAttackTarget {
     // TODO
     public ICharacterStatus GetStatus();
+    public GameObject GetHitTarget();
 }
 
 

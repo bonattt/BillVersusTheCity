@@ -6,7 +6,8 @@ public class Bullet : MonoBehaviour, IBullet
 {
     
     public IAttackTarget attacker { get; set; }
-    public float attack_damage { get; set; }
+    public float attack_damage_min { get; set; }
+    public float attack_damage_max { get; set; }
     public float armor_damage { get; set; }
 
     public float time_to_live = 30f;
@@ -32,27 +33,27 @@ public class Bullet : MonoBehaviour, IBullet
 
     void OnCollisionEnter(Collision hit) {
         Debug.Log($"OnCollisionEnter({hit.gameObject})");
-        ResolveHit(hit.gameObject);
+        ResolveHit(hit.gameObject, hit.contacts[0].point);
     }
 
     void OnTriggerEnter(Collider hit) {
         Debug.Log($"OnTriggerEnter({hit.gameObject})");
-        ResolveHit(hit.gameObject);
+        ResolveHit(hit.gameObject, hit.gameObject.transform.position);
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit) {
         Debug.Log($"OnControllerColliderHit({hit.gameObject})");
-        ResolveHit(hit.gameObject);
+        ResolveHit(hit.gameObject, hit.gameObject.transform.position);
     }
 
-    public void ResolveHit(GameObject hit) {
+    public void ResolveHit(GameObject hit, Vector3 hit_location) {
         IAttackTarget target = hit.GetComponent<IAttackTarget>();
         if(target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
             Debug.LogWarning("bullet ignores collision with the one who shot it!");
         }
         else if (target != null) {
-            DamageResolver.ResolveAttack(this, target);
+            AttackResolver.ResolveAttackHit(this, target, hit_location);
             DestroyProjectile();
         } 
         else {

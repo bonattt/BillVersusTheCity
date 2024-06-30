@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 338529273}
   - component: {fileID: 338529272}
   - component: {fileID: 338529275}
+  - component: {fileID: 338529276}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -252,6 +253,22 @@ MonoBehaviour:
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   bullet_speed: 20
   shot_cooldown: 0.25
+--- !u!114 &338529276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338529271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b53bffae39530459e04c285aad944d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: -1
+  max_health: -1
+  armor: -1
+  armor_hardness: -1
 --- !u!1 &421483738
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +387,7 @@ GameObject:
   - component: {fileID: 616846526}
   - component: {fileID: 616846523}
   - component: {fileID: 616846522}
+  - component: {fileID: 616846527}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -481,6 +499,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &616846527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616846521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b53bffae39530459e04c285aad944d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: -1
+  max_health: -1
+  armor: -1
+  armor_hardness: -1
 --- !u!1 &640303064
 GameObject:
   m_ObjectHideFlags: 0

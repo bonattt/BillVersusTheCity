@@ -35,7 +35,8 @@ public class AttackController : MonoBehaviour
         bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
         Bullet bullet = bullet_obj.GetComponent<Bullet>();
-        bullet.attack_damage = 10f;
+        bullet.attack_damage_max = 50f;
+        bullet.attack_damage_min = 10f;
         bullet.attacker = attacker;
     }
 }
