@@ -38,5 +38,7 @@ public class AttackController : MonoBehaviour
         bullet.attack_damage_max = 50f;
         bullet.attack_damage_min = 10f;
         bullet.attacker = attacker;
+
+        AttackResolver.AttackStart(bullet, shoot_point.position);
     }
 }

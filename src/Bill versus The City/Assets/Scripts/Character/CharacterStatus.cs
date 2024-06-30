@@ -65,7 +65,6 @@ public class CharacterStatus : ICharacterStatus {
         this.health = max_health;
         this.armor = 0;
         this.armor_hardness = 0;
-        Debug.Log($"health: {health} / {this.max_health}");
     }
 
     public void Subscribe(ICharStatusSubscriber sub) => subscribers.Add(sub);

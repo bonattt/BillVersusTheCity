@@ -32,18 +32,15 @@ public class Bullet : MonoBehaviour, IBullet
     }
 
     void OnCollisionEnter(Collision hit) {
-        Debug.Log($"OnCollisionEnter({hit.gameObject})");
         ResolveHit(hit.gameObject, hit.contacts[0].point);
     }
 
     void OnTriggerEnter(Collider hit) {
-        Debug.Log($"OnTriggerEnter({hit.gameObject})");
         ResolveHit(hit.gameObject, hit.gameObject.transform.position);
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit) {
-        Debug.Log($"OnControllerColliderHit({hit.gameObject})");
-        ResolveHit(hit.gameObject, hit.gameObject.transform.position);
+        ResolveHit(hit.gameObject, hit.point);
     }
 
     public void ResolveHit(GameObject hit, Vector3 hit_location) {
@@ -57,7 +54,7 @@ public class Bullet : MonoBehaviour, IBullet
             DestroyProjectile();
         } 
         else {
-            Debug.Log("hit non-target");
+            AttackResolver.AttackMiss(this, hit_location);
             DestroyProjectile();
         }
 

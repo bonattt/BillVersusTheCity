@@ -3,10 +3,11 @@ using UnityEngine;
 public static class AttackResolver {
 
     public const string PLACEHOLDER_ATTACK_PREFAB = "MuzzelFlashEffect";
+    public const string PLACEHOLDER_ATTACK_HIT_PREFAB = "BloodSplatterEffect";
     public const string PLACEHOLDER_ATTACK_MISS_PREFAB = "MuzzelFlashEffectGray";
 
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
-        new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB)
+        new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB)
     };
 
     private static IAttackShootEffect[] SHOOT_EFFECTS = new IAttackShootEffect[]{
@@ -14,7 +15,7 @@ public static class AttackResolver {
     };
 
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{
-        new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB)
+        new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB)
     };
 
     public static void ResolveAttackHit(IAttack attack, 
