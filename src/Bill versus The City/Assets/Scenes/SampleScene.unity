@@ -367,6 +367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 616846525}
   - component: {fileID: 616846524}
+  - component: {fileID: 616846526}
   - component: {fileID: 616846523}
   - component: {fileID: 616846522}
   m_Layer: 0
@@ -389,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shoot_point: {fileID: 8645002}
-  bullet_prefab: {fileID: 729866780372750824, guid: ab101a28dfab9b843a1742e8cb00ac75, type: 3}
+  bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   bullet_speed: 35
   shot_cooldown: 0.1
 --- !u!114 &616846523
@@ -406,6 +407,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
+  shoot_inaccuracy: 2
+  target: {fileID: 338529274}
+  shooting_rate: 0.75
 --- !u!143 &616846524
 CharacterController:
   m_ObjectHideFlags: 0
@@ -450,6 +454,33 @@ Transform:
   - {fileID: 8645002}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &616846526
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616846521}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &640303064
 GameObject:
   m_ObjectHideFlags: 0

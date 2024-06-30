@@ -13,6 +13,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     protected AttackController attack_controller;
     protected ICharacterStatus char_status;
 
+    public float last_attack_time { get; private set; }
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
     
@@ -47,8 +48,13 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
 
     private void TryToAttack() {
         if (AttackInput() && CanAttack()) {
-            attack_controller.FireAttack(ShootVector());
+            PerformAttack();
         }
+    }
+
+    protected virtual void PerformAttack() {
+        last_attack_time = Time.time;
+        attack_controller.FireAttack(ShootVector());
     }
     
     // public void SetMovementAction(IMovementAction action) {
@@ -116,7 +122,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
         return VectorFromLookTarget(LookTarget());
     }
 
-    private Vector3 VectorFromLookTarget(Vector3 look_target) {
+    protected Vector3 VectorFromLookTarget(Vector3 look_target) {
         Vector3 v = look_target - transform.position;
         Vector3 forward = new Vector3(
             v.x, 0, v.z

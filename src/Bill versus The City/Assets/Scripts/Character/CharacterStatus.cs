@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine;
+
 public class CharacterStatus : ICharacterStatus {
     
     public float _health = 0;
@@ -59,10 +61,11 @@ public class CharacterStatus : ICharacterStatus {
 
     public CharacterStatus() : this(100f) { /* do nothing */ }
     public CharacterStatus(float max_health) {
-        this.health = max_health;
         this.max_health = max_health;
+        this.health = max_health;
         this.armor = 0;
         this.armor_hardness = 0;
+        Debug.Log($"health: {health} / {this.max_health}");
     }
 
     public void Subscribe(ICharStatusSubscriber sub) => subscribers.Add(sub);
@@ -70,6 +73,7 @@ public class CharacterStatus : ICharacterStatus {
     public void Unsubscribe(ICharStatusSubscriber sub) => subscribers.Remove(sub);
 
     public void UpdateStatus() {
+        Debug.Log($"UpdateStatus: health {health}/{max_health}, armor {armor}");
         foreach(ICharStatusSubscriber sub in subscribers) {
             sub.StatusUpdated(this);
         }

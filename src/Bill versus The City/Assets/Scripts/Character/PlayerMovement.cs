@@ -14,6 +14,7 @@ public class PlayerMovement : CharCtrl
     
 
     public override bool AttackInput() {
+        Debug.Log($"InputSystem.current.AttackClickInput(): {InputSystem.current.AttackClickInput()}");
         return InputSystem.current.AttackClickInput();
     }
 
