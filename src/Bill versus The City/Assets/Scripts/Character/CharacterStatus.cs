@@ -3,10 +3,58 @@ using System.Collections.Generic;
 
 public class CharacterStatus : ICharacterStatus {
     
-    public float health { get; set; }
-    public float max_health { get; set; }
-    public float armor { get; set; }
-    public float armor_hardness { get; set; }
+    public float _health = 0;
+    public float health { 
+        get {
+            return _health;
+        }
+        set {
+            _health = value;
+            if (_health < 0) {
+                _health = 0;
+            }
+            else if (_health > _max_health) {
+                _health = _max_health;
+            }  
+            UpdateStatus();
+        }
+    }
+    public float _max_health = 0;
+    public float max_health { 
+        get {
+            return _max_health;
+        }
+        set {
+            _max_health = value;
+            if (_max_health < 0) {
+                _max_health = 0;
+            }
+            if (_health > _max_health) {
+                _health = _max_health;
+            }
+            UpdateStatus();
+        }
+    }
+    public float _armor = 0;
+    public float armor { 
+        get {
+            return _armor;
+        }
+        set {
+            _armor = value;
+            UpdateStatus();
+        }
+    }
+    public float _armor_hardness = 0;
+    public float armor_hardness { 
+        get {
+            return _armor_hardness;
+        }
+        set {
+            _armor_hardness = value;
+            UpdateStatus();
+        }
+    }
     private List<ICharStatusSubscriber> subscribers = new List<ICharStatusSubscriber>();
 
     public CharacterStatus() : this(100f) { /* do nothing */ }

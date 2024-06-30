@@ -30,12 +30,19 @@ public class Bullet : MonoBehaviour, IBullet
         }
     }
 
-    void OnCollisionEnter(Collision other) {
-        ResolveHit(other.gameObject);
+    void OnCollisionEnter(Collision hit) {
+        Debug.Log($"OnCollisionEnter({hit.gameObject})");
+        ResolveHit(hit.gameObject);
     }
 
-    void OnTriggerEnter(Collider other) {
-        ResolveHit(other.gameObject);
+    void OnTriggerEnter(Collider hit) {
+        Debug.Log($"OnTriggerEnter({hit.gameObject})");
+        ResolveHit(hit.gameObject);
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit) {
+        Debug.Log($"OnControllerColliderHit({hit.gameObject})");
+        ResolveHit(hit.gameObject);
     }
 
     public void ResolveHit(GameObject hit) {
