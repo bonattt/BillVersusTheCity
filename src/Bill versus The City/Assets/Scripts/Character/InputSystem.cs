@@ -60,7 +60,7 @@ public class InputSystem
     public bool AttackClickInput() {
         // TODO --- implement this
         StaticLogger.Warning("AttackClickInput has a placeholder implementation");
-        return Input.GetAxis(ATTACK_INPUT) != 0;
+        return Input.GetKeyDown(KeyCode.Mouse0);
     }
     
     public bool AttackHoldInput() {

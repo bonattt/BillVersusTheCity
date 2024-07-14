@@ -31,21 +31,10 @@ public class AttackController : MonoBehaviour
                 Debug.LogWarning("no weapon selected!");
                 return 0.5f;
             }
-            if (current_weapon.firing_mode == FiringMode.semi_auto) {
-                return current_weapon.semi_auto_fire_rate;
-            }
-            else if (current_weapon.firing_mode == FiringMode.full_auto) {
+            if (current_weapon.auto_fire) {
                 return current_weapon.full_auto_fire_rate;
             }
-            else if (current_weapon.firing_mode == FiringMode.select) {
-                if (use_full_auto) {
-                    return current_weapon.full_auto_fire_rate;
-                }
-                else {
-                    return current_weapon.semi_auto_fire_rate;
-                }
-            }
-            return 0.1f;
+            return current_weapon.semi_auto_fire_rate;
         }
     }
     

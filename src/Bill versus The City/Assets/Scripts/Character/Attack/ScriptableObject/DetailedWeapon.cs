@@ -47,6 +47,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public FiringMode firing_mode { 
         get { return _firing_mode; }
     }
+    public bool auto_fire { 
+        get { return firing_mode == FiringMode.full_auto; }
+    }
     public float semi_auto_fire_rate { 
         get { return _semi_auto_fire_rate; }
     }

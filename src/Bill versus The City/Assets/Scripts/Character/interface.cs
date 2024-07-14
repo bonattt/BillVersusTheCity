@@ -51,6 +51,7 @@ public interface IWeapon {
 
     // rate of fire
     public FiringMode firing_mode { get; }
+    public bool auto_fire { get; }
     public float semi_auto_fire_rate { get; }
     public float full_auto_fire_rate { get; }
 

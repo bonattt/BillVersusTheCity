@@ -14,6 +14,10 @@ public class PlayerMovement : CharCtrl
     
 
     public override bool AttackInput() {
+        if (attack_controller.current_weapon.auto_fire) {
+            Debug.Log($"InputSystem.current.AttackClickInput(): {InputSystem.current.AttackHoldInput()}");
+            return InputSystem.current.AttackHoldInput();
+        }
         Debug.Log($"InputSystem.current.AttackClickInput(): {InputSystem.current.AttackClickInput()}");
         return InputSystem.current.AttackClickInput();
     }
