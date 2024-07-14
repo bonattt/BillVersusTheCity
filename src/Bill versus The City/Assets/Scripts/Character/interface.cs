@@ -43,7 +43,33 @@ public interface IAttackTarget {
 
 
 public interface IWeapon {
-    // TODO
+    // ammo
+    public AmmoType ammo_type { get; }
+    public int ammo_capacity { get; }
+    public int reload_amount { get; }
+    public float reload_time { get; }
 
-    
+    // rate of fire
+    public FiringMode firing_mode { get; }
+    public float semi_auto_fire_rate { get; }
+    public float full_auto_fire_rate { get; }
+
+    // accuracy
+    public float aimed_inaccuracy { get; }
+    public float initial_inaccuracy { get; }
+    public float aim_speed { get; }
+    public float recoil_inaccuracy { get; }
+    public float recoil_shake { get; }
+}
+
+public enum FiringMode {
+    semi_auto,
+    full_auto,
+    select 
+}
+
+
+public enum AmmoType {
+    handgun,
+    rifle
 }

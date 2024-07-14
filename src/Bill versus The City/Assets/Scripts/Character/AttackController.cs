@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
+    public ScriptableObject initialize_weapon;
     public IWeapon current_weapon;
     public IAttackTarget attacker = null;
 
@@ -18,6 +19,10 @@ public class AttackController : MonoBehaviour
     
     // tracks when the last shot was fired, for handling rate-of-fire
     private float _last_shot_at = 0f;
+
+    void Start() {
+        current_weapon = (IWeapon) initialize_weapon;
+    }
 
     public void FireAttack(Vector3 attack_direction) {
         // fires an attack with the current weapon

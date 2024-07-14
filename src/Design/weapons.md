@@ -57,8 +57,8 @@ Hunting Rifle [.30-06]:
 - damage: damage dealt to target
 - projectile_velocity
 
-- semi_auto_rate_of_fire: how quickly can single shots be fired repeatedly
-- full_auto_rate_of_fire: how quickly does fully auto shoot
+- semi_auto_fire_rate: how quickly can single shots be fired repeatedly
+- full_auto_fire_rate: how quickly does fully auto shoot
 
 - ammo_capacity: how many rounds are stored a fully loaded gun
 - reload_amount: how many rounds are loaded by a reload action
