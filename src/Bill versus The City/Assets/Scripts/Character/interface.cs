@@ -60,6 +60,11 @@ public interface IWeapon {
     public float aim_speed { get; }
     public float recoil_inaccuracy { get; }
     public float recoil_shake { get; }
+
+    public float bullet_speed { get; }
+    public float weapon_damage_min { get; }
+    public float weapon_damage_max { get; }
+    public float armor_penetration { get; }
 }
 
 public enum FiringMode {

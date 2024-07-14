@@ -249,10 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e75bd6fe4d58fb40af8be675ff6c945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialize_weapon: {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   shoot_point: {fileID: 1612991197}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
-  bullet_speed: 20
-  shot_cooldown: 0.25
+  use_full_auto: 1
 --- !u!114 &338529276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,10 +407,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e75bd6fe4d58fb40af8be675ff6c945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialize_weapon: {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   shoot_point: {fileID: 8645002}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
-  bullet_speed: 35
-  shot_cooldown: 0.1
+  use_full_auto: 1
 --- !u!114 &616846523
 MonoBehaviour:
   m_ObjectHideFlags: 0

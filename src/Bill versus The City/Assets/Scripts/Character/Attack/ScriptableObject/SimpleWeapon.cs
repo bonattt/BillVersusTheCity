@@ -8,20 +8,24 @@ public class SimpleWeapon : ScriptableObject, IWeapon
 {
     // ammo
     public AmmoType _ammo_type;
-    public int _ammo_capacity;
+    public int _ammo_capacity = 17;
     // public int _reload_amount;
-    public float _reload_time;
+    public float _reload_time = 1.5f;
 
     // rate of fire
     public FiringMode _firing_mode; 
-    public float _fire_rate;
+    public float _fire_rate = 0.25f;
 
     // accuracy
-    private float _aimed_inaccuracy;
-    private float _initial_inaccuracy;
+    private float _aimed_inaccuracy = 0f;
+    private float _initial_inaccuracy = 2f;
     private float _aim_speed = 1f;
     private float _recoil_inaccuracy = 0f;
     private float _recoil_shake = 0f;
+
+    private float _bullet_speed = 35f;
+    public float weapon_damage = 40f;
+    private float _armor_penetration = 0f;
 
     
     public AmmoType ammo_type { 
@@ -63,5 +67,18 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     }
     public float recoil_shake { 
         get { return _recoil_shake; }
+    }
+    
+    public float bullet_speed { 
+        get { return _bullet_speed; }
+    }
+    public float weapon_damage_min { 
+        get { return weapon_damage - 5; }
+    }
+    public float weapon_damage_max { 
+        get { return weapon_damage + 5; }
+    }
+    public float armor_penetration { 
+        get { return _armor_penetration; }
     }
 }

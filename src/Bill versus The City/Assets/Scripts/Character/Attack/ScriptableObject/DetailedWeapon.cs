@@ -8,21 +8,27 @@ public class DetailedWeapon : ScriptableObject, IWeapon
 {
     // ammo
     public AmmoType _ammo_type;
-    public int _ammo_capacity;
-    public int _reload_amount;
-    public float _reload_time;
+    public int _ammo_capacity = 30;
+    public int _reload_amount = 30;
+    public float _reload_time ;
 
     // rate of fire
     public FiringMode _firing_mode; 
-    public float _semi_auto_fire_rate;
-    public float _full_auto_fire_rate;
+    public float _semi_auto_fire_rate = 0.25f;
+    public float _full_auto_fire_rate = 0.1f;
 
     // accuracy
-    public float _aimed_inaccuracy;
-    public float _initial_inaccuracy;
-    public float _aim_speed;
-    public float _recoil_inaccuracy;
-    public float _recoil_shake;
+    public float _aimed_inaccuracy = 0f;
+    public float _initial_inaccuracy = 2f; 
+    public float _aim_speed = 1f;
+    public float _recoil_inaccuracy = 0.5f;
+    public float _recoil_shake = 0.1f;
+
+    // attack
+    public float _bullet_speed = 35f;
+    public float _weapon_damage_min = 30f;
+    public float _weapon_damage_max = 50f;
+    public float _armor_penetration = 0f;
 
     public AmmoType ammo_type { 
         get { return _ammo_type; } 
@@ -64,4 +70,19 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float recoil_shake { 
         get { return _recoil_shake; }
     }
+    
+    
+    public float bullet_speed { 
+        get { return _bullet_speed; }
+    }
+    public float weapon_damage_min { 
+        get { return _weapon_damage_min; }
+    }
+    public float weapon_damage_max { 
+        get { return _weapon_damage_max; }
+    }
+    public float armor_penetration { 
+        get { return _armor_penetration; }
+    }
+
 }

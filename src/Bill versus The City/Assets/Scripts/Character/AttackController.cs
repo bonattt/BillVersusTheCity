@@ -12,10 +12,42 @@ public class AttackController : MonoBehaviour
 
     public GameObject bullet_prefab;
 
+    public bool use_full_auto = true; // use full auto with select fire weapons
+
     // how fast bullets move when fired
-    public float bullet_speed = 35f;
+    public float bullet_speed {
+        get {
+            if(current_weapon == null) {
+                Debug.LogWarning("no weapon selected!");
+                return 35f;
+            }
+            return current_weapon.bullet_speed;
+        }
+    }
     // how long must pass from the previous shot before you can shoot again
-    public float shot_cooldown = 0.1f; 
+    public float shot_cooldown {
+        get {
+            if (current_weapon == null) {
+                Debug.LogWarning("no weapon selected!");
+                return 0.5f;
+            }
+            if (current_weapon.firing_mode == FiringMode.semi_auto) {
+                return current_weapon.semi_auto_fire_rate;
+            }
+            else if (current_weapon.firing_mode == FiringMode.full_auto) {
+                return current_weapon.full_auto_fire_rate;
+            }
+            else if (current_weapon.firing_mode == FiringMode.select) {
+                if (use_full_auto) {
+                    return current_weapon.full_auto_fire_rate;
+                }
+                else {
+                    return current_weapon.semi_auto_fire_rate;
+                }
+            }
+            return 0.1f;
+        }
+    }
     
     // tracks when the last shot was fired, for handling rate-of-fire
     private float _last_shot_at = 0f;
@@ -40,8 +72,8 @@ public class AttackController : MonoBehaviour
         bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
         Bullet bullet = bullet_obj.GetComponent<Bullet>();
-        bullet.attack_damage_max = 50f;
-        bullet.attack_damage_min = 10f;
+        bullet.attack_damage_max = current_weapon.weapon_damage_max;
+        bullet.attack_damage_min = current_weapon.weapon_damage_min;
         bullet.attacker = attacker;
 
         AttackResolver.AttackStart(bullet, shoot_point.position);

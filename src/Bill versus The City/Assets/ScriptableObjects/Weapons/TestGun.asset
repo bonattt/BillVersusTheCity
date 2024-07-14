@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: TestGun
   m_EditorClassIdentifier: 
   _ammo_type: 0
-  _ammo_capacity: 0
-  _reload_time: 0
+  _ammo_capacity: 17
+  _reload_time: 1
   _firing_mode: 0
-  _fire_rate: 0
+  _fire_rate: 0.25
+  weapon_damage: 40
