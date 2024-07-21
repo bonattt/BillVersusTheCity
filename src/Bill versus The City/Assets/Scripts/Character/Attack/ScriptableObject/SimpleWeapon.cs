@@ -28,7 +28,7 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     public float weapon_damage = 40f;
     private float _armor_penetration = 0f;
 
-    public string name {
+    public string weapon_name {
         get { return _name; }
     }
     public AmmoType ammo_type { 

@@ -16,7 +16,6 @@ public class PlayerAttackController : AttackController
     //     current_weapon = weapon;
     // }
     public override void UpdateSubscribers() {
-        Debug.Log($"UpdateSubscribers for {subscribers.Count} subs, slot: {current_slot}");
         foreach (IWeaponManagerSubscriber sub in subscribers) {
             sub.UpdateWeapon(null, current_weapon);
         }
@@ -35,6 +34,7 @@ public class PlayerAttackController : AttackController
     protected override void AttackControllerUpdate()
     {
         int? weapon_slot_input = InputSystem.current.WeaponSlotInput();
+        Debug.Log($"key 1 down: {Input.GetKeyDown(KeyCode.Keypad1)}");
         Debug.Log("weapon slot input: " + weapon_slot_input);
         if (weapon_slot_input != null) {
             SetWeaponBySlot((int) weapon_slot_input);

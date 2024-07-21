@@ -46,7 +46,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
     public void Subscribe(IWeaponManagerSubscriber sub) => subscribers.Add(sub);
     public void Unsubscribe(IWeaponManagerSubscriber sub) => subscribers.Remove(sub);
     public virtual void UpdateSubscribers() {
-        Debug.Log($"UpdateSubscribers for {subscribers.Count} subs. (base class).");
         foreach (IWeaponManagerSubscriber sub in subscribers) {
             sub.UpdateWeapon(null, current_weapon);
         }

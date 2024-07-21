@@ -13,12 +13,9 @@ public class PlayerMovement : CharCtrl
     public float move_y = 0f;
 
     public override bool AttackInput() {
-        Debug.Log($"AttackController: {attack_controller}, current_weapon: {attack_controller.current_weapon}");
         if (attack_controller.current_weapon.auto_fire) {
-            Debug.Log($"InputSystem.current.AttackClickInput(): {InputSystem.current.AttackHoldInput()}");
             return InputSystem.current.AttackHoldInput();
         }
-        Debug.Log($"InputSystem.current.AttackClickInput(): {InputSystem.current.AttackClickInput()}");
         return InputSystem.current.AttackClickInput();
     }
 

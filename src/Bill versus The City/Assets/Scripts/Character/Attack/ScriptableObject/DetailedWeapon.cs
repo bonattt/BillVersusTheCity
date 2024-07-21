@@ -31,7 +31,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _weapon_damage_max = 50f;
     public float _armor_penetration = 0f;
 
-    public string name {
+    public string weapon_name {
         get { return _name; }
     }
     public AmmoType ammo_type { 

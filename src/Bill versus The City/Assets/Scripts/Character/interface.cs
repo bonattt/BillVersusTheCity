@@ -43,7 +43,7 @@ public interface IAttackTarget {
 
 
 public interface IWeapon {
-    public string name { get; }
+    public string weapon_name { get; }
     // ammo
     public AmmoType ammo_type { get; }
     public int ammo_capacity { get; }
