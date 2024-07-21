@@ -85,6 +85,8 @@ public enum AmmoType {
 public interface IWeaponManager {
     // implements Observable for updating UI when the player switches
     // weapons, or updates ammo
+    public int? current_slot { get; }
+    public IWeapon current_weapon { get; }
     public void Subscribe(IWeaponManagerSubscriber sub);
     public void Unsubscribe(IWeaponManagerSubscriber sub);
 }

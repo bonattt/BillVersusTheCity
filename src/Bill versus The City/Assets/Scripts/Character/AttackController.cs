@@ -51,14 +51,15 @@ public class AttackController : MonoBehaviour, IWeaponManager
         }
     }
 
+    public virtual int? current_slot {
+        get { return null; }
+    }
+
     //////// MonoBehaviour
     void Start() {
-        if (initialize_weapon != null) {
-            current_weapon = (IWeapon) initialize_weapon;
-        }
        AttackControllerStart();
        // TODO --- make this better
-       current_weapon.current_ammo = current_weapon.ammo_capacity;
+       UpdateSubscribers();
     }
 
     void Update() {
@@ -67,6 +68,10 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     protected virtual void AttackControllerStart() {
         // allow extending classes to add to `Start`    
+       if (initialize_weapon != null) {
+           current_weapon = (IWeapon) Instantiate(initialize_weapon);
+       }
+       current_weapon.current_ammo = current_weapon.ammo_capacity;
     }
 
     protected virtual void AttackControllerUpdate() {
@@ -98,5 +103,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         bullet.attacker = attacker;
 
         AttackResolver.AttackStart(bullet, shoot_point.position);
+
+        UpdateSubscribers();
     }
 }

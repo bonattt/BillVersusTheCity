@@ -10,7 +10,10 @@ public class PlayerAttackController : AttackController
     public IWeapon[] weapon_slots = new IWeapon[10];
     public bool[] weapon_slots_enabled = new bool[]{true, true, false, false, false, false, false, false, false, false};
 
-    public int current_slot = 0;
+    public int _current_slot = 0;
+    public override int? current_slot {
+        get { return _current_slot; }
+    }
 
     // public void UpdateWeapon(int slot, IWeapon weapon) {
     //     current_weapon = weapon;
@@ -24,10 +27,13 @@ public class PlayerAttackController : AttackController
     protected override void AttackControllerStart() {
         for (int i = 0; i < 10; i++) {
             if (init_slots[i] != null) {
-                weapon_slots[i] = (IWeapon) init_slots[i];
+                weapon_slots[i] = (IWeapon) Instantiate(init_slots[i]);
+                weapon_slots[i].current_ammo = weapon_slots[i].ammo_capacity;
             }
         }
-        SetWeaponBySlot(current_slot);
+        SetWeaponBySlot(_current_slot);
+
+        UpdateSubscribers();
     }
 
     // Update is called once per frame
@@ -43,7 +49,7 @@ public class PlayerAttackController : AttackController
     
     private bool SetWeaponBySlot(int slot) {
         if (weapon_slots_enabled[slot] && weapon_slots[slot] != null) {
-            current_slot = slot;
+            _current_slot = slot;
             current_weapon = weapon_slots[slot];
             UpdateSubscribers();
             Debug.Log($"set weapon slot to '{slot}': {current_weapon}");
