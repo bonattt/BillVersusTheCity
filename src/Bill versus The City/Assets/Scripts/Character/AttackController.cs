@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour
+public class AttackController : MonoBehaviour, IWeaponManager
 {
     public ScriptableObject initialize_weapon;
-    public IWeapon current_weapon;
+    public IWeapon current_weapon { get; set; }
     public IAttackTarget attacker = null;
 
     public Transform shoot_point; // bullets start here
@@ -40,20 +40,53 @@ public class AttackController : MonoBehaviour
     
     // tracks when the last shot was fired, for handling rate-of-fire
     private float _last_shot_at = 0f;
+    
+    //////// IMPLEMENT `IWeaponManagerSubscriber`
+    protected List<IWeaponManagerSubscriber> subscribers = new List<IWeaponManagerSubscriber>();
+    public void Subscribe(IWeaponManagerSubscriber sub) => subscribers.Add(sub);
+    public void Unsubscribe(IWeaponManagerSubscriber sub) => subscribers.Remove(sub);
+    public virtual void UpdateSubscribers() {
+        Debug.Log($"UpdateSubscribers for {subscribers.Count} subs. (base class).");
+        foreach (IWeaponManagerSubscriber sub in subscribers) {
+            sub.UpdateWeapon(null, current_weapon);
+        }
+    }
 
+    //////// MonoBehaviour
     void Start() {
-        current_weapon = (IWeapon) initialize_weapon;
+        if (initialize_weapon != null) {
+            current_weapon = (IWeapon) initialize_weapon;
+        }
+       AttackControllerStart();
+       // TODO --- make this better
+       current_weapon.current_ammo = current_weapon.ammo_capacity;
+    }
+
+    void Update() {
+        AttackControllerUpdate();
+    }
+
+    protected virtual void AttackControllerStart() {
+        // allow extending classes to add to `Start`    
+    }
+
+    protected virtual void AttackControllerUpdate() {
+        // allow extending classes to add to `Update`
     }
 
     public void FireAttack(Vector3 attack_direction) {
         // fires an attack with the current weapon
-        if (_last_shot_at + shot_cooldown <= Time.time) {
+        if (
+            (current_weapon.current_ammo > 0)
+            &&(_last_shot_at + shot_cooldown <= Time.time)
+        ) {
             _FireAttack(attack_direction);
         }
     }
 
     private void _FireAttack(Vector3 attack_direction) {
         _last_shot_at = Time.time;
+        current_weapon.current_ammo -= 1;
         GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
 
         bullet_obj.transform.position = shoot_point.position;

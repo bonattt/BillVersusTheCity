@@ -72,7 +72,6 @@ public class CharacterStatus : ICharacterStatus {
     public void Unsubscribe(ICharStatusSubscriber sub) => subscribers.Remove(sub);
 
     public void UpdateStatus() {
-        Debug.Log($"UpdateStatus: health {health}/{max_health}, armor {armor}");
         foreach(ICharStatusSubscriber sub in subscribers) {
             sub.StatusUpdated(this);
         }

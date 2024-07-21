@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c187b49fb663d4479d70cf21f3605f0, type: 3}
   m_Name: TestGunSMG
   m_EditorClassIdentifier: 
+  _name: SMG
   _ammo_type: 0
   _ammo_capacity: 40
   _reload_time: 1

@@ -43,11 +43,13 @@ public interface IAttackTarget {
 
 
 public interface IWeapon {
+    public string name { get; }
     // ammo
     public AmmoType ammo_type { get; }
     public int ammo_capacity { get; }
     public int reload_amount { get; }
     public float reload_time { get; }
+    public int current_ammo { get; set; }
 
     // rate of fire
     public FiringMode firing_mode { get; }
@@ -78,4 +80,15 @@ public enum FiringMode {
 public enum AmmoType {
     handgun,
     rifle
+}
+
+public interface IWeaponManager {
+    // implements Observable for updating UI when the player switches
+    // weapons, or updates ammo
+    public void Subscribe(IWeaponManagerSubscriber sub);
+    public void Unsubscribe(IWeaponManagerSubscriber sub);
+}
+
+public interface IWeaponManagerSubscriber {
+    public void UpdateWeapon(int? slot, IWeapon weapon);
 }

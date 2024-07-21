@@ -58,8 +58,8 @@ public class InputSystem
     }
 
     public bool AttackClickInput() {
-        // TODO --- implement this
-        StaticLogger.Warning("AttackClickInput has a placeholder implementation");
+        // TODO --- implement more control mapping
+        // StaticLogger.Warning("AttackClickInput has a placeholder implementation");
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
     
@@ -109,5 +109,103 @@ public class InputSystem
 
     public bool PauseMenuInput() {
         return Input.GetKeyDown(PAUSE_MENU_INPUT);
+    }
+
+    public int? WeaponSlotInput() {
+        // returns a nullable int, containing the weapon slot input
+        // for this frame, and null if no input was made
+        if (Input.GetKeyDown(KeyCode.Keypad1)) {
+            return 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2)) {
+            return 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3)) {
+            return 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4)) {
+            return 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad5)) {
+            return 4;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad6)) {
+            return 5;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad7)) {
+            return 6;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad8)) {
+            return 7;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad9)) {
+            return 8;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad0)) {
+            return 9;
+        }
+        return null;
+    }
+
+    public bool WeaponSlotKeyDown(int slot_number) {
+        List<KeyCode> key_query = new List<KeyCode>();
+        switch (slot_number) {
+            case 0:
+                key_query.Add(KeyCode.Keypad1);
+                break;
+
+            case 1:
+                key_query.Add(KeyCode.Keypad2);
+                break;
+            
+            case 2:
+                key_query.Add(KeyCode.Keypad3);
+                break;
+            
+            case 3:
+                key_query.Add(KeyCode.Keypad4);
+                break;
+            
+            case 4:
+                key_query.Add(KeyCode.Keypad5);
+                break;
+            
+            case 5:
+                key_query.Add(KeyCode.Keypad6);
+                break;
+            
+            case 6:
+                key_query.Add(KeyCode.Keypad7);
+                break;
+            
+            case 7:
+                key_query.Add(KeyCode.Keypad8);
+                break;
+            
+            case 8:
+                key_query.Add(KeyCode.Keypad9);
+                break;
+            
+            case 9:
+                key_query.Add(KeyCode.Keypad0);
+                break;
+
+            default:
+                return false;
+        }
+        foreach(KeyCode code in key_query) {
+            if (Input.GetKeyDown(code)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool NextWeaponInput() {
+        return false; // TODO --- implement
+    }
+
+    public bool PreviousWeaponInput() {
+        return false; // TODO --- implement
     }
 }

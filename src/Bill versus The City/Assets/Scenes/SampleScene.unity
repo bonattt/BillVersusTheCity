@@ -164,8 +164,9 @@ GameObject:
   - component: {fileID: 338529274}
   - component: {fileID: 338529273}
   - component: {fileID: 338529272}
-  - component: {fileID: 338529275}
+  - component: {fileID: 338529278}
   - component: {fileID: 338529276}
+  - component: {fileID: 338529277}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -187,6 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
+  debug_attack_input: 0
+  debug_can_attack: 0
   walk_speed: 10
   sprint_speed: 15
   sprint_cost: 15
@@ -237,22 +240,6 @@ Transform:
   - {fileID: 1612991197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &338529275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338529271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e75bd6fe4d58fb40af8be675ff6c945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialize_weapon: {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  shoot_point: {fileID: 1612991197}
-  bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
-  use_full_auto: 1
 --- !u!114 &338529276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +256,50 @@ MonoBehaviour:
   max_health: -1
   armor: -1
   armor_hardness: -1
+--- !u!114 &338529277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338529271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5382a17a3850c424e899a85e5160afe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character_controller: {fileID: 338529272}
+  attack_controller: {fileID: 0}
+--- !u!114 &338529278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338529271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c04c39a8018b0344b14f95391c5c725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialize_weapon: {fileID: 0}
+  shoot_point: {fileID: 1612991197}
+  bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
+  use_full_auto: 1
+  weapon_manager: {fileID: 338529277}
+  init_slots:
+  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  weapon_slots_enabled: 01010000000000000000
+  current_slot: 0
 --- !u!1 &421483738
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +456,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
+  debug_attack_input: 0
+  debug_can_attack: 0
   shoot_inaccuracy: 2
   target: {fileID: 338529274}
   shooting_rate: 0.75

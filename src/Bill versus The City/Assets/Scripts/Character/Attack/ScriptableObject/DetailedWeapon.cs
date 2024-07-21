@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Detailed Weapon", menuName ="Data/DetailedWeapon")]
 public class DetailedWeapon : ScriptableObject, IWeapon
 {
+    public string _name;
     // ammo
     public AmmoType _ammo_type;
     public int _ammo_capacity = 30;
@@ -30,6 +31,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _weapon_damage_max = 50f;
     public float _armor_penetration = 0f;
 
+    public string name {
+        get { return _name; }
+    }
     public AmmoType ammo_type { 
         get { return _ammo_type; } 
     }
@@ -42,6 +46,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float reload_time { 
         get { return _reload_time; } 
     }
+    public int current_ammo { get; set; }
 
     // rate of fire
     public FiringMode firing_mode { 
@@ -88,4 +93,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
         get { return _armor_penetration; }
     }
 
+    public override string ToString() {
+        return $"DetailedWeapon<{_name}>";
+    }
 }

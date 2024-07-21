@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Simple Weapon", menuName ="Data/SimpleWeapon")]
 public class SimpleWeapon : ScriptableObject, IWeapon
 {
+    public string _name;
     // ammo
     public AmmoType _ammo_type;
     public int _ammo_capacity = 17;
@@ -27,7 +28,9 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     public float weapon_damage = 40f;
     private float _armor_penetration = 0f;
 
-    
+    public string name {
+        get { return _name; }
+    }
     public AmmoType ammo_type { 
         get { return _ammo_type; } 
     }
@@ -40,6 +43,7 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     public float reload_time { 
         get { return _reload_time; } 
     }
+    public int current_ammo { get; set; }
 
     // rate of fire
     public FiringMode firing_mode { 
@@ -84,5 +88,9 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     }
     public float armor_penetration { 
         get { return _armor_penetration; }
+    }
+
+    public override string ToString() {
+        return $"SimpleWeapon<{_name}>";
     }
 }

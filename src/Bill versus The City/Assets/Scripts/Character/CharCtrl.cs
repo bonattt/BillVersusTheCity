@@ -16,7 +16,27 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     public float last_attack_time { get; private set; }
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
-    
+
+    ////////// debug fields /////////
+    public bool debug_attack_input;
+    public bool debug_can_attack;
+    public bool debug_weapon_isnull;
+    public bool debug_full_auto;
+    public int debug_current_ammo;
+
+    private void SetDebugData() {
+        debug_attack_input = AttackInput();
+        debug_can_attack = CanAttack();
+        debug_weapon_isnull = attack_controller.current_weapon == null;
+        if (!debug_weapon_isnull) {
+            debug_full_auto = attack_controller.current_weapon.auto_fire;
+            debug_current_ammo = attack_controller.current_weapon.current_ammo;
+        } else {
+            debug_full_auto = false;
+            debug_current_ammo = -1;
+        }
+    }
+    /////////////////////////////////
 
     void Start() {
         SetupCharacter(); 
@@ -37,6 +57,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     {   
         Move();
         TryToAttack();
+        SetDebugData();
     }
 
     private void Move() {
