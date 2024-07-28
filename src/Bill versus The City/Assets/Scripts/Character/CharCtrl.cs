@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public enum CharacterActionKey {
@@ -16,6 +18,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     public float last_attack_time { get; private set; }
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
+    public ActionCode current_action = ActionCode.none;
 
     ////////// debug fields /////////
     public bool debug_attack_input;
@@ -23,6 +26,25 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     public bool debug_weapon_isnull;
     public bool debug_full_auto;
     public int debug_current_ammo;
+    public bool debug_reloading = false;
+
+
+    public float reload_move_speed = 0.33f;
+
+    public float start_reload_at;
+
+    private bool _reloading = false;
+    public bool reloading {
+        get { return _reloading; }
+        protected set {
+            _reloading = value;
+            try {
+                ((PlayerAttackController) attack_controller).switch_weapons_blocked = value;
+            } catch (InvalidCastException) {
+                // do nothing
+            }
+        }
+    }
 
     private void SetDebugData() {
         debug_attack_input = AttackInput();
@@ -35,6 +57,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
             debug_full_auto = false;
             debug_current_ammo = -1;
         }
+        debug_reloading = reloading;
     }
     /////////////////////////////////
 
@@ -55,9 +78,61 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     // Update is called once per frame
     void Update()
     {   
+        SetAction();
         Move();
         TryToAttack();
         SetDebugData();
+    }
+
+    protected void SetAction() {
+        if (reloading) {
+            if (ReloadIsFinished()) {
+                FinishReload();
+            }
+            else if (GetActionInput() == ActionCode.cancel_reload) {
+                CancelReload();
+            }
+        }
+
+        else if (current_action == ActionCode.none) {
+            current_action = GetActionInput();
+
+            switch (current_action) {
+                case ActionCode.none:
+                    break;
+
+                case ActionCode.reload:
+                    StartReload();
+                    break;
+            }
+        }
+    }
+
+    public virtual ActionCode GetActionInput() {
+        if (ReloadInput()) {
+            return ActionCode.reload;
+        }
+        else if (CancelReloadInput()) {
+            return ActionCode.cancel_reload;
+        }
+        else if (SprintInput()) {
+            return ActionCode.sprint;
+        }
+        return ActionCode.none;
+    }
+
+    public virtual bool ReloadInput() {
+        return attack_controller.current_weapon.current_ammo == 0
+            && !reloading
+            && AttackInput();
+    }
+
+    public virtual bool SprintInput() {
+        return false;
+    }
+
+    public virtual bool CancelReloadInput() {
+        return false;
     }
 
     private void Move() {
@@ -67,8 +142,45 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
         // }
     }
 
+    public void StartReload() {
+        // initiate a reload
+        reloading = true;
+        start_reload_at = Time.time;
+    }
+
+    public bool ReloadIsFinished() {
+        if (!reloading) {
+            return false;
+        }
+        return Time.time >= start_reload_at + attack_controller.current_weapon.reload_time;
+    }
+
+    public void CancelReload() {
+        // end reload before it's finished
+        reloading = false;
+        current_action = ActionCode.none;
+    }
+    
+    private void FinishReload() {
+        // complete a reload successfully.
+        reloading = false;
+        current_action = ActionCode.none;
+        IWeapon wpn = attack_controller.current_weapon;
+        wpn.current_ammo += wpn.reload_amount;
+        if (wpn.current_ammo > wpn.ammo_capacity) {
+            wpn.current_ammo = wpn.ammo_capacity;
+        }
+
+        // for weapons that reload single rounds, keep reloading
+        if(wpn.current_ammo 
+                != wpn.ammo_capacity) {
+            StartReload();
+        }
+        attack_controller.UpdateSubscribers();
+    }
+
     private void TryToAttack() {
-        if (AttackInput() && CanAttack()) {
+        if (AttackInput() && CanAttack() && !reloading) {
             PerformAttack();
         }
     }
@@ -86,8 +198,17 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
 
     private void MoveNormal() {
         LookWithAction();
-        Vector3 dir = MoveVector();
-        controller.SimpleMove(dir);
+        Vector3 move = MoveVector();
+        move = ModifyMoveVector(move);
+        controller.SimpleMove(move);
+    }
+
+    protected virtual Vector3 ModifyMoveVector(Vector3 move) {
+        if (reloading) {
+            move *= reload_move_speed;
+        }
+
+        return move;
     }
 
     // private void MoveWithAction() {
@@ -197,4 +318,14 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     public GameObject GetHitTarget() {
         return this.gameObject;
     }
+}
+
+
+public enum ActionCode {
+    // list of action choices returned by subclasses to pick action
+    none,
+    sprint,
+    reload,
+    cancel_reload
+
 }

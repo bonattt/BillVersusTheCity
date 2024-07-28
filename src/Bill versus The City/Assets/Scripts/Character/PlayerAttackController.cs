@@ -10,6 +10,8 @@ public class PlayerAttackController : AttackController
     public IWeapon[] weapon_slots = new IWeapon[10];
     public bool[] weapon_slots_enabled = new bool[]{true, true, false, false, false, false, false, false, false, false};
 
+    public bool switch_weapons_blocked = false;
+
     public int _current_slot = 0;
     public override int? current_slot {
         get { return _current_slot; }
@@ -39,11 +41,18 @@ public class PlayerAttackController : AttackController
     // Update is called once per frame
     protected override void AttackControllerUpdate()
     {
-        int? weapon_slot_input = InputSystem.current.WeaponSlotInput();
-        Debug.Log($"key 1 down: {Input.GetKeyDown(KeyCode.Keypad1)}");
-        Debug.Log("weapon slot input: " + weapon_slot_input);
-        if (weapon_slot_input != null) {
-            SetWeaponBySlot((int) weapon_slot_input);
+        TrySwitchWeapons();
+    }
+
+    private void TrySwitchWeapons() {
+        // Polls for player inputs, and switches weapons if necessary
+        if (! switch_weapons_blocked) {
+            int? weapon_slot_input = InputSystem.current.WeaponSlotInput();
+            Debug.Log($"key 1 down: {Input.GetKeyDown(KeyCode.Keypad1)}");
+            Debug.Log("weapon slot input: " + weapon_slot_input);
+            if (weapon_slot_input != null) {
+                SetWeaponBySlot((int) weapon_slot_input);
+            }
         }
     }
     

@@ -19,6 +19,24 @@ public class PlayerMovement : CharCtrl
         return InputSystem.current.AttackClickInput();
     }
 
+    public override bool ReloadInput() {
+        if (this.reloading) {
+            return false;
+        }
+        return InputSystem.current.ReloadInput();
+    }
+
+    public override bool SprintInput() {
+        return false;
+    }
+
+    public override bool CancelReloadInput() {
+        if (! this.reloading) {
+            return false;
+        }
+        return InputSystem.current.ReloadInput();
+    }
+
     public override Vector3 LookTarget() {
         Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
         Vector3 look_target = new Vector3(mouse_pos.x, transform.position.y, mouse_pos.z);

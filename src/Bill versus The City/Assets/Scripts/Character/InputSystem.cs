@@ -13,6 +13,7 @@ public class InputSystem
     public const KeyCode PAUSE_MENU_INPUT = KeyCode.Escape;
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
     public const KeyCode INTERACT = KeyCode.E;
+    public const KeyCode RELOAD = KeyCode.R;
     public const KeyCode DASH = KeyCode.Space;
     public const KeyCode INVENTORY_MENU = KeyCode.I;
     public const KeyCode DEBUG_KEY = KeyCode.BackQuote;
@@ -89,6 +90,10 @@ public class InputSystem
 
     public bool InteractInput() {
         return Input.GetKeyDown(INTERACT);
+    }
+
+    public bool ReloadInput() {
+        return Input.GetKeyDown(RELOAD);
     }
 
     public bool TestInput() {
