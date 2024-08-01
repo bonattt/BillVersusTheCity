@@ -7,8 +7,10 @@ public class StatusDebugger : MonoBehaviour
 
     public float health = -1;
     public float max_health = -1;
+    public float max_armor = -1;
     public float armor = -1;
     public float armor_hardness = -1;
+    public float armor_protection = -1;
 
     private ICharacterStatus _status;
     private ICharacterStatus status {
@@ -28,7 +30,22 @@ public class StatusDebugger : MonoBehaviour
         } 
         health = status.health;
         max_health = status.max_health;
-        armor = status.armor;
-        armor_hardness = status.armor_hardness;
+
+        if (status.armor == null) {
+            SetArmorNull();
+        }
+        else {
+            max_armor = status.armor.armor_max_durability;
+            armor = status.armor.armor_durability;
+            armor_hardness = status.armor.armor_hardness;
+            armor_protection = status.armor.armor_protection;
+        } 
+    }
+
+    private void SetArmorNull() {
+        max_armor = 0;
+        armor = 0;
+        armor_hardness = 0;
+        armor_protection = 0;
     }
 }

@@ -37,25 +37,10 @@ public class CharacterStatus : ICharacterStatus {
             UpdateStatus();
         }
     }
-    public float _armor = 0;
-    public float armor { 
-        get {
-            return _armor;
-        }
-        set {
-            _armor = value;
-            UpdateStatus();
-        }
-    }
-    public float _armor_hardness = 0;
-    public float armor_hardness { 
-        get {
-            return _armor_hardness;
-        }
-        set {
-            _armor_hardness = value;
-            UpdateStatus();
-        }
+    public IArmor _armor;
+    public IArmor armor { 
+        get { return _armor; }
+        set { _armor = value; }
     }
     private List<ICharStatusSubscriber> subscribers = new List<ICharStatusSubscriber>();
 
@@ -63,8 +48,7 @@ public class CharacterStatus : ICharacterStatus {
     public CharacterStatus(float max_health) {
         this.max_health = max_health;
         this.health = max_health;
-        this.armor = 0;
-        this.armor_hardness = 0;
+        this.armor = null;
     }
 
     public void Subscribe(ICharStatusSubscriber sub) => subscribers.Add(sub);

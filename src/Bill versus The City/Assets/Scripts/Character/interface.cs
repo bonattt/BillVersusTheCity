@@ -6,8 +6,7 @@ using UnityEngine;
 public interface ICharacterStatus {
     public float health { get; set; }
     public float max_health { get; set; }
-    public float armor { get; set; }
-    public float armor_hardness { get; }
+    public IArmor armor { get; set; }
 
     public void Subscribe(ICharStatusSubscriber sub);
 
@@ -40,7 +39,7 @@ public interface IArmor {
 
     // reduces overall damage
     public float armor_hardness { get; }
-    
+
     // percentage of damage dealt to the wearer of the armor
     public float armor_protection { get; }
 }
