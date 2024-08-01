@@ -1,3 +1,4 @@
+ITERATION 1
 
 [ ] UI
     [+] Ammo Display
@@ -6,8 +7,25 @@
 
 [ ] Combat
     [+] Attack effects
-        [ ] Weapon-based gunshot noise
     [+] Weapon based attack stats
-    [+] Ammo repletion
+    [+] Ammo capacity and reloads
     [+] Health Depletion
     [ ] Armor-based damage calculations
+
+[ ] Effects
+    [+] Gunshot and hit vfx
+    [ ] Gunshot and hit sfx
+    [ ] Reload sfx
+    [ ] Reload progress UI
+
+[ ] Enemy Behavior
+    [ ] Hunt down the player
+    [ ] 
+
+
+[ ] BUGS
+    [ ] Fix bullet collsions
+
+
+[ ] Maps
+    [ ] Build a prototype map.

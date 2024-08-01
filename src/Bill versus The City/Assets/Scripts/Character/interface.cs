@@ -31,6 +31,20 @@ public interface IAttack {
 
 }
 
+public interface IArmor {
+    // maximum HP of the armor
+    public float armor_max_durability { get;}
+
+    // current HP of the armor
+    public float armor_durability { get; set; }
+
+    // reduces overall damage
+    public float armor_hardness { get; }
+    
+    // percentage of damage dealt to the wearer of the armor
+    public float armor_protection { get; }
+}
+
 public interface IBullet : IAttack {
     public void ResolveHit(GameObject hit, Vector3 point);
 }
