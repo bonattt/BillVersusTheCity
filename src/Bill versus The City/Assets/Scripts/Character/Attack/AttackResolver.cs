@@ -52,10 +52,6 @@ public static class AttackResolver {
                 attack.attack_damage_max));
     } 
 
-    public static float CalculateDamageReduction(IAttack attack, IArmor armor) {
-        return Mathf.Min(0, armor.armor_hardness);
-    } 
-
     public static float CalculateDamageSplit(IAttack attack, IArmor armor) {
         float og_split = armor.armor_protection - attack.armor_penetration;
         float split = Mathf.Max(0.95f, Mathf.Min(0.05f, og_split));
@@ -67,11 +63,10 @@ public static class AttackResolver {
 
     public static (float, float, float) CalculateArmorDamage(IAttack attack, IArmor armor) {
         float total_attack_damage = RandomDamage(attack);
-        // float damage_reduction = CalculateDamageReduction(attack, armor);
         float damage_split = CalculateDamageSplit(attack, armor);
         float attack_damage = total_attack_damage * (1 - damage_split);
         float base_armor_damage = total_attack_damage * damage_split;
-        float armor_damage =base_armor_damage;
+        float armor_damage = base_armor_damage;
 
         attack_damage = Mathf.Max(1, attack_damage);
         armor_damage = Mathf.Max(1, armor_damage);
