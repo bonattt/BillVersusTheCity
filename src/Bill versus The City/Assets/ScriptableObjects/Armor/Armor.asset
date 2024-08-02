@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cb212391a4b8b498dd8bf871a802c8, type: 3}
   m_Name: Armor
   m_EditorClassIdentifier: 
-  _armor_max_durability: 50
+  _armor_max_durability: 200
   _armor_hardness: 5
   _armor_protection: 0.8
