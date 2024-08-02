@@ -22,10 +22,12 @@ public static class AttackResolver {
             IAttackTarget target, Vector3 hit_location) {
         ICharacterStatus status = target.GetStatus();
         float attack_damage;
-        if (status.armor == null) {
+        
+        if (attack.ignore_armor || status.armor == null) {
             attack_damage = ResolveGunDamageUnarmored(attack, status);
         }
         else if (status.armor.armor_durability <= 0) {
+            StaticLogger.Log("Armor Broken, deal unarmored damage!");
             attack_damage = ResolveGunDamageUnarmored(attack, status);
         }
         else {

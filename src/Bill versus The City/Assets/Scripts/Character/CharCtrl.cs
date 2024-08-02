@@ -14,6 +14,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     protected CharacterController controller;
     protected AttackController attack_controller;
     protected ICharacterStatus char_status;
+    public ArmorPlate armor_init;
 
     public float last_attack_time { get; private set; }
     public float rotation_degrees_per_second = 400;
@@ -73,6 +74,14 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();
         attack_controller = GetComponent<AttackController>();
+        if (armor_init != null) { 
+            try {
+                status.armor = (IArmor) Instantiate(armor_init);
+            } catch (InvalidCastException) {
+                Debug.LogError($"invalid init armor: {armor_init}");
+                status.armor = null;
+            }
+        }
     }
 
     // Update is called once per frame
