@@ -53,44 +53,59 @@ public static class AttackResolver {
     } 
 
     public static float CalculateDamageReduction(IAttack attack, IArmor armor) {
-        return Mathf.Max(0f, armor.armor_hardness - attack.armor_penetration);
+        return Mathf.Min(0, armor.armor_hardness);
     } 
 
     public static float CalculateDamageSplit(IAttack attack, IArmor armor) {
-        float og_split = armor.armor_protection / attack.armor_penetration;
-        float split = Mathf.Max(1, Mathf.Min(0, og_split));
+        float og_split = armor.armor_protection - attack.armor_penetration;
+        float split = Mathf.Max(0.95f, Mathf.Min(0.05f, og_split));
         if (og_split != split) {
-            StaticLogger.Warning($"unbalanced attack: {og_split} => {split}");
+            StaticLogger.Warning($"unbalanced damage split: {og_split} => {split}");
         }
         return split;
     }
 
-    public static (float, float) CalculateArmorDamage(IAttack attack, IArmor armor) {
-        float base_attack_damage = RandomDamage(attack);
-        float damage_reduction = CalculateDamageReduction(attack, armor);
+    public static (float, float, float) CalculateArmorDamage(IAttack attack, IArmor armor) {
+        float total_attack_damage = RandomDamage(attack);
+        // float damage_reduction = CalculateDamageReduction(attack, armor);
         float damage_split = CalculateDamageSplit(attack, armor);
-        float attack_damage = base_attack_damage * (1 - damage_split);
-        float base_armor_damage = base_attack_damage * damage_split;
-        float armor_damage = base_armor_damage / damage_reduction;
-        
-        StaticLogger.Log($"{base_attack_damage} => {attack_damage} / {base_armor_damage}");
-        return (attack_damage, armor_damage);
+        float attack_damage = total_attack_damage * (1 - damage_split);
+        float base_armor_damage = total_attack_damage * damage_split;
+        float armor_damage =base_armor_damage;
+
+        attack_damage = Mathf.Max(1, attack_damage);
+        armor_damage = Mathf.Max(1, armor_damage);
+      
+        StaticLogger.Log($"base_attack_damage: {total_attack_damage}, \ndamage_split: {damage_split}, \nattack_damage: {attack_damage}, \nbase_armor_damage: {base_armor_damage}, \narmor_damage: {armor_damage}");
+        StaticLogger.Log($"{total_attack_damage} => {attack_damage} / {base_armor_damage}");
+        if (total_attack_damage <= 0) { Debug.LogWarning($"negative total_attack_damage: {total_attack_damage}"); } 
+        if (attack_damage <= 0) { Debug.LogWarning($"negative attack_damage: {attack_damage}"); } 
+        if (armor_damage <= 0) { Debug.LogWarning($"negative armor_damage: {armor_damage}"); } 
+        return (total_attack_damage, attack_damage, armor_damage);
     }
 
     public static float ResolveGunDamageArmored(IAttack attack, 
             ICharacterStatus status, Vector3 hit_location) {
-
-        (float attack_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
+        (float total_attack_damage, float attack_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
         float overflow_damage;
+        float armor_before = status.armor.armor_durability; // TODO --- remove debug code
         if (armor_damage > status.armor.armor_durability) {
             overflow_damage = armor_damage - status.armor.armor_durability;
             status.armor.armor_durability = 0;
             ResolveArmorBreak(attack, status, hit_location);
         } else {
+            StaticLogger.Log("no overflow");
             overflow_damage = 0;
             status.armor.armor_durability -= armor_damage;
         }
         status.health -= attack_damage + overflow_damage;
+        if(total_attack_damage < (attack_damage + overflow_damage)) {
+            StaticLogger.Warning($"Overflow damage more than base: {total_attack_damage} => {attack_damage} + {overflow_damage}");
+        }
+        StaticLogger.Warning($"armor {armor_before} --> {status.armor.armor_durability}");
+        if (armor_before >= status.armor.armor_durability) {
+            StaticLogger.Warning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}");
+        }    
         return attack_damage;
     }
 

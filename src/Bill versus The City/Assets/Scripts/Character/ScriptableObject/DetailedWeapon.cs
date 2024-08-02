@@ -29,7 +29,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _bullet_speed = 35f;
     public float _weapon_damage_min = 30f;
     public float _weapon_damage_max = 50f;
-    public float _armor_penetration = 0f;
+    public float _armor_penetration = 1f;
 
     public string weapon_name {
         get { return _name; }
@@ -91,10 +91,6 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float armor_penetration { 
         get { return _armor_penetration; }
-    }
-    public float _armor_damage;
-    public float armor_damage { 
-        get { return _armor_damage; }
     }
 
     public override string ToString() {

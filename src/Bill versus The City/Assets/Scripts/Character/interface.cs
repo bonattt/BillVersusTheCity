@@ -27,7 +27,6 @@ public interface IAttack {
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
     public float armor_penetration { get; }
-    public float armor_damage { get; }
     public bool ignore_armor { get; }
 
 }
@@ -83,7 +82,6 @@ public interface IWeapon {
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
     public float armor_penetration { get; }
-    public float armor_damage { get; }
 }
 
 public enum FiringMode {
