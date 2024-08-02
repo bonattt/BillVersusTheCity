@@ -41,10 +41,7 @@ public class ArmorPlate : ScriptableObject, IArmor
             return (float) armor_durability;
         }
         set {
-            if (value == null) {
-                _armor_durability = null;
-            }
-            else if (value > armor_max_durability) {
+            if (value > armor_max_durability) {
                 _armor_durability = armor_max_durability;
             }
             else if (value < 0) {

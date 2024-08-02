@@ -21,16 +21,80 @@ public static class AttackResolver {
     public static void ResolveAttackHit(IAttack attack, 
             IAttackTarget target, Vector3 hit_location) {
         ICharacterStatus status = target.GetStatus();
-        float attack_damage = Random.Range(attack.attack_damage_min, 
-                attack.attack_damage_max);
-        status.health -= attack_damage;
-        // TODO --- implement armor
-
+        float attack_damage;
+        if (status.armor == null) {
+            attack_damage = ResolveGunDamageUnarmored(attack, status);
+        }
+        else if (status.armor.armor_durability <= 0) {
+            attack_damage = ResolveGunDamageUnarmored(attack, status);
+        }
+        else {
+            attack_damage = ResolveGunDamageArmored(attack, status, hit_location);
+        }
         
         foreach (IAttackHitEffect effect in DAMAGE_EFFECTS) {
             effect.DisplayDamageEffect(
                 target.GetHitTarget(), hit_location, attack_damage);
         }
+    }
+
+    public static float ResolveGunDamageUnarmored(IAttack attack, 
+            ICharacterStatus status) {
+        float attack_damage = RandomDamage(attack);
+        status.health -= attack_damage;
+        return attack_damage;
+    }
+
+    public static float RandomDamage(IAttack attack) {
+        return Mathf.Max(1f, Random.Range(attack.attack_damage_min, 
+                attack.attack_damage_max));
+    } 
+
+    public static float CalculateDamageReduction(IAttack attack, IArmor armor) {
+        return Mathf.Max(0f, armor.armor_hardness - attack.armor_penetration);
+    } 
+
+    public static float CalculateDamageSplit(IAttack attack, IArmor armor) {
+        float og_split = armor.armor_protection / attack.armor_penetration;
+        float split = Mathf.Max(1, Mathf.Min(0, og_split));
+        if (og_split != split) {
+            StaticLogger.Warning($"unbalanced attack: {og_split} => {split}");
+        }
+        return split;
+    }
+
+    public static (float, float) CalculateArmorDamage(IAttack attack, IArmor armor) {
+        float base_attack_damage = RandomDamage(attack);
+        float damage_reduction = CalculateDamageReduction(attack, armor);
+        float damage_split = CalculateDamageSplit(attack, armor);
+        float attack_damage = base_attack_damage * (1 - damage_split);
+        float base_armor_damage = base_attack_damage * damage_split;
+        float armor_damage = base_armor_damage / damage_reduction;
+        
+        StaticLogger.Log($"{base_attack_damage} => {attack_damage} / {base_armor_damage}");
+        return (attack_damage, armor_damage);
+    }
+
+    public static float ResolveGunDamageArmored(IAttack attack, 
+            ICharacterStatus status, Vector3 hit_location) {
+
+        (float attack_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
+        float overflow_damage;
+        if (armor_damage > status.armor.armor_durability) {
+            overflow_damage = armor_damage - status.armor.armor_durability;
+            status.armor.armor_durability = 0;
+            ResolveArmorBreak(attack, status, hit_location);
+        } else {
+            overflow_damage = 0;
+            status.armor.armor_durability -= armor_damage;
+        }
+        status.health -= attack_damage + overflow_damage;
+        return attack_damage;
+    }
+
+    public static void ResolveArmorBreak(IAttack attack, 
+            ICharacterStatus status, Vector3 hit_location) {
+        StaticLogger.Log($"Armor '{status.armor}' Broken by {attack}!!!");
     }
 
     public static void AttackMiss(IAttack attack, Vector3 location) {

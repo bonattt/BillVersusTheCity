@@ -100,6 +100,8 @@ public class AttackController : MonoBehaviour, IWeaponManager
         Bullet bullet = bullet_obj.GetComponent<Bullet>();
         bullet.attack_damage_max = current_weapon.weapon_damage_max;
         bullet.attack_damage_min = current_weapon.weapon_damage_min;
+        bullet.armor_damage = current_weapon.armor_damage;
+        bullet.armor_penetration = current_weapon.armor_penetration;
         bullet.attacker = attacker;
 
         AttackResolver.AttackStart(bullet, shoot_point.position);

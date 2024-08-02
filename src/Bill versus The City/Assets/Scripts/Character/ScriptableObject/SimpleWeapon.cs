@@ -89,6 +89,10 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     public float armor_penetration { 
         get { return _armor_penetration; }
     }
+    public float _armor_damage;
+    public float armor_damage { 
+        get { return _armor_damage; }
+    }
 
     public override string ToString() {
         return $"SimpleWeapon<{_name}>";
