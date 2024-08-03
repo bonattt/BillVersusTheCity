@@ -3,12 +3,15 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; 
 
 public class ReloadUI : MonoBehaviour, IReloadSubscriber
 {
     public GameObject target;
     public Image progress_bar;
     private IReloadManager manager;
+
+    public TMP_Text text;
 
     private bool reloading = false;
     
@@ -39,6 +42,7 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber
     
     public void StartReload(IReloadManager manager, IWeapon weapon) {
         reloading = true;
+        text.text = "reloading";
         UpdateProgress();
     }
 
@@ -53,6 +57,7 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber
     private void ClearUI() {
         reloading = false;
         progress_bar.fillAmount = 0f;
+        text.text = "";
     }
 
 }

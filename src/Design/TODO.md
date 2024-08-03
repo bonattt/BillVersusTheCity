@@ -16,7 +16,7 @@ ITERATION 1
     [+] Gunshot and hit vfx
     [ ] Gunshot and hit sfx
     [ ] Reload sfx
-    [ ] Reload progress UI
+    [+] Reload progress UI
 
 [ ] Enemy Behavior
     [ ] Hunt down the player
