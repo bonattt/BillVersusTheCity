@@ -150,8 +150,8 @@ GameObject:
   - component: {fileID: 7243860271420088886}
   - component: {fileID: 6586359110877128584}
   - component: {fileID: 4665821343985391478}
-  - component: {fileID: 5853968398484751862}
   - component: {fileID: 7212405945941910509}
+  - component: {fileID: 2012941016556226390}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7281ba570d76e9b4eb5d64cd6017d9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
@@ -264,24 +263,6 @@ MonoBehaviour:
   weapon_slots_enabled: 01010101000000000000
   switch_weapons_blocked: 0
   _current_slot: 0
---- !u!114 &5853968398484751862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2783782960125533881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b53bffae39530459e04c285aad944d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: -1
-  max_health: -1
-  max_armor: -1
-  armor: -1
-  armor_hardness: -1
-  armor_protection: -1
 --- !u!114 &7212405945941910509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +277,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character_controller: {fileID: 6586359110877128584}
   attack_controller: {fileID: 0}
+--- !u!114 &2012941016556226390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8433efe4cf285824e9dc3e1c1af8a959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+  _max_health: 100
+  armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
+  _debug_has_armor: 0
+  _debug_max_armor: -1
+  _debug_armor: -1
+  _debug_armor_protection: -1
 --- !u!1 &8455391820605880308
 GameObject:
   m_ObjectHideFlags: 0

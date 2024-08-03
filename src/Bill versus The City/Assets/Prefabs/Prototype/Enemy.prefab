@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4785987381228191808}
   - component: {fileID: 3396656997431563555}
   - component: {fileID: 6935893205124348823}
-  - component: {fileID: 8512249126416887633}
+  - component: {fileID: 1034086256320115388}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -104,7 +104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6a98283f43bb34fab5dd6b8760ee16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
@@ -135,7 +134,7 @@ MonoBehaviour:
   shoot_point: {fileID: 4280276152886177003}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   use_full_auto: 1
---- !u!114 &8512249126416887633
+--- !u!114 &1034086256320115388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,15 +143,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1505927797627387282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b53bffae39530459e04c285aad944d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8433efe4cf285824e9dc3e1c1af8a959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: -1
-  max_health: -1
-  max_armor: -1
-  armor: -1
-  armor_hardness: -1
-  armor_protection: -1
+  _health: 100
+  _max_health: 100
+  armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
+  _debug_has_armor: 0
+  _debug_max_armor: -1
+  _debug_armor: -1
+  _debug_armor_protection: -1
 --- !u!1 &2741102800901688509
 GameObject:
   m_ObjectHideFlags: 0
