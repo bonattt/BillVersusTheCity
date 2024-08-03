@@ -9,7 +9,7 @@ public enum CharacterActionKey {
     sprint,
 }
 
-public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTarget
+public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTarget, IReloadManager
 {
     protected CharacterController controller;
     protected AttackController attack_controller;
@@ -43,6 +43,24 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
             } catch (InvalidCastException) {
                 // do nothing
             }
+        }
+    }
+
+    public float reload_time {
+        get {
+            if (attack_controller.current_weapon == null) {
+                return 0f;
+            }
+            return attack_controller.current_weapon.reload_time;
+        }
+    }
+
+    // percent (0f - 1f) progress on reload completion
+    public float reload_progress {
+        get {
+            if (! reloading) { return 0f; }
+            float progress_seconds = Time.time - start_reload_at;
+            return progress_seconds / reload_time;
         }
     }
 
@@ -142,19 +160,21 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
         // initiate a reload
         reloading = true;
         start_reload_at = Time.time;
+        UpdateStartReload(attack_controller.current_weapon);
     }
 
     public bool ReloadIsFinished() {
         if (!reloading) {
             return false;
         }
-        return Time.time >= start_reload_at + attack_controller.current_weapon.reload_time;
+        return Time.time >= start_reload_at + this.reload_time;
     }
 
     public void CancelReload() {
         // end reload before it's finished
         reloading = false;
         current_action = ActionCode.none;
+        UpdateCancelReload(attack_controller.current_weapon);
     }
     
     private void FinishReload() {
@@ -173,6 +193,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
             StartReload();
         }
         attack_controller.UpdateSubscribers();
+        UpdateFinishReload(attack_controller.current_weapon);
     }
 
     private void TryToAttack() {
@@ -314,6 +335,25 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     public GameObject GetHitTarget() {
         return this.gameObject;
     }
+
+    private List<IReloadSubscriber> _reload_subscribers = new List<IReloadSubscriber>();
+    public void UpdateStartReload(IWeapon weapon) {
+        foreach (IReloadSubscriber sub in _reload_subscribers) {
+            sub.StartReload(this, weapon);
+        }
+    }
+    public void UpdateFinishReload(IWeapon weapon) {
+        foreach (IReloadSubscriber sub in _reload_subscribers) {
+            sub.FinishReload(this, weapon);
+        }
+    }
+    public void UpdateCancelReload(IWeapon weapon) {
+        foreach (IReloadSubscriber sub in _reload_subscribers) {
+            sub.CancelReload(this, weapon);
+        }
+    }
+    public void Subscribe(IReloadSubscriber sub) => _reload_subscribers.Add(sub);
+    public void Unsubscribe(IReloadSubscriber sub) => _reload_subscribers.Remove(sub);
 }
 
 

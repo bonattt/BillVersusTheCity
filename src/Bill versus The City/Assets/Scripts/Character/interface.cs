@@ -108,3 +108,20 @@ public interface IWeaponManager {
 public interface IWeaponManagerSubscriber {
     public void UpdateWeapon(int? slot, IWeapon weapon);
 }
+
+public interface IReloadManager {
+    public bool reloading { get; }
+    public float reload_time { get; }
+    public float reload_progress { get; }
+    public void UpdateStartReload(IWeapon weapon);
+    public void UpdateFinishReload(IWeapon weapon);
+    public void UpdateCancelReload(IWeapon weapon);
+    public void Subscribe(IReloadSubscriber sub);
+    public void Unsubscribe(IReloadSubscriber sub);
+}
+
+public interface IReloadSubscriber {
+    public void StartReload(IReloadManager manager, IWeapon weapon);
+    public void FinishReload(IReloadManager manager, IWeapon weapon);
+    public void CancelReload(IReloadManager manager, IWeapon weapon);
+}
