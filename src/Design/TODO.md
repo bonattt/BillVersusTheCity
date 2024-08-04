@@ -18,13 +18,19 @@ ITERATION 1
     [ ] Reload sfx
     [+] Reload progress UI
 
+    [ ] SFX system
+        [ ] supports multiple volume sliders (sfx, music, voice, etc)
+        [ ] supports deconflicting noices (20 gunshots )
+
 [ ] Enemy Behavior
+    [ ] Don't shoot walls
+    [ ] detection modes
     [ ] Hunt down the player
     [ ] 
 
 
 [ ] BUGS
-    [ ] Fix bullet collsions
+    [+] Fix bullet collsions
 
 
 [ ] Maps

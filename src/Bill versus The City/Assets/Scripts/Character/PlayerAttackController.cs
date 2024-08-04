@@ -48,8 +48,6 @@ public class PlayerAttackController : AttackController
         // Polls for player inputs, and switches weapons if necessary
         if (! switch_weapons_blocked) {
             int? weapon_slot_input = InputSystem.current.WeaponSlotInput();
-            Debug.Log($"key 1 down: {Input.GetKeyDown(KeyCode.Keypad1)}");
-            Debug.Log("weapon slot input: " + weapon_slot_input);
             if (weapon_slot_input != null) {
                 SetWeaponBySlot((int) weapon_slot_input);
             }
@@ -61,7 +59,6 @@ public class PlayerAttackController : AttackController
             _current_slot = slot;
             current_weapon = weapon_slots[slot];
             UpdateSubscribers();
-            Debug.Log($"set weapon slot to '{slot}': {current_weapon}");
             return true;
         }
         Debug.LogWarning($"tried to set weapon to invalid slot '{slot}'.\nEnabled: {weapon_slots_enabled[slot]}, {weapon_slots[slot]}");
