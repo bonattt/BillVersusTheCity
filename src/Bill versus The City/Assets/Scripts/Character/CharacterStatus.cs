@@ -62,6 +62,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus {
                 Debug.LogError($"invalid init armor: {armor_init}");
             }
         }
+        UpdateStatus();
     }   
 
     void Update() {

@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character_controller: {fileID: 6586359110877128584}
-  attack_controller: {fileID: 0}
+  attack_controller: {fileID: 4665821343985391478}
 --- !u!114 &2012941016556226390
 MonoBehaviour:
   m_ObjectHideFlags: 0

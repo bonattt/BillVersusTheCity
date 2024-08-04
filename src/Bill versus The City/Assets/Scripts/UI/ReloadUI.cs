@@ -32,8 +32,6 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber
         if (reloading) {
             UpdateProgress();
         }
-
-
     }
 
     private void UpdateProgress() {

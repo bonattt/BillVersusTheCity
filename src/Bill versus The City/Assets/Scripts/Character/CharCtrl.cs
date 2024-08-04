@@ -9,7 +9,7 @@ public enum CharacterActionKey {
     sprint,
 }
 
-public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTarget, IReloadManager
+public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager
 {
     protected CharacterController controller;
     protected AttackController attack_controller;
@@ -80,7 +80,7 @@ public abstract class CharCtrl : MonoBehaviour, ICharStatusSubscriber, IAttackTa
     /////////////////////////////////
 
     void Start() {
-        SetupCharacter(); 
+        SetupCharacter();
     }
     public virtual void SetupCharacter() {
         char_status = GetComponent<CharacterStatus>();
