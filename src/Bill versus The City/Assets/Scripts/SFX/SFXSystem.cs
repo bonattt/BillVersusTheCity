@@ -17,15 +17,15 @@ public class SFXSystem : MonoBehaviour
         _instance = this;
     }
 
-    public void PlaySoundClip(ISound sound, Vector3 target) {
-        PlaySoundClip(sound.GetSound(), target);
+    public void PlaySound(ISound sound, Vector3 target) {
+        PlaySound(sound.GetSound(), target);
     }
 
-    public void PlaySoundClip(AdjustedSound sound, Vector3 target) {
-        PlaySoundClip(sound.clip, target, sound.volume);
+    public void PlaySound(AdjustedSound sound, Vector3 target) {
+        PlaySound(sound.clip, target, sound.volume);
     }
 
-    public void PlaySoundClip(AudioClip audio_clip, Vector3 target, float volume) {
+    public void PlaySound(AudioClip audio_clip, Vector3 target, float volume) {
         // based on tutoral at `https://www.youtube.com/watch?v=DU7cgVsU2rM`
         Debug.Log(sfx_object);
         AudioSource audio_source = Instantiate(sfx_object, target, Quaternion.identity);
@@ -41,11 +41,11 @@ public class SFXSystem : MonoBehaviour
 
     public void PlayRandomClip(AudioClip[] audio_clips, Vector3 target, float volume) {
         int rand = Random.Range(0, audio_clips.Length);
-        PlaySoundClip(audio_clips[rand], target, volume);
+        PlaySound(audio_clips[rand], target, volume);
     }
 
     public void PlayRandomClip(ISoundSet sound_set, Vector3 target) {
-        PlaySoundClip(sound_set.GetRandomSound(), target);
+        PlaySound(sound_set.GetRandomSound(), target);
     }
 }
 

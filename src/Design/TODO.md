@@ -14,7 +14,7 @@ ITERATION 1
 
 [ ] Effects
     [+] Gunshot and hit vfx
-    [ ] Gunshot and hit sfx
+    [+] Gunshot and hit sfx
     [ ] Reload sfx
     [+] Reload progress UI
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New Sound", menuName ="Data/Sound")]
-public class AdjustedSound : ScriptableObject
+public class AdjustedSound : ScriptableObject, ISound
 {
     public string sound_name = "new sound";
     public AudioClip clip;
@@ -11,6 +11,9 @@ public class AdjustedSound : ScriptableObject
     public float volume = 1f;
 
     public SoundCategory default_category = SoundCategory.sound_effect;
+    public AdjustedSound GetSound() {
+        return this;
+    }
 
 }
 

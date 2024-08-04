@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e8a05d6d04394eb8efeea4ceded38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 8b9d42b0b13d26f4e9862a8e3d526ddc, type: 3}
+  clip: {fileID: 0}
   sound_path: damage_chiptone
   volume: 1
 --- !u!1 &284962765
@@ -1251,6 +1251,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5368812941516574276, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368812941516574276, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368812941516574276, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.53
+      objectReference: {fileID: 0}
     - target: {fileID: 5800516004979044445, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.53
@@ -1397,6 +1409,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
+      propertyPath: reload_start_sound_path
+      value: Prototype\start-reload-chiptone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
+      propertyPath: reload_complete_sound_path
+      value: Prototype\complete-reload-chiptone
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1416,7 +1436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505927797627387282, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3396656997431563555, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: target

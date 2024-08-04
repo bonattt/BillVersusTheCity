@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 4665821343985391478}
   - component: {fileID: 7212405945941910509}
   - component: {fileID: 2012941016556226390}
+  - component: {fileID: 4205565970539061229}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -296,6 +297,20 @@ MonoBehaviour:
   _debug_max_armor: -1
   _debug_armor: -1
   _debug_armor_protection: -1
+--- !u!114 &4205565970539061229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6622fa67b2f2fc043a0e067d32b61aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reload_start_sound_path: Prototype/start-reload-chiptone
+  reload_complete_sound_path: Prototype/complete-reload-chiptone
 --- !u!1 &8455391820605880308
 GameObject:
   m_ObjectHideFlags: 0
