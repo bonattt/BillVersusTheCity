@@ -20,15 +20,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float rotation_speed = 0.85f;
     public ActionCode current_action = ActionCode.none;
 
-    ////////// debug fields /////////
-    public bool debug_attack_input;
-    public bool debug_can_attack;
-    public bool debug_weapon_isnull;
-    public bool debug_full_auto;
-    public int debug_current_ammo;
-    public bool debug_reloading = false;
-
-
     public float reload_move_speed = 0.33f;
 
     public float start_reload_at;
@@ -63,8 +54,15 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             return progress_seconds / reload_time;
         }
     }
+    ////////// debug fields /////////
+    public bool debug_attack_input;
+    public bool debug_can_attack;
+    public bool debug_weapon_isnull;
+    public bool debug_full_auto;
+    public int debug_current_ammo;
+    public bool debug_reloading = false;
 
-    private void SetDebugData() {
+    protected virtual void SetDebugData() {
         debug_attack_input = AttackInput();
         debug_can_attack = CanAttack();
         debug_weapon_isnull = attack_controller.current_weapon == null;

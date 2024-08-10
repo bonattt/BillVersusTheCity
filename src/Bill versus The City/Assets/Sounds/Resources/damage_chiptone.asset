@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: damage_chiptone
   m_EditorClassIdentifier: Assembly-CSharp::SimpleSoundSet
-  sound_name: damage_chiptone
-  sounds:
-  - {fileID: 8300000, guid: 8b9d42b0b13d26f4e9862a8e3d526ddc, type: 3}
-  - {fileID: 8300000, guid: b583450413b8556469b85e6bd4c1f8e5, type: 3}
-  - {fileID: 8300000, guid: 51cb6f788a5dc4543ab8fd81a02591a5, type: 3}
+  sound_name: new sound set
+  sounds: []
   volume: 1
   default_category: 0

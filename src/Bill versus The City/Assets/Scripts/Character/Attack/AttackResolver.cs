@@ -99,7 +99,6 @@ public static class AttackResolver {
         if(total_attack_damage < (attack_damage + overflow_damage)) {
             StaticLogger.Warning($"Overflow damage more than base: {total_attack_damage} => {attack_damage} + {overflow_damage}");
         }
-        StaticLogger.Warning($"armor {armor_before} --> {status.armor.armor_durability}");
         if (armor_before >= status.armor.armor_durability) {
             StaticLogger.Warning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}");
         }    

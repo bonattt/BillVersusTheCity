@@ -6,6 +6,7 @@ using UnityEngine;
 {
     public float shoot_inaccuracy = 1f;
     public Transform target;
+    public LayerMask obstacleMask;
 
     public float shooting_rate = 0.75f;
 
@@ -29,6 +30,14 @@ using UnityEngine;
         return VectorFromLookTarget(ShootTarget());
     }
 
+    public bool LineOfSightToTarget() {
+        RaycastHit hit;
+        Vector3 direction = target.position - transform.position;
+
+        bool raycast_hits = Physics.Raycast(transform.position, direction, out hit, direction.magnitude, obstacleMask);
+        return raycast_hits;
+    }
+
     private Vector3 ShootTarget() {
         float rand_x = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
         float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
@@ -39,5 +48,12 @@ using UnityEngine;
     protected override void CharacterDeath() {
         base.CharacterDeath();
         Destroy(gameObject);
+    }
+
+    public bool debug_sight_to_target;
+
+    protected override void SetDebugData() {
+        base.SetDebugData();
+        debug_sight_to_target = LineOfSightToTarget();
     }
 }
