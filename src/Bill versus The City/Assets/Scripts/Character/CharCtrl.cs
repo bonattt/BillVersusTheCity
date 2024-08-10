@@ -15,7 +15,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected AttackController attack_controller;
     protected ICharacterStatus char_status;
 
-    public float last_attack_time { get; private set; }
+    public float last_attack_time { get; protected set; }
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
     public ActionCode current_action = ActionCode.none;

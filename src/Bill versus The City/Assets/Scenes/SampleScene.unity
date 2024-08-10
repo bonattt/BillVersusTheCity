@@ -1409,14 +1409,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: reload_start_sound_path
-      value: Prototype\start-reload-chiptone
-      objectReference: {fileID: 0}
-    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: reload_complete_sound_path
-      value: Prototype\complete-reload-chiptone
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1434,14 +1426,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 1505927797627387282, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3396656997431563555, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 338529274}
+    - target: {fileID: 3396656997431563555, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 6372002721478199582, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.759

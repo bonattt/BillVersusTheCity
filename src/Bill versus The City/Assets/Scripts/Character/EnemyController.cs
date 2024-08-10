@@ -8,6 +8,8 @@ using UnityEngine;
     public Transform target;
     public LayerMask obstacleMask;
 
+    private bool saw_target = false; // saw the target last frame
+
     public float shooting_rate = 0.75f;
 
     public override Vector3 MoveVector() {
@@ -23,19 +25,21 @@ using UnityEngine;
 
     public override bool AttackInput() {
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {shooting_rate}: {Time.time >= (this.last_attack_time + shooting_rate)}");
-        return Time.time >= (this.last_attack_time + shooting_rate);
+        if (LineOfSightToTarget()) {
+            if (saw_target) {
+                return Time.time >= (this.last_attack_time + shooting_rate);
+            }
+            else {
+                // start countdown to shoot once target is seen
+                saw_target = true;
+                this.last_attack_time = Time.time;
+            }
+        }
+        return false;
     }
 
     public override Vector3 ShootVector() {
         return VectorFromLookTarget(ShootTarget());
-    }
-
-    public bool LineOfSightToTarget() {
-        RaycastHit hit;
-        Vector3 direction = target.position - transform.position;
-
-        bool raycast_hits = Physics.Raycast(transform.position, direction, out hit, direction.magnitude, obstacleMask);
-        return raycast_hits;
     }
 
     private Vector3 ShootTarget() {
@@ -50,6 +54,23 @@ using UnityEngine;
         Destroy(gameObject);
     }
 
+    public bool LineOfSightToTarget() {
+        RaycastHit hit;
+        Vector3 offset = new Vector3(0f, 0.5f, 0f);
+        Vector3 start = transform.position + offset;
+        Vector3 end = target.position + offset;
+        Vector3 direction = end - start;
+        Debug.DrawRay(start, direction, Color.red);
+        if (Physics.Raycast(start, direction, out hit, direction.magnitude, obstacleMask)) {
+            return hit.transform == target;
+        }
+        return false;
+    }
+
+    /////////////////////////////
+    /// DEBUG FIELDS ////////////
+    /////////////////////////////
+    
     public bool debug_sight_to_target;
 
     protected override void SetDebugData() {

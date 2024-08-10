@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3396656997431563555}
   - component: {fileID: 6935893205124348823}
   - component: {fileID: 1034086256320115388}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,17 +107,21 @@ MonoBehaviour:
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
+  reload_move_speed: 0.33
+  start_reload_at: 0
   debug_attack_input: 0
   debug_can_attack: 0
   debug_weapon_isnull: 0
   debug_full_auto: 0
   debug_current_ammo: 0
   debug_reloading: 0
-  reload_move_speed: 0.33
-  start_reload_at: 0
   shoot_inaccuracy: 2
   target: {fileID: 0}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
   shooting_rate: 0.75
+  debug_sight_to_target: 0
 --- !u!114 &6935893205124348823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4280276152886177003}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: shoot_from
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +200,7 @@ GameObject:
   - component: {fileID: 301002020569527670}
   - component: {fileID: 5325629209526968525}
   - component: {fileID: 6445435249086485608}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +305,7 @@ GameObject:
   - component: {fileID: 3054881419786669909}
   - component: {fileID: 6208943079163993904}
   - component: {fileID: 730918942408077585}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
