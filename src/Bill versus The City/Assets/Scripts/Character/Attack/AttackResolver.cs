@@ -6,6 +6,7 @@ public static class AttackResolver {
     public const string PLACEHOLDER_ATTACK_HIT_PREFAB = "BloodSplatterEffect";
     public const string PLACEHOLDER_ATTACK_MISS_PREFAB = "MuzzelFlashEffectGray";
     public const string PLACEHOLDER_DAMAGE_SOUND_EFFECT = "damage_chiptone";
+    public const string PLACEHOLDER_GUNSHOT = "gunshot";
 
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB),
@@ -13,7 +14,8 @@ public static class AttackResolver {
     };
 
     private static IAttackShootEffect[] SHOOT_EFFECTS = new IAttackShootEffect[]{
-        new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB)
+        new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB),
+        new SoundEffect(PLACEHOLDER_DAMAGE_SOUND_EFFECT)
     };
 
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{

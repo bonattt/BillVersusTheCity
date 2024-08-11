@@ -10,19 +10,24 @@ public static class SFXLibrary
         return Resources.Load<AudioClip>(path);
     }
 
-    public static ISound LoadSound(string path) {
-        ISound sound = (ISound) Resources.Load<ScriptableObject>(path);
+
+    public static ISoundSet LoadSound(string path) {
+        Debug.Log($"sound path: {path}");
+        ISoundSet sound = (ISoundSet) Resources.Load<ScriptableObject>(path);
         if (sound != null) {
             return sound;
         }
         AudioClip clip = LoadAudioClip(path);
         if (clip == null) { return null; }
-        AdjustedSound new_sound = new AdjustedSound();
+        GenericSound new_sound = new GenericSound();
         new_sound.sound_name = path;
         new_sound.volume = 1f;
         new_sound.clip = clip;
         new_sound.default_category = SoundCategory.sound_effect;
 
+        if (new_sound == null) {
+            Debug.LogWarning($"Failed to load sound {path}");
+        }
         return new_sound;
 
         // AudioClip clip = Resources.Load<AudioClip>(path);

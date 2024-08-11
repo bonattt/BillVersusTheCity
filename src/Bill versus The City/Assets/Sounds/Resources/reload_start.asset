@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 316e498e6a4421a4e9d34348fb704497, type: 3}
-  m_Name: damage_chiptone
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleSoundSet
-  sound_name: damage sounds
+  m_Name: reload_start
+  m_EditorClassIdentifier: 
+  sound_name: reload start
   sounds:
-  - {fileID: 8300000, guid: 8b9d42b0b13d26f4e9862a8e3d526ddc, type: 3}
-  - {fileID: 8300000, guid: b583450413b8556469b85e6bd4c1f8e5, type: 3}
-  - {fileID: 8300000, guid: 51cb6f788a5dc4543ab8fd81a02591a5, type: 3}
+  - {fileID: 8300000, guid: dc31417231701054e87614a395b508d3, type: 3}
   volume: 1
   default_category: 0

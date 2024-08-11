@@ -269,8 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e8a05d6d04394eb8efeea4ceded38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
-  sound_path: damage_chiptone
+  clip: {fileID: 8300000, guid: 56d1056023b952441a637cfeace7fe93, type: 3}
+  sound_path: 
   volume: 1
 --- !u!1 &284962765
 GameObject:
@@ -1408,6 +1408,14 @@ PrefabInstance:
     - target: {fileID: 3633326187336503762, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
+      propertyPath: reload_start_sound_path
+      value: reload_start
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
+      propertyPath: reload_complete_sound_path
+      value: reload_finish
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

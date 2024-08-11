@@ -8,10 +8,14 @@ public class SoundSet : ScriptableObject, ISoundSet
     public string sound_name = "new sound set";
     public List<AdjustedSound> sounds;
 
-    public List<AdjustedSound> GetSounds() {
-        return new List<AdjustedSound>(sounds);
+    public List<ISound> GetSounds() {
+        List<ISound> output = new List<ISound>();
+        foreach (AdjustedSound s in sounds) {
+            output.Add((ISound) s);
+        }
+        return output;
     }
-    public AdjustedSound GetSound() {
+    public ISound GetSound() {
         return ((ISoundSet) this).GetRandomSound();
     }
 }

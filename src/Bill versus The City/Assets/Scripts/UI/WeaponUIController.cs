@@ -36,14 +36,22 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         if (ammo_label == null) {
             return;
         }
-        ammo_label.text = $"{weapon.current_ammo} / {weapon.ammo_capacity}";
+        if (weapon == null) {
+            ammo_label.text = "- / -";
+        } else {
+            ammo_label.text = $"{weapon.current_ammo} / {weapon.ammo_capacity}";
+        }
     }
 
-    private void SetWeaponLabel(IWeapon weapon) {
+    private void SetWeaponLabel(IWeapon weapon) { 
         if (weapon_label == null) {
             return;
         }
-        weapon_label.text = $"{weapon.weapon_name}";
+        if (weapon == null) {
+            weapon_label.text = "-";
+        } else {
+            weapon_label.text = $"{weapon.weapon_name}";
+        }
     }
     
     public void UpdateWeapon(int? slot, IWeapon weapon) {

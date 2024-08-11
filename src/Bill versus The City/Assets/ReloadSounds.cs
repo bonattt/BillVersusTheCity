@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ReloadSounds : MonoBehaviour, IReloadSubscriber
 {
-    public string reload_start_sound_path = "Prototype/start-reload-chiptone";
-    public string reload_complete_sound_path = "Prototype/complete-reload-chiptone";
-    private ISound reload_start_sound, reload_complete_sound;
+    public string reload_start_sound_path = "reload_start";
+    public string reload_complete_sound_path = "reload_finish";
+    private ISoundSet reload_start_sound, reload_complete_sound;
     private IReloadManager manager;
 
     // Start is called before the first frame update

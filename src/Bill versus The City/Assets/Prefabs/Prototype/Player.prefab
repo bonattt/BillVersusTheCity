@@ -309,8 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6622fa67b2f2fc043a0e067d32b61aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reload_start_sound_path: Prototype\start-reload-chiptone
-  reload_complete_sound_path: Prototype\complete-reload-chiptone
+  reload_start_sound_path: reload_start
+  reload_complete_sound_path: reload_finish
 --- !u!1 &8455391820605880308
 GameObject:
   m_ObjectHideFlags: 0

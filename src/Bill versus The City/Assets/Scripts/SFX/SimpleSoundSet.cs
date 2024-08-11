@@ -11,12 +11,12 @@ public class SimpleSoundSet : ScriptableObject, ISoundSet
     public float volume = 1f;
     public SoundCategory default_category = SoundCategory.sound_effect;
 
-    public List<AdjustedSound> GetSounds() {
-        List<AdjustedSound> output_sounds = new List<AdjustedSound>();
+    public List<ISound> GetSounds() {
+        List<ISound> output_sounds = new List<ISound>();
         for(int i = 0; i < sounds.Count; i++) {
             AudioClip clip  = sounds[i];
-            AdjustedSound new_sound = new AdjustedSound();
-            new_sound.name = $"sound from '{name}' {i}";
+            GenericSound new_sound = new GenericSound();
+            new_sound.sound_name = $"sound from '{name}' {i}";
             new_sound.clip = clip;
             new_sound.volume = volume;
             new_sound.default_category = default_category;
@@ -24,7 +24,7 @@ public class SimpleSoundSet : ScriptableObject, ISoundSet
         }
         return output_sounds;
     }
-    public AdjustedSound GetSound() {
-        return ((ISoundSet) this).GetRandomSound();
-    }
+    // public GenericSound GetSound() {
+    //     return ((ISoundSet) this).GetRandomSound();
+    // }
 }

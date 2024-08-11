@@ -4,7 +4,7 @@ public class SoundEffect : IAttackHitEffect,
         IAttackShootEffect, IAttackMissEffect {
     
     private string sound_path;
-    private ISound sound;
+    private ISoundSet sound;
     public Vector3 offset = new Vector3(0f, 0f, 0f);
 
     public SoundEffect(string sound_path) {

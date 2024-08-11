@@ -17,11 +17,11 @@ public class SFXSystem : MonoBehaviour
         _instance = this;
     }
 
-    public void PlaySound(ISound sound, Vector3 target) {
-        PlaySound(sound.GetSound(), target);
+    public void PlaySound(ISoundSet sound, Vector3 target) {
+        PlaySound(sound.GetRandomSound(), target);
     }
 
-    public void PlaySound(AdjustedSound sound, Vector3 target) {
+    public void PlaySound(ISound sound, Vector3 target) {
         PlaySound(sound.clip, target, sound.volume);
     }
 
