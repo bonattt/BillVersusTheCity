@@ -1409,14 +1409,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: reload_start_sound_path
-      value: reload_start
-      objectReference: {fileID: 0}
-    - target: {fileID: 4205565970539061229, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: reload_complete_sound_path
-      value: reload_finish
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
