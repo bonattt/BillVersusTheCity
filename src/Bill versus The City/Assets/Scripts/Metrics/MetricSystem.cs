@@ -30,5 +30,7 @@ public class MetricSystem {
         all_metrics[metric] = value;
     }
 
-
+    public List<string> ListMetrics() {
+        return new List<string>(all_metrics.Keys);
+    }
 }
