@@ -5,22 +5,67 @@ using UnityEngine;
  public class EnemyController : CharCtrl
 {
     public float shoot_inaccuracy = 1f;
-    public Transform target;
     public LayerMask obstacleMask;
-
     private bool saw_target = false; // saw the target last frame
 
     public float shooting_rate = 0.75f;
 
+    //////////////////////////////
+    /// Behavior controls ////////
+    //////////////////////////////
+    public Transform ctrl_target;
+    public bool ctrl_will_shoot = true;  // set by behavior, determines if the character will shoot if able
+    public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
+    public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
+    public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
+
     public override Vector3 MoveVector() {
-        return new Vector3(0f, 0f, 0f);
+        switch (ctrl_move_mode) {
+            case MovementTarget.stationary:
+                return new Vector3(0f, 0f, 0f);
+
+            case MovementTarget.target:
+                if (ctrl_target != null) {
+                    return ctrl_target.position;
+                }
+                break;
+
+            case MovementTarget.waypoint:
+                if (ctrl_waypoint != null) {
+                    return ctrl_waypoint;
+                }
+                break;
+
+            default:
+                Debug.LogWarning($"movement for {ctrl_move_mode} is not implemented!");
+                break;
+        }
+        return new Vector3(0f, 0f, 0f); // don't move
     }
 
     public override Vector3 LookTarget() {
-        if (target == null) {
-            return new Vector3(0, 0, 0);
+        switch (ctrl_aim_mode) {
+            case AimingTarget.stationary:
+                return new Vector3(0f, 0f, 0f);
+
+            case AimingTarget.target:
+                if (ctrl_target != null) {
+                    return ctrl_target.position;
+                }
+                break;
+
+            case AimingTarget.waypoint:
+                if (ctrl_target != null) {
+                    return ctrl_waypoint;
+                }
+                break;
+
+            default:
+                Debug.LogWarning($"aiming for {ctrl_aim_mode} is not implemented!");
+                break;
         }
-        return target.position;
+        // TODO --- default case should make aiming not change, rather than pusing it to 
+        return new Vector3(0f, 0f, 0f);  
     }
 
     public override bool AttackInput() {
@@ -55,14 +100,17 @@ using UnityEngine;
     }
 
     public bool LineOfSightToTarget() {
+        if (ctrl_target == null) {
+            return false;
+        }
         RaycastHit hit;
         Vector3 offset = new Vector3(0f, 0.5f, 0f);
         Vector3 start = transform.position + offset;
-        Vector3 end = target.position + offset;
+        Vector3 end = ctrl_target.position + offset;
         Vector3 direction = end - start;
         Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, direction.magnitude, obstacleMask)) {
-            return hit.transform == target;
+            return hit.transform == ctrl_target;
         }
         return false;
     }
@@ -77,4 +125,17 @@ using UnityEngine;
         base.SetDebugData();
         debug_sight_to_target = LineOfSightToTarget();
     }
+}
+
+public enum MovementTarget {
+    stationary,
+    target,
+    waypoint, 
+    random
+}
+
+public enum AimingTarget {
+    stationary,
+    target,
+    waypoint
 }
