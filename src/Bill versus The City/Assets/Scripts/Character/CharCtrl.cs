@@ -90,10 +90,20 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // Update is called once per frame
     void Update()
     {   
+        PreUpdate();
         SetAction();
         Move();
         TryToAttack();
         SetDebugData();
+        PostUpdate();
+    }
+
+    protected virtual void PreUpdate() {
+        // do nothing. Extension hook for subclasses.
+    }
+
+    protected virtual void PostUpdate() {
+        // do nothing. Extension hook for subclasses.
     }
 
     protected void SetAction() {

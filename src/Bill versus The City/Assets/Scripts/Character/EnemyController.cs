@@ -6,7 +6,12 @@ using UnityEngine;
 {
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
-    private bool saw_target = false; // saw the target last frame
+
+    [SerializeField]
+    public bool saw_target { get; protected set; } // saw the target last frame
+    
+    [SerializeField]
+    public bool seeing_target { get; protected set; } // seeing the target last frame
 
     public float shooting_rate = 0.75f;
 
@@ -18,6 +23,12 @@ using UnityEngine;
     public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
     public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
     public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
+
+    public override void SetupCharacter() {
+        base.SetupCharacter();
+        saw_target = false;
+        seeing_target = false;
+    }
 
     public override Vector3 MoveVector() {
         switch (ctrl_move_mode) {
@@ -70,13 +81,12 @@ using UnityEngine;
 
     public override bool AttackInput() {
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {shooting_rate}: {Time.time >= (this.last_attack_time + shooting_rate)}");
-        if (LineOfSightToTarget()) {
+        if (seeing_target) {
             if (saw_target) {
                 return Time.time >= (this.last_attack_time + shooting_rate);
             }
             else {
                 // start countdown to shoot once target is seen
-                saw_target = true;
                 this.last_attack_time = Time.time;
             }
         }
@@ -114,6 +124,14 @@ using UnityEngine;
         }
         return false;
     }
+
+    protected override void PreUpdate() {
+        seeing_target = LineOfSightToTarget();
+    }
+    
+    protected override void PostUpdate() {
+        saw_target = LineOfSightToTarget();
+    }    
 
     /////////////////////////////
     /// DEBUG FIELDS ////////////
