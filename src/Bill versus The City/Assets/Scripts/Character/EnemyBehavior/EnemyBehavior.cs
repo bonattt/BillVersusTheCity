@@ -19,7 +19,7 @@ public class EnemyBehavior : MonoBehaviour
         controller.ctrl_target = player.transform;
         controller.ctrl_waypoint = new Vector3(0, 0, 0);
         controller.ctrl_will_shoot = true;
-        controller.ctrl_move_mode = MovementTarget.waypoint;
+        controller.ctrl_move_mode = MovementTarget.target;
         if (controller.seeing_target) {
             controller.ctrl_aim_mode = AimingTarget.target;
         }

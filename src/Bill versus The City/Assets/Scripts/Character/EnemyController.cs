@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
  public class EnemyController : CharCtrl
 {
@@ -24,16 +25,23 @@ using UnityEngine;
     public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
     public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
 
+    public NavMeshAgent nav_mesh_agent;
+
     public override void SetupCharacter() {
         base.SetupCharacter();
         saw_target = false;
         seeing_target = false;
     }
 
+    protected override void MoveNormal() {
+        LookWithAction();
+        nav_mesh_agent.SetDestination(MoveVector());
+    }
+
     public override Vector3 MoveVector() {
         switch (ctrl_move_mode) {
             case MovementTarget.stationary:
-                return new Vector3(0f, 0f, 0f);
+                return transform.position;
 
             case MovementTarget.target:
                 if (ctrl_target != null) {

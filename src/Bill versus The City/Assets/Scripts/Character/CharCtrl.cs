@@ -221,7 +221,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //     action.remaining_duration = action.action_duration;
     // }
 
-    private void MoveNormal() {
+    protected virtual void MoveNormal() {
         LookWithAction();
         Vector3 move = MoveVector();
         move = ModifyMoveVector(move);
@@ -254,7 +254,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //     return movement_action != null 
     //         && movement_action.action_name.Equals(name);
     // }
-    private void LookWithAction() {
+    protected void LookWithAction() {
         // Handles adjusting the player character's rotation with hooks to
         // allow a movement_action to override the value
         Vector3 forward; 
