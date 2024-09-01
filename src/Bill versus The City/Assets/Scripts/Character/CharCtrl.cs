@@ -221,20 +221,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //     action.remaining_duration = action.action_duration;
     // }
 
-    protected virtual void MoveNormal() {
-        LookWithAction();
-        Vector3 move = MoveVector();
-        move = ModifyMoveVector(move);
-        controller.SimpleMove(move);
-    }
-
-    protected virtual Vector3 ModifyMoveVector(Vector3 move) {
-        if (reloading) {
-            move *= reload_move_speed;
-        }
-
-        return move;
-    }
+    protected abstract void MoveNormal();
 
     // private void MoveWithAction() {
     //     LookWithAction();

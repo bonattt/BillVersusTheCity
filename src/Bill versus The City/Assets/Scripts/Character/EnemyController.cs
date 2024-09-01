@@ -34,6 +34,7 @@ using UnityEngine.AI;
     }
 
     protected override void MoveNormal() {
+        // TODO --- refactor how this works
         LookWithAction();
         nav_mesh_agent.SetDestination(MoveVector());
     }

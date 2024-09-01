@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3396656997431563555}
   - component: {fileID: 6935893205124348823}
   - component: {fileID: 1034086256320115388}
-  - component: {fileID: 1689481986746389854}
   - component: {fileID: 4785987381228191808}
   - component: {fileID: 1629567951243630353}
-  - component: {fileID: 8577082626434106756}
+  - component: {fileID: 7771750986634287957}
+  - component: {fileID: 2365366885385776978}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -74,7 +74,7 @@ MonoBehaviour:
   ctrl_waypoint: {x: 0, y: 0, z: 0}
   ctrl_move_mode: 0
   ctrl_aim_mode: 1
-  nav_mesh_agent: {fileID: 8577082626434106756}
+  nav_mesh_agent: {fileID: 2365366885385776978}
   debug_sight_to_target: 0
 --- !u!114 &6935893205124348823
 MonoBehaviour:
@@ -111,20 +111,6 @@ MonoBehaviour:
   _debug_max_armor: -1
   _debug_armor: -1
   _debug_armor_protection: -1
---- !u!114 &1689481986746389854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1505927797627387282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a044a3560ef27e44985f2e1bd40b66b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  controller: {fileID: 3396656997431563555}
 --- !u!54 &4785987381228191808
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -175,7 +161,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &8577082626434106756
+--- !u!114 &7771750986634287957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505927797627387282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a044a3560ef27e44985f2e1bd40b66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  controller: {fileID: 3396656997431563555}
+--- !u!195 &2365366885385776978
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

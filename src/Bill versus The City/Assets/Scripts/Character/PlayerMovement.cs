@@ -36,6 +36,20 @@ public class PlayerMovement : CharCtrl
         }
         return InputSystem.current.ReloadInput();
     }
+    
+    protected override void MoveNormal() {
+        LookWithAction();
+        Vector3 move = MoveVector();
+        move = ModifyMoveVector(move);
+        controller.SimpleMove(move);
+    }
+
+    protected Vector3 ModifyMoveVector(Vector3 move) {
+        if (reloading) {
+            move *= reload_move_speed;
+        }
+        return move;
+    }
 
     public override Vector3 LookTarget() {
         Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
