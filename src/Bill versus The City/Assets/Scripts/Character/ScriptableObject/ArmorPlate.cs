@@ -36,7 +36,7 @@ public class ArmorPlate : ScriptableObject, IArmor
     public float armor_durability { 
         get {
             if (_armor_durability == null) {
-                Debug.Log("durability null!");
+                // initialize nullable float armor durability
                 _armor_durability = armor_max_durability;
             }
             return (float) _armor_durability;
@@ -45,11 +45,9 @@ public class ArmorPlate : ScriptableObject, IArmor
             Debug.Log($"set armor durability to {value}");
             if (value > armor_max_durability) {
                 _armor_durability = armor_max_durability;
-                Debug.Log("cap armor at max");
             }
             else if (value < 0) {
                 _armor_durability = 0f;
-                Debug.Log("min armor at 0");
             }
             else {
                 _armor_durability = value;

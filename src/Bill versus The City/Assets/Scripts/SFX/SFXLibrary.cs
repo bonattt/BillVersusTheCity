@@ -12,7 +12,6 @@ public static class SFXLibrary
 
 
     public static ISoundSet LoadSound(string path) {
-        Debug.Log($"sound path: {path}");
         ISoundSet sound = (ISoundSet) Resources.Load<ScriptableObject>(path);
         if (sound != null) {
             return sound;

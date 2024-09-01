@@ -120,6 +120,7 @@ using UnityEngine.AI;
 
     public bool LineOfSightToTarget() {
         if (ctrl_target == null) {
+            Debug.LogWarning("no target!");
             return false;
         }
         RaycastHit hit;
@@ -129,8 +130,11 @@ using UnityEngine.AI;
         Vector3 direction = end - start;
         Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, direction.magnitude, obstacleMask)) {
-            return hit.transform == ctrl_target;
+            bool los_to_target = hit.transform == ctrl_target;
+            // Debug.Log($"seeing {hit}");
+            return los_to_target;
         }
+        Debug.Log("I SEE NOTHING!");
         return false;
     }
 
@@ -146,11 +150,12 @@ using UnityEngine.AI;
     /// DEBUG FIELDS ////////////
     /////////////////////////////
     
-    public bool debug_sight_to_target;
+    public bool debug_seeing_target, debug_saw_target;
 
     protected override void SetDebugData() {
         base.SetDebugData();
-        debug_sight_to_target = LineOfSightToTarget();
+        debug_seeing_target = seeing_target;
+        debug_saw_target = saw_target;
     }
 }
 
