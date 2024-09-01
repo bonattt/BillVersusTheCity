@@ -12,7 +12,7 @@ public class ChasePlayerBehavior : ISubBehavior  {
             parent.controller.ctrl_aim_mode = AimingTarget.target;
         }
         else {
-            Debug.Log("don't aim at unseen target");
+            // don't aim at unseen target
             parent.controller.ctrl_aim_mode = AimingTarget.stationary;
         }
     }

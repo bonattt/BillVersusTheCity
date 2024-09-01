@@ -53,6 +53,8 @@ public interface IAttackTarget {
     // TODO
     public ICharacterStatus GetStatus();
     public GameObject GetHitTarget();
+    public void OnAttackHitRecieved(IAttack attack);
+    public void OnAttackHitDealt(IAttack attack, IAttackTarget target);
 }
 
 

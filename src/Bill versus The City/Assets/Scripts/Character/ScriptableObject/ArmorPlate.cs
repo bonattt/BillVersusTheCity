@@ -42,7 +42,6 @@ public class ArmorPlate : ScriptableObject, IArmor
             return (float) _armor_durability;
         }
         set {
-            Debug.Log($"set armor durability to {value}");
             if (value > armor_max_durability) {
                 _armor_durability = armor_max_durability;
             }

@@ -23,6 +23,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float reload_move_speed = 0.33f;
 
     public float start_reload_at;
+    private float hit_stun_until = -1f;
+
 
     private bool _reloading = false;
     public bool reloading {
@@ -54,6 +56,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             return progress_seconds / reload_time;
         }
     }
+
+    public bool is_hit_stunned { get { return hit_stun_until > Time.time; }}
+
     ////////// debug fields /////////
     public bool debug_attack_input;
     public bool debug_can_attack;
@@ -157,13 +162,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return false;
     }
 
-    private void Move() {
-        MoveNormal();
-        // else {
-        //     MoveWithAction();
-        // }
-    }
-
     public void StartReload() {
         // initiate a reload
         reloading = true;
@@ -205,7 +203,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private void TryToAttack() {
-        if (AttackInput() && CanAttack() && !reloading) {
+        if (!is_hit_stunned && AttackInput() && CanAttack() && !reloading) {
             PerformAttack();
         }
     }
@@ -221,7 +219,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //     action.remaining_duration = action.action_duration;
     // }
 
-    protected abstract void MoveNormal();
+    protected abstract void Move();
 
     // private void MoveWithAction() {
     //     LookWithAction();
@@ -310,7 +308,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public void OnAttackHitRecieved(IAttack attack) {
         // char_status.GetAttackTarget().OnAttackHitRecieved(attack, attacker);
         Debug.Log($"{this} was hit by an attack {attack}!");
+        SetHitStun(attack);
     }     
+
+    public void SetHitStun(IAttack attack) {
+        hit_stun_until = Time.time + 0.25f;
+    }
 
     public void StatusUpdated(ICharacterStatus status) {
         if (char_status.health <= 0) {

@@ -31,7 +31,6 @@ public static class AttackResolver {
             attack_damage = ResolveGunDamageUnarmored(attack, status);
         }
         else if (status.armor.armor_durability <= 0) {
-            StaticLogger.Log("Armor Broken, deal unarmored damage!");
             attack_damage = ResolveGunDamageUnarmored(attack, status);
         }
         else {
@@ -42,6 +41,8 @@ public static class AttackResolver {
             effect.DisplayDamageEffect(
                 target.GetHitTarget(), hit_location, attack_damage);
         }
+        target.OnAttackHitRecieved(attack);
+        attack.attacker.OnAttackHitDealt(attack, target);
     }
 
     public static float ResolveGunDamageUnarmored(IAttack attack, 
@@ -75,8 +76,8 @@ public static class AttackResolver {
         attack_damage = Mathf.Max(1, attack_damage);
         armor_damage = Mathf.Max(1, armor_damage);
       
-        StaticLogger.Log($"base_attack_damage: {total_attack_damage}, \ndamage_split: {damage_split}, \nattack_damage: {attack_damage}, \nbase_armor_damage: {base_armor_damage}, \narmor_damage: {armor_damage}");
-        StaticLogger.Log($"{total_attack_damage} => {attack_damage} / {base_armor_damage}");
+        // StaticLogger.Log($"base_attack_damage: {total_attack_damage}, \ndamage_split: {damage_split}, \nattack_damage: {attack_damage}, \nbase_armor_damage: {base_armor_damage}, \narmor_damage: {armor_damage}");
+        // StaticLogger.Log($"{total_attack_damage} => {attack_damage} / {base_armor_damage}");
         if (total_attack_damage <= 0) { Debug.LogWarning($"negative total_attack_damage: {total_attack_damage}"); } 
         if (attack_damage <= 0) { Debug.LogWarning($"negative attack_damage: {attack_damage}"); } 
         if (armor_damage <= 0) { Debug.LogWarning($"negative armor_damage: {armor_damage}"); } 
@@ -93,7 +94,6 @@ public static class AttackResolver {
             status.armor.armor_durability = 0;
             ResolveArmorBreak(attack, status, hit_location);
         } else {
-            StaticLogger.Log("no overflow");
             overflow_damage = 0;
             status.armor.armor_durability -= armor_damage;
         }
@@ -109,7 +109,8 @@ public static class AttackResolver {
 
     public static void ResolveArmorBreak(IAttack attack, 
             ICharacterStatus status, Vector3 hit_location) {
-        StaticLogger.Log($"Armor '{status.armor}' Broken by {attack}!!!");
+        // StaticLogger.Log($"Armor '{status.armor}' Broken by {attack}!!!");
+        // TODO !
     }
 
     public static void AttackMiss(IAttack attack, Vector3 location) {

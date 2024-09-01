@@ -63,15 +63,19 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
 
     void Update() {
+        attacker = GetComponent<CharCtrl>();
+        if (attacker == null) {
+            Debug.LogWarning("attacker is null!");
+        }
         AttackControllerUpdate();
     }
 
     protected virtual void AttackControllerStart() {
-        // allow extending classes to add to `Start`    
-       if (initialize_weapon != null) {
-           current_weapon = (IWeapon) Instantiate(initialize_weapon);
-       }
-       current_weapon.current_ammo = current_weapon.ammo_capacity;
+         // allow extending classes to add to `Start`    
+        if (initialize_weapon != null) {
+            current_weapon = (IWeapon) Instantiate(initialize_weapon);
+        }
+        current_weapon.current_ammo = current_weapon.ammo_capacity;
     }
 
     protected virtual void AttackControllerUpdate() {

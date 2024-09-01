@@ -33,10 +33,14 @@ using UnityEngine.AI;
         seeing_target = false;
     }
 
-    protected override void MoveNormal() {
-        // TODO --- refactor how this works
+    protected override void Move() {
         LookWithAction();
-        nav_mesh_agent.SetDestination(MoveVector());
+        if (this.is_hit_stunned) {
+            nav_mesh_agent.SetDestination(transform.position);
+        }
+        else {
+            nav_mesh_agent.SetDestination(MoveVector());
+        }
     }
 
     public override Vector3 MoveVector() {

@@ -37,7 +37,7 @@ public class PlayerMovement : CharCtrl
         return InputSystem.current.ReloadInput();
     }
     
-    protected override void MoveNormal() {
+    protected override void Move() {
         LookWithAction();
         Vector3 move = MoveVector();
         move = ModifyMoveVector(move);
@@ -47,6 +47,9 @@ public class PlayerMovement : CharCtrl
     protected Vector3 ModifyMoveVector(Vector3 move) {
         if (reloading) {
             move *= reload_move_speed;
+        }
+        if (this.is_hit_stunned) {
+            move *= 0.1f;
         }
         return move;
     }
