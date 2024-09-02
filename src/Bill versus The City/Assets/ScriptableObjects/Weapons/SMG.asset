@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c187b49fb663d4479d70cf21f3605f0, type: 3}
-  m_Name: TestGunSMG
+  m_Name: SMG
   m_EditorClassIdentifier: 
   _name: SMG
   _ammo_type: 0
