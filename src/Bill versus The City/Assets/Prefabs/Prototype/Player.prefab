@@ -290,8 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8433efe4cf285824e9dc3e1c1af8a959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
-  _max_health: 100
+  _health: 50
+  _max_health: 50
   armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
   _debug_has_armor: 0
   _debug_max_armor: -1

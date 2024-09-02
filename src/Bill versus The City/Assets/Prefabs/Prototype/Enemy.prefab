@@ -75,7 +75,8 @@ MonoBehaviour:
   ctrl_move_mode: 0
   ctrl_aim_mode: 1
   nav_mesh_agent: {fileID: 2365366885385776978}
-  debug_sight_to_target: 0
+  debug_seeing_target: 0
+  debug_saw_target: 0
 --- !u!114 &6935893205124348823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 100
   _max_health: 100
-  armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
+  armor_init: {fileID: 0}
   _debug_has_armor: 0
   _debug_max_armor: -1
   _debug_armor: -1
@@ -185,8 +186,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 4.5
+  m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0

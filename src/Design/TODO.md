@@ -11,11 +11,12 @@ ITERATION 1
     [+] Ammo capacity and reloads
     [+] Health Depletion
     [+] Armor-based damage calculations
+    [ ] Accuracy system
 
 [ ] Effects
     [+] Gunshot and hit vfx
     [+] Gunshot and hit sfx
-    [ ] Reload sfx
+    [+] Reload sfx
     [+] Reload progress UI
 
     [ ] SFX system
@@ -23,9 +24,9 @@ ITERATION 1
         [ ] supports deconflicting noices (20 gunshots )
 
 [ ] Enemy Behavior
-    [ ] Don't shoot walls
-    [ ] detection modes
-    [ ] Hunt down the player
+    [+] Don't shoot walls
+    [+] detection modes
+    [+] Hunt down the player
     [ ] 
 
 
@@ -35,3 +36,34 @@ ITERATION 1
 
 [ ] Maps
     [ ] Build a prototype map.
+
+
+
+
+
+=============================
+==== Unplanned features =====
+=============================
+
+[ ] Menus
+
+[ ] Ammo Pool
+
+[ ] Truck
+    [ ] Restore ammo from truck
+
+[ ] Enemy Detection
+    [ ] Hearing
+    [ ] Vision Range
+    [ ] Vision Direction
+
+
+[ ] Difficulty System
+    [ ] override availible equipment
+    [ ] override reload
+    [ ] truck medkit limit
+    [ ] truck armor plates limit
+    [ ] medkit healing rate
+    [ ] player damage rate
+    [ ] enemy damage rate
+    [ ] Enemy detection effectiveness
