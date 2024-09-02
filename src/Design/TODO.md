@@ -47,6 +47,38 @@ ITERATION 1
 - doors
 
 
+================
+==== Demo 1 ====
+================
+
+[ ] Metric System
+
+[ ] Accuracy System
+    [ ] Accuracy based on angle, instead of postion
+    [ ] accuracy from weapon
+    [ ] accuracy from enemy
+    [ ] recoil decreases accuracy while shooting
+
+[ ] Difficulty System
+    [ ]
+
+[ ] Enemy Detection
+    [ ] Vision Cone detection
+    [ ] Vision Range
+    [ ] Hearing
+    [ ] Detection not instant
+
+[ ] Weapons
+    [ ] Ammo Pool
+    [ ] Shotgun
+    [ ] AR-15
+
+[ ] Truck
+    [ ] replenish ammo
+    [ ] repair armor
+    [ ] heal partial damage
+    [ ] limitted uses
+
 
 =============================
 ==== Unplanned features =====
