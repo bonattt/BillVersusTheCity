@@ -34,10 +34,17 @@ ITERATION 1
     [+] Fix bullet collsions
 
 
-[ ] Maps
-    [ ] Build a prototype map.
+[+] Maps
+    [+] Build a prototype map.
 
+========================
+==== DEMO 000 NOTES ====
+========================
 
+- Better enemy detection and coordination
+- detection range
+- don't move and shoot at the same time
+- doors
 
 
 
