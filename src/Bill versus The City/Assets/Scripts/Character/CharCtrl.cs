@@ -67,6 +67,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public int debug_current_ammo;
     public bool debug_reloading = false;
 
+    public float debug_inaccuracy = 0f;
+
     protected virtual void SetDebugData() {
         debug_attack_input = AttackInput();
         debug_can_attack = CanAttack();
@@ -79,6 +81,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             debug_current_ammo = -1;
         }
         debug_reloading = reloading;
+        debug_inaccuracy = attack_controller.current_inaccuracy;
     }
     /////////////////////////////////
 

@@ -68,6 +68,35 @@ public class AttackController : MonoBehaviour, IWeaponManager
             Debug.LogWarning("attacker is null!");
         }
         AttackControllerUpdate();
+
+        if (! _aim_this_frame) { StopAim(); }
+        _aim_this_frame = false;
+    }
+    private float? start_aim_at = null;
+    public bool is_aiming { get { return start_aim_at != null; }}
+    public float current_inaccuracy { 
+        get {
+            if (current_weapon == null) { return -1f; }
+            if (start_aim_at == null) {
+                return current_weapon.initial_inaccuracy;
+            }
+            float aimed_for = Time.time - ((float) start_aim_at);
+            float aim_percent = Mathf.Clamp(
+                (aimed_for / current_weapon.time_to_aim), 0f, 1f
+            );
+
+            return (current_weapon.aimed_inaccuracy * aim_percent) + (current_weapon.initial_inaccuracy * (1 - aim_percent));
+        } 
+    }
+    private bool _aim_this_frame = false;
+    public void Aim() {
+        _aim_this_frame = true;
+        if (start_aim_at == null) {
+            start_aim_at = Time.time;
+        }
+    }
+    public void StopAim() {
+        start_aim_at = null;
     }
 
     protected virtual void AttackControllerStart() {
@@ -98,7 +127,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
 
         bullet_obj.transform.position = shoot_point.position;
-        Vector3 velocity = attack_direction.normalized * bullet_speed;
+        Vector3 velocity = GetAttackVector(attack_direction);
         bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
         Bullet bullet = bullet_obj.GetComponent<Bullet>();
@@ -110,5 +139,15 @@ public class AttackController : MonoBehaviour, IWeaponManager
         AttackResolver.AttackStart(bullet, shoot_point.position);
 
         UpdateSubscribers();
+    }
+
+    private Vector3 GetAttackVector(Vector3 attack_direction) {
+        Vector3 base_vector = attack_direction.normalized * bullet_speed;
+        float deviation = Random.Range(-current_inaccuracy, current_inaccuracy);
+
+        Vector3 rotation_axis = Vector3.up;
+        Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
+        Debug.Log("original aim_vector: " + base_vector + ", inaccuracy_vector: " + rotated_direction);
+        return rotated_direction;
     }
 }

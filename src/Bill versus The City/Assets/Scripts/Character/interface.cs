@@ -76,7 +76,7 @@ public interface IWeapon {
     // accuracy
     public float aimed_inaccuracy { get; }
     public float initial_inaccuracy { get; }
-    public float aim_speed { get; }
+    public float time_to_aim { get; }
     public float recoil_inaccuracy { get; }
     public float recoil_shake { get; }
 
@@ -103,6 +103,10 @@ public interface IWeaponManager {
     // weapons, or updates ammo
     public int? current_slot { get; }
     public IWeapon current_weapon { get; }
+    public float current_inaccuracy { get; }
+    public bool is_aiming { get; }
+    public void Aim();
+    public void StopAim();
     public void Subscribe(IWeaponManagerSubscriber sub);
     public void Unsubscribe(IWeaponManagerSubscriber sub);
 }

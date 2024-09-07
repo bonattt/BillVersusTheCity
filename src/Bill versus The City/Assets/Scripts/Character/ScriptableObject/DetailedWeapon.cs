@@ -21,7 +21,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     // accuracy
     public float _aimed_inaccuracy = 0f;
     public float _initial_inaccuracy = 2f; 
-    public float _aim_speed = 1f;
+    public float _time_to_aim = 1f;
     public float _recoil_inaccuracy = 0.5f;
     public float _recoil_shake = 0.1f;
 
@@ -69,8 +69,8 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float initial_inaccuracy { 
         get { return _initial_inaccuracy; }
     }
-    public float aim_speed { 
-        get { return _aim_speed; }
+    public float time_to_aim { 
+        get { return _time_to_aim; }
     }
     public float recoil_inaccuracy { 
         get { return _recoil_inaccuracy; }

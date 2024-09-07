@@ -111,10 +111,11 @@ using UnityEngine.AI;
     }
 
     private Vector3 ShootTarget() {
-        float rand_x = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
-        float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
-        Vector3 rand = new Vector3(rand_x, 0, rand_z);
-        return LookTarget() + rand;
+        // float rand_x = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
+        // float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
+        // Vector3 rand = new Vector3(rand_x, 0, rand_z);
+        // return LookTarget() + rand;
+        return LookTarget();
     }
 
     protected override void CharacterDeath() {
