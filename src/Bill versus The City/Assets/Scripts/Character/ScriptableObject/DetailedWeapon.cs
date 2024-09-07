@@ -23,6 +23,8 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _initial_inaccuracy = 2f; 
     public float _time_to_aim = 1f;
     public float _recoil_inaccuracy = 0.5f;
+    public float _recoil_max = 15f;
+    public float _recoil_recovery = 30f;
     public float _recoil_shake = 0.1f;
 
     // attack
@@ -74,6 +76,12 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float recoil_inaccuracy { 
         get { return _recoil_inaccuracy; }
+    }
+    public float recoil_max { 
+        get { return _recoil_max; }
+    }
+    public float recoil_recovery { 
+        get { return _recoil_recovery; }
     }
     public float recoil_shake { 
         get { return _recoil_shake; }

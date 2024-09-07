@@ -18,10 +18,12 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     public float _fire_rate = 0.25f;
 
     // accuracy
-    private float _aimed_inaccuracy = 0f;
-    private float _initial_inaccuracy = 2f;
+    private float _aimed_inaccuracy = 1f;
+    private float _initial_inaccuracy = 8f; 
     private float _time_to_aim = 1f;
-    private float _recoil_inaccuracy = 1f;
+    private float _recoil_inaccuracy = 10f;
+    private float _recoil_max = 12f;
+    private float _recoil_recovery = 30f;
     private float _recoil_shake = 0f;
 
     private float _bullet_speed = 35f;
@@ -72,6 +74,12 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     }
     public float recoil_inaccuracy { 
         get { return _recoil_inaccuracy; }
+    }
+    public float recoil_max { 
+        get { return _recoil_max; }
+    }
+    public float recoil_recovery { 
+        get { return _recoil_recovery; }
     }
     public float recoil_shake { 
         get { return _recoil_shake; }

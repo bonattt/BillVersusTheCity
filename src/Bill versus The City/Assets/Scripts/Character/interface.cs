@@ -78,6 +78,8 @@ public interface IWeapon {
     public float initial_inaccuracy { get; }
     public float time_to_aim { get; }
     public float recoil_inaccuracy { get; }
+    public float recoil_max { get; }
+    public float recoil_recovery { get; }
     public float recoil_shake { get; }
 
     public float bullet_speed { get; }

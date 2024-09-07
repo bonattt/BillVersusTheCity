@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour, IWeaponManager
 {
+    // public const float RECOIL_DECAY = 15f;
+    // public const float MAX_RECOIL = 15f;
     public ScriptableObject initialize_weapon;
     public IWeapon current_weapon { get; set; }
     public IAttackTarget attacker = null;
@@ -55,25 +57,25 @@ public class AttackController : MonoBehaviour, IWeaponManager
         get { return null; }
     }
 
-    //////// MonoBehaviour
-    void Start() {
-       AttackControllerStart();
-       // TODO --- make this better
-       UpdateSubscribers();
-    }
-
-    void Update() {
-        attacker = GetComponent<CharCtrl>();
-        if (attacker == null) {
-            Debug.LogWarning("attacker is null!");
-        }
-        AttackControllerUpdate();
-
-        if (! _aim_this_frame) { StopAim(); }
-        _aim_this_frame = false;
-    }
     private float? start_aim_at = null;
     public bool is_aiming { get { return start_aim_at != null; }}
+
+    public float _current_recoil = 0f; 
+    public float current_recoil {
+        get { return _current_recoil; }
+        set { 
+            if (value <= 0) {
+                _current_recoil = 0;
+            }
+            else if (value >= current_weapon.recoil_max) {
+                _current_recoil = current_weapon.recoil_max;
+            }
+            else {
+                _current_recoil = value;
+            }
+        }
+    }
+
     public float current_inaccuracy { 
         get {
             if (current_weapon == null) { return -1f; }
@@ -89,6 +91,36 @@ public class AttackController : MonoBehaviour, IWeaponManager
         } 
     }
     private bool _aim_this_frame = false;
+
+    void Start() {
+       AttackControllerStart();
+       // TODO --- make this better
+       UpdateSubscribers();
+    }
+
+    void Update() {
+        attacker = GetComponent<CharCtrl>();
+        if (attacker == null) {
+            Debug.LogWarning("attacker is null!");
+        }
+        AttackControllerUpdate();
+        UpdateRecoil();
+
+        if (! _aim_this_frame) { StopAim(); }
+        _aim_this_frame = false;
+    }
+
+
+    private void UpdateRecoil() {
+        float recoil_decay = current_weapon.recoil_recovery;
+        if (_aim_this_frame) {
+            recoil_decay *= 2;
+        }
+        current_recoil -= (recoil_decay * Time.deltaTime);
+
+
+    }
+    
     public void Aim() {
         _aim_this_frame = true;
         if (start_aim_at == null) {
@@ -123,7 +155,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     private void _FireAttack(Vector3 attack_direction) {
         _last_shot_at = Time.time;
-        current_weapon.current_ammo -= 1;
         GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
 
         bullet_obj.transform.position = shoot_point.position;
@@ -136,6 +167,9 @@ public class AttackController : MonoBehaviour, IWeaponManager
         bullet.armor_penetration = current_weapon.armor_penetration;
         bullet.attacker = attacker;
 
+        current_recoil += current_weapon.recoil_inaccuracy;
+        current_weapon.current_ammo -= 1;
+
         AttackResolver.AttackStart(bullet, shoot_point.position);
 
         UpdateSubscribers();
@@ -143,7 +177,9 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     private Vector3 GetAttackVector(Vector3 attack_direction) {
         Vector3 base_vector = attack_direction.normalized * bullet_speed;
-        float deviation = Random.Range(-current_inaccuracy, current_inaccuracy);
+
+        float inaccuracy = current_inaccuracy + current_recoil;
+        float deviation = Random.Range(-inaccuracy, inaccuracy);
 
         Vector3 rotation_axis = Vector3.up;
         Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
