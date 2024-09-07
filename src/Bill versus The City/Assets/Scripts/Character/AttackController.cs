@@ -189,7 +189,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
             return shoot_point.position;
         }
         // radom variance to make shotguns feel better
-        float variance = i / 10;
+        float variance = 0.25f;
         Vector3 offset = new Vector3(Random.Range(0, variance), 0, Random.Range(0, variance));
         return shoot_point.position + offset;
     }
@@ -204,8 +204,12 @@ public class AttackController : MonoBehaviour, IWeaponManager
         Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
         Debug.Log("original aim_vector: " + base_vector + ", inaccuracy_vector: " + rotated_direction);
 
-        float speed_variance = Mathf.Clamp(i / 10, 0, 0.25f);
-        float multiplier = Random.Range(1 - speed_variance, 1 + speed_variance);
+        float multiplier;
+        if(i == 0) {
+            multiplier = 1;
+        } else {
+            multiplier = Random.Range(0.9f, 1.1f);
+        }
 
         return rotated_direction * multiplier;
     }
