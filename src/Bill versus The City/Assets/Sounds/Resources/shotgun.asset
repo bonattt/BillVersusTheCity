@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sound_name: gunshot
   _clip: {fileID: 8300000, guid: 52712f2f50f1a394ea7431ee225f4016, type: 3}
-  _volume: 0.25
+  _volume: 0.5
   _default_category: 0

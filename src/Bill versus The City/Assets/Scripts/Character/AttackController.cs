@@ -161,8 +161,8 @@ public class AttackController : MonoBehaviour, IWeaponManager
         for (int i = 0; i < current_weapon.n_shots; i++) {
             GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
 
-            bullet_obj.transform.position = shoot_point.position;
-            Vector3 velocity = GetAttackVector(attack_direction);
+            bullet_obj.transform.position = GetShootPoint(i);
+            Vector3 velocity = GetAttackVector(attack_direction, i);
             bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
             bullet = bullet_obj.GetComponent<Bullet>();
@@ -182,7 +182,19 @@ public class AttackController : MonoBehaviour, IWeaponManager
         UpdateSubscribers();
     }
 
-    private Vector3 GetAttackVector(Vector3 attack_direction) {
+    private Vector3 GetShootPoint(int i) {
+        // takes a loop counter, and returns the start point for a bullet. If loop counter is 0, the start point is always the same, 
+        // but if loop counter is not 0, a random offset is applied.
+        if (i == 0) {
+            return shoot_point.position;
+        }
+        // radom variance to make shotguns feel better
+        float variance = i / 10;
+        Vector3 offset = new Vector3(Random.Range(0, variance), 0, Random.Range(0, variance));
+        return shoot_point.position + offset;
+    }
+
+    private Vector3 GetAttackVector(Vector3 attack_direction, int i) {
         Vector3 base_vector = attack_direction.normalized * bullet_speed;
 
         float inaccuracy = current_inaccuracy + current_recoil;
@@ -191,6 +203,10 @@ public class AttackController : MonoBehaviour, IWeaponManager
         Vector3 rotation_axis = Vector3.up;
         Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
         Debug.Log("original aim_vector: " + base_vector + ", inaccuracy_vector: " + rotated_direction);
-        return rotated_direction;
+
+        float speed_variance = Mathf.Clamp(i / 10, 0, 0.25f);
+        float multiplier = Random.Range(1 - speed_variance, 1 + speed_variance);
+
+        return rotated_direction * multiplier;
     }
 }
