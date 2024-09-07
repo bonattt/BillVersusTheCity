@@ -17,6 +17,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public FiringMode _firing_mode; 
     public float _semi_auto_fire_rate = 0.25f;
     public float _full_auto_fire_rate = 0.1f;
+    public int _n_shots = 1;
 
     // accuracy
     public float _aimed_inaccuracy = 0f;
@@ -62,6 +63,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float full_auto_fire_rate { 
         get { return _full_auto_fire_rate; }
+    }
+    public int n_shots {
+        get { return _n_shots; }
     }
 
     // accuracy

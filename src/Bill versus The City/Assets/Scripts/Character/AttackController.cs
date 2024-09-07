@@ -16,6 +16,8 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     public bool use_full_auto = true; // use full auto with select fire weapons
 
+    public float inaccuracy_modifier = 0f;
+
     // how fast bullets move when fired
     public float bullet_speed {
         get {
@@ -155,23 +157,28 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     private void _FireAttack(Vector3 attack_direction) {
         _last_shot_at = Time.time;
-        GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
+        Bullet bullet = null;
+        for (int i = 0; i < current_weapon.n_shots; i++) {
+            GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
 
-        bullet_obj.transform.position = shoot_point.position;
-        Vector3 velocity = GetAttackVector(attack_direction);
-        bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
+            bullet_obj.transform.position = shoot_point.position;
+            Vector3 velocity = GetAttackVector(attack_direction);
+            bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
-        Bullet bullet = bullet_obj.GetComponent<Bullet>();
-        bullet.attack_damage_max = current_weapon.weapon_damage_max;
-        bullet.attack_damage_min = current_weapon.weapon_damage_min;
-        bullet.armor_penetration = current_weapon.armor_penetration;
-        bullet.attacker = attacker;
-
+            bullet = bullet_obj.GetComponent<Bullet>();
+            bullet.attack_damage_max = current_weapon.weapon_damage_max;
+            bullet.attack_damage_min = current_weapon.weapon_damage_min;
+            bullet.armor_penetration = current_weapon.armor_penetration;
+            bullet.attacker = attacker;
+        }
         current_recoil += current_weapon.recoil_inaccuracy;
         current_weapon.current_ammo -= 1;
-
-        AttackResolver.AttackStart(bullet, shoot_point.position);
-
+        if (bullet != null) {
+            AttackResolver.AttackStart(bullet, shoot_point.position); // Only create a muzzel flash once for a shotgun
+        }
+        else {
+            Debug.LogWarning("bullet is null!");
+        }
         UpdateSubscribers();
     }
 

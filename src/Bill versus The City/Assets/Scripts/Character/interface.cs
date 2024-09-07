@@ -72,6 +72,7 @@ public interface IWeapon {
     public bool auto_fire { get; }
     public float semi_auto_fire_rate { get; }
     public float full_auto_fire_rate { get; }
+    public int n_shots { get; }
 
     // accuracy
     public float aimed_inaccuracy { get; }
@@ -97,7 +98,8 @@ public enum FiringMode {
 
 public enum AmmoType {
     handgun,
-    rifle
+    rifle,
+    shotgun
 }
 
 public interface IWeaponManager {

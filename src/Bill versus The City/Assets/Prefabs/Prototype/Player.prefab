@@ -171,7 +171,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3851362431406773233}
   - {fileID: 2784499627323257222}
@@ -227,6 +227,8 @@ MonoBehaviour:
   debug_full_auto: 0
   debug_current_ammo: 0
   debug_reloading: 0
+  debug_inaccuracy: 0
+  debug_recoil: 0
   walk_speed: 10
   sprint_speed: 15
   sprint_cost: 15
@@ -249,19 +251,21 @@ MonoBehaviour:
   shoot_point: {fileID: 2506234290457545205}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   use_full_auto: 1
+  inaccuracy_modifier: 0
+  _current_recoil: 0
   weapon_manager: {fileID: 7212405945941910509}
   init_slots:
-  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
+  - {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
+  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
-  weapon_slots_enabled: 01010101000000000000
+  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
+  weapon_slots_enabled: 01010100000000000000
   switch_weapons_blocked: 0
   _current_slot: 0
 --- !u!114 &7212405945941910509
