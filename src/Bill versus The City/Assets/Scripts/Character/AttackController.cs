@@ -62,6 +62,17 @@ public class AttackController : MonoBehaviour, IWeaponManager
     private float? start_aim_at = null;
     public bool is_aiming { get { return start_aim_at != null; }}
 
+    public float aim_percent {
+        get {
+            if (start_aim_at == null) { return 0f; }
+            
+            float aimed_for = Time.time - ((float) start_aim_at);
+            return Mathf.Clamp(
+                (aimed_for / current_weapon.time_to_aim), 0f, 1f
+            );
+        }
+    }
+
     public float _current_recoil = 0f; 
     public float current_recoil {
         get { return _current_recoil; }
@@ -84,11 +95,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
             if (start_aim_at == null) {
                 return current_weapon.initial_inaccuracy;
             }
-            float aimed_for = Time.time - ((float) start_aim_at);
-            float aim_percent = Mathf.Clamp(
-                (aimed_for / current_weapon.time_to_aim), 0f, 1f
-            );
-
             return (current_weapon.aimed_inaccuracy * aim_percent) + (current_weapon.initial_inaccuracy * (1 - aim_percent));
         } 
     }
@@ -108,8 +114,8 @@ public class AttackController : MonoBehaviour, IWeaponManager
         AttackControllerUpdate();
         UpdateRecoil();
 
-        if (! _aim_this_frame) { StopAim(); }
-        _aim_this_frame = false;
+        // if (! _aim_this_frame) { StopAim(); }
+        // _aim_this_frame = false;
     }
 
 
@@ -123,13 +129,15 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     }
     
-    public void Aim() {
+    public void StartAim() {
+        Debug.Log("start aim!");
         _aim_this_frame = true;
         if (start_aim_at == null) {
             start_aim_at = Time.time;
         }
     }
     public void StopAim() {
+        Debug.Log("stop aim!");
         start_aim_at = null;
     }
 

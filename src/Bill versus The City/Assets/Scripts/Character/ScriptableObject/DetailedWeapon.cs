@@ -28,6 +28,10 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _recoil_recovery = 30f;
     public float _recoil_shake = 0.1f;
 
+    // aiming
+    public float _aim_zoom = 0.5f;
+    public float _aim_move_speed = 0.5f;
+
     // attack
     public float _bullet_speed = 35f;
     public float _weapon_damage_min = 30f;
@@ -89,6 +93,13 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float recoil_shake { 
         get { return _recoil_shake; }
+    }
+    // aiming
+    public float aim_zoom {
+        get { return _aim_zoom; }
+    }
+    public float aim_move_speed { 
+        get { return _aim_move_speed; }
     }
     
     

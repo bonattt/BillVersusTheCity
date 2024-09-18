@@ -26,6 +26,8 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     private float _recoil_max = 12f;
     private float _recoil_recovery = 30f;
     private float _recoil_shake = 0f;
+    private float _aim_zoom = 0.5f;
+    private float _aim_move_speed = 0.5f;
 
     private float _bullet_speed = 35f;
     public float weapon_damage = 40f;
@@ -87,6 +89,13 @@ public class SimpleWeapon : ScriptableObject, IWeapon
     }
     public float recoil_shake { 
         get { return _recoil_shake; }
+    }
+    // aiming
+    public float aim_zoom {
+        get { return _aim_zoom; }
+    }
+    public float aim_move_speed { 
+        get { return _aim_move_speed; }
     }
     
     public float bullet_speed { 

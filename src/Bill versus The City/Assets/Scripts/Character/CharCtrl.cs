@@ -11,6 +11,9 @@ public enum CharacterActionKey {
 
 public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager
 {
+    // list of codes which don't correspond to actual actions, and should be reset to ActionCode.none
+    public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload};
+
     protected CharacterController controller;
     protected AttackController attack_controller;
     protected ICharacterStatus char_status;
@@ -38,6 +41,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             }
         }
     }
+    private bool _aiming = false;
+    public bool aiming {
+        get { return _aiming; }
+        protected set {
+            _aiming = value;
+            Debug.Log($"set aiming = {value}");
+            if (_aiming) {
+                attack_controller.StartAim();
+            } else {
+                attack_controller.StopAim();
+            }
+        }
+    }
 
     public float reload_time {
         get {
@@ -60,6 +76,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public bool is_hit_stunned { get { return hit_stun_until > Time.time; }}
 
     ////////// debug fields /////////
+    public ActionCode debug_action_input = ActionCode.none;
     public bool debug_attack_input;
     public bool debug_can_attack;
     public bool debug_weapon_isnull;
@@ -69,7 +86,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public float debug_inaccuracy = 0f;
     public float debug_recoil = 0f;
-
+    public float debug_aim_percent = 0f;
+    
     protected virtual void SetDebugData() {
         debug_attack_input = AttackInput();
         debug_can_attack = CanAttack();
@@ -84,6 +102,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         debug_reloading = reloading;
         debug_inaccuracy = attack_controller.current_inaccuracy;
         debug_recoil = attack_controller.current_recoil;
+        debug_aim_percent = attack_controller.aim_percent;
+        debug_action_input = GetActionInput();
     }
     /////////////////////////////////
 
@@ -117,17 +137,32 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected void SetAction() {
+        ActionCode action_input = GetActionInput();
+        if (action_input == ActionCode.cancel_aim) { Debug.LogWarning("cancel aim input!"); }
         if (reloading) {
             if (ReloadIsFinished()) {
                 FinishReload();
             }
-            else if (GetActionInput() == ActionCode.cancel_reload) {
+            else if (
+                    action_input == ActionCode.cancel_reload || 
+                    action_input == ActionCode.sprint ||  
+                    action_input == ActionCode.aim 
+            ) {
                 CancelReload();
             }
         }
 
-        else if (current_action == ActionCode.none) {
-            current_action = GetActionInput();
+        else if (aiming) {
+            Debug.Log("is aiming!");
+            if (action_input == ActionCode.cancel_aim || action_input == ActionCode.sprint) {
+                Debug.Log("cancel aim");
+                aiming = false;
+                current_action = ActionCode.none;
+            }
+        }
+
+        if (current_action == ActionCode.none) {
+            current_action = action_input;
 
             switch (current_action) {
                 case ActionCode.none:
@@ -136,7 +171,15 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                 case ActionCode.reload:
                     StartReload();
                     break;
+
+                case ActionCode.aim:
+                    Debug.Log("start aim!");
+                    aiming = true;
+                    break;
             }
+        }
+        if (NON_ACTIONABLE_CODES.Contains(current_action)) {
+            current_action = ActionCode.none;
         }
     }
 
@@ -144,13 +187,27 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         if (ReloadInput()) {
             return ActionCode.reload;
         }
-        else if (CancelReloadInput()) {
-            return ActionCode.cancel_reload;
+        else if (AimInput()) {
+            return ActionCode.aim;
         }
         else if (SprintInput()) {
             return ActionCode.sprint;
         }
+        else if (CancelReloadInput()) {
+            return ActionCode.cancel_reload;
+        }
+        else if (CancelAimInput()) {
+            return ActionCode.cancel_aim;
+        }
         return ActionCode.none;
+    }
+
+    public virtual bool AimInput() {
+        return false;
+    }
+
+    public virtual bool CancelAimInput() {
+        return false;
     }
 
     public virtual bool ReloadInput() {
@@ -370,6 +427,8 @@ public enum ActionCode {
     none,
     sprint,
     reload,
-    cancel_reload
+    cancel_reload,
+    aim,
+    cancel_aim
 
 }

@@ -37,6 +37,17 @@ public class PlayerMovement : CharCtrl
         return InputSystem.current.ReloadInput();
     }
     
+    public override bool AimInput() {
+        return InputSystem.current.AimAttackInput();
+    }
+
+    public override bool CancelAimInput() {
+        if (this.aiming) {
+            return !AimInput();
+        }
+        return false;
+    }
+    
     protected override void Move() {
         LookWithAction();
         Vector3 move = MoveVector();

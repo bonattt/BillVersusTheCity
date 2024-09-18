@@ -87,6 +87,10 @@ public interface IWeapon {
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
     public float armor_penetration { get; }
+
+    // aiming
+    public float aim_zoom { get; }
+    public float aim_move_speed { get; }
 }
 
 public enum FiringMode {
@@ -109,7 +113,7 @@ public interface IWeaponManager {
     public IWeapon current_weapon { get; }
     public float current_inaccuracy { get; }
     public bool is_aiming { get; }
-    public void Aim();
+    public void StartAim();
     public void StopAim();
     public void Subscribe(IWeaponManagerSubscriber sub);
     public void Unsubscribe(IWeaponManagerSubscriber sub);
