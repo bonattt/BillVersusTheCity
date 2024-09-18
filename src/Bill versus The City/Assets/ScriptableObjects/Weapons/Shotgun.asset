@@ -16,13 +16,13 @@ MonoBehaviour:
   _ammo_type: 2
   _ammo_capacity: 6
   _reload_amount: 1
-  _reload_time: 0.5
+  _reload_time: 0.75
   _firing_mode: 0
-  _semi_auto_fire_rate: 0.5
+  _semi_auto_fire_rate: 0.75
   _full_auto_fire_rate: 0.1
-  _n_shots: 12
-  _aimed_inaccuracy: 12
-  _initial_inaccuracy: 12
+  _n_shots: 8
+  _aimed_inaccuracy: 8
+  _initial_inaccuracy: 8
   _time_to_aim: 1
   _recoil_inaccuracy: 0.5
   _recoil_max: 15
