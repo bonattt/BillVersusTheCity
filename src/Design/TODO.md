@@ -89,7 +89,7 @@ ITERATION 1
     [ ] heal partial damage
     [ ] limitted uses
 
-[ ] Damage number UI
+[+] Damage number UI
 
 
 =============================
