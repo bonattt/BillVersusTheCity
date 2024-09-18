@@ -17,7 +17,7 @@ public class UIFloater : MonoBehaviour
 
     private void Start() {
         m_MainCamera = Camera.main;
-        m_Bar = GetComponent<UIDocument>().rootVisualElement.Q("Root");
+        m_Bar = GetComponent<UIDocument>().rootVisualElement;
         
         SetPosition();
     }
@@ -29,7 +29,7 @@ public class UIFloater : MonoBehaviour
     }
 
     public void SetPosition() {
-        Debug.Log(m_Bar);
+        // Debug.Log(m_Bar);
         // Transforms a world absolute position to a local coordinate on a panel
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(
             m_Bar.panel, TransformToFollow.position, m_MainCamera
@@ -37,7 +37,7 @@ public class UIFloater : MonoBehaviour
 
         m_Bar.transform.position = new Vector2(
             newPosition.x - m_Bar.layout.width / 2,
-            newPosition.y
+            newPosition.y - m_Bar.layout.height / 2
         );
     }
 }

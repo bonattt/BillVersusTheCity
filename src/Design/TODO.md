@@ -53,11 +53,17 @@ ITERATION 1
 
 [ ] Metric System
 
-[ ] Accuracy System
-    [ ] Accuracy based on angle, instead of postion
-    [ ] accuracy from weapon
+[~] Accuracy System
+    [+] Accuracy based on angle, instead of postion
+    [+] accuracy from weapon
     [ ] accuracy from enemy
-    [ ] recoil decreases accuracy while shooting
+    [+] recoil decreases accuracy while shooting
+    [+] Aiming increases accuracy
+
+[ ] Aiming
+    [ ] Aiming accuracy
+    [ ] Aiming Camera
+    [ ] Aiming UI 
 
 [ ] Difficulty System
     [ ]
@@ -68,16 +74,22 @@ ITERATION 1
     [ ] Hearing
     [ ] Detection not instant
 
-[ ] Weapons
+[~] Weapons Mechanics
     [ ] Ammo Pool
-    [ ] Shotgun
+    [+] Shotgun
     [ ] AR-15
+
+[ ] Weapons UI
+    [ ] Show equipable weapons
+    [ ] Show equipped weapon
 
 [ ] Truck
     [ ] replenish ammo
     [ ] repair armor
     [ ] heal partial damage
     [ ] limitted uses
+
+[ ] Damage number UI
 
 
 =============================

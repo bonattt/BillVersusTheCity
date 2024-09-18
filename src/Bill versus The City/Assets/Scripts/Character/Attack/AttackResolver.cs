@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class AttackResolver {
@@ -11,6 +12,10 @@ public static class AttackResolver {
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB),
         new SoundEffect(PLACEHOLDER_DAMAGE_SOUND_EFFECT)
+    };
+
+    private static IAttackHitEffect[] DEBUG_DAMAGE_EFFECTS = new IAttackHitEffect[]{
+        new SpawnDamageNumberEffect()
     };
 
     private static IAttackShootEffect[] SHOOT_EFFECTS = new IAttackShootEffect[]{
@@ -37,12 +42,27 @@ public static class AttackResolver {
             attack_damage = ResolveGunDamageArmored(attack, status, hit_location);
         }
         
-        foreach (IAttackHitEffect effect in DAMAGE_EFFECTS) {
+        foreach (IAttackHitEffect effect in GetDamageEffects()) {
             effect.DisplayDamageEffect(
                 target.GetHitTarget(), hit_location, attack_damage);
         }
         target.OnAttackHitRecieved(attack);
         attack.attacker.OnAttackHitDealt(attack, target);
+    }
+
+    private static IAttackHitEffect[] GetDamageEffects() {
+        if (!DebugMode.inst.debug_enabled) {
+            return DAMAGE_EFFECTS;
+        }
+        return ConcatinateArrays(DAMAGE_EFFECTS, DEBUG_DAMAGE_EFFECTS);
+    }
+
+    private static T[] ConcatinateArrays<T>(T[] firstArray, T[] secondArray){
+        T[] result = new T[firstArray.Length + secondArray.Length];
+        Array.Copy(firstArray, result, firstArray.Length);
+        // Copy the second array to the result array, starting at the end of the first array
+        Array.Copy(secondArray, 0, result, firstArray.Length, secondArray.Length);
+        return result;
     }
 
     public static float ResolveGunDamageUnarmored(IAttack attack, 
@@ -53,7 +73,7 @@ public static class AttackResolver {
     }
 
     public static float RandomDamage(IAttack attack) {
-        return Mathf.Max(1f, Random.Range(attack.attack_damage_min, 
+        return Mathf.Max(1f, UnityEngine.Random.Range(attack.attack_damage_min, 
                 attack.attack_damage_max));
     } 
 

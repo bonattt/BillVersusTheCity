@@ -1,3 +1,5 @@
+// Controller on the prefab gun-shot effect built with unity primatives
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
