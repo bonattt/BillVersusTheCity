@@ -11,7 +11,7 @@ public class SpawnDamageNumberEffect : SpawnPrefabEffect {
     protected override void ConfigureDamageEffect(GameObject spawned_prefab, GameObject hit_target,
             Vector3 hit_location, float damage) {
         // hook to extend this class and setup the spawned prefab. By default, do nothing
-        DamageNumberEffect effect = spawned_prefab.GetComponent<DamageNumberEffect>();
+        DamageNumberController effect = spawned_prefab.GetComponent<DamageNumberController>();
         effect.damage_amount = Mathf.Round(damage);
         Debug.Log($"spawn damage number {damage}");
     }

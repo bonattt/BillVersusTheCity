@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DamageNumberEffect : MonoBehaviour
+public class DamageNumberController : MonoBehaviour
 {
     
     public float damage_amount = 10f;

@@ -22,10 +22,14 @@ public static class AttackResolver {
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB),
         new SoundEffect(PLACEHOLDER_DAMAGE_SOUND_EFFECT)
     };
+    
+
+    private static IAttackShootEffect[] DEBUG_SHOOT_EFFECTS = new IAttackShootEffect[]{};
 
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB)
     };
+    private static IAttackMissEffect[] DEBUG_MISS_EFFECTS = new IAttackMissEffect[]{};
 
     public static void ResolveAttackHit(IAttack attack, 
             IAttackTarget target, Vector3 hit_location) {
@@ -55,6 +59,20 @@ public static class AttackResolver {
             return DAMAGE_EFFECTS;
         }
         return ConcatinateArrays(DAMAGE_EFFECTS, DEBUG_DAMAGE_EFFECTS);
+    }
+
+    private static IAttackShootEffect[] GetShootEffects() {
+        if (!DebugMode.inst.debug_enabled) {
+            return SHOOT_EFFECTS;
+        }
+        return ConcatinateArrays(SHOOT_EFFECTS, DEBUG_SHOOT_EFFECTS);
+    }
+
+    private static IAttackMissEffect[] GetMissEffects() {
+        if (!DebugMode.inst.debug_enabled) {
+            return MISS_EFFECTS;
+        }
+        return ConcatinateArrays(MISS_EFFECTS, DEBUG_MISS_EFFECTS);
     }
 
     private static T[] ConcatinateArrays<T>(T[] firstArray, T[] secondArray){
@@ -135,7 +153,7 @@ public static class AttackResolver {
 
     public static void AttackMiss(IAttack attack, Vector3 location) {
 
-        foreach (IAttackMissEffect effect in MISS_EFFECTS) {
+        foreach (IAttackMissEffect effect in GetMissEffects()) {
             effect.DisplayEffect(location);
         }
     }
@@ -143,7 +161,7 @@ public static class AttackResolver {
     public static void AttackStart(IAttack attack, Vector3 location) {
         // Displays attack effects for firing a weapon
 
-        foreach (IAttackShootEffect effect in SHOOT_EFFECTS) {
+        foreach (IAttackShootEffect effect in GetShootEffects()) {
             effect.DisplayEffect(location);
         }
     }
