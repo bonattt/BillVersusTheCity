@@ -11,8 +11,11 @@ public class MetricDebugger : MonoBehaviour
     void Update()
     {
         metrics = new List<string>();
-        foreach (string key in MetricSystem.instance.ListMetrics()) {
-            metrics.Add($"{key}: {MetricSystem.instance.GetMetric(key)}");
+        foreach (string key in MetricSystem.instance.ListFloatMetrics()) {
+            metrics.Add($"{key}: {MetricSystem.instance.GetFloatMetric(key)}");
+        }
+        foreach (string key in MetricSystem.instance.ListIntMetrics()) {
+            metrics.Add($"{key}: {MetricSystem.instance.GetIntMetric(key)}");
         }
     }
 }

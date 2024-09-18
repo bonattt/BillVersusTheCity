@@ -121,6 +121,7 @@ using UnityEngine.AI;
     protected override void CharacterDeath() {
         base.CharacterDeath();
         Destroy(gameObject);
+        MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
     }
 
     public bool LineOfSightToTarget() {

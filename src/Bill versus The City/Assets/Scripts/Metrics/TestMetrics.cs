@@ -9,11 +9,26 @@ public class TestMetrics : MonoBehaviour
     {
         MetricSystem.instance.SetMetric("pootis", 420.69f);
         MetricSystem.instance.SetMetric("pingas", 42);
-        MetricSystem.instance.SetMetric("string", "string");
 
-        Debug.Log($"test metric 'pootis': {MetricSystem.instance.GetMetric("pootis")}");
-        Debug.Log($"test metric 'pingas': {MetricSystem.instance.GetMetric("pingas")}");
-        Debug.Log($"test metric 'string': {MetricSystem.instance.GetMetric("string")}");
+        Debug.Log($"test metric 'pootis': {MetricSystem.instance.GetFloatMetric("pootis")}");
+        Debug.Log($"test metric 'pingas': {MetricSystem.instance.GetIntMetric("pingas")}");
+
+        MetricSystem.instance.IncrimentMetric("pootis", 1f);
+        Debug.Log($"test metric 'pootis'+1: {MetricSystem.instance.GetFloatMetric("pootis")}");
+        
+        MetricSystem.instance.IncrimentMetric("pingas", 1);
+        Debug.Log($"test metric 'pingas'+1: {MetricSystem.instance.GetIntMetric("pingas")}");
+
+        MetricSystem.instance.IncrimentMetric("pootis", 21);
+        Debug.Log($"test metric 'pootis'+21: {MetricSystem.instance.GetFloatMetric("pootis")}");
+
+        Debug.Log($"has 'pootis': {MetricSystem.instance.HasFloatMetric("pootis")}");
+        Debug.Log($"has 'pingas': {MetricSystem.instance.HasIntMetric("pingas")}");
+
+        Debug.Log($"should not have 'pootis' as int: {MetricSystem.instance.HasIntMetric("pootis")}");
+        Debug.Log($"should not have 'pingas' as float: {MetricSystem.instance.HasFloatMetric("pingas")}");
+        Debug.Log($"should not have 'string': {MetricSystem.instance.HasFloatMetric("string")}");
+        Debug.Log($"should not have 'string': {MetricSystem.instance.HasIntMetric("string")}");
     }
 }
     

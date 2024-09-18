@@ -320,9 +320,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         hit_stun_until = Time.time + 0.25f;
     }
 
+    private int times_killed = 0;
     public void StatusUpdated(ICharacterStatus status) {
         if (char_status.health <= 0) {
-            CharacterDeath();
+            if (times_killed == 0) {
+                // prevent CharacterDeath from being called multiple times in shotgun deaths
+                CharacterDeath();
+            }
+            times_killed += 1;
         }
     }
 
