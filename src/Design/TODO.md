@@ -61,7 +61,7 @@ ITERATION 1
     [+] Aiming increases accuracy
 
 [ ] Aiming
-    [ ] Aiming accuracy
+    [+] Aiming accuracy
     [ ] Aiming Camera
     [ ] Aiming UI 
 
@@ -88,6 +88,7 @@ ITERATION 1
     [ ] repair armor
     [ ] heal partial damage
     [ ] limitted uses
+    [+] prototype model
 
 [+] Damage number UI
 
