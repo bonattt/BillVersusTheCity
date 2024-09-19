@@ -28,8 +28,9 @@ MonoBehaviour:
   _recoil_max: 15
   _recoil_recovery: 30
   _recoil_shake: 0.1
-  _aim_zoom: 0.25
+  _aim_zoom: 0.75
   _aim_move_speed: 0.7
+  _max_zoom_range: 1
   _bullet_speed: 35
   _weapon_damage_min: 45
   _weapon_damage_max: 55

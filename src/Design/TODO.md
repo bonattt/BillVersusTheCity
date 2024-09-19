@@ -63,6 +63,7 @@ ITERATION 1
 [ ] Aiming
     [+] Aiming accuracy
     [+] Aiming Camera
+    [+] Aiming is actually good!
     [ ] Aiming UI 
 
 [ ] Difficulty System

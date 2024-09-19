@@ -31,6 +31,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     // aiming
     public float _aim_zoom = 0.5f;
     public float _aim_move_speed = 0.5f;
+    public float _max_zoom_range = 5f;
 
     // attack
     public float _bullet_speed = 35f;
@@ -100,6 +101,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float aim_move_speed { 
         get { return _aim_move_speed; }
+    }
+    public float max_zoom_range { 
+        get { return _max_zoom_range; }
     }
     
     

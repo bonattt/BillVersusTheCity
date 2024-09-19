@@ -85,14 +85,14 @@ public class CameraFollow : MonoBehaviour
 
     public float max_zoom_range {
         get {
-            float zoom_rate;
+            float zoom_range;
             if (current_weapon == null) {
-                zoom_rate = ZOOM_DISTANCE_CONSTANT / 2;
+                zoom_range = ZOOM_DISTANCE_CONSTANT;
             }
             else {
-                zoom_rate = current_weapon.aim_zoom * ZOOM_DISTANCE_CONSTANT;
+                zoom_range = current_weapon.max_zoom_range;;
             }
-            return Mathf.Sqrt(zoom_rate);
+            return zoom_range;
         }
     }
 

@@ -91,6 +91,7 @@ public interface IWeapon {
     // aiming
     public float aim_zoom { get; }
     public float aim_move_speed { get; }
+    public float max_zoom_range { get; }
 }
 
 public enum FiringMode {
