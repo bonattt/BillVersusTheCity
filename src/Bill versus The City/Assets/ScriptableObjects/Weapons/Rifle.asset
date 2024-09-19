@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
-  m_Name: Shotgun
+  m_Name: Rifle
   m_EditorClassIdentifier: 
-  _name: shotgun
-  _ammo_type: 2
-  _ammo_capacity: 6
-  _reload_amount: 1
-  _reload_time: 0.75
+  _name: Rifle
+  _ammo_type: 1
+  _ammo_capacity: 30
+  _reload_amount: 30
+  _reload_time: 1
   _firing_mode: 0
-  _semi_auto_fire_rate: 0.75
+  _semi_auto_fire_rate: 0.1
   _full_auto_fire_rate: 0.1
-  _n_shots: 9
-  _aimed_inaccuracy: 10
-  _initial_inaccuracy: 10
-  _time_to_aim: 1
+  _n_shots: 1
+  _aimed_inaccuracy: 0
+  _initial_inaccuracy: 8
+  _time_to_aim: 2
   _recoil_inaccuracy: 0.5
   _recoil_max: 15
   _recoil_recovery: 30
   _recoil_shake: 0.1
-  _aim_zoom: 0.25
-  _aim_move_speed: 0.5
-  _bullet_speed: 55
-  _weapon_damage_min: 25
-  _weapon_damage_max: 40
-  _armor_penetration: 0
+  _aim_zoom: 0.75
+  _aim_move_speed: 0.35
+  _bullet_speed: 45
+  _weapon_damage_min: 90
+  _weapon_damage_max: 110
+  _armor_penetration: 1

@@ -82,6 +82,8 @@ ITERATION 1
 [ ] Weapons UI
     [ ] Show equipable weapons
     [ ] Show equipped weapon
+    [ ] Weapon Icons
+    [ ] Weapon-based shooting and reload sounds
 
 [ ] Truck
     [ ] replenish ammo
@@ -91,6 +93,9 @@ ITERATION 1
     [+] prototype model
 
 [+] Damage number UI
+
+[ ] Bugs
+    [ ] Fix reload UI meter
 
 
 =============================
