@@ -291,7 +291,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private void TryToAttack() {
-        if (!is_hit_stunned && AttackInput() && CanAttack() && !reloading) {
+        if (!is_hit_stunned && AttackInput() && CanAttack() && !reloading && !is_spinting) {
             PerformAttack();
         }
     }
