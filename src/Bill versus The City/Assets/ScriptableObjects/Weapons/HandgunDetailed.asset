@@ -21,14 +21,14 @@ MonoBehaviour:
   _semi_auto_fire_rate: 0.1
   _full_auto_fire_rate: 0.1
   _n_shots: 1
-  _aimed_inaccuracy: 0
-  _initial_inaccuracy: 2
+  _aimed_inaccuracy: 2
+  _initial_inaccuracy: 3
   _time_to_aim: 0.75
   _recoil_inaccuracy: 10
   _recoil_max: 15
   _recoil_recovery: 30
   _recoil_shake: 0.1
-  _aim_zoom: 0.1
+  _aim_zoom: 0.25
   _aim_move_speed: 0.7
   _bullet_speed: 35
   _weapon_damage_min: 45

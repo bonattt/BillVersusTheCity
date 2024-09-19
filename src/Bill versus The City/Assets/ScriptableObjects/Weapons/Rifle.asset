@@ -22,7 +22,7 @@ MonoBehaviour:
   _full_auto_fire_rate: 0.1
   _n_shots: 1
   _aimed_inaccuracy: 0
-  _initial_inaccuracy: 8
+  _initial_inaccuracy: 5
   _time_to_aim: 2
   _recoil_inaccuracy: 0.5
   _recoil_max: 15
