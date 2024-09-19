@@ -39,6 +39,7 @@ using UnityEngine.AI;
             nav_mesh_agent.SetDestination(transform.position);
         }
         else {
+            nav_mesh_agent.speed = this.movement_speed;
             nav_mesh_agent.SetDestination(MoveVector());
         }
     }

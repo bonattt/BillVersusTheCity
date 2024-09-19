@@ -5,12 +5,6 @@ using UnityEngine;
 public class PlayerMovement : CharCtrl
 {
     
-    public float walk_speed = 4.0f;
-    public float sprint_speed = 10.0f;
-    public float sprint_cost = 15.0f;
-    public float attack_cost = 10.0f;
-    public float move_x = 0f;
-    public float move_y = 0f;
 
     public override bool AttackInput() {
         if (attack_controller.current_weapon.auto_fire) {
@@ -56,13 +50,7 @@ public class PlayerMovement : CharCtrl
     }
 
     protected Vector3 ModifyMoveVector(Vector3 move) {
-        if (reloading) {
-            move *= reload_move_speed;
-        }
-        if (this.is_hit_stunned) {
-            move *= 0.1f;
-        }
-        return move;
+        return move * this.movement_speed;
     }
 
     public override Vector3 LookTarget() {
@@ -73,8 +61,8 @@ public class PlayerMovement : CharCtrl
     
     public override Vector3 MoveVector() {
         // float move_x, move_y;
-        move_x = InputSystem.current.MoveXInput();
-        move_y = InputSystem.current.MoveYInput();
+        float move_x = InputSystem.current.MoveXInput();
+        float move_y = InputSystem.current.MoveYInput();
         if (move_x != 0 && move_y != 0) {
             // remove crabwalk
             move_x = move_x / 1.4f;
@@ -82,6 +70,6 @@ public class PlayerMovement : CharCtrl
         }
         Vector3 move_vector = new Vector3(move_x, 0, move_y);
 
-        return move_vector * walk_speed;
+        return move_vector;
     }
 }

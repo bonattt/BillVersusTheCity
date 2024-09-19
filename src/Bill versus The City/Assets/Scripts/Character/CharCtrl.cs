@@ -23,11 +23,25 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float rotation_speed = 0.85f;
     public ActionCode current_action = ActionCode.none;
 
-    public float reload_move_speed = 0.33f;
+    public float reload_move_multiplier = 0.33f;
+    public float walk_speed = 4.0f;
+    public float sprint_multiplier = 10.0f;
 
     public float start_reload_at;
     private float hit_stun_until = -1f;
+    public float movement_speed {
+        get {
+            float move_speed = walk_speed;
+            if (reloading) {
+                move_speed *= reload_move_multiplier;
+            }
+            if (this.is_hit_stunned) {
+                move_speed *= 0.1f;
+            }
 
+            return move_speed;
+        }
+    }
 
     private bool _reloading = false;
     public bool reloading {
