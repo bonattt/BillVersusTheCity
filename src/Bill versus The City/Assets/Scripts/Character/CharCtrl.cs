@@ -70,7 +70,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         get { return _aiming; }
         protected set {
             _aiming = value;
-            Debug.Log($"set aiming = {value}");
             if (_aiming) {
                 attack_controller.StartAim();
             } else {
@@ -167,7 +166,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             current_action = ActionCode.none;
         }
         ActionCode action_input = GetActionInput();
-        if (action_input == ActionCode.cancel_aim) { Debug.LogWarning("cancel aim input!"); }
         if (reloading) {
             if (ReloadIsFinished()) {
                 FinishReload();
@@ -182,9 +180,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
 
         else if (aiming) {
-            Debug.Log("is aiming!");
             if (action_input == ActionCode.cancel_aim || action_input == ActionCode.sprint) {
-                Debug.Log("cancel aim");
                 aiming = false;
                 current_action = ActionCode.none;
             }
@@ -202,7 +198,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                     break;
 
                 case ActionCode.aim:
-                    Debug.Log("start aim!");
                     aiming = true;
                     break;
             }

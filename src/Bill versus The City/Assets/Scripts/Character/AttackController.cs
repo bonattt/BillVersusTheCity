@@ -130,14 +130,12 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
     
     public void StartAim() {
-        Debug.Log("start aim!");
         _aim_this_frame = true;
         if (start_aim_at == null) {
             start_aim_at = Time.time;
         }
     }
     public void StopAim() {
-        Debug.Log("stop aim!");
         start_aim_at = null;
     }
 

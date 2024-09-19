@@ -104,7 +104,6 @@ public class InputSystem
 
     public bool TestInput2() {
         // input key used purely for testing functionality
-        Debug.Log("TestInput2: " + Input.GetKeyDown(DEBUG2_KEY));
         return Input.GetKeyDown(DEBUG2_KEY);
     }
 

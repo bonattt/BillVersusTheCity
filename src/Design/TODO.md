@@ -51,7 +51,7 @@ ITERATION 1
 ==== Demo 1 ====
 ================
 
-[ ] Metric System
+[+] Metric System
 
 [~] Accuracy System
     [+] Accuracy based on angle, instead of postion
@@ -62,7 +62,7 @@ ITERATION 1
 
 [ ] Aiming
     [+] Aiming accuracy
-    [ ] Aiming Camera
+    [+] Aiming Camera
     [ ] Aiming UI 
 
 [ ] Difficulty System
@@ -74,10 +74,12 @@ ITERATION 1
     [ ] Hearing
     [ ] Detection not instant
 
+[ ] Player Detection
+
 [~] Weapons Mechanics
     [ ] Ammo Pool
     [+] Shotgun
-    [ ] AR-15
+    [+] AR-15
 
 [ ] Weapons UI
     [ ] Show equipable weapons

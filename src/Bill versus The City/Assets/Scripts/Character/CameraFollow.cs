@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
     public float y_offset = 10f;
     public float z_offset = 0f; 
     public float slerp = 0.7f;
+    public const float ZOOM_DISTANCE_CONSTANT = 25f;
     public Transform target;
     public AttackController attack_controller;
 
@@ -20,16 +21,45 @@ public class CameraFollow : MonoBehaviour
     }
 
     private Vector3 FollowTargetPosition() {
+        // returns the position from which the camera would directly follow the follow target (eg. the player)
         return target.position + this.offset;
+    }
+
+    private float desired_camera_height {
+        get {
+            // returns the desired height of the camera
+            return this.target.position.y + this.offset.y;
+        }
     }
 
     private void UpdatePosition() {
         Vector3 target_pos = FollowTargetPosition();
         float percent_mouse = ShiftToMousePercent();
         Vector3 mid_point = (target_pos * (1 - percent_mouse)) + (mouse_position * percent_mouse);
-        mid_point = new Vector3(mid_point.x, y_offset, mid_point.z);
-        transform.position = Vector3.Slerp(transform.position, mid_point, this.slerp * Time.deltaTime);
-    } 
+        // point `percent_mouse` between the mouse position and the target-follow
+        //   possition, adjusted to the desired camera height
+        mid_point = new Vector3(mid_point.x, desired_camera_height, mid_point.z);
+
+        float distance_from_follow_target = FlatDistance(target_pos, mid_point);
+        // Debug.Log($"max_zoom_range: {max_zoom_range}, distance_from_follow_target: {distance_from_follow_target}, desired_camera_height: {desired_camera_height}");
+        Vector3 camera_destination;
+        if (distance_from_follow_target > max_zoom_range) {
+            Vector3 vector_to = (mid_point - transform.position).normalized * max_zoom_range;
+            camera_destination = target_pos + vector_to;
+            Debug.Log($"caping zoom at max_zoom_range! {mid_point} -> {camera_destination}");
+        } else {
+            camera_destination = mid_point;
+        }
+        
+        transform.position = Vector3.Slerp(transform.position, camera_destination, this.slerp * Time.deltaTime);
+    }
+
+    public static float FlatDistance(Vector3 first, Vector3 second) {
+        // negates the Y-axis component before finding the distance between two points
+        first = new Vector3(first.x, 0f, first.z);
+        second = new Vector3(second.x, 0f, second.z);
+        return Vector3.Distance(first, second);
+    }
 
     private float ShiftToMousePercent() {
         // returns a percent (float 0-1) determining how shifted towards the mouse the camera follow should be
@@ -50,6 +80,19 @@ public class CameraFollow : MonoBehaviour
                 return null;
             }
             return attack_controller.current_weapon;
+        }
+    }
+
+    public float max_zoom_range {
+        get {
+            float zoom_rate;
+            if (current_weapon == null) {
+                zoom_rate = ZOOM_DISTANCE_CONSTANT / 2;
+            }
+            else {
+                zoom_rate = current_weapon.aim_zoom * ZOOM_DISTANCE_CONSTANT;
+            }
+            return Mathf.Sqrt(zoom_rate);
         }
     }
 
