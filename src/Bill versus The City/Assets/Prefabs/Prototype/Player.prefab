@@ -219,8 +219,11 @@ MonoBehaviour:
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
-  reload_move_speed: 0.33
+  reload_move_multiplier: 0.33
+  walk_speed: 10
+  sprint_multiplier: 1.75
   start_reload_at: 0
+  debug_action_input: 0
   debug_attack_input: 0
   debug_can_attack: 0
   debug_weapon_isnull: 0
@@ -229,12 +232,7 @@ MonoBehaviour:
   debug_reloading: 0
   debug_inaccuracy: 0
   debug_recoil: 0
-  walk_speed: 10
-  sprint_speed: 15
-  sprint_cost: 15
-  attack_cost: 10
-  move_x: 0
-  move_y: 0
+  debug_aim_percent: 0
 --- !u!114 &4665821343985391478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,17 +253,17 @@ MonoBehaviour:
   _current_recoil: 0
   weapon_manager: {fileID: 7212405945941910509}
   init_slots:
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  - {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  - {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
-  weapon_slots_enabled: 01010100000000000000
+  weapon_slots_enabled: 01010101000000000000
   switch_weapons_blocked: 0
   _current_slot: 0
 --- !u!114 &7212405945941910509

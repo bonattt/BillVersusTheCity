@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : CharCtrl
 {
-    
-
     public override bool AttackInput() {
         if (attack_controller.current_weapon.auto_fire) {
             return InputSystem.current.AttackHoldInput();
@@ -21,7 +19,7 @@ public class PlayerMovement : CharCtrl
     }
 
     public override bool SprintInput() {
-        return false;
+        return InputSystem.current.SprintInput();
     }
 
     public override bool CancelReloadInput() {

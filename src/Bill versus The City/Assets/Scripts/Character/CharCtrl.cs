@@ -12,7 +12,7 @@ public enum CharacterActionKey {
 public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager
 {
     // list of codes which don't correspond to actual actions, and should be reset to ActionCode.none
-    public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload};
+    public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint};
 
     protected CharacterController controller;
     protected AttackController attack_controller;
@@ -25,13 +25,17 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public float reload_move_multiplier = 0.33f;
     public float walk_speed = 4.0f;
-    public float sprint_multiplier = 10.0f;
+    public float sprint_multiplier = 1.75f;
 
     public float start_reload_at;
     private float hit_stun_until = -1f;
     public float movement_speed {
         get {
             float move_speed = walk_speed;
+            if (is_spinting) {
+                move_speed *= sprint_multiplier;
+            }
+
             if (reloading) {
                 move_speed *= reload_move_multiplier;
             }
@@ -40,6 +44,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             }
 
             return move_speed;
+        }
+    }
+
+    public bool is_spinting {
+        get {
+            return this.current_action == ActionCode.sprint;
         }
     }
 
@@ -101,6 +111,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float debug_inaccuracy = 0f;
     public float debug_recoil = 0f;
     public float debug_aim_percent = 0f;
+    public bool debug_sprint_inputp = false;
     
     protected virtual void SetDebugData() {
         debug_attack_input = AttackInput();
@@ -118,6 +129,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         debug_recoil = attack_controller.current_recoil;
         debug_aim_percent = attack_controller.aim_percent;
         debug_action_input = GetActionInput();
+        debug_sprint_inputp = SprintInput();
     }
     /////////////////////////////////
 
@@ -151,6 +163,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected void SetAction() {
+        if (NON_ACTIONABLE_CODES.Contains(current_action)) {
+            current_action = ActionCode.none;
+        }
         ActionCode action_input = GetActionInput();
         if (action_input == ActionCode.cancel_aim) { Debug.LogWarning("cancel aim input!"); }
         if (reloading) {
@@ -191,9 +206,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                     aiming = true;
                     break;
             }
-        }
-        if (NON_ACTIONABLE_CODES.Contains(current_action)) {
-            current_action = ActionCode.none;
         }
     }
 

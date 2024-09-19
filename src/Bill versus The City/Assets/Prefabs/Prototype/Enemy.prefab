@@ -56,14 +56,20 @@ MonoBehaviour:
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
-  reload_move_speed: 0.33
+  reload_move_multiplier: 0.33
+  walk_speed: 4
+  sprint_multiplier: 1.75
   start_reload_at: 0
+  debug_action_input: 0
   debug_attack_input: 0
   debug_can_attack: 0
   debug_weapon_isnull: 0
   debug_full_auto: 0
   debug_current_ammo: 0
   debug_reloading: 0
+  debug_inaccuracy: 0
+  debug_recoil: 0
+  debug_aim_percent: 0
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
@@ -93,6 +99,8 @@ MonoBehaviour:
   shoot_point: {fileID: 4280276152886177003}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   use_full_auto: 1
+  inaccuracy_modifier: 0
+  _current_recoil: 0
 --- !u!114 &1034086256320115388
 MonoBehaviour:
   m_ObjectHideFlags: 0

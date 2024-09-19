@@ -9,7 +9,7 @@ public class InputSystem
     public const string MOVE_Y = "Vertical";
     public const string ATTACK_INPUT = "Fire1";
     public const string AIM_ATTACK = "Fire2";
-    public const string SPRINT_INPUT = "Shift";
+    public const string SPRINT_INPUT = "Sprint";
     public const KeyCode PAUSE_MENU_INPUT = KeyCode.Escape;
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
     public const KeyCode INTERACT = KeyCode.E;

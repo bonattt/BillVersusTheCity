@@ -2260,6 +2260,7 @@ GameObject:
   - component: {fileID: 1246229176}
   - component: {fileID: 1246229175}
   - component: {fileID: 1246229177}
+  - component: {fileID: 1246229178}
   m_Layer: 0
   m_Name: Debug
   m_TagString: Untagged
@@ -2310,6 +2311,35 @@ MonoBehaviour:
   lag_chance: 0.01
   min_spike_seconds: 0.01
   max_spike_seconds: 0.05
+--- !u!114 &1246229178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246229174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3496ffedc77a001489f62e2cb448187b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouse_screen_position: {x: 0, y: 0, z: 0}
+  mouse_world_position: {x: 0, y: 0, z: 0}
+  attack_click_input: 0
+  attack_hold_input: 0
+  aim_attack_input: 0
+  sprint_input: 0
+  dash_input: 0
+  move_x_input: 0
+  move_y_input: 0
+  interact_input: 0
+  reload_input: 0
+  test_input: 0
+  test_input2: 0
+  menu_cancel_input: 0
+  pause_menu_input: 0
+  next_weapon_input: 0
+  previous_weapon_input: 0
 --- !u!1 &1319152122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,18 +4499,6 @@ PrefabInstance:
     - target: {fileID: 3633326187336503762, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4665821343985391478, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: init_slots.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
-    - target: {fileID: 4665821343985391478, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: init_slots.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
-    - target: {fileID: 4665821343985391478, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      propertyPath: weapon_slots_enabled.Array.data[3]
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
