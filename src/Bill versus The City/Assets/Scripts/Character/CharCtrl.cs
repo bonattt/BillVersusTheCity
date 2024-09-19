@@ -39,6 +39,17 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             if (reloading) {
                 move_speed *= reload_move_multiplier;
             }
+
+            if (aiming) {
+                float aim_multiplier;
+                if (attack_controller.current_weapon == null) {
+                    aim_multiplier = 0.75f;
+                } else {
+                    aim_multiplier = attack_controller.current_weapon.aim_move_speed;
+                }
+                move_speed *= aim_multiplier;
+            }
+
             if (this.is_hit_stunned) {
                 move_speed *= 0.1f;
             }
