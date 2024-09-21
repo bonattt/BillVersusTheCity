@@ -37,6 +37,17 @@ public class InputSystem
         }
     }
 
+    public GameObject GetHoveredObject() {
+        // gets a GameObject the mouse is hovering over.
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);;
+        RaycastHit hit;
+        // int layer_mask = LayerMask.GetMask(TACTICAL_UI_LAYER);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity)) { // }, layer_mask)) {
+            return hit.collider.gameObject;
+        }
+        return null;
+    }
+
     public Vector3 MouseScreenPosition() {
         return new Vector3(
             Input.mousePosition.x,

@@ -77,15 +77,15 @@ ITERATION 1
 
 [ ] Player Detection
 
-[~] Weapons Mechanics
-    [ ] Ammo Pool
+[+] Weapons Mechanics
+    [+] Ammo Pool
     [+] Shotgun
     [+] AR-15
 
-[ ] Weapons UI
-    [ ] Show equipable weapons
-    [ ] Show equipped weapon
-    [ ] Weapon Icons
+[~] Weapons UI
+    [+] Show equipable weapons
+    [+] Show equipped weapon
+    [+] Weapon Icons
     [ ] Weapon-based shooting and reload sounds
 
 [ ] Truck

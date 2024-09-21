@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoContainer : MonoBehaviour, IGenericObservable
+public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffect
 {
     public int handgun_max = 80;
     public int handgun_start = 80;
@@ -87,5 +87,12 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable
     public int AmmoNeeded(AmmoType type) {
         // gets the ammount of ammo needed to fill this container with the given ammo type
         return this.ammo_max[type] - this.ammo_count[type];
+    }
+
+    public void Interact(GameObject obj) {
+        AmmoContainer other = obj.GetComponent<AmmoContainer>();
+        if (other == null) {
+            Debug.LogError($"unable to find AmmoContainer on {obj}!");
+        }
     }
 }
