@@ -3832,6 +3832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868261690}
   - component: {fileID: 1868261691}
+  - component: {fileID: 1868261692}
   m_Layer: 0
   m_Name: WeaponToolbar
   m_TagString: Untagged
@@ -3870,6 +3871,20 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 35ee21ba271843445aef54d4fa871d5f, type: 3}
   m_SortingOrder: 0
+--- !u!114 &1868261692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868261689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d151bc7f5d83e57439bc8b6eaa4dcbc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui_doc: {fileID: 1868261691}
+  attack_ctrl: {fileID: 338529282}
 --- !u!1 &1908606955
 GameObject:
   m_ObjectHideFlags: 0

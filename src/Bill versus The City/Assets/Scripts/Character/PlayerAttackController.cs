@@ -22,7 +22,7 @@ public class PlayerAttackController : AttackController
     // }
     public override void UpdateSubscribers() {
         foreach (IWeaponManagerSubscriber sub in subscribers) {
-            sub.UpdateWeapon(null, current_weapon);
+            sub.UpdateWeapon(current_slot, current_weapon);
         }
     }
 
