@@ -208,7 +208,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
         Vector3 rotation_axis = Vector3.up;
         Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
-        Debug.Log("original aim_vector: " + base_vector + ", inaccuracy_vector: " + rotated_direction);
 
         float multiplier;
         if(i == 0) {

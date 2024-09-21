@@ -35,7 +35,6 @@ public class PlayerInteractor : MonoBehaviour
             else { Debug.Log("hovered object is null"); } 
             return interaction;
         }
-        Debug.Log("no hovered object!");
         return null;
     }
 }

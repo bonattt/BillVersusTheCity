@@ -556,11 +556,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c04c39a8018b0344b14f95391c5c725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &338529286
+--- !u!114 &338529286 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8741898434085393183, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
+  m_PrefabInstance: {fileID: 5342343658664017690}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338529271}
   m_Enabled: 1
@@ -568,28 +567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af1aafb0fea08d4691e9b906021af6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handgun_max: 80
-  handgun_start: 80
-  rifle_max: 30
-  rifle_start: 30
-  shotgun_max: 10
-  shotgun_start: 10
---- !u!114 &338529287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338529271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd0e18cc90ef6b448cc98e568f55ce7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layer_mask:
-    serializedVersion: 2
-    m_Bits: 1024
-  debug_can_interact: 0
 --- !u!1 &354703179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,6 +1738,7 @@ MonoBehaviour:
   target: {fileID: 338529274}
   attack_controller: {fileID: 338529282}
   debug_shift_to_mouse: 0
+  debug_last_mouse_pos: {x: 0, y: 0, z: 0}
 --- !u!1 &986714524
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,6 +3132,8 @@ MonoBehaviour:
   rifle_start: 30
   shotgun_max: 10
   shotgun_start: 10
+  debug_rifle: 0
+  debug_shotgun: 0
 --- !u!114 &1522836253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4700,13 +4680,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2783782960125533881, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 338529286}
-    - targetCorrespondingSourceObject: {fileID: 2783782960125533881, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 338529287}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
 --- !u!1001 &6175174388333805725
 PrefabInstance:

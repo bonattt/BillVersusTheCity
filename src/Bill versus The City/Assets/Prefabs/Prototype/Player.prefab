@@ -153,6 +153,8 @@ GameObject:
   - component: {fileID: 7212405945941910509}
   - component: {fileID: 2012941016556226390}
   - component: {fileID: 4205565970539061229}
+  - component: {fileID: 8741898434085393183}
+  - component: {fileID: 1903757511592045748}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -258,12 +260,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
   - {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
   - {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
-  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
-  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
-  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   weapon_slots_enabled: 01010101010000000000
   switch_weapons_blocked: 0
   _current_slot: 0
@@ -314,6 +316,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reload_start_sound_path: reload_start
   reload_complete_sound_path: reload_finish
+--- !u!114 &8741898434085393183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af1aafb0fea08d4691e9b906021af6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handgun_max: 80
+  handgun_start: 80
+  rifle_max: 30
+  rifle_start: 30
+  shotgun_max: 10
+  shotgun_start: 10
+  debug_rifle: 0
+  debug_shotgun: 0
+--- !u!114 &1903757511592045748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd0e18cc90ef6b448cc98e568f55ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer_mask:
+    serializedVersion: 2
+    m_Bits: 1024
+  debug_can_interact: 0
 --- !u!1 &8455391820605880308
 GameObject:
   m_ObjectHideFlags: 0

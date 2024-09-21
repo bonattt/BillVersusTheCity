@@ -47,7 +47,6 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber
                     child.AddToClassList("weapon_slot_container_enabled");
                     child.AddToClassList("weapon_slot_container_selected");
                 } else {
-                    Debug.Log($"slot {i} != {slot}");
                     child.AddToClassList("weapon_slot_container_enabled");
                     child.RemoveFromClassList("weapon_slot_container_selected");
                 }

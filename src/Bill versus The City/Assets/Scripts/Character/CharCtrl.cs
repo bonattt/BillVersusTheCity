@@ -208,7 +208,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                     break;
 
                 case ActionCode.reload:
-                    StartReload();
+                    if (CanReload()) {
+                        StartReload();
+                    } else {
+                        // cannot reload, reset action code.
+                        current_action = ActionCode.none;
+                    }
                     break;
 
                 case ActionCode.aim:
@@ -298,11 +303,31 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // for weapons that reload single rounds, keep reloading
         if(wpn.current_ammo != wpn.ammo_capacity) {
             // if you have infinite ammo, OR if there is at least 1 bullet left, keep reloading
-            if (!ShouldReloadWithContainer(wpn) || ammo_container.GetCount(wpn.ammo_type) > 0) {
+            if (CanReload(wpn.ammo_type)) {
                 StartReload();
-            }
+            } 
         }
     }
+    public bool CanReload() {
+        // returns if the character can reload with the current_weapon.
+        IWeapon current = attack_controller.current_weapon;
+        if (current == null) { 
+            Debug.LogWarning("cannot reload, current weapon is null!");
+            return false; 
+        }
+        return CanReload(current);
+    }
+    public bool CanReload(IWeapon weapon) {
+        // cannot reload full weapon
+        if (weapon.ammo_capacity == weapon.current_ammo) { return false; }
+        return CanReload(weapon.ammo_type);
+    }
+
+    public bool CanReload(AmmoType type) {
+        // returns if the character is actually able to reload with the given ammo type
+        return !ShouldReloadWithContainer(type) || ammo_container.GetCount(type) > 0;
+    }
+
     public bool ShouldReloadWithContainer(IWeapon weapon) {
         // returns True if the character should reload from a container,
         // or False if the character should reload with infinite ammo
