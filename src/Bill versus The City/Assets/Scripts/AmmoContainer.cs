@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq; 
+
 using UnityEngine;
 
 public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffect
@@ -10,6 +12,8 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
     public int rifle_start = 30;
     public int shotgun_max = 10;
     public int shotgun_start = 10;
+
+    public int debug_rifle, debug_shotgun;
 
     private Dictionary<AmmoType, int> ammo_count = new Dictionary<AmmoType, int>();
     private Dictionary<AmmoType, int> ammo_max = new Dictionary<AmmoType, int>();
@@ -38,7 +42,8 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
     }
 
     public void TransferAmmoFrom(AmmoContainer other) {
-        foreach (AmmoType type in ammo_max.Keys) {
+        // iterate over only keys that are in both containiers
+        foreach (AmmoType type in ammo_max.Keys.Intersect(other.ammo_max.Keys)) {
             TransferAmmoFrom(type, other);
         }        
     }
@@ -53,6 +58,8 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
             this.ammo_count[type] += other.ammo_count[type];
             other.ammo_count[type] = 0;
         }
+        UpdateSubscribers();
+        other.UpdateSubscribers();
     }
 
     public int GetMax(AmmoType type) {
@@ -94,5 +101,15 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         if (other == null) {
             Debug.LogError($"unable to find AmmoContainer on {obj}!");
         }
+        other.TransferAmmoFrom(this);
+    }
+
+    void Update() {
+        UpdateDebug();
+    }
+
+    public void UpdateDebug() {
+        debug_rifle = ammo_count[AmmoType.rifle];
+        debug_shotgun = ammo_count[AmmoType.shotgun];
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInteractor : MonoBehaviour
 {
 
+    public LayerMask layer_mask; // = LayerMask.GetMask("Interaction");
     public bool debug_can_interact = false;
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class PlayerInteractor : MonoBehaviour
     }
 
     private Interaction GetInteraction() {
-        GameObject obj = InputSystem.current.GetHoveredObject();
+        GameObject obj = InputSystem.current.GetHoveredObject(layer_mask);
         if (obj != null) {
             Interaction interaction = obj.GetComponent<Interaction>();
             if (interaction == null) { Debug.Log("hovered object is null"); } 

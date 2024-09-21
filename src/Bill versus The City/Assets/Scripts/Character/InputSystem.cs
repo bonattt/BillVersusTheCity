@@ -37,12 +37,12 @@ public class InputSystem
         }
     }
 
-    public GameObject GetHoveredObject() {
+    public GameObject GetHoveredObject(LayerMask mask) {
         // gets a GameObject the mouse is hovering over.
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);;
         RaycastHit hit;
         // int layer_mask = LayerMask.GetMask(TACTICAL_UI_LAYER);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity)) { // }, layer_mask)) {
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) {
             return hit.collider.gameObject;
         }
         return null;
