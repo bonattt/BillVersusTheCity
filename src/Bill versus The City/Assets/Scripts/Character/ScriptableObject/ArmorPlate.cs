@@ -6,11 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Armor", menuName ="Data/Armor")]
 public class ArmorPlate : ScriptableObject, IArmor
 {
-    
+    public string _item_name;
+    public Sprite _item_icon;
     public float _armor_max_durability;
     public float _armor_hardness;
     public float _armor_protection;
     
+    
+    public string item_name { get { return _item_name; } }
+    public Sprite item_icon { get { return _item_icon; } }
+
     public float armor_max_durability { 
         get {
             return _armor_max_durability;

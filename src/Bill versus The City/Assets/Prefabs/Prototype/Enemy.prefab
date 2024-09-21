@@ -70,6 +70,7 @@ MonoBehaviour:
   debug_inaccuracy: 0
   debug_recoil: 0
   debug_aim_percent: 0
+  debug_sprint_inputp: 0
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
@@ -95,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e75bd6fe4d58fb40af8be675ff6c945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialize_weapon: {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
+  initialize_weapon: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   shoot_point: {fileID: 4280276152886177003}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   use_full_auto: 1

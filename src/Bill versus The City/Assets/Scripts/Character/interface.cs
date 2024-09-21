@@ -31,7 +31,7 @@ public interface IAttack {
 
 }
 
-public interface IArmor {
+public interface IArmor : IItem {
     // maximum HP of the armor
     public float armor_max_durability { get;}
 
@@ -57,9 +57,13 @@ public interface IAttackTarget {
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target);
 }
 
+public interface IItem {
+    public string item_name { get; }
+    public Sprite item_icon { get; }
+}
 
-public interface IWeapon {
-    public string weapon_name { get; }
+
+public interface IWeapon : IItem {
     // ammo
     public AmmoType ammo_type { get; }
     public int ammo_capacity { get; }

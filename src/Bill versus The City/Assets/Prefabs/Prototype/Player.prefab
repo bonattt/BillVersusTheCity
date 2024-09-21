@@ -233,6 +233,7 @@ MonoBehaviour:
   debug_inaccuracy: 0
   debug_recoil: 0
   debug_aim_percent: 0
+  debug_sprint_inputp: 0
 --- !u!114 &4665821343985391478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,9 +255,9 @@ MonoBehaviour:
   weapon_manager: {fileID: 7212405945941910509}
   init_slots:
   - {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
-  - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
   - {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
+  - {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}
   - {fileID: 11400000, guid: 771b45e7ea3396b48801aec010bbebb8, type: 2}

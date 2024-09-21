@@ -60,13 +60,13 @@ ITERATION 1
     [+] recoil decreases accuracy while shooting
     [+] Aiming increases accuracy
 
-[ ] Aiming
+[+] Aiming
     [+] Aiming accuracy
     [+] Aiming Camera
     [+] Aiming is actually good!
-    [ ] Aiming UI 
+    [X] Aiming UI 
 
-[ ] Difficulty System
+[X] Difficulty System --> do in another milestone
     [ ]
 
 [ ] Enemy Detection

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   _name: Rifle
+  _item_icon: {fileID: 21300000, guid: 362b9c4654ab6d24f8ed03fb2d65ff7e, type: 3}
   _ammo_type: 1
   _ammo_capacity: 30
   _reload_amount: 30

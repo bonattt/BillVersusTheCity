@@ -41,12 +41,10 @@ public class CameraFollow : MonoBehaviour
         mid_point = new Vector3(mid_point.x, desired_camera_height, mid_point.z);
 
         float distance_from_follow_target = FlatDistance(target_pos, mid_point);
-        // Debug.Log($"max_zoom_range: {max_zoom_range}, distance_from_follow_target: {distance_from_follow_target}, desired_camera_height: {desired_camera_height}");
         Vector3 camera_destination;
         if (distance_from_follow_target > max_zoom_range) {
             Vector3 vector_to = (mid_point - transform.position).normalized * max_zoom_range;
             camera_destination = target_pos + vector_to;
-            Debug.Log($"caping zoom at max_zoom_range! {mid_point} -> {camera_destination}");
         } else {
             camera_destination = mid_point;
         }

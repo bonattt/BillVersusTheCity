@@ -50,7 +50,7 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         if (weapon == null) {
             weapon_label.text = "-";
         } else {
-            weapon_label.text = $"{weapon.weapon_name}";
+            weapon_label.text = $"{weapon.item_name}";
         }
     }
     

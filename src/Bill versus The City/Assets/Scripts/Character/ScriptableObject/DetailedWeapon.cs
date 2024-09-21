@@ -7,6 +7,7 @@ using UnityEngine;
 public class DetailedWeapon : ScriptableObject, IWeapon
 {
     public string _name;
+    public Sprite _item_icon;
     // ammo
     public AmmoType _ammo_type;
     public int _ammo_capacity = 30;
@@ -39,9 +40,10 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _weapon_damage_max = 50f;
     public float _armor_penetration = 1f;
 
-    public string weapon_name {
-        get { return _name; }
-    }
+
+    public string item_name { get { return _name; } }
+    public Sprite item_icon { get { return _item_icon; } }
+
     public AmmoType ammo_type { 
         get { return _ammo_type; } 
     }
