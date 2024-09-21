@@ -12,14 +12,14 @@
 
 .weapon_slot_container_selected {
     background-color: rgba(197, 197, 197, 0.31);
-    border-left-color: rgb(0, 161, 18);
-    border-right-color: rgb(0, 161, 18);
-    border-top-color: rgb(0, 161, 18);
-    border-bottom-color: rgb(0, 161, 18);
-    border-top-width: 3px;
-    border-right-width: 3px;
-    border-bottom-width: 3px;
-    border-left-width: 3px;
+    border-left-color: rgb(19, 218, 42);
+    border-right-color: rgb(19, 218, 42);
+    border-top-color: rgb(19, 218, 42);
+    border-bottom-color: rgb(19, 218, 42);
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
 }
 
 .weapon_slot_container {

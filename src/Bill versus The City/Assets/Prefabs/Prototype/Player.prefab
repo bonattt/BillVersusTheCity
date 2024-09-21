@@ -264,7 +264,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
   - {fileID: 11400000, guid: 632e7a2c2fb436c418e2cd10c0a41933, type: 2}
-  weapon_slots_enabled: 01010101000000000000
+  weapon_slots_enabled: 01010101010000000000
   switch_weapons_blocked: 0
   _current_slot: 0
 --- !u!114 &7212405945941910509
