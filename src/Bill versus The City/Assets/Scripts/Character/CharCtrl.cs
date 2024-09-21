@@ -27,6 +27,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float walk_speed = 4.0f;
     public float sprint_multiplier = 1.75f;
 
+    private AmmoContainer ammo_container;
+
     public float start_reload_at;
     private float hit_stun_until = -1f;
     public float movement_speed {
@@ -151,6 +153,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();
         attack_controller = GetComponent<AttackController>();
+        ammo_container = GetComponent<AmmoContainer>();
     }
 
     // Update is called once per frame
@@ -282,18 +285,56 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         reloading = false;
         current_action = ActionCode.none;
         IWeapon wpn = attack_controller.current_weapon;
-        wpn.current_ammo += wpn.reload_amount;
-        if (wpn.current_ammo > wpn.ammo_capacity) {
-            wpn.current_ammo = wpn.ammo_capacity;
-        }
 
-        // for weapons that reload single rounds, keep reloading
-        if(wpn.current_ammo 
-                != wpn.ammo_capacity) {
-            StartReload();
+        if (ShouldReloadWithContainer(wpn)) {
+            _ReloadFromContainer(wpn);
+        }
+        else {
+            _ReloadGeneric(wpn);
         }
         attack_controller.UpdateSubscribers();
         UpdateFinishReload(attack_controller.current_weapon);
+
+        // for weapons that reload single rounds, keep reloading
+        if(wpn.current_ammo != wpn.ammo_capacity) {
+            // if you have infinite ammo, OR if there is at least 1 bullet left, keep reloading
+            if (!ShouldReloadWithContainer(wpn) || ammo_container.GetCount(wpn.ammo_type) > 0) {
+                StartReload();
+            }
+        }
+    }
+    public bool ShouldReloadWithContainer(IWeapon weapon) {
+        // returns True if the character should reload from a container,
+        // or False if the character should reload with infinite ammo
+        return ShouldReloadWithContainer(weapon.ammo_type);
+    }
+
+    public bool ShouldReloadWithContainer(AmmoType type) {
+        return (ammo_container != null) && (ammo_container.HasAmmoType(type));
+    }
+
+    private void _ReloadFromContainer(IWeapon weapon) {
+        // reloads a weapon, limitted by the reserves in an AmmoContainer
+
+        int availible_ammo = ammo_container.GetCount(weapon.ammo_type);
+        int ammo_needed = Math.Min(weapon.reload_amount, (weapon.ammo_capacity - weapon.current_ammo));
+        int reloaded_amount;
+        if (availible_ammo >= ammo_needed) {
+            reloaded_amount = ammo_needed;
+        }
+        else {
+            reloaded_amount = availible_ammo;
+        }
+        weapon.current_ammo += reloaded_amount;
+        ammo_container.UseAmmo(weapon.ammo_type, reloaded_amount);
+    }
+
+    private void _ReloadGeneric(IWeapon weapon) {
+        // reloads with an infinite reserve of ammo
+        weapon.current_ammo += weapon.reload_amount;
+        if (weapon.current_ammo > weapon.ammo_capacity) {
+            weapon.current_ammo = weapon.ammo_capacity;
+        }
     }
 
     private void TryToAttack() {

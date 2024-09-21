@@ -32,7 +32,7 @@ MonoBehaviour:
   _aim_zoom: 0.95
   _aim_move_speed: 0.35
   _max_zoom_range: 5
-  _bullet_speed: 45
+  _bullet_speed: 65
   _weapon_damage_min: 90
   _weapon_damage_max: 110
   _armor_penetration: 1

@@ -139,6 +139,15 @@ public interface IReloadManager {
     public void Unsubscribe(IReloadSubscriber sub);
 }
 
+public interface IGenericObserver {
+    public void UpdateObserver(IGenericObservable observable);
+}
+
+public interface IGenericObservable {
+    public void Subscribe(IGenericObserver sub);
+    public void Unusubscribe(IGenericObserver sub);
+}
+
 public interface IReloadSubscriber {
     public void StartReload(IReloadManager manager, IWeapon weapon);
     public void FinishReload(IReloadManager manager, IWeapon weapon);
