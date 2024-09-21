@@ -156,6 +156,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         if (
             (current_weapon.current_ammo > 0)
             &&(_last_shot_at + shot_cooldown <= Time.time)
+            &&(! InputSystem.IsNullPoint(attack_direction))
         ) {
             _FireAttack(attack_direction);
         }

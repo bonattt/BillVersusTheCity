@@ -64,9 +64,13 @@ public class InputSystem
             return hit.point;
         }
         else {
-            Debug.LogError("Cannot find Mouse Position REEEEEEE");
+            // Debug.LogError("Cannot find Mouse Position REEEEEEE");
             return NULL_POINT;
         }
+    }
+
+    public static bool IsNullPoint(Vector3 point) {
+        return float.IsNaN(point.x) || float.IsNaN(point.y) || float.IsNaN(point.z);
     }
 
     public bool AttackClickInput() {

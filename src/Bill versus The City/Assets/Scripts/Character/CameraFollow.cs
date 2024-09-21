@@ -97,7 +97,7 @@ public class CameraFollow : MonoBehaviour
     private Vector3 mouse_position {
         get {
             Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
-            if (mouse_pos != InputSystem.NULL_POINT) {
+            if (! InputSystem.IsNullPoint(mouse_pos)) {
                 last_mouse_position = mouse_pos;
             }
             return last_mouse_position + this.offset;
@@ -117,7 +117,9 @@ public class CameraFollow : MonoBehaviour
     }
 
     public float debug_shift_to_mouse = 0f;
+    public Vector3 debug_last_mouse_pos;
     private void SetDebug() {
         debug_shift_to_mouse = ShiftToMousePercent();
+        debug_last_mouse_pos = last_mouse_position;
     }
 }
