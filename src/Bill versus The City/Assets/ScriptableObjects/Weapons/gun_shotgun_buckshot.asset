@@ -10,20 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
-  m_Name: Shotgun
+  m_Name: gun_shotgun_buckshot
   m_EditorClassIdentifier: 
-  _name: shotgun
+  _name: shotgun (buckshot)
   _item_icon: {fileID: 21300000, guid: 219824c4331c8d64fa6ac45b42d9d582, type: 3}
-  _ammo_type: 2
+  weapon_setting: {fileID: 11400000, guid: e0eee3dd1d665284eb6339043cea0e9c, type: 2}
+  bullet_effect: {fileID: 11400000, guid: adc61a8755f42d740b642b2a3482c159, type: 2}
   _ammo_capacity: 6
   _reload_amount: 1
   _reload_time: 0.75
-  _firing_mode: 0
-  _semi_auto_fire_rate: 0.75
-  _full_auto_fire_rate: 0.1
-  _n_shots: 9
-  _aimed_inaccuracy: 10
-  _initial_inaccuracy: 10
   _time_to_aim: 1
   _recoil_inaccuracy: 0.5
   _recoil_max: 15
@@ -32,7 +27,3 @@ MonoBehaviour:
   _aim_zoom: 0.75
   _aim_move_speed: 0.5
   _max_zoom_range: 1
-  _bullet_speed: 55
-  _weapon_damage_min: 25
-  _weapon_damage_max: 40
-  _armor_penetration: 0

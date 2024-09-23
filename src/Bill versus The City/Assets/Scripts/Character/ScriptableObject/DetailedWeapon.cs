@@ -8,21 +8,18 @@ public class DetailedWeapon : ScriptableObject, IWeapon
 {
     public string _name;
     public Sprite _item_icon;
+
+    public WeaponSetting weapon_setting;
+    // public WeaponSetting weapon_setting { get { return (WeaponSetting) _weapon_setting; }}
+    public BulletEffect bullet_effect;
+    // public BulletEffect bullet_effect { get { return (BulletEffect) _bullet_effect; }}
     // ammo
-    public AmmoType _ammo_type;
+    // public AmmoType _ammo_type;
     public int _ammo_capacity = 30;
     public int _reload_amount = 30;
     public float _reload_time ;
 
-    // rate of fire
-    public FiringMode _firing_mode; 
-    public float _semi_auto_fire_rate = 0.25f;
-    public float _full_auto_fire_rate = 0.1f;
-    public int _n_shots = 1;
-
     // accuracy
-    public float _aimed_inaccuracy = 0f;
-    public float _initial_inaccuracy = 2f; 
     public float _time_to_aim = 1f;
     public float _recoil_inaccuracy = 0.5f;
     public float _recoil_max = 15f;
@@ -34,18 +31,11 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _aim_move_speed = 0.5f;
     public float _max_zoom_range = 5f;
 
-    // attack
-    public float _bullet_speed = 35f;
-    public float _weapon_damage_min = 30f;
-    public float _weapon_damage_max = 50f;
-    public float _armor_penetration = 1f;
-
-
     public string item_name { get { return _name; } }
     public Sprite item_icon { get { return _item_icon; } }
 
     public AmmoType ammo_type { 
-        get { return _ammo_type; } 
+        get { return bullet_effect.ammo_type; } 
     }
     public int ammo_capacity { 
         get { return _ammo_capacity; } 
@@ -60,27 +50,27 @@ public class DetailedWeapon : ScriptableObject, IWeapon
 
     // rate of fire
     public FiringMode firing_mode { 
-        get { return _firing_mode; }
+        get { return weapon_setting.firing_mode; }
     }
     public bool auto_fire { 
         get { return firing_mode == FiringMode.full_auto; }
     }
     public float semi_auto_fire_rate { 
-        get { return _semi_auto_fire_rate; }
+        get { return weapon_setting.fire_rate; }
     }
     public float full_auto_fire_rate { 
-        get { return _full_auto_fire_rate; }
+        get { return weapon_setting.fire_rate; }
     }
     public int n_shots {
-        get { return _n_shots; }
+        get { return bullet_effect.n_shots; }
     }
 
     // accuracy
     public float aimed_inaccuracy { 
-        get { return _aimed_inaccuracy; }
+        get { return bullet_effect.aimed_inaccuracy; }
     }
     public float initial_inaccuracy { 
-        get { return _initial_inaccuracy; }
+        get { return bullet_effect.initial_inaccuracy; }
     }
     public float time_to_aim { 
         get { return _time_to_aim; }
@@ -110,16 +100,16 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     
     
     public float bullet_speed { 
-        get { return _bullet_speed; }
+        get { return bullet_effect.bullet_speed; }
     }
     public float weapon_damage_min { 
-        get { return _weapon_damage_min; }
+        get { return bullet_effect.weapon_damage_min; }
     }
     public float weapon_damage_max { 
-        get { return _weapon_damage_max; }
+        get { return bullet_effect.weapon_damage_max; }
     }
     public float armor_penetration { 
-        get { return _armor_penetration; }
+        get { return bullet_effect.armor_penetration; }
     }
 
     public override string ToString() {
