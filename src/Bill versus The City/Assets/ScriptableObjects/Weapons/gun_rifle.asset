@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Rifle
   _item_icon: {fileID: 21300000, guid: 362b9c4654ab6d24f8ed03fb2d65ff7e, type: 3}
-  weapon_setting: {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
+  _weapon_settings:
+  - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
+  - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
   bullet_effect: {fileID: 11400000, guid: 1bf148443c6c889419e7498189d8def6, type: 2}
   _ammo_capacity: 30
   _reload_amount: 30

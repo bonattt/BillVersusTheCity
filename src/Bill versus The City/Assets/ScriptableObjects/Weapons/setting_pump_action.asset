@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: pump action
   _firing_mode: 0
-  _fire_rate: 0.5
+  _fire_rate: 0.75

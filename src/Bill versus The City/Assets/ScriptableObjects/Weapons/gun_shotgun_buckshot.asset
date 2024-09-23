@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: shotgun (buckshot)
   _item_icon: {fileID: 21300000, guid: 219824c4331c8d64fa6ac45b42d9d582, type: 3}
-  weapon_setting: {fileID: 11400000, guid: e0eee3dd1d665284eb6339043cea0e9c, type: 2}
+  _weapon_settings:
+  - {fileID: 11400000, guid: e0eee3dd1d665284eb6339043cea0e9c, type: 2}
   bullet_effect: {fileID: 11400000, guid: adc61a8755f42d740b642b2a3482c159, type: 2}
   _ammo_capacity: 6
   _reload_amount: 1

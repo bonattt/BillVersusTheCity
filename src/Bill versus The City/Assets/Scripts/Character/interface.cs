@@ -96,6 +96,9 @@ public interface IWeapon : IItem {
     public float aim_zoom { get; }
     public float aim_move_speed { get; }
     public float max_zoom_range { get; }
+    
+    public void NextWeaponSetting();
+    public void PreviousWeaponSetting();
 }
 
 public enum FiringMode {

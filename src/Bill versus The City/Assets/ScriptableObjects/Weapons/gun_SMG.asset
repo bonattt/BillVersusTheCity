@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: SMG
   _item_icon: {fileID: 21300000, guid: 1419e43d1f456314aa821b180bec4a72, type: 3}
-  weapon_setting: {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
+  _weapon_settings:
+  - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
+  - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
   bullet_effect: {fileID: 11400000, guid: 8ebc6d38bc880e0438d76a176368121f, type: 2}
   _ammo_capacity: 40
   _reload_amount: 40

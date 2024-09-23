@@ -9,12 +9,12 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public string _name;
     public Sprite _item_icon;
 
-    public WeaponSetting weapon_setting;
-    // public WeaponSetting weapon_setting { get { return (WeaponSetting) _weapon_setting; }}
+    public WeaponSetting[] _weapon_settings;
+    private int current_setting = 0;
+    public WeaponSetting weapon_setting { get { return _weapon_settings[current_setting]; }}
+
     public BulletEffect bullet_effect;
-    // public BulletEffect bullet_effect { get { return (BulletEffect) _bullet_effect; }}
-    // ammo
-    // public AmmoType _ammo_type;
+
     public int _ammo_capacity = 30;
     public int _reload_amount = 30;
     public float _reload_time ;
@@ -114,5 +114,19 @@ public class DetailedWeapon : ScriptableObject, IWeapon
 
     public override string ToString() {
         return $"DetailedWeapon<{_name}>";
+    }
+    
+    public void NextWeaponSetting() {
+        current_setting += 1;
+        if (current_setting >= _weapon_settings.Length) {
+            current_setting = 0;
+        }
+    }
+
+    public void PreviousWeaponSetting() {
+        current_setting -= 1;
+        if (current_setting < 0) {
+            current_setting = _weapon_settings.Length - 1;
+        }
     }
 }
