@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9198be484ac57a9409f789c857d798ef, type: 3}
-  m_Name: bullet_rifle
+  m_Name: ammo_slug
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
-  _name: handgun 9mm
-  ammo_type: 1
+  _name: shotgun slug
+  ammo_type: 2
   n_shots: 1
-  aimed_inaccuracy: 0
-  initial_inaccuracy: 5
-  bullet_speed: 65
-  weapon_damage_min: 90
-  weapon_damage_max: 110
-  armor_penetration: 5
+  aimed_inaccuracy: 3
+  initial_inaccuracy: 6
+  bullet_speed: 55
+  weapon_damage_min: 98
+  weapon_damage_max: 120
+  armor_penetration: 2
