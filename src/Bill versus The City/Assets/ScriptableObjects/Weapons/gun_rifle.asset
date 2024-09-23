@@ -28,4 +28,4 @@ MonoBehaviour:
   _recoil_shake: 0.1
   _aim_zoom: 0.95
   _aim_move_speed: 0.35
-  _max_zoom_range: 5
+  _max_zoom_range: 7

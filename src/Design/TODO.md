@@ -100,9 +100,9 @@ ITERATION 1
 [+] Bugs
     [+] Fix reload UI meter
 
-[ ] Enemy Behavior
-    [ ] Don't crowd the player
-    [ ] Actually aim
+[+] Enemy Behavior
+    [+] Don't crowd the player
+    [-] Actually aim
     
 
 
