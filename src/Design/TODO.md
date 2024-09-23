@@ -56,7 +56,7 @@ ITERATION 1
 [~] Accuracy System
     [+] Accuracy based on angle, instead of postion
     [+] accuracy from weapon
-    [ ] accuracy from enemy
+    [X] accuracy from enemy
     [+] recoil decreases accuracy while shooting
     [+] Aiming increases accuracy
 
@@ -69,13 +69,13 @@ ITERATION 1
 [X] Difficulty System --> do in another milestone
     [ ]
 
-[ ] Enemy Detection
+[X] Enemy Detection  --> do in another milestone
     [ ] Vision Cone detection
     [ ] Vision Range
     [ ] Hearing
     [ ] Detection not instant
 
-[ ] Player Detection
+[X] Player Detection --> not sure I will do at all
 
 [+] Weapons Mechanics
     [+] Ammo Pool
@@ -89,16 +89,21 @@ ITERATION 1
     [ ] Weapon-based shooting and reload sounds
 
 [ ] Truck
-    [ ] replenish ammo
+    [+] replenish ammo
     [ ] repair armor
     [ ] heal partial damage
-    [ ] limitted uses
+    [+] limitted uses
     [+] prototype model
 
 [+] Damage number UI
 
-[ ] Bugs
-    [ ] Fix reload UI meter
+[+] Bugs
+    [+] Fix reload UI meter
+
+[ ] Enemy Behavior
+    [ ] Don't crowd the player
+    [ ] Actually aim
+    
 
 
 =============================
@@ -106,11 +111,6 @@ ITERATION 1
 =============================
 
 [ ] Menus
-
-[ ] Ammo Pool
-
-[ ] Truck
-    [ ] Restore ammo from truck
 
 [ ] Enemy Detection
     [ ] Hearing

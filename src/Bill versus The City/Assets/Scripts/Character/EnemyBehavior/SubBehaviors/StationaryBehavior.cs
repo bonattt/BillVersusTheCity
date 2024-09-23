@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class StationaryBehavior : ISubBehavior {
     
+    public float shooting_rate { get { return 1f; }}
+    
     public StationaryBehavior() { /* do nothing */ }
     
     public void SetControllerFlags(EnemyBehavior parent) {

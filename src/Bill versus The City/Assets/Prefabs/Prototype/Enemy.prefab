@@ -75,7 +75,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  shooting_rate: 0.75
+  ctrl_shooting_rate: 0.75
   ctrl_target: {fileID: 0}
   ctrl_will_shoot: 1
   ctrl_waypoint: {x: 0, y: 0, z: 0}
@@ -185,6 +185,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   controller: {fileID: 3396656997431563555}
+  optimal_attack_range: 5
+  _shooting_rate: 1
+  debug_distance_to_target: 0
+  debug_sub_behavior: 
+  debug_behavior_mode: 0
 --- !u!195 &2365366885385776978
 NavMeshAgent:
   m_ObjectHideFlags: 0

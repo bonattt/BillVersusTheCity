@@ -14,7 +14,7 @@ using UnityEngine.AI;
     [SerializeField]
     public bool seeing_target { get; protected set; } // seeing the target last frame
 
-    public float shooting_rate = 0.75f;
+    public float ctrl_shooting_rate = 0.75f;
 
     //////////////////////////////
     /// Behavior controls ////////
@@ -94,10 +94,10 @@ using UnityEngine.AI;
     }
 
     public override bool AttackInput() {
-        // Debug.Log($"{Time.time} >= {this.last_attack_time} + {shooting_rate}: {Time.time >= (this.last_attack_time + shooting_rate)}");
+        // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
         if (seeing_target) {
             if (saw_target) {
-                return Time.time >= (this.last_attack_time + shooting_rate);
+                return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
             }
             else {
                 // start countdown to shoot once target is seen
