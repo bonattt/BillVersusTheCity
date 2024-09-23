@@ -47,6 +47,12 @@ public class PlayerMovement : CharCtrl
         controller.SimpleMove(move);
     }
 
+    protected override void PostUpdate() {
+        if (InputSystem.current.NextWeaponModeInput()) {
+            attack_controller.current_weapon.NextWeaponSetting();
+        }
+    }
+
     protected Vector3 ModifyMoveVector(Vector3 move) {
         return move * this.movement_speed;
     }

@@ -18,7 +18,7 @@ public class InputSystem
     public const KeyCode INVENTORY_MENU = KeyCode.I;
     public const KeyCode DEBUG_KEY = KeyCode.BackQuote;
     public const KeyCode DEBUG2_KEY = KeyCode.Mouse3;
-    public const KeyCode SWITCH_WEAPON = KeyCode.Alpha1;
+    public const KeyCode NEXT_WEAPON_MODE = KeyCode.X;
     public static readonly Vector3 NULL_POINT = new Vector3(float.NaN, float.NaN, float.NaN);
 
     private InputSystem() {
@@ -226,5 +226,9 @@ public class InputSystem
 
     public bool PreviousWeaponInput() {
         return false; // TODO --- implement
+    }
+
+    public bool NextWeaponModeInput() {
+        return Input.GetKeyDown(NEXT_WEAPON_MODE);
     }
 }
