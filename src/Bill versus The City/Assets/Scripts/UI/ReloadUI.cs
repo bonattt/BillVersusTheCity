@@ -8,6 +8,8 @@ using TMPro;
 public class ReloadUI : MonoBehaviour, IReloadSubscriber
 {
     public GameObject target;
+    public RectTransform reload_ui; 
+    public Vector3 mouse_offset = new Vector3(50f, -75f, 0f);
     public Image progress_bar;
     private IReloadManager manager;
 
@@ -31,7 +33,13 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber
     {
         if (reloading) {
             UpdateProgress();
+            UpdatePosition();
         }
+    }
+
+    private void UpdatePosition() {
+        Vector3 mouse = InputSystem.current.MouseScreenPosition();
+        reload_ui.position = mouse + mouse_offset;
     }
 
     private void UpdateProgress() {
