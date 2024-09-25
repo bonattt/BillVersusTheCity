@@ -112,6 +112,7 @@ public interface IWeapon : IItem {
     
     // effects
     public string gunshot_sound { get; }
+    public string empty_gunshot_sound { get; }
     public string reload_start_sound { get; }
     public string reload_complete_sound { get; }
     

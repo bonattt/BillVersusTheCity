@@ -154,12 +154,20 @@ public class AttackController : MonoBehaviour, IWeaponManager
     public void FireAttack(Vector3 attack_direction) {
         // fires an attack with the current weapon
         if (
-            (current_weapon.current_ammo > 0)
-            &&(_last_shot_at + shot_cooldown <= Time.time)
+            (_last_shot_at + shot_cooldown <= Time.time)
             &&(! InputSystem.IsNullPoint(attack_direction))
         ) {
-            _FireAttack(attack_direction);
+            if (current_weapon.current_ammo > 0) {
+                _FireAttack(attack_direction);
+            }
+            else {
+                _EmptyAttack();
+            }
         }
+    }
+
+    private void _EmptyAttack() {
+        AttackResolver.AttackEmpty(current_weapon, transform.position);
     }
 
     private void _FireAttack(Vector3 attack_direction) {

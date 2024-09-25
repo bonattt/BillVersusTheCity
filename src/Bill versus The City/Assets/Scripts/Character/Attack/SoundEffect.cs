@@ -72,3 +72,12 @@ public class ReloadCompleteSoundEffect : SoundEffect {
         return weapon.reload_complete_sound;
     }
 }
+
+public class EmptyGunshotSoundEffect : SoundEffect {
+
+    public EmptyGunshotSoundEffect() : base (AttackResolver.EMPTY_GUNSHOT_SOUND_PATH) { /* do nothing */ }
+
+    protected override string GetAttackSoundPath(IWeapon weapon) {
+        return weapon.empty_gunshot_sound;
+    }
+}

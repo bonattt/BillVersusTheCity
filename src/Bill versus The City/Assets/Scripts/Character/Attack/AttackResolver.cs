@@ -7,6 +7,7 @@ public static class AttackResolver {
     public const string PLACEHOLDER_ATTACK_HIT_PREFAB = "BloodSplatterEffect";
     public const string PLACEHOLDER_ATTACK_MISS_PREFAB = "MuzzelFlashEffectGray";
     public const string PLACEHOLDER_DAMAGE_SOUND_EFFECT = "damage_chiptone";
+    public const string EMPTY_GUNSHOT_SOUND_PATH = "empty_gunshot";
     public const string DEFAULT_GUNSHOT = "gunshot_default";
 
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
@@ -30,6 +31,10 @@ public static class AttackResolver {
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB)
     };
     private static IAttackMissEffect[] DEBUG_MISS_EFFECTS = new IAttackMissEffect[]{};
+    private static IWeaponEffect[] EMPTY_SHOOT_EFFECT = new IWeaponEffect[]{
+        new EmptyGunshotSoundEffect()
+    };
+    private static IWeaponEffect[] DEBUG_EMPTY_SHOOT_EFFECT = new IWeaponEffect[]{};
 
     public static void ResolveAttackHit(IAttack attack, 
             IAttackTarget target, Vector3 hit_location) {
@@ -73,6 +78,13 @@ public static class AttackResolver {
             return MISS_EFFECTS;
         }
         return ConcatinateArrays(MISS_EFFECTS, DEBUG_MISS_EFFECTS);
+    }
+
+    private static IWeaponEffect[] GetEmptyShotEffects() {
+        if (!DebugMode.inst.debug_enabled) {
+            return EMPTY_SHOOT_EFFECT;
+        }
+        return ConcatinateArrays(EMPTY_SHOOT_EFFECT, DEBUG_EMPTY_SHOOT_EFFECT);
     }
 
     private static T[] ConcatinateArrays<T>(T[] firstArray, T[] secondArray){
@@ -155,6 +167,12 @@ public static class AttackResolver {
 
         foreach (IAttackMissEffect effect in GetMissEffects()) {
             effect.DisplayEffect(location, attack);
+        }
+    }
+
+    public static void AttackEmpty(IWeapon weapon, Vector3 location) {
+        foreach (IWeaponEffect effect in GetEmptyShotEffects()) {
+            effect.DisplayWeaponEffect(location, weapon);
         }
     }
 
