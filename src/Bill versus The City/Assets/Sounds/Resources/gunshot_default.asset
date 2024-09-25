@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: gunshot_default
   m_EditorClassIdentifier: 
   _sound_name: default gunshot
-  _clip: {fileID: 8300000, guid: 52712f2f50f1a394ea7431ee225f4016, type: 3}
+  _clip: {fileID: 8300000, guid: bcd580fd7c386494299bb448f1edd60a, type: 3}
   _volume: 0.5
   _default_category: 0

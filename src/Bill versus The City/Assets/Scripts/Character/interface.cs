@@ -33,6 +33,17 @@ public interface IAttack {
 
 }
 
+public class GenericAttack : IAttack {
+    
+    public IAttackTarget attacker { get; set; }
+    public IWeapon weapon { get; set; }
+    public float attack_damage_min { get; set; }
+    public float attack_damage_max { get; set; }
+    public float armor_penetration { get; set; }
+    public bool ignore_armor { get; set; }
+    public float final_damage { get; set; }
+}
+
 public interface IArmor : IItem {
     // maximum HP of the armor
     public float armor_max_durability { get;}
@@ -101,6 +112,8 @@ public interface IWeapon : IItem {
     
     // effects
     public string gunshot_sound { get; }
+    public string reload_start_sound { get; }
+    public string reload_complete_sound { get; }
     
     public void NextWeaponSetting();
     public void PreviousWeaponSetting();

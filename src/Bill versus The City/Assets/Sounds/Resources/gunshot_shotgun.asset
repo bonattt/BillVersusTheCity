@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: gunshot_shotgun
   m_EditorClassIdentifier: 
   _sound_name: shotgun blast
-  _clip: {fileID: 8300000, guid: 56d1056023b952441a637cfeace7fe93, type: 3}
+  _clip: {fileID: 8300000, guid: 1130ce1802b23a24a9b4968c27b8e78b, type: 3}
   _volume: 1
   _default_category: 0

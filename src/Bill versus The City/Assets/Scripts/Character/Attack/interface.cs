@@ -15,3 +15,8 @@ public interface IAttackMissEffect {
     // visual effect when an attack hits a wall
     public void DisplayEffect(Vector3 shoot_point, IAttack attack);
 }
+
+public interface IWeaponEffect {
+    // visual effect which doesn't require an attack
+    public void DisplayWeaponEffect(Vector3 point, IWeapon weapon);
+}
