@@ -28,3 +28,4 @@ MonoBehaviour:
   _aim_zoom: 0.75
   _aim_move_speed: 0.5
   _max_zoom_range: 2.5
+  _gunshot_sound: gunshot_shotgun

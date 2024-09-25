@@ -24,10 +24,12 @@ public interface ICharStatusSubscriber {
 public interface IAttack {
     // TODO
     public IAttackTarget attacker { get; }
+    public IWeapon weapon { get; }
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
     public float armor_penetration { get; }
     public bool ignore_armor { get; }
+    public float final_damage { get; set; }
 
 }
 
@@ -96,6 +98,9 @@ public interface IWeapon : IItem {
     public float aim_zoom { get; }
     public float aim_move_speed { get; }
     public float max_zoom_range { get; }
+    
+    // effects
+    public string gunshot_sound { get; }
     
     public void NextWeaponSetting();
     public void PreviousWeaponSetting();

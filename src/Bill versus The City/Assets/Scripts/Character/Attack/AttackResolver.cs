@@ -7,7 +7,7 @@ public static class AttackResolver {
     public const string PLACEHOLDER_ATTACK_HIT_PREFAB = "BloodSplatterEffect";
     public const string PLACEHOLDER_ATTACK_MISS_PREFAB = "MuzzelFlashEffectGray";
     public const string PLACEHOLDER_DAMAGE_SOUND_EFFECT = "damage_chiptone";
-    public const string PLACEHOLDER_GUNSHOT = "gunshot";
+    public const string DEFAULT_GUNSHOT = "gunshot_default";
 
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB),
@@ -20,7 +20,7 @@ public static class AttackResolver {
 
     private static IAttackShootEffect[] SHOOT_EFFECTS = new IAttackShootEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB),
-        new SoundEffect(PLACEHOLDER_DAMAGE_SOUND_EFFECT)
+        new GunshotSoundEffect()
     };
     
 
@@ -45,10 +45,10 @@ public static class AttackResolver {
         else {
             attack_damage = ResolveGunDamageArmored(attack, status, hit_location);
         }
-        
+        attack.final_damage = attack_damage;
         foreach (IAttackHitEffect effect in GetDamageEffects()) {
             effect.DisplayDamageEffect(
-                target.GetHitTarget(), hit_location, attack_damage);
+                target.GetHitTarget(), hit_location, attack);
         }
         target.OnAttackHitRecieved(attack);
         attack.attacker.OnAttackHitDealt(attack, target);
@@ -154,7 +154,7 @@ public static class AttackResolver {
     public static void AttackMiss(IAttack attack, Vector3 location) {
 
         foreach (IAttackMissEffect effect in GetMissEffects()) {
-            effect.DisplayEffect(location);
+            effect.DisplayEffect(location, attack);
         }
     }
 
@@ -162,7 +162,7 @@ public static class AttackResolver {
         // Displays attack effects for firing a weapon
 
         foreach (IAttackShootEffect effect in GetShootEffects()) {
-            effect.DisplayEffect(location);
+            effect.DisplayEffect(location, attack);
         }
     }
 }

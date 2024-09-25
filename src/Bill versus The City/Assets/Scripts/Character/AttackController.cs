@@ -173,6 +173,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
             bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
             bullet = bullet_obj.GetComponent<Bullet>();
+            bullet.weapon = current_weapon;
             bullet.attack_damage_max = current_weapon.weapon_damage_max;
             bullet.attack_damage_min = current_weapon.weapon_damage_min;
             bullet.armor_penetration = current_weapon.armor_penetration;
@@ -181,7 +182,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         current_recoil += current_weapon.recoil_inaccuracy;
         current_weapon.current_ammo -= 1;
         if (bullet != null) {
-            AttackResolver.AttackStart(bullet, shoot_point.position); // Only create a muzzel flash once for a shotgun
+            AttackResolver.AttackStart(bullet, shoot_point.position); // Only create a shot effects once for a shotgun
         }
         else {
             Debug.LogWarning("bullet is null!");

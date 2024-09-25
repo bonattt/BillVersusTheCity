@@ -12,12 +12,12 @@ public class SpawnPrefabEffect : IAttackHitEffect,
     }
     
     public void DisplayDamageEffect(GameObject hit_target,
-            Vector3 hit_location, float damage) {
+            Vector3 hit_location, IAttack attack) {
         GameObject spawned_prefab = SpawnPrefab(hit_location);
-        ConfigureDamageEffect(spawned_prefab, hit_target, hit_location, damage);
+        ConfigureDamageEffect(spawned_prefab, hit_target, hit_location, attack.final_damage);
     }
 
-    public void DisplayEffect(Vector3 hit_location) {
+    public void DisplayEffect(Vector3 hit_location, IAttack attack) {
         SpawnPrefab(hit_location);
     }
 

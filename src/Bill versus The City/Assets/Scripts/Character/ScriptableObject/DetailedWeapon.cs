@@ -31,6 +31,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float _aim_move_speed = 0.5f;
     public float _max_zoom_range = 5f;
 
+    // effects
+    public string _gunshot_sound = null;
+
     public string item_name { get { return _name; } }
     public Sprite item_icon { get { return _item_icon; } }
 
@@ -110,6 +113,10 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float armor_penetration { 
         get { return bullet_effect.armor_penetration; }
+    }
+
+    public string gunshot_sound {
+        get { return _gunshot_sound; }
     }
 
     public override string ToString() {

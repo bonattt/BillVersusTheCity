@@ -103,8 +103,53 @@ ITERATION 1
 [+] Enemy Behavior
     [+] Don't crowd the player
     [-] Actually aim
-    
 
+=============================
+    DEMO NOTES
+SOOSH:
+    - rooms too big
+        - enemies very hard too see
+    - can shoot through walls
+    - alt is the alternative for 
+    - zoom out for weapon zoom
+
+
+    - trying to shoot with no ammo feels bad
+        - make a click or auto-reload
+    - cancel reload cancels on empty gun???
+
+
+
+================
+==== Demo 2 ====
+================
+
+[ ] Enemies 
+    [ ] Enemies reload
+
+[ ] Settings system
+    [ ] Observer pattern
+    [ ] Font size
+    [ ] Volume
+    [ ] difficulty
+
+[ ] Menus
+    [ ] Exit Game
+    [ ] Restart Level
+    [ ] Settings Menu
+
+[ ] Sounds
+    [ ] weapon specific sounds
+        [ ] Shoot
+        [ ] Reload
+    [ ] Shoot Empty Weapon Sound
+
+[ ] Fixes
+    [ ] Shooting through walls
+    [ ] Cancel Reload with Aim feels bad
+    
+[ ] Weapons
+    [ ] Zoom out camera while aiming
 
 =============================
 ==== Unplanned features =====
