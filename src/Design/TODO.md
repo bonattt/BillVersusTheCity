@@ -149,7 +149,8 @@ SOOSH:
     [+] Cancel Reload with Aim feels bad
     
 [ ] Weapons
-    [ ] Zoom out camera while aiming
+    [~] Zoom out camera while aiming
+    [~] Mouse sensitivity while aiming
 
 =============================
 ==== Unplanned features =====
