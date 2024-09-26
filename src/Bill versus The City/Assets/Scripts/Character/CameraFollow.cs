@@ -44,9 +44,9 @@ public class CameraFollow : MonoBehaviour
         Vector3 camera_destination;
         if (distance_from_follow_target > max_zoom_range) {
             Vector3 vector_to = (mid_point - transform.position).normalized * max_zoom_range;
-            camera_destination = target_pos + vector_to;
+            camera_destination = target_pos + vector_to + new Vector3(0f, zoom_out_distance, 0f);
         } else {
-            camera_destination = mid_point;
+            camera_destination = mid_point + new Vector3(0f, zoom_out_distance, 0f);
         }
         
         transform.position = Vector3.Slerp(transform.position, camera_destination, this.slerp * Time.deltaTime);
@@ -94,6 +94,15 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
+    public const float ZOOM_OUT_CONSTANT = 10f;
+    public float zoom_out_distance {
+        //  height to raise the camera to zoom out when aiming.
+        get {
+            // return 0f;
+            return ShiftToMousePercent() * ZOOM_OUT_CONSTANT;
+        }
+    }
+
     private Vector3 mouse_position {
         get {
             Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
@@ -117,9 +126,11 @@ public class CameraFollow : MonoBehaviour
     }
 
     public float debug_shift_to_mouse = 0f;
+    public float debug_zoom_out_distance = 0f;
     public Vector3 debug_last_mouse_pos;
     private void SetDebug() {
         debug_shift_to_mouse = ShiftToMousePercent();
+        debug_zoom_out_distance = zoom_out_distance;
         debug_last_mouse_pos = last_mouse_position;
     }
 }

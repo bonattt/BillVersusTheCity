@@ -36,6 +36,9 @@ public class InputSystem
             return _current;
         }
     }
+    public GameObject GetHoveredObject() {
+        return GetHoveredObject(LayerMask.GetMask("Interaction"));
+    }
 
     public GameObject GetHoveredObject(LayerMask mask) {
         // gets a GameObject the mouse is hovering over.
@@ -57,10 +60,14 @@ public class InputSystem
     }
 
     public Vector3 MouseWorldPosition() {
+        LayerMask mouse_coordinates = LayerMask.GetMask("MouseCoordinates");
+        return MouseWorldPosition(mouse_coordinates);
+    }
+    public Vector3 MouseWorldPosition(LayerMask mask) {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);;
         RaycastHit hit;
         // int layer_mask = LayerMask.GetMask(TACTICAL_UI_LAYER);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity)) { // }, layer_mask)) {
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) { // }, layer_mask)) {
             return hit.point;
         }
         else {
