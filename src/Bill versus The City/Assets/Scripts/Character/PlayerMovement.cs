@@ -26,7 +26,7 @@ public class PlayerMovement : CharCtrl
         if (! this.reloading) {
             return false;
         }
-        return InputSystem.current.ReloadInput();
+        return InputSystem.current.ReloadInput() || InputSystem.current.AttackClickInput();
     }
     
     public override bool AimInput() {

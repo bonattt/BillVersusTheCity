@@ -364,6 +364,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     private void TryToAttack() {
         if (!is_hit_stunned && AttackInput() && !reloading && !is_spinting) {
+            if (current_action == ActionCode.cancel_reload) {
+                // shooting can be used to cancel reload. in that case, cancel reload instead of shooting
+                // cannot shoot the same frame you cancel reload
+                return; 
+            }
             PerformAttack();
         }
     }

@@ -139,14 +139,14 @@ SOOSH:
     [ ] Settings Menu
 
 [ ] Sounds
-    [ ] weapon specific sounds
-        [ ] Shoot
-        [ ] Reload
-    [ ] Shoot Empty Weapon Sound
+    [+] weapon specific sounds
+        [+] Shoot
+        [+] Reload
+    [+] Shoot Empty Weapon Sound
 
 [ ] Fixes
     [ ] Shooting through walls
-    [ ] Cancel Reload with Aim feels bad
+    [+] Cancel Reload with Aim feels bad
     
 [ ] Weapons
     [ ] Zoom out camera while aiming
