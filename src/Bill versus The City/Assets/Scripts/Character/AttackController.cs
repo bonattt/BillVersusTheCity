@@ -113,9 +113,13 @@ public class AttackController : MonoBehaviour, IWeaponManager
         }
         AttackControllerUpdate();
         UpdateRecoil();
-
+        UpdateAimSensitivity();
         // if (! _aim_this_frame) { StopAim(); }
         // _aim_this_frame = false;
+    }
+
+    private void UpdateAimSensitivity() {
+        InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
 
 
@@ -136,6 +140,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         }
     }
     public void StopAim() {
+        InputSystem.current.mouse_sensitivity_percent = 1f;
         start_aim_at = null;
     }
 

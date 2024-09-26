@@ -36,6 +36,36 @@ public class InputSystem
             return _current;
         }
     }
+
+    private float _base_mouse_sensitivity = 1f;
+    public float base_mouse_sensitivity {
+        get { return _base_mouse_sensitivity; }
+        set { 
+            _base_mouse_sensitivity = value; 
+            SetMouseSensitivity(_base_mouse_sensitivity * _mouse_sensitivity_percent);
+        }
+    }
+
+    private float _mouse_sensitivity_percent = 1f;
+    public float mouse_sensitivity_percent {
+        get { return _mouse_sensitivity_percent; }
+        set { 
+            if (value <= 0) {
+                _mouse_sensitivity_percent = 0f; 
+            } else if (value >= 1) {
+                _mouse_sensitivity_percent = 1f; 
+            } else {
+                _mouse_sensitivity_percent = value; 
+            }
+            SetMouseSensitivity(_base_mouse_sensitivity * _mouse_sensitivity_percent);
+        }
+    }
+
+    private void SetMouseSensitivity(float sensitivity) {
+        // applies mouse sensitivity settings
+        AimingMouseSensitivity.inst.sensitivity = sensitivity;
+    }
+
     public GameObject GetHoveredObject() {
         return GetHoveredObject(LayerMask.GetMask("Interaction"));
     }
