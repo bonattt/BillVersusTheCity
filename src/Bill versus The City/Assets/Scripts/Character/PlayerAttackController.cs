@@ -20,10 +20,9 @@ public class PlayerAttackController : AttackController
     // public void UpdateWeapon(int slot, IWeapon weapon) {
     //     current_weapon = weapon;
     // }
-    public override void UpdateSubscribers() {
-        foreach (IWeaponManagerSubscriber sub in subscribers) {
-            sub.UpdateWeapon(current_slot, current_weapon);
-        }
+
+    private void UpdateAimSensitivity() {
+        InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
 
     protected override void AttackControllerStart() {
@@ -42,7 +41,15 @@ public class PlayerAttackController : AttackController
     protected override void AttackControllerUpdate()
     {
         TrySwitchWeapons();
+        UpdateSubscribers();
     }
+    
+    public override void UpdateSubscribers() {
+        foreach (IWeaponManagerSubscriber sub in subscribers) {
+            sub.UpdateWeapon(current_slot, current_weapon);
+        }
+    }
+    
 
     private void TrySwitchWeapons() {
         // Polls for player inputs, and switches weapons if necessary

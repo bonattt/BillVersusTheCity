@@ -11,8 +11,10 @@ public class AimingMouseSensitivity : MonoBehaviour
     void Awake() {
         inst = this;
     }
- 
+
     void Start() {
+        // Debug.Log($"initialized AimingMouseSensitivity on {transform.parent.gameObject}/{this.gameObject}");
+
         // Store the initial mouse position
         last_mouse_position = Input.mousePosition;
     }

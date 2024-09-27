@@ -113,15 +113,9 @@ public class AttackController : MonoBehaviour, IWeaponManager
         }
         AttackControllerUpdate();
         UpdateRecoil();
-        UpdateAimSensitivity();
         // if (! _aim_this_frame) { StopAim(); }
         // _aim_this_frame = false;
     }
-
-    private void UpdateAimSensitivity() {
-        InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
-    }
-
 
     private void UpdateRecoil() {
         float recoil_decay = current_weapon.recoil_recovery;
