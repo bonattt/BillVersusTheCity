@@ -130,9 +130,10 @@ SOOSH:
 [ ] Settings system
     [ ] Observer pattern
     [ ] Font size
-    [ ] Volume -> float 
+    [+] Volume -> float 
     [X] graphics (do later, but must be supported) -> bool, floats, ints, enums
-    [ ] difficulty -> numbers, enums
+    [X] difficulty (do later) -> numbers, enums
+    [ ] Settings UI
 
 [ ] Menus
     [ ] Exit Game
