@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class InputSystem
+public class InputSystem : ISettingsObserver 
 {
     public const string MOVE_X = "Horizontal";
     public const string MOVE_Y = "Vertical";
@@ -25,16 +25,26 @@ public class InputSystem
         // if (_current == null) {
         //     _current = this;
         // }
+        if (_current != null) {
+            GameSettings.inst.game_play_settings.Unsubscribe(_current);
+        }
+        GameSettings.inst.game_play_settings.Subscribe(this);
+        _current = this;
+
     }
 
     private static InputSystem _current = null;
     public static InputSystem current {
         get {
             if (_current == null) {
-                _current = new InputSystem();
+                new InputSystem();
             }
             return _current;
         }
+    }
+
+    public float mouse_sensitivity {
+        get { return base_mouse_sensitivity * mouse_sensitivity_percent; }
     }
 
     private float _base_mouse_sensitivity = 1f;
@@ -42,7 +52,6 @@ public class InputSystem
         get { return _base_mouse_sensitivity; }
         set { 
             _base_mouse_sensitivity = value; 
-            SetMouseSensitivity(_base_mouse_sensitivity * _mouse_sensitivity_percent);
         }
     }
 
@@ -57,13 +66,7 @@ public class InputSystem
             } else {
                 _mouse_sensitivity_percent = value; 
             }
-            SetMouseSensitivity(_base_mouse_sensitivity * _mouse_sensitivity_percent);
         }
-    }
-
-    private void SetMouseSensitivity(float sensitivity) {
-        // applies mouse sensitivity settings
-        AimingMouseSensitivity.inst.sensitivity = sensitivity;
     }
 
     public GameObject GetHoveredObject() {
@@ -267,5 +270,29 @@ public class InputSystem
 
     public bool NextWeaponModeInput() {
         return Input.GetKeyDown(NEXT_WEAPON_MODE);
+    }
+
+    public void SettingsUpdated(ISettingsModule updated, string field) {
+        switch(updated) {
+            case GamePlaySettings gameplay_settings:
+                GamePlaySettingsUpdated(gameplay_settings, field);
+                break;  
+
+            default:
+                // do nothing, no updates needed
+                break;
+        }
+    }
+
+    private void GamePlaySettingsUpdated(GamePlaySettings settings, string field) {
+        switch (field) {
+            case GamePlaySettings.MOUSE_SENSITIVITY:
+                base_mouse_sensitivity = settings.mouse_sensitivity;
+                break;
+
+            default:
+                // do nothing
+                break;
+        }
     }
 }

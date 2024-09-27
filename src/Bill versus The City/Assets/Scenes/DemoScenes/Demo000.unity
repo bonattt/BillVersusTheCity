@@ -3492,6 +3492,8 @@ GameObject:
   - component: {fileID: 1582257779}
   - component: {fileID: 1582257778}
   - component: {fileID: 1582257780}
+  - component: {fileID: 1582257781}
+  - component: {fileID: 1582257782}
   m_Layer: 0
   m_Name: Settings
   m_TagString: Untagged
@@ -3539,6 +3541,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TEST: 
+--- !u!114 &1582257781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582257777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3642daa7c8b4f419724bd9a554eee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  write: 0
+  master_volume: 1
+  menu_volume: 1
+  music_volume: 1
+  sfx_volume: 1
+--- !u!114 &1582257782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582257777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e0d7c02da80ec4a9b78006627bdae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  write: 0
+  mouse_sensitivity: 1
 --- !u!1 &1628558833
 GameObject:
   m_ObjectHideFlags: 0

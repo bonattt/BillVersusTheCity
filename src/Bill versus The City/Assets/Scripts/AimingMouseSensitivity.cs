@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AimingMouseSensitivity : MonoBehaviour
 {
-    public float sensitivity = 1.0f; // Sensitivity multiplier
+    public float debug_sensitivity = 1.0f; // Sensitivity multiplier
     private Vector3 last_mouse_position; // Store last frame's mouse position
 
     public static AimingMouseSensitivity inst { get; private set; }
@@ -13,13 +13,16 @@ public class AimingMouseSensitivity : MonoBehaviour
     }
 
     void Start() {
-        // Debug.Log($"initialized AimingMouseSensitivity on {transform.parent.gameObject}/{this.gameObject}");
+        Debug.Log($"initialized AimingMouseSensitivity on {transform.parent.gameObject}/{this.gameObject}");
 
         // Store the initial mouse position
         last_mouse_position = Input.mousePosition;
     }
 
     void Update() {
+        float sensitivity = InputSystem.current.mouse_sensitivity;
+        debug_sensitivity = sensitivity;
+        
         // Get mouse movement delta since the last frame
         Vector3 mouse_delta = Input.mousePosition - last_mouse_position;
         

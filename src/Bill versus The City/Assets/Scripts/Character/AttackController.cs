@@ -134,7 +134,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
         }
     }
     public void StopAim() {
-        InputSystem.current.mouse_sensitivity_percent = 1f;
         start_aim_at = null;
     }
 

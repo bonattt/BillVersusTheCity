@@ -13,6 +13,7 @@ public class GameSettings {
     // public const string DIFFICULTY_SETTINGS = "difficulty";
 
     public AudioSettings audio_settings = new AudioSettings();
+    public GamePlaySettings game_play_settings = new GamePlaySettings();
 
     public GameSettings() {
         if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }

@@ -41,10 +41,12 @@ public class PlayerAttackController : AttackController
     protected override void AttackControllerUpdate()
     {
         TrySwitchWeapons();
-        UpdateSubscribers();
+        // UpdateSubscribers();
+        UpdateAimSensitivity();
     }
     
     public override void UpdateSubscribers() {
+        // update UI's to display changes to equipped weapon or ammo amound
         foreach (IWeaponManagerSubscriber sub in subscribers) {
             sub.UpdateWeapon(current_slot, current_weapon);
         }
