@@ -13,7 +13,6 @@ public class SpawnDamageNumberEffect : SpawnPrefabEffect {
         // hook to extend this class and setup the spawned prefab. By default, do nothing
         DamageNumberController effect = spawned_prefab.GetComponent<DamageNumberController>();
         effect.damage_amount = Mathf.Round(damage);
-        Debug.Log($"spawn damage number {damage}");
     }
 
 }
