@@ -22,7 +22,7 @@ public class SFXSystem : MonoBehaviour
     }
 
     public void PlaySound(ISound sound, Vector3 target) {
-        PlaySound(sound.clip, target, sound.volume);
+        PlaySound(sound.clip, target, GetVolume(sound));
     }
 
     public void PlaySound(AudioClip audio_clip, Vector3 target, float volume) {
@@ -45,6 +45,13 @@ public class SFXSystem : MonoBehaviour
 
     public void PlayRandomClip(ISoundSet sound_set, Vector3 target) {
         PlaySound(sound_set.GetRandomSound(), target);
+        PlaySound(sound_set.GetRandomSound(), target);
+    }
+
+    public static float GetVolume(ISound sound) {
+        // gets the volume level (0-1 percent) by applying the master volume, category volume, and clip volume
+        AudioSettings settings = GameSettings.inst.audio_settings;
+        return sound.volume * settings.GetVolume(sound.default_category);
     }
 }
 
