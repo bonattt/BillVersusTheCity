@@ -362,8 +362,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
+    private bool CanAttack() {
+        return !is_hit_stunned && !reloading && !is_spinting && Time.timeScale != 0f;
+    }
+
     private void TryToAttack() {
-        if (!is_hit_stunned && AttackInput() && !reloading && !is_spinting) {
+        if (AttackInput() && CanAttack()) {
             if (current_action == ActionCode.cancel_reload) {
                 // shooting can be used to cancel reload. in that case, cancel reload instead of shooting
                 // cannot shoot the same frame you cancel reload
@@ -456,11 +460,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public virtual bool AttackInput() {
         // Indicates that a main attack should be made this frame.
         return false;
-    }
-
-    public virtual bool CanAttack() {
-        // Indicates whether an attack can be started this frame;
-        return true;
     }
 
     public abstract Vector3 MoveVector();
