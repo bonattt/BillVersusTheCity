@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UXML/DialogueStyles.uss?fileID=7433441132597879392&amp;guid=f61b3e054cba3af46834e258ffef606b&amp;type=3#DialogueStyles" />
+    <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center; align-self: auto; align-items: center;">
+        <ui:VisualElement name="Window" style="flex-grow: 1; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); background-color: rgb(176, 176, 176); max-width: 50%; min-width: 400px; max-height: 35%; min-height: 200px; height: 25%; width: 40%;">
+            <ui:VisualElement name="Header" style="flex-grow: 1; width: 100%; height: 25%;">
+                <ui:Label tabindex="-1" text="Dialogue Header" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderLabel" class="dialogue_header" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Body" style="flex-grow: 1; height: 50%; width: 100%;">
+                <ui:Label tabindex="-1" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu tortor eget justo ullamcorper malesuada nec a nisi. Phasellus hendrerit id ex eget vestibulum. Phasellus pretium ac risus in viverra." parse-escape-sequences="true" display-tooltip-when-elided="true" name="Contents" class="dialogue_contents_label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Controls" style="flex-grow: 1; height: 25%; width: 100%; align-items: center; align-self: auto; justify-content: center; flex-direction: row;">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfirmButton" class="dialogue_button" style="background-color: rgb(103, 103, 103);">
+                    <ui:Label tabindex="-1" text="Continue" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ConfirmLabel" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

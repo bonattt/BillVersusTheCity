@@ -1,0 +1,46 @@
+.confirm_dialogue_button {
+    background-color: rgb(77, 183, 92);
+}
+
+.reject_dialogue_button {
+    background-color: rgb(154, 75, 75);
+}
+
+.dialogue_button {
+    max-width: none;
+    width: 200px;
+    height: 80%;
+    max-height: none;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.dialogue_contents_label {
+    text-overflow: clip;
+    white-space: normal;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.dialogue_header {
+    font-size: 40px;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    white-space: normal;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}

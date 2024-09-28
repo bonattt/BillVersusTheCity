@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pause_menu_prefab;
+    public GameObject pause_menu_prefab, yes_no_dialogue;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -106,15 +106,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenSubMenuPrefab(GameObject prefab) {
+    public GameObject OpenSubMenuPrefab(GameObject prefab) {
         GameObject new_menu = Instantiate(prefab) as GameObject;
-        if (open_menu == null) {
-            new_menu.transform.parent = transform;
-        } else {
-            new_menu.transform.parent = open_menu.transform;
-        }
+        new_menu.transform.parent = transform;
         sub_menus.Push(new_menu);
         paused = true;
+        return new_menu;
     }
 
     public static void PlayMenuClick(ClickEvent _) {
@@ -136,6 +133,13 @@ public class MenuManager : MonoBehaviour
         foreach (Button b in buttons) {
             AddGenericEvents(b);
         }
+    }
+
+    public YesNoDialogueController OpenNewDialogue() {
+        GameObject new_menu = OpenSubMenuPrefab(yes_no_dialogue);
+        YesNoDialogueController script = new_menu.GetComponent<YesNoDialogueController>();
+        script.Configure();
+        return script;
     }
 
 }
