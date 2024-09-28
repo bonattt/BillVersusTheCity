@@ -6,4 +6,6 @@ public interface IMenuManager {
 
 public interface ISubMenu {
     // managed by Menu Manager
+
+    public void MenuNavigation();
 }
