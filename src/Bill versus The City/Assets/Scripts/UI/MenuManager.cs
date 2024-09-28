@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
@@ -53,6 +55,10 @@ public class MenuManager : MonoBehaviour
             CloseMenu();
         }
         paused = false;
+    }
+
+    public static void CloseMenuClick(ClickEvent _) {
+        MenuManager.inst.CloseMenu();
     }
 
     public void CloseMenu() {
@@ -109,6 +115,27 @@ public class MenuManager : MonoBehaviour
         }
         sub_menus.Push(new_menu);
         paused = true;
+    }
+
+    public static void PlayMenuClick(ClickEvent _) {
+        PlayMenuSound("menu_click");
+    }
+
+    public static void PlayMenuSound(string sound_name) {
+        ISoundSet sound = SFXLibrary.LoadSound(sound_name);
+        Vector3 target = Camera.main.transform.position;
+        SFXSystem.instance.PlaySound(sound, target);
+    } 
+
+    public static void AddGenericEvents(Button button) {
+        button.RegisterCallback<ClickEvent>(PlayMenuClick);
+    }
+
+    public static void AddGenericEvents(Button[] buttons) {
+        // adds events present on all buttons to a while array of Buttons
+        foreach (Button b in buttons) {
+            AddGenericEvents(b);
+        }
     }
 
 }

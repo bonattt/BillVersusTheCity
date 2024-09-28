@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,6 +9,8 @@ public class EscapeMenuController : MonoBehaviour
 {
     public UIDocument ui_doc;
     private VisualElement root;
+    private Button resume_button, settings_button, restart_button, exit_button;
+    private Button[] all_buttons;
 
     // private bool _menu_open; 
     // public bool menu_open {
@@ -26,6 +29,32 @@ public class EscapeMenuController : MonoBehaviour
     {
         root = ui_doc.rootVisualElement;
         // menu_open = false;
+
+        resume_button = root.Q<Button>("ResumeButton");
+        settings_button = root.Q<Button>("SettingsButton");
+        restart_button = root.Q<Button>("RestartButton");
+        exit_button = root.Q<Button>("ExitButton");
+
+
+        resume_button.RegisterCallback<ClickEvent>(MenuManager.CloseMenuClick);
+        // settings_button.RegisterCallback<ClickEvent>(  );
+        // restart_button.RegisterCallback<ClickEvent>(  );
+        exit_button.clicked += ExitGame; // TODO ---
+        
+        all_buttons = new Button[]{resume_button, settings_button, restart_button, exit_button};
+        MenuManager.AddGenericEvents(all_buttons);
+    }
+
+    public void ExitGame() {
+        Debug.Log("Game is exiting...");
+        // preprocessor #if, #else, #endif optimizes the code by excluding code sections at compile time instead of runtime
+        #if UNITY_EDITOR
+            // If running in the Unity Editor, stop playing the scene
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            // If running in a standalone build, quit the application
+            Application.Quit();
+        #endif
     }
     
     public void MenuNavigation() {
