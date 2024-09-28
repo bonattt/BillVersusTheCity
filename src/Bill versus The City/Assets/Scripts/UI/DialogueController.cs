@@ -15,6 +15,11 @@ public class DialogueController : MonoBehaviour
     protected Label header_label, content_label, confirm_label;
     public Button confirm_button { get; protected set; }
 
+    void Start() {
+        Configure();
+        UpdateLabels();
+    }
+
     public virtual void Configure() {
         // setup object references to UI components.
         root_visual = GetComponentInChildren<UIDocument>().rootVisualElement;
