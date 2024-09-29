@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pause_menu_prefab, yes_no_dialogue;
+    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -135,9 +135,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public YesNoDialogueController OpenNewDialogue() {
-        GameObject new_menu = OpenSubMenuPrefab(yes_no_dialogue);
-        YesNoDialogueController script = new_menu.GetComponent<YesNoDialogueController>();
+    public YesNoPopupController OpenNewPopup() {
+        GameObject new_menu = OpenSubMenuPrefab(yes_no_popup_prefab);
+        YesNoPopupController script = new_menu.GetComponent<YesNoPopupController>();
         script.Configure();
         return script;
     }

@@ -37,7 +37,7 @@ public class EscapeMenuController : MonoBehaviour
 
 
         resume_button.RegisterCallback<ClickEvent>(MenuManager.CloseMenuClick);
-        // settings_button.RegisterCallback<ClickEvent>(  );
+        settings_button.RegisterCallback<ClickEvent>(SettingsButtonClicked);
         // restart_button.RegisterCallback<ClickEvent>(  );
         exit_button.RegisterCallback<ClickEvent>(ExitGameClick); 
         
@@ -45,12 +45,16 @@ public class EscapeMenuController : MonoBehaviour
         MenuManager.AddGenericEvents(all_buttons);
     }
 
+    public void SettingsButtonClicked(ClickEvent _) {
+        MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.settings_menu_prefab);
+    }
+
     public void ExitGameClick(ClickEvent _) {
-        YesNoDialogueController dialogue = MenuManager.inst.OpenNewDialogue();
-        dialogue.header_text = "Exit Game";
-        dialogue.content_text = "Are you sure you want to quit?";
-        dialogue.UpdateLabels();
-        dialogue.confirm_button.RegisterCallback<ClickEvent>(ExitGameConfirmClick);
+        YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+        popup.header_text = "Exit Game";
+        popup.content_text = "Are you sure you want to quit?";
+        popup.UpdateLabels();
+        popup.confirm_button.RegisterCallback<ClickEvent>(ExitGameConfirmClick);
     }
 
     public void ExitGameConfirmClick(ClickEvent _) {

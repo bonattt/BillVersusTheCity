@@ -1,0 +1,14 @@
+.menu_header {
+    font-size: 36px;
+    -unity-text-align: upper-center;
+}
+
+.menu_setting_list {
+}
+
+.menu_setting_list_item {
+}
+
+.settings_module_tab {
+    font-size: 32px;
+}

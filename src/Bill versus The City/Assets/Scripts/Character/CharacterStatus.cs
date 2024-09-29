@@ -175,7 +175,6 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     public void Unsubscribe(ICharStatusSubscriber sub) => subscribers.Remove(sub);
 
     public void UpdateStatus() {
-        Debug.Log("settings updated!");  // TODO --- remove debug
         foreach(ICharStatusSubscriber sub in subscribers) {
             sub.StatusUpdated(this);
         }

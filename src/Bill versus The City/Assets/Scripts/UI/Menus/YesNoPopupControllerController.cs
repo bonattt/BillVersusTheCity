@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class YesNoDialogueController : DialogueController
+public class YesNoPopupController : PopupController
 {
     public string reject_text = "no";
 

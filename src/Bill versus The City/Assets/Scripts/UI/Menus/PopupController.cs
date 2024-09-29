@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DialogueController : MonoBehaviour
+public class PopupController : MonoBehaviour
 {
     protected VisualElement root_visual;
 
-    public string header_text = "Dialogue";
+    public string header_text = "Popup";
     public string content_text = "";
     public string confirm_text = "Continue"; 
 
