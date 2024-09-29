@@ -12,12 +12,45 @@ public class GameSettings {
     // public const string GAMEPLAY_SETTINGS = "gameplay";
     // public const string DIFFICULTY_SETTINGS = "difficulty";
 
-    public AudioSettings audio_settings = new AudioSettings();
-    public GamePlaySettings game_play_settings = new GamePlaySettings();
+    
+    private AudioSettings _audio_settings = new AudioSettings();
+    public AudioSettings audio_settings { 
+        get { return _audio_settings; }
+        set { 
+            ReplaceModule(_audio_settings, value);
+            _audio_settings = value; 
+        }
+    }
+    
+    private GamePlaySettings _game_play_settings = new GamePlaySettings();
+    public GamePlaySettings game_play_settings { 
+        get { return _game_play_settings; }
+        set { 
+            ReplaceModule(_game_play_settings, value);
+            _game_play_settings = value; 
+        }
+    }
+
+    private DifficultySettings _difficulty_settings = new DifficultySettings();
+    public DifficultySettings difficulty_settings { 
+        get { return _difficulty_settings; }
+        set { 
+            ReplaceModule(_difficulty_settings, value);
+            _difficulty_settings = value; 
+        }
+    }
 
     public GameSettings() {
         if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }
         inst = this;
+    }
+
+
+    private void ReplaceModule(ISettingsModule old_module, ISettingsModule new_module) {
+        // add `old_module`s subscribers to `new_module` so the old module can be replaced seemlessly
+        foreach (ISettingsObserver sub in old_module.GetSubscribers()) {
+            new_module.Subscribe(sub);
+        }
     }
 
     // private Dictionary<string, ISettingsModule> settings_modules = new Dictionary<string, ISettingsModule>();

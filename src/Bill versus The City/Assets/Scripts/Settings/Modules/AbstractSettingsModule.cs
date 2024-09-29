@@ -13,4 +13,8 @@ public abstract class AbstractSettingsModule : ISettingsModule {
             sub.SettingsUpdated(this, field);
         }
     }
+
+    public List<ISettingsObserver> GetSubscribers() {
+        return new List<ISettingsObserver>(subscribers);
+    }
 }

@@ -6,12 +6,14 @@ using UnityEngine;
 public interface ICharacterStatus {
     public float health { get; set; }
     public float max_health { get; set; }
-    public IArmor armor { get; set; }
+    public IArmor armor { get; }
+
+    public void ApplyNewArmor(ScriptableObject armor_template); // create new armor from ScriptableObject template
+    public void ApplyExistingArmor(IArmor existing_armor); // set an existing armor, and preserve stats
+    public void RemoveArmor(); // set armor to null
 
     public void Subscribe(ICharStatusSubscriber sub);
-
     public void Unsubscribe(ICharStatusSubscriber sub);
-
     public void UpdateStatus();
 }
 
@@ -44,9 +46,9 @@ public class GenericAttack : IAttack {
     public float final_damage { get; set; }
 }
 
-public interface IArmor : IItem {
+public interface IArmor : IItem, IDifficultyAdjusted {
     // maximum HP of the armor
-    public float armor_max_durability { get;}
+    public float armor_max_durability { get; }
 
     // current HP of the armor
     public float armor_durability { get; set; }
