@@ -31,7 +31,8 @@ public interface IAttack {
     public float attack_damage_max { get; }
     public float armor_penetration { get; }
     public bool ignore_armor { get; }
-    public float final_damage { get; set; }
+    public float final_health_damage { get; set; }
+    public float final_armor_damage { get; set; }
 
 }
 
@@ -43,7 +44,8 @@ public class GenericAttack : IAttack {
     public float attack_damage_max { get; set; }
     public float armor_penetration { get; set; }
     public bool ignore_armor { get; set; }
-    public float final_damage { get; set; }
+    public float final_health_damage { get; set; }
+    public float final_armor_damage { get; set; }
 }
 
 public interface IArmor : IItem, IDifficultyAdjusted {

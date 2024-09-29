@@ -14,7 +14,7 @@ public class SpawnPrefabEffect : IAttackHitEffect,
     public void DisplayDamageEffect(GameObject hit_target,
             Vector3 hit_location, IAttack attack) {
         GameObject spawned_prefab = SpawnPrefab(hit_location);
-        ConfigureDamageEffect(spawned_prefab, hit_target, hit_location, attack.final_damage);
+        ConfigureDamageEffect(spawned_prefab, hit_target, hit_location, attack);
     }
 
     public void DisplayEffect(Vector3 hit_location, IAttack attack) {
@@ -31,7 +31,7 @@ public class SpawnPrefabEffect : IAttackHitEffect,
     }
 
     protected virtual void ConfigureDamageEffect(GameObject spawned_prefab, GameObject hit_target,
-            Vector3 hit_location, float damage) {
+            Vector3 hit_location, IAttack attack) {
         // hook to extend this class and setup the spawned prefab for a damage effect. By default, do nothing
     }
 

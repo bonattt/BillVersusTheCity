@@ -16,7 +16,8 @@ public static class AttackResolver {
     };
 
     private static IAttackHitEffect[] DEBUG_DAMAGE_EFFECTS = new IAttackHitEffect[]{
-        new SpawnDamageNumberEffect()
+        new SpawnDamageNumberEffect(),
+        new SpawnDamageNumberEffect(true, Color.gray, Color.black)
     };
 
     private static IAttackShootEffect[] SHOOT_EFFECTS = new IAttackShootEffect[]{
@@ -39,18 +40,20 @@ public static class AttackResolver {
     public static void ResolveAttackHit(IAttack attack, 
             IAttackTarget target, Vector3 hit_location) {
         ICharacterStatus status = target.GetStatus();
-        float attack_damage;
+        float health_damage;
+        float armor_damage = 0f;
         
         if (attack.ignore_armor || status.armor == null) {
-            attack_damage = ResolveGunDamageUnarmored(attack, status);
+            health_damage = ResolveGunDamageUnarmored(attack, status);
         }
         else if (status.armor.armor_durability <= 0) {
-            attack_damage = ResolveGunDamageUnarmored(attack, status);
+            health_damage = ResolveGunDamageUnarmored(attack, status);
         }
         else {
-            attack_damage = ResolveGunDamageArmored(attack, status, hit_location);
+            (health_damage, armor_damage) = ResolveGunDamageArmored(attack, status, hit_location);
         }
-        attack.final_damage = attack_damage;
+        attack.final_health_damage = health_damage;
+        attack.final_armor_damage = armor_damage;
         foreach (IAttackHitEffect effect in GetDamageEffects()) {
             effect.DisplayDamageEffect(
                 target.GetHitTarget(), hit_location, attack);
@@ -134,9 +137,9 @@ public static class AttackResolver {
         return (total_attack_damage, attack_damage, armor_damage);
     }
 
-    public static float ResolveGunDamageArmored(IAttack attack, 
+    public static (float, float) ResolveGunDamageArmored(IAttack attack, 
             ICharacterStatus status, Vector3 hit_location) {
-        (float total_attack_damage, float attack_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
+        (float total_attack_damage, float health_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
         float overflow_damage;
         float armor_before = status.armor.armor_durability; // TODO --- remove debug code
         if (armor_damage > status.armor.armor_durability) {
@@ -147,14 +150,14 @@ public static class AttackResolver {
             overflow_damage = 0;
             status.armor.armor_durability -= armor_damage;
         }
-        status.health -= attack_damage + overflow_damage;
-        if(total_attack_damage < (attack_damage + overflow_damage)) {
-            StaticLogger.Warning($"Overflow damage more than base: {total_attack_damage} => {attack_damage} + {overflow_damage}");
+        status.health -= health_damage + overflow_damage;
+        if(total_attack_damage < (health_damage + overflow_damage)) {
+            StaticLogger.Warning($"Overflow damage more than base: {total_attack_damage} => {health_damage} + {overflow_damage}");
         }
         if (armor_before >= status.armor.armor_durability) {
             StaticLogger.Warning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}");
         }    
-        return attack_damage;
+        return (health_damage, armor_damage);
     }
 
     public static void ResolveArmorBreak(IAttack attack, 
