@@ -1,4 +1,7 @@
-ITERATION 1
+========================
+===== ITERATION 1 ======
+========================
+
 
 [ ] UI
     [+] Ammo Display
@@ -127,38 +130,47 @@ SOOSH:
 [ ] Enemies 
     [ ] Enemies reload
 
-[ ] Settings system
-    [ ] Observer pattern
-    [ ] Font size
+[+] Settings system (GameSettings)
+    [+] Observer pattern
     [+] Volume -> float 
     [X] graphics (do later, but must be supported) -> bool, floats, ints, enums
     [X] difficulty (do later) -> numbers, enums
-    [ ] Settings UI
 
-[ ] Menus
-    [ ] Exit Game
+[~] Menus
+    [+] Exit Game
     [ ] Restart Level
-    [ ] Settings Menu
+    [~] Settings Menu
+        [ ] Audio Settings UI
+        [ ] Gameplay Settings UI
+        [ ] Graphics Settings UI
 
-[ ] Menu Backends
-    [ ] MenuManager
-        [ ] Create and destroy menus from prefabs
-        [ ] create submenus
-    [ ] Settings Module menu helpers
+[+] Menu Backends
+    [+] MenuManager
+        [+] Create and destroy menus from prefabs
+        [+] create submenus
+    [+] Settings Module menu helpers
+    [+] Audio Settings
+    [+] Difficulty Settings
+    [+] Mouse Sensitivity
+    [ ] Graphics Settings (font size)
+    
 
-[ ] Sounds
+[+] Sounds
     [+] weapon specific sounds
         [+] Shoot
         [+] Reload
     [+] Shoot Empty Weapon Sound
+    [ ] Reload Cancel sound
 
 [ ] Fixes
     [ ] Shooting through walls
     [+] Cancel Reload with Aim feels bad
+    [ ] Rapid clicks firing empty machineguns
     
 [ ] Weapons
     [~] Zoom out camera while aiming
     [~] Mouse sensitivity while aiming
+    [ ] Aiming Reticle
 
 =============================
 ==== Unplanned features =====
