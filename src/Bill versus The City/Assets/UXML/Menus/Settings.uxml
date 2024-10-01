@@ -11,7 +11,7 @@
                     <ui:Button text="Graphics" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GraphicsTab" class="settings_module_tab" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="options_panel" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; height: 100%;" />
+            <ui:VisualElement name="options_panel" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; height: 100%; flex-shrink: 0; min-width: 1000px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -1,13 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UXML/Menus/SettingsStyle.uss?fileID=7433441132597879392&amp;guid=b2b4ac4aa3c030d44a0a792fa3a4310d&amp;type=3#SettingsStyle" />
     <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center; align-self: center; width: 100%; height: 100%;">
-        <ui:VisualElement name="panel" style="flex-grow: 1; background-color: rgb(128, 128, 128); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: 495px;">
+        <ui:VisualElement name="panel" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: 495px;">
             <ui:Label tabindex="-1" text="Audio Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderText" class="menu_header" />
             <ui:VisualElement name="List" class="menu_setting_list" style="flex-grow: 1;">
-                <ui:Toggle label="Toggle" class="menu_setting_list_item" />
-                <ui:SliderInt label="SliderInt" high-value="100" class="menu_setting_list_item" />
-                <ui:Slider label="Slider" high-value="100" class="menu_setting_list_item" />
-                <ui:MinMaxSlider label="Min/Max Slider" min-value="10" max-value="12" low-limit="-10" high-limit="40" class="menu_setting_list_item" />
+                <ui:Slider label="Slider" high-value="100" class="menu_setting_list_item settings_percent_slider settings_item" />
+                <ui:VisualElement name="MySlider" class="settings_slider_container settings_item" style="flex-grow: 1;">
+                    <ui:Label tabindex="-1" text="Slider" parse-escape-sequences="true" display-tooltip-when-elided="true" class="settings_slider_label" />
+                    <ui:Slider high-value="100" name="Slider" class="settings_slider_tracker" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Controlls" class="settings_control_buttons_pannel">
+                <ui:Button text="Apply" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ApplyButton" class="settings_control_button" />
+                <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ApplyButton" class="settings_control_button" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,8 @@ public class SettingsMenuController : MonoBehaviour
     public VisualTreeAsset general_settings_ui, graphics_settings_ui, audio_settings_ui, gameplay_settings_ui;
 
     private VisualElement root, tabs_list, sub_menu_root, sub_menu_panel;
+
+    private ISettingModuleMenu open_settings_controller = null;
 
     public const string GENERAL_TAB = "General";
     public const string GRAPHICS_TAB = "Graphics";
@@ -70,8 +73,19 @@ public class SettingsMenuController : MonoBehaviour
         return () => OpenSubDocument(GetTabUI(tab_name));
     }
 
-    private void OpenSubDocument(VisualTreeAsset uxml) {
+    private void CleanUpSubDocument() {
+        // cleans up the already open sub document so a new doc can be opened
         sub_menu_panel.Clear();
+        if (open_settings_controller != null) {
+            open_settings_controller.CleanUp();
+            open_settings_controller = null;
+        }
+    }
+
+    private void OpenSubDocument(VisualTreeAsset uxml) {
+        // opens a new tab in the settings menu
+        CleanUpSubDocument();
+
         if (uxml == null) {
             Debug.LogWarning("opening null settings menu sub-module");
             return;
@@ -79,6 +93,9 @@ public class SettingsMenuController : MonoBehaviour
 
         sub_menu_root = uxml.CloneTree();
         sub_menu_panel.Add(sub_menu_root);
+        open_settings_controller = new AudioSettingsMenuCtrl();
+        open_settings_controller.Initialize(sub_menu_root);
+
     }
 
 }

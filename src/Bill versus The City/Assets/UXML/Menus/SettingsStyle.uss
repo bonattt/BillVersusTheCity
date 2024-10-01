@@ -12,3 +12,39 @@
 .settings_module_tab {
     font-size: 32px;
 }
+
+.settings_control_button {
+    font-size: 36px;
+    width: 150px;
+    height: 100px;
+}
+
+.settings_control_buttons_pannel {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.settings_item {
+    font-size: 28px;
+    left: 5px;
+}
+
+.settings_percent_slider {
+}
+
+.settings_slider_tracker {
+    margin-right: 15px;
+    min-width: 50%;
+    max-width: 80%;
+}
+
+.settings_slider_label {
+    font-size: 28px;
+    -unity-text-align: middle-left;
+}
+
+.settings_slider_container {
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: space-between;
+}
