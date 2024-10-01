@@ -34,6 +34,17 @@ public class SettingsMenuController : MonoBehaviour
                 return null;
         }
     }
+    
+    private ISettingModuleMenu GetTabController(string tab_name) {
+        // takes a tab name and returns the controller script for that tab
+        switch(tab_name) {
+            case AUDIO_TAB: return new AudioSettingsMenuCtrl();
+            default:
+                Debug.LogWarning($"Unknown settings tab `{tab_name}`");
+                return new PlaceholderSettingsMenuCtrl();
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +53,7 @@ public class SettingsMenuController : MonoBehaviour
         tabs_list = root.Q<VisualElement>("tabs_list");
         sub_menu_panel = root.Q<VisualElement>("options_panel");
 
-        OpenSubDocument(audio_settings_ui);
+        OpenSubDocument(tabs_order[0]);
         UpdateTabs();
     }
 
@@ -70,7 +81,7 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     private System.Action GetSettingsTabCallback(string tab_name) {
-        return () => OpenSubDocument(GetTabUI(tab_name));
+        return () => OpenSubDocument(tab_name);
     }
 
     private void CleanUpSubDocument() {
@@ -82,10 +93,10 @@ public class SettingsMenuController : MonoBehaviour
         }
     }
 
-    private void OpenSubDocument(VisualTreeAsset uxml) {
+    private void OpenSubDocument(string tab_name) {
         // opens a new tab in the settings menu
         CleanUpSubDocument();
-
+        VisualTreeAsset uxml = GetTabUI(tab_name);
         if (uxml == null) {
             Debug.LogWarning("opening null settings menu sub-module");
             return;
@@ -93,9 +104,20 @@ public class SettingsMenuController : MonoBehaviour
 
         sub_menu_root = uxml.CloneTree();
         sub_menu_panel.Add(sub_menu_root);
-        open_settings_controller = new AudioSettingsMenuCtrl();
+        open_settings_controller = GetTabController(tab_name);
+        AddSaveLoadButtons();
+
         open_settings_controller.Initialize(sub_menu_root);
 
+    }
+
+    private VisualElement AddSaveLoadButtons() {
+        VisualElement controls = sub_menu_root.Q<VisualElement>("Controls");
+        controls = SettingsMenuUtil.CreateSettingsControlButtons(open_settings_controller, controls);
+        // if (!sub_menu_root.Children().Contains(controls)) {
+            sub_menu_root.Add(controls);
+        // }
+        return controls;
     }
 
 }

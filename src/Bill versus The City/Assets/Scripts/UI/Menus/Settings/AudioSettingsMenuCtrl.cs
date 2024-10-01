@@ -37,6 +37,8 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
             if (new_slider == null) { Debug.LogWarning("Slider null!"); }
             volume_sliders[category] = new_slider;
         }
+
+        LoadSettings();
     }
 
     private Slider AddVolumeSlider(string slider_label) {
@@ -47,12 +49,20 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
 
     public void SaveSettings() {
         // Saves the menu's changes to settings    
-        // TODO
+        AudioSettings settings = GameSettings.inst.audio_settings;
+        settings.master_volume = master_volume.value;
+        foreach (SoundCategory category in sound_category_ordering) {
+            settings.SetVolumeSetting(category, volume_sliders[category].value);
+        }
     }
 
     public void LoadSettings() {
         // sets the UI's elements to match what is stored in settings (reverting any changes)
-        // TODO
+        AudioSettings settings = GameSettings.inst.audio_settings;
+        master_volume.value = settings.master_volume;
+        foreach (SoundCategory category in sound_category_ordering) {
+             volume_sliders[category].value = settings.GetVolumeSetting(category);
+        }
     }
 
     public void CleanUp() {

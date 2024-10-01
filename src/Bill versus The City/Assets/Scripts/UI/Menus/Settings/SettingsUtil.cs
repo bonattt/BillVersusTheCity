@@ -34,7 +34,7 @@ public static class SettingsMenuUtil {
         slider.label = "";
         slider.lowValue = 0f;
         slider.highValue = 1f;
-        // these should be dynamically set, but for testing purposes, the coinflip makes it easier to quickly see where the sliders are
+        // these should be dynamically set, but for testing purposes, the coinflip makes it easier to quickly see where the sliders are 
         slider.value = Mathf.Round(UnityEngine.Random.Range(0.1f, 0.9f));
         slider.direction = SliderDirection.Horizontal;
         slider.AddToClassList(SLIDER_TRACKER_CLASS);
@@ -69,4 +69,32 @@ public static class SettingsMenuUtil {
             element.AddToClassList(style_class);
         }
     }
+
+    public static VisualElement CreateSettingsControlButtons(ISettingModuleMenu menu, VisualElement controls) {
+        // creates a visual element containing the save/revert menu buttons
+        if (controls == null) {
+            controls = new VisualElement();
+        }
+        controls.Clear();
+        controls.name = "Controls";
+        controls.AddToClassList("settings_control_buttons_pannel");
+
+        Button save_button = new Button();
+        save_button.text = "Apply";
+        save_button.AddToClassList("settings_control_button");
+        save_button.RegisterCallback<ClickEvent>(MenuManager.PlayMenuClick);
+        save_button.clicked += menu.SaveSettings;
+        controls.Add(save_button);
+
+        Button load_button = new Button();
+        load_button.text = "Revert";
+        load_button.AddToClassList("settings_control_button");
+        load_button.RegisterCallback<ClickEvent>(MenuManager.PlayMenuCancelClick);
+        load_button.clicked += menu.LoadSettings;
+        controls.Add(load_button);
+
+        return controls;
+
+    }
+
 }

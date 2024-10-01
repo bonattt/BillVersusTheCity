@@ -35,7 +35,7 @@
 .settings_slider_tracker {
     margin-right: 15px;
     min-width: 50%;
-    max-width: 80%;
+    width: 50%;
 }
 
 .settings_slider_label {

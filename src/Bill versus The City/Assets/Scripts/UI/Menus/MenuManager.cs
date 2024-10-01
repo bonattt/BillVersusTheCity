@@ -118,6 +118,10 @@ public class MenuManager : MonoBehaviour
         PlayMenuSound("menu_click");
     }
 
+    public static void PlayMenuCancelClick(ClickEvent _) {
+        PlayMenuSound("menu_click");
+    }
+
     public static void PlayMenuSound(string sound_name) {
         ISoundSet sound = SFXLibrary.LoadSound(sound_name);
         Vector3 target = Camera.main.transform.position;
