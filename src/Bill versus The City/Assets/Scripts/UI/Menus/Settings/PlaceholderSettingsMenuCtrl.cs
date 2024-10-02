@@ -7,9 +7,9 @@ using UnityEngine.UIElements;
 
 public class PlaceholderSettingsMenuCtrl : ISettingModuleMenu {
     // Placeholder class that implements ISettingModuleMenu but does nothing.
-    
+
     public PlaceholderSettingsMenuCtrl() {
-        // do nothing
+        // do nothing: placeholder class
     }
 
     // return the SettingsModule this controller targets
@@ -17,18 +17,22 @@ public class PlaceholderSettingsMenuCtrl : ISettingModuleMenu {
     
     // takes the root element of the sub-menu, and configures the menu's controller
     public void Initialize(VisualElement root) {
-        // do nothing
+        // do nothing: placeholder class
     }
 
     public void SaveSettings() {
-        // do nothing
+        // do nothing: placeholder class
     }
 
     public void LoadSettings() {
-        // do nothing
+        // do nothing: placeholder class
+    }
+
+    public void UpdateUI() {
+        // do nothing: placeholder class
     }
 
     public void CleanUp() {
-        // do nothing
+        // do nothing: placeholder class
     }
 }

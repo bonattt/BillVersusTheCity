@@ -8,15 +8,23 @@ using UnityEngine.UIElements;
 
 public static class SettingsMenuUtil {
 
-    public const string SLIDER_CLASS = "settings_slider_container";
-    public const string PERCENT_SLIDER_CLASS = "settings_percent_slider";
-    public const string SLIDER_LABEL_CLASS = "settings_slider_label";
-    public const string SLIDER_TRACKER_CLASS = "settings_slider_tracker";
+    public const string SLIDER_CLASS = "settings_slider"; // top level class for all sliders
+    public const string SLIDER_CONTAINER_INNER_CLASS = "settings_slider_container_inner";  // for the Element containing the slider and it's value display
+    public const string PERCENT_SLIDER_CLASS = "settings_percent_slider"; // top level class for percent sliders
+    public const string SLIDER_LABEL_CLASS = "settings_slider_label";  // for Label displaying the field for the slider
+    public const string SLIDER_TRACKER_CLASS = "settings_slider_tracker"; // for actual slider element
+    public const string SLIDER_VALUE_CLASS = "settings_slider_value"; // for Label displaying slider value
 
+    public const string SLIDER_VALUE_LABEL = "SliderValue"; // name of the Label used to display the value of a slider
 
     public static readonly string[] SETTINGS_ITEM_CLASSES = new string[]{"settings_item"};
+    
+    public static void UpdatePercentSliderLabel(Slider slider, Label label) {
+        // updates the value display of a percent slider to show a percent 0-100
+        label.text = $"{Mathf.Round(slider.value * 100)}";
+    }
 
-    public static VisualElement CreatePercentSlider(string text) {
+    public static VisualElement CreateSlider(string text, float min_value, float max_value) {
         // creates a slider for controlling percent fields (0-1f)
         VisualElement parent = new VisualElement();
         parent.name = text;
@@ -24,24 +32,39 @@ public static class SettingsMenuUtil {
         parent.AddToClassList(SLIDER_CLASS);
         
         Label label = new Label();
-        label.name = "Label";
+        label.name = "SliderLabel";
         label.text = text;
         label.AddToClassList(SLIDER_LABEL_CLASS);
         parent.Add(label);
 
+        VisualElement slider_container = new VisualElement();
+        slider_container.AddToClassList(SLIDER_CONTAINER_INNER_CLASS);
+        parent.Add(slider_container);
+
+        Label slider_value = new Label();
+        slider_value.name = SLIDER_VALUE_LABEL;
+        slider_value.text = "9001";
+        slider_value.AddToClassList(SLIDER_VALUE_CLASS);
+        slider_container.Add(slider_value);
+        
         Slider slider = new Slider();
         slider.name = "Slider";
         slider.label = "";
-        slider.lowValue = 0f;
-        slider.highValue = 1f;
-        // these should be dynamically set, but for testing purposes, the coinflip makes it easier to quickly see where the sliders are 
-        slider.value = Mathf.Round(UnityEngine.Random.Range(0.1f, 0.9f));
+        slider.lowValue = min_value;
+        slider.highValue = max_value;
+        // // these should be dynamically set, but for testing purposes, the coinflip makes it easier to quickly see where the sliders are 
+        // slider.value = Mathf.Round(UnityEngine.Random.Range(0.1f, 0.9f));
         slider.direction = SliderDirection.Horizontal;
         slider.AddToClassList(SLIDER_TRACKER_CLASS);
-        parent.Add(slider);
+        slider_container.Add(slider);
 
         ApplySettingsItemClasses(parent);
         return parent;
+    }
+
+    public static VisualElement CreatePercentSlider(string text) {
+        // creates a slider for controlling percent fields (0-1f)
+        return CreateSlider(text, 0f, 1f);
     }
 
     public static void LogChildren(VisualElement element) {
@@ -50,18 +73,6 @@ public static class SettingsMenuUtil {
             msg += $"\n\t{child}"; 
         }
         Debug.Log(msg);
-    }
-
-    private static Label GetSliderLabel(Slider slider) {
-        /** Gets the Label element of a slider */
-        // return slider.Q<Label>("unity-slider__label");
-        return (Label) slider.ElementAt(0);
-    }
-
-    private static VisualElement GetSliderTracker(Slider slider) {
-        /** gets the VisualElement of a Slider which contains the actual slider */
-        // return slider.Q<VisualElement>("unity-slider__tracker");
-        return slider.ElementAt(1);
     }
 
     public static void ApplySettingsItemClasses(VisualElement element) {

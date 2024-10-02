@@ -57,6 +57,12 @@ public class SettingsMenuController : MonoBehaviour
         UpdateTabs();
     }
 
+    void Update() {
+        if (open_settings_controller != null) {
+            open_settings_controller.UpdateUI();
+        }
+    }
+
     public void UpdateTabs() {
         tabs_list.Clear();
         for (int i = 0; i < tabs_order.Length; i++) {

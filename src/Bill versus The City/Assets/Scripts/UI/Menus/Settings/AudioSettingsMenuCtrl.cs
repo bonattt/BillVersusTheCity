@@ -9,7 +9,9 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
 
     private VisualElement root, settings_pannel, buttons_pannel; 
     private Slider master_volume;
+    private Label master_volume_label;
     private Dictionary<SoundCategory, Slider> volume_sliders = new Dictionary<SoundCategory, Slider>();
+    private Dictionary<SoundCategory, Label> volume_slider_labels = new Dictionary<SoundCategory, Label>();
 
     public readonly SoundCategory[] sound_category_ordering = new SoundCategory[]{
         SoundCategory.sound_effect,
@@ -30,21 +32,22 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         buttons_pannel = root.Q<VisualElement>("Controlls");
 
         settings_pannel.Clear();
-        master_volume = AddVolumeSlider("Master Volume");
+        (master_volume, master_volume_label) = AddVolumeSlider("Master Volume");
         for (int i = 0; i < sound_category_ordering.Length; i++) {
             SoundCategory category = sound_category_ordering[i];
-            Slider new_slider = AddVolumeSlider($"{category}");
+            (Slider new_slider, Label slider_label) = AddVolumeSlider(DisplayValue(category));
             if (new_slider == null) { Debug.LogWarning("Slider null!"); }
             volume_sliders[category] = new_slider;
+            volume_slider_labels[category] = slider_label;
         }
 
         LoadSettings();
     }
 
-    private Slider AddVolumeSlider(string slider_label) {
+    private (Slider, Label) AddVolumeSlider(string slider_label) {
         VisualElement slider_element = SettingsMenuUtil.CreatePercentSlider(slider_label);
         settings_pannel.Add(slider_element);
-        return slider_element.Q<Slider>();
+        return (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
     }
 
     public void SaveSettings() {
@@ -62,6 +65,30 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         master_volume.value = settings.master_volume;
         foreach (SoundCategory category in sound_category_ordering) {
              volume_sliders[category].value = settings.GetVolumeSetting(category);
+        }
+        UpdateUI();
+    }
+
+    public void UpdateUI() {
+        // updates the UI
+        SettingsMenuUtil.UpdatePercentSliderLabel(master_volume, master_volume_label);
+        foreach (SoundCategory key in volume_sliders.Keys) {
+            SettingsMenuUtil.UpdatePercentSliderLabel(volume_sliders[key], volume_slider_labels[key]);
+        }
+    }
+
+    public static string DisplayValue(SoundCategory category) {
+        switch(category) {
+            case SoundCategory.menu:
+                return "Menu";
+            case SoundCategory.music:
+                return "Music";
+            case SoundCategory.sound_effect:
+                return "Sound Effect";
+            
+            default:
+                Debug.LogWarning($"unknown sound category {category}!");
+                return $"{category}";
         }
     }
 

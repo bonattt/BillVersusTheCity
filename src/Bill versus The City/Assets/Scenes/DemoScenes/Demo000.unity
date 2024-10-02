@@ -3588,10 +3588,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3642daa7c8b4f419724bd9a554eee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  write: 0
-  master_volume: 1
+  write: 1
+  read: 0
+  master_volume: 0.8
   menu_volume: 1
-  music_volume: 1
+  music_volume: 0.1
   sfx_volume: 1
 --- !u!114 &1582257782
 MonoBehaviour:

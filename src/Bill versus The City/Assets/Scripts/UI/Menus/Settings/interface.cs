@@ -18,6 +18,9 @@ public interface ISettingModuleMenu {
     // sets the UI's elements to match what is stored in settings (reverting any changes)
     public void LoadSettings();
 
+    // Updates UI to display changes
+    public void UpdateUI();
+
     // disposes of any resources that need to be cleaned when the sub-menu is closed
     public void CleanUp();
 }

@@ -36,8 +36,8 @@
 
 .settings_slider_tracker {
     margin-right: 15px;
-    min-width: 50%;
-    width: 50%;
+    min-width: 500px;
+    width: 500px;
 }
 
 .settings_slider_label {
@@ -45,8 +45,20 @@
     -unity-text-align: middle-left;
 }
 
-.settings_slider_container {
+.settings_slider_value {
+    font-size: 20px;
+    -unity-text-align: middle-right;
+    min-width: 40px;
+    max-width: 40px;
+    width: 75px;
+}
+
+.settings_slider {
     flex-shrink: 0;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.settings_slider_container_inner {
+    flex-direction: row-reverse;
 }

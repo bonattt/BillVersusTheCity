@@ -4,10 +4,12 @@
         <ui:VisualElement name="panel" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
             <ui:Label tabindex="-1" text="Audio Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderText" class="menu_header" />
             <ui:VisualElement name="List" class="menu_setting_list" style="flex-grow: 1;">
-                <ui:Slider label="Slider" high-value="100" class="menu_setting_list_item settings_percent_slider settings_item" />
-                <ui:VisualElement name="MySlider" class="settings_slider_container settings_item" style="flex-grow: 1;">
-                    <ui:Label tabindex="-1" text="Slider" parse-escape-sequences="true" display-tooltip-when-elided="true" class="settings_slider_label" />
-                    <ui:Slider high-value="100" name="Slider" class="settings_slider_tracker" />
+                <ui:VisualElement name="MySlider" class="settings_item settings_slider" style="flex-grow: 1;">
+                    <ui:Label tabindex="-1" text="Slider" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SliderLabel" class="settings_slider_label" />
+                    <ui:VisualElement class="settings_slider_container_inner">
+                        <ui:Label tabindex="-1" text="420.69" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SliderValue" class="settings_slider_value" />
+                        <ui:Slider high-value="100" name="Slider" class="settings_slider_tracker" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="Controls" class="settings_control_buttons_pannel">
