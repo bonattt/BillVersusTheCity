@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main_doc: {fileID: 5528828143367200548}
-  general_settings_ui: {fileID: 0}
-  graphics_settings_ui: {fileID: 0}
+  general_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}
+  graphics_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}
   audio_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}
-  gameplay_settings_ui: {fileID: 0}
+  gameplay_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}

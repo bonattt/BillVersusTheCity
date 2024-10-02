@@ -39,6 +39,7 @@ public class SettingsMenuController : MonoBehaviour
         // takes a tab name and returns the controller script for that tab
         switch(tab_name) {
             case AUDIO_TAB: return new AudioSettingsMenuCtrl();
+            case GENERAL_TAB: return new GeneralSettingsMenuCtrl();
             default:
                 Debug.LogWarning($"Unknown settings tab `{tab_name}`");
                 return new PlaceholderSettingsMenuCtrl();

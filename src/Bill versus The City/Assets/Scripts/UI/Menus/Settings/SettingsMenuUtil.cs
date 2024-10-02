@@ -17,6 +17,30 @@ public static class SettingsMenuUtil {
 
     public const string SLIDER_VALUE_LABEL = "SliderValue"; // name of the Label used to display the value of a slider
 
+    // public static VisualElement EmptySettingsModule(ISettingModuleMenu menu_ctrl, string name) {
+    //     VisualElement root = new VisualElement();
+    //     root.name = "root";
+
+    //     VisualElement panel = new VisualElement();
+    //     panel.name = "panel";
+    //     root.Add(panel);
+
+    //     Label header_label = new Label();
+    //     header_label.name = "HeaderText";
+    //     header_label.text = name;
+    //     panel.Add(header_label);
+
+    //     VisualElement list = new VisualElement();
+    //     list.name = "List";
+    //     list.AddToClassList("menu_settings_list");
+    //     panel.Add(list);
+
+    //     VisualElement controls = CreateSettingsControlButtons(menu_ctrl);
+    //     panel.Add(controls);
+
+    //     return root;
+    // }
+
     public static readonly string[] SETTINGS_ITEM_CLASSES = new string[]{"settings_item"};
     
     public static void UpdatePercentSliderLabel(Slider slider, Label label) {
@@ -79,6 +103,11 @@ public static class SettingsMenuUtil {
         foreach(string style_class in SETTINGS_ITEM_CLASSES) {
             element.AddToClassList(style_class);
         }
+    }
+
+
+    public static VisualElement CreateSettingsControlButtons(ISettingModuleMenu menu) {
+        return CreateSettingsControlButtons(menu, null);
     }
 
     public static VisualElement CreateSettingsControlButtons(ISettingModuleMenu menu, VisualElement controls) {

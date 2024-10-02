@@ -4869,6 +4869,10 @@ PrefabInstance:
       propertyPath: attack_ctrl
       value: 
       objectReference: {fileID: 338529282}
+    - target: {fileID: 2114265992011989898, guid: 5de7717cde36ebb449029f2828ef2bd7, type: 3}
+      propertyPath: sample_rate_seconds
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2902952363329132125, guid: 5de7717cde36ebb449029f2828ef2bd7, type: 3}
       propertyPath: m_Name
       value: UI-documents

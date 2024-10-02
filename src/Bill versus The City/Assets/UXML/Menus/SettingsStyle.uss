@@ -6,15 +6,6 @@
 .menu_setting_list {
 }
 
-.menu_setting_list_item {
-}
-
-.settings_module_tab {
-    font-size: 32px;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .settings_control_button {
     font-size: 36px;
     width: 150px;
@@ -31,26 +22,18 @@
     left: 5px;
 }
 
+.settings_module_menu {
+    flex-grow: 1;
+    background-color: rgb(230, 230, 230);
+}
+
+.settings_module_tab {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .settings_percent_slider {
-}
-
-.settings_slider_tracker {
-    margin-right: 15px;
-    min-width: 500px;
-    width: 500px;
-}
-
-.settings_slider_label {
-    font-size: 28px;
-    -unity-text-align: middle-left;
-}
-
-.settings_slider_value {
-    font-size: 20px;
-    -unity-text-align: middle-right;
-    min-width: 40px;
-    max-width: 40px;
-    width: 75px;
 }
 
 .settings_slider {
@@ -61,4 +44,23 @@
 
 .settings_slider_container_inner {
     flex-direction: row-reverse;
+}
+
+.settings_slider_label {
+    font-size: 28px;
+    -unity-text-align: middle-left;
+}
+
+.settings_slider_tracker {
+    margin-right: 15px;
+    min-width: 500px;
+    width: 500px;
+}
+
+.settings_slider_value {
+    font-size: 20px;
+    -unity-text-align: middle-right;
+    width: 50px;
+    margin-right: 15px;
+    margin-left: 15px;
 }

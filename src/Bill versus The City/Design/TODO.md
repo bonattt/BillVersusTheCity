@@ -140,7 +140,7 @@ SOOSH:
     [+] Exit Game
     [ ] Restart Level
     [~] Settings Menu
-        [ ] Audio Settings UI <--- you are here
+        [+] Audio Settings UI
         [ ] Gameplay Settings UI
         [ ] Graphics Settings UI
 

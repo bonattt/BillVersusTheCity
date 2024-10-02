@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 public class FPSCounter : MonoBehaviour
 {
     public UIDocument ui_doc;
+    public float sample_rate_seconds = 0.5f;
+    private float sampled_at = 0f;
     private Label fps_label;
 
     // Start is called before the first frame update
@@ -24,7 +26,14 @@ public class FPSCounter : MonoBehaviour
     }
     
     private void UpdateFPS() {
-        float fps = Mathf.Round(1 / Time.deltaTime);
-        fps_label.text = $"{fps} FPS";
+        if (GameSettings.inst.general_settings.show_fps) {
+            if (sampled_at + sample_rate_seconds < Time.time) {
+                float fps = Mathf.Round(1 / Time.deltaTime);
+                sampled_at = Time.time;
+                fps_label.text = $"{fps} FPS";
+            } // for readability, only update the FPS once per <sample_rate>
+        } else {
+            fps_label.text = "";
+        }
     }
 }

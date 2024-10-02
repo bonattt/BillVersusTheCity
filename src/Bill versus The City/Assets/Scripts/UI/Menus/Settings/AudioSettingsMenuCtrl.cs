@@ -9,7 +9,7 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
 
     private VisualElement root, settings_pannel, buttons_pannel; 
     private Slider master_volume;
-    private Label master_volume_label;
+    private Label master_volume_label, header_label;
     private Dictionary<SoundCategory, Slider> volume_sliders = new Dictionary<SoundCategory, Slider>();
     private Dictionary<SoundCategory, Label> volume_slider_labels = new Dictionary<SoundCategory, Label>();
 
@@ -30,6 +30,8 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         this.root = root;
         settings_pannel = root.Q<VisualElement>("List");
         buttons_pannel = root.Q<VisualElement>("Controlls");
+        header_label = root.Q<Label>("HeaderText");
+        header_label.text = "Audio Settings";
 
         settings_pannel.Clear();
         (master_volume, master_volume_label) = AddVolumeSlider("Master Volume");

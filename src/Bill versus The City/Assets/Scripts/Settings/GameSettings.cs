@@ -12,6 +12,14 @@ public class GameSettings {
     // public const string GAMEPLAY_SETTINGS = "gameplay";
     // public const string DIFFICULTY_SETTINGS = "difficulty";
 
+    private GeneralSettings _general_settings = new GeneralSettings();
+    public GeneralSettings general_settings {
+        get { return _general_settings; }
+        set {
+            ReplaceModule(_general_settings, value);
+            _general_settings = value;
+        }
+    }
     
     private AudioSettings _audio_settings = new AudioSettings();
     public AudioSettings audio_settings { 
