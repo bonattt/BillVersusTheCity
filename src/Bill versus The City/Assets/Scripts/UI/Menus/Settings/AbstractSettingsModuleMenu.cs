@@ -1,0 +1,42 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
+
+    protected VisualElement root, settings_pannel, buttons_pannel; 
+    protected Label header_label;
+
+
+    public abstract ISettingsModule settings_module { get; }
+    
+    public abstract void Initialize(VisualElement root);
+
+    protected void LoadTemplate(VisualElement root) {
+        // loads the root visaul element and finds required class field in the Visual Tree
+        this.root = root;
+        settings_pannel = root.Q<VisualElement>("List");
+        buttons_pannel = root.Q<VisualElement>("Controlls");
+        header_label = root.Q<Label>("HeaderText");
+        header_label.text = "Audio Settings";
+
+        settings_pannel.Clear();
+    }
+
+    public abstract void SaveSettings();
+
+    public abstract void LoadSettings();
+
+    public void UpdateUI() {
+        // updates the UI
+        // nothing to do here yet
+    }
+
+    public void CleanUp() {
+        // disposes of any resources that need to be cleaned when the sub-menu is closed
+        // nothing to do here
+    }
+}
