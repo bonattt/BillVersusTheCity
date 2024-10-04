@@ -295,4 +295,40 @@ public class InputSystem : ISettingsObserver
                 break;
         }
     }
+
+    public string InputTypeDisplay(InputType input_type) {
+        // takes an input type and returns a string display value for whatever control that input type is currently mapped to
+        switch (input_type) {
+            case InputType.fire_weapon:
+                return "LMB";
+            case InputType.aim_weapon:
+                return "RMB";
+            case InputType.interact:
+                return $"{INTERACT}";
+            case InputType.reload:
+                return $"{RELOAD}";
+            case InputType.sprint:
+                return $"{SPRINT_INPUT}";
+            case InputType.menu_cancel:
+                return $"{CANCEL_MENU}";
+            case InputType.pause_menu:
+                return $"{PAUSE_MENU_INPUT}";
+
+            default:
+                Debug.LogError($"unknown InputType: {input_type}");
+                return "null";
+        }
+    }
+}
+
+
+public enum InputType {
+    // enum for different kinds of player inputs, which may be mapped to any number of different actual inputs
+    fire_weapon,
+    aim_weapon,
+    interact,
+    reload,
+    sprint,
+    menu_cancel,  // cancels out of the current menu
+    pause_menu  // opens the pause menu while in normal gameplay
 }

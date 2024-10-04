@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    public List<MonoBehaviour> effects;
+    // public List<MonoBehaviour> effects;
     public float interaction_range = 1f;
 
     public float DistanceTo(Transform actor) {
@@ -17,8 +17,7 @@ public class Interaction : MonoBehaviour
     }
 
     public void InteractWith(GameObject actor) {
-        foreach(MonoBehaviour behavior in effects) {
-            IInteractionEffect e = (IInteractionEffect) behavior;
+        foreach (IInteractionEffect e in GetComponents<IInteractionEffect>()) {
             e.Interact(actor);
         }
     }

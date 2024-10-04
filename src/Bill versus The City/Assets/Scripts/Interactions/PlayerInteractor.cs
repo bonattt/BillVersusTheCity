@@ -8,6 +8,12 @@ public class PlayerInteractor : MonoBehaviour
     public LayerMask layer_mask; // = LayerMask.GetMask("Interaction");
     public bool debug_can_interact = false;
 
+    public static PlayerInteractor inst { get; private set; }
+
+    void Awake() {
+        inst = this;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -18,13 +24,17 @@ public class PlayerInteractor : MonoBehaviour
             debug_can_interact = false;
         }
         if (interaction != null && InputSystem.current.InteractInput()) {
-            if (interaction.IsInRange(transform)) {
+            if (CanInteractWith(interaction)) {
                 interaction.InteractWith(gameObject);
             }
             else {
                 Debug.Log($"interaction out of range! (range {interaction.DistanceTo(transform)})");
             }
         }
+    }
+
+    public bool CanInteractWith(Interaction interactable) {
+        return interactable.IsInRange(transform);
     }
 
     private Interaction GetInteraction() {

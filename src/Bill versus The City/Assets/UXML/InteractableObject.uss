@@ -1,0 +1,4 @@
+.interactable_text {
+    white-space: normal;
+    opacity: 1;
+}

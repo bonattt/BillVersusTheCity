@@ -166,6 +166,9 @@ SOOSH:
     [+] Shooting through walls
     [+] Cancel Reload with Aim feels bad
     [+] Rapid clicks firing empty machineguns
+
+[ ] Interaction UI
+    [ ] Interactable objects show interaction on hover
     
 [ ] Weapons
     [~] Zoom out camera while aiming
