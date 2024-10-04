@@ -15,6 +15,8 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
 
     public int debug_rifle, debug_shotgun;
 
+    public string interaction_sound_path = "reload_finished";
+
     private Dictionary<AmmoType, int> ammo_count = new Dictionary<AmmoType, int>();
     private Dictionary<AmmoType, int> ammo_max = new Dictionary<AmmoType, int>();
 
@@ -41,15 +43,33 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         ammo_max[AmmoType.shotgun] = shotgun_max;
     }
 
-    public void TransferAmmoFrom(AmmoContainer other) {
+    public bool TransferAmmoFrom(AmmoContainer other) {
+        bool ammo_transfered = false;  // has any ammo been transfered?
         // iterate over only keys that are in both containiers
         foreach (AmmoType type in ammo_max.Keys.Intersect(other.ammo_max.Keys)) {
-            TransferAmmoFrom(type, other);
-        }        
+            bool _ammo_transfered = TransferAmmoFrom(type, other);
+            if (_ammo_transfered) {
+                Debug.Log($"some {type} ammo transfered!");   // TODO --- remove debug
+            }
+            ammo_transfered |= _ammo_transfered;
+        }
+        Debug.Log($"ammo_transfered: {ammo_transfered}");  // TODO --- remove debug
+        return ammo_transfered;
     }
 
-    public void TransferAmmoFrom(AmmoType type, AmmoContainer other) {
+    public bool TransferAmmoFrom(AmmoType type, AmmoContainer other) {
+        // transfers ammo of the given type from the other container to this one.
+        // if no ammo can be transfered, return false.
+        // any ammo is actually transfere, return true.
         int needed_ammo = AmmoNeeded(type);
+        if (needed_ammo == 0) { 
+            Debug.Log($"{type} ammo needed == 0");  // TODO --- remove debug
+            return false; 
+        } // we don't need this ammo type, so none is transfered 
+        else if (other.ammo_count[type] == 0) { 
+            Debug.Log($"container has 0 ammo of {type}");  // TODO --- remove debug
+            return false; 
+        } // other container doesn't have this ammo, so none is transfered
         if (other.ammo_count[type] >= needed_ammo) {
             other.ammo_count[type] -= needed_ammo;
             this.ammo_count[type] += needed_ammo;
@@ -60,6 +80,8 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         }
         UpdateSubscribers();
         other.UpdateSubscribers();
+        Debug.Log($"transfered some {type} ammo");  // TODO --- remove debug
+        return true; // some amount of ammo was transfered, so return true.
     }
 
     public int GetMax(AmmoType type) {
@@ -101,7 +123,19 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         if (other == null) {
             Debug.LogError($"unable to find AmmoContainer on {obj}!");
         }
-        other.TransferAmmoFrom(this);
+        bool ammo_transfered = other.TransferAmmoFrom(this);
+        if (ammo_transfered) {
+            // play sound, but only if ammo is actually transfered.
+            PlayInteractionSound();
+        }
+    }
+
+    public void PlayInteractionSound() {
+        if (interaction_sound_path.Equals("")) {
+            return; // do not play sound if there is no sound
+        }
+        ISoundSet sounds = SFXLibrary.LoadSound(interaction_sound_path);
+        SFXSystem.instance.PlaySound(sounds, transform.position);
     }
 
     void Update() {

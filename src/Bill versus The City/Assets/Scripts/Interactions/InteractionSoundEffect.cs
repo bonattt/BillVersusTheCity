@@ -10,7 +10,7 @@ public class InteractionSoundEffect : MonoBehaviour, IInteractionEffect
 
     public void Interact(GameObject obj) {
         ISoundSet sounds = SFXLibrary.LoadSound(sound_path);
-         SFXSystem.instance.PlaySound(sounds, transform.position);
+        SFXSystem.instance.PlaySound(sounds, transform.position);
     }
 
 }
