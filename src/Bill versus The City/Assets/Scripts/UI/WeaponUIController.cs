@@ -39,7 +39,8 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         if (weapon == null) {
             ammo_label.text = "- / -";
         } else {
-            ammo_label.text = $"{weapon.current_ammo} / {weapon.ammo_capacity}";
+            string automatic =  weapon.firing_mode == FiringMode.full_auto ? " (auto)": ""; 
+            ammo_label.text = $"{weapon.current_ammo} / {weapon.ammo_capacity}{automatic}";
         }
     }
 

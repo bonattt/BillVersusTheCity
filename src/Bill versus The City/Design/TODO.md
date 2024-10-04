@@ -169,7 +169,7 @@ SOOSH:
 
 [~] Interaction UI
     [+] Interactable objects show interaction on hover
-    [ ] REFACTOR: extract ammo-containier display to it's own UI document
+    [ ] REFACTOR: extract ammo-containier display to it's own UI document <--- you are here
     [ ] show ammo-container contents on the interaction
     
 [ ] Weapons

@@ -50,6 +50,7 @@ public class PlayerMovement : CharCtrl
     protected override void PostUpdate() {
         if (InputSystem.current.NextWeaponModeInput()) {
             attack_controller.current_weapon.NextWeaponSetting();
+            attack_controller.UpdateSubscribers();
         }
     }
 
