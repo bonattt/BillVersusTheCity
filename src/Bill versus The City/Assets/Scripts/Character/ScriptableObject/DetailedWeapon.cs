@@ -56,7 +56,8 @@ public class DetailedWeapon : ScriptableObject, IWeapon
         get { return weapon_setting.firing_mode; }
     }
     public bool auto_fire { 
-        get { return firing_mode == FiringMode.full_auto; }
+        // check ammo to prevent fully-auto "empty weapon" click
+        get { return firing_mode == FiringMode.full_auto && current_ammo > 0; }
     }
     public float semi_auto_fire_rate { 
         get { return weapon_setting.fire_rate; }
