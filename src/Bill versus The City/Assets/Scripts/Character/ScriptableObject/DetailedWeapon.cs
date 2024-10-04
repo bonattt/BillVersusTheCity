@@ -135,6 +135,11 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public override string ToString() {
         return $"DetailedWeapon<{_name}>";
     }
+
+    public bool HasWeaponSettings() {
+        // returns true if the weapon has more than one firing mode
+        return _weapon_settings.Length > 1;
+    }
     
     public void NextWeaponSetting() {
         current_setting += 1;

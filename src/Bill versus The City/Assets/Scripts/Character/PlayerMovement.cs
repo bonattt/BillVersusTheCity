@@ -50,6 +50,11 @@ public class PlayerMovement : CharCtrl
     protected override void PostUpdate() {
         if (InputSystem.current.NextWeaponModeInput()) {
             attack_controller.current_weapon.NextWeaponSetting();
+            if (attack_controller.current_weapon.HasWeaponSettings()) {
+                ISoundSet sound = SFXLibrary.LoadSound("weapon_mode_switch");
+                SFXSystem.instance.PlaySound(sound, transform.position);
+
+            }
             attack_controller.UpdateSubscribers();
         }
     }

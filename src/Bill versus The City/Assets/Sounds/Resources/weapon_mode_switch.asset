@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 316e498e6a4421a4e9d34348fb704497, type: 3}
-  m_Name: reload_cancel
+  m_Script: {fileID: 11500000, guid: 4d73897c23901c8478f9d68e6e920202, type: 3}
+  m_Name: weapon_mode_switch
   m_EditorClassIdentifier: 
-  sound_name: reload finish
-  sounds: []
-  volume: 1
-  default_category: 0
+  _sound_name: weapon mode switch
+  _clip: {fileID: 8300000, guid: ee5c7cb6424a1a6419f69cbe95f8d92c, type: 3}
+  _volume: 1
+  _default_category: 0

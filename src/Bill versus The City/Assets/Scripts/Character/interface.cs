@@ -119,7 +119,8 @@ public interface IWeapon : IItem {
     public string empty_gunshot_sound { get; }
     public string reload_start_sound { get; }
     public string reload_complete_sound { get; }
-    
+
+    public bool HasWeaponSettings();
     public void NextWeaponSetting();
     public void PreviousWeaponSetting();
 }

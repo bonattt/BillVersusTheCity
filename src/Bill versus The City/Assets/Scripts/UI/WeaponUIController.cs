@@ -50,8 +50,12 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         if (weapon == null) {
             weapon_label.text = "-";
         } else {
-            string automatic =  weapon.firing_mode == FiringMode.full_auto ? " (auto)": ""; 
-            weapon_label.text = $"{weapon.item_name}{automatic}";
+            string additional = "";
+            // only apply (auto) to the weapons name if it is full-auto, and actually has more than one setting
+            if (weapon.firing_mode == FiringMode.full_auto && weapon.HasWeaponSettings()) {
+                additional = " (auto)"; 
+            } 
+            weapon_label.text = $"{weapon.item_name}{additional}";
         }
     }
     
