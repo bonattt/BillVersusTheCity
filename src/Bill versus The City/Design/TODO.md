@@ -167,8 +167,10 @@ SOOSH:
     [+] Cancel Reload with Aim feels bad
     [+] Rapid clicks firing empty machineguns
 
-[ ] Interaction UI
-    [ ] Interactable objects show interaction on hover
+[~] Interaction UI
+    [+] Interactable objects show interaction on hover
+    [ ] REFACTOR: extract ammo-containier display to it's own UI document
+    [ ] show ammo-container contents on the interaction
     
 [ ] Weapons
     [~] Zoom out camera while aiming
