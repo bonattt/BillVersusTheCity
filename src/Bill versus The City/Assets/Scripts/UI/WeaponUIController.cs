@@ -39,8 +39,7 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         if (weapon == null) {
             ammo_label.text = "- / -";
         } else {
-            string automatic =  weapon.firing_mode == FiringMode.full_auto ? " (auto)": ""; 
-            ammo_label.text = $"{weapon.current_ammo} / {weapon.ammo_capacity}{automatic}";
+            ammo_label.text = $"{weapon.current_ammo} / {weapon.ammo_capacity}";
         }
     }
 
@@ -51,7 +50,8 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         if (weapon == null) {
             weapon_label.text = "-";
         } else {
-            weapon_label.text = $"{weapon.item_name}";
+            string automatic =  weapon.firing_mode == FiringMode.full_auto ? " (auto)": ""; 
+            weapon_label.text = $"{weapon.item_name}{automatic}";
         }
     }
     

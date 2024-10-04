@@ -18,10 +18,18 @@ public class SFXSystem : MonoBehaviour
     }
 
     public void PlaySound(ISoundSet sound, Vector3 target) {
+        if (sound == null) {
+            Debug.LogWarning("empty sound effect");
+            return;
+        }
         PlaySound(sound.GetRandomSound(), target);
     }
 
     public void PlaySound(ISound sound, Vector3 target) {
+        if (sound == null) {
+            Debug.LogWarning("empty sound effect");
+            return;
+        }
         PlaySound(sound.clip, target, GetVolume(sound));
     }
 

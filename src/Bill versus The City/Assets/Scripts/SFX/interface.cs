@@ -16,7 +16,7 @@ public interface ISoundSet {
 
     public ISound GetRandomSound() {
         List<ISound> sounds = GetSounds();
-        if (sounds.Count < 0) {
+        if (sounds.Count <= 0) {
             return null;
         }
         int i = Random.Range(0, sounds.Count);
