@@ -160,12 +160,12 @@ SOOSH:
         [+] Shoot
         [+] Reload
     [+] Shoot Empty Weapon Sound
-    [ ] Reload Cancel sound
+    [+] Reload Cancel sound
 
-[ ] Fixes
-    [ ] Shooting through walls
+[+] Fixes
+    [+] Shooting through walls
     [+] Cancel Reload with Aim feels bad
-    [ ] Rapid clicks firing empty machineguns
+    [+] Rapid clicks firing empty machineguns
     
 [ ] Weapons
     [~] Zoom out camera while aiming
