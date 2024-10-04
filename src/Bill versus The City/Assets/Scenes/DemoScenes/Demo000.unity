@@ -3353,6 +3353,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464615321}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1522836252 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4302876944562101421, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
+  m_PrefabInstance: {fileID: 4269365806491408667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af1aafb0fea08d4691e9b906021af6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1542348213
 GameObject:
   m_ObjectHideFlags: 0
@@ -4397,6 +4408,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970332502}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2042442448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3366367406412365533, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
+  m_PrefabInstance: {fileID: 4269365806491408667}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2042442451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8210774429092036770, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
+  m_PrefabInstance: {fileID: 4269365806491408667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042442448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2042442453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042442448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ecc07d2d7ff51488e13b8732a9dbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammo_container: {fileID: 1522836252}
+  ui_doc: {fileID: 2042442451}
+  font_size: 20
 --- !u!1001 &2066310619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4866,10 +4908,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9075012847587955672, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
+      propertyPath: name_header
+      value: Refill Ammo
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3366367406412365533, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2042442453}
   m_SourcePrefab: {fileID: 100100000, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
 --- !u!1001 &5005312468174744092
 PrefabInstance:

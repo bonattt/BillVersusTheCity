@@ -14,8 +14,7 @@ public class InteractableUI : MonoBehaviour
     private VisualElement root;
 
     private Label interaction_label; 
-    public string name = "name"; 
-    public string additional_text = "";
+    public string name_header = "name"; 
     void Start()
     {
         target_manager = target.GetComponent<Interaction>();
@@ -47,6 +46,6 @@ public class InteractableUI : MonoBehaviour
 
     protected void SetLabels() {
         // updates the UI with current display values
-        interaction_label.text = $"{name} [{InputSystem.current.InputTypeDisplay(InputType.interact)}]";
+        interaction_label.text = $"{name_header} [{InputSystem.current.InputTypeDisplay(InputType.interact)}]";
     }
 }

@@ -10,9 +10,6 @@ public class AmmoBeltUI : MonoBehaviour, IGenericObserver
     private VisualElement element_list;
     public AmmoContainer ammo_container;
 
-    // guarantees a consisten order to which fields are displayed
-    public AmmoType[] display_order = new AmmoType[]{AmmoType.handgun, AmmoType.rifle, AmmoType.shotgun};
-
     void Start() {
         element_list = ui_doc.rootVisualElement.Q<VisualElement>("contents"); 
         ammo_container.Subscribe(this);
@@ -25,12 +22,12 @@ public class AmmoBeltUI : MonoBehaviour, IGenericObserver
 
     public void UpdateAmmo() {
         element_list.Clear();
-        for (int i = 0; i < display_order.Length; i++) {
-            AmmoType type = display_order[i];
+        for (int i = 0; i < AmmoContainer.display_order.Length; i++) {
+            AmmoType type = AmmoContainer.display_order[i];
             if (! ammo_container.HasAmmoType(type)) {
                 continue;
             }
-            Label label = new Label($"{AmmoTypeDisplay.DisplayValue(type)}: {ammo_container.GetCount(type)} / {ammo_container.GetMax(type)}");
+            Label label = new Label(ammo_container.GetTextDisplay(type));
             label.AddToClassList("ammo_type");
             element_list.Add(label);
         }

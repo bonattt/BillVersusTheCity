@@ -17,6 +17,9 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
 
     public string interaction_sound_path = "reload_finished";
 
+    // guarantees a consisten order to which fields are displayed
+    public static readonly AmmoType[] display_order = new AmmoType[]{AmmoType.handgun, AmmoType.rifle, AmmoType.shotgun, AmmoType.handgun};
+
     private Dictionary<AmmoType, int> ammo_count = new Dictionary<AmmoType, int>();
     private Dictionary<AmmoType, int> ammo_max = new Dictionary<AmmoType, int>();
 
@@ -32,6 +35,11 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         foreach (IGenericObserver sub in subscribers) {
             sub.UpdateObserver(this);
         }
+    }
+
+    public string GetTextDisplay(AmmoType type) {
+        // gets a line of text to display the contents of the container for this ammo type (eg. "Shotgun 10 / 20")
+        return $"{AmmoTypeDisplay.DisplayValue(type)}: {GetCount(type)} / {GetMax(type)}";
     }
 
     public void Initialize() {
@@ -85,10 +93,16 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
     }
 
     public int GetMax(AmmoType type) {
+        if (! ammo_count.ContainsKey(type)) {
+            return 0;
+        }
         return ammo_max[type];
     }
 
     public int GetCount(AmmoType type) {
+        if (! ammo_count.ContainsKey(type)) {
+            return 0;
+        }
         return ammo_count[type];
     }
 
