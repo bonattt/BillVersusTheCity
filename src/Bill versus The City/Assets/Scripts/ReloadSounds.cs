@@ -6,15 +6,16 @@ public class ReloadSounds : MonoBehaviour, IReloadSubscriber
 {
     public const string RELOAD_START_SOUND_PATH = "reload_start";
     public const string RELOAD_COMPLETE_SOUND_PATH = "reload_finish";
+    public const string RELOAD_CANCEL_SOUND_PATH = "reload_cancel";
     // private ISoundSet reload_start_sound, reload_complete_sound;
-    private static SoundEffect reload_start_effect;
-    private static SoundEffect reload_complete_effect;
+    private static SoundEffect reload_start_effect, reload_complete_effect, reload_cancel_effect;
     private IReloadManager manager;
 
     void Awake() {
         // Resource.Load cannot be called in static class constructor
         reload_start_effect = new ReloadStartSoundEffect();
         reload_complete_effect = new ReloadCompleteSoundEffect();
+        reload_cancel_effect = new SoundEffect(RELOAD_CANCEL_SOUND_PATH);
     }
 
     // Start is called before the first frame update
@@ -48,6 +49,7 @@ public class ReloadSounds : MonoBehaviour, IReloadSubscriber
 
     public void CancelReload(IReloadManager manager, IWeapon weapon) {
         // do nothing
+        reload_cancel_effect.DisplayWeaponEffect(transform.position, weapon);
     }
 
 }

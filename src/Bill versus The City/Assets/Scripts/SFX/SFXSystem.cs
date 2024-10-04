@@ -26,6 +26,11 @@ public class SFXSystem : MonoBehaviour
     }
 
     public void PlaySound(AudioClip audio_clip, Vector3 target, float volume) {
+        if (audio_clip == null) {
+            Debug.LogWarning("empty sound effect");
+            return;
+        }
+
         // based on tutoral at `https://www.youtube.com/watch?v=DU7cgVsU2rM`
         AudioSource audio_source = Instantiate(sfx_object, target, Quaternion.identity);
         audio_source.clip = audio_clip;
