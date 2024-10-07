@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class SettingsMenuController : MonoBehaviour
+public class SettingsMenuController : MonoBehaviour, ISubMenu
 {
 
     public UIDocument main_doc;
@@ -74,6 +74,18 @@ public class SettingsMenuController : MonoBehaviour
         }
     }
 
+    
+    public void MenuNavigation() {
+        if (InputSystem.current.MenuCancelInput()) {
+            if (open_settings_controller == null || !open_settings_controller.HasUnsavedChanges()) {
+                MenuManager.inst.CloseMenu();
+            } else {
+                OpenConfirmExitDialogue();
+            }
+
+        }
+    }
+
     // public Action GetClickEvent(string tab_name) {
         
     // }
@@ -113,15 +125,33 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     public void OpenConfirmNaviagtionDialogue(string tab_name) {
-        YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
-        popup.header_text = "Unsaved Changes";
-        popup.content_text = "You have unsaved changes, are you sure you want to leave?";
-        popup.confirm_text = "Discard";
-        popup.reject_text = "Cancel";
-
+        YesNoPopupController popup = _OpenConfirmationDialogue();
+        popup.confirm_button.clicked -= MenuManager.inst.CloseMenu;
         popup.confirm_button.clicked += () => OpenSubDocument(tab_name);
         // popup.cancel_button.clicked += 
+    }
+
+    public void OpenConfirmExitDialogue() {
+        YesNoPopupController popup = _OpenConfirmationDialogue();
+        popup.confirm_button.clicked += () => CloseSettingsFromPopup();
+        // popup.cancel_button.clicked += 
+    }
+
+    public void CloseSettingsFromPopup() {
+        // closes the settings menu from a popup dialogue button.
+        MenuManager.inst.CloseMenu(); // close pop-up dialogue
+        MenuManager.inst.CloseMenu(); // close settings menu 
+
+    }
+
+    private YesNoPopupController _OpenConfirmationDialogue() {
+        YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+        popup.header_text = "Unsaved Changes";
+        popup.content_text = "You have unsaved changes, are you sure you want to leave this menu?";
+        popup.confirm_text = "Discard";
+        popup.reject_text = "Cancel";
         popup.UpdateLabels();
+        return popup;
     }
 
     private void CleanUpSubDocument() {
