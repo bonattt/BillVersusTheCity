@@ -138,7 +138,7 @@ SOOSH:
 
 [~] Menus
     [+] Exit Game
-    [ ] Restart Level
+    [+] Restart Level
     [~] Settings Menu
         [+] Audio Settings UI
         [ ] Gameplay Settings UI
