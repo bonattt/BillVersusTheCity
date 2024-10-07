@@ -88,4 +88,9 @@ public class PlayerMovement : CharCtrl
 
         return move_vector;
     }
+
+    
+    protected override void CharacterDeath() {
+        MenuManager.inst.PlayerDefeatPopup();
+    }
 }

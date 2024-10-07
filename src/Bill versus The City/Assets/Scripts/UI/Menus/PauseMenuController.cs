@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class EscapeMenuController : MonoBehaviour
+public class PauseMenuController : MonoBehaviour
 {
     public UIDocument ui_doc;
     private VisualElement root;
@@ -52,12 +52,7 @@ public class EscapeMenuController : MonoBehaviour
         popup.header_text = "Restart Level";
         popup.content_text = "Are you sure you want restart? All progress will be lost";
         popup.UpdateLabels();
-        popup.confirm_button.RegisterCallback<ClickEvent>(RestartLevelConfirmed);
-    }
-
-    public void RestartLevelConfirmed(ClickEvent _) {
-        string scene_name = "Demo000";  // TODO --- make this dynamic
-        SceneManager.LoadScene(scene_name);
+        popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void SettingsButtonClicked(ClickEvent _) {
@@ -76,7 +71,8 @@ public class EscapeMenuController : MonoBehaviour
         ExitGame();
     }
 
-    public void ExitGame() {
+    public static void ExitGame() {
+        // TODO --- move this code somewhere more suitable
         Debug.Log("Game is exiting...");
         // preprocessor #if, #else, #endif optimizes the code by excluding code sections at compile time instead of runtime
         #if UNITY_EDITOR

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
@@ -144,6 +145,19 @@ public class MenuManager : MonoBehaviour
         YesNoPopupController script = new_menu.GetComponent<YesNoPopupController>();
         script.Configure();
         return script;
+    }
+
+    public void PlayerDefeatPopup() {
+        // click event for when the restart level button is clicked
+        YesNoPopupController popup = OpenNewPopup();
+        popup.header_text = "Defeat!";
+        popup.content_text = "You have been killed";
+        popup.confirm_text = "Restart Level";
+        popup.reject_text = "Quit";
+
+        popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        popup.cancel_button.clicked += PauseMenuController.ExitGame;  // TODO --- move this helper somewhere more appropriate
+        popup.UpdateLabels();
     }
 
 }
