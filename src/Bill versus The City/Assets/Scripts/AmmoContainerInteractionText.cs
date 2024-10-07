@@ -54,7 +54,6 @@ public class AmmoContainerInteractionText : MonoBehaviour
         if (last_char == '\n') {
             output = output.Substring(0, output.Length - 1);
         }
-        Debug.Log("text: " + output);
         return output;
     }
 

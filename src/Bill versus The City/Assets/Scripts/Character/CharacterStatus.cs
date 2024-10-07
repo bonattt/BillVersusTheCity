@@ -62,7 +62,6 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         float previous_multiplier = health_multiplier; 
         if (is_player) {
             health_multiplier = GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.PLAYER_HEALTH);
-            Debug.Log($"player health multiplier: {health_multiplier}, previous: {previous_multiplier}");
         } else {
             health_multiplier = GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.ENEMY_HEALTH);
         }

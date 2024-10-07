@@ -17,6 +17,7 @@ public interface ISettingModuleMenu {
 
     // sets the UI's elements to match what is stored in settings (reverting any changes)
     public void LoadSettings();
+    public bool HasUnsavedChanges();
 
     // Updates UI to display changes
     public void UpdateUI();

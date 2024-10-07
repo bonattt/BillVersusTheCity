@@ -15,13 +15,13 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
     
     public abstract void Initialize(VisualElement root);
 
-    protected void LoadTemplate(VisualElement root) {
+    protected virtual void LoadTemplate(VisualElement root) {
         // loads the root visaul element and finds required class field in the Visual Tree
         this.root = root;
         settings_pannel = root.Q<VisualElement>("List");
         buttons_pannel = root.Q<VisualElement>("Controlls");
         header_label = root.Q<Label>("HeaderText");
-        header_label.text = "Audio Settings";
+        header_label.text = "Settings";
 
         settings_pannel.Clear();
     }
@@ -29,6 +29,8 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
     public abstract void SaveSettings();
 
     public abstract void LoadSettings();
+
+    public abstract bool HasUnsavedChanges();
 
     public void UpdateUI() {
         // updates the UI

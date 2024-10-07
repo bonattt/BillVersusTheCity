@@ -19,6 +19,7 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
         this.LoadTemplate(root);
+        header_label.text = "General Settings";
 
         // TODO --- refactor: extract Toggle creation 
         VisualElement div = new VisualElement();
@@ -54,6 +55,12 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
         
         show_fps_toggle.value = settings.show_fps;
         UpdateUI();
+    }
+    
+    
+    public override bool HasUnsavedChanges() {
+        GeneralSettings settings = GameSettings.inst.general_settings;
+        return show_fps_toggle.value != settings.show_fps;
     }
 
 }

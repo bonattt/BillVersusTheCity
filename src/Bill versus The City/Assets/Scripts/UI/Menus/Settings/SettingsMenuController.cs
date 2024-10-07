@@ -14,6 +14,7 @@ public class SettingsMenuController : MonoBehaviour
     private VisualElement root, tabs_list, sub_menu_root, sub_menu_panel;
 
     private ISettingModuleMenu open_settings_controller = null;
+    private string open_tab_name = "";
 
     public const string GENERAL_TAB = "General";
     public const string GRAPHICS_TAB = "Graphics";
@@ -36,7 +37,7 @@ public class SettingsMenuController : MonoBehaviour
     }
     
     private ISettingModuleMenu GetTabController(string tab_name) {
-        // takes a tab name and returns the controller script for that tab
+        // takes a tab name and returns a new controller script for that tab type
         switch(tab_name) {
             case AUDIO_TAB: return new AudioSettingsMenuCtrl();
             case GENERAL_TAB: return new GeneralSettingsMenuCtrl();
@@ -65,6 +66,7 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     public void UpdateTabs() {
+        // updates the navigation tab sidebar.
         tabs_list.Clear();
         for (int i = 0; i < tabs_order.Length; i++) {
             string tab_name = tabs_order[i];
@@ -79,6 +81,7 @@ public class SettingsMenuController : MonoBehaviour
     // public void TabClicked
 
     private void AddModuleTab(string tab_name) {
+        // adds a navigation tab for the given tab_name.
         Button button = new Button();
         button.text = tab_name;
         button.AddToClassList("settings_module_tab");
@@ -88,11 +91,42 @@ public class SettingsMenuController : MonoBehaviour
     }
 
     private System.Action GetSettingsTabCallback(string tab_name) {
-        return () => OpenSubDocument(tab_name);
+        return () => SettingsTabClicked(tab_name);
+    }
+
+    public void SettingsTabClicked(string tab_name) {
+        Debug.Log($"settings tab clicked. open_settings_controller: {open_settings_controller}");
+        if (tab_name.Equals(open_tab_name)) { 
+            return; // do nothing if the already open tab is clicked
+        }
+        else if (open_settings_controller != null) {
+            Debug.Log($"has unsaved changes: {open_settings_controller.HasUnsavedChanges()}");
+            if (open_settings_controller.HasUnsavedChanges()) {
+                OpenConfirmNaviagtionDialogue(tab_name);
+            } else {
+                OpenSubDocument(tab_name);
+            }
+        }
+        else {
+            OpenSubDocument(tab_name);
+        }
+    }
+
+    public void OpenConfirmNaviagtionDialogue(string tab_name) {
+        YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+        popup.header_text = "Unsaved Changes";
+        popup.content_text = "You have unsaved changes, are you sure you want to leave?";
+        popup.confirm_text = "Discard";
+        popup.reject_text = "Cancel";
+
+        popup.confirm_button.clicked += () => OpenSubDocument(tab_name);
+        // popup.cancel_button.clicked += 
+        popup.UpdateLabels();
     }
 
     private void CleanUpSubDocument() {
         // cleans up the already open sub document so a new doc can be opened
+        // returns true if cleanup is successful
         sub_menu_panel.Clear();
         if (open_settings_controller != null) {
             open_settings_controller.CleanUp();
@@ -103,6 +137,7 @@ public class SettingsMenuController : MonoBehaviour
     private void OpenSubDocument(string tab_name) {
         // opens a new tab in the settings menu
         CleanUpSubDocument();
+        open_tab_name = tab_name;
         VisualTreeAsset uxml = GetTabUI(tab_name);
         if (uxml == null) {
             Debug.LogWarning("opening null settings menu sub-module");

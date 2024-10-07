@@ -70,6 +70,17 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         }
         UpdateUI();
     }
+    
+    public bool HasUnsavedChanges() {
+        AudioSettings settings = GameSettings.inst.audio_settings;
+        foreach (SoundCategory category in sound_category_ordering) {
+            // if any setting doesn't match, shourt-circuit and return false
+            if (volume_sliders[category].value != settings.GetVolumeSetting(category)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void UpdateUI() {
         // updates the UI

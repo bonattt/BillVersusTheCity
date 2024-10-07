@@ -28,6 +28,10 @@ public class PlaceholderSettingsMenuCtrl : ISettingModuleMenu {
         // do nothing: placeholder class
     }
 
+    public bool HasUnsavedChanges() {
+        return false;
+    }
+
     public void UpdateUI() {
         // do nothing: placeholder class
     }
