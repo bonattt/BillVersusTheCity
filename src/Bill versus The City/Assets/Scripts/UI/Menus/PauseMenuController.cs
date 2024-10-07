@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class EscapeMenuController : MonoBehaviour
@@ -38,11 +39,25 @@ public class EscapeMenuController : MonoBehaviour
 
         resume_button.RegisterCallback<ClickEvent>(MenuManager.CloseMenuClick);
         settings_button.RegisterCallback<ClickEvent>(SettingsButtonClicked);
-        // restart_button.RegisterCallback<ClickEvent>(  );
+        restart_button.RegisterCallback<ClickEvent>(RestartButtonClicked);
         exit_button.RegisterCallback<ClickEvent>(ExitGameClick); 
         
         all_buttons = new Button[]{resume_button, settings_button, restart_button, exit_button};
         MenuManager.AddGenericEvents(all_buttons);
+    }
+
+    public void RestartButtonClicked(ClickEvent _) {
+        // click event for when the restart level button is clicked
+        YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+        popup.header_text = "Restart Level";
+        popup.content_text = "Are you sure you want restart? All progress will be lost";
+        popup.UpdateLabels();
+        popup.confirm_button.RegisterCallback<ClickEvent>(RestartLevelConfirmed);
+    }
+
+    public void RestartLevelConfirmed(ClickEvent _) {
+        string scene_name = "Demo000";  // TODO --- make this dynamic
+        SceneManager.LoadScene(scene_name);
     }
 
     public void SettingsButtonClicked(ClickEvent _) {

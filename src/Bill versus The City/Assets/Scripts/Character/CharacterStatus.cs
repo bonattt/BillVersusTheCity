@@ -46,20 +46,30 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     }
     private List<ICharStatusSubscriber> subscribers = new List<ICharStatusSubscriber>();
 
-    public bool is_player = false;
+    private bool _is_player = false;
+    public bool is_player {
+        get { return _is_player; }
+        set {
+            _is_player = value;
+            SetHealthDifficulty();
+            SetArmorDifficulty();
+        }
+    }
 
     private float health_multiplier = 1f; // set by difficulty
     private void SetHealthDifficulty() {
         // adjusts health and max_healht based on the games difficulty settings 
         float previous_multiplier = health_multiplier; 
         if (is_player) {
-            health_multiplier = 1f;
+            health_multiplier = GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.PLAYER_HEALTH);
+            Debug.Log($"player health multiplier: {health_multiplier}, previous: {previous_multiplier}");
         } else {
             health_multiplier = GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.ENEMY_HEALTH);
         }
         // remove previous multiplier and add new multiplier
         _max_health = Mathf.Round(_max_health * health_multiplier / previous_multiplier);
-        _health = Mathf.Round(_health * health_multiplier / previous_multiplier);
+        // setting property updates subscribers automagically
+        health = Mathf.Round(_health * health_multiplier / previous_multiplier);
     }
 
     private string health_difficulty_field { 

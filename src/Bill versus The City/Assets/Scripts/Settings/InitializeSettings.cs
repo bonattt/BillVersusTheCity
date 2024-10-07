@@ -9,6 +9,6 @@ public class InitializeSettings : MonoBehaviour
         if (GameSettings.inst == null) {
             new GameSettings();
         }
-        Destroy(this);
+        Destroy(gameObject);
     }
 }
