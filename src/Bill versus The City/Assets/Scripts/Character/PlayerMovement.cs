@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : CharCtrl
 {
+    
+    public override void SetupCharacter() {
+        base.SetupCharacter();
+        ((CharacterStatus) char_status).is_player = true;
+    }
+
     public override bool AttackInput() {
         if (attack_controller.current_weapon.auto_fire) {
             return InputSystem.current.AttackHoldInput();

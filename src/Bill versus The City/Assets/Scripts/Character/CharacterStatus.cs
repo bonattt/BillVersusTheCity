@@ -46,7 +46,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     }
     private List<ICharStatusSubscriber> subscribers = new List<ICharStatusSubscriber>();
 
-    public bool is_player { get { return false; }} // TODO --- implement this
+    public bool is_player = false;
 
     private float health_multiplier = 1f; // set by difficulty
     private void SetHealthDifficulty() {

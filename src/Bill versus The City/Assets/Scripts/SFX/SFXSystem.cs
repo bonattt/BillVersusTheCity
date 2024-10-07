@@ -5,7 +5,7 @@ using UnityEngine;
 public class SFXSystem : MonoBehaviour
 {
 
-    public AudioSource sfx_object;
+    public AudioSource sfx_object_prefab;
     private static SFXSystem _instance;
     public static SFXSystem instance {
         get {
@@ -40,7 +40,7 @@ public class SFXSystem : MonoBehaviour
         }
 
         // based on tutoral at `https://www.youtube.com/watch?v=DU7cgVsU2rM`
-        AudioSource audio_source = Instantiate(sfx_object, target, Quaternion.identity);
+        AudioSource audio_source = Instantiate(sfx_object_prefab, target, Quaternion.identity);
         audio_source.clip = audio_clip;
         audio_source.volume = volume;
         audio_source.Play();
