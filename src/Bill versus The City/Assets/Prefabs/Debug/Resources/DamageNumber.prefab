@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39cbeffa39e2ed479782fb5493fb144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage_amount: 0
+  damage_value: 10
+  text_color: {r: 0.9, g: 0.05, b: 0.05, a: 1}
+  outline_color: {r: 0.55, g: 0, b: 0, a: 1}
   duration: 3
   scatter: 1
-  debug_start_target: {fileID: 0}
   start_offset: {x: 0, y: 0, z: 0}
   upware_float: 0
   uiDocument: {fileID: 4017287325707662143}
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: e1a33280f3e329c488a96e743a778330, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 0182db95521d24c49a61db9cd3095d4e, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: -1
 --- !u!114 &4689076559793516901
 MonoBehaviour:
   m_ObjectHideFlags: 0
