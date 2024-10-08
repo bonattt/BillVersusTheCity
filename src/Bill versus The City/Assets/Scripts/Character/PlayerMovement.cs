@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : CharCtrl
 {
-    
+    public static PlayerMovement inst {
+        get; private set;
+    }
+
     public override void SetupCharacter() {
         base.SetupCharacter();
         ((CharacterStatus) char_status).is_player = true;
+        if (inst != null) {
+            Debug.LogWarning("updating Player singleton!");
+        }
+        inst = this;
     }
 
     public override bool AttackInput() {

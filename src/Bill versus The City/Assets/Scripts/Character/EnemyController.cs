@@ -8,13 +8,11 @@ using UnityEngine.AI;
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
 
-    [SerializeField]
-    public bool saw_target { get; protected set; } // saw the target last frame
-    
-    [SerializeField]
-    public bool seeing_target { get; protected set; } // seeing the target last frame
+    public bool saw_target { get { return perception.saw_target_last_frame; } } // saw the target last frame
+    public bool seeing_target { get { return perception.seeing_target; }  } // seeing the target last frame
 
     public float ctrl_shooting_rate = 0.75f;
+    private EnemyPerception perception;
 
     //////////////////////////////
     /// Behavior controls ////////
@@ -29,8 +27,7 @@ using UnityEngine.AI;
 
     public override void SetupCharacter() {
         base.SetupCharacter();
-        saw_target = false;
-        seeing_target = false;
+        perception = GetComponent<EnemyPerception>();
     }
 
     protected override void Move() {
@@ -124,34 +121,6 @@ using UnityEngine.AI;
         Destroy(gameObject);
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
     }
-
-    public bool LineOfSightToTarget() {
-        if (ctrl_target == null) {
-            Debug.LogWarning("no target!");
-            return false;
-        }
-        RaycastHit hit;
-        Vector3 offset = new Vector3(0f, 0.5f, 0f);
-        Vector3 start = transform.position + offset;
-        Vector3 end = ctrl_target.position + offset;
-        Vector3 direction = end - start;
-        Debug.DrawRay(start, direction, Color.red);
-        if (Physics.Raycast(start, direction, out hit, direction.magnitude, obstacleMask)) {
-            bool los_to_target = hit.transform == ctrl_target;
-            // Debug.Log($"seeing {hit}");
-            return los_to_target;
-        }
-        Debug.Log("I SEE NOTHING!");
-        return false;
-    }
-
-    protected override void PreUpdate() {
-        seeing_target = LineOfSightToTarget();
-    }
-    
-    protected override void PostUpdate() {
-        saw_target = LineOfSightToTarget();
-    }    
 
     /////////////////////////////
     /// DEBUG FIELDS ////////////

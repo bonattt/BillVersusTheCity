@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public PlayerMovement player;
+    public PlayerMovement player;   // TODO --- update this to use the singleton
     public EnemyController controller;
 
     public float optimal_attack_range = 6f;
