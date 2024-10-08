@@ -23,6 +23,10 @@ using UnityEngine.AI;
         return new List<EnemyController>(enemies);
     }
 
+    public void RemoveEnemy(EnemyController enemy) {
+        enemies.Remove(enemy);
+    }
+
     public void AlertEnemiesNear(Vector3 start) {
         // Alerts all nearby enemies to the given point
         foreach(EnemyController ctrl in enemies) {

@@ -25,6 +25,10 @@ using UnityEngine.AI;
 
     public NavMeshAgent nav_mesh_agent;
 
+    void OnDestroy() {
+        EnemiesManager.inst.RemoveEnemy(this);
+    }
+
     public override void SetupCharacter() {
         base.SetupCharacter();
         perception = GetComponent<EnemyPerception>();
