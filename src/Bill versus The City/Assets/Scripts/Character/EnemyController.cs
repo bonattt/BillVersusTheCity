@@ -9,7 +9,7 @@ using UnityEngine.AI;
     public LayerMask obstacleMask;
 
     public bool saw_target { get { return perception.saw_target_last_frame; } } // saw the target last frame
-    public bool seeing_target { get { return perception.seeing_target; }  } // seeing the target last frame
+    public bool seeing_target { get { return perception.player_noticed; }  } // seeing the target last frame
 
     public float ctrl_shooting_rate = 0.75f;
     private EnemyPerception perception;

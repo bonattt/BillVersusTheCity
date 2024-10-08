@@ -8,6 +8,21 @@ public class PlayerMovement : CharCtrl
         get; private set;
     }
 
+    // returns a list of all the nodes which enemies raycast to see the player
+    public Transform vision_target;
+    private List<Transform> _vision_nodes = null;
+    public List<Transform> vision_nodes {
+        get {
+            if (_vision_nodes == null) {
+                _vision_nodes = new List<Transform>{transform};
+                foreach (Transform child in vision_target) {
+                    _vision_nodes.Add(child);
+                }
+            }
+            return _vision_nodes;
+        }
+    }
+
     public override void SetupCharacter() {
         base.SetupCharacter();
         ((CharacterStatus) char_status).is_player = true;
