@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class EnemyPerception : MonoBehaviour
+public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
 {
     /** 
       * Script controlling if an Enemy can see the player
@@ -15,8 +15,6 @@ public class EnemyPerception : MonoBehaviour
     public int max_vision_nodes = 1; // max number of visible nodes that will add to how quickly the player is noticed
     public float notice_player_rate = 2f;
     public float forget_player_rate = 2f;
-
-    private float player_noticed_percent = 0f; // ticks up as the enemy sees the player
 
     protected bool _saw_target_last_frame = false; // saw the target last frame
     public bool saw_target_last_frame { 
@@ -35,7 +33,7 @@ public class EnemyPerception : MonoBehaviour
     public int visible_nodes_this_frame { get; protected set; }
 
     [SerializeField]
-    public float _percent_noticed;
+    public float _percent_noticed; // ticks up as the enemy sees the player. at 1f, player is spotted
     public float percent_noticed { 
         get {
             return _percent_noticed;
@@ -57,6 +55,20 @@ public class EnemyPerception : MonoBehaviour
 
     void Start() {
         visible_nodes_this_frame = 0;
+        GetComponent<ICharacterStatus>().Subscribe(this);
+    }
+
+    public void StatusUpdated(ICharacterStatus status) {
+        // instantly notice the player if you take damage
+        if (status.health < status.max_health) {
+            percent_noticed = 1f;
+            return;
+        }
+        if (status.armor != null) {
+            if (status.armor.armor_durability < status.armor.armor_max_durability) {
+                percent_noticed = 1f;
+            }
+        }
     }
 
     void Update() {
