@@ -34,11 +34,9 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
     
 
     private DropdownField GetDifficultyDropdown() {
-        // DifficultyLevel current_level = GameSettings.inst.difficulty_settings.difficulty_level;
-        // DropdownField dropdown = new DropdownField(DifficultySettings.DifficultyLevelDisplay(current_level));
         DropdownField dropdown = new DropdownField();
         dropdown.name = "Difficulty";
-        // dropdown.text = "Difficulty";
+        dropdown.AddToClassList(SETTINGS_ITEM_CLASS);
         
         UpdateDropdownOptions(dropdown);
         return dropdown;
@@ -47,9 +45,9 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
     private void UpdateDropdownOptions(DropdownField dropdown) {
         DifficultyLevel current_level = GameSettings.inst.difficulty_settings.difficulty_level;
         if (current_level == DifficultyLevel.custom) {
-            RemoveCustomOption(dropdown);
-        } else {
             AddCustomOption(dropdown);
+        } else {
+            RemoveCustomOption(dropdown);
         }
     }
 

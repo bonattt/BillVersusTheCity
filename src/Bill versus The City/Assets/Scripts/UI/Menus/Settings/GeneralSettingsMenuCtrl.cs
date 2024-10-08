@@ -24,6 +24,7 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
         // TODO --- refactor: extract Toggle creation 
         VisualElement div = new VisualElement();
         div.style.flexDirection = FlexDirection.Row;
+        div.AddToClassList(SETTINGS_ITEM_CLASS);
         settings_pannel.Add(div);
 
         Label show_fps_label = new Label();

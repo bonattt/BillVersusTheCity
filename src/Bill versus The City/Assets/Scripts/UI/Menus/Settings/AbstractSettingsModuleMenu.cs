@@ -10,6 +10,8 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
     protected VisualElement root, settings_pannel, buttons_pannel; 
     protected Label header_label;
 
+    // style-sheet class for any top-level item in a settings module menue
+    public const string SETTINGS_ITEM_CLASS = "settings_item";
 
     public abstract ISettingsModule settings_module { get; }
     
