@@ -34,9 +34,9 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
 
     public abstract bool HasUnsavedChanges();
 
-    public void UpdateUI() {
+    public virtual void UpdateUI() {
         // updates the UI
-        // nothing to do here yet
+        // nothing to do here, hook is in place to override in subclasses
     }
 
     public void CleanUp() {

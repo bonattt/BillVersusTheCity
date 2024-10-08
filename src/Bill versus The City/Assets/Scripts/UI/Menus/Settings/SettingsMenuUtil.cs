@@ -43,7 +43,7 @@ public static class SettingsMenuUtil {
 
     public static readonly string[] SETTINGS_ITEM_CLASSES = new string[]{"settings_item"};
     
-    public static void UpdatePercentSliderLabel(Slider slider, Label label) {
+    public static void UpdateSliderValueDisplay(Slider slider, Label label) {
         // updates the value display of a percent slider to show a percent 0-100
         label.text = $"{Mathf.Round(slider.value * 100)}";
     }
@@ -52,7 +52,6 @@ public static class SettingsMenuUtil {
         // creates a slider for controlling percent fields (0-1f)
         VisualElement parent = new VisualElement();
         parent.name = text;
-        parent.AddToClassList(PERCENT_SLIDER_CLASS);
         parent.AddToClassList(SLIDER_CLASS);
         
         Label label = new Label();
@@ -86,9 +85,16 @@ public static class SettingsMenuUtil {
         return parent;
     }
 
+    public static (Slider, Label) UnpacKSlider(VisualElement slider_element) {
+        // unpacks the Slider and Label components packaged by the parent slider VisualElement
+        return (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
+    }
+
     public static VisualElement CreatePercentSlider(string text) {
         // creates a slider for controlling percent fields (0-1f)
-        return CreateSlider(text, 0f, 1f);
+        VisualElement slider = CreateSlider(text, 0f, 1f);
+        slider.AddToClassList(PERCENT_SLIDER_CLASS);
+        return slider;
     }
 
     public static void LogChildren(VisualElement element) {

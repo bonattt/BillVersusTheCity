@@ -51,6 +51,7 @@ public class SettingsMenuController : MonoBehaviour, ISubMenu
             case AUDIO_TAB: return new AudioSettingsMenuCtrl();
             case DIFFICULTY_TAB: return new DifficultySettingsMenuCtrl();
             case GENERAL_TAB: return new GeneralSettingsMenuCtrl();
+            case GAMEPLAY_TAB: return new GameplaySettingsMenuCtrl();
             default:
                 Debug.LogWarning($"Unknown settings tab `{tab_name}`");
                 return new PlaceholderSettingsMenuCtrl();

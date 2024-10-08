@@ -49,7 +49,7 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
     private (Slider, Label) AddVolumeSlider(string slider_label) {
         VisualElement slider_element = SettingsMenuUtil.CreatePercentSlider(slider_label);
         settings_pannel.Add(slider_element);
-        return (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
+        return SettingsMenuUtil.UnpacKSlider(slider_element);  // (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
     }
 
     public void SaveSettings() {
@@ -84,9 +84,9 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
 
     public void UpdateUI() {
         // updates the UI
-        SettingsMenuUtil.UpdatePercentSliderLabel(master_volume, master_volume_label);
+        SettingsMenuUtil.UpdateSliderValueDisplay(master_volume, master_volume_label);
         foreach (SoundCategory key in volume_sliders.Keys) {
-            SettingsMenuUtil.UpdatePercentSliderLabel(volume_sliders[key], volume_slider_labels[key]);
+            SettingsMenuUtil.UpdateSliderValueDisplay(volume_sliders[key], volume_slider_labels[key]);
         }
     }
 
