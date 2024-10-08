@@ -3184,6 +3184,9 @@ MonoBehaviour:
   - {fileID: 1696000022}
   - {fileID: 1981470902}
   - {fileID: 1056295678}
+  layer_mask:
+    serializedVersion: 2
+    m_Bits: 199
 --- !u!4 &1552676431
 Transform:
   m_ObjectHideFlags: 0
