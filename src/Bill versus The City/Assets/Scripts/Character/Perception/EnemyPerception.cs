@@ -39,6 +39,17 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
             return _percent_noticed;
         }
         protected set {
+            if (value >= 1f) {
+                if (_percent_noticed < 1f) {
+                    Alert();
+                }
+                _percent_noticed = 1f;
+            } else if (value <= 0) {
+                _percent_noticed = 0f;
+            } else {
+                _percent_noticed = value;
+            }
+
             _percent_noticed = value;
             if(_percent_noticed <= 0) {
                 _percent_noticed = 0f;
@@ -58,15 +69,20 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         GetComponent<ICharacterStatus>().Subscribe(this);
     }
 
+    public void Alert() {
+        // alerts the enemy
+        _percent_noticed = 1f;
+    }
+
     public void StatusUpdated(ICharacterStatus status) {
         // instantly notice the player if you take damage
         if (status.health < status.max_health) {
-            percent_noticed = 1f;
+            Alert();
             return;
         }
         if (status.armor != null) {
             if (status.armor.armor_durability < status.armor.armor_max_durability) {
-                percent_noticed = 1f;
+                Alert();
             }
         }
     }
@@ -85,7 +101,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     void LateUpdate() {
-        Debug.Log("LateUpdate");
         updated_this_frame = false;
     }
 
@@ -153,7 +168,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         Vector3 start = raycast_start.position;
         Vector3 end = target_node.position;
         Vector3 direction = end - start;
-        Debug.DrawRay(start, direction, Color.red);
+        // Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, direction.magnitude, vision_mask)) {
             bool los_to_target = hit.transform == target_node || hit.transform == PlayerMovement.inst.transform;
             return los_to_target;

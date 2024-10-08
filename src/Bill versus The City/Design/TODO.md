@@ -127,8 +127,8 @@ SOOSH:
 ==== Demo 2 ====
 ================
 
-[ ] Enemies 
-    [ ] Enemies reload
+[X] Enemies 
+    [X] Enemies reload
 
 [+] Settings system (GameSettings)
     [+] Observer pattern
@@ -136,13 +136,13 @@ SOOSH:
     [X] graphics (do later, but must be supported) -> bool, floats, ints, enums
     [X] difficulty (do later) -> numbers, enums
 
-[~] Menus
+[+] Menus
     [+] Exit Game
     [+] Restart Level
-    [~] Settings Menu
+    [+] Settings Menu
         [+] Audio Settings UI
-        [ ] Gameplay Settings UI
-        [ ] Graphics Settings UI
+        [+] Gameplay Settings UI
+        [X] Graphics Settings UI
 
 [+] Menu Backends
     [+] MenuManager
@@ -152,7 +152,7 @@ SOOSH:
     [+] Audio Settings
     [+] Difficulty Settings
     [+] Mouse Sensitivity
-    [ ] Graphics Settings (font size)
+    [X] Graphics Settings (font size) --> do later
     
 
 [+] Sounds
@@ -167,15 +167,59 @@ SOOSH:
     [+] Cancel Reload with Aim feels bad
     [+] Rapid clicks firing empty machineguns
 
-[~] Interaction UI
+[+] Interaction UI
     [+] Interactable objects show interaction on hover
-    [~] REFACTOR: extract ammo-containier display to it's own UI document <--- you are here
+    [~] REFACTOR: extract ammo-containier display to it's own UI document
     [+] show ammo-container contents on the interaction
     
-[ ] Weapons
-    [~] Zoom out camera while aiming
-    [~] Mouse sensitivity while aiming
-    [ ] Aiming Reticle
+[+] Weapons
+    [~] Zoom out camera while aiming --> doesn't work great
+    [+] Mouse sensitivity while aiming
+    [X] Aiming Reticle --> do later
+
+[+] Enemy perception
+    [+] Enemies take a moment to notice to the player
+    [+] Enemies notice the player if they take damage
+    [ ] Enemies take a moment to react before they can shoot
+    [ ] Enemies notice the player if shots are fired nearby
+
+
+=============================
+    DEMO NOTES
+SOOSH:
+    - rooms too big
+        - enemies very hard too see
+    - can shoot through walls
+    - alt is the alternative for 
+    - zoom out for weapon zoom
+
+
+    - trying to shoot with no ammo feels bad
+        - make a click or auto-reload
+    - cancel reload cancels on empty gun???
+
+
+===================
+==== DEMO 003 =====
+===================
+
+[ ] Aiming reticle
+    [ ] Reticle appears as you aim
+    [ ] hide mouse while unpaused in main gameplay
+
+[ ] Save and Load data
+    [ ] Save/Load Game settings
+    [ ] Save/Load metrics
+
+[ ] Main Menu
+
+[ ] Equipment Select at the start of a level
+
+[ ] Equipment Pickups
+
+[ ] Dialogue system
+
+    
 
 =============================
 ==== Unplanned features =====

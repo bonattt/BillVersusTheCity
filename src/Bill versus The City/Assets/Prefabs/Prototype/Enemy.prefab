@@ -56,8 +56,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vision_mask:
     serializedVersion: 2
-    m_Bits: 3959
+    m_Bits: 375
   raycast_start: {fileID: 4280276152886177003}
+  max_vision_nodes: 1
+  notice_player_rate: 2
+  forget_player_rate: 2
+  _percent_noticed: 0
 --- !u!114 &3396656997431563555
 MonoBehaviour:
   m_ObjectHideFlags: 0
