@@ -66,3 +66,4 @@ MonoBehaviour:
   graphics_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}
   audio_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}
   gameplay_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}
+  difficulty_settings_ui: {fileID: 9197481963319205126, guid: e39b224ceccee124589f0dfb5c412f16, type: 3}

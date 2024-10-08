@@ -59,6 +59,38 @@ public class DifficultySettings : AbstractSettingsModule {
         UpdateSubscribers(key);
     }
 
+    public static readonly Dictionary<DifficultyLevel, string> DISPLAY_VALUES = new Dictionary<DifficultyLevel, string>(){
+        {DifficultyLevel.custom, "Custom"},
+        {DifficultyLevel.easy, "Easy"},
+        {DifficultyLevel.medium, "Medium"},
+        {DifficultyLevel.hard, "Hard"}
+    };
+
+    private static Dictionary<string, DifficultyLevel> REVERSE_DISPLAY_VALUES = null;
+
+    public static string DifficultyLevelDisplay(DifficultyLevel level) {
+        if (DISPLAY_VALUES.ContainsKey(level)) {
+            return DISPLAY_VALUES[level];
+        }
+        Debug.LogError($"no display value for difficulty level '{level}'");
+        return $"{level}";
+    }
+
+    public static DifficultyLevel LevelFromDisplay(string display_value) {
+        // initialize reverse lookup for display values only once
+        if (REVERSE_DISPLAY_VALUES == null) {
+            REVERSE_DISPLAY_VALUES = new Dictionary<string, DifficultyLevel>();
+            foreach(DifficultyLevel level in DISPLAY_VALUES.Keys) {
+                REVERSE_DISPLAY_VALUES[DISPLAY_VALUES[level]] = level;
+            }
+        }
+        if (! REVERSE_DISPLAY_VALUES.ContainsKey(display_value)) {
+            Debug.LogError($"'{display_value}' is not recognized as a difficulty level");
+            return DifficultyLevel.custom;
+        }
+        return REVERSE_DISPLAY_VALUES[display_value];
+    }
+
 }
 
 

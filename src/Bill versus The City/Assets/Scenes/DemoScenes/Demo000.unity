@@ -3564,8 +3564,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5326133b05020354fbc18f1494202022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  write: 1
+  set_template: 1
+  write: 0
   read: 1
+  difficulty_level: 1
   enemy_armor: 1
   enemy_health: 0.1
   player_armor: 2

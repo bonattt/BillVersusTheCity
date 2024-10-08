@@ -9,7 +9,7 @@ public class SettingsMenuController : MonoBehaviour, ISubMenu
 {
 
     public UIDocument main_doc;
-    public VisualTreeAsset general_settings_ui, graphics_settings_ui, audio_settings_ui, gameplay_settings_ui;
+    public VisualTreeAsset general_settings_ui, graphics_settings_ui, audio_settings_ui, gameplay_settings_ui, difficulty_settings_ui;
 
     private VisualElement root, tabs_list, sub_menu_root, sub_menu_panel;
 
@@ -17,16 +17,25 @@ public class SettingsMenuController : MonoBehaviour, ISubMenu
     private string open_tab_name = "";
 
     public const string GENERAL_TAB = "General";
-    public const string GRAPHICS_TAB = "Graphics";
     public const string GAMEPLAY_TAB = "Gameplay";
+    public const string DIFFICULTY_TAB = "Difficulty";
+    public const string GRAPHICS_TAB = "Graphics";
     public const string AUDIO_TAB = "Audio";
-    public readonly string[] tabs_order = new string[]{GENERAL_TAB, GRAPHICS_TAB, GAMEPLAY_TAB, AUDIO_TAB};
+    public readonly string[] tabs_order = new string[]{GENERAL_TAB, GAMEPLAY_TAB, DIFFICULTY_TAB, GRAPHICS_TAB, AUDIO_TAB};
+    /** ADDING A NEW TAB
+      * 1) add the tab to `tabs_order`
+      * 2) Add the tab to `GetTabUI`
+      * 3) Add the tab to `GetTabController`
+      * 4) add the UXML for the new Tab's UI to the controller's prefab
+      */
+
     private VisualTreeAsset GetTabUI(string tab_name) {
         // takes a tab-name and returns the UXML for that tab.
         // needs to be a method, because the VisualTreeAssets are dynamic
         switch(tab_name) {
             case GENERAL_TAB: return general_settings_ui;
             case GRAPHICS_TAB: return graphics_settings_ui;
+            case DIFFICULTY_TAB: return difficulty_settings_ui;
             case GAMEPLAY_TAB: return gameplay_settings_ui;
             case AUDIO_TAB: return audio_settings_ui;
 
@@ -40,6 +49,7 @@ public class SettingsMenuController : MonoBehaviour, ISubMenu
         // takes a tab name and returns a new controller script for that tab type
         switch(tab_name) {
             case AUDIO_TAB: return new AudioSettingsMenuCtrl();
+            case DIFFICULTY_TAB: return new DifficultySettingsMenuCtrl();
             case GENERAL_TAB: return new GeneralSettingsMenuCtrl();
             default:
                 Debug.LogWarning($"Unknown settings tab `{tab_name}`");

@@ -25,6 +25,7 @@
                         <ui:Slider high-value="100" name="Slider" class="settings_slider_tracker" />
                     </ui:VisualElement>
                 </ui:VisualElement>
+                <ui:DropdownField label="Dropdown" choices="1,2,3" usage-hints="None" index="1" />
             </ui:VisualElement>
             <ui:VisualElement name="Controls" class="settings_control_buttons_pannel">
                 <ui:Button text="Apply" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ApplyButton" class="settings_control_button" />
