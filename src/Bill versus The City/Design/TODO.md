@@ -180,8 +180,8 @@ SOOSH:
 [+] Enemy perception
     [+] Enemies take a moment to notice to the player
     [+] Enemies notice the player if they take damage
-    [ ] Enemies take a moment to react before they can shoot
-    [ ] Enemies notice the player if shots are fired nearby
+    [~] Enemies take a moment to react before they can shoot
+    [+] Enemies notice the player if shots are fired nearby
 
 
 =============================
@@ -205,7 +205,7 @@ SOOSH:
     [ ] hide mouse while unpaused in main gameplay
 
 [ ] Save and Load data
-    [ ] Save/Load Game settings
+    [+] Save/Load Game settings
     [ ] Save/Load metrics
 
 [ ] Main Menu
@@ -215,6 +215,15 @@ SOOSH:
 [ ] Equipment Pickups
 
 [ ] Dialogue system
+
+[ ] Fixes
+    [ ] fences look breakable
+    [ ] FPS display doesn't work in pause
+     X Truck Asset has weird collisions --> won't do
+    [ ] Aim-zoom janky
+    [ ] click R again canceling reload is annoying
+        - only have "shoot" cancel it, BUT aiming doesn't work while reloading
+    [ ] shooting through wall still works occasionally, but it's harder
 
     
 
