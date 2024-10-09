@@ -204,7 +204,7 @@ SOOSH:
     [ ] Reticle appears as you aim
     [ ] hide mouse while unpaused in main gameplay
 
-[ ] Save and Load data
+[~] Save and Load data
     [+] Save/Load Game settings
     [ ] Save/Load metrics
 
