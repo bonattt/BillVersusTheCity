@@ -10,6 +10,8 @@ public class SaveFile {
     public const string SAVE_SLOT_1 = "save_1";
     public const string SAVE_FILE_DIR = ".save_files";
 
+    public static SaveFile current_save = null;
+
     public string filepath {
         get {
             // TODO --- if save_name is ever user-generated, this will need to be sanitized
@@ -40,6 +42,11 @@ public class SaveFile {
 
     public void Save() {
         File.WriteAllText(this.filepath, AsJson());
+    }
+
+    public void SaveOnExit() {
+        // saves SOME save data, such as settings 
+        Save();
     }
 
     public void LoadFromJson(string json_str) {

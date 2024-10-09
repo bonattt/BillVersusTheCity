@@ -13,7 +13,7 @@ public class InitializeSettings : MonoBehaviour
         // }
 
         // sets and mutates settings singleton
-        SaveFile.Load(SaveFile.SAVE_SLOT_1);
+        SaveFile.current_save = SaveFile.Load(SaveFile.SAVE_SLOT_1);
 
         // Destroy(gameObject);
     }
