@@ -60,6 +60,28 @@ public class GameSettings {
             new_module.Subscribe(sub);
         }
     }
+    
+    public string AsJson() {
+        // returns json data for the settings in this module
+        DuckDict data = new DuckDict();
+        
+        data.SetObject("general", JsonParser.ReadAsDuckDict(general_settings.AsJson()));
+        data.SetObject("difficulty", JsonParser.ReadAsDuckDict(difficulty_settings.AsJson()));
+        data.SetObject("gameplay", JsonParser.ReadAsDuckDict(game_play_settings.AsJson()));
+        data.SetObject("audio", JsonParser.ReadAsDuckDict(audio_settings.AsJson()));
+        data.SetObject("graphics", new DuckDict());
+
+        return data.Jsonify();
+    }
+    public void LoadFromJson(string json_str) {
+        // sets the settings module from a JSON string
+        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        
+        general_settings.LoadFromJson(data.GetObject("general").Jsonify());
+        difficulty_settings.LoadFromJson(data.GetObject("difficulty").Jsonify());
+        game_play_settings.LoadFromJson(data.GetObject("gameplay").Jsonify());
+        audio_settings.LoadFromJson(data.GetObject("audio").Jsonify());
+    }
 
     // private Dictionary<string, ISettingsModule> settings_modules = new Dictionary<string, ISettingsModule>();
 

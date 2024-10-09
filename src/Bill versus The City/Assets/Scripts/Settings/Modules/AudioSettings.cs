@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -39,5 +40,73 @@ public class AudioSettings : AbstractSettingsModule {
         }
         volume_settings[category] = _volume;
         UpdateSubscribers($"{category}");
+    }
+    
+    public override string AsJson() {
+        // returns json data for the settings in this module
+        DuckDict data = new DuckDict();
+        data.SetFloat("master_volume", master_volume);
+        foreach (SoundCategory category in volume_settings.Keys) {
+            data.SetFloat(CategoryToString(category), volume_settings[category]);
+        }
+
+        return data.Jsonify();
+    }
+
+    private List<string> _all_fields = null;
+    public override List<string> all_fields {
+        get {
+            if (_all_fields == null) {
+                _all_fields = new List<string>(){"master_volume"};
+                foreach (SoundCategory category in Enum.GetValues(typeof(SoundCategory))) {
+                    _all_fields.Add(CategoryToString(category));
+                }
+            }
+            return _all_fields;
+        }
+    }
+    
+    public override void LoadFromJson(string json_str) {
+        // sets the settings module from a JSON string
+        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        master_volume = (float) data.GetFloat("master_volume");
+
+        foreach (SoundCategory category in Enum.GetValues(typeof(SoundCategory))) {
+            float val;
+            string key = CategoryToString(category);
+            if (data.ContainsKey(key)) {
+                if (data.GetFloat(key) == null) {
+                    val = 1f;
+                }
+                else {
+                    val = (float) data.GetFloat(key);
+                }
+            }
+            else {
+                val = 1f;
+            }
+            volume_settings[CategoryFromString(key)] = val;
+            
+            this.AllFieldsUpdates();
+        }
+    }
+
+    private static SoundCategory CategoryFromString(string category) {
+        switch(category) {
+            case "sound_effect":
+                return SoundCategory.sound_effect;
+            case "music":
+                return SoundCategory.music;
+            case "menu":
+                return SoundCategory.menu;
+
+            default:
+                Debug.LogError($"unknown sound category string '{category}'!");
+                return SoundCategory.sound_effect;
+        }
+    }
+
+    private static string CategoryToString(SoundCategory category) {
+        return $"{category}";
     }
 }

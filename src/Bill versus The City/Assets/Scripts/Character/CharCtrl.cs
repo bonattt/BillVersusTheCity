@@ -490,10 +490,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    protected virtual void CharacterDeath() {
-        Debug.LogWarning($"Character '{gameObject.name}' has died!");
-        // TODO ---
-    }
+    protected abstract void CharacterDeath();
 
     public ICharacterStatus GetStatus() {
         return this.char_status;

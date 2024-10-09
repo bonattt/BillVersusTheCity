@@ -20,4 +20,28 @@ public class GamePlaySettings : AbstractSettingsModule {
             UpdateSubscribers(MOUSE_SENSITIVITY);
         }
     }
+
+    public override List<string> all_fields { get { return new List<string>(){"mouse_sensitivity"}; }}
+
+    public override string AsJson() {
+        // returns json data for the settings in this module
+        DuckDict data = new DuckDict();
+        data.SetFloat(MOUSE_SENSITIVITY, mouse_sensitivity);
+
+        return data.Jsonify();
+    }
+    public override void LoadFromJson(string json_str) {
+        // sets the settings module from a JSON string
+        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+
+        float? ms = data.GetFloat(MOUSE_SENSITIVITY);
+        if (ms == null) {
+            mouse_sensitivity = 1f;
+        } else {
+            mouse_sensitivity = (float) ms;
+        }
+
+        this.AllFieldsUpdates();
+    }
+    
 }

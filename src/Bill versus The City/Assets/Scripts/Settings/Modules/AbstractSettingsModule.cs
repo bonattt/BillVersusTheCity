@@ -8,9 +8,21 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     public void Subscribe(ISettingsObserver sub) => subscribers.Add(sub);
     public void Unsubscribe(ISettingsObserver sub) => subscribers.Remove(sub);
 
+    public abstract string AsJson(); // returns json data for the settings in this module
+    public abstract void LoadFromJson(string json_str);  // sets the settings module from a JSON string
+
     public void UpdateSubscribers(string field) {
         foreach(ISettingsObserver sub in subscribers) {
             sub.SettingsUpdated(this, field);
+        }
+    }
+
+    public abstract List<string> all_fields { get; }
+
+    public void AllFieldsUpdates() {
+        // updates subscribers for ALL fields
+        foreach (string field_name in all_fields) {
+            UpdateSubscribers(field_name);
         }
     }
 

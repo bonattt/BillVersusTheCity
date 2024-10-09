@@ -49,11 +49,6 @@ using UnityEngine.AI;
             if (los_to_target) {
                 perception.Alert();
             }
-            else {
-                Debug.LogWarning($"raycast hit {hit.transform.gameObject}");
-            }
-        } else {
-            Debug.Log("raycast missed!");
         }
         
     }

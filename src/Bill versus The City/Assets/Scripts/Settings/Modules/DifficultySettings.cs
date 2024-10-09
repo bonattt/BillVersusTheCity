@@ -7,6 +7,7 @@ using UnityEngine;
 public class DifficultySettings : AbstractSettingsModule {
     private Dictionary<string, float> multipliers;
     public DifficultyLevel difficulty_level { get; private set; }
+    public const string DIFFICULTY_LEVEL = "difficulty_level";
     public const string PLAYER_ARMOR = "player_armor";
     public const string PLAYER_HEALTH = "player_health";
     public const string ENEMY_ARMOR = "enemy_armor";
@@ -89,6 +90,61 @@ public class DifficultySettings : AbstractSettingsModule {
             return DifficultyLevel.custom;
         }
         return REVERSE_DISPLAY_VALUES[display_value];
+    }
+
+    public override List<string> all_fields {
+        get { 
+            List<string> fields = new List<string>(FIELDS);
+            fields.Add(DIFFICULTY_LEVEL);
+            return fields; 
+        }
+    }
+    
+    public override string AsJson() {
+        // returns json data for the settings in this module
+        DuckDict data = new DuckDict();
+        data.SetString(DIFFICULTY_LEVEL, DifficultyAsString(difficulty_level));
+        foreach(string field in multipliers.Keys) {
+            data.SetFloat(field, multipliers[field]);
+        }
+
+        return data.Jsonify();
+    }
+    
+    public override void LoadFromJson(string json_str) {
+        // sets the settings module from a JSON string
+        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        foreach(string field in FIELDS) {
+            float? value = data.GetFloat(field);
+            if (value == null) {
+                multipliers[field] = 1f;
+            } else {
+                multipliers[field] = (float) value;
+            }
+        }
+        difficulty_level = DifficultyFromString(data.GetString(DIFFICULTY_LEVEL));
+        this.AllFieldsUpdates();
+    }
+
+    public static string DifficultyAsString(DifficultyLevel level) {
+        return $"{level}";
+    }
+
+    public static DifficultyLevel DifficultyFromString(string level) {
+        switch(level) {
+            case "custom":
+                return DifficultyLevel.custom;
+            case "easy":
+                return DifficultyLevel.easy;
+            case "medium":
+                return DifficultyLevel.medium;
+            case "hard":
+                return DifficultyLevel.hard;
+
+            default:
+                Debug.LogError($"unknown difficulty string '{level}'");
+                return DifficultyLevel.custom;
+        }
     }
 
 }
