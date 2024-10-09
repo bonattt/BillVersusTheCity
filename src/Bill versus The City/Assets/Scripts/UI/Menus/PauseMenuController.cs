@@ -38,6 +38,7 @@ public class PauseMenuController : MonoBehaviour
 
 
         resume_button.RegisterCallback<ClickEvent>(MenuManager.CloseMenuClick);
+        resume_button.clicked += SaveFile.current_save.SaveOnExit;
         settings_button.RegisterCallback<ClickEvent>(SettingsButtonClicked);
         restart_button.RegisterCallback<ClickEvent>(RestartButtonClicked);
         exit_button.RegisterCallback<ClickEvent>(ExitGameClick); 

@@ -187,16 +187,13 @@ SOOSH:
 =============================
     DEMO NOTES
 SOOSH:
-    - rooms too big
-        - enemies very hard too see
-    - can shoot through walls
-    - alt is the alternative for 
-    - zoom out for weapon zoom
-
-
-    - trying to shoot with no ammo feels bad
-        - make a click or auto-reload
-    - cancel reload cancels on empty gun???
+    - fences look breakable
+    - FPS display doesn't work in pause
+    - Truck Asset has weird collisions
+    - Aim-zoom janky
+    - click R again canceling reload is annoying
+        - only have "shoot" cancel it, BUT aiming doesn't work while reloading
+    - shooting through wall still works occasionally, but it's harder
 
 
 ===================
