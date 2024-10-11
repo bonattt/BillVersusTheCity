@@ -208,7 +208,14 @@ SOOSH:
     [+] Save/Load Game settings
     [ ] Save/Load metrics
 
-[ ] Main Menu
+[ ] Scene Management
+    [+] Can load into new scenes
+        [ ] Load new scenes when all enemies defeated
+        [ ] Add a Delay before level ends, or require a return to truck
+    [+] Static resources transfer to new scene seemlessly 
+        [ ] REGRESSION BUG: restart-level breaks now
+    [ ] Main Menu
+    [ ] Pass Dyamic player configuration to next level
 
 [ ] Equipment Select at the start of a level
 
