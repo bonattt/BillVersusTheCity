@@ -154,10 +154,20 @@ public class MenuManager : MonoBehaviour
         popup.content_text = "You have been killed";
         popup.confirm_text = "Restart Level";
         popup.reject_text = "Quit";
-
+        
         popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         popup.cancel_button.clicked += PauseMenuController.ExitGame;  // TODO --- move this helper somewhere more appropriate
         popup.UpdateLabels();
     }
 
+    public void WinGamePopup() {
+        YesNoPopupController popup = OpenNewPopup();
+        popup.header_text = "Victory!";
+        popup.content_text = "You have defeated every enemy!";
+        popup.confirm_text = "Restart Level";
+        popup.reject_text = "Keep Playing";
+
+        popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        popup.UpdateLabels();
+    }
 }

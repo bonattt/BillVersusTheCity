@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
- public class EnemiesManager : MonoBehaviour
+
+ public class EnemiesManager : MonoBehaviour, IGenericObservable
 {
     private List<EnemyController> enemies = new List<EnemyController>();
+
+    public int remaining_enemies {
+        get {
+            return enemies.Count;
+        }
+    }
+
+    private int _total_enemies = 0;
+    public int total_enemies { get { return _total_enemies; } }
 
     public LayerMask layer_mask;
 
@@ -30,7 +39,7 @@ using UnityEngine.AI;
         if (inst != this) {
             Destroy(this);
             Debug.LogWarning("removing redundant EnemiesManager");  // TODO --- remove debug
-        }
+        } 
     }
 
 
@@ -39,12 +48,22 @@ using UnityEngine.AI;
         return new List<EnemyController>(enemies);
     }
 
+    public void ResetEnemies() {
+        // resets the current and total enemies.
+        _total_enemies = 0;
+        enemies = new List<EnemyController>();
+        UpdateSubscribers();
+    }
+
     public void AddEnemy(EnemyController enemy) {
+        _total_enemies += 1;
         enemies.Add(enemy);
+        UpdateSubscribers();
     }
 
     public void RemoveEnemy(EnemyController enemy) {
         enemies.Remove(enemy);
+        UpdateSubscribers();
     }
 
     public void AlertEnemiesNear(Vector3 start) {
@@ -71,5 +90,15 @@ using UnityEngine.AI;
             }
         }
         
+    }
+
+    private List<IGenericObserver> subscribers = new List<IGenericObserver>();
+    public void Subscribe(IGenericObserver sub) => subscribers.Add(sub);
+    public void Unusubscribe(IGenericObserver sub) => subscribers.Remove(sub);
+
+    public void UpdateSubscribers() {
+        foreach(IGenericObserver sub in subscribers) {
+            sub.UpdateObserver(this);
+        }
     }
 }
