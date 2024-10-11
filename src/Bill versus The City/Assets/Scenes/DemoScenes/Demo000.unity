@@ -227,6 +227,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36720185}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &206167879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8704656528648356063, guid: a351078fb753b89438aa3dc3c403f7db, type: 3}
+  m_PrefabInstance: {fileID: 7442366734833633545}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &206167882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206167879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb37d2bc2e285c439cf0fb4cb4f49b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouse_texture: {fileID: 0}
 --- !u!1 &216170732
 GameObject:
   m_ObjectHideFlags: 0
@@ -4584,7 +4602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7198383694333953745, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7198383694333953745, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMin.x
@@ -4592,7 +4610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7198383694333953745, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7198383694333953745, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4604,11 +4622,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7198383694333953745, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 7198383694333953745, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 7378305412953429078, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: player_target
@@ -4624,7 +4642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8217863634046063004, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8217863634046063004, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMin.x
@@ -4632,7 +4650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8217863634046063004, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8217863634046063004, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4644,11 +4662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8217863634046063004, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 8217863634046063004, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 8985824868457143739, guid: 67127388933276849bd2010bc4db5fe6, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5109,10 +5127,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: GlobalManagers
       objectReference: {fileID: 0}
+    - target: {fileID: 8704656528648356063, guid: a351078fb753b89438aa3dc3c403f7db, type: 3}
+      propertyPath: m_Name
+      value: MouseControls
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8704656528648356063, guid: a351078fb753b89438aa3dc3c403f7db, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 206167882}
   m_SourcePrefab: {fileID: 100100000, guid: a351078fb753b89438aa3dc3c403f7db, type: 3}
 --- !u!1001 &8545900030494247798
 PrefabInstance:
