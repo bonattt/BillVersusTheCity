@@ -212,8 +212,12 @@ SOOSH:
     [+] Can load into new scenes
         [ ] Load new scenes when all enemies defeated
         [ ] Add a Delay before level ends, or require a return to truck
-    [+] Static resources transfer to new scene seemlessly 
+    [~] Static resources transfer to new scene seemlessly 
+        [+] Static resources transfer to new scene
         [ ] REGRESSION BUG: restart-level breaks now
+        [ ] REGRESSION BUG: reload UI breaks on new-scene load
+        [ ] weapon toolbar doesn't update after new scene load
+        [ ] previously equipped weapon should be retained on a new scene load
     [ ] Main Menu
     [ ] Pass Dyamic player configuration to next level
 
