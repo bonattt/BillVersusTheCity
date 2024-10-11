@@ -45,7 +45,6 @@ public class DifficultySettings : AbstractSettingsModule {
     }
 
     public void SetDifficultyLevel(DifficultyLevel level) {
-        Debug.Log($"SetDifficultyLevel({level})"); // TODO --- remove debug
         SetFromTemplate(DifficultyTemplates.GetTemplate(level));
         difficulty_level = level;
         AllFieldsUpdates();
@@ -124,7 +123,6 @@ public class DifficultySettings : AbstractSettingsModule {
             }
         }
         difficulty_level = DifficultyFromString(data.GetString(DIFFICULTY_LEVEL));
-        Debug.Log($"difficulty level: {difficulty_level}");  // TODO --- remove debug
         this.AllFieldsUpdates();
     }
 

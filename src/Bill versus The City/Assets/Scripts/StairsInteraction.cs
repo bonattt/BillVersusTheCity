@@ -9,7 +9,6 @@ public class StairsInteraction : MonoBehaviour, IInteractionEffect
     public Transform move_to;
     
     public void Interact(GameObject actor) {
-        Debug.Log("interact with stairs"); // TODO --- remove debug
         Vector3 cam_offset = Camera.main.transform.position - PlayerMovement.inst.transform.position;
         CharacterController char_ctrl = PlayerMovement.inst.GetComponent<CharacterController>();
         char_ctrl.enabled = false;

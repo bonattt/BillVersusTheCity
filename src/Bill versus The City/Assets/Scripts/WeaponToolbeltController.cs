@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber
+public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber, IPlayerObserver
 {
     
     public UIDocument ui_doc;
     private VisualElement element_list;
 
     public PlayerAttackController attack_ctrl;
+
 
     private static readonly string[] ALL_CLASSES = new string[]{
         ".weapon_slot",
@@ -21,11 +22,21 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber
 
     void Start() {
         element_list = ui_doc.rootVisualElement.Q<VisualElement>("List");
+        NewPlayerObject(PlayerMovement.inst);
+    }
+    
+    public void NewPlayerObject(PlayerMovement player) {
+        // called when a new player replaces the existing player
+        if (attack_ctrl != null) {
+            attack_ctrl.Unsubscribe(this);
+        }
+        attack_ctrl = player.GetComponent<PlayerAttackController>();
         attack_ctrl.Subscribe(this);
         UpdateToolbelt(null);
     }
     
     public void UpdateWeapon(int? slot, IWeapon weapon) {
+        // called when changes are made to the observed IWeaponManager
         UpdateToolbelt(slot);
     }
 

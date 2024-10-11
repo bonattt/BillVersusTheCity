@@ -4,19 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AmmoBeltUI : MonoBehaviour, IGenericObserver
+public class AmmoBeltUI : MonoBehaviour, IGenericObserver, IPlayerObserver
 {
     public UIDocument ui_doc;
     private VisualElement element_list;
-    public AmmoContainer ammo_container;
+    private AmmoContainer ammo_container;
 
     void Start() {
         element_list = ui_doc.rootVisualElement.Q<VisualElement>("contents"); 
-        ammo_container.Subscribe(this);
-        UpdateAmmo();
+        PlayerObservable.inst.SubscribeToPlayer(this);
+        NewPlayerObject(PlayerMovement.inst);
     }
 
     public void UpdateObserver(IGenericObservable _) {
+        // called on changes to the AmmoContainer 
+        UpdateAmmo();
+    }
+    
+    public void NewPlayerObject(PlayerMovement player) {
+        // called if a new player object is created
+        if (ammo_container != null) {
+            ammo_container.Unusubscribe(this);
+        }
+        ammo_container = player.GetComponent<AmmoContainer>();
+        ammo_container.Subscribe(this);
         UpdateAmmo();
     }
 

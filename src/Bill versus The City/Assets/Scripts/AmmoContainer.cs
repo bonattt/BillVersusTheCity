@@ -18,6 +18,7 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
     public string interaction_sound_path = "reload_finished";
 
     // guarantees a consisten order to which fields are displayed
+    // guarantees a consisten order to which fields are displayed
     public static readonly AmmoType[] display_order = new AmmoType[]{AmmoType.handgun, AmmoType.rifle, AmmoType.shotgun, AmmoType.handgun};
 
     private Dictionary<AmmoType, int> ammo_count = new Dictionary<AmmoType, int>();
@@ -57,11 +58,9 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         foreach (AmmoType type in ammo_max.Keys.Intersect(other.ammo_max.Keys)) {
             bool _ammo_transfered = TransferAmmoFrom(type, other);
             if (_ammo_transfered) {
-                Debug.Log($"some {type} ammo transfered!");   // TODO --- remove debug
             }
             ammo_transfered |= _ammo_transfered;
         }
-        Debug.Log($"ammo_transfered: {ammo_transfered}");  // TODO --- remove debug
         return ammo_transfered;
     }
 
@@ -71,11 +70,9 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         // any ammo is actually transfere, return true.
         int needed_ammo = AmmoNeeded(type);
         if (needed_ammo == 0) { 
-            Debug.Log($"{type} ammo needed == 0");  // TODO --- remove debug
             return false; 
         } // we don't need this ammo type, so none is transfered 
         else if (other.ammo_count[type] == 0) { 
-            Debug.Log($"container has 0 ammo of {type}");  // TODO --- remove debug
             return false; 
         } // other container doesn't have this ammo, so none is transfered
         if (other.ammo_count[type] >= needed_ammo) {
@@ -88,7 +85,6 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         }
         UpdateSubscribers();
         other.UpdateSubscribers();
-        Debug.Log($"transfered some {type} ammo");  // TODO --- remove debug
         return true; // some amount of ammo was transfered, so return true.
     }
 

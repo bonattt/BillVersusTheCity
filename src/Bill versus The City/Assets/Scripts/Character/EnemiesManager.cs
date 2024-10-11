@@ -20,15 +20,8 @@ using UnityEngine;
 
     public static EnemiesManager inst { get; protected set; }
     void Awake() {
-        Debug.Log($"Awake(): inst {inst}");  // TODO --- remove debug
         Initialize();
-        Debug.Log($"AFTER Awake(): inst {inst}");  // TODO --- remove debug
-    }
-
-    void Start() {
-        Debug.Log($"Start(): inst {inst}");  // TODO --- remove debug
-        Initialize();
-        Debug.Log($"AFTER Start(): inst {inst}");  // TODO --- remove debug
+        
     }
 
     private void Initialize() {

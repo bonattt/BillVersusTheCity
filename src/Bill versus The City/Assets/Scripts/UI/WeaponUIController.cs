@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
+public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlayerObserver
 {
 
-    public GameObject target;
-    private IWeaponManager target_manager;
+    private IWeaponManager target_manager = null;
     private UIDocument ui_doc;
 
     private VisualElement root;
@@ -21,9 +20,25 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber
         weapon_label  = root.Q<Label>("CurrentWeaponLabel");
         ammo_label = root.Q<Label>("AmmoLabel");
 
+        PlayerObservable.inst.SubscribeToPlayer(this);
+        SetSubscription(PlayerMovement.inst);
+    }
+
+    void OnDestroy() {
+        PlayerObservable.inst.UnsubscribeToPlayer(this);
+        target_manager.Unsubscribe(this);
+    }
+    
+    public void NewPlayerObject(PlayerMovement player) {
+        SetSubscription(player);
+    }
+
+    private void SetSubscription(PlayerMovement target) {
+        if (target_manager != null) {
+            target_manager.Unsubscribe(this);
+        }
         target_manager = target.GetComponent<IWeaponManager>();
         target_manager.Subscribe(this);
-
         SetLabels(target_manager.current_slot, target_manager.current_weapon);
     }
 
