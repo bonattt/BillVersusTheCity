@@ -19,7 +19,7 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber
     
     void Start()
     {
-        manager = target.GetComponent<IReloadManager>();    
+        manager = PlayerMovement.inst.GetComponent<IReloadManager>();    
         manager.Subscribe(this);
         ClearUI();
     }

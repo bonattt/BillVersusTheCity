@@ -8,7 +8,11 @@ using TMPro;
 public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber
 {
 
-    public CharacterStatus target_status;
+    public CharacterStatus target_status { 
+        get {
+            return PlayerMovement.inst.GetComponent<CharacterStatus>();
+        }
+    }
     public Slider armor_slider, health_slider;
     public TMP_Text armor_text, health_text; 
 
