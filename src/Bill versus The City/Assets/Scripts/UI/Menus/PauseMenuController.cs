@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class PauseMenuController : MonoBehaviour
@@ -53,7 +52,7 @@ public class PauseMenuController : MonoBehaviour
         popup.header_text = "Restart Level";
         popup.content_text = "Are you sure you want restart? All progress will be lost";
         popup.UpdateLabels();
-        popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        popup.confirm_button.clicked += ScenesUtil.RestartLevel;
     }
 
     public void SettingsButtonClicked(ClickEvent _) {

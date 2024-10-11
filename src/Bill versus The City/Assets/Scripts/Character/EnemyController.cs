@@ -32,6 +32,9 @@ using UnityEngine.AI;
     public override void SetupCharacter() {
         base.SetupCharacter();
         perception = GetComponent<EnemyPerception>();
+        // Debug.Log($"EnemiesManager: {EnemiesManager}");   // TODO --- remove debug
+        Debug.Log($"EnemiesManager.inst: {EnemiesManager.inst}");  // TODO --- remove debug
+        EnemiesManager.inst.AddEnemy(this);
     }
 
     protected override void Move() {

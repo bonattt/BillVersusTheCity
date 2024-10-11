@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public PlayerMovement player;   // TODO --- update this to use the singleton
     public EnemyController controller;
 
     public float optimal_attack_range = 6f;
@@ -35,7 +34,7 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         SetBehaviorMode();
-        controller.ctrl_target = player.transform;
+        controller.ctrl_target = PlayerMovement.inst.transform;
         GetSubBehavior().SetControllerFlags(this);
         SetStandardBehaviorPatterns();
         SetDebug();
@@ -48,7 +47,7 @@ public class EnemyBehavior : MonoBehaviour
 
     protected float DistanceToTarget() {
         // TODO --- flatten the Y co-ordinates
-        return Vector3.Distance(controller.transform.position, player.transform.position);  
+        return Vector3.Distance(controller.transform.position, PlayerMovement.inst.transform.position);  
     }
 
     protected ISubBehavior GetSubBehavior() {

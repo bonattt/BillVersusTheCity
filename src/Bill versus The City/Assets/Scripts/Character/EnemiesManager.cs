@@ -5,22 +5,42 @@ using UnityEngine.AI;
 
  public class EnemiesManager : MonoBehaviour
 {
-    public List<EnemyController> enemies;
+    private List<EnemyController> enemies = new List<EnemyController>();
 
     public LayerMask layer_mask;
 
     public static EnemiesManager inst { get; protected set; }
+    void Awake() {
+        Debug.Log($"Awake(): inst {inst}");  // TODO --- remove debug
+        Initialize();
+        Debug.Log($"AFTER Awake(): inst {inst}");  // TODO --- remove debug
+    }
+
     void Start() {
-        if (inst != null) {
-            Debug.LogWarning("replacing existing EnemiesManager");
+        Debug.Log($"Start(): inst {inst}");  // TODO --- remove debug
+        Initialize();
+        Debug.Log($"AFTER Start(): inst {inst}");  // TODO --- remove debug
+    }
+
+    private void Initialize() {
+        if (inst == null) {
+            Debug.LogWarning("setting `inst` to `this`");  // TODO --- remove debug
+            inst = this;
         }
-        inst = this;
+        if (inst != this) {
+            Destroy(this);
+            Debug.LogWarning("removing redundant EnemiesManager");  // TODO --- remove debug
+        }
     }
 
 
     public List<EnemyController> GetEnemies() {
         // returns a new list containing all the enemies in the current scene
         return new List<EnemyController>(enemies);
+    }
+
+    public void AddEnemy(EnemyController enemy) {
+        enemies.Add(enemy);
     }
 
     public void RemoveEnemy(EnemyController enemy) {
