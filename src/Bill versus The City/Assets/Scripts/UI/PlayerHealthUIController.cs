@@ -30,7 +30,14 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
     }
     
     public void NewPlayerObject(PlayerCombat player) {
+        if (_status != null) {
+            _status.Unsubscribe(this);
+        }
         _status = player.status;
+        if (_status != null) {
+            _status.Subscribe(this);
+            UpdateUI();
+        }
     }
 
     public void UpdateUI() {
