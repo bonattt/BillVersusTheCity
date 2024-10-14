@@ -155,7 +155,7 @@ public class MenuManager : MonoBehaviour
         popup.confirm_text = "Restart Level";
         popup.reject_text = "Quit";
         
-        popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        popup.confirm_button.clicked += ScenesUtil.RestartLevel;
         popup.cancel_button.clicked += PauseMenuController.ExitGame;  // TODO --- move this helper somewhere more appropriate
         popup.UpdateLabels();
     }
@@ -167,7 +167,7 @@ public class MenuManager : MonoBehaviour
         popup.confirm_text = "Restart Level";
         popup.reject_text = "Keep Playing";
 
-        popup.confirm_button.clicked += () => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        popup.confirm_button.clicked += ScenesUtil.RestartLevel;
         popup.UpdateLabels();
     }
 }

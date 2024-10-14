@@ -26,7 +26,7 @@ using UnityEngine.AI;
     public NavMeshAgent nav_mesh_agent;
 
     void OnDestroy() {
-        EnemiesManager.inst.KillEnemy(this);
+        Debug.Log("EnemyController.OnDestroy"); // TODO --- remove debug
     }
 
     public override void SetupCharacter() {
@@ -123,6 +123,7 @@ using UnityEngine.AI;
 
     protected override void CharacterDeath() {
         Destroy(gameObject);
+        EnemiesManager.inst.KillEnemy(this);
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
     }
 

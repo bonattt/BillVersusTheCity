@@ -9,15 +9,21 @@ public static class ScenesUtil {
     
     private static HashSet<string> loaded_floors = new HashSet<string>();
 
-    public static void RestartLevel() {
+    private static void ResetResources() {
+        Debug.LogWarning("ResetResources");
         EnemiesManager.inst.Reset();
+    }
+
+    public static void RestartLevel() {
+        ResetResources();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-         // this fails to fix 
+        Debug.Log($"Scene count {SceneManager.sceneCount}"); // TODO --- remove debug
     }
 
     public static void NextLevel(string next_level) {
-        EnemiesManager.inst.Reset();
+        ResetResources();
         SceneManager.LoadScene(next_level);
+        Debug.Log($"Scene count {SceneManager.sceneCount}"); // TODO --- remove debug
     }
 
     private static PlayerCombat RegisterScenePlayer() {

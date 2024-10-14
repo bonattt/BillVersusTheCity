@@ -48,30 +48,36 @@ using UnityEngine;
                 }
             }
         }
-        Debug.Log($"_enemies_remaining: {_enemies_remaining.Count}");
         return _enemies_remaining;
     }
 
     public void Reset() {
         // resets the current and total enemies.
-        enemies = new HashSet<EnemyController>();
-        enemies_defeated = new HashSet<EnemyController>();
+        enemies.Clear();
+        enemies_defeated.Clear();
+        Debug.Log($"Clear(): enemies.Count: {enemies.Count}");
+        Debug.Log($"Clear(): enemies_defeated.Count: {enemies_defeated.Count}");
         UpdateSubscribers();
     }
 
     public void AddEnemy(EnemyController enemy) {
+        Debug.Log($"AddEnemy({enemy})");  // TODO --- remove debug
         enemies.Add(enemy);
         UpdateSubscribers();
     }
 
-    public void DestoryEnemy(EnemyController enemy) {
-        enemies.Remove(enemy);
-        enemies_defeated.Remove(enemy);
-        UpdateSubscribers();
-    }
+    // public void DestoryEnemy(EnemyController enemy) {
+    //     enemies.Remove(enemy);
+    //     enemies_defeated.Remove(enemy);
+    //     UpdateSubscribers();
+    // }
 
     public void KillEnemy(EnemyController enemy) {
-        enemies_defeated.Add(enemy);
+        // only add enemy to defeated enemies if it's actually in the scene
+        // if the enemy is not in the scene, it's being cleaned up on a scene load
+        if (enemies.Contains(enemy)) {
+            enemies_defeated.Add(enemy);
+        }
         UpdateSubscribers();
     }
 
@@ -109,6 +115,27 @@ using UnityEngine;
         _enemies_remaining = null;  // reset lazy property
         foreach(IGenericObserver sub in subscribers) {
             sub.UpdateObserver(this);
+        }
+    }
+
+
+    public List<string> debug_enemies, debug_enemeis_defeated, debug_enemies_remaining;
+    void Update() {
+        UpdateDebug();
+    }
+
+    private void UpdateDebug() {
+        debug_enemies = new List<string>();
+        debug_enemies_remaining = new List<string>();
+        debug_enemeis_defeated = new List<string>();
+        foreach (EnemyController e in enemies) {
+            debug_enemies.Add($"{e}");
+        }
+        foreach (EnemyController e in enemies_defeated) {
+            debug_enemeis_defeated.Add($"{e}");
+        }
+        foreach (EnemyController e in GetRemainingEnemies()) {
+            debug_enemies_remaining.Add($"{e}");
         }
     }
 }

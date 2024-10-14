@@ -6,7 +6,7 @@ public class SFXSystem : MonoBehaviour
 {
 
     public AudioSource sfx_object_prefab;
-    private static SFXSystem _instance;
+    private static SFXSystem _instance = null;
     public static SFXSystem instance {
         get {
             return _instance;

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManagersManager : MonoBehaviour
+public class CombatHUDManager : MonoBehaviour
 {
-
-    public static ManagersManager inst { get; private set; }
+    
+    public static CombatHUDManager inst { get; private set; }
 
     void Awake() {
         inst = this;
