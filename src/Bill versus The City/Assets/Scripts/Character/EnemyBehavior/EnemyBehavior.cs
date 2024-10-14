@@ -34,7 +34,7 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         SetBehaviorMode();
-        controller.ctrl_target = PlayerMovement.inst.transform;
+        controller.ctrl_target = PlayerCharacter.inst.player_transform;
         GetSubBehavior().SetControllerFlags(this);
         SetStandardBehaviorPatterns();
         SetDebug();
@@ -47,7 +47,7 @@ public class EnemyBehavior : MonoBehaviour
 
     protected float DistanceToTarget() {
         // TODO --- flatten the Y co-ordinates
-        return Vector3.Distance(controller.transform.position, PlayerMovement.inst.transform.position);  
+        return Vector3.Distance(controller.transform.position, PlayerCharacter.inst.player_transform.position);  
     }
 
     protected ISubBehavior GetSubBehavior() {

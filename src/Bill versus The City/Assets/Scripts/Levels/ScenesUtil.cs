@@ -11,6 +11,7 @@ public static class ScenesUtil {
 
     public static void RestartLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // PlayerCharacter.inst.PlayerUpdated();  // this fails to fix 
     }
 
     public static void LoadFloor(string scene_name) {

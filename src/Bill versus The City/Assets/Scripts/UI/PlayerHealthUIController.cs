@@ -3,14 +3,20 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
+using UnityEngine.TextCore.Text;
 
-public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber
+public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IPlayerObserver
 {
 
+    private CharacterStatus _status = null;
     public CharacterStatus target_status { 
         get {
-            return PlayerMovement.inst.GetComponent<CharacterStatus>();
+            if (_status == null) {
+                PlayerCombat player = PlayerCharacter.inst.GetPlayerCombat(this);
+                _status = player.status;
+            }
+            return _status;
         }
     }
     public Slider armor_slider, health_slider;
@@ -21,6 +27,10 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber
     {
         target_status.Subscribe(this);
         UpdateUI();
+    }
+    
+    public void NewPlayerObject(PlayerCombat player) {
+        _status = player.status;
     }
 
     public void UpdateUI() {

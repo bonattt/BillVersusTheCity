@@ -1600,7 +1600,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GlobalManagers
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1294486624935810330, guid: a351078fb753b89438aa3dc3c403f7db, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber, IPlayerObserver
 {
+    /// <summary>
+    ///  UI Controller that displays the player's availible AND currently equipped weapons
+    /// </summary>
     
     public UIDocument ui_doc;
     private VisualElement element_list;
@@ -22,15 +25,22 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
 
     void Start() {
         element_list = ui_doc.rootVisualElement.Q<VisualElement>("List");
-        NewPlayerObject(PlayerMovement.inst);
+        NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
+    }
+
+    void OnDestroy() {
+        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
+        if (attack_ctrl != null) {
+            attack_ctrl.Unsubscribe(this);
+        }
     }
     
-    public void NewPlayerObject(PlayerMovement player) {
+    public void NewPlayerObject(PlayerCombat player) {
         // called when a new player replaces the existing player
         if (attack_ctrl != null) {
             attack_ctrl.Unsubscribe(this);
         }
-        attack_ctrl = player.GetComponent<PlayerAttackController>();
+        attack_ctrl = player.attacks;
         attack_ctrl.Subscribe(this);
         UpdateToolbelt(null);
     }

@@ -12,8 +12,13 @@ public class AmmoBeltUI : MonoBehaviour, IGenericObserver, IPlayerObserver
 
     void Start() {
         element_list = ui_doc.rootVisualElement.Q<VisualElement>("contents"); 
-        PlayerObservable.inst.SubscribeToPlayer(this);
-        NewPlayerObject(PlayerMovement.inst);
+        PlayerCharacter.inst.SubscribeToPlayer(this);
+        NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
+    }
+
+    void OnDestroy() {
+        ammo_container.Unusubscribe(this);
+        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
     }
 
     public void UpdateObserver(IGenericObservable _) {
@@ -21,12 +26,12 @@ public class AmmoBeltUI : MonoBehaviour, IGenericObserver, IPlayerObserver
         UpdateAmmo();
     }
     
-    public void NewPlayerObject(PlayerMovement player) {
+    public void NewPlayerObject(PlayerCombat player) {
         // called if a new player object is created
         if (ammo_container != null) {
             ammo_container.Unusubscribe(this);
         }
-        ammo_container = player.GetComponent<AmmoContainer>();
+        ammo_container = player.ammo;
         ammo_container.Subscribe(this);
         UpdateAmmo();
     }

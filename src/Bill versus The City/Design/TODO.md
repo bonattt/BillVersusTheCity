@@ -214,7 +214,7 @@ SOOSH:
         [ ] Add a Delay before level ends, or require a return to truck
     [~] Static resources transfer to new scene seemlessly 
         [+] Static resources transfer to new scene
-        [ ] REGRESSION BUG: restart-level breaks now
+        [ ] REGRESSION BUG: restart-level breaks now <---- you are here
         [ ] REGRESSION BUG: reload UI breaks on new-scene load
         [ ] weapon toolbar doesn't update after new scene load
         [ ] previously equipped weapon should be retained on a new scene load

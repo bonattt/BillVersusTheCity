@@ -20,24 +20,19 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
         weapon_label  = root.Q<Label>("CurrentWeaponLabel");
         ammo_label = root.Q<Label>("AmmoLabel");
 
-        PlayerObservable.inst.SubscribeToPlayer(this);
-        SetSubscription(PlayerMovement.inst);
+        NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
     }
 
     void OnDestroy() {
-        PlayerObservable.inst.UnsubscribeToPlayer(this);
+        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
         target_manager.Unsubscribe(this);
     }
     
-    public void NewPlayerObject(PlayerMovement player) {
-        SetSubscription(player);
-    }
-
-    private void SetSubscription(PlayerMovement target) {
+    public void NewPlayerObject(PlayerCombat player) {
         if (target_manager != null) {
             target_manager.Unsubscribe(this);
         }
-        target_manager = target.GetComponent<IWeaponManager>();
+        target_manager = player.GetComponent<IWeaponManager>();
         target_manager.Subscribe(this);
         SetLabels(target_manager.current_slot, target_manager.current_weapon);
     }

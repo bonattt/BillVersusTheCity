@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro; 
 
-public class ReloadUI : MonoBehaviour, IReloadSubscriber
+public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
 {
     public GameObject target;
     public RectTransform reload_ui; 
@@ -19,13 +19,18 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber
     
     void Start()
     {
-        manager = PlayerMovement.inst.GetComponent<IReloadManager>();    
+        NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
+    }
+    
+    public void NewPlayerObject(PlayerCombat player) {
+        manager = player.reloading;    
         manager.Subscribe(this);
         ClearUI();
     }
 
     void OnDestroy() {
         manager.Unsubscribe(this);
+        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
     }
 
     // Update is called once per frame

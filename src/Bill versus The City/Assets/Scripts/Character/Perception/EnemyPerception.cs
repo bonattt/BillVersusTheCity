@@ -121,21 +121,21 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
 
     public Transform target {
         get {
-            if (PlayerMovement.inst == null) {
-                return null;
-            }
-            return PlayerMovement.inst.transform;
+            // if (?PlayerCharacter.inst == null) {
+            //     return null;
+            // }
+            return PlayerCharacter.inst.player_transform;
         }
     }
 
     private List<Transform> VisibleNodes() {
         List<Transform> visible_nodes = new List<Transform>();
-        if (PlayerMovement.inst == null) {
+        if (PlayerCharacter.inst.player_transform == null) {
             Debug.LogWarning("no target!");
             return visible_nodes;
         }
 
-        foreach (Transform node in PlayerMovement.inst.vision_nodes) {
+        foreach (Transform node in PlayerCharacter.inst.vision_nodes) {
             if (CanSeeNode(node)) {
                 visible_nodes.Add(node);
             }
@@ -144,7 +144,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     private bool LineOfSightToPlayer() {
-        if (PlayerMovement.inst == null) {
+        if (PlayerCharacter.inst.player_transform == null) {
             Debug.LogWarning("no target!");
             return false;
         }
@@ -170,7 +170,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         Vector3 direction = end - start;
         // Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, direction.magnitude, vision_mask)) {
-            bool los_to_target = hit.transform == target_node || hit.transform == PlayerMovement.inst.transform;
+            bool los_to_target = hit.transform == target_node || hit.transform == PlayerCharacter.inst.player_transform;
             return los_to_target;
         }
         return false;

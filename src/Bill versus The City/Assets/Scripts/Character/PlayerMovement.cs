@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : CharCtrl
 {
-    public static PlayerMovement inst {
-        get; private set;
-    }
-
     // returns a list of all the nodes which enemies raycast to see the player
     public Transform vision_target;
     private List<Transform> _vision_nodes = null;
@@ -20,33 +16,6 @@ public class PlayerMovement : CharCtrl
                 }
             }
             return _vision_nodes;
-        }
-    }
-
-    public override void SetupCharacter() {
-        // called from `CharCtrl.Start()`
-        base.SetupCharacter();
-        ((CharacterStatus) char_status).is_player = true;
-        if (inst != null) {
-            Debug.LogWarning("updating Player singleton!");
-        }
-        SetAsInstance();
-    }
-
-    void Awake() {
-        // called in Awake to initialize before other scripts Start's.
-        // called again in Start so new Player objects can replace the old.
-        SetAsInstance();
-    }
-
-    private void SetAsInstance() {
-        if(inst != null && inst != this) {
-            Debug.LogWarning("overwriting current player");
-        }
-        inst = this;
-        if (PlayerObservable.inst != null) {
-            // if we run into this loading-order issue, the scripts will still initialize themselves off PlayerMovement.inst in Start
-            PlayerObservable.inst.PlayerUpdated(this);
         }
     }
 
