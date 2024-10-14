@@ -26,7 +26,7 @@ using UnityEngine.AI;
     public NavMeshAgent nav_mesh_agent;
 
     void OnDestroy() {
-        EnemiesManager.inst.RemoveEnemy(this);
+        EnemiesManager.inst.KillEnemy(this);
     }
 
     public override void SetupCharacter() {

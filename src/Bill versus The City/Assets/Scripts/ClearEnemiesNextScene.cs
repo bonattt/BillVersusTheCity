@@ -21,7 +21,7 @@ public class ClearEnemiesNextScene : MonoBehaviour, IGenericObserver
     
     public void UpdateObserver(IGenericObservable observable) {
         if (WinCondition()) {
-            SceneManager.LoadScene("Demo001--level01");
+            ScenesUtil.NextLevel("Demo001--level01");
             Destroy(this);
         }
     }

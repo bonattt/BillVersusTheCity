@@ -52,7 +52,12 @@ public class PauseMenuController : MonoBehaviour
         popup.header_text = "Restart Level";
         popup.content_text = "Are you sure you want restart? All progress will be lost";
         popup.UpdateLabels();
-        popup.confirm_button.clicked += ScenesUtil.RestartLevel;
+        popup.confirm_button.clicked += RestartButtonConfirmed;
+    }
+
+    public void RestartButtonConfirmed() {
+        MenuManager.inst.CloseAllMenus();
+        ScenesUtil.RestartLevel();
     }
 
     public void SettingsButtonClicked(ClickEvent _) {

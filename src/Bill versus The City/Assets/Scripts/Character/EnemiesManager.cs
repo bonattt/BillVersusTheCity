@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
  public class EnemiesManager : MonoBehaviour, IGenericObservable
 {
-    private List<EnemyController> enemies = new List<EnemyController>();
+    private HashSet<EnemyController> enemies = new HashSet<EnemyController>();
+    private HashSet<EnemyController> enemies_defeated = new HashSet<EnemyController>();
 
     public int remaining_enemies {
         get {
-            return enemies.Count;
+            return enemies.Count - enemies_defeated.Count;
         }
     }
 
     private int _total_enemies = 0;
-    public int total_enemies { get { return _total_enemies; } }
+    public int total_enemies { get { return enemies.Count; } }
 
     public LayerMask layer_mask;
 
@@ -35,33 +37,47 @@ using UnityEngine;
         } 
     }
 
-
-    public List<EnemyController> GetEnemies() {
-        // returns a new list containing all the enemies in the current scene
-        return new List<EnemyController>(enemies);
+    private HashSet<EnemyController> _enemies_remaining = null;
+    public HashSet<EnemyController> GetRemainingEnemies() {
+        // returns a new HashSet containing all the enemies in the current scene
+        if (_enemies_remaining == null) {
+            _enemies_remaining = new HashSet<EnemyController>(enemies);
+            foreach (EnemyController e in enemies_defeated) {
+                if (_enemies_remaining.Contains(e)) {
+                    _enemies_remaining.Remove(e);
+                }
+            }
+        }
+        Debug.Log($"_enemies_remaining: {_enemies_remaining.Count}");
+        return _enemies_remaining;
     }
 
-    public void ResetEnemies() {
+    public void Reset() {
         // resets the current and total enemies.
-        _total_enemies = 0;
-        enemies = new List<EnemyController>();
+        enemies = new HashSet<EnemyController>();
+        enemies_defeated = new HashSet<EnemyController>();
         UpdateSubscribers();
     }
 
     public void AddEnemy(EnemyController enemy) {
-        _total_enemies += 1;
         enemies.Add(enemy);
         UpdateSubscribers();
     }
 
-    public void RemoveEnemy(EnemyController enemy) {
+    public void DestoryEnemy(EnemyController enemy) {
         enemies.Remove(enemy);
+        enemies_defeated.Remove(enemy);
+        UpdateSubscribers();
+    }
+
+    public void KillEnemy(EnemyController enemy) {
+        enemies_defeated.Add(enemy);
         UpdateSubscribers();
     }
 
     public void AlertEnemiesNear(Vector3 start) {
         // Alerts all nearby enemies to the given point
-        foreach(EnemyController ctrl in enemies) {
+        foreach(EnemyController ctrl in GetRemainingEnemies()) {
             TryAlertOneEnemy(start, ctrl.GetComponent<EnemyPerception>());
         }
     }
@@ -85,11 +101,12 @@ using UnityEngine;
         
     }
 
-    private List<IGenericObserver> subscribers = new List<IGenericObserver>();
+    private HashSet<IGenericObserver> subscribers = new HashSet<IGenericObserver>();
     public void Subscribe(IGenericObserver sub) => subscribers.Add(sub);
     public void Unusubscribe(IGenericObserver sub) => subscribers.Remove(sub);
 
     public void UpdateSubscribers() {
+        _enemies_remaining = null;  // reset lazy property
         foreach(IGenericObserver sub in subscribers) {
             sub.UpdateObserver(this);
         }

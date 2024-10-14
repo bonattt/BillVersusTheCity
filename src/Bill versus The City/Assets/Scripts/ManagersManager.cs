@@ -10,7 +10,7 @@ public class ManagersManager : MonoBehaviour
         
     }
 
-    public void TransitionToNewScene() {
-        EnemiesManager.inst.ResetEnemies();
-    }
+    // public void TransitionToNewScene() {
+    //     EnemiesManager.inst.Reset();
+    // }
 }
