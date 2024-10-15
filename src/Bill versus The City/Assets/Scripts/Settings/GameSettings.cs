@@ -5,7 +5,15 @@ using UnityEngine;
 
 public class GameSettings {
 
-    public static GameSettings inst { get; private set; }
+    private static GameSettings _inst = null;
+    public static GameSettings inst { 
+        get { 
+            if (_inst == null) {
+                _inst = new GameSettings();
+            }
+            return _inst; 
+        }
+    }
 
     // public const string AUDIO_SETTINGS = "audio";
     // public const string GRAPHICS_SETTINGS = "graphics";
@@ -48,9 +56,9 @@ public class GameSettings {
         }
     }
 
-    public GameSettings() {
-        if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }
-        inst = this;
+    private GameSettings() {
+        // if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }
+        // inst = this;
     }
 
 

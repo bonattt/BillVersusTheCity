@@ -10,7 +10,7 @@ public class MainMenuController : MonoBehaviour
 
     private Button start_game_button;
 
-    public GameObject hud, managers;
+    // public GameObject hud, managers;
 
     void Start() {
         start_game_button = ui_doc.rootVisualElement.Q<Button>("StartGameButton");

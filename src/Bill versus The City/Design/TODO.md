@@ -210,15 +210,15 @@ SOOSH:
 
 [ ] Scene Management
     [+] Can load into new scenes
-        [ ] Load new scenes when all enemies defeated
+        [+] Load new scenes when all enemies defeated
         [ ] Add a Delay before level ends, or require a return to truck
     [~] Static resources transfer to new scene seemlessly 
         [+] Static resources transfer to new scene
-        [ ] REGRESSION BUG: restart-level breaks now <---- you are here
-        [ ] REGRESSION BUG: reload UI breaks on new-scene load
-        [ ] weapon toolbar doesn't update after new scene load
-        [ ] previously equipped weapon should be retained on a new scene load
-    [ ] Main Menu
+        [+] REGRESSION BUG: restart-level breaks now
+        [+] REGRESSION BUG: reload UI breaks on new-scene load
+        [+] weapon toolbar doesn't update after new scene load
+        [X] previously equipped weapon should be retained on a new scene load (won't do this sprint, maybe never)
+    [+] Main Menu
     [ ] Pass Dyamic player configuration to next level
 
 [ ] Equipment Select at the start of a level
@@ -230,7 +230,7 @@ SOOSH:
 [ ] Fixes
     [ ] fences look breakable
     [ ] FPS display doesn't work in pause
-     X Truck Asset has weird collisions --> won't do
+    [+] Truck Asset has weird collisions
     [ ] Aim-zoom janky
     [ ] click R again canceling reload is annoying
         - only have "shoot" cancel it, BUT aiming doesn't work while reloading

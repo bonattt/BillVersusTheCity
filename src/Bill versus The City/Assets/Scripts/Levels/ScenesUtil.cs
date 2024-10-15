@@ -11,7 +11,9 @@ public static class ScenesUtil {
 
     private static void ResetResources() {
         Debug.LogWarning("ResetResources");
-        EnemiesManager.inst.Reset();
+        if (EnemiesManager.inst != null) {
+            EnemiesManager.inst.Reset();
+        }
     }
 
     public static void RestartLevel() {

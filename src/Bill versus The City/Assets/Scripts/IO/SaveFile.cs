@@ -5,8 +5,6 @@ using UnityEngine;
 public class SaveFile {
 
     public string save_name { get; protected set; }
-    public GameSettings settings;
-
     public const string SAVE_SLOT_1 = "save_1";
     public const string SAVE_FILE_DIR = ".save_files";
 
@@ -21,11 +19,6 @@ public class SaveFile {
 
     public SaveFile(string save_name) {
         this.save_name = save_name;
-        if(GameSettings.inst == null) {
-            settings = new GameSettings();
-        } else {
-            settings = GameSettings.inst;
-        }
     }
 
     public static SaveFile Load(string save_name) {
@@ -36,7 +29,7 @@ public class SaveFile {
 
     public string AsJson() {
         DuckDict data = new DuckDict();
-        data.SetObject("settings", JsonParser.ReadAsDuckDict(settings.AsJson()));
+        data.SetObject("settings", JsonParser.ReadAsDuckDict(GameSettings.inst.AsJson()));
         return data.Jsonify();
     }
 
@@ -54,7 +47,7 @@ public class SaveFile {
         // TODO ---
         DuckDict data = JsonParser.ReadAsDuckDict(json_str);
         DuckDict settings_data = data.GetObject("settings");
-        settings.LoadFromJson(settings_data.Jsonify());
+        GameSettings.inst.LoadFromJson(settings_data.Jsonify());
     } 
 
     public void LoadFromFile() {
