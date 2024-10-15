@@ -236,6 +236,9 @@ SOOSH:
         - only have "shoot" cancel it, BUT aiming doesn't work while reloading
     [ ] shooting through wall still works occasionally, but it's harder
 
+[ ] Bugs
+    [ ] hovering on Interactions is not detected sometimes
+
     
 
 =============================

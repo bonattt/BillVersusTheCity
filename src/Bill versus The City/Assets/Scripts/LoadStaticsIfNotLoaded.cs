@@ -7,7 +7,7 @@ public class LoadStaticsIfNotLoaded : MonoBehaviour
 
     public GameObject hud_prefab, managers_prefab;
 
-    void Start()
+    void Awake()
     {
         if (CombatHUDManager.inst == null) {
             Instantiate(hud_prefab);

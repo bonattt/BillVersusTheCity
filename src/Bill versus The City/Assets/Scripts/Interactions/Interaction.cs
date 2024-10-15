@@ -6,6 +6,7 @@ public class Interaction : MonoBehaviour
 {
     // public List<MonoBehaviour> effects;
     public float interaction_range = 1f;
+    public bool interaction_enabled = true;
 
     public float DistanceTo(Transform actor) {
         return Vector3.Distance(transform.position, actor.position);

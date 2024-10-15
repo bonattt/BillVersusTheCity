@@ -34,7 +34,7 @@ public class PlayerInteractor : MonoBehaviour
     }
 
     public bool CanInteractWith(Interaction interactable) {
-        return interactable.IsInRange(transform);
+        return interactable.interaction_enabled && interactable.IsInRange(transform);
     }
 
     private Interaction GetInteraction() {

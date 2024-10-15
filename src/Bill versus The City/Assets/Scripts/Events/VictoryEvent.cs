@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VictoryEvent : MonoBehaviour, IGameEvent
+public class VictoryEvent : MonoBehaviour, IGameEvent, IInteractionEffect
 {
     // // Start is called before the first frame update
     // void Start()
@@ -17,7 +17,11 @@ public class VictoryEvent : MonoBehaviour, IGameEvent
     // void OnDestroy() {
     //     EnemiesManager.inst.Unusubscribe(this);  
     // }
+
     
+    public void Interact(GameObject actor) {
+        ActivateEvent();
+    }
     
     public void ActivateEvent() {
         MenuManager.inst.WinGamePopup();
