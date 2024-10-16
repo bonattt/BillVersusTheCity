@@ -47,6 +47,9 @@ MonoBehaviour:
   layer_mask:
     serializedVersion: 2
     m_Bits: 199
+  debug_enemies: []
+  debug_enemeis_defeated: []
+  debug_enemies_remaining: []
 --- !u!1 &2665482373796785951
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +131,6 @@ Transform:
   - {fileID: 3826513729309972027}
   - {fileID: 7593054974637868750}
   - {fileID: 2199962130810427545}
-  - {fileID: 3652194584579746205}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3712621998481691609
@@ -197,50 +199,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4367909846e9a4f4297bad7f2986e101, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &6085683687264866000
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3652194584579746205}
-  - component: {fileID: 1294486624935810330}
-  m_Layer: 0
-  m_Name: PlayerObservable
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3652194584579746205
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6085683687264866000}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2132203353638809629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1294486624935810330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6085683687264866000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27fdec18aa20a0946b1435e5ec9018f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8704656528648356063
@@ -335,3 +293,4 @@ MonoBehaviour:
   pause_menu_prefab: {fileID: 1782725758659580537, guid: 4776203a4556a1f4f91e621ccc0c0d41, type: 3}
   yes_no_popup_prefab: {fileID: 4600493022970907218, guid: 7a253e3a1f2fe8e4b9c0353b99b94d3b, type: 3}
   settings_menu_prefab: {fileID: 3540054854953037603, guid: e09d276249d91ce488bc260162c5cdc9, type: 3}
+  dialogue_prefab: {fileID: 3756970114183036475, guid: 3586b7d08443e3e4990ba1e73063912b, type: 3}

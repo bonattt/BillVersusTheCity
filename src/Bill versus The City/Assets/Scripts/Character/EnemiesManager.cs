@@ -15,7 +15,6 @@ using UnityEngine;
         }
     }
 
-    private int _total_enemies = 0;
     public int total_enemies { get { return enemies.Count; } }
 
     public LayerMask layer_mask;

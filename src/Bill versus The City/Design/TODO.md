@@ -211,7 +211,7 @@ SOOSH:
 [ ] Scene Management
     [+] Can load into new scenes
         [+] Load new scenes when all enemies defeated
-        [ ] Add a Delay before level ends, or require a return to truck
+        [+] Add a Delay before level ends, or require a return to truck
     [~] Static resources transfer to new scene seemlessly 
         [+] Static resources transfer to new scene
         [+] REGRESSION BUG: restart-level breaks now
@@ -226,6 +226,8 @@ SOOSH:
 [ ] Equipment Pickups
 
 [ ] Dialogue system
+    [ ] Dialogue System
+    [ ] Portrait Manager
 
 [ ] Fixes
     [ ] fences look breakable

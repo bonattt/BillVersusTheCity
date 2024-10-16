@@ -1,0 +1,16 @@
+.dialogue_portrait {
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    flex-direction: column-reverse;
+}
+
+.portrait_name_label {
+    -unity-text-align: upper-center;
+    font-size: 32px;
+}
+
+.dialogue_portrait_holder {
+    width: 50%;
+    height: 100%;
+}

@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab;
+    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -87,18 +87,25 @@ public class MenuManager : MonoBehaviour
     protected void MenuNavigation() {
         if (open_menu == null) {
             if (InputSystem.current.PauseMenuInput()) {
-                OpenSubMenuPrefab(pause_menu_prefab);
+                OpenDialoge("TODO");
             }
         }
         else {
             ISubMenu menu_ctrl = open_menu.GetComponent<ISubMenu>();
             if (menu_ctrl == null) {
-                DefaultMenuNavigation();
+                OpenSubMenuPrefab(dialogue_prefab);
+                // DefaultMenuNavigation(); // TODO --- uncomment debug
             }
             else {
                 menu_ctrl.MenuNavigation();
             }
         }
+    }
+
+    public void OpenDialoge(string file_name) {
+        GameObject obj = OpenSubMenuPrefab(dialogue_prefab);
+        DialogueController ctrl = obj.GetComponent<DialogueController>();
+        ctrl.StartDialogue(file_name);
     }
     
     public void DefaultMenuNavigation() {
