@@ -1,4 +1,6 @@
 
+using System;
+using System.Globalization;
 
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,6 +13,8 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
     public UIDocument ui_doc;
     private VisualElement root, left_portraits, right_portraits;
 
+    private Label dialogue_text;
+
     public void StartDialogue(string file_path) {
         dialogue_file_path = file_path;
     }
@@ -19,6 +23,7 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
         root = ui_doc.rootVisualElement;
         left_portraits = root.Q<VisualElement>("LeftPortraits");
         right_portraits = root.Q<VisualElement>("RightPortraits");
+        dialogue_text = root.Q<Label>("DialogueText");
         left_portraits.Clear();
         right_portraits.Clear();
 
@@ -59,6 +64,22 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
         character_name.AddToClassList("portrait_name_label");
 
         return portrait;
+    }
+
+    public void SetSpeakerName(string speaker_name) {
+        if (speaker_name == null) {
+            // TODO --- no speaker, just narration
+        }
+        
+        TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;  // TODO --- investigate this deeper
+        // use underscores for spaces in the name of the speaker. Title Case names
+        speaker_name = textInfo.ToTitleCase(speaker_name.ToLower().Replace("_", " "));
+        Debug.LogWarning($"Not Implelented: SetSpeakerName('{speaker_name}')");
+        // TODO --- implement speaker_name
+    }
+
+    public void SetText(string new_dialouge) {
+        dialogue_text.text = new_dialouge;
     }
     
     // public void MenuNavigation() {
