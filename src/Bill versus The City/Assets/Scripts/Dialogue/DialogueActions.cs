@@ -9,7 +9,6 @@ public interface IDialogueAction {
     // eg. Changes in blocking, or text to display
 
     public bool wait_for_player_input { get; }
-    public bool end_of_dialogue { get; }
     public void ResolveDialogue(DialogueController ctrl);
 }
 
@@ -18,7 +17,6 @@ public class DialogueNoOp : IDialogueAction {
     // no-op dialogue action
     private bool _wait_for_player_input;
     public bool wait_for_player_input { get { return _wait_for_player_input; }}
-    public bool end_of_dialogue { get { return false; } }
 
     public DialogueNoOp() : this (false) { /* do nothing */ }
     public DialogueNoOp(bool player_input) {
@@ -34,7 +32,6 @@ public class DialogueSpeach : IDialogueAction {
     // class for representing one line of text spoken by a character
 
     public bool wait_for_player_input { get; set; }
-    public bool end_of_dialogue { get { return false; } }
 
     public string cmd { get; private set; }
     public string speaker { get; private set; }
@@ -57,7 +54,6 @@ public class DialogueSpeach : IDialogueAction {
 public class DialogueEnter : IDialogueAction {
     // class representing a new character entering the scene
     public bool wait_for_player_input { get; set; }
-    public bool end_of_dialogue { get { return false; } }
     
     public string cmd { get; private set; }
     public string actor_name { get; private set; }
@@ -69,7 +65,7 @@ public class DialogueEnter : IDialogueAction {
         if (!(args.Length == 3 || args.Length == 5)) {
             throw new DialogueActionsException("enter command usage: `enter character right` or `enter character left facing right`");
         }
-        wait_for_player_input = true;
+        wait_for_player_input = false;
         cmd = args[0];
         actor_name = args[1];
         side = DialogueActionUtil.StageDirectionFromString(args[2]);
@@ -91,15 +87,13 @@ public class DialogueEnter : IDialogueAction {
     }
     public void ResolveDialogue(DialogueController ctrl) {
         // TODO --- implement this
-        throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
+        throw new NotImplementedException("DialogueEnter IDialogueAction is not yet implemented");
     }
-
 }
 
 public class DialogueBlocking : IDialogueAction {
     // class representing changes to blocking during dialogue (character portrait changes
     public bool wait_for_player_input { get; set; }
-    public bool end_of_dialogue { get { return false; } }
     
     public string cmd { get; private set; }
     public string actor { get; private set; }

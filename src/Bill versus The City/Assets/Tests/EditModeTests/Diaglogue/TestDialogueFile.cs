@@ -134,13 +134,37 @@ public class TestDialogueFile
     }
 
     [Test]
+    public void IterationGetNextActionListEmpty() {
+        f.ParseLinesFromData("");
+        f.ParseActions();
+        Assert.AreEqual(0, f.GetNextActionsList().Count, "empty list should be returned with no actions");
+        Assert.AreEqual(0, f.GetNextActionsList().Count, "empty list should be returned with no actions");
+        Assert.AreEqual(0, f.GetNextActionsList().Count, "empty list should be returned with no actions");
+    }
+
+    [Test]
+    public void IterationGetNextActionList() {
+        f.ParseLinesFromData("noop; say bill pingas; say bill pootis; enter dave left; noop; say dave PotUS");
+        f.ParseActions();
+
+        List<IDialogueAction> result1 = f.GetNextActionsList();
+        List<IDialogueAction> result2 = f.GetNextActionsList();
+        List<IDialogueAction> result3 = f.GetNextActionsList();
+        List<IDialogueAction> result4 = f.GetNextActionsList();
+
+        Assert.AreEqual(2, result1.Count, "action count");
+        Assert.AreEqual(1, result2.Count, "action count");
+        Assert.AreEqual(3, result3.Count, "action count");
+        Assert.AreEqual(0, result4.Count, "action count");
+    }
+
+    [Test]
     public void NoopAction() {
         f.ParseLinesFromData("noop");
         f.ParseActions();
         IDialogueAction result = f.GetNextAction();
         
-        Assert.IsFalse(result.wait_for_player_input);
-        Assert.IsFalse(result.end_of_dialogue);
+        Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
     [Test]
@@ -153,8 +177,7 @@ public class TestDialogueFile
         Assert.AreEqual("bill", result.actor_name);
         Assert.AreEqual(StageDirection.left, result.side);
         Assert.AreEqual(StageDirection.right, result.facing);
-        Assert.IsFalse(result.wait_for_player_input);
-        Assert.IsFalse(result.end_of_dialogue);
+        Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
     [Test]
@@ -167,8 +190,7 @@ public class TestDialogueFile
         Assert.AreEqual("bill", result.actor_name);
         Assert.AreEqual(StageDirection.right, result.side);
         Assert.AreEqual(StageDirection.left, result.facing);
-        Assert.IsFalse(result.wait_for_player_input);
-        Assert.IsFalse(result.end_of_dialogue);
+        Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
     [Test]
@@ -181,8 +203,7 @@ public class TestDialogueFile
         Assert.AreEqual("bill", result.actor_name);
         Assert.AreEqual(StageDirection.right, result.side);
         Assert.AreEqual(StageDirection.right, result.facing);
-        Assert.IsFalse(result.wait_for_player_input);
-        Assert.IsFalse(result.end_of_dialogue);
+        Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
     [Test]
@@ -194,14 +215,6 @@ public class TestDialogueFile
         Assert.AreEqual("say", result.cmd);
         Assert.AreEqual("bill_protagonist", result.speaker);
         Assert.AreEqual("pingas pootis PotUS 420.69", result.text);
-        Assert.IsTrue(result.wait_for_player_input);
-        Assert.IsFalse(result.end_of_dialogue);
+        Assert.IsTrue(result.wait_for_player_input, "wait_for_player_input");
     }
-
-}
-
-
-
-public class TestDialogueFileIteration {
-
 }

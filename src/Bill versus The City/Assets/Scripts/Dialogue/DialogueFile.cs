@@ -112,10 +112,27 @@ public class DialogueFile {
     }
 
     public IDialogueAction GetNextAction() {
+        // gets the next action in the dialogue, or returns null at the end
         if (_index >= actions.Count) {
             return null;
         }
         return actions[_index++];
+    }
+
+    public List<IDialogueAction> GetNextActionsList() {
+        // returns a list of dialogue actions including the current, and going until 
+        // either the dialogue runs out of actions, or an action is flagged to pause for player input
+        List<IDialogueAction> ls = new List<IDialogueAction>();
+        while (true) {
+            IDialogueAction next_action = GetNextAction();
+            if (next_action == null) {
+                return ls;
+            }
+            ls.Add(next_action);
+            if (next_action.wait_for_player_input) {
+                return ls;
+            }
+        }
     }
 }
 

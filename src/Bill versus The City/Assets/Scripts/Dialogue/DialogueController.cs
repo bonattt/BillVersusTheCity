@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 
 using UnityEngine;
@@ -8,7 +10,7 @@ using UnityEngine.UIElements;
 public class DialogueController : MonoBehaviour { //, ISubMenu {
     // class controlling a single dialogue session
 
-    private string dialogue_file_path;
+    private DialogueFile dialogue_file;
 
     public UIDocument ui_doc;
     private VisualElement root, left_portraits, right_portraits;
@@ -16,7 +18,20 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
     private Label dialogue_text;
 
     public void StartDialogue(string file_path) {
-        dialogue_file_path = file_path;
+        dialogue_file = new DialogueFile(file_path);
+        dialogue_file.ParseFile();
+    }
+
+    public void NextDialogueStep() {
+        List<IDialogueAction> actions = dialogue_file.GetNextActionsList();
+        if (actions.Count == 0) {
+            // no actions, dialogue is over
+            MenuManager.inst.CloseMenu();
+            return;
+        }
+        foreach (IDialogueAction a in actions) {
+            a.ResolveDialogue(this);
+        }
     }
 
     void Start() {
@@ -27,6 +42,7 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
         left_portraits.Clear();
         right_portraits.Clear();
 
+        // TODO --- replace this with an actual blocking system
         VisualElement portrait1 = GetEmptyPortrait();
         SetPortraitImage(portrait1, "bill");
         left_portraits.Add(portrait1);
@@ -35,6 +51,7 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
         SetPortraitImage(portrait2, "gangsta");
         right_portraits.Add(portrait2);
         
+        NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
     
     public static void SetPortraitImage(VisualElement portrait, string character_name) {
