@@ -13,9 +13,8 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     private DialogueFile dialogue_file;
 
     public UIDocument ui_doc;
-    private VisualElement root, left_portraits, right_portraits;
-
-    private Label dialogue_text;
+    private VisualElement root, left_portraits, right_portraits, speaker_left_element;
+    private Label dialogue_text, speaker_label;
     private Dictionary<string, (string, StageDirection, StageDirection)> character_blocking;
     private Dictionary<string, VisualElement> character_portraits;
 
@@ -44,6 +43,9 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         left_portraits = root.Q<VisualElement>("LeftPortraits");
         right_portraits = root.Q<VisualElement>("RightPortraits");
         dialogue_text = root.Q<Label>("DialogueText");
+        // speaker_left_element = root.Q<VisualElement>("Speaker");
+        speaker_left_element = root.Q<VisualElement>("SpeakerLeft");
+        speaker_label = speaker_left_element.Q<Label>();
         left_portraits.Clear();
         right_portraits.Clear();
 
@@ -148,29 +150,29 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         portrait.name = name;
         portrait.AddToClassList("dialogue_portrait");
 
-        VisualElement portrait_image = new VisualElement();
-        portrait_image.name = PORTRAIT_IMAGE_ELEMENT;
-        portrait_image.AddToClassList("dialogue_portrait_image");
-        portrait.Add(portrait_image);
-
         Label character_name = new Label();
         character_name.text = "new character";
         character_name.AddToClassList("portrait_name_label");
         portrait.Add(character_name);
 
+        VisualElement portrait_image = new VisualElement();
+        portrait_image.name = PORTRAIT_IMAGE_ELEMENT;
+        portrait_image.AddToClassList("dialogue_portrait_image");
+        portrait.Add(portrait_image);
+
         return portrait;
     }
 
     public void SetSpeakerName(string speaker_name) {
-        if (speaker_name == null) {
-            // TODO --- no speaker, just narration
+        if (speaker_name == null || speaker_name.Equals("*") || speaker_name.Equals("")) {
+            speaker_left_element.style.visibility = Visibility.Hidden;
+        } else {
+            speaker_left_element.style.visibility = Visibility.Visible;
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;  // TODO --- investigate this deeper
+            // use underscores for spaces in the name of the speaker. Title Case names
+            speaker_label.text = textInfo.ToTitleCase(speaker_name.ToLower().Replace("_", " "));
         }
-        
-        TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;  // TODO --- investigate this deeper
-        // use underscores for spaces in the name of the speaker. Title Case names
-        speaker_name = textInfo.ToTitleCase(speaker_name.ToLower().Replace("_", " "));
-        Debug.LogWarning($"Not Implelented: SetSpeakerName('{speaker_name}')");
-        // TODO --- implement speaker_name
+        // Debug.LogWarning($"Not Implelented: SetSpeakerName('{speaker_name}')");
     }
 
     public void SetText(string new_dialouge) {
