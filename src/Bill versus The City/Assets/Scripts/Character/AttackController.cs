@@ -17,6 +17,16 @@ public class AttackController : MonoBehaviour, IWeaponManager
     public bool use_full_auto = true; // use full auto with select fire weapons
 
     public float inaccuracy_modifier = 0f;
+    
+    // set the script to be inactive while game is paused
+    private bool _is_active = true;
+    public bool is_active {
+        get { return _is_active; }
+        set {
+            // avoids shooting because you clicked on the last frame of dialouge
+            _is_active = value;
+        }
+    }
 
     // how fast bullets move when fired
     public float bullet_speed {
@@ -107,6 +117,8 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
 
     void Update() {
+        if (! is_active) { return; } // do nothing while controller disabled
+        
         attacker = GetComponent<CharCtrl>();
         if (attacker == null) {
             Debug.LogWarning("attacker is null!");

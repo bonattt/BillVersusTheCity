@@ -27,6 +27,9 @@ public class MenuManager : MonoBehaviour
             else {
                 Time.timeScale = 1f;
             }
+            if (PlayerCharacter.inst != null) {
+                PlayerCharacter.inst.is_active = ! _paused;
+            }
         }
     }
 
@@ -116,10 +119,12 @@ public class MenuManager : MonoBehaviour
     }
 
     public GameObject OpenSubMenuPrefab(GameObject prefab) {
+        // PRIMARY method to open a new menu. Takes a unity prefab and opens a menu from it.
         GameObject new_menu = Instantiate(prefab) as GameObject;
         new_menu.transform.parent = transform;
         sub_menus.Push(new_menu);
         paused = true;
+
         return new_menu;
     }
 

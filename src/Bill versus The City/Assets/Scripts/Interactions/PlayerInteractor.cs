@@ -8,6 +8,15 @@ public class PlayerInteractor : MonoBehaviour
     public LayerMask layer_mask; // = LayerMask.GetMask("Interaction");
     public bool debug_can_interact = false;
 
+    // set script to inactive while game is paused    
+    private bool _is_active = true;
+    public bool is_active {
+        get { return _is_active; }
+        set {
+            _is_active = value;
+        }
+    }
+
     public static PlayerInteractor inst { get; private set; }
 
     void Awake() {
@@ -17,6 +26,7 @@ public class PlayerInteractor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (! is_active) { return; } // do nothing while script is disabled
         Interaction interaction = GetInteraction();
         if (interaction != null) {
             debug_can_interact = true;

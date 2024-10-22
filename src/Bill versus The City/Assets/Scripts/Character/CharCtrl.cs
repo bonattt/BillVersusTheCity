@@ -31,6 +31,21 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public float start_reload_at;
     private float hit_stun_until = -1f;
+    
+    private bool _is_active = true;
+    private float _attack_paused_locked_for = 0f;
+    private const float ATTACK_LOCK_AFTER_PAUSE = 0.75f; // how long will attacking be blocked after unpausing
+    public bool is_active {
+        get { return _is_active; }
+        set {
+            if (value && !_is_active) {
+                // used to avoid instantly shooting when clicking out of a dialogue or menu
+                _attack_paused_locked_for = ATTACK_LOCK_AFTER_PAUSE;
+            }
+            Debug.LogWarning($"_attack_held_since_unpaused: {_attack_paused_locked_for}");  // TODO --- remove debug
+            _is_active = value;
+        }
+    }
     public float movement_speed {
         get {
             float move_speed = walk_speed;
@@ -124,6 +139,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float debug_recoil = 0f;
     public float debug_aim_percent = 0f;
     public bool debug_sprint_inputp = false;
+    public float debug_pause_blocked_for; 
+    public bool debug_pause_blocked; 
     
     protected virtual void SetDebugData() {
         debug_attack_input = AttackInput();
@@ -142,6 +159,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         debug_aim_percent = attack_controller.aim_percent;
         debug_action_input = GetActionInput();
         debug_sprint_inputp = SprintInput();
+        debug_pause_blocked_for = _attack_paused_locked_for;
+        debug_pause_blocked = AttackPauseLocked();
     }
     /////////////////////////////////
 
@@ -159,11 +178,13 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // Update is called once per frame
     void Update()
     {   
+        if (! is_active) { return; } // do nothing while controller disabled
         PreUpdate();
         SetAction();
         Move();
         TryToAttack();
         SetDebugData();
+        UpdatePauseAttackLock();
         PostUpdate();
     }
 
@@ -363,7 +384,24 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private bool CanAttack() {
-        return !is_hit_stunned && !reloading && !is_spinting && Time.timeScale != 0f;
+        return !is_hit_stunned && !reloading && !is_spinting && !AttackPauseLocked();
+    }
+
+    private void UpdatePauseAttackLock() {
+        _attack_paused_locked_for -= Time.deltaTime;
+        if (_attack_paused_locked_for <= 0f) {
+            _attack_paused_locked_for = 0f;
+        }
+    }
+
+    public bool AttackPauseLocked() {
+        // returns whether attack input is locked because of pause.
+        // attacking locks while the game is paused, AND for a short time after
+        if (Time.timeScale == 0f) {
+            Debug.LogWarning("always paused-locked when timescale is zero'd."); // TODO --- remove debug
+            return true;
+        }
+        return _attack_paused_locked_for > 0f;
     }
 
     private void TryToAttack() {

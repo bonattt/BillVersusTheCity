@@ -159,6 +159,7 @@ public interface IReloadManager {
     public bool reloading { get; }
     public float reload_time { get; }
     public float reload_progress { get; }
+    public bool is_active { get; set; }
     public void UpdateStartReload(IWeapon weapon);
     public void UpdateFinishReload(IWeapon weapon);
     public void UpdateCancelReload(IWeapon weapon);

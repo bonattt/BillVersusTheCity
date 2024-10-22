@@ -13,8 +13,10 @@ public class PlayerCombat : MonoBehaviour  {
         set {
             _is_active = value;
             // TODO ---
-            // movement.is_active = value;
-            // attacks.is_active = value;
+            movement.is_active = value;
+            attacks.is_active = value;
+            reloading.is_active = value;
+            interactor.is_active = value;
         }
     }
 
