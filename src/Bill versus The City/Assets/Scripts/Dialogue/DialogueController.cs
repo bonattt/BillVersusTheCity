@@ -15,12 +15,10 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     public UIDocument ui_doc;
     private VisualElement root, left_portraits, right_portraits, speaker_left_element;
     private Label dialogue_text, speaker_label;
-    private Dictionary<string, (string, StageDirection, StageDirection)> character_blocking;
     private Dictionary<string, VisualElement> character_portraits;
 
 
     public void StartDialogue(string file_path) {
-        character_blocking = new Dictionary<string, (string, StageDirection, StageDirection)>();
         character_portraits = new Dictionary<string, VisualElement>();
         dialogue_file = new DialogueFile(file_path);
         dialogue_file.ParseFile();
@@ -95,11 +93,12 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         else {
             // add new character to scene
             portrait = GetEmptyPortrait(character_name);
-            _SetPortraitName(portrait, character_name);
-            _SetPortraitImage(portrait, image, character_name);
-            _SetPortraitSide(portrait, side);
-            _SetPortraitFacing(portrait, facing);
+            character_portraits[character_name] = portrait;
         }
+        _SetPortraitName(portrait, character_name);
+        _SetPortraitImage(portrait, image, character_name);
+        _SetPortraitSide(portrait, side);
+        _SetPortraitFacing(portrait, facing);
         return portrait;
     }
 
@@ -133,6 +132,9 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     private void _SetPortraitSide(VisualElement portrait, StageDirection side) {
         // move a portrait to the correct side of the screen\
         // TODO --- handle moving existing portrait
+        if (portrait.parent != null) {
+            portrait.parent.Remove(portrait);
+        }
         if (side == StageDirection.left) {
             left_portraits.Add(portrait);
         }
