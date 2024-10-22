@@ -16,9 +16,13 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     private VisualElement root, left_portraits, right_portraits;
 
     private Label dialogue_text;
-    private Dictionary<string, (string, StageDirection, StageDirection)> character_blocking = new Dictionary<string, (string, StageDirection, StageDirection)>();
+    private Dictionary<string, (string, StageDirection, StageDirection)> character_blocking;
+    private Dictionary<string, VisualElement> character_portraits;
+
 
     public void StartDialogue(string file_path) {
+        character_blocking = new Dictionary<string, (string, StageDirection, StageDirection)>();
+        character_portraits = new Dictionary<string, VisualElement>();
         dialogue_file = new DialogueFile(file_path);
         dialogue_file.ParseFile();
     }
@@ -64,6 +68,10 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         }
     }
     
+    public void RemovePortrait(string character_name) {
+        // removed the character portrait from the scene
+        // TODO --- 
+    }
     public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
         Texture2D portrait_image = PortraitSystem.GetPortrait(character_name);
         return _SetPortrait(portrait_image, character_name, side, facing);
@@ -77,19 +85,31 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     private VisualElement _SetPortrait(Texture2D image, string character_name, StageDirection side, StageDirection facing) {
         // handles setting the portrait for the given character, whether they're in the scene or not
         // TODO --- handle character already in scene
-        VisualElement portrait = GetEmptyPortrait(character_name);
-        _SetPortraitImage(portrait, image, character_name);
-        _SetPortraitSide(portrait, side);
-        _SetPortraitFacing(portrait, facing);
+        VisualElement portrait;
+        if (character_portraits.ContainsKey(character_name)) {
+            // TODO --- implement
+            portrait = character_portraits[character_name];
+        }
+        else {
+            // add new character to scene
+            portrait = GetEmptyPortrait(character_name);
+            _SetPortraitName(portrait, character_name);
+            _SetPortraitImage(portrait, image, character_name);
+            _SetPortraitSide(portrait, side);
+            _SetPortraitFacing(portrait, facing);
+        }
         return portrait;
     }
 
-    private static VisualElement _SetPortraitImage(VisualElement portrait, Texture2D image, string character_name) {
-        // takes a VisualElement and assigns the given image to that portrait
+    private static void _SetPortraitName(VisualElement portrait, string character_name) {
         Label name_label = portrait.Q<Label>();
         name_label.text = character_name;
-        portrait.style.backgroundImage = image;
-        return portrait;
+    }
+
+    private static void _SetPortraitImage(VisualElement portrait, Texture2D image, string character_name) {
+        // takes a VisualElement and assigns the given image to that portrait
+        VisualElement portrait_image = portrait.Q<VisualElement>(PORTRAIT_IMAGE_ELEMENT);
+        portrait_image.style.backgroundImage = image;
     }
 
     private void _SetPortraitFacing(VisualElement portrait, StageDirection facing) {
@@ -97,7 +117,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         
         if (facing == StageDirection.left) {
             // display mirror image along the X axis
-            portrait.style.scale = new Scale(new Vector3(-1, 1, 1)); 
+            portrait.Q<VisualElement>(PORTRAIT_IMAGE_ELEMENT).style.scale = new Scale(new Vector3(-1, 1, 1)); 
         }
         else if (facing == StageDirection.right) {
             // do nothing
@@ -107,6 +127,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         }
     }
 
+    private const string PORTRAIT_IMAGE_ELEMENT = "portrait";
     private void _SetPortraitSide(VisualElement portrait, StageDirection side) {
         // move a portrait to the correct side of the screen\
         // TODO --- handle moving existing portrait
@@ -123,15 +144,19 @@ public class DialogueController : MonoBehaviour, ISubMenu {
 
     public static VisualElement GetEmptyPortrait(string name) {
         // gets a portrait, with no image set
-
         VisualElement portrait = new VisualElement();
         portrait.name = name;
         portrait.AddToClassList("dialogue_portrait");
 
+        VisualElement portrait_image = new VisualElement();
+        portrait_image.name = PORTRAIT_IMAGE_ELEMENT;
+        portrait_image.AddToClassList("dialogue_portrait_image");
+        portrait.Add(portrait_image);
+
         Label character_name = new Label();
-        portrait.Add(character_name);
         character_name.text = "new character";
         character_name.AddToClassList("portrait_name_label");
+        portrait.Add(character_name);
 
         return portrait;
     }

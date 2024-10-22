@@ -94,7 +94,11 @@ public class DialogueFile {
             case "blocking":
                 return new DialogueBlocking(split_result);
 
+            case "exit":
+                return new DialogueExit(split_result);
+
             default:
+                Debug.LogError($"Unknown dialogue action '{cmd}'");
                 return null;
         }
     }

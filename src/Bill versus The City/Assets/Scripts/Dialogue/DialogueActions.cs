@@ -70,7 +70,6 @@ public class DialogueEnter : IDialogueAction {
         actor_name = args[1];
         side = DialogueActionUtil.StageDirectionFromString(args[2]);
 
-
         if (side == StageDirection.unspecified) {
             throw new DialogueActionsException($"new characters in a dialogue must be on the left or right");
         }
@@ -88,6 +87,21 @@ public class DialogueEnter : IDialogueAction {
     public void ResolveDialogue(DialogueController ctrl) {
         // `enter` command sets the portrait direction, but doesn't support posing
         ctrl.SetPortrait(actor_name, side, facing);
+    }
+}
+
+public class DialogueExit : IDialogueAction {
+    
+    public bool wait_for_player_input { get; }
+    public string cmd { get; private set; }
+    public string actor_name { get; private set; }
+
+    public DialogueExit(string[] args) {
+        cmd = args[0];
+        actor_name = args[1];
+    }
+    public void ResolveDialogue(DialogueController ctrl) {
+        ctrl.RemovePortrait(actor_name);
     }
 }
 
@@ -111,52 +125,6 @@ public class DialogueBlocking : IDialogueAction {
 
 }
 
-
-public static class DialogueActionUtil {
-    public static string StageDirectionToString(StageDirection dir) {
-        return $"{dir}";
-    }
-
-    public static StageDirection StageDirectionFromString(string dir) {
-        switch(dir.ToLower()) {
-            case "left":
-                return StageDirection.left;
-            
-            case "right":
-                return StageDirection.right;
-
-            case "unspecified":
-                return StageDirection.unspecified;
-
-            default:
-                Debug.LogError($"string cannot be converted to stage direction '{dir}'");
-                return StageDirection.unspecified;
-        }
-    }
-
-    public static StageDirection StageDirectionOposite(StageDirection dir) {
-        // gets the opposite direction of the passed dirction. Eg. given right, return left
-        switch (dir) {
-            case StageDirection.left:
-                return StageDirection.right;
-            
-            case StageDirection.right:
-                return StageDirection.left;
-
-            default:
-                return StageDirection.unspecified;
-        }
-    }
-}
-
-
-public enum StageDirection {
-    left,
-    right,
-    // unspecified is generally not a valid option to select a character's direction
-    // but can sometimes be used to leave a character wherever they already were
-    unspecified  
-}
 
 
 [System.Serializable]

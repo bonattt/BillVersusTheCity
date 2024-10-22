@@ -2,13 +2,15 @@
     <Style src="project://database/Assets/UXML/Dialogue/Dialogue.uss?fileID=7433441132597879392&amp;guid=298e9966f4595804893276ca551c3d7f&amp;type=3#Dialogue" />
     <ui:VisualElement name="Root" style="flex-grow: 1;">
         <ui:VisualElement name="PortraitDiv" style="flex-grow: 1; width: 100%; height: 67%; flex-direction: row;">
-            <ui:VisualElement name="LeftPortraits" class="dialogue_portrait_holder" style="flex-grow: 1; flex-direction: row;">
-                <ui:VisualElement name="Portrait" class="dialogue_portrait" style="flex-grow: 1; background-color: rgba(255, 0, 208, 0.39);">
+            <ui:VisualElement name="LeftPortraits" class="dialogue_portraits_holder" style="flex-grow: 1; flex-direction: row;">
+                <ui:VisualElement name="bill" class="dialogue_portrait" style="flex-grow: 1;">
+                    <ui:VisualElement name="Portrait" class="dialogue_portrait_image" style="flex-grow: 1; background-color: rgba(255, 0, 208, 0.39);" />
                     <ui:Label tabindex="-1" text="Bill" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CharacterNameLabel" class="portrait_name_label" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="RightPortraits" class="dialogue_portrait_holder" style="flex-grow: 1; flex-direction: row-reverse;">
-                <ui:VisualElement name="Portrait" class="dialogue_portrait" style="flex-grow: 1; background-color: rgba(255, 0, 208, 0.39);">
+            <ui:VisualElement name="RightPortraits" class="dialogue_portraits_holder" style="flex-grow: 1; flex-direction: row-reverse;">
+                <ui:VisualElement name="gangsta" class="dialogue_portrait" style="flex-grow: 1;">
+                    <ui:VisualElement name="Portrait" class="dialogue_portrait_image" style="flex-grow: 1; background-color: rgba(255, 0, 208, 0.39);" />
                     <ui:Label tabindex="-1" text="Gangsta" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CharacterNameLabel" class="portrait_name_label" />
                 </ui:VisualElement>
             </ui:VisualElement>
