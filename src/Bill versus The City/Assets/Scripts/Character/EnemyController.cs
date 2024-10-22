@@ -25,9 +25,9 @@ using UnityEngine.AI;
 
     public NavMeshAgent nav_mesh_agent;
 
-    void OnDestroy() {
-        Debug.Log("EnemyController.OnDestroy"); // TODO --- remove debug
-    }
+    // void OnDestroy() {
+    //     // DO nothing
+    // }
 
     public override void SetupCharacter() {
         base.SetupCharacter();

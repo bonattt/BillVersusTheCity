@@ -42,7 +42,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                 // used to avoid instantly shooting when clicking out of a dialogue or menu
                 _attack_paused_locked_for = ATTACK_LOCK_AFTER_PAUSE;
             }
-            Debug.LogWarning($"_attack_held_since_unpaused: {_attack_paused_locked_for}");  // TODO --- remove debug
             _is_active = value;
         }
     }
@@ -398,7 +397,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // returns whether attack input is locked because of pause.
         // attacking locks while the game is paused, AND for a short time after
         if (Time.timeScale == 0f) {
-            Debug.LogWarning("always paused-locked when timescale is zero'd."); // TODO --- remove debug
             return true;
         }
         return _attack_paused_locked_for > 0f;
