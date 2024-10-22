@@ -3,11 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DialogueController : MonoBehaviour { //, ISubMenu {
+public class DialogueController : MonoBehaviour, ISubMenu {
     // class controlling a single dialogue session
 
     private DialogueFile dialogue_file;
@@ -16,6 +16,7 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
     private VisualElement root, left_portraits, right_portraits;
 
     private Label dialogue_text;
+    private Dictionary<string, (string, StageDirection, StageDirection)> character_blocking = new Dictionary<string, (string, StageDirection, StageDirection)>();
 
     public void StartDialogue(string file_path) {
         dialogue_file = new DialogueFile(file_path);
@@ -43,36 +44,88 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
         right_portraits.Clear();
 
         // TODO --- replace this with an actual blocking system
-        VisualElement portrait1 = GetEmptyPortrait();
-        SetPortraitImage(portrait1, "bill");
-        left_portraits.Add(portrait1);
-
-        VisualElement portrait2 = GetEmptyPortrait();
-        SetPortraitImage(portrait2, "gangsta");
-        right_portraits.Add(portrait2);
+        // SetPortrait("bill", StageDirection.left, StageDirection.right);
+        // SetPortrait("gangsta", StageDirection.right, StageDirection.left);
         
         NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
+
+    public void MenuNavigation() {
+        // TODO --- remove debug (below)
+        if (InputSystem.current.MenuCancelInput()) {
+            MenuManager.inst.CloseAllMenus();
+        }
+
+        // TODO --- remove debug ^^^
+
+        if (InputSystem.current.MenuNextInput()) {
+            MenuManager.PlayMenuSound("menu_click");
+            NextDialogueStep();
+        }
+    }
     
-    public static void SetPortraitImage(VisualElement portrait, string character_name) {
+    public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
         Texture2D portrait_image = PortraitSystem.GetPortrait(character_name);
-        _SetPortraitImage(portrait, portrait_image, character_name);
+        return _SetPortrait(portrait_image, character_name, side, facing);
     }
 
-    public static void SetPortraitImage(VisualElement portrait, string character_name, string pose) {
+    public VisualElement SetPortrait(string character_name, string pose, StageDirection side, StageDirection facing) {
         Texture2D portrait_image = PortraitSystem.GetPortrait(character_name, pose);
-        _SetPortraitImage(portrait, portrait_image, character_name);
+        return _SetPortrait(portrait_image, character_name, side, facing);
     }
 
-    private static void _SetPortraitImage(VisualElement portrait, Texture2D image, string character_name) {
+    private VisualElement _SetPortrait(Texture2D image, string character_name, StageDirection side, StageDirection facing) {
+        // handles setting the portrait for the given character, whether they're in the scene or not
+        // TODO --- handle character already in scene
+        VisualElement portrait = GetEmptyPortrait(character_name);
+        _SetPortraitImage(portrait, image, character_name);
+        _SetPortraitSide(portrait, side);
+        _SetPortraitFacing(portrait, facing);
+        return portrait;
+    }
+
+    private static VisualElement _SetPortraitImage(VisualElement portrait, Texture2D image, string character_name) {
+        // takes a VisualElement and assigns the given image to that portrait
         Label name_label = portrait.Q<Label>();
         name_label.text = character_name;
         portrait.style.backgroundImage = image;
+        return portrait;
     }
 
-    public static VisualElement GetEmptyPortrait() {
+    private void _SetPortraitFacing(VisualElement portrait, StageDirection facing) {
+        // turns the image in a portrait to face the correct direction
+        
+        if (facing == StageDirection.left) {
+            // display mirror image along the X axis
+            portrait.style.scale = new Scale(new Vector3(-1, 1, 1)); 
+        }
+        else if (facing == StageDirection.right) {
+            // do nothing
+        } 
+        else {
+            Debug.LogWarning($"cannot set rotate character portrait '{portrait.name}' to face to the '{facing}'!");
+        }
+    }
+
+    private void _SetPortraitSide(VisualElement portrait, StageDirection side) {
+        // move a portrait to the correct side of the screen\
+        // TODO --- handle moving existing portrait
+        if (side == StageDirection.left) {
+            left_portraits.Add(portrait);
+        }
+        else if (side == StageDirection.right) {
+            right_portraits.Add(portrait);
+        } 
+        else {
+            throw new DialogueControllerException($"cannot set character portrait '{portrait.name}' to the '{side}' side of the screen");
+        }
+    }
+
+    public static VisualElement GetEmptyPortrait(string name) {
         // gets a portrait, with no image set
+
         VisualElement portrait = new VisualElement();
+        portrait.name = name;
         portrait.AddToClassList("dialogue_portrait");
 
         Label character_name = new Label();
@@ -98,8 +151,15 @@ public class DialogueController : MonoBehaviour { //, ISubMenu {
     public void SetText(string new_dialouge) {
         dialogue_text.text = new_dialouge;
     }
-    
-    // public void MenuNavigation() {
-    //     // TODO --- 
-    // }
+}
+
+[System.Serializable]
+public class DialogueControllerException : System.Exception
+{
+    // public DialogueControllerException() { }
+    public DialogueControllerException(string message) : base(message) { }
+    // public DialogueControllerException(string message, System.Exception inner) : base(message, inner) { }
+    // protected DialogueControllerException(
+    //     System.Runtime.Serialization.SerializationInfo info,
+    //     System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }

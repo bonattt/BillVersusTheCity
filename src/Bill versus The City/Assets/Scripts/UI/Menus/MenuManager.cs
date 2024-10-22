@@ -94,7 +94,7 @@ public class MenuManager : MonoBehaviour
         else {
             ISubMenu menu_ctrl = open_menu.GetComponent<ISubMenu>();
             if (menu_ctrl == null) {
-                DefaultMenuNavigation(); // TODO --- uncomment debug
+                DefaultMenuNavigation();
             }
             else {
                 menu_ctrl.MenuNavigation();

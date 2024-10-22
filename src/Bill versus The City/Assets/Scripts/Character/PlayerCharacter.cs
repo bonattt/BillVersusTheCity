@@ -21,6 +21,17 @@ public class PlayerCharacter {
         }
     }
 
+    private bool _is_active = true;
+    public bool is_active {
+        get { return _is_active; }
+        set {
+            _is_active = value;
+            if (combat != null) {
+                combat.is_active = value;
+            }
+        }
+    }
+
     public List<Transform> vision_nodes { get { return combat.movement.vision_nodes; }}
 
     public GameObject game_object = null;

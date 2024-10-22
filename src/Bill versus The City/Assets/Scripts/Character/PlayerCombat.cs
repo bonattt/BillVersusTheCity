@@ -5,6 +5,18 @@ public class PlayerCombat : MonoBehaviour  {
     /**
       * Script that does nothing but contain references to other player scripts
       */
+    
+
+    private bool _is_active = true;
+    public bool is_active {
+        get { return _is_active; }
+        set {
+            _is_active = value;
+            // TODO ---
+            // movement.is_active = value;
+            // attacks.is_active = value;
+        }
+    }
 
     private PlayerMovement _movement = null;
     public PlayerMovement movement {

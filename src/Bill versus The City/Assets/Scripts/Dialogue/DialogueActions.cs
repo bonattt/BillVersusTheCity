@@ -86,8 +86,8 @@ public class DialogueEnter : IDialogueAction {
         }
     }
     public void ResolveDialogue(DialogueController ctrl) {
-        // TODO --- implement this
-        throw new NotImplementedException("DialogueEnter IDialogueAction is not yet implemented");
+        // `enter` command sets the portrait direction, but doesn't support posing
+        ctrl.SetPortrait(actor_name, side, facing);
     }
 }
 

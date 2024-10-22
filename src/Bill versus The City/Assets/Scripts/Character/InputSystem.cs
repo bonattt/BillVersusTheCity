@@ -11,6 +11,7 @@ public class InputSystem : ISettingsObserver
     public const string AIM_ATTACK = "Fire2";
     public const string SPRINT_INPUT = "Sprint";
     public const KeyCode PAUSE_MENU_INPUT = KeyCode.Escape;
+    public const KeyCode MENU_NEXT = KeyCode.Mouse0;
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
     public const KeyCode INTERACT = KeyCode.E;
     public const KeyCode RELOAD = KeyCode.R;
@@ -168,6 +169,12 @@ public class InputSystem : ISettingsObserver
 
     public bool PauseMenuInput() {
         return Input.GetKeyDown(PAUSE_MENU_INPUT);
+    }
+
+    public bool MenuNextInput() {
+        // input for advancing dialouge
+
+        return Input.GetKeyDown(MENU_NEXT);
     }
 
     public int? WeaponSlotInput() {
