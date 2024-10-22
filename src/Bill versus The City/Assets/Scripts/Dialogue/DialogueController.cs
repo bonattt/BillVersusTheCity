@@ -70,7 +70,14 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     
     public void RemovePortrait(string character_name) {
         // removed the character portrait from the scene
-        // TODO --- 
+        if (! character_portraits.ContainsKey(character_name)) {
+            Debug.LogWarning($"cannot remove '{character_name}' from dialogug because it is not present!");
+            return;
+        }
+        VisualElement portrait = character_portraits[character_name];
+        if (portrait.parent != null) {
+            portrait.parent.Remove(portrait);
+        }
     }
     public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
         Texture2D portrait_image = PortraitSystem.GetPortrait(character_name);
