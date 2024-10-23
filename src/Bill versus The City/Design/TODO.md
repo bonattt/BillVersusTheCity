@@ -233,8 +233,11 @@ SOOSH:
         [+] Rearange portraits 
         [+] Step through dialogue text
         [+] Automatically set the speaker label
+        [+] set pose on characters
         [ ] Portraits gray out while not speaking ---> do later
         [ ] Portraits on a side together can stack
+        [ ] Use multiple portraits with the same art
+        [ ] 
     [~] Portrait Manager
         [+] PortraitSystem class
         [ ] Get test portraits
