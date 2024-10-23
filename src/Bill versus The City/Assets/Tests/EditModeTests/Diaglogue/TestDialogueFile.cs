@@ -168,7 +168,16 @@ public class TestDialogueFile
     }
 
     [Test]
-    public void EnterActionNoFacingStandingLeft() {
+    public void NoopActionWithPause() {
+        f.ParseLinesFromData("break");
+        f.ParseActions();
+        IDialogueAction result = f.GetNextAction();
+        
+        Assert.IsTrue(result.wait_for_player_input, "wait_for_player_input");
+    }
+
+    [Test]
+    public void BlockingActionNoFacingStandingLeft() {
         f.ParseLinesFromData("enter bill left");
         f.ParseActions();
         DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
@@ -177,11 +186,12 @@ public class TestDialogueFile
         Assert.AreEqual("bill", result.actor_name);
         Assert.AreEqual(StageDirection.left, result.side);
         Assert.AreEqual(StageDirection.right, result.facing);
+        Assert.IsNull(result.pose, "pose should be null");
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
     [Test]
-    public void EnterActionNoFacingStandingRight() {
+    public void BlockingActionNoFacingStandingRight() {
         f.ParseLinesFromData("enter bill right");
         f.ParseActions();
         DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
@@ -190,11 +200,12 @@ public class TestDialogueFile
         Assert.AreEqual("bill", result.actor_name);
         Assert.AreEqual(StageDirection.right, result.side);
         Assert.AreEqual(StageDirection.left, result.facing);
+        Assert.IsNull(result.pose, "pose should be null");
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
     [Test]
-    public void EnterActionWithFacing() {
+    public void BlockingActionWithFacing() {
         f.ParseLinesFromData("enter bill right facing right");
         f.ParseActions();
         DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
@@ -203,6 +214,21 @@ public class TestDialogueFile
         Assert.AreEqual("bill", result.actor_name);
         Assert.AreEqual(StageDirection.right, result.side);
         Assert.AreEqual(StageDirection.right, result.facing);
+        Assert.IsNull(result.pose, "pose should be null");
+        Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
+    }
+
+    [Test]
+    public void BlockingActionWithPose() {
+        f.ParseLinesFromData("enter bill right facing right angry");
+        f.ParseActions();
+        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
+        
+        Assert.AreEqual("enter", result.cmd);
+        Assert.AreEqual("bill", result.actor_name);
+        Assert.AreEqual(StageDirection.right, result.side);
+        Assert.AreEqual(StageDirection.right, result.facing);
+        Assert.AreEqual("angry", result.pose);
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
     }
 
@@ -218,6 +244,18 @@ public class TestDialogueFile
         Assert.IsTrue(result.wait_for_player_input, "wait_for_player_input");
     }
 
+    [Test]
+    public void PoseAction() {
+        f.ParseLinesFromData("pose bill angry");
+        f.ParseActions();
+        DialoguePose result = (DialoguePose) f.GetNextAction();
+        
+        Assert.AreEqual("pose", result.cmd);
+        Assert.AreEqual("bill", result.actor_name);
+        Assert.AreEqual("angry", result.pose);
+        Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
+    }
 
-    /// NEW TESTS: PoseAction, Blocking with pose, Blocking existing character preserves pose
+
+    /// NEW TESTS: Blocking with pose, Blocking existing character preserves pose
 }
