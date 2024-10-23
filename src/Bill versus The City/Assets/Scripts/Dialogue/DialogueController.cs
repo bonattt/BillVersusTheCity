@@ -168,10 +168,19 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         if (image != null) {
             _SetPortraitImage(portrait, image);
         }
-        _SetPortraitName(portrait, character_name);
+        SetPortraitName(portrait, character_name);
         _SetPortraitSide(portrait, side);
         _SetPortraitFacing(portrait, facing);
         return portrait;
+    }
+
+    private void SetPortraitName(VisualElement portrait, string character_name) {
+        string character_title = character_name;
+        if (portrait_aliases.ContainsKey(character_name)) {
+            (string _, string character_display) = portrait_aliases[character_name];
+            character_title = character_display;
+        }
+        _SetPortraitName(portrait, character_title);
     }
 
     private static void _SetPortraitName(VisualElement portrait, string character_name) {
