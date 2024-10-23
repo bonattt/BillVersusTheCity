@@ -99,6 +99,10 @@ public class DialogueFile {
 
             case "pose":
                 return new DialoguePose(split_result);
+
+            case "alias":
+                return new DialougeAlias(split_result);
+                
             default:
                 Debug.LogError($"Unknown dialogue action '{cmd}'");
                 return null;

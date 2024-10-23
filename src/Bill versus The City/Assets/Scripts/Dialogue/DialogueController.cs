@@ -18,6 +18,30 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     private Label dialogue_text, speaker_label;
     private Dictionary<string, VisualElement> character_portraits;
 
+    // character_name -> (portrait_name, display_name)
+    private static readonly Dictionary<string, (string, string)> DEFAULT_PORTRAIT_ALIASES = new Dictionary<string, (string, string)>();
+    private Dictionary<string, (string, string)> _portrait_aliases = null;
+    public Dictionary<string, (string, string)> portrait_aliases {
+        get {
+            if (_portrait_aliases == null) {
+                _portrait_aliases = new Dictionary<string, (string, string)>(DEFAULT_PORTRAIT_ALIASES);
+            }
+            return _portrait_aliases;
+        }
+    }
+
+    private void ResetAliases() {
+        // resets aliases to the default aliases
+        _portrait_aliases = new Dictionary<string, (string, string)>(DEFAULT_PORTRAIT_ALIASES);
+    }
+
+    public void AddAlias(string character_name, string portrait_name, string display_name) {
+        // adds a portrait allias. Portrait alliases are used to display multiple distinct characters using the same character art.
+        // `character_name` is the name used to reference the character for blocking
+        // `portrait_name` is the name used to reference the character's sprites
+        // `display_name` is the name used to show the character in name tags
+        portrait_aliases[character_name] = (portrait_name, display_name);
+    }
 
     public void StartDialogue(string file_path) {
         character_portraits = new Dictionary<string, VisualElement>();
@@ -56,12 +80,10 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     }
 
     public void MenuNavigation() {
-        // TODO --- remove debug (below)
-        if (InputSystem.current.MenuCancelInput()) {
-            MenuManager.inst.CloseAllMenus();
-        }
-
-        // TODO --- remove debug ^^^
+        // // TODO --- remove debug (below)
+        // if (InputSystem.current.MenuCancelInput()) {
+        //     MenuManager.inst.CloseAllMenus();
+        // } // TODO --- remove debug ^^^
 
         if (InputSystem.current.MenuNextInput()) {
             MenuManager.PlayMenuSound("menu_click");
@@ -85,12 +107,30 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         // updates just the pose on a character already in a scene
 
         if (! character_portraits.ContainsKey(character_name)) {
-            throw new DialogueActionsException("cannot update the pose for a character that's not in the dialogue!");
+            throw new DialogueActionsException($"cannot update the pose for a character that's not in the dialogue '{character_name}'!");
         }
         VisualElement portrait = character_portraits[character_name];
-        Texture2D image = PortraitSystem.GetPortrait(character_name, pose);
+        Texture2D image = this.GetPortrait(character_name, pose);
         
         _SetPortraitImage(portrait, image);
+    }
+
+    public Texture2D GetPortrait(string character_name) {
+        // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
+        if (! portrait_aliases.ContainsKey(character_name)) {
+            return PortraitSystem.GetPortrait(character_name);
+        }
+        (string portrait_name, string display_name) = portrait_aliases[character_name];
+        return PortraitSystem.GetPortrait(portrait_name);
+    }
+
+    public Texture2D GetPortrait(string character_name, string pose) {
+        // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
+        if (! portrait_aliases.ContainsKey(character_name)) {
+            return PortraitSystem.GetPortrait(character_name, pose);
+        }
+        (string portrait_name, string display_name) = portrait_aliases[character_name];
+        return PortraitSystem.GetPortrait(portrait_name, pose);
     }
 
     public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
@@ -98,13 +138,13 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         if (! character_portraits.ContainsKey(character_name)) {
             // if the character is not already in the scene, load their default portrait.
             // Otherwise, leave as null to preserve their previous pose
-            portrait_image = PortraitSystem.GetPortrait(character_name);;
+            portrait_image = this.GetPortrait(character_name);;
         }
         return _SetPortrait(portrait_image, character_name, side, facing);
     }
 
     public VisualElement SetPortrait(string character_name, string pose, StageDirection side, StageDirection facing) {
-        Texture2D portrait_image = PortraitSystem.GetPortrait(character_name, pose);
+        Texture2D portrait_image = this.GetPortrait(character_name, pose);
         return _SetPortrait(portrait_image, character_name, side, facing);
     }
 

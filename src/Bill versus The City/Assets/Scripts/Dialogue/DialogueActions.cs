@@ -129,8 +129,8 @@ public class DialoguePose : IDialogueAction {
 }
 
 public class DialogueExit : IDialogueAction {
-    
-    public bool wait_for_player_input { get; }
+    // dialogue action for a character exiting the scene
+    public bool wait_for_player_input { get { return false; }}
     public string cmd { get; private set; }
     public string actor_name { get; private set; }
 
@@ -140,6 +140,39 @@ public class DialogueExit : IDialogueAction {
     }
     public void ResolveDialogue(DialogueController ctrl) {
         ctrl.RemovePortrait(actor_name);
+    }
+}
+
+public class DialougeAlias : IDialogueAction {
+    
+    public bool wait_for_player_input { get { return false; }}
+    public string cmd { get; private set; }
+    public string character_name { get; private set; }
+    public string portrait_name { get; private set; }
+    public string display_name { get; private set; }
+
+    private const string USAGE_EXAMPLE = "Alias command usage `alias gangsta1 as gangsta` or `alias gangsta1 as gangsta show Daniel`";
+    public DialougeAlias(string[] args) {
+        if (args.Length < 4) {
+            throw new DialogueActionsException($"expected at least 4 args, got {args.Length} in '{string.Join(", ", args)}': {USAGE_EXAMPLE}");
+        }
+        cmd = args[0];
+        character_name = args[1];
+        if (! args[2].ToLower().Equals("as")) {
+            Debug.LogWarning($"expected 'as' got '{args[2]}': {USAGE_EXAMPLE}");
+        }
+        portrait_name = args[3];
+        if (args.Length >= 5) {
+            if (! args[4].ToLower().Equals("show")) {
+                Debug.LogWarning($"expected 'show' got '{args[4]}': {USAGE_EXAMPLE}");
+            }
+            display_name = args[5];
+        } else {
+            display_name = character_name;
+        }
+    }
+    public void ResolveDialogue(DialogueController ctrl) {
+        ctrl.AddAlias(character_name, portrait_name, display_name);
     }
 }
 
