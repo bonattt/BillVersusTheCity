@@ -225,11 +225,20 @@ SOOSH:
 
 [ ] Equipment Pickups
 
-[ ] Dialogue system
-    [ ] Dialogue System
-    [ ] Portrait Manager
+[~] Dialogue system
+    [+] Dialogue System
+        [+] Loads portraits from dialogue file
+        [+] Rearange portraits 
+        [+] Step through dialogue text
+        [+] Automatically set the speaker label
+        [ ] Portraits gray out while not speaking
+        [ ] Portraits on a side together can stack
+    [~] Portrait Manager
+        [+] PortraitSystem class
+        [ ] Get test portraits
 
 [ ] Fixes
+    [ ] Absent Save file is breaking the built game
     [ ] fences look breakable
     [ ] FPS display doesn't work in pause
     [+] Truck Asset has weird collisions
@@ -237,6 +246,7 @@ SOOSH:
     [ ] click R again canceling reload is annoying
         - only have "shoot" cancel it, BUT aiming doesn't work while reloading
     [ ] shooting through wall still works occasionally, but it's harder
+    [ ] Shooting wall alerts enemies on the other side
 
 [ ] Bugs
     [ ] hovering on Interactions is not detected sometimes
