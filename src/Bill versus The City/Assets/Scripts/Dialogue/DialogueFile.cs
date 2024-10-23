@@ -76,7 +76,7 @@ public class DialogueFile {
         if (split_result.Length == 0) {
             throw new DialogueFileException($"invalid dialogue line '{action_line}'");
         }
-        string cmd = split_result[0];
+        string cmd = split_result[0].ToLower();
         switch(cmd) {
             case "noop":
                 return new DialogueNoOp();
@@ -89,7 +89,7 @@ public class DialogueFile {
                 return new DialogueSpeach(split_result);
 
             case "enter":
-                return new DialogueEnter(split_result);
+                return new DialogueBlocking(split_result);
 
             case "blocking":
                 return new DialogueBlocking(split_result);
@@ -97,6 +97,8 @@ public class DialogueFile {
             case "exit":
                 return new DialogueExit(split_result);
 
+            case "pose":
+                return new DialoguePose(split_result);
             default:
                 Debug.LogError($"Unknown dialogue action '{cmd}'");
                 return null;

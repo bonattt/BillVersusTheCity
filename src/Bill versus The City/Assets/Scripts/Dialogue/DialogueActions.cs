@@ -51,7 +51,9 @@ public class DialogueSpeach : IDialogueAction {
         dialogue.SetText(text);
     }
 }
-public class DialogueEnter : IDialogueAction {
+
+
+public class DialogueBlocking : IDialogueAction {
     // class representing a new character entering the scene
     public bool wait_for_player_input { get; set; }
     
@@ -59,11 +61,12 @@ public class DialogueEnter : IDialogueAction {
     public string actor_name { get; private set; }
     public StageDirection side { get; private set; }
     public StageDirection facing { get; private set; }
+    public string pose { get; private set; }
 
 
-    public DialogueEnter(string[] args) {
-        if (!(args.Length == 3 || args.Length == 5)) {
-            throw new DialogueActionsException("enter command usage: `enter character right` or `enter character left facing right`");
+    public DialogueBlocking(string[] args) {
+        if (!(args.Length == 3 || args.Length == 5 || args.Length == 6)) {
+            throw new DialogueActionsException("BLOCKING command usage: `enter character right` or `blocking character left facing right` or `enter character left facing right <pose>`");
         }
         wait_for_player_input = false;
         cmd = args[0];
@@ -76,8 +79,14 @@ public class DialogueEnter : IDialogueAction {
 
         if (args.Length == 5) {
             facing = DialogueActionUtil.StageDirectionFromString(args[4]);
+            pose = null;
+        } 
+        else if (args.Length == 6) {
+            facing = DialogueActionUtil.StageDirectionFromString(args[4]);
+            pose = args[5];
         } else {
             facing = StageDirection.unspecified;
+            pose = null;
         }
         // if facing is not given, place the character facing 
         if (facing == StageDirection.unspecified) {
@@ -86,7 +95,36 @@ public class DialogueEnter : IDialogueAction {
     }
     public void ResolveDialogue(DialogueController ctrl) {
         // `enter` command sets the portrait direction, but doesn't support posing
-        ctrl.SetPortrait(actor_name, side, facing);
+        if (pose == null) {
+            ctrl.SetPortrait(actor_name, side, facing);
+        } else {
+            ctrl.SetPortrait(actor_name, pose, side, facing);
+        }
+    }
+}
+
+public class DialoguePose : IDialogueAction {
+    // class representing a new character entering the scene
+    public bool wait_for_player_input { get; set; }
+    
+    public string cmd { get; private set; }
+    public string actor_name { get; private set; }
+    public string pose { get; private set; }
+
+
+    public DialoguePose(string[] args) {
+        if (args.Length < 3) {
+            throw new DialogueActionsException("POSE command usage: `pose character angry`");
+        }
+        wait_for_player_input = false;
+        cmd = args[0];
+        actor_name = args[1];
+        pose = args[2];
+    }
+
+    public void ResolveDialogue(DialogueController ctrl) {
+        // `enter` command sets the portrait direction, but doesn't support posing
+        ctrl.UpdatePose(actor_name, pose);
     }
 }
 
@@ -105,25 +143,25 @@ public class DialogueExit : IDialogueAction {
     }
 }
 
-public class DialogueBlocking : IDialogueAction {
-    // class representing changes to blocking during dialogue (character portrait changes
-    public bool wait_for_player_input { get; set; }
+// public class DialogueBlocking : IDialogueAction {
+//     // class representing changes to blocking during dialogue (character portrait changes
+//     public bool wait_for_player_input { get; set; }
     
-    public string cmd { get; private set; }
-    public string actor { get; private set; }
-    public string text { get; private set; }
+//     public string cmd { get; private set; }
+//     public string actor { get; private set; }
+//     public string text { get; private set; }
 
 
-    public DialogueBlocking(string[] args) {
-        // TODO --- implement this
-        throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
-    }
-    public void ResolveDialogue(DialogueController ctrl) {
-        // TODO --- implement this
-        throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
-    }
+//     public DialogueBlocking(string[] args) {
+//         // TODO --- implement this
+//         throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
+//     }
+//     public void ResolveDialogue(DialogueController ctrl) {
+//         // TODO --- implement this
+//         throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
+//     }
 
-}
+// }
 
 
 

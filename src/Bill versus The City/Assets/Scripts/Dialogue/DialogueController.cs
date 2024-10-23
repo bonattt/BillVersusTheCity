@@ -80,6 +80,19 @@ public class DialogueController : MonoBehaviour, ISubMenu {
             portrait.parent.Remove(portrait);
         }
     }
+
+    public void UpdatePose(string character_name, string pose) {
+        // updates just the pose on a character already in a scene
+        
+        if (! character_portraits.ContainsKey(character_name)) {
+            throw new DialogueActionsException("cannot update the pose for a character that's not in the dialogue!");
+        }
+        VisualElement portrait = character_portraits[character_name];
+        Texture2D image = PortraitSystem.GetPortrait(character_name, pose);
+        
+        _SetPortraitImage(portrait, image);
+    }
+
     public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
         Texture2D portrait_image = PortraitSystem.GetPortrait(character_name);
         return _SetPortrait(portrait_image, character_name, side, facing);
@@ -104,7 +117,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
             character_portraits[character_name] = portrait;
         }
         _SetPortraitName(portrait, character_name);
-        _SetPortraitImage(portrait, image, character_name);
+        _SetPortraitImage(portrait, image);
         _SetPortraitSide(portrait, side);
         _SetPortraitFacing(portrait, facing);
         return portrait;
@@ -115,7 +128,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         name_label.text = character_name;
     }
 
-    private static void _SetPortraitImage(VisualElement portrait, Texture2D image, string character_name) {
+    private static void _SetPortraitImage(VisualElement portrait, Texture2D image) {
         // takes a VisualElement and assigns the given image to that portrait
         VisualElement portrait_image = portrait.Q<VisualElement>(PORTRAIT_IMAGE_ELEMENT);
         portrait_image.style.backgroundImage = image;

@@ -171,7 +171,7 @@ public class TestDialogueFile
     public void EnterActionNoFacingStandingLeft() {
         f.ParseLinesFromData("enter bill left");
         f.ParseActions();
-        DialogueEnter result = (DialogueEnter) f.GetNextAction();
+        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
@@ -184,7 +184,7 @@ public class TestDialogueFile
     public void EnterActionNoFacingStandingRight() {
         f.ParseLinesFromData("enter bill right");
         f.ParseActions();
-        DialogueEnter result = (DialogueEnter) f.GetNextAction();
+        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
@@ -197,7 +197,7 @@ public class TestDialogueFile
     public void EnterActionWithFacing() {
         f.ParseLinesFromData("enter bill right facing right");
         f.ParseActions();
-        DialogueEnter result = (DialogueEnter) f.GetNextAction();
+        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
