@@ -1,3 +1,8 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +12,8 @@ public static class PortraitSystem {
     public const int PORTRAIT_WIDTH = 100;
     public static readonly Color ERROR_COLOR = new Color(1f, 0f, 0.82f, 0.4f);
     public const string DEFAULT_POSE = "standing";
+
+    public const string BASE_PATH = "portraits";
     
     public static Texture2D GetPortrait(string character_name) {
         // Gets a portrait of the requested character using the default pose
@@ -18,7 +25,12 @@ public static class PortraitSystem {
         // Gets a portrait of the requested character using the given pose
         // if the character exists, but does not have the requested pose, return the character in the default pose.
         // if the character cannot be found, returns the Error Portrait
-        // TODO --- implement
+        string path = $"{BASE_PATH}/{character_name.ToLower()}/{pose.ToLower()}";
+        Texture2D texture = Resources.Load<Texture2D>(path);
+        if (texture != null) {
+            return texture;
+        }
+        Debug.LogError($"failed to load character portrait '{path}'!");
         return GetErrorPortrait();
     }
 

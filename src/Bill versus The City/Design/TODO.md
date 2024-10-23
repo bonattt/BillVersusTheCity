@@ -223,7 +223,9 @@ SOOSH:
 
 [ ] Equipment Select at the start of a level
 
-[ ] Equipment Pickups
+[
+    
+] Equipment Pickups
 
 [~] Dialogue system
     [+] Dialogue System
@@ -231,7 +233,7 @@ SOOSH:
         [+] Rearange portraits 
         [+] Step through dialogue text
         [+] Automatically set the speaker label
-        [ ] Portraits gray out while not speaking
+        [ ] Portraits gray out while not speaking ---> do later
         [ ] Portraits on a side together can stack
     [~] Portrait Manager
         [+] PortraitSystem class
@@ -247,6 +249,7 @@ SOOSH:
         - only have "shoot" cancel it, BUT aiming doesn't work while reloading
     [ ] shooting through wall still works occasionally, but it's harder
     [ ] Shooting wall alerts enemies on the other side
+    [ ] Test un-pause attack blocking
 
 [ ] Bugs
     [ ] hovering on Interactions is not detected sometimes
