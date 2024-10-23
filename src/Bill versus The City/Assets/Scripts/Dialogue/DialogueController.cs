@@ -83,7 +83,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
 
     public void UpdatePose(string character_name, string pose) {
         // updates just the pose on a character already in a scene
-        
+
         if (! character_portraits.ContainsKey(character_name)) {
             throw new DialogueActionsException("cannot update the pose for a character that's not in the dialogue!");
         }
@@ -94,7 +94,12 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     }
 
     public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
-        Texture2D portrait_image = PortraitSystem.GetPortrait(character_name);
+        Texture2D portrait_image = null;
+        if (! character_portraits.ContainsKey(character_name)) {
+            // if the character is not already in the scene, load their default portrait.
+            // Otherwise, leave as null to preserve their previous pose
+            portrait_image = PortraitSystem.GetPortrait(character_name);;
+        }
         return _SetPortrait(portrait_image, character_name, side, facing);
     }
 
@@ -110,14 +115,20 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         if (character_portraits.ContainsKey(character_name)) {
             // TODO --- implement
             portrait = character_portraits[character_name];
-        }
+        } 
         else {
+            if (image == null) {
+                throw new DialogueActionsException($"new characters in a scene cannot use a null image! '{character_name} {side} facing {facing}'");
+            }
             // add new character to scene
             portrait = GetEmptyPortrait(character_name);
             character_portraits[character_name] = portrait;
         }
+        // pass image as null to preserve the previous image
+        if (image != null) {
+            _SetPortraitImage(portrait, image);
+        }
         _SetPortraitName(portrait, character_name);
-        _SetPortraitImage(portrait, image);
         _SetPortraitSide(portrait, side);
         _SetPortraitFacing(portrait, facing);
         return portrait;

@@ -217,4 +217,7 @@ public class TestDialogueFile
         Assert.AreEqual("pingas pootis PotUS 420.69", result.text);
         Assert.IsTrue(result.wait_for_player_input, "wait_for_player_input");
     }
+
+
+    /// NEW TESTS: PoseAction, Blocking with pose, Blocking existing character preserves pose
 }
