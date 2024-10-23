@@ -90,8 +90,8 @@ public class MenuManager : MonoBehaviour
     protected void MenuNavigation() {
         if (open_menu == null) {
             if (InputSystem.current.PauseMenuInput()) {
-                OpenDialoge("test\\sample_dialogue");
-                // OpenSubMenuPrefab(pause_menu_prefab); // TODO --- uncomment debug
+                // OpenDialoge("test\\sample_dialogue");
+                OpenSubMenuPrefab(pause_menu_prefab); // TODO --- uncomment debug
             }
         }
         else {

@@ -63,8 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  name: Refill Ammo
-  additional_text: 
+  name_header: name
+  hover_opacity: 0.8
+  default_opacity: 0.4
 --- !u!114 &6958376482463443040
 MonoBehaviour:
   m_ObjectHideFlags: 0

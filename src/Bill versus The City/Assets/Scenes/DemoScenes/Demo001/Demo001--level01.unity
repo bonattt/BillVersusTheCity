@@ -5722,6 +5722,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTruck
       objectReference: {fileID: 0}
+    - target: {fileID: 2608884200599413935, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: hover_opacity
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2608884200599413935, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: default_opacity
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658742417150927902, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: hover_opacity
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658742417150927902, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: default_opacity
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5345889260223724624, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
     m_RemovedGameObjects: []
