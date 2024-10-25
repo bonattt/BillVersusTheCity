@@ -87,12 +87,15 @@ public class MenuManager : MonoBehaviour
         MenuNavigation();
     }
 
+    public void TryOpenPauseMenu() {
+        if (InputSystem.current.PauseMenuInput()) {
+            OpenSubMenuPrefab(pause_menu_prefab);
+        }
+    }
+
     protected void MenuNavigation() {
         if (open_menu == null) {
-            if (InputSystem.current.PauseMenuInput()) {
-                // OpenDialoge("test\\sample_dialogue");
-                OpenSubMenuPrefab(pause_menu_prefab); // TODO --- uncomment debug
-            }
+            TryOpenPauseMenu();
         }
         else {
             ISubMenu menu_ctrl = open_menu.GetComponent<ISubMenu>();
@@ -105,11 +108,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenDialoge(string file_name) {
+    public DialogueController OpenDialoge(string file_name) {
         // Opens a new dialogue from a dialogue file
         GameObject obj = OpenSubMenuPrefab(dialogue_prefab);
         DialogueController ctrl = obj.GetComponent<DialogueController>();
         ctrl.StartDialogue(file_name);
+        return ctrl;
     }
     
     public void DefaultMenuNavigation() {

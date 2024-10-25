@@ -24,11 +24,16 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     public Dictionary<string, (string, string)> portrait_aliases {
         get {
             if (_portrait_aliases == null) {
-                _portrait_aliases = new Dictionary<string, (string, string)>(DEFAULT_PORTRAIT_ALIASES);
+                ResetAliases();
             }
             return _portrait_aliases;
         }
     }
+
+    // flexible assignment for effects after finishing the dialogue.
+    // if null, nothing happens.
+    // if it's not null, try to use it as an IGameEvent. If that doesn't work, use it as a prefab.
+    public GameObject dialogue_finished = null;
 
     private void ResetAliases() {
         // resets aliases to the default aliases
@@ -54,6 +59,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         if (actions.Count == 0) {
             // no actions, dialogue is over
             MenuManager.inst.CloseMenu();
+            DialogueFinished();
             return;
         }
         foreach (IDialogueAction a in actions) {
@@ -88,6 +94,8 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         if (InputSystem.current.MenuNextInput()) {
             MenuManager.PlayMenuSound("menu_click");
             NextDialogueStep();
+        } else {
+            MenuManager.inst.TryOpenPauseMenu();
         }
     }
     
@@ -260,6 +268,20 @@ public class DialogueController : MonoBehaviour, ISubMenu {
 
     public void SetText(string new_dialouge) {
         dialogue_text.text = new_dialouge;
+    }
+
+    public void DialogueFinished() {
+        if (dialogue_finished != null) {
+            IGameEvent g_event = dialogue_finished.GetComponent<IGameEvent>();
+            if (g_event != null) {
+                Debug.Log("use `dialogue_finished` as IGameEvent");
+                g_event.ActivateEvent();
+            }
+            else {
+                Debug.Log("use `dialogue_finished` as prefab");
+                Instantiate(dialogue_finished);
+            }
+        }
     }
 }
 

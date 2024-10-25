@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueInteraction : MonoBehaviour, IInteractionEffect
+public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
 {
     public List<string> dialogue_files;
     
@@ -11,6 +11,8 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect
 
     // if `random_dialogue` is checked, dialouges will be shuffled
     public bool random_dialouge = false;
+
+    public GameObject dialogue_finished;
 
 
     void Start() {
@@ -23,8 +25,8 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect
     public void Reset() {
         index = 0;
     }
-
-    public void Interact(GameObject actor) {
+    
+    public void ActivateEvent() {
         if (index >= dialogue_files.Count) {
             if (endless_dialogue) {
                 index -= 1; // repeat the final dialogue
@@ -44,6 +46,11 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect
             index += 1;
         }
 
-        MenuManager.inst.OpenDialoge(file_path);
+        DialogueController ctrl = MenuManager.inst.OpenDialoge(file_path);
+        ctrl.dialogue_finished = dialogue_finished;
+    }
+
+    public void Interact(GameObject actor) {
+        ActivateEvent();
     }
 }
