@@ -223,24 +223,23 @@ SOOSH:
 
 [ ] Equipment Select at the start of a level
 
-[
-    
-] Equipment Pickups
+[ ] Equipment Pickups
 
-[~] Dialogue system
+[+] Dialogue system
     [+] Dialogue System
         [+] Loads portraits from dialogue file
         [+] Rearange portraits 
         [+] Step through dialogue text
         [+] Automatically set the speaker label
         [+] set pose on characters
-        [ ] Portraits gray out while not speaking ---> do later
-        [ ] Portraits on a side together can stack
-        [ ] Use multiple portraits with the same art
-        [ ] 
-    [~] Portrait Manager
+        [X] Portraits gray out while not speaking ---> do later
+        [X] Portraits on a side together can stack ---> good enough for now
+        [+] Use multiple portraits with the same art
+        [+] Can pause during dialogue
+        [+] Dialogue's can trigger events 
+    [+] Portrait Manager
         [+] PortraitSystem class
-        [ ] Get test portraits
+        [+] Get test portraits
 
 [ ] Fixes
     [ ] Absent Save file is breaking the built game
