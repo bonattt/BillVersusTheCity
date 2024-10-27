@@ -140,15 +140,18 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         foreach (VisualElement p in portraits_to_move) {
             p.parent.Remove(p);
         }
-        for (int i = 0; i < portraits_to_move.Count; i++) {
-            if (side == StageDirection.left) {
+        
+        if (side == StageDirection.left) {
+            for (int i = portraits_to_move.Count - 1; i > -1; i--) {
                 left_portraits.Add(portraits_to_move[i]);
-            } else if (side == StageDirection.right) {
+            }
+        } else if (side == StageDirection.right) {
+            for (int i = 0; i < portraits_to_move.Count; i++) {
                 right_portraits.Add(portraits_to_move[i]);
             }
-            else {
-                throw new DialogueActionsException($"side must be either left or right, not {side}");
-            }
+        }
+        else {
+            throw new DialogueActionsException($"side must be either left or right, not {side}");
         }
     }
 
