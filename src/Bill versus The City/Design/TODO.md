@@ -208,7 +208,7 @@ SOOSH:
     [+] Save/Load Game settings
     [ ] Save/Load metrics
 
-[ ] Scene Management
+[~] Scene Management
     [+] Can load into new scenes
         [+] Load new scenes when all enemies defeated
         [+] Add a Delay before level ends, or require a return to truck
@@ -234,6 +234,7 @@ SOOSH:
         [+] set pose on characters
         [X] Portraits gray out while not speaking ---> do later
         [X] Portraits on a side together can stack ---> good enough for now
+        [+] Portraits can be ordered on a side
         [+] Use multiple portraits with the same art
         [+] Can pause during dialogue
         [+] Dialogue's can trigger events 

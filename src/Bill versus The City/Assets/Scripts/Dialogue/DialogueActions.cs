@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -28,7 +30,7 @@ public class DialogueNoOp : IDialogueAction {
 }
 
 
-public class DialogueSpeach : IDialogueAction {
+public class DialogueSpeachAction : IDialogueAction {
     // class for representing one line of text spoken by a character
 
     public bool wait_for_player_input { get; set; }
@@ -37,7 +39,7 @@ public class DialogueSpeach : IDialogueAction {
     public string speaker { get; private set; }
     public string text { get; private set; }
 
-    public DialogueSpeach(string[] args) {
+    public DialogueSpeachAction(string[] args) {
         wait_for_player_input = true;
         cmd = args[0];
         speaker = args[1];
@@ -53,8 +55,8 @@ public class DialogueSpeach : IDialogueAction {
 }
 
 
-public class DialogueBlocking : IDialogueAction {
-    // class representing a new character entering the scene
+public class DialogueMoveAction : IDialogueAction {
+    /** class representing a new character entering the scene, or moving around in the scene */
     public bool wait_for_player_input { get; set; }
     
     public string cmd { get; private set; }
@@ -63,10 +65,11 @@ public class DialogueBlocking : IDialogueAction {
     public StageDirection facing { get; private set; }
     public string pose { get; private set; }
 
+    private const string USAGE_EXAMPLE = "`enter character right` or `blocking character left facing right` or `enter character left facing right <pose>`";
 
-    public DialogueBlocking(string[] args) {
+    public DialogueMoveAction(string[] args) {
         if (!(args.Length == 3 || args.Length == 5 || args.Length == 6)) {
-            throw new DialogueActionsException("BLOCKING command usage: `enter character right` or `blocking character left facing right` or `enter character left facing right <pose>`");
+            throw new DialogueActionsException($"MOVE/ENTER command usage: {USAGE_EXAMPLE}");
         }
         wait_for_player_input = false;
         cmd = args[0];
@@ -103,7 +106,7 @@ public class DialogueBlocking : IDialogueAction {
     }
 }
 
-public class DialoguePose : IDialogueAction {
+public class DialoguePoseAction : IDialogueAction {
     // class representing a new character entering the scene
     public bool wait_for_player_input { get; set; }
     
@@ -112,7 +115,7 @@ public class DialoguePose : IDialogueAction {
     public string pose { get; private set; }
 
 
-    public DialoguePose(string[] args) {
+    public DialoguePoseAction(string[] args) {
         if (args.Length < 3) {
             throw new DialogueActionsException("POSE command usage: `pose character angry`");
         }
@@ -128,13 +131,13 @@ public class DialoguePose : IDialogueAction {
     }
 }
 
-public class DialogueExit : IDialogueAction {
+public class DialogueExitAction : IDialogueAction {
     // dialogue action for a character exiting the scene
     public bool wait_for_player_input { get { return false; }}
     public string cmd { get; private set; }
     public string actor_name { get; private set; }
 
-    public DialogueExit(string[] args) {
+    public DialogueExitAction(string[] args) {
         cmd = args[0];
         actor_name = args[1];
     }
@@ -143,7 +146,7 @@ public class DialogueExit : IDialogueAction {
     }
 }
 
-public class DialougeAlias : IDialogueAction {
+public class DialougeAliasAction : IDialogueAction {
     
     public bool wait_for_player_input { get { return false; }}
     public string cmd { get; private set; }
@@ -152,7 +155,7 @@ public class DialougeAlias : IDialogueAction {
     public string display_name { get; private set; }
 
     private const string USAGE_EXAMPLE = "Alias command usage `alias gangsta1 as gangsta` or `alias gangsta1 as gangsta show Daniel`";
-    public DialougeAlias(string[] args) {
+    public DialougeAliasAction(string[] args) {
         if (args.Length < 4) {
             throw new DialogueActionsException($"expected at least 4 args, got {args.Length} in '{string.Join(", ", args)}': {USAGE_EXAMPLE}");
         }
@@ -176,25 +179,35 @@ public class DialougeAlias : IDialogueAction {
     }
 }
 
-// public class DialogueBlocking : IDialogueAction {
-//     // class representing changes to blocking during dialogue (character portrait changes
-//     public bool wait_for_player_input { get; set; }
+public class DialogueBlockingAction : IDialogueAction {
+    // class representing changes to blocking during dialogue (character portrait changes
+    public bool wait_for_player_input { get; set; }
     
-//     public string cmd { get; private set; }
-//     public string actor { get; private set; }
-//     public string text { get; private set; }
+    public string cmd { get; private set; }
+    public StageDirection side { get; private set; }
+    public List<string> actors { get; private set; }
 
+    private const string USAGE_EXAMPLE = "blocking left bill gangsta gangsta2";
 
-//     public DialogueBlocking(string[] args) {
-//         // TODO --- implement this
-//         throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
-//     }
-//     public void ResolveDialogue(DialogueController ctrl) {
-//         // TODO --- implement this
-//         throw new NotImplementedException("DialogueBlocking IDialogueAction is not yet implemented");
-//     }
+    public DialogueBlockingAction(string[] args) {
+        // TODO --- implement this
+        if (args.Length < 3) {
+            throw new DialogueActionsException($"`blocking` requires at least 3 arguments. Usage: `{USAGE_EXAMPLE}`");
+        } 
+        cmd = args[0];
+        side = DialogueActionUtil.StageDirectionFromString(args[1]);
+        if (side != StageDirection.left && side != StageDirection.right ){
+            throw new DialogueActionsException($"side must be either left or right, not {side}");
+        }
+        actors = new List<string>(args.Skip(2));
+    }
 
-// }
+    public void ResolveDialogue(DialogueController ctrl) {
+        // TODO --- implement this
+        ctrl.SetBlocking(side, actors);
+    }
+
+}
 
 
 

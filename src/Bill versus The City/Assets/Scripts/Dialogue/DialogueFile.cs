@@ -86,22 +86,22 @@ public class DialogueFile {
                 return new DialogueNoOp(true);
 
             case "say":
-                return new DialogueSpeach(split_result);
+                return new DialogueSpeachAction(split_result);
 
-            case "enter":
-                return new DialogueBlocking(split_result);
+            case "enter" or "move":
+                return new DialogueMoveAction(split_result);
 
             case "blocking":
-                return new DialogueBlocking(split_result);
+                return new DialogueBlockingAction(split_result);
 
             case "exit":
-                return new DialogueExit(split_result);
+                return new DialogueExitAction(split_result);
 
             case "pose":
-                return new DialoguePose(split_result);
+                return new DialoguePoseAction(split_result);
 
             case "alias":
-                return new DialougeAlias(split_result);
+                return new DialougeAliasAction(split_result);
                 
             default:
                 Debug.LogError($"Unknown dialogue action '{cmd}'");

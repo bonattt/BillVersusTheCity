@@ -123,6 +123,35 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         _SetPortraitImage(portrait, image);
     }
 
+    public void SetBlocking(StageDirection side, List<string> character_names) {
+        // validate all characters exist in dialogue
+        List<VisualElement> portraits_to_move = new List<VisualElement>();
+        foreach (string cn in character_names) {
+            if (! character_portraits.ContainsKey(cn)) {
+                throw new DialogueActionsException("cannot set blocking for character not in scene");
+            }
+            else {
+                portraits_to_move.Add(character_portraits[cn]);
+            }
+        }
+
+        //
+
+        foreach (VisualElement p in portraits_to_move) {
+            p.parent.Remove(p);
+        }
+        for (int i = 0; i < portraits_to_move.Count; i++) {
+            if (side == StageDirection.left) {
+                left_portraits.Add(portraits_to_move[i]);
+            } else if (side == StageDirection.right) {
+                right_portraits.Add(portraits_to_move[i]);
+            }
+            else {
+                throw new DialogueActionsException($"side must be either left or right, not {side}");
+            }
+        }
+    }
+
     public Texture2D GetPortrait(string character_name) {
         // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
         if (! portrait_aliases.ContainsKey(character_name)) {

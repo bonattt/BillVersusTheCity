@@ -180,7 +180,7 @@ public class TestDialogueFile
     public void BlockingActionNoFacingStandingLeft() {
         f.ParseLinesFromData("enter bill left");
         f.ParseActions();
-        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
+        DialogueMoveAction result = (DialogueMoveAction) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
@@ -194,7 +194,7 @@ public class TestDialogueFile
     public void BlockingActionNoFacingStandingRight() {
         f.ParseLinesFromData("enter bill right");
         f.ParseActions();
-        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
+        DialogueMoveAction result = (DialogueMoveAction) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
@@ -208,7 +208,7 @@ public class TestDialogueFile
     public void BlockingActionWithFacing() {
         f.ParseLinesFromData("enter bill right facing right");
         f.ParseActions();
-        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
+        DialogueMoveAction result = (DialogueMoveAction) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
@@ -222,7 +222,7 @@ public class TestDialogueFile
     public void BlockingActionWithPose() {
         f.ParseLinesFromData("enter bill right facing right angry");
         f.ParseActions();
-        DialogueBlocking result = (DialogueBlocking) f.GetNextAction();
+        DialogueMoveAction result = (DialogueMoveAction) f.GetNextAction();
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
@@ -236,7 +236,7 @@ public class TestDialogueFile
     public void SpeakAction() {
         f.ParseLinesFromData("say bill_protagonist pingas pootis PotUS 420.69");
         f.ParseActions();
-        DialogueSpeach result = (DialogueSpeach) f.GetNextAction();
+        DialogueSpeachAction result = (DialogueSpeachAction) f.GetNextAction();
         
         Assert.AreEqual("say", result.cmd);
         Assert.AreEqual("bill_protagonist", result.speaker);
@@ -248,7 +248,7 @@ public class TestDialogueFile
     public void PoseAction() {
         f.ParseLinesFromData("pose bill angry");
         f.ParseActions();
-        DialoguePose result = (DialoguePose) f.GetNextAction();
+        DialoguePoseAction result = (DialoguePoseAction) f.GetNextAction();
         
         Assert.AreEqual("pose", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
