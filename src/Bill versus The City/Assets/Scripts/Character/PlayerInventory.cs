@@ -40,8 +40,8 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     public PlayerInventory() {
         combat = null; // subscribing to the PlayerCharacter here creates infinite recursion
         _handgun = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.HANDGUN);
-        _rifle = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.RIFLE);
-        _pickup = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.SHOTGUN);
+        _rifle = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.SHOTGUN);
+        _pickup = null;
     }
 
     public void SetWeapons(PlayerAttackController attack_ctrl) {

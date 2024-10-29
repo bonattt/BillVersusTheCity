@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishLevelCleanup : MonoBehaviour, IInteractionEffect, IGameEvent
+public class RemovePickupWeapons : MonoBehaviour, IInteractionEffect, IGameEvent
 {
     public string cleanup_triggered_dialogue;
     public MonoBehaviour dialogue_finished;
@@ -15,7 +15,7 @@ public class FinishLevelCleanup : MonoBehaviour, IInteractionEffect, IGameEvent
         }
         else {
             if (dialogue_finished == null) { return; }
-            IGameEvent g_event = dialogue_finished.GetComponent<IGameEvent>();
+            IGameEvent g_event = (IGameEvent) dialogue_finished;
             if (g_event == null) {
                 Debug.LogWarning($"{dialogue_finished} does not have a game event attached!");
             } else {

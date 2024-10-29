@@ -1888,6 +1888,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1437333251418134552, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: interaction_order.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437333251418134552, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: interaction_order.Array.data[0]
+      value: 
+      objectReference: {fileID: 2141052582}
     - target: {fileID: 1639495429217644494, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
       propertyPath: m_Name
       value: PlayerTruck
@@ -2011,6 +2019,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
   m_PrefabInstance: {fileID: 8585521472859300136}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2141052582 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1669012711162536639, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+  m_PrefabInstance: {fileID: 1956002374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5c9aa41b27dbc4987a84e95c5b0f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5342343658664017690
 PrefabInstance:
   m_ObjectHideFlags: 0
