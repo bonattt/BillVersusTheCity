@@ -30,9 +30,17 @@ public class PlayerAttackController : AttackController
                 weapon_slots[i].current_ammo = weapon_slots[i].ammo_capacity;
             }
         }
+        PlayerCharacter.inst.inventory.SetWeapons(this);
         SwitchWeaponBySlot(_current_slot);
-
         UpdateSubscribers();
+    }
+    
+    public void SetWeaponsFromInventory(PlayerInventory inventory) {
+
+        ClearWeapons();
+        AssignWeaponSlot(0, inventory.handgun);
+        AssignWeaponSlot(1, inventory.rifle);
+        AssignWeaponSlot(2, inventory.pickup);
     }
 
     // Update is called once per frame
@@ -77,9 +85,11 @@ public class PlayerAttackController : AttackController
         for (int i = 0; i < weapon_slots.Length; i++) {
             weapon_slots[i] = null;
         }
+        UpdateSubscribers();
     }
 
     public void AssignWeaponSlot(int slot, IWeapon weapon) {
         weapon_slots[slot] = weapon;
+        UpdateSubscribers();
     }
 }

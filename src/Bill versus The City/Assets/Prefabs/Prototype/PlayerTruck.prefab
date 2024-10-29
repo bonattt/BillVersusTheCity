@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6828463536557817257}
   - component: {fileID: 7567799447127125868}
   - component: {fileID: 1437333251418134552}
+  - component: {fileID: 1669012711162536639}
   - component: {fileID: 3144694336298380374}
   m_Layer: 10
   m_Name: FinishLevelInteraction
@@ -150,6 +151,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction_range: 4
   interaction_enabled: 0
+  interaction_order: []
+--- !u!114 &1669012711162536639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988230370517091649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5c9aa41b27dbc4987a84e95c5b0f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cleanup_triggered_dialogue: 
+  dialogue_finished: {fileID: 3144694336298380374}
 --- !u!114 &3144694336298380374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +182,7 @@ MonoBehaviour:
   - test\\finish_level
   endless_dialogue: 0
   random_dialouge: 0
-  dialogue_finished: {fileID: 1957007087169141663}
+  dialogue_finished: {fileID: 8673137286306914175}
   index: 0
 --- !u!1001 &3609753179645235905
 PrefabInstance:
@@ -190,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 62520102913324767, guid: 5a43788cfe824b14eb067fad8a942d48, type: 3}
       propertyPath: default_opacity
-      value: 0.75
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2318786422914600680, guid: 5a43788cfe824b14eb067fad8a942d48, type: 3}
       propertyPath: m_LocalScale.x

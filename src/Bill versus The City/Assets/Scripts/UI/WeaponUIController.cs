@@ -32,6 +32,10 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
         if (target_manager != null) {
             target_manager.Unsubscribe(this);
         }
+        if (player == null) {
+            Debug.LogWarning("new player is null!");
+            return;
+        }
         target_manager = player.GetComponent<IWeaponManager>();
         target_manager.Subscribe(this);
         SetLabels(target_manager.current_slot, target_manager.current_weapon);

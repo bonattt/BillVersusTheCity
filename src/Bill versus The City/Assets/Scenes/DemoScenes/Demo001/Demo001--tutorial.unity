@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction_range: 4
   interaction_enabled: 1
+  interaction_order: []
 --- !u!65 &67806984
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -204,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
+  active: 1
 --- !u!1 &183055445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,9 +1892,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTruck
       objectReference: {fileID: 0}
-    - target: {fileID: 3658742417150927902, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
-      propertyPath: default_opacity
-      value: 0.4
+    - target: {fileID: 1669012711162536639, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
+      propertyPath: cleanup_triggered_dialogue
+      value: test\\remove_illegal_items
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

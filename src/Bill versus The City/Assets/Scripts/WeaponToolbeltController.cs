@@ -40,6 +40,10 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
         if (attack_ctrl != null) {
             attack_ctrl.Unsubscribe(this);
         }
+        if (player == null) {
+            Debug.LogWarning("new player is null!");
+            return;
+        }
         attack_ctrl = player.attacks;
         attack_ctrl.Subscribe(this);
         UpdateToolbelt(null);

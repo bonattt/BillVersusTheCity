@@ -44,20 +44,21 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
         _pickup = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.SHOTGUN);
     }
 
-    public void SetWeapons() {
+    public void SetWeapons(PlayerAttackController attack_ctrl) {
         if (combat == null) {
             Debug.LogWarning("`PlayerInventory.SetWeapons(null)` called!");
             return;
         }
-        combat.attacks.ClearWeapons();
-        combat.attacks.AssignWeaponSlot(0, handgun);
-        combat.attacks.AssignWeaponSlot(1, rifle);
-        combat.attacks.AssignWeaponSlot(2, pickup);
+        attack_ctrl.SetWeaponsFromInventory(this);
+        // attack_ctrl.ClearWeapons();
+        // attack_ctrl.AssignWeaponSlot(0, handgun);
+        // attack_ctrl.AssignWeaponSlot(1, rifle);
+        // attack_ctrl.AssignWeaponSlot(2, pickup);
     }
     
     public void NewPlayerObject(PlayerCombat player) {
         combat = player;
-        SetWeapons();
+        player.attacks.SetWeaponsFromInventory(this);
     }
     // private List<IGenericObserver> subscribers = new List<IGenericObserver>();
     // public void Subscribe(IGenericObserver sub) => subscribers.Add(sub);

@@ -31,6 +31,10 @@ public class AmmoBeltUI : MonoBehaviour, IGenericObserver, IPlayerObserver
         if (ammo_container != null) {
             ammo_container.Unusubscribe(this);
         }
+        if (player == null) {
+            Debug.LogWarning("new player is null!");
+            return;
+        }
         ammo_container = player.ammo;
         ammo_container.Subscribe(this);
         UpdateAmmo();

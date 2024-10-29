@@ -12,7 +12,7 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
     // if `random_dialogue` is checked, dialouges will be shuffled
     public bool random_dialouge = false;
 
-    public GameObject dialogue_finished;
+    public MonoBehaviour dialogue_finished;
 
 
     void Start() {

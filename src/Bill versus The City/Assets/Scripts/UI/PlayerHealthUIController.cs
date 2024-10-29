@@ -14,7 +14,7 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
         get {
             if (_status == null) {
                 PlayerCombat player = PlayerCharacter.inst.GetPlayerCombat(this);
-                _status = player.status;
+                NewPlayerObject(player);  // as long as player != null, _status will be set
             }
             return _status;
         }
@@ -32,6 +32,10 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
     public void NewPlayerObject(PlayerCombat player) {
         if (_status != null) {
             _status.Unsubscribe(this);
+        }
+        if (player == null) {
+            Debug.LogWarning("new player is null!");
+            return;
         }
         _status = player.status;
         if (_status != null) {
