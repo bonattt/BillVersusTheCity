@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerAttackController : AttackController
 {
-
-    public PlayerWeaponSelection weapon_manager;
     public ScriptableObject[] init_slots;
     public IWeapon[] weapon_slots = new IWeapon[10];
-    public bool[] weapon_slots_enabled = new bool[]{true, true, false, false, false, false, false, false, false, false};
+    public bool[] weapon_slots_enabled = new bool[]{true, true, true, false, false, false, false, false, false, false};
 
     public bool switch_weapons_blocked = false;
 
@@ -32,7 +30,7 @@ public class PlayerAttackController : AttackController
                 weapon_slots[i].current_ammo = weapon_slots[i].ammo_capacity;
             }
         }
-        SetWeaponBySlot(_current_slot);
+        SwitchWeaponBySlot(_current_slot);
 
         UpdateSubscribers();
     }
@@ -58,12 +56,12 @@ public class PlayerAttackController : AttackController
         if (! switch_weapons_blocked) {
             int? weapon_slot_input = InputSystem.current.WeaponSlotInput();
             if (weapon_slot_input != null) {
-                SetWeaponBySlot((int) weapon_slot_input);
+                SwitchWeaponBySlot((int) weapon_slot_input);
             }
         }
     }
     
-    private bool SetWeaponBySlot(int slot) {
+    private bool SwitchWeaponBySlot(int slot) {
         if (weapon_slots_enabled[slot] && weapon_slots[slot] != null) {
             _current_slot = slot;
             current_weapon = weapon_slots[slot];
@@ -72,5 +70,16 @@ public class PlayerAttackController : AttackController
         }
         Debug.LogWarning($"tried to set weapon to invalid slot '{slot}'.\nEnabled: {weapon_slots_enabled[slot]}, {weapon_slots[slot]}");
         return false;
+    }
+
+    public void ClearWeapons() {
+        // remove all equipped weapons
+        for (int i = 0; i < weapon_slots.Length; i++) {
+            weapon_slots[i] = null;
+        }
+    }
+
+    public void AssignWeaponSlot(int slot, IWeapon weapon) {
+        weapon_slots[slot] = weapon;
     }
 }

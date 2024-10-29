@@ -11,6 +11,11 @@ public class PlayerCharacter {
       *   and track all player stats together in a single place.
       */
 
+    private PlayerCharacter() {
+        _inventory = new PlayerInventory();
+        SubscribeToPlayer(_inventory); 
+    }
+
     private static PlayerCharacter _inst = null;
     public static PlayerCharacter inst { 
         get {
@@ -36,6 +41,9 @@ public class PlayerCharacter {
 
     public GameObject game_object = null;
     private PlayerCombat combat = null;
+    private PlayerInventory _inventory; // = new PlayerInventory();
+    public PlayerInventory inventory { get { return _inventory; }}
+
     public Transform player_transform { get { 
         if (combat == null) { return null; }
         return combat.transform; 

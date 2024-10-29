@@ -8,6 +8,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
 {
     public string _name;
     public Sprite _item_icon;
+    
+    public WeaponClass _weapon_class;
+    public WeaponClass weapon_class { get { return _weapon_class; } }
 
     public WeaponSetting[] _weapon_settings;
     private int current_setting = 0;

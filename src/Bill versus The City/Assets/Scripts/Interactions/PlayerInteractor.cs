@@ -51,8 +51,7 @@ public class PlayerInteractor : MonoBehaviour
         GameObject obj = InputSystem.current.GetHoveredObject(layer_mask);
         if (obj != null) {
             Interaction interaction = obj.GetComponent<Interaction>();
-            if (interaction == null) { Debug.Log("hovered object is null"); } 
-            else { Debug.Log("hovered object is null"); } 
+            if (interaction == null) { Debug.LogWarning("hovered object is null"); } 
             return interaction;
         }
         return null;

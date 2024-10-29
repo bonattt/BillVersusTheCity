@@ -81,6 +81,8 @@ public interface IItem {
 
 
 public interface IWeapon : IItem {
+    // equipment
+    public WeaponClass weapon_class { get; }
     // ammo
     public AmmoType ammo_type { get; }
     public int ammo_capacity { get; }
@@ -123,6 +125,7 @@ public interface IWeapon : IItem {
     public bool HasWeaponSettings();
     public void NextWeaponSetting();
     public void PreviousWeaponSetting();
+    // TODO --- refactor add copy method
 }
 
 public enum FiringMode {
