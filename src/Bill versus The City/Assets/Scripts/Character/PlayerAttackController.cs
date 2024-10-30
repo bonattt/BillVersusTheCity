@@ -90,6 +90,9 @@ public class PlayerAttackController : AttackController
 
     public void AssignWeaponSlot(int slot, IWeapon weapon) {
         weapon_slots[slot] = weapon;
+        if (slot == current_slot) {
+            current_weapon = weapon;
+        }
         UpdateSubscribers();
     }
 }
