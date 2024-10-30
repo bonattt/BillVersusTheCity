@@ -33,6 +33,11 @@ public class InteractableUI : MonoBehaviour
         UpdateVisibility();
     }
 
+    public void SetNewText(string new_text) {
+        name_header = new_text;
+        SetLabels();
+    }
+
     void Update() {
         UpdateVisibility();
     }

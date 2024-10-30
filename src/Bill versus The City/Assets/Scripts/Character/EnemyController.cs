@@ -14,6 +14,9 @@ using UnityEngine.AI;
     public float ctrl_shooting_rate = 0.75f;
     private EnemyPerception perception;
 
+    public GameObject weapon_pickup_prefab;
+
+
     //////////////////////////////
     /// Behavior controls ////////
     //////////////////////////////
@@ -122,9 +125,27 @@ using UnityEngine.AI;
     }
 
     protected override void CharacterDeath() {
+        SpawnWeaponPickup();
         Destroy(gameObject);
         EnemiesManager.inst.KillEnemy(this);
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
+    }
+
+    protected void SpawnWeaponPickup() {
+        Debug.Log("SpawnWeaponPickup");
+        // spawns a weapon pickup where the enemy is standing
+        if (weapon_pickup_prefab == null || attack_controller.current_weapon == null) {
+            Debug.LogWarning("skipping weapon pickup drop");
+            return;
+        }
+
+        GameObject obj = Instantiate(weapon_pickup_prefab);
+        obj.transform.position = transform.position;
+        WeaponPickupInteraction pickup = obj.GetComponent<WeaponPickupInteraction>();
+        pickup.pickup_weapon = attack_controller.current_weapon;
+        if (pickup.pickup_weapon.current_ammo == 0) {
+            pickup.pickup_weapon.current_ammo = pickup.pickup_weapon.ammo_capacity;
+        }
     }
 
     /////////////////////////////
