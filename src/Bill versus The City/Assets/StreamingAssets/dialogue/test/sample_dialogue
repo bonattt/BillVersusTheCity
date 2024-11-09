@@ -1,0 +1,21 @@
+alias gangsta2 as gangsta show lacky
+
+enter bill left
+say * you walk up to a suspicious looking man outside your house
+
+enter gangsta right facing left angry
+enter gangsta2 right
+say bill what are you doing here?
+say bill get off my property. We have castle doctrine in this state, you know?
+say gangsta yo, bring out Dicky or we're gonna shoot up your house, he owes me $5. 
+
+pose bill angry
+say bill you asked for it
+move bill right facing right
+blocking right bill gangsta gangsta2; break;
+blocking left bill gangsta gangsta2; break;
+blocking right bill gangsta gangsta2; break;
+
+exit gangsta
+exit gangsta2
+say gangsta ...

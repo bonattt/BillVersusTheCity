@@ -9,7 +9,7 @@ public class DialogueFile {
     // class for reading a single dialogue file
     // dialogue files parse a text file into dialogue actions, which can be new dialogue lines of new blocking (characters entering, leaving, or changing poses)
 
-    public const string SAVE_FILE_DIR = ".game_data\\dialogue";
+    public const string SAVE_FILE_DIR = "dialogue";
     public string file_name { get; private set; }
     public LanguageSetting language { get; private set; }
 
@@ -19,7 +19,13 @@ public class DialogueFile {
     public string filepath {
         get {
             // TODO --- if save_name is ever user-generated, this will need to be sanitized
-            return Path.Join(Application.dataPath, $"{SAVE_FILE_DIR}\\{file_name}");
+            return Path.Join(directory_path, file_name);
+        }
+    }
+
+    public static string directory_path {
+        get {
+            return Path.Join(Application.streamingAssetsPath, SAVE_FILE_DIR);
         }
     }
 
