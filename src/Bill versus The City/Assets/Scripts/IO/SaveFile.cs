@@ -13,12 +13,32 @@ public class SaveFile {
     public string filepath {
         get {
             // TODO --- if save_name is ever user-generated, this will need to be sanitized
-            return Path.Join(Application.dataPath, $"{SAVE_FILE_DIR}\\{save_name}");
+            return Path.Join(directory_path, save_name);
+        }
+    }
+
+    public static string directory_path {
+        get {
+            return Path.Join(Application.dataPath, SAVE_FILE_DIR);
         }
     }
 
     public SaveFile(string save_name) {
         this.save_name = save_name;
+    }
+
+    public static void SetupDirectory() {
+        // validates the saves directory exists, and creates it if it's not there.
+        if (! Directory.Exists(directory_path)) {
+            Directory.CreateDirectory(directory_path);
+        }
+    }
+
+    public static SaveFile NewSave(string save_name) {
+        SaveFile new_save = new SaveFile(save_name);
+        // initialize
+        // TODO ---
+        return new_save;
     }
 
     public static SaveFile Load(string save_name) {

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+
 using UnityEngine;
 
 public class InitializeSettings : MonoBehaviour
@@ -11,8 +13,15 @@ public class InitializeSettings : MonoBehaviour
         //     new GameSettings();
         // }
 
+        SaveFile.SetupDirectory();
         // sets and mutates settings singleton
-        SaveFile.current_save = SaveFile.Load(SaveFile.SAVE_SLOT_1);
+        try {
+            SaveFile.current_save = SaveFile.Load(SaveFile.SAVE_SLOT_1);
+        } catch (FileNotFoundException) {
+            Debug.LogWarning($"no save at {SaveFile.SAVE_SLOT_1}, creating a new save");
+            // DirectoryNotFoundException: Could not find a part of the path "C:\MY-documents\git-repos\BillVersusTheCity\src\Bill versus The City\Build\Bill versus The City_Data\.save_files\save_1".
+            SaveFile.current_save = SaveFile.NewSave(SaveFile.SAVE_SLOT_1);
+        }
 
         Destroy(gameObject);
     }
