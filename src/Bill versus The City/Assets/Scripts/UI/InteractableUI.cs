@@ -19,6 +19,13 @@ public class InteractableUI : MonoBehaviour
 
     void Start()
     {
+        Configure();
+        SetLabels();
+        UpdateVisibility();
+    }
+
+    private void Configure() {
+        // initializes fields
         target_manager = target.GetComponent<Interaction>();
 
         ui_doc = GetComponent<UIDocument>();
@@ -28,9 +35,6 @@ public class InteractableUI : MonoBehaviour
         background_pannel.RegisterCallback<MouseLeaveEvent>(evnt => SetAsNotHovered());
         
         interaction_label = root.Q<Label>("InteractionLabel");
-
-        SetLabels();
-        UpdateVisibility();
     }
 
     public void SetNewText(string new_text) {
@@ -80,6 +84,9 @@ public class InteractableUI : MonoBehaviour
 
     protected void SetLabels() {
         // updates the UI with current display values
+        if (interaction_label == null) {
+            Configure();
+        }
         interaction_label.text = $"{name_header} [{InputSystem.current.InputTypeDisplay(InputType.interact)}]";
     }
 }

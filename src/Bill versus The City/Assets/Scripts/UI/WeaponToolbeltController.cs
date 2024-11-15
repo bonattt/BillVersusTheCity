@@ -25,6 +25,10 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
 
     void Start() {
         element_list = ui_doc.rootVisualElement.Q<VisualElement>("List");
+        element_list.Clear();
+        element_list.Add(new WeaponIcon());
+        element_list.Add(new WeaponIcon());
+        element_list.Add(new WeaponIcon());
         NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
     }
 
@@ -57,28 +61,19 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
     private void UpdateToolbelt(int? slot) {
         for (int i = 0; i < element_list.childCount; i++)
         {
-            VisualElement child = element_list[i];  // Get child by index
+            WeaponIcon child = (WeaponIcon) element_list[i];  // Get child by index
             child.AddToClassList("weapon_slot_container");
             if (attack_ctrl.weapon_slots_enabled[i]) {
                 IWeapon weapon = attack_ctrl.weapon_slots[i];
-                child.Clear();
-                if (weapon != null) {
-                    child.style.backgroundImage = new StyleBackground(weapon.item_icon);
-                } else {
-                    child.style.backgroundImage = null;
-                }
-
+                child.weapon = weapon;
                 if (i == slot) {
-                    child.AddToClassList("weapon_slot_container_enabled");
-                    child.AddToClassList("weapon_slot_container_selected");
+                    child.SelectSlot();
                 } else {
-                    child.AddToClassList("weapon_slot_container_enabled");
-                    child.RemoveFromClassList("weapon_slot_container_selected");
+                    child.DeselectSlot();
                 }
             }
             else {
-                child.RemoveFromClassList("weapon_slot_container_enabled");
-                child.RemoveFromClassList("weapon_slot_container_selected");
+                child.DisableSlot();
             }
             
         }
