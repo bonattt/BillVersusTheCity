@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="flex-grow: 1;">
+        <ui:VisualElement name="Panel" style="flex-grow: 1; background-color: rgb(161, 161, 161); width: 80%; height: 80%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
+            <ui:VisualElement name="Header" style="flex-grow: 0;">
+                <ui:Label tabindex="-1" text="Select Weapons" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderLabel" style="-unity-text-align: middle-center; font-size: 32px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Content" style="flex-grow: 1; flex-direction: row;">
+                <ui:VisualElement name="LeftContent" style="flex-grow: 1; width: 50%; border-left-color: rgba(0, 0, 0, 0.6); border-right-color: rgba(0, 0, 0, 0.6); border-top-color: rgba(0, 0, 0, 0.6); border-bottom-color: rgba(0, 0, 0, 0.6); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
+                    <ui:Label tabindex="-1" text="Rifle" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LeftContentHeader" style="-unity-text-align: upper-center; font-size: 20px;" />
+                    <ui:VisualElement name="Buttons" style="flex-grow: 1;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="RightContent" style="flex-grow: 1; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgba(0, 0, 0, 0.6); border-right-color: rgba(0, 0, 0, 0.6); border-top-color: rgba(0, 0, 0, 0.6); border-bottom-color: rgba(0, 0, 0, 0.6);">
+                    <ui:Label tabindex="-1" text="Handgun" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RightContentHeader" style="-unity-text-align: upper-center; font-size: 20px;" />
+                    <ui:VisualElement name="Buttons" style="flex-grow: 1;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Footer" style="flex-grow: 0; justify-content: center; flex-direction: row;">
+                <ui:Button text="Accept" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AcceptButton" />
+                <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
