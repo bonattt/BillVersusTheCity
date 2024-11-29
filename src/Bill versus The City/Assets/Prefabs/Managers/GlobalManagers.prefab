@@ -294,3 +294,4 @@ MonoBehaviour:
   yes_no_popup_prefab: {fileID: 4600493022970907218, guid: 7a253e3a1f2fe8e4b9c0353b99b94d3b, type: 3}
   settings_menu_prefab: {fileID: 3540054854953037603, guid: e09d276249d91ce488bc260162c5cdc9, type: 3}
   dialogue_prefab: {fileID: 3756970114183036475, guid: 3586b7d08443e3e4990ba1e73063912b, type: 3}
+  weapon_menu_prefab: {fileID: 7782688222122553301, guid: 52e93dd6aad952a448aca650678aa5e5, type: 3}

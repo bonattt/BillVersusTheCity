@@ -1,3 +1,9 @@
+.weapon_select_list_item {
+    flex-direction: row;
+    font-size: 20px;
+    -unity-text-align: middle-left;
+}
+
 .weapon_slot_container_enabled {
     background-color: rgba(197, 197, 197, 0.31);
     border-left-color: rgb(0, 0, 0);

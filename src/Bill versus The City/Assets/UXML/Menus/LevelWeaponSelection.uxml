@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UXML/Menus/WeaponStyles.uss?fileID=7433441132597879392&amp;guid=721f8e00ba5706b4ab9468197f5cee65&amp;type=3#WeaponStyles" />
     <ui:VisualElement name="Root" style="flex-grow: 1;">
         <ui:VisualElement name="Panel" style="flex-grow: 1; background-color: rgb(161, 161, 161); width: 80%; height: 80%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
             <ui:VisualElement name="Header" style="flex-grow: 0;">
@@ -15,8 +16,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="Footer" style="flex-grow: 0; justify-content: center; flex-direction: row;">
-                <ui:Button text="Accept" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AcceptButton" />
-                <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" />
+                <ui:Button text="Accept" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AcceptButton" style="color: rgb(0, 0, 0);" />
+                <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="color: rgb(0, 0, 0);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

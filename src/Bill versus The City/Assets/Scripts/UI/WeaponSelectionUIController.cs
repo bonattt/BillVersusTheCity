@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
+public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
 {
     /// <summary>
     ///  UI Controller that displays the player's availible AND currently equipped weapons
@@ -16,21 +17,42 @@ public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
 
     private PlayerAttackController attack_ctrl;
 
-    public bool confirm_selection = true;
+    public List<ScriptableObject> rifle_selection, handgun_selection;
+    private List<IWeapon> _rifle_selection = new List<IWeapon>();
+    private List<IWeapon> _handgun_selection = new List<IWeapon>();
 
+    public bool confirm_selection = true;
+    public bool allow_cancel = false;
 
     void Start() {
+        SetupUI();
+        UpdateContents();
+    }
+
+    private void LoadWeaponsFromInspector(List<ScriptableObject> source, List<IWeapon> weapons) {
+        foreach(ScriptableObject scriptable_weapon in source) {
+            weapons.Add((IWeapon) scriptable_weapon);
+        }
+    }
+
+    public void SetupUI() {
+        LoadWeaponsFromInspector(handgun_selection, _handgun_selection);
+        LoadWeaponsFromInspector(rifle_selection, _rifle_selection);
+
         root = ui_doc.rootVisualElement;
         left_content = root.Q<VisualElement>("LeftContent").Q<VisualElement>("Buttons");
         right_content = root.Q<VisualElement>("RightContent").Q<VisualElement>("Buttons");
 
-        VisualElement footer = root.Q<VisualElement>("footer");
+        VisualElement footer = root.Q<VisualElement>("Footer");
         continue_button = footer.Q<Button>("AcceptButton");
         cancel_button = footer.Q<Button>("CancelButton");
 
         continue_button.clicked += ContinueButtonClicked;
-        if (cancel_button != null) {
-            // TODO ---
+        if (!allow_cancel) {
+            cancel_button.parent.Remove(cancel_button);
+            cancel_button = null;
+        } else {
+            cancel_button.clicked += CancelButtonClicked;
         }
     }
 
@@ -48,6 +70,68 @@ public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
         } else {
             ApplySelection();
         }
+    }
+
+    public void UpdateContents() {
+        Debug.Log("UpdateContents");
+        PopulateContents(right_content, _rifle_selection);
+        PopulateContents(left_content, _handgun_selection);
+    }
+
+    private void PopulateContents(VisualElement content_element, List<IWeapon> content) {
+        content_element.Clear();
+        foreach (IWeapon weapon in content) {
+            VisualElement list_item = new VisualElement();
+            list_item.name = weapon.item_name;
+            list_item.AddToClassList("weapon_select_list_item");
+            
+            WeaponIcon icon = new WeaponIcon(weapon);
+            icon.name = "WeaponIcon";
+            icon.DeselectSlot();
+
+            Label label = new Label();
+            label.name = "Label";
+            label.text = weapon.item_name;
+            
+            list_item.Add(icon);
+            list_item.Add(label);
+            content_element.Add(list_item);
+        }
+    }
+
+    public void SelectElementFrom(VisualElement parent, IWeapon weapon) {
+        foreach(WeaponIcon icon in parent.Children()) {
+            if (icon.weapon == weapon) {
+                SelectElementFrom(parent, icon);
+                return;
+            }
+        }
+        Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
+    }
+
+    public void SelectElementFrom(VisualElement parent, WeaponIcon selected) {
+        bool success = false;
+        foreach (VisualElement child in parent.Children()) {
+            try {
+                WeaponIcon slot = (WeaponIcon) child;
+                if (slot == selected) {
+                    slot.SelectSlot();
+                    success = true;
+                } else {
+                    slot.DeselectSlot();
+                }
+            } catch (InvalidCastException) {
+                // do nothing with non WeaponSlot elements
+            }
+        }
+
+        if (!success) {
+            Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
+        }
+    }
+
+    public void CancelButtonClicked() {
+        MenuManager.inst.CloseMenu();
     }
 
     public void ApplySelection() {

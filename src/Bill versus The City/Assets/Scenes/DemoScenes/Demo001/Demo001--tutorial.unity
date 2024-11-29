@@ -420,6 +420,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+--- !u!1 &499115280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 499115282}
+  - component: {fileID: 499115281}
+  m_Layer: 0
+  m_Name: OpenWeaponSelectionMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &499115281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499115280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9026be957df5444ac68a4a46fecf9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &499115282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499115280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -26.320473, y: 0.93952185, z: -10.284987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &547422700 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 596759447067694754, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
@@ -2044,3 +2088,4 @@ SceneRoots:
   - {fileID: 1956002374}
   - {fileID: 560177006}
   - {fileID: 3080771814200956598}
+  - {fileID: 499115282}

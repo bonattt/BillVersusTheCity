@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab;
+    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab, weapon_menu_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -16,6 +16,7 @@ public class MenuManager : MonoBehaviour
         get { return _inst; }
     }
 
+    [SerializeField]  // TODO --- remove debug
     private bool _paused = false;
     public bool paused {
         get { return _paused; }
@@ -28,6 +29,7 @@ public class MenuManager : MonoBehaviour
                 Time.timeScale = 1f;
             }
             if (PlayerCharacter.inst != null) {
+                Debug.Log("!!!");  // TODO --- remove debug
                 PlayerCharacter.inst.is_active = ! _paused;
             }
         }
