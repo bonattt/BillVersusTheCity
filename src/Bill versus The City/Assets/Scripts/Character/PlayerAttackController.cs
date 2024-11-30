@@ -88,11 +88,15 @@ public class PlayerAttackController : AttackController
         UpdateSubscribers();
     }
 
-    public void AssignWeaponSlot(int slot, IWeapon weapon) {
-        weapon_slots[slot] = weapon;
+    public void AssignWeaponSlot(int slot, IWeapon new_weapon) {
+        IWeapon previous_weapon = weapon_slots[slot];
+        weapon_slots[slot] = new_weapon;
         if (slot == current_slot) {
-            current_weapon = weapon;
+            current_weapon = new_weapon;
         }
-        UpdateSubscribers();
+        // only update subscribers if the ne~w weapon is actually new
+        if (previous_weapon != new_weapon) {
+            UpdateSubscribers();
+        }
     }
 }

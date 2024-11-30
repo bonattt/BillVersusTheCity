@@ -15,7 +15,7 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
         get { return _handgun; }
         set {
             _handgun = value;
-            combat.attacks.AssignWeaponSlot(0, _handgun);
+            combat.attacks.AssignWeaponSlot(1, _handgun);
         }
     }
 
@@ -24,7 +24,7 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
         get { return _rifle; }
         set {
             _rifle = value;
-            combat.attacks.AssignWeaponSlot(1, _rifle);
+            combat.attacks.AssignWeaponSlot(0, _rifle);
         }
     }
     private IWeapon _pickup; // weapon slot for picking up dropped, potentially illegal, weapons

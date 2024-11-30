@@ -157,4 +157,8 @@ public class DetailedWeapon : ScriptableObject, IWeapon
             current_setting = _weapon_settings.Length - 1;
         }
     }
+    
+    public IWeapon CopyWeapon() {
+        return Instantiate(this);
+    }
 }

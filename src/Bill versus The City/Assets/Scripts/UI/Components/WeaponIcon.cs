@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponListing : VisualElement {
+public class WeaponIcon : VisualElement, IWeaponUI {
 
     public const string BASE_STYLE_CLASS = "weapon_slot_container";
     public const string ENABLED_STYLE_CLASS = "weapon_slot_container_enabled";
@@ -34,11 +34,11 @@ public class WeaponListing : VisualElement {
     }
     
 
-    public WeaponListing() : this(null) {
-        // overloaded constructor: do nothing here
+    public WeaponIcon() : this(null) {
+        
     }
 
-    public WeaponListing(IWeapon weapon) : base() {
+    public WeaponIcon(IWeapon weapon) : base() {
         this.weapon = weapon;
         this.AddToClassList(BASE_STYLE_CLASS);
     }
@@ -50,13 +50,13 @@ public class WeaponListing : VisualElement {
     }
 
     public void DeselectSlot() {
-        _is_selected = true;
+        _is_selected = false;
         AddToClassList(ENABLED_STYLE_CLASS);
         RemoveFromClassList(SELECTED_STYLE_CLASS);
     }
 
     public void DisableSlot() {
-        _is_selected = true;
+        _is_selected = false;
         RemoveFromClassList(ENABLED_STYLE_CLASS);
         RemoveFromClassList(SELECTED_STYLE_CLASS);
     }

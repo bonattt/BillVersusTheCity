@@ -125,7 +125,7 @@ public interface IWeapon : IItem {
     public bool HasWeaponSettings();
     public void NextWeaponSetting();
     public void PreviousWeaponSetting();
-    // TODO --- refactor add copy method
+    public IWeapon CopyWeapon();
 }
 
 public enum FiringMode {

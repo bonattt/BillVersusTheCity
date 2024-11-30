@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
+public class WeaponSelectionUIController : MonoBehaviour
 {
     /// <summary>
     ///  UI Controller that displays the player's availible AND currently equipped weapons
@@ -14,8 +14,6 @@ public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
     public UIDocument ui_doc;
     private VisualElement root, left_content, right_content;
     private Button continue_button, cancel_button;
-
-    private PlayerAttackController attack_ctrl;
 
     public List<ScriptableObject> rifle_selection, handgun_selection;
     private List<IWeapon> _rifle_selection = new List<IWeapon>();
@@ -27,6 +25,8 @@ public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
     void Start() {
         SetupUI();
         UpdateContents();
+        SelectElementFrom(left_content, _rifle_selection[0]);
+        SelectElementFrom(right_content, _handgun_selection[0]);
     }
 
     private void LoadWeaponsFromInspector(List<ScriptableObject> source, List<IWeapon> weapons) {
@@ -57,63 +57,73 @@ public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
     }
 
     public void ContinueButtonClicked() {
-        if (confirm_selection) {
-            YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
-            popup.header_text = "Are you sure?";
-            popup.content_text = "Continue with these Weapons?";
-            popup.confirm_text = "Yes";
-            popup.reject_text = "No";
+        // if (confirm_selection) {
+        //     YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+        //     popup.header_text = "Are you sure?";
+        //     popup.content_text = "Continue with these Weapons?";
+        //     popup.confirm_text = "Yes";
+        //     popup.reject_text = "No";
             
-            popup.confirm_button.clicked += ApplySelection;
-            // popup.cancel_button.clicked += PauseMenuController.ExitGame;  // TODO --- move this helper somewhere more appropriate
-            popup.UpdateLabels();
-        } else {
+        //     popup.confirm_button.clicked += ApplySelection;
+        //     popup.confirm_button.clicked += MenuManager.inst.CloseMenu;
+        //     // popup.cancel_button.clicked += PauseMenuController.ExitGame;  // TODO --- move this helper somewhere more appropriate
+        //     popup.UpdateLabels();
+        // } 
+        try {
             ApplySelection();
+            MenuManager.inst.CloseMenu();
+        } catch (WeaponNotSelectedException) {
+            Debug.LogError("TODO --- handle WeaponNotSelectedException error!");
         }
     }
 
     public void UpdateContents() {
         Debug.Log("UpdateContents");
-        PopulateContents(right_content, _rifle_selection);
-        PopulateContents(left_content, _handgun_selection);
+        PopulateContents(right_content, _handgun_selection);
+        PopulateContents(left_content, _rifle_selection);
     }
 
     private void PopulateContents(VisualElement content_element, List<IWeapon> content) {
         content_element.Clear();
         foreach (IWeapon weapon in content) {
-            VisualElement list_item = new VisualElement();
-            list_item.name = weapon.item_name;
-            list_item.AddToClassList("weapon_select_list_item");
+            VisualElement list_item = new WeaponListing(weapon);
+            // list_item.name = weapon.item_name;
+            // list_item.AddToClassList("weapon_select_list_item");
             
-            WeaponIcon icon = new WeaponIcon(weapon);
-            icon.name = "WeaponIcon";
-            icon.DeselectSlot();
+            // WeaponIcon icon = new WeaponIcon(weapon);
+            // icon.name = "WeaponIcon";
+            // icon.DeselectSlot();
 
-            Label label = new Label();
-            label.name = "Label";
-            label.text = weapon.item_name;
+            // Label label = new Label();
+            // label.name = "Label";
+            // label.text = weapon.item_name;
             
-            list_item.Add(icon);
-            list_item.Add(label);
+            // list_item.Add(icon);
+            // list_item.Add(label);
             content_element.Add(list_item);
         }
     }
 
     public void SelectElementFrom(VisualElement parent, IWeapon weapon) {
-        foreach(WeaponIcon icon in parent.Children()) {
-            if (icon.weapon == weapon) {
-                SelectElementFrom(parent, icon);
-                return;
+        foreach(VisualElement child in parent.Children()) {
+            try {
+                IWeaponUI listing = (IWeaponUI) child;
+                if (listing.weapon == weapon) {
+                    SelectElementFrom(parent, listing);
+                    return;
+                }
+            } catch (InvalidCastException) {
+                // do nothing with non WeaponSlot elements
             }
         }
         Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
     }
 
-    public void SelectElementFrom(VisualElement parent, WeaponIcon selected) {
+    public void SelectElementFrom(VisualElement parent, IWeaponUI selected) {
         bool success = false;
         foreach (VisualElement child in parent.Children()) {
             try {
-                WeaponIcon slot = (WeaponIcon) child;
+                IWeaponUI slot = (IWeaponUI) child;
                 if (slot == selected) {
                     slot.SelectSlot();
                     success = true;
@@ -130,16 +140,43 @@ public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
         }
     }
 
+    public IWeaponUI GetSelectedElementFrom(VisualElement parent) {
+
+        foreach (VisualElement child in parent.Children()) {
+            try {
+                IWeaponUI slot = (IWeaponUI) child;
+                if (slot.is_selected) {
+                    return slot;
+                }
+            } catch (InvalidCastException) {
+                // do nothing with non WeaponSlot elements
+            }
+        }
+        return null;
+    }
+
     public void CancelButtonClicked() {
         MenuManager.inst.CloseMenu();
     }
 
     public void ApplySelection() {
+        IWeaponUI selected_rifle = GetSelectedElementFrom(left_content);
+        IWeaponUI selected_handgun = GetSelectedElementFrom(right_content);
+        if (selected_rifle != null) {
+            PlayerCharacter.inst.inventory.rifle = selected_rifle.weapon.CopyWeapon();
+            PlayerCharacter.inst.inventory.rifle.current_ammo = PlayerCharacter.inst.inventory.rifle.ammo_capacity;
+        } else {
+            throw new WeaponNotSelectedException("rifle not selected!");
+        }
 
-    }
+        if (selected_handgun != null) {
+            PlayerCharacter.inst.inventory.handgun = selected_handgun.weapon.CopyWeapon();
+            PlayerCharacter.inst.inventory.handgun.current_ammo = PlayerCharacter.inst.inventory.handgun.ammo_capacity;
+        } else {
+            throw new WeaponNotSelectedException("handgun not selected!");
+        }
 
-    public void MenuNavigation() {
-        // TODO --- 
+        PlayerCharacter.inst.inventory.pickup = null;
     }
 
 
@@ -194,4 +231,15 @@ public class WeaponSelectionUIController : MonoBehaviour // , ISubMenu
     //     return texture;
     // }
 
+}
+
+[System.Serializable]
+public class WeaponNotSelectedException : System.Exception
+{
+    // public WeaponNotSelectedException() { }
+    public WeaponNotSelectedException(string message) : base(message) { }
+    // public WeaponNotSelectedException(string message, System.Exception inner) : base(message, inner) { }
+    // protected WeaponNotSelectedException(
+    //     System.Runtime.Serialization.SerializationInfo info,
+    //     System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
