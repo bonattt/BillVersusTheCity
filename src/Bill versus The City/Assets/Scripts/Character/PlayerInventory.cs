@@ -37,6 +37,36 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     }
     private PlayerCombat combat;
 
+    private List<IWeapon> _availible_rifles, _availible_handguns;
+    public List<IWeapon> availible_rifles {
+        get {
+            if (_availible_rifles == null) {
+                // initialize with starting weapons
+                _availible_rifles = new List<IWeapon>();
+                foreach (IWeapon weapon in GetStartingEquipment().rifles) {
+                    _availible_rifles.Add(weapon.CopyWeapon());
+                }
+            }
+            return _availible_rifles;
+        }
+    }
+    public List<IWeapon> availible_handguns {
+        get {
+            if (_availible_handguns == null) {
+                // initialize with starting weapons
+                _availible_handguns = new List<IWeapon>();
+                foreach (IWeapon weapon in GetStartingEquipment().handguns) {
+                    _availible_handguns.Add(weapon.CopyWeapon());
+                }
+            }
+            return _availible_handguns;
+        }
+    }
+
+    public static EquipmentSet GetStartingEquipment() {
+        return Resources.Load<EquipmentSet>("StartingEquipment");
+    }
+
     public PlayerInventory() {
         combat = null; // subscribing to the PlayerCharacter here creates infinite recursion
         _handgun = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.HANDGUN);

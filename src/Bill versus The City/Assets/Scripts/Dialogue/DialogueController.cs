@@ -78,10 +78,6 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         left_portraits.Clear();
         right_portraits.Clear();
 
-        // TODO --- replace this with an actual blocking system
-        // SetPortrait("bill", StageDirection.left, StageDirection.right);
-        // SetPortrait("gangsta", StageDirection.right, StageDirection.left);
-        
         NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
 

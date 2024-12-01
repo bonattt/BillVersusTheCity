@@ -60,7 +60,6 @@ using UnityEngine;
     }
 
     public void AddEnemy(EnemyController enemy) {
-        Debug.Log($"AddEnemy({enemy})");  // TODO --- remove debug
         enemies.Add(enemy);
         UpdateSubscribers();
     }
