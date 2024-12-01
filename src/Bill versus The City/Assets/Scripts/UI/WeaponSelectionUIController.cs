@@ -25,8 +25,8 @@ public class WeaponSelectionUIController : MonoBehaviour
     void Start() {
         SetupUI();
         UpdateContents();
-        SelectElementFrom(left_content, _rifle_selection[0]);
-        SelectElementFrom(right_content, _handgun_selection[0]);
+        // SelectElementFrom(left_content, _rifle_selection[0]);
+        // SelectElementFrom(right_content, _handgun_selection[0]);
     }
 
     private void LoadWeaponsFromInspector(List<ScriptableObject> source, List<IWeapon> weapons) {
@@ -83,10 +83,15 @@ public class WeaponSelectionUIController : MonoBehaviour
         PopulateContents(left_content, _rifle_selection);
     }
 
+    public void WeaponListingOnClick(ClickEvent _) {
+        
+    }
+
     private void PopulateContents(VisualElement content_element, List<IWeapon> content) {
         content_element.Clear();
+        bool first = true;
         foreach (IWeapon weapon in content) {
-            VisualElement list_item = new WeaponListing(weapon);
+            WeaponListing list_item = new WeaponListing(weapon);
             // list_item.name = weapon.item_name;
             // list_item.AddToClassList("weapon_select_list_item");
             
@@ -101,44 +106,50 @@ public class WeaponSelectionUIController : MonoBehaviour
             // list_item.Add(icon);
             // list_item.Add(label);
             content_element.Add(list_item);
-        }
-    }
-
-    public void SelectElementFrom(VisualElement parent, IWeapon weapon) {
-        foreach(VisualElement child in parent.Children()) {
-            try {
-                IWeaponUI listing = (IWeaponUI) child;
-                if (listing.weapon == weapon) {
-                    SelectElementFrom(parent, listing);
-                    return;
-                }
-            } catch (InvalidCastException) {
-                // do nothing with non WeaponSlot elements
+            if (first) {
+                first = false;
+                list_item.SelectSlot();
+            } else {
+                list_item.DeselectSlot();
             }
         }
-        Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
     }
 
-    public void SelectElementFrom(VisualElement parent, IWeaponUI selected) {
-        bool success = false;
-        foreach (VisualElement child in parent.Children()) {
-            try {
-                IWeaponUI slot = (IWeaponUI) child;
-                if (slot == selected) {
-                    slot.SelectSlot();
-                    success = true;
-                } else {
-                    slot.DeselectSlot();
-                }
-            } catch (InvalidCastException) {
-                // do nothing with non WeaponSlot elements
-            }
-        }
+    // public void SelectElementFrom(VisualElement parent, IWeapon weapon) {
+    //     foreach(VisualElement child in parent.Children()) {
+    //         try {
+    //             IWeaponUI listing = (IWeaponUI) child;
+    //             if (listing.weapon == weapon) {
+    //                 SelectElementFrom(parent, listing);
+    //                 return;
+    //             }
+    //         } catch (InvalidCastException) {
+    //             // do nothing with non WeaponSlot elements
+    //         }
+    //     }
+    //     Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
+    // }
 
-        if (!success) {
-            Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
-        }
-    }
+    // public void SelectElementFrom(VisualElement parent, IWeaponUI selected) {
+    //     bool success = false;
+    //     foreach (VisualElement child in parent.Children()) {
+    //         try {
+    //             IWeaponUI slot = (IWeaponUI) child;
+    //             if (slot == selected) {
+    //                 slot.SelectSlot();
+    //                 success = true;
+    //             } else {
+    //                 slot.DeselectSlot();
+    //             }
+    //         } catch (InvalidCastException) {
+    //             // do nothing with non WeaponSlot elements
+    //         }
+    //     }
+
+    //     if (!success) {
+    //         Debug.LogError("SelectElementFrom called on weapon not contained in parent!");
+    //     }
+    // }
 
     public IWeaponUI GetSelectedElementFrom(VisualElement parent) {
 

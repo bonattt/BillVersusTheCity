@@ -13,6 +13,7 @@ public class WeaponListing : VisualElement, IWeaponUI {
 
     private WeaponIcon _weapon_icon;
     private Label _weapon_label;
+    private bool _is_disabled = false;
     public WeaponIcon weapon_icon {
         get { return _weapon_icon; }
     }
@@ -23,10 +24,10 @@ public class WeaponListing : VisualElement, IWeaponUI {
         }
         set {
             _weapon_icon.weapon = value;
-            if (value != null) {
-                // TODO ---
+            if (value != null && !_is_disabled) {
+                SetContents();
             } else {
-                // TODO
+                ClearContents();
             }
         }
     }
@@ -38,10 +39,7 @@ public class WeaponListing : VisualElement, IWeaponUI {
     }
     
 
-    public WeaponListing() : this(null) {
-        // overloaded constructor: do nothing here
-    }
-
+    public WeaponListing() : this(null) { /* overloaded constructor: do nothing here */ }
     public WeaponListing(IWeapon weapon) : base() {
         this.AddToClassList("weapon_select_list_item");
         
@@ -55,20 +53,47 @@ public class WeaponListing : VisualElement, IWeaponUI {
         
         this.Add(_weapon_icon);
         this.Add(_weapon_label);
+        RegisterCallback<ClickEvent>(OnClick);
+    }
+
+    public void OnClick(ClickEvent _) {
+        foreach(VisualElement child in this.parent.Children()) {
+            try {
+                IWeaponUI weapon_ui = (IWeaponUI) child;
+                if (weapon_ui == this) {
+                    weapon_ui.SelectSlot();
+                } else {
+                    weapon_ui.DeselectSlot();
+                }
+            } catch (InvalidCastException) {
+                // skip non IWeaponUI elements
+            }
+        }
     }
 
     public void SelectSlot() {
+        _is_disabled = false;
         weapon_icon.SelectSlot();
-        _weapon_label.text = this.weapon.item_name;
+        SetContents();
     }
 
     public void DeselectSlot() {
+        _is_disabled = false;
         weapon_icon.DeselectSlot();
-        _weapon_label.text = this.weapon.item_name;
+        SetContents();
     }
 
     public void DisableSlot() {
+        _is_disabled = true;
         weapon_icon.DisableSlot();
+        ClearContents();
+    }
+
+    private void SetContents() {
+        _weapon_label.text = this.weapon.item_name;
+    }
+
+    private void ClearContents() {
         _weapon_label.text = "";
     }
 }
