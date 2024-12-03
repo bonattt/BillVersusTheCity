@@ -151,7 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction_range: 4
   interaction_enabled: 0
-  interaction_order: []
+  interaction_order:
+  - {fileID: 1669012711162536639}
 --- !u!114 &1669012711162536639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5c9aa41b27dbc4987a84e95c5b0f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cleanup_triggered_dialogue: 
+  cleanup_triggered_dialogue: test\\remove_illegal_items
   dialogue_finished: {fileID: 3144694336298380374}
 --- !u!114 &3144694336298380374
 MonoBehaviour:

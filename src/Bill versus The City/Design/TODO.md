@@ -221,9 +221,9 @@ SOOSH:
     [+] Main Menu
     [ ] Pass Dyamic player configuration to next level
 
-[ ] Equipment Select at the start of a level
+[+] Equipment Select at the start of a level
 
-[ ] Equipment Pickups
+[+] Equipment Pickups
 
 [+] Dialogue system
     [+] Dialogue System
@@ -243,16 +243,18 @@ SOOSH:
         [+] Get test portraits
 
 [ ] Fixes
-    [ ] Absent Save file is breaking the built game
-    [ ] fences look breakable
-    [ ] FPS display doesn't work in pause
+    [+] Absent Save file is breaking the built game
     [+] Truck Asset has weird collisions
+    [ ] Audio Sources delete script, not game object
+    [ ] Exception finishing levels with a pickup weapon
+    [ ] FPS display doesn't work in pause
     [ ] Aim-zoom janky
     [ ] click R again canceling reload is annoying
         - only have "shoot" cancel it, BUT aiming doesn't work while reloading
     [ ] shooting through wall still works occasionally, but it's harder
     [ ] Shooting wall alerts enemies on the other side
     [ ] Test un-pause attack blocking
+    [ ] fences look breakable --> won't fix (game will look nothing like it looks now)
 
 [ ] Bugs
     [ ] hovering on Interactions is not detected sometimes

@@ -16,8 +16,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="Footer" style="flex-grow: 0; justify-content: center; flex-direction: row;">
-                <ui:Button text="Accept" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AcceptButton" style="color: rgb(0, 0, 0);" />
-                <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="color: rgb(0, 0, 0);" />
+                <ui:Button text="Accept" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AcceptButton" style="color: rgb(0, 0, 0); font-size: 30px;" />
+                <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="color: rgb(0, 0, 0); font-size: 30px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
