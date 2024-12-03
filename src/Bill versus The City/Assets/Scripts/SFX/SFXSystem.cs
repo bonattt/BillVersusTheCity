@@ -47,7 +47,7 @@ public class SFXSystem : MonoBehaviour
 
         // destroy when sound finishes  
         float clip_length = audio_source.clip.length;
-        Destroy(audio_source, clip_length);
+        Destroy(audio_source.gameObject, clip_length);
 
     }
 

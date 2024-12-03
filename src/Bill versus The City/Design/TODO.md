@@ -245,8 +245,8 @@ SOOSH:
 [ ] Fixes
     [+] Absent Save file is breaking the built game
     [+] Truck Asset has weird collisions
-    [ ] Audio Sources delete script, not game object
-    [ ] Exception finishing levels with a pickup weapon
+    [+] Audio Sources delete script, not game object
+    [+] Exception finishing levels with a pickup weapon
     [ ] FPS display doesn't work in pause
     [ ] Aim-zoom janky
     [ ] click R again canceling reload is annoying
