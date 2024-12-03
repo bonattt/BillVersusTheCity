@@ -7,7 +7,7 @@ public class OpenWeaponSelectionMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject new_menu = MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
+        MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
         Destroy(gameObject);
     }
 }
