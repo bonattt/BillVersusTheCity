@@ -61,14 +61,21 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     public bool player_noticed { get; protected set; }
-
-    public bool knows_player_location { get; protected set; }
-
-    public Vector3 last_seen_at { get; protected set; }
+    public bool knows_player_location { get { return visible_nodes_this_frame > 0; } }
+    public Vector3 _last_seen_at;
+    public Vector3 last_seen_at { 
+        get {
+            return _last_seen_at;
+        } 
+        protected set {
+            _last_seen_at = value;
+            last_seen_at_investigated = false;
+        }
+    }
+    public bool last_seen_at_investigated = false;
     private bool updated_this_frame = false;
 
     void Start() {
-        knows_player_location = false;
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
         visible_nodes_this_frame = 0;
         GetComponent<ICharacterStatus>().Subscribe(this);
@@ -77,16 +84,13 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public void Alert() {
         // alerts the enemy
         _percent_noticed = 1f;
-        knows_player_location = true;
+        last_seen_at = target.position;
         player_noticed = true;
     }
 
     public void LosePlayer() {
         // the enemy no longer knows where the player is, if it ever did.
-        if (knows_player_location) {
-            last_seen_at = target.position;
-        }
-        knows_player_location = false;
+        // TODO --- nothing to do here, yet. There will be.
     }
 
     public void StatusUpdated(ICharacterStatus status) {
@@ -103,16 +107,25 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     void Update() {
-        UpdateLineOfSight();
+        UpdateLineOfSight(); // sets lazy values for line of sight
         UpdateNoticePlayer();
+        UpdatePlayerPosition();
         SetDebugData();
+    }
+
+    void UpdatePlayerPosition() {
+        if (knows_player_location) {
+            last_seen_at = target.position;
+        }
     }
 
     void UpdateNoticePlayer() {
         if (visible_nodes_this_frame == 0) { // && percent_noticed < 1f) {
             percent_noticed -= forget_player_rate * Time.deltaTime;
         } else {
-            percent_noticed += notice_player_rate * Time.deltaTime * visible_nodes_this_frame;
+            float notice_rate = this.notice_player_rate;
+            if (player_noticed) { notice_rate *= 2; } // notice the player faster if the enemy is already alert;
+            percent_noticed += notice_rate * Time.deltaTime * visible_nodes_this_frame;
         }
     }
 

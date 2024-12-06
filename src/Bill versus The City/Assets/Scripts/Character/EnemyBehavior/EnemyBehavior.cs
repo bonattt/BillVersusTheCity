@@ -23,11 +23,11 @@ public class EnemyBehavior : MonoBehaviour
         {BehaviorMode.persuing, new ChasePlayerBehavior()},
         {BehaviorMode.passive, new StationaryBehavior()},
         {BehaviorMode.retreating, new StationaryBehavior()},  // TODO --- placeholder behavior value
-        {BehaviorMode.searching, new StationaryBehavior()}  // TODO --- placeholder behavior value
+        {BehaviorMode.searching, new SearchingBehavior()} 
     };
 
     private EnemyPerception _perception = null;
-    private EnemyPerception perception {
+    public EnemyPerception perception {
         get {
             if (_perception == null) {
                 _perception = GetComponent<EnemyPerception>();
