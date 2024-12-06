@@ -8,11 +8,15 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect
     public InteractableUI ui;
     public ScriptableObject unity_weapon;
     public IWeapon pickup_weapon;
+    public bool full_ammo = false; // if true, the weapon will have it's ammo set to full
 
     void Start() {
         if (pickup_weapon == null && unity_weapon != null) {
             Debug.Log("instantiate pickup from scriptable object");
             pickup_weapon = (IWeapon) Instantiate(unity_weapon);
+            if (full_ammo) {
+                pickup_weapon.current_ammo = pickup_weapon.ammo_capacity;
+            }
         }
         UpdateUIText();
     }
