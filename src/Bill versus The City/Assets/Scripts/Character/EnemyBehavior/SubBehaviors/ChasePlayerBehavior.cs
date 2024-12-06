@@ -8,7 +8,7 @@ public class ChasePlayerBehavior : ISubBehavior  {
     
     public void SetControllerFlags(EnemyBehavior parent) {
         // parent.controller.ctrl_waypoint = new Vector3(0, 0, 0);
-        parent.controller.ctrl_will_shoot = true;
+        parent.controller.ctrl_will_shoot = parent.DistanceToTarget() < parent.max_attack_range;
         parent.controller.ctrl_move_mode = MovementTarget.target;
         if (parent.controller.seeing_target) {
             parent.controller.ctrl_aim_mode = AimingTarget.target;

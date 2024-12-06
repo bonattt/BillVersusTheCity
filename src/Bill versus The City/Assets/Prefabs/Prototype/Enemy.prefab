@@ -60,7 +60,7 @@ MonoBehaviour:
   raycast_start: {fileID: 4280276152886177003}
   max_vision_nodes: 1
   notice_player_rate: 2
-  forget_player_rate: 2
+  forget_player_rate: 0.25
   _percent_noticed: 0
 --- !u!114 &3396656997431563555
 MonoBehaviour:
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3396656997431563555}
   optimal_attack_range: 5
+  max_attack_range: 11
   _shooting_rate: 1
   debug_distance_to_target: 0
   debug_sub_behavior: 

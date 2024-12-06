@@ -7,6 +7,7 @@ public class EnemyBehavior : MonoBehaviour
     public EnemyController controller;
 
     public float optimal_attack_range = 6f;
+    public float max_attack_range = 11f;
 
     public float _shooting_rate = 1f;
     public float shooting_rate {
@@ -18,10 +19,22 @@ public class EnemyBehavior : MonoBehaviour
     public BehaviorMode behavior_mode { get; private set; }
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
-        {BehaviorMode.aggressive, new StandAndShootBehavior()},
-        {BehaviorMode.hunting, new ChasePlayerBehavior()},
-        {BehaviorMode.passive, new StationaryBehavior()}
+        {BehaviorMode.engaged, new StandAndShootBehavior()},
+        {BehaviorMode.persuing, new ChasePlayerBehavior()},
+        {BehaviorMode.passive, new StationaryBehavior()},
+        {BehaviorMode.retreating, new StationaryBehavior()},  // TODO --- placeholder behavior value
+        {BehaviorMode.searching, new StationaryBehavior()}  // TODO --- placeholder behavior value
     };
+
+    private EnemyPerception _perception = null;
+    private EnemyPerception perception {
+        get {
+            if (_perception == null) {
+                _perception = GetComponent<EnemyPerception>();
+            }
+            return _perception;
+        }
+    }
     
     void Start()
     {
@@ -45,7 +58,7 @@ public class EnemyBehavior : MonoBehaviour
         controller.ctrl_shooting_rate = this.shooting_rate;
     }
 
-    protected float DistanceToTarget() {
+    public float DistanceToTarget() {
         // TODO --- flatten the Y co-ordinates
         return Vector3.Distance(controller.transform.position, PlayerCharacter.inst.player_transform.position);  
     }
@@ -58,14 +71,19 @@ public class EnemyBehavior : MonoBehaviour
         if (behavior_mode == BehaviorMode.passive) {
             // do nothing (stay passive)
             if (controller.seeing_target) {
-                behavior_mode = BehaviorMode.aggressive;
+                behavior_mode = BehaviorMode.engaged;
             }
         }
         else { 
-            if (controller.seeing_target && DistanceToTarget() < optimal_attack_range) {
-            behavior_mode = BehaviorMode.aggressive;
+            if (perception.knows_player_location) {
+                float dist = DistanceToTarget();
+                if (controller.seeing_target && dist < optimal_attack_range) {
+                    behavior_mode = BehaviorMode.engaged;
+                } else {
+                    behavior_mode = BehaviorMode.persuing;
+                }
             } else {
-                behavior_mode = BehaviorMode.hunting;
+                behavior_mode = BehaviorMode.searching;
             }
         }
     }
@@ -81,7 +99,9 @@ public class EnemyBehavior : MonoBehaviour
 }
 
 public enum BehaviorMode {
-    aggressive,
-    hunting,
-    passive
+    engaged,  // enemy is aware of the player, and is in optimal combat range
+    persuing, // enemy is aware of the player, but is beyond optimal combat range
+    retreating,  // enemey is aware of the player, but is too close for optimal combat range
+    passive,  // enemy doesn't know the player exists
+    searching // enemy is aware of the player, but doesn't know where he is.
 }

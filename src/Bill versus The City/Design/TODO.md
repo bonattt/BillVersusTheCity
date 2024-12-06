@@ -219,7 +219,7 @@ SOOSH:
         [+] weapon toolbar doesn't update after new scene load
         [X] previously equipped weapon should be retained on a new scene load (won't do this sprint, maybe never)
     [+] Main Menu
-    [ ] Pass Dyamic player configuration to next level
+    [~] Pass Dyamic player configuration to next level
 
 [+] Equipment Select at the start of a level
 
@@ -259,13 +259,30 @@ SOOSH:
 [ ] Bugs
     [ ] hovering on Interactions is not detected sometimes
 
-    
+
+
+
+=============================
+========== Roadmap ==========
+=============================
+
+[ ] Milestone 4: enemy behavior improvements
+[ ] Milestone ???: Level config (level )
+[ ] Milestone ???: Hub World (Bill's House and Gunstore), Saving level
+[ ] Milestone ???: More Levels
+[ ] Milestone ???: More Dialogue
+[ ] Milestone ???: Art assets
+
 
 =============================
 ==== Unplanned features =====
 =============================
 
 [ ] Menus
+
+[ ] Fix Movement
+
+[ ] Add aiming line
 
 [ ] Enemy Detection
     [ ] Hearing
