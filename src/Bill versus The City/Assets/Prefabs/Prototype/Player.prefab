@@ -467,7 +467,9 @@ MonoBehaviour:
   y_offset: 0.05
   base_color: {r: 1, g: 0, b: 0, a: 1}
   attack_controller: {fileID: 4665821343985391478}
-  debug_alpha: 0
+  layer_mask:
+    serializedVersion: 2
+    m_Bits: 67
 --- !u!1 &8443810530588016481
 GameObject:
   m_ObjectHideFlags: 0

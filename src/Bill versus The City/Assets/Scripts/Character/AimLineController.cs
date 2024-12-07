@@ -14,7 +14,7 @@ public class AimLineController : MonoBehaviour
     public Color base_color = Color.red;
     public PlayerAttackController attack_controller;
 
-    // public LayerMask layer_mask;
+    public LayerMask layer_mask;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,7 @@ public class AimLineController : MonoBehaviour
         Vector3 end_pos;
         RaycastHit hit;
         // if there is a wall in the way, don't draw aim-lines past it
-        if (Physics.Raycast(start_pos, direction, out hit, direction.magnitude)) {
+        if (Physics.Raycast(start_pos, direction, out hit, direction.magnitude, layer_mask)) {
             end_pos = hit.point;
         } 
         else {
