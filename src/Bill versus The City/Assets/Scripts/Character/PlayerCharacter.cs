@@ -39,7 +39,13 @@ public class PlayerCharacter {
 
     public List<Transform> vision_nodes { get { return combat.movement.vision_nodes; }}
 
-    public GameObject game_object = null;
+    public GameObject player_object { 
+        get { 
+            if (combat == null) { return null; }
+            return combat.movement.gameObject; 
+        }
+    }
+
     private PlayerCombat combat = null;
     private PlayerInventory _inventory; // = new PlayerInventory();
     public PlayerInventory inventory { get { return _inventory; }}
@@ -49,11 +55,6 @@ public class PlayerCharacter {
         return combat.transform; 
     }}
     public CharacterController character_controller { get { return combat.character_controller; }}
-
-    public void SetGameObject(GameObject obj) {
-        this.game_object = obj;
-        combat = obj.GetComponent<PlayerCombat>();
-    }
 
     private HashSet<IPlayerObserver> subscribers = new HashSet<IPlayerObserver>();
 

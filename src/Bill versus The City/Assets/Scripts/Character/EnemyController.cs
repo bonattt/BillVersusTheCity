@@ -171,5 +171,6 @@ public enum MovementTarget {
 public enum AimingTarget {
     stationary,
     target,
-    waypoint
+    waypoint,
+    movement_direction  // TODO --- not implemented
 }
