@@ -68,23 +68,31 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     protected void SetBehaviorMode() {
-        if (behavior_mode == BehaviorMode.passive) {
-            // do nothing (stay passive)
-            if (controller.seeing_target) {
-                behavior_mode = BehaviorMode.engaged;
-            }
-        }
-        else { 
-            if (perception.knows_player_location) {
+        switch(perception.state) {
+            case PerceptionState.seeing:
                 float dist = DistanceToTarget();
                 if (controller.seeing_target && dist < optimal_attack_range) {
                     behavior_mode = BehaviorMode.engaged;
                 } else {
                     behavior_mode = BehaviorMode.persuing;
                 }
-            } else {
+                break;
+
+            case PerceptionState.alert:
+                behavior_mode = BehaviorMode.persuing;
+                break;
+
+            case PerceptionState.searching:
                 behavior_mode = BehaviorMode.searching;
-            }
+                break;
+
+            case PerceptionState.unaware:
+                behavior_mode = BehaviorMode.passive;
+                break;
+
+            default:
+                Debug.LogError($"unhandled PerceptionState {perception.state}");
+                break;
         }
     }
     

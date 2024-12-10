@@ -30,6 +30,9 @@ public class AimLineController : MonoBehaviour
     }
 
     private void DrawLineTo(float x, float z) {
+        // player character not initialized this frame, ignore
+        if (PlayerCharacter.inst.player_object == null) { return; } 
+
         Vector3 start_pos = PlayerCharacter.inst.player_object.transform.position;
         Vector3 base_end_pos = new Vector3(x, y_offset, z);
         

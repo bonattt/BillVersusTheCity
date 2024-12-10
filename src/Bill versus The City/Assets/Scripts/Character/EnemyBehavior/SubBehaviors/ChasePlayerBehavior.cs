@@ -15,7 +15,7 @@ public class ChasePlayerBehavior : ISubBehavior  {
         }
         else {
             // don't aim at unseen target
-            parent.controller.ctrl_aim_mode = AimingTarget.stationary;
+            parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
         }
     }
 }

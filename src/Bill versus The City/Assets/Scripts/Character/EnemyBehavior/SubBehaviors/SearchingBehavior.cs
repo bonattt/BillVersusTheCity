@@ -15,11 +15,11 @@ public class SearchingBehavior : ISubBehavior  {
         parent.controller.ctrl_will_shoot = false;
         parent.controller.ctrl_move_mode = MovementTarget.waypoint;
         if (parent.controller.seeing_target) {
-            parent.controller.ctrl_aim_mode = AimingTarget.waypoint;
+            parent.controller.ctrl_aim_mode = AimingTarget.target;
         }
         else {
             // don't aim at unseen target
-            parent.controller.ctrl_aim_mode = AimingTarget.stationary;
+            parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
         }
 
     }

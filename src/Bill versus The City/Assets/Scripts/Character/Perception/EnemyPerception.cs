@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -33,35 +34,69 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public int visible_nodes_this_frame { get; protected set; }
 
     [SerializeField]
+    private PerceptionState _state = PerceptionState.unaware;
+    public PerceptionState state {
+        get { return _state; }
+        protected set { _state = value; }
+    }
+
+    [SerializeField]
     public float _percent_noticed; // ticks up as the enemy sees the player. at 1f, player is spotted
     public float percent_noticed { 
         get {
             return _percent_noticed;
         }
         protected set {
-            if (value >= 1f) {
-                if (_percent_noticed < 1f) {
-                    Alert();
-                }
-                _percent_noticed = 1f;
-            } else if (value <= 0) {
-                LosePlayer();
-                _percent_noticed = 0f;
-            } else {
-                _percent_noticed = value;
+            _percent_noticed = value;
+            if (_percent_noticed <= 0) {
+                _percent_noticed = 0;
+            } else if (_percent_noticed >= 1.1f) {
+                _percent_noticed = 1.1f;
             }
 
-            _percent_noticed = value;
-            if(_percent_noticed <= 0) {
-                _percent_noticed = 0f;
-            } else if (_percent_noticed >= 1) {
-                _percent_noticed = 1f;
+            if (state == PerceptionState.alert || state == PerceptionState.seeing) {
+                if (_percent_noticed <= 0) {
+                    LosePlayer();
+                }
+                else if (visible_nodes_this_frame >= 1) {
+                    state = PerceptionState.seeing;
+                }
             }
+
+            else if (state == PerceptionState.searching || state == PerceptionState.unaware) {
+                if (_percent_noticed >= 1) {
+                    Alert();
+                }
+            }
+
+            else {
+                Debug.LogError($"unhandled perception state {state}");
+            }
+
+            // if (value >= 1f) {
+            //     if (_percent_noticed < 1f) {
+            //         Alert();
+            //     }
+            //     // _percent_noticed = 1f;
+            // } else if (value <= 0) {
+            //     LosePlayer();
+            //     _percent_noticed = 0f;
+            // } else {
+            //     _percent_noticed = value;
+            // }
+
+            // _percent_noticed = value;
+            // if(_percent_noticed <= 0) {
+            //     _percent_noticed = 0f;
+            // } 
+            // // else if (_percent_noticed >= 1) {
+            // //     _percent_noticed = 1f;
+            // // }
         }
     }
 
-    public bool player_noticed { get; protected set; }
-    public bool knows_player_location { get { return visible_nodes_this_frame > 0; } }
+    public bool player_noticed { get { return state != PerceptionState.unaware; } }
+    public bool knows_player_location { get { return state == PerceptionState.seeing; } }
     public Vector3 _last_seen_at;
     public Vector3 last_seen_at { 
         get {
@@ -73,7 +108,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         }
     }
     public bool last_seen_at_investigated = false;
-    private bool updated_this_frame = false;
+    private bool updated_this_frame = false; // used to avoid calculating visibility more than once per frame
 
     void Start() {
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
@@ -83,14 +118,26 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
 
     public void Alert() {
         // alerts the enemy
-        _percent_noticed = 1f;
+        Debug.LogWarning($"alert called on {gameObject.name}");
+        _percent_noticed += 0.5f;
         last_seen_at = target.position;
-        player_noticed = true;
+        if (visible_nodes_this_frame >= 1) {
+            state = PerceptionState.seeing;
+        } else {
+            state = PerceptionState.alert;
+        }
+    }
+
+    public void AlertFrom(Vector3 alert_from) {
+        // alert the enemy, but give a waypoint other than the player's current position
+        Alert();
+        last_seen_at = alert_from;
     }
 
     public void LosePlayer() {
         // the enemy no longer knows where the player is, if it ever did.
-        // TODO --- nothing to do here, yet. There will be.
+        if (state == PerceptionState.unaware) { return; } // do nothing if the enemy didn't know about the player
+        state = PerceptionState.searching;
     }
 
     public void StatusUpdated(ICharacterStatus status) {
@@ -123,9 +170,11 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         if (visible_nodes_this_frame == 0) { // && percent_noticed < 1f) {
             percent_noticed -= forget_player_rate * Time.deltaTime;
         } else {
-            float notice_rate = this.notice_player_rate;
+            int effective_nodes = Math.Min(max_vision_nodes, visible_nodes_this_frame);
+            float notice_rate = this.notice_player_rate * effective_nodes;
             if (player_noticed) { notice_rate *= 2; } // notice the player faster if the enemy is already alert;
-            percent_noticed += notice_rate * Time.deltaTime * visible_nodes_this_frame;
+            percent_noticed += notice_rate * Time.deltaTime;
+            // updating state is handled by percent_noticed
         }
     }
 
@@ -211,4 +260,16 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         debug_knows_player_location = knows_player_location;
         debug_player_noticed = player_noticed;
     }
+}
+
+public enum PerceptionState {
+    unaware,  // enemy does not know the Player exists
+    searching,  // enemy knows the player exists, AND knows the player is not near the waypoint
+    alert,  // enemy is aware the player exists, and has some waypoint they are investigating
+    seeing,  // enemy is seeing the player this frame
+    
+}
+
+public interface IPerceptionSubscriber {
+    public void UpdatePerceptionState(PerceptionState previous_state, PerceptionState new_state);
 }
