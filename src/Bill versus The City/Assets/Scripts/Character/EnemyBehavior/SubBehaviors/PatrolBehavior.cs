@@ -15,7 +15,7 @@ public class PatrolBehavior : MonoBehaviour, ISubBehavior  {
     private const float distance_to_arrival = 0.1f;
     private bool initialized = false;
 
-    private const float COOLDOWN = 2f;
+    public float pause_at_point = 1f;
     private float cooldown = 0f;
     private Vector3 destination;
     
@@ -54,7 +54,7 @@ public class PatrolBehavior : MonoBehaviour, ISubBehavior  {
     protected void SetNewDestination(EnemyBehavior parent) {
         parent.controller.ctrl_move_mode = MovementTarget.stationary;
         parent.controller.ctrl_aim_mode = AimingTarget.stationary;
-        cooldown = COOLDOWN;
+        cooldown = pause_at_point;
         
         if (current == patrol_points.Count - 1) {
             if (loop) {
