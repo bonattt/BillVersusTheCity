@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour
 {
     public EnemyController controller;
+    public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
 
     public float optimal_attack_range = 6f;
     public float max_attack_range = 11f;
@@ -15,15 +17,18 @@ public class EnemyBehavior : MonoBehaviour
             return _shooting_rate * GetSubBehavior().shooting_rate; 
         }
     }
-    
+
     public BehaviorMode behavior_mode { get; private set; }
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
+        // agressive behaviors
         {BehaviorMode.engaged, new StandAndShootBehavior()},
         {BehaviorMode.persuing, new ChasePlayerBehavior()},
-        {BehaviorMode.passive, new StationaryBehavior()},
         {BehaviorMode.retreating, new StationaryBehavior()},  // TODO --- placeholder behavior value
-        {BehaviorMode.searching, new SearchingBehavior()} 
+        {BehaviorMode.searching, new SearchingBehavior()},
+        // passive behaviors
+        {BehaviorMode.passive, new StationaryBehavior()},
+        {BehaviorMode.wondering, new WonderingBehavior()},
     };
 
     private EnemyPerception _perception = null;
@@ -38,7 +43,7 @@ public class EnemyBehavior : MonoBehaviour
     
     void Start()
     {
-        behavior_mode = BehaviorMode.passive;
+        behavior_mode = default_behavior;
         if (controller == null) {
             controller = GetComponent<EnemyController>();
         }
@@ -87,7 +92,7 @@ public class EnemyBehavior : MonoBehaviour
                 break;
 
             case PerceptionState.unaware:
-                behavior_mode = BehaviorMode.passive;
+                behavior_mode = default_behavior;
                 break;
 
             default:
@@ -110,6 +115,9 @@ public enum BehaviorMode {
     engaged,  // enemy is aware of the player, and is in optimal combat range
     persuing, // enemy is aware of the player, but is beyond optimal combat range
     retreating,  // enemey is aware of the player, but is too close for optimal combat range
+    searching, // enemy is aware of the player, but doesn't know where he is.
+    // passive behaviors:
     passive,  // enemy doesn't know the player exists
-    searching // enemy is aware of the player, but doesn't know where he is.
+    wondering,  // enemy is unaware of the player, and wonders idly 
+
 }

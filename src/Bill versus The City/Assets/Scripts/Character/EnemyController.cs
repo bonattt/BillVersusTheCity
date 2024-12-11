@@ -156,11 +156,14 @@ using UnityEngine.AI;
     /////////////////////////////
     
     public bool debug_seeing_target, debug_saw_target;
+    public Vector3 debug_move_vector, debug_look_target;
 
     protected override void SetDebugData() {
         base.SetDebugData();
         debug_seeing_target = seeing_target;
         debug_saw_target = saw_target;
+        debug_move_vector = MoveVector();
+        debug_look_target = LookTarget();
     }
 }
 

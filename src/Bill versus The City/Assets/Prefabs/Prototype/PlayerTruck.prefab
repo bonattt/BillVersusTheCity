@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 795017645550784582}
+  - component: {fileID: 3739027032396445928}
+  - component: {fileID: 726694994034773716}
   m_Layer: 0
   m_Name: PlayerTruck
   m_TagString: Untagged
@@ -34,6 +36,35 @@ Transform:
   - {fileID: 6828463536557817257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &3739027032396445928
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639495429217644494}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &726694994034773716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639495429217644494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b48ee125813614ba77ec975f711549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: Note; wondering enemies can get stuck on the truck
 --- !u!1 &1957007087169141663
 GameObject:
   m_ObjectHideFlags: 0
