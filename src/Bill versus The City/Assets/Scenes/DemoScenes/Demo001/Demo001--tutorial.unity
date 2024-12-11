@@ -1021,6 +1021,7 @@ MonoBehaviour:
   - {fileID: 234555067}
   - {fileID: 1570507708}
   loop: 1
+  pause_at_point: 1
 --- !u!1 &948243120 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1505927797627387282, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
@@ -1043,6 +1044,7 @@ MonoBehaviour:
   - {fileID: 1934227973}
   - {fileID: 569138367}
   loop: 0
+  pause_at_point: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,6 +1252,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 338529279}
+    - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: default_behavior
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
