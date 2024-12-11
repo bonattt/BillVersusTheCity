@@ -20,16 +20,7 @@ public class EnemyBehavior : MonoBehaviour
 
     public BehaviorMode behavior_mode { get; private set; }
 
-    private Dictionary<BehaviorMode, ISubBehavior> behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
-        // agressive behaviors
-        {BehaviorMode.engaged, new StandAndShootBehavior()},
-        {BehaviorMode.persuing, new ChasePlayerBehavior()},
-        {BehaviorMode.retreating, new StationaryBehavior()},  // TODO --- placeholder behavior value
-        {BehaviorMode.searching, new SearchingBehavior()},
-        // passive behaviors
-        {BehaviorMode.passive, new StationaryBehavior()},
-        {BehaviorMode.wondering, new WonderingBehavior()},
-    };
+    private Dictionary<BehaviorMode, ISubBehavior> behaviors;
 
     private EnemyPerception _perception = null;
     public EnemyPerception perception {
@@ -40,9 +31,26 @@ public class EnemyBehavior : MonoBehaviour
             return _perception;
         }
     }
+
+    private void InitializeBehaviorsDict() {
+        // initializes the `behaviors` dictionary with values
+        behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
+            // agressive behaviors
+            {BehaviorMode.engaged, new StandAndShootBehavior()},
+            {BehaviorMode.persuing, new ChasePlayerBehavior()},
+            {BehaviorMode.retreating, new StationaryBehavior()},  // TODO --- placeholder behavior value
+            {BehaviorMode.searching, new SearchingBehavior()},
+            // passive behaviors
+            {BehaviorMode.passive, new StationaryBehavior()},
+            {BehaviorMode.wondering, new WonderingBehavior(this)},
+            {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
+        };
+    }
     
     void Start()
     {
+        InitializeBehaviorsDict();
+
         behavior_mode = default_behavior;
         if (controller == null) {
             controller = GetComponent<EnemyController>();
@@ -118,6 +126,7 @@ public enum BehaviorMode {
     searching, // enemy is aware of the player, but doesn't know where he is.
     // passive behaviors:
     passive,  // enemy doesn't know the player exists
+    patrol,  // enemy will patrol through a sequence of pre-set points
     wondering,  // enemy is unaware of the player, and wonders idly 
 
 }
