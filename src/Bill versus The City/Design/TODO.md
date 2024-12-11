@@ -122,7 +122,6 @@ SOOSH:
     - cancel reload cancels on empty gun???
 
 
-
 ================
 ==== Demo 2 ====
 ================
@@ -258,6 +257,31 @@ SOOSH:
 
 [ ] Bugs
     [ ] hovering on Interactions is not detected sometimes
+
+
+
+===================
+==== DEMO 004 =====
+===================
+
+[~] More interesting Enemy Behavior
+    [+] varied passive behaviors
+        [+] Patrol
+        [+] Wonder
+    [+] Less Omnipotent agression
+        [+] Enemies do not always know exactly where the player is when aggressive
+        [+] Enemies eventually lose track of the player
+        [ ] Enemies will search out the player if they know the player is present on the map
+    [ ] Enemies can seek out an use tactical positions
+    [ ] Enemies can retreat to reload weapons
+        [ ] Enemies track ammo as they shoot
+        [ ] Enemies can reload when they run out
+        [ ] Enemies will reposition somewhere out of the way to reload when they do
+        [ ] UI indicates if an enemy is reloading
+
+[ ] Tactiacal positions
+    [ ] Cover positions exist, and can be used by the player <----- you are here
+    [ ] Enemies can use cover
 
 
 
