@@ -46,7 +46,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             _is_active = value;
         }
     }
-    public float movement_speed {
+    public virtual float movement_speed {
         get {
             float move_speed = walk_speed;
             if (is_spinting) {
@@ -70,7 +70,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             if (this.is_hit_stunned) {
                 move_speed *= 0.1f;
             }
-
             return move_speed;
         }
     }

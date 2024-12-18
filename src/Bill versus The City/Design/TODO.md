@@ -279,8 +279,8 @@ SOOSH:
         [ ] Enemies will reposition somewhere out of the way to reload when they do
         [ ] UI indicates if an enemy is reloading
 
-[ ] Tactiacal positions
-    [ ] Cover positions exist, and can be used by the player <----- you are here 
+[~] Tactiacal positions
+    [+] Cover positions exist, and can be used by the player
     [ ] Enemies can use cover
 
 

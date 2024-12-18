@@ -34,9 +34,7 @@ public class Bullet : MonoBehaviour, IBullet
         if (start_time + time_to_live <= Time.time) {
             DestroyProjectile();
         }
-        Debug.LogError($"bullet velocity: {rb.velocity}");
         Debug.DrawRay(transform.position, rb.velocity, Color.green, Time.deltaTime);
-        Debug.DrawRay(transform.position, -rb.velocity, Color.blue, Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision hit) {

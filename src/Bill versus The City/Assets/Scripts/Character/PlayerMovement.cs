@@ -49,7 +49,7 @@ public class PlayerMovement : CharCtrl
     }
 
     public override bool CrouchInput() {
-        return !InputSystem.current.CrouchInput();  // TODO --- remove debug
+        return InputSystem.current.CrouchInput();
     }
 
     public override bool CancelAimInput() {
@@ -78,7 +78,15 @@ public class PlayerMovement : CharCtrl
     public float uncrouched_height = 1.2f;
     public float crouch_rate = 4f;
     public float uncrouch_rate = 4f;
-    
+
+    public override float movement_speed {
+        get {
+            float move_speed = base.movement_speed; 
+            float crouch_multiplier = (1 - crouch_percent) + (this.crouched_speed * crouch_percent);
+            return move_speed * crouch_multiplier;
+        }
+    }
+
     private void HandleCrouch() {
         if (CrouchInput()) {
             crouch_percent += crouch_rate * Time.deltaTime;

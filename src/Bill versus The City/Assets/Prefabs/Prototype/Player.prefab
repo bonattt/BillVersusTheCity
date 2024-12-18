@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 8986722397995800886}
   - component: {fileID: 6920396538687356567}
   - component: {fileID: 3981117020171347118}
+  - component: {fileID: 2096724102164174658}
   m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
@@ -172,6 +173,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2096724102164174658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514911123346442368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d162c032e84816840b9b63bfe2320e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target_object: {fileID: 3851362431406773233}
+  crouched_y: 0.25
+  player: {fileID: 6586359110877128584}
 --- !u!1 &1806144397869016587
 GameObject:
   m_ObjectHideFlags: 0
