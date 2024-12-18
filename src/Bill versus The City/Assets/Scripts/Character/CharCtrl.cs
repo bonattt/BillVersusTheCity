@@ -17,6 +17,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected CharacterController controller;
     protected AttackController attack_controller;
     protected ICharacterStatus char_status;
+    public Transform aim_target;
 
     public float last_attack_time { get; protected set; }
     public float rotation_degrees_per_second = 400;
@@ -261,6 +262,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
         return ActionCode.none;
     }
+    
+    public virtual bool CrouchInput() { 
+        return false;
+    }
 
     public virtual bool AimInput() {
         return false;
@@ -502,12 +507,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target) {
         // TODO
-        Debug.Log($"{this} scored a hit with attack {attack}!");
+        // Debug.Log($"{this} scored a hit with attack {attack}!");
     }
 
     public void OnAttackHitRecieved(IAttack attack) {
         // char_status.GetAttackTarget().OnAttackHitRecieved(attack, attacker);
-        Debug.Log($"{this} was hit by an attack {attack}!");
+        // Debug.Log($"{this} was hit by an attack {attack}!");
         SetHitStun(attack);
     }     
 
@@ -534,6 +539,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public GameObject GetHitTarget() {
         return this.gameObject;
+    }
+
+    public Transform GetAimTarget() {
+        if (aim_target == null) { 
+            Debug.LogWarning($"{this} using implicit aim_target!");
+            return transform; 
+        }
+        return aim_target;
     }
 
     private List<IReloadSubscriber> _reload_subscribers = new List<IReloadSubscriber>();

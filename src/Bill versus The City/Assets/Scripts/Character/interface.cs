@@ -69,7 +69,8 @@ public interface IBullet : IAttack {
 public interface IAttackTarget {
     // TODO
     public ICharacterStatus GetStatus();
-    public GameObject GetHitTarget();
+    public GameObject GetHitTarget(); // game object for handling effects when a target is hit
+    public Transform GetAimTarget(); // return a transform to aim at when the character is targetted with attacks
     public void OnAttackHitRecieved(IAttack attack);
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target);
 }

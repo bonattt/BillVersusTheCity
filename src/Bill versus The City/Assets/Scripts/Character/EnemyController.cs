@@ -20,7 +20,7 @@ using UnityEngine.AI;
     //////////////////////////////
     /// Behavior controls ////////
     //////////////////////////////
-    public Transform ctrl_target;
+    public CharCtrl ctrl_target;
     public bool ctrl_will_shoot = true;  // set by behavior, determines if the character will shoot if able
     public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
     public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
@@ -56,7 +56,7 @@ using UnityEngine.AI;
 
             case MovementTarget.target:
                 if (ctrl_target != null) {
-                    return ctrl_target.position;
+                    return ctrl_target.transform.position;
                 }
                 break;
 
@@ -73,6 +73,33 @@ using UnityEngine.AI;
         return new Vector3(0f, 0f, 0f); // don't move
     }
 
+    public override bool AttackInput() {
+        // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
+        if (seeing_target) {
+            if (saw_target) {
+                return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
+            }
+            else {
+                // start countdown to shoot once target is seen
+                this.last_attack_time = Time.time;
+            }
+        }
+        return false;
+    }
+
+    public override Vector3 ShootVector() {
+        return ShootTarget() - attack_controller.shoot_point.position; //  VectorFromLookTarget(ShootTarget());
+    }
+
+    private Vector3 ShootTarget() {
+        // float rand_x = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
+        // float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
+        // Vector3 rand = new Vector3(rand_x, 0, rand_z);
+        // return LookTarget() + rand;
+        Debug.LogWarning($"shoot target: {ctrl_target.GetAimTarget().gameObject.name} at {ctrl_target.GetAimTarget().position}"); // TODO --- remove debug
+        return ctrl_target.GetAimTarget().position;
+    }
+    
     public override Vector3 LookTarget() {
         switch (ctrl_aim_mode) {
             case AimingTarget.stationary:
@@ -80,7 +107,7 @@ using UnityEngine.AI;
 
             case AimingTarget.target:
                 if (ctrl_target != null) {
-                    return ctrl_target.position;
+                    return ctrl_target.GetAimTarget().position;
                 }
                 break;
 
@@ -99,32 +126,6 @@ using UnityEngine.AI;
         }
         // TODO --- default case should make aiming not change, rather than pusing it to 
         return new Vector3(0f, 0f, 0f);  
-    }
-
-    public override bool AttackInput() {
-        // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-        if (seeing_target) {
-            if (saw_target) {
-                return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
-            }
-            else {
-                // start countdown to shoot once target is seen
-                this.last_attack_time = Time.time;
-            }
-        }
-        return false;
-    }
-
-    public override Vector3 ShootVector() {
-        return VectorFromLookTarget(ShootTarget());
-    }
-
-    private Vector3 ShootTarget() {
-        // float rand_x = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
-        // float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
-        // Vector3 rand = new Vector3(rand_x, 0, rand_z);
-        // return LookTarget() + rand;
-        return LookTarget();
     }
 
     protected override void CharacterDeath() {

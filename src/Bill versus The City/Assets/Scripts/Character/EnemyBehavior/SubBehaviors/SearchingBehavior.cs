@@ -6,11 +6,11 @@ public class SearchingBehavior : ISubBehavior  {
     
     public SearchingBehavior() { /* do nothing */ }
     
-    public void SetControllerFlags(EnemyBehavior parent) {
+    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
         if (Vector3.Distance(parent.transform.position, parent.perception.last_seen_at) <= 0.25f) {
             parent.perception.last_seen_at_investigated = true;
         }
-
+        parent.controller.ctrl_target = player;
         parent.controller.ctrl_waypoint = parent.perception.last_seen_at;
         parent.controller.ctrl_will_shoot = false;
         parent.controller.ctrl_move_mode = MovementTarget.waypoint;

@@ -118,7 +118,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
 
     public void Alert() {
         // alerts the enemy
-        Debug.LogWarning($"alert called on {gameObject.name}");
+        // Debug.Log($"alert called on {gameObject.name}");
         _percent_noticed += 0.5f;
         last_seen_at = target.position;
         if (visible_nodes_this_frame >= 1) {

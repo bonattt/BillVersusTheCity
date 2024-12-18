@@ -7,9 +7,10 @@ public class StandAndShootBehavior : ISubBehavior  {
     // shoot twice as fast
     public float shooting_rate  { get { return 0.5f; }}
     
-    public void SetControllerFlags(EnemyBehavior parent) {
+    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
         // parent.controller.ctrl_waypoint = new Vector3(0, 0, 0);
         parent.controller.ctrl_will_shoot = true;
+        parent.controller.ctrl_target = player;
         parent.controller.ctrl_move_mode = MovementTarget.stationary;
         if (parent.controller.seeing_target) {
             parent.controller.ctrl_aim_mode = AimingTarget.target;

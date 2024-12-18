@@ -19,7 +19,7 @@ public class WonderingBehavior : ISubBehavior  {
         SetNewDestination(parent);
     }
     
-    public void SetControllerFlags(EnemyBehavior parent) {
+    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
 
         parent.controller.ctrl_will_shoot = false;
         float distance = Vector3.Distance(parent.transform.position, destination);

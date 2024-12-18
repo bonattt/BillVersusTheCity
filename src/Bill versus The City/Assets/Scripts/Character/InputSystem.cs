@@ -15,7 +15,7 @@ public class InputSystem : ISettingsObserver
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
     public const KeyCode INTERACT = KeyCode.E;
     public const KeyCode RELOAD = KeyCode.R;
-    public const KeyCode DASH = KeyCode.Space;
+    public const KeyCode CROUCH = KeyCode.Space;
     public const KeyCode INVENTORY_MENU = KeyCode.I;
     public const KeyCode DEBUG_KEY = KeyCode.BackQuote;
     public const KeyCode DEBUG2_KEY = KeyCode.Mouse3;
@@ -68,6 +68,10 @@ public class InputSystem : ISettingsObserver
                 _mouse_sensitivity_percent = value; 
             }
         }
+    }
+     
+    public bool CrouchInput() {
+        return Input.GetKey(CROUCH);
     }
 
     public GameObject GetHoveredObject() {
@@ -133,7 +137,7 @@ public class InputSystem : ISettingsObserver
     }
 
     public bool DashInput() {
-        return Input.GetKeyDown(DASH);
+        return Input.GetKeyDown(CROUCH);
     }
 
     public float MoveXInput() {

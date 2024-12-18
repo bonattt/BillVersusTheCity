@@ -18,12 +18,14 @@ public class PatrolBehavior : MonoBehaviour, ISubBehavior  {
     public float pause_at_point = 1f;
     private float cooldown = 0f;
     private Vector3 destination;
+
+    private PlayerCombat player_combat;
     
     void Start() { 
         initialized = false;
     }
     
-    public void SetControllerFlags(EnemyBehavior parent) {
+    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
         if (!initialized) {
             SetNewDestination(parent);
             initialized = true;

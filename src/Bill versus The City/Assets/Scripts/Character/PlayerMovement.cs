@@ -48,15 +48,61 @@ public class PlayerMovement : CharCtrl
         return InputSystem.current.AimAttackInput();
     }
 
+    public override bool CrouchInput() {
+        return !InputSystem.current.CrouchInput();  // TODO --- remove debug
+    }
+
     public override bool CancelAimInput() {
         if (this.aiming) {
             return !AimInput();
         }
         return false;
     }
+
+    public float _crouch_percent = 0f;
+    public float crouch_percent {
+        get { return _crouch_percent; }
+        set {
+            _crouch_percent = value;
+            if (_crouch_percent >= 1f) { 
+                _crouch_percent = 1f;
+            }
+            else if (_crouch_percent <= 0f) {
+                _crouch_percent = 0f;
+            }
+            
+        }
+    }
+    public float crouch_height = 0.6f;
+    public float crouched_speed = 0.25f;
+    public float uncrouched_height = 1.2f;
+    public float crouch_rate = 4f;
+    public float uncrouch_rate = 4f;
+    
+    private void HandleCrouch() {
+        if (CrouchInput()) {
+            crouch_percent += crouch_rate * Time.deltaTime;
+
+        } 
+        else {
+            crouch_percent -= uncrouch_rate * Time.deltaTime;
+        }
+        Vector3 destination;
+        if (crouch_percent == 1) {
+            destination = new Vector3(aim_target.position.x, crouch_height, aim_target.position.z);
+        } else if (crouch_percent == 0) {
+            destination = new Vector3(aim_target.position.x, uncrouched_height, aim_target.position.z);
+        }
+        else {
+            float y = (uncrouched_height * (1 - crouch_percent)) + (crouch_height * crouch_percent);
+            destination = new Vector3(aim_target.position.x, y, aim_target.position.z);
+        }
+        aim_target.position = destination;
+    }
     
     protected override void Move() {
         LookWithAction();
+        HandleCrouch();
         Vector3 move = MoveVector();
         move = ModifyMoveVector(move);
         controller.SimpleMove(move);

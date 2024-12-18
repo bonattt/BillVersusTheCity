@@ -280,7 +280,7 @@ SOOSH:
         [ ] UI indicates if an enemy is reloading
 
 [ ] Tactiacal positions
-    [ ] Cover positions exist, and can be used by the player <----- you are here
+    [ ] Cover positions exist, and can be used by the player <----- you are here 
     [ ] Enemies can use cover
 
 

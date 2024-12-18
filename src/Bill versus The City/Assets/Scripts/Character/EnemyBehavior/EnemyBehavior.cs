@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehavior : MonoBehaviour
+public class EnemyBehavior : MonoBehaviour, IPlayerObserver
 {
     public EnemyController controller;
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
@@ -19,6 +19,8 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     public BehaviorMode behavior_mode { get; private set; }
+
+    private PlayerCombat player_combat;
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors;
 
@@ -46,10 +48,15 @@ public class EnemyBehavior : MonoBehaviour
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
         };
     }
+
+    public void NewPlayerObject(PlayerCombat new_player) {
+        player_combat = new_player;
+    }
     
     void Start()
     {
         InitializeBehaviorsDict();
+        player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
 
         behavior_mode = default_behavior;
         if (controller == null) {
@@ -60,10 +67,14 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         SetBehaviorMode();
-        controller.ctrl_target = PlayerCharacter.inst.player_transform;
-        GetSubBehavior().SetControllerFlags(this);
+        
+        GetSubBehavior().SetControllerFlags(this, player_combat.movement);
         SetStandardBehaviorPatterns();
         SetDebug();
+    }
+
+    void OnDestroy() {
+        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
     }
 
     protected void SetStandardBehaviorPatterns() {
