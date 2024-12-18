@@ -11,6 +11,8 @@ using UnityEngine.AI;
     public bool saw_target { get { return perception.saw_target_last_frame; } } // saw the target last frame
     public bool seeing_target { get { return perception.seeing_target; }  } // seeing the target last frame
 
+    public bool drop_weapon = false;
+
     public float ctrl_shooting_rate = 0.75f;
     private EnemyPerception perception;
 
@@ -138,8 +140,11 @@ using UnityEngine.AI;
     protected void SpawnWeaponPickup() {
         Debug.Log("SpawnWeaponPickup");
         // spawns a weapon pickup where the enemy is standing
+        if (!drop_weapon) {
+            return;
+        }
         if (weapon_pickup_prefab == null || attack_controller.current_weapon == null) {
-            Debug.LogWarning("skipping weapon pickup drop");
+            Debug.Log("no weapon to drop as pickup!");
             return;
         }
 
