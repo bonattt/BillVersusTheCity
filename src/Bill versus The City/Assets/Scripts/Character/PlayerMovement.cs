@@ -139,7 +139,6 @@ public class PlayerMovement : CharCtrl
             move = MoveVector();
         }        
         move = ModifyMoveVector(move);
-        Debug.LogWarning($"player move: {move}"); // TODO --- remove debug
         controller.SimpleMove(move);
     }
 
