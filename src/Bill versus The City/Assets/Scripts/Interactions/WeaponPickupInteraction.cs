@@ -12,7 +12,6 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect
 
     void Start() {
         if (pickup_weapon == null && unity_weapon != null) {
-            Debug.Log("instantiate pickup from scriptable object");
             pickup_weapon = (IWeapon) Instantiate(unity_weapon);
             if (full_ammo) {
                 pickup_weapon.current_ammo = pickup_weapon.ammo_capacity;

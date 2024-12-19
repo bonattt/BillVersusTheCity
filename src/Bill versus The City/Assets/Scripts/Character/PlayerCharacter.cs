@@ -63,7 +63,6 @@ public class PlayerCharacter {
 
     public void PlayerUpdated(PlayerCombat new_player) {
         // ensure the old combat script is gone
-        Debug.LogWarning("new PlayerCombat set");
         if (this.combat != null) {
             UnityEngine.Object.Destroy(this.combat.gameObject);
         }

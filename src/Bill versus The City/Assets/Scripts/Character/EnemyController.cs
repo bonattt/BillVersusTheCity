@@ -98,7 +98,6 @@ using UnityEngine.AI;
         // float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
         // Vector3 rand = new Vector3(rand_x, 0, rand_z);
         // return LookTarget() + rand;
-        Debug.LogWarning($"shoot target: {ctrl_target.GetAimTarget().gameObject.name} at {ctrl_target.GetAimTarget().position}"); // TODO --- remove debug
         return ctrl_target.GetAimTarget().position;
     }
     
@@ -138,7 +137,6 @@ using UnityEngine.AI;
     }
 
     protected void SpawnWeaponPickup() {
-        Debug.Log("SpawnWeaponPickup");
         // spawns a weapon pickup where the enemy is standing
         if (!drop_weapon) {
             return;

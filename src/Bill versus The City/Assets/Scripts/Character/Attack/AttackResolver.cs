@@ -118,7 +118,7 @@ public static class AttackResolver {
         float og_split = armor.armor_protection - attack.armor_penetration;
         float split = Mathf.Max(0.95f, Mathf.Min(0.05f, og_split));
         if (og_split != split) {
-            StaticLogger.Warning($"unbalanced damage split: {og_split} => {split}");
+            Debug.LogWarning($"unbalanced damage split: {og_split} => {split}");
         }
         return split;
     }
@@ -133,8 +133,8 @@ public static class AttackResolver {
         attack_damage = Mathf.Max(1, attack_damage);
         armor_damage = Mathf.Max(1, armor_damage);
       
-        // StaticLogger.Log($"base_attack_damage: {total_attack_damage}, \ndamage_split: {damage_split}, \nattack_damage: {attack_damage}, \nbase_armor_damage: {base_armor_damage}, \narmor_damage: {armor_damage}");
-        // StaticLogger.Log($"{total_attack_damage} => {attack_damage} / {base_armor_damage}");
+        // Debug.Log($"base_attack_damage: {total_attack_damage}, \ndamage_split: {damage_split}, \nattack_damage: {attack_damage}, \nbase_armor_damage: {base_armor_damage}, \narmor_damage: {armor_damage}");
+        // Debug.Log($"{total_attack_damage} => {attack_damage} / {base_armor_damage}");
         if (total_attack_damage <= 0) { Debug.LogWarning($"negative total_attack_damage: {total_attack_damage}"); } 
         if (attack_damage <= 0) { Debug.LogWarning($"negative attack_damage: {attack_damage}"); } 
         if (armor_damage <= 0) { Debug.LogWarning($"negative armor_damage: {armor_damage}"); } 
@@ -156,17 +156,17 @@ public static class AttackResolver {
         }
         status.health -= health_damage + overflow_damage;
         if(total_attack_damage < (health_damage + overflow_damage)) {
-            StaticLogger.Warning($"Overflow damage more than base: {total_attack_damage} => {health_damage} + {overflow_damage}");
+            Debug.LogWarning($"Overflow damage more than base: {total_attack_damage} => {health_damage} + {overflow_damage}");
         }
         if (armor_before >= status.armor.armor_durability) {
-            StaticLogger.Warning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}");
+            Debug.LogWarning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}");
         }    
         return (health_damage, armor_damage);
     }
 
     public static void ResolveArmorBreak(IAttack attack, 
             ICharacterStatus status, Vector3 hit_location) {
-        // StaticLogger.Log($"Armor '{status.armor}' Broken by {attack}!!!");
+        // Debug.Log($"Armor '{status.armor}' Broken by {attack}!!!");
         // TODO !
     }
 

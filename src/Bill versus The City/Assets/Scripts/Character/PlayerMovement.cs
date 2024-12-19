@@ -7,6 +7,9 @@ public class PlayerMovement : CharCtrl
     // returns a list of all the nodes which enemies raycast to see the player
     public Transform vision_target;
     private List<Transform> _vision_nodes = null;
+    public float crouch_dive_duration = 1f; // how long does a crouch dive last
+    private Vector3 crouch_dive_direction = new Vector3(0, 0, 0);
+    private float crouch_dive_remaining = 0f; // how long can you crouch dive for
     public List<Transform> vision_nodes {
         get {
             if (_vision_nodes == null) {
@@ -81,19 +84,36 @@ public class PlayerMovement : CharCtrl
 
     public override float movement_speed {
         get {
-            float move_speed = base.movement_speed; 
+            if (crouch_dive_remaining > 0f) {
+                Debug.Log($"crouch dive speed: {walk_speed} * {sprint_multiplier}");
+                return walk_speed * sprint_multiplier;
+            }
+            float move_speed = base.movement_speed;
             float crouch_multiplier = (1 - crouch_percent) + (this.crouched_speed * crouch_percent);
+            if ((is_spinting && crouch_percent >= 1f) || CrouchInput()) {
+                // disallow sprinting while fully crouched, but not while standing up
+                move_speed = move_speed / sprint_multiplier;
+            }
             return move_speed * crouch_multiplier;
         }
     }
 
     private void HandleCrouch() {
-        if (CrouchInput()) {
+        if (crouch_dive_remaining >= 0) { crouch_dive_remaining -= Time.deltaTime; }
+        bool is_moving =  MoveVector() != new Vector3(0f, 0f, 0f);
+        if (is_moving && CrouchInput() && SprintInput() && crouch_percent <= 0f && crouch_dive_remaining <= 0) { // crouch diving
+            crouch_percent = 1;
+            crouch_dive_remaining = crouch_dive_duration;
+            crouch_dive_direction = MoveVector();
+            Debug.Log("start crouch dive!");
+        } else if (CrouchInput()) {  // is crouching
             crouch_percent += crouch_rate * Time.deltaTime;
-
         } 
-        else {
-            crouch_percent -= uncrouch_rate * Time.deltaTime;
+        else {  // not crouching
+            if (crouch_dive_remaining < 0) {
+                // un-crouch, but only if you're not in a crouch dive
+                crouch_percent -= uncrouch_rate * Time.deltaTime;
+            }
         }
         Vector3 destination;
         if (crouch_percent == 1) {
@@ -111,8 +131,15 @@ public class PlayerMovement : CharCtrl
     protected override void Move() {
         LookWithAction();
         HandleCrouch();
-        Vector3 move = MoveVector();
+        Vector3 move;
+        if (crouch_dive_remaining > 0f) {
+            Debug.Log($"crouch_dive_remaining: {crouch_dive_remaining}, crouch_dive_direction: {crouch_dive_direction}");
+            move = crouch_dive_direction;
+        } else {
+            move = MoveVector();
+        }        
         move = ModifyMoveVector(move);
+        Debug.LogWarning($"player move: {move}"); // TODO --- remove debug
         controller.SimpleMove(move);
     }
 

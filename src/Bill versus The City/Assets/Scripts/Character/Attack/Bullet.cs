@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour, IBullet
         IAttackTarget target = hit.GetComponent<IAttackTarget>();
         if(target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
-            Debug.LogWarning("bullet ignores collision with the one who shot it!");
+            // Debug.LogWarning("bullet ignores collision with the one who shot it!");
         }
         else if (target != null) {
             AttackResolver.ResolveAttackHit(this, target, hit_location);

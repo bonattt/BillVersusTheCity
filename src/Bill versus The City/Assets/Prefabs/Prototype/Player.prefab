@@ -367,6 +367,7 @@ MonoBehaviour:
   debug_pause_blocked_for: 0
   debug_pause_blocked: 0
   vision_target: {fileID: 7902831743066966521}
+  crouch_dive_duration: 0.5
   _crouch_percent: 0
   crouch_height: 0.4
   crouched_speed: 0.25
