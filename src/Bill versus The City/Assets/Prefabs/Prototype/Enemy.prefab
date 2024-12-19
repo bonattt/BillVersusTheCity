@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1629567951243630353}
   - component: {fileID: 7771750986634287957}
   - component: {fileID: 2365366885385776978}
+  - component: {fileID: 7349087969400524599}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -104,6 +105,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  drop_weapon: 0
   ctrl_shooting_rate: 0.75
   weapon_pickup_prefab: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
   ctrl_target: {fileID: 0}
@@ -246,6 +248,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7349087969400524599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505927797627387282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd805de725c4fc40941c74e0a395991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2741102800901688509
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,6 @@ public abstract class AbstractFloaterEffect : MonoBehaviour
     public float upware_float = 0f;
 
     public UIDocument uiDocument;
-    private Label damage_label;
 
     void Start() {
         Destroy(this.gameObject, duration);

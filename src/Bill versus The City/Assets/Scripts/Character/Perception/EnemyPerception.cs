@@ -37,7 +37,13 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     private PerceptionState _state = PerceptionState.unaware;
     public PerceptionState state {
         get { return _state; }
-        protected set { _state = value; }
+        protected set { 
+            PerceptionState old_state = _state;
+            _state = value; 
+            if (old_state != _state) {
+                UpdateSubscribers(old_state, _state);
+            }
+        }
     }
 
     [SerializeField]
@@ -259,6 +265,15 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public void SetDebugData() {
         debug_knows_player_location = knows_player_location;
         debug_player_noticed = player_noticed;
+    }
+
+    private List<IPerceptionSubscriber> subscribers = new List<IPerceptionSubscriber>();
+    public void Subscribe(IPerceptionSubscriber new_sub) => subscribers.Add(new_sub);
+    public void Unsubscribe(IPerceptionSubscriber old_sub) => subscribers.Remove(old_sub);
+    public void UpdateSubscribers(PerceptionState old_state, PerceptionState new_state) {
+        foreach(IPerceptionSubscriber sub in subscribers) {
+            sub.UpdatePerceptionState(old_state, new_state);
+        }
     }
 }
 
