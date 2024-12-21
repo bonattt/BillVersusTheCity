@@ -41,139 +41,102 @@ public static class NavMeshUtils {
         return Vector3.zero;
     }
 
-    public static bool CanRetreatFrom(Vector3 start_point, Vector3[] run_from) {
-        return CanRetreatFrom(start_point, run_from, 0.99f);
+    
+    public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from) {
+        int n_rays = 30;
+        return GetRetreatWithCover(start, cover_from, n_rays);
     }
-    public static bool CanRetreatFrom(Vector3 start_point, Vector3[] run_from, float threashold) {
-        // returns a boolean whether it is possible to retreat from threats in all the given positions.
-        Vector3 final_escape_vector = GetEscapeVector(start_point, run_from);
-        return final_escape_vector.normalized.magnitude >= threashold;
-    }
+    public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from, int n_rays) {
+        bool start_has_cover = PositionHasCoverFrom(start, cover_from, draw_debug_ray: true);
+        if (start_has_cover) { return start; }
 
-    public static Vector3 GetEscapeVector(Vector3 start_point, Vector3 run_from) {
-        Vector3[] as_array = new Vector3[]{run_from};
-        return GetEscapeVector(start_point, as_array);
-    }
-    public static Vector3 GetEscapeVector(Vector3 start_point, Vector3[] run_from) {
-        // returns a vector roughly poiting away from all given threats. Vector is NOT normalized.
-        Vector3 final_escape_vector = new Vector3(0, 0, 0);
-        foreach (Vector3 v in run_from) {
-            Vector3 escape_vector = (start_point - v).normalized;
-            final_escape_vector += escape_vector;
-            // Debug.Log($"escape away: {escape_vector}"); // TODO --- remove debug
+        List<Vector3> cover_positions = GetCoverPositions(cover_from, n_rays);
+        if (cover_positions.Count == 0) {
+            return start + (5 * (cover_from - start).normalized); // if there are no cover positions, just try to move away
         }
-        // Debug.Log($"final_escape_vector: {final_escape_vector}"); // TODO --- remove debug
-        return final_escape_vector;
+        float best_distance_score = float.NegativeInfinity;
+        Vector3 best_position = cover_positions[0];
+        foreach (Vector3 position in cover_positions) {
+            float distance_score = CoverDistanceScore(position, start, cover_from);
+            if (distance_score > best_distance_score) {
+                best_distance_score = distance_score;
+                best_position = position;
+            }
+        }
+        return best_position;
     }
 
-    public static Vector3 GetMultiRetreatPoint(Vector3 start_point, Vector3[] run_from) {
-        // gets the best escape point from several un-weighted threats
-        Vector3 escape_vector = GetEscapeVector(start_point, run_from);
-
-        Vector3 near_escape_point = start_point + escape_vector;
-        float radius = 1f;
-        if(NavMesh.SamplePosition(near_escape_point, out NavMeshHit hit, radius, NavMesh.AllAreas)) {
-            return hit.position; // return the first val
-        }
-        // Debug.LogWarning($"{near_escape_point} is not on the nav mesh!"); // TODO --- remove debug
-        return near_escape_point; // TODO --- this is not actually a valid NavMeshPoint
+    private static float CoverDistanceScore(Vector3 destination, Vector3 start_pos, Vector3 cover_from) {
+        // returns a "score" for ranking the best destination point for an agent trying to move from `start_pos` to `destination` while 
+        // avoiding `cover_from`.
+        // method only factors distance.
+        float avoidance_score = Mathf.Sqrt(2 * Vector3.Distance(destination, cover_from)); // score for how far the point to be avoided is from the destination
+        float travel_score = Vector3.Distance(destination, cover_from); // score for how far the destination is from the start
+        
+        // high avoidance score is good, b/c we want to avoid, but high travel_score is bad b/c it means we have to travel a long way to reach safety
+        return avoidance_score - travel_score;  
     }
 
-    public static Vector3 GetRetreatWithCover(Vector3 start_point, Vector3 cover_from) {
-        // gets a position on the NavMesh to take cover against `cover_from`
-        int max_tries = 6;  // arbitrary max_tries to find a cover position
-        Vector3 escape_vector = GetEscapeVector(start_point, cover_from).normalized;
-        (Vector3 escape_left, Vector3 escape_right) = GetPerpendicularVectors(escape_vector);
-        Vector3 escape_point = start_point + escape_vector;
-        float radius = 1f;
-        if(NavMesh.SamplePosition(escape_point, out NavMeshHit hit, radius, NavMesh.AllAreas)) {
-            escape_point = hit.position;
-        }
-
-        for (int i = 1; i < max_tries + 1; i++) {
-            Vector3 p_forward = start_point + (escape_vector * i);
-            Vector3 p_left = start_point + (escape_left * i);
-            Vector3 p_right = start_point + (escape_right * i);
-
-            List<Vector3> forward_points = _GetCanidatePoints(p_forward, i, i);
-            List<Vector3> left_points = _GetCanidatePoints(p_left, i, i);
-            List<Vector3> right_points = _GetCanidatePoints(p_right, i, i);
-
-            List<Vector3> valid_points = new List<Vector3>();
-            _TryCoverPoints(cover_from, left_points, valid_points);
-            _TryCoverPoints(cover_from, right_points, valid_points);
-            _TryCoverPoints(cover_from, forward_points, valid_points);
-
-            if (valid_points.Count == 0) { continue; }
-
-            float min_distance = float.PositiveInfinity;
-            Vector3 closest_point = new Vector3(float.NaN, 0, 0);
-            foreach(Vector3 p in valid_points) {
-                float dist = Vector3.Distance(start_point, p);
-                if (dist <= min_distance) {
-                    closest_point = p;
-                    min_distance = dist;
+    private static List<Vector3> GetCoverPositions(Vector3 cover_from, int n_rays) {
+        // returns a list of Vector3's which have cover from `cover_from` AND are valid positions on a navmesh
+        List<Vector3> rays = GetNDirections(n_rays);
+        List<Vector3> valid_positions = new List<Vector3>();
+        foreach (Vector3 r in rays) {
+            if (Physics.Raycast(cover_from, r, out RaycastHit raycast_hit, float.PositiveInfinity)) {
+                if (! RaycastHitsPlayer(raycast_hit)) {
+                    float radius = 1f;
+                    Vector3 point_past_cover = raycast_hit.point + r.normalized * radius; // move `radius` units past the cover
+                    if (NavMesh.SamplePosition(point_past_cover, out NavMeshHit navmesh_hit, radius, NavMesh.AllAreas)) { 
+                        Vector3 valid_p = navmesh_hit.position;
+                        // retest that the navmesh position still has cover
+                        if (Physics.Raycast(cover_from, valid_p, out RaycastHit raycast_hit2, float.PositiveInfinity)) {
+                            if (! RaycastHitsPlayer(raycast_hit)) {
+                                valid_positions.Add(valid_p);
+                            }
+                        }
+                    }
                 }
             }
-            Debug.Log($"found retreat point on iteration i = {i} / max = {max_tries}"); // TODO --- remove debug
-            return closest_point;
         }
-        Debug.LogWarning($"failed to find valid retreat in {max_tries} iterations"); // TODO --- remove debug
-        return escape_point;
+        return valid_positions;
     }
 
-    private static List<Vector3> _TryCoverPoints(Vector3 cover_from, List<Vector3> trial_points, List<Vector3> valid_points) {
-        // tries a list of points, and returns a list containing only points which have no line-of-sight to `cover_point`
-        // ADDs all valid points to an exiting list that is passed in.
-        foreach(Vector3 v in trial_points) {
-            // NavMeshHit hit;
-            // checks that 1) point is on NavMesh and 2) there is also collision between the points.
-            if (NavMesh.Raycast(cover_from, v, out NavMeshHit _, NavMesh.AllAreas)) {
-                valid_points.Add(v);
-            }
+    public static bool RaycastHitsPlayer(RaycastHit hit) {
+        // TODO --- find a better home for this helper method
+        Transform hit_transform = hit.transform;
+        while (hit_transform.parent != null) {
+            hit_transform = hit_transform.parent;
         }
-        return valid_points;
+        Debug.LogWarning($"cover raycast hit {hit_transform.gameObject.name}!"); // TODO --- remove debug
+        return hit_transform.gameObject.GetComponent<PlayerMovement>() != null;
     }
 
-    private static List<Vector3> _GetCanidatePoints(Vector3 center, float radius, int random_points ) {
-        List<Vector3> canidates = new List<Vector3>();
-        canidates.Add(center);
-        for (int i = 0; i < random_points; i++) {
-            (Vector3 p, float distance) = _GetRandomPointInRadiusWithDistance(center, radius);
-            if (! float.IsNaN(p.x)) {
-                canidates.Add(p);
-            }
+    public static bool PositionHasCoverFrom(Vector3 cover_from, Vector3 end, bool draw_debug_ray = false) {
+        Vector3 raycast_direction = cover_from - end;
+        RaycastHit hit;
+        float ray_length = raycast_direction.magnitude;
+
+        if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, Color.cyan, ray_length); }
+        if (Physics.Raycast(cover_from, raycast_direction, out hit, raycast_direction.magnitude)) {
+            // if raycast hits something other than the player
+            return !RaycastHitsPlayer(hit);
         }
-        return canidates;
+        return false; // raycast hit nothing, or hit the player, so there is not cover
     }
 
-    private static (Vector3, float) _GetRandomPointInRadiusWithDistance(Vector3 center, float radius) {
-        // returns a single random point within {radius} distance of {center}, and the distance from center the point is.
-        NavMeshHit hit;
-        Vector3 random_point = center + (Random.insideUnitSphere * radius);
-        if (NavMesh.SamplePosition(random_point, out hit, radius, NavMesh.AllAreas)) {
-            return (hit.position, Vector3.Distance(center, hit.position));
+    public static List<Vector3> GetNDirections(int n) {
+        // returns a list of n equidistant unit-vectors pointing in all directions 
+        // TODO --- find a better home for this helper method
+        List<Vector3> vectors = new List<Vector3>();
+        float incriment = 360f / n;  // degrees of rotation between each vector
+        Vector3 base_vector = new Vector3(1f, 0, 0);
+
+        for (int i = 0; i < n; i++) {
+            float angle = i * incriment;
+            Debug.LogWarning($"i = {i}: angle {angle}"); // TODO --- remove debug
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            vectors.Add(rotation * base_vector);
         }
-        return (new Vector3(float.NaN, float.NaN, float.NaN), float.PositiveInfinity);
-    }
-
-    private static Vector3 _GetRandomPointInRadius(Vector3 center, float radius, int max_tries) {
-        // tries {max_tries} times to find a point on the NavMesh inside {radius}
-        NavMeshHit hit;
-        for (int j = 0; j < max_tries; j++) {
-            Vector3 random_point = center + (Random.insideUnitSphere * radius);
-            if (NavMesh.SamplePosition(random_point, out hit, radius, NavMesh.AllAreas)) {
-                return hit.position;
-            }
-        }
-        return new Vector3(float.NaN, float.NaN, float.NaN);
-    }
-
-
-    public static (Vector3, Vector3) GetPerpendicularVectors(Vector3 base_vector) {
-        // returns the vectors perpendicular to the base vector, and returns both.
-        // returns the "left" then "right" vector in that order.
-        // "left" is rotated 90 degrees anti-clockwise, and "right" is rotated 90 degrees clockwise
-        return (new Vector3(-base_vector.z, 0, base_vector.x).normalized, new Vector3(base_vector.z, 0, -base_vector.x).normalized);
+        return vectors;
     }
 }

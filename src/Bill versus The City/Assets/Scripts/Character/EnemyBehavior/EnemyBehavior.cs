@@ -89,7 +89,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     }
 
     protected ISubBehavior GetSubBehavior() {
-        Debug.Log($"behavior {behavior_mode} => {behaviors[behavior_mode]}"); // TODO --- remove debug
         return behaviors[behavior_mode];
     }
 
