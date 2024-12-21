@@ -43,7 +43,7 @@ public static class NavMeshUtils {
 
     
     public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from) {
-        int n_rays = 30;
+        int n_rays = 15;
         return GetRetreatWithCover(start, cover_from, n_rays);
     }
     public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from, int n_rays) {
