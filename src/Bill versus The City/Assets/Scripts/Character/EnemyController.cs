@@ -77,7 +77,7 @@ using UnityEngine.AI;
 
     public override bool AttackInput() {
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-        if (seeing_target) {
+        if (seeing_target && ctrl_will_shoot) {
             if (saw_target) {
                 return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
             }

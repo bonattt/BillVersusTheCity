@@ -46,6 +46,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
             {BehaviorMode.passive, new StationaryBehavior()},
             {BehaviorMode.wondering, new WonderingBehavior(this)},
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
+            {BehaviorMode.routed, new FleeToCoverBehavior()},
         };
     }
 
@@ -88,10 +89,16 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     }
 
     protected ISubBehavior GetSubBehavior() {
+        Debug.Log($"behavior {behavior_mode} => {behaviors[behavior_mode]}"); // TODO --- remove debug
         return behaviors[behavior_mode];
     }
 
     protected void SetBehaviorMode() {
+        // routed is permanent, and the enemy will run away forever
+        if (behavior_mode == BehaviorMode.routed) { 
+            return; 
+        }
+
         switch(perception.state) {
             case PerceptionState.seeing:
                 float dist = DistanceToTarget();
@@ -139,5 +146,6 @@ public enum BehaviorMode {
     passive,  // enemy doesn't know the player exists
     patrol,  // enemy will patrol through a sequence of pre-set points
     wondering,  // enemy is unaware of the player, and wonders idly 
+    routed,  // enemy is paniced and will run away forever. (probably mostly for testing retreat behaviors and pathfinding)
 
 }
