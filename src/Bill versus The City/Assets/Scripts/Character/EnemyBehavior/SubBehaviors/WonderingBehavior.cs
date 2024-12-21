@@ -48,6 +48,6 @@ public class WonderingBehavior : ISubBehavior  {
     
         parent.controller.ctrl_move_mode = MovementTarget.stationary;
         cooldown = Random.Range(wonder_cooldown_min, wonder_cooldown_max);
-        destination = NavMeshUtils.GetRandomNavMeshPoint(parent.controller.nav_mesh_agent, wonder_cooldown_max);
+        destination = NavMeshUtils.GetRandomPoint(parent.controller.nav_mesh_agent, wonder_cooldown_max);
     }
 }
