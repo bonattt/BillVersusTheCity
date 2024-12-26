@@ -280,7 +280,10 @@ SOOSH:
         [ ] UI indicates if an enemy is reloading
     [~] Retreat SubBehavior
         [+] Enemies find a semi optimal position to take cover from the player
-        [ ] Bugfix <--- you are here
+        [~] Bugfix
+            [+] Cover detection broken
+            [+] Finding cover proceedurally is buggy --> replaced with waypoint system.
+            [ ] Enemies on a point count themselves as cover <--- you are here
         [ ] Optimize
 
 [~] Tactiacal positions

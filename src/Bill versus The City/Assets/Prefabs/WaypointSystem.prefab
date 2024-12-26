@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5824527686841103989}
   - component: {fileID: 3279546278897656431}
   - component: {fileID: 8470584015707732818}
+  - component: {fileID: 9198862466182834100}
   m_Layer: 0
   m_Name: WaypointSystem
   m_TagString: Untagged
@@ -53,7 +54,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107624226753905868}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b48de2cefb997a844a0cb521511165be, type: 3}
   m_Name: 
@@ -62,4 +63,22 @@ MonoBehaviour:
   start_position: {x: 0, y: 0, z: 0}
   cover_from_pos: {x: 0, y: 0, z: 0}
   cover_from: {fileID: 0}
+  start: {fileID: 0}
+  test_ray: {r: 0, g: 1, b: 0, a: 1}
   selected_point: {fileID: 0}
+--- !u!114 &9198862466182834100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107624226753905868}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae11fedb25cda74a8d04d7f6957a438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cover_from: {fileID: 0}
+  cover_from_pos: {x: 0, y: 0, z: 0}
+  cover_color: {r: 0, g: 1, b: 0, a: 1}
+  clear_color: {r: 1, g: 0, b: 0, a: 1}
