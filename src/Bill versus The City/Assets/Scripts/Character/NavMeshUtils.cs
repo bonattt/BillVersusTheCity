@@ -47,6 +47,9 @@ public static class NavMeshUtils {
         return GetRetreatWithCover(start, cover_from, n_rays);
     }
     public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from, int n_rays) {
+        start = new Vector3(start.x, 0.5f, start.z);
+        cover_from = new Vector3(cover_from.x, 0.5f, cover_from.z);
+        
         bool start_has_cover = PositionHasCoverFrom(start, cover_from, draw_debug_ray: true);
         if (start_has_cover) { return start; }
 
@@ -107,8 +110,9 @@ public static class NavMeshUtils {
         while (hit_transform.parent != null) {
             hit_transform = hit_transform.parent;
         }
-        Debug.LogWarning($"cover raycast hit {hit_transform.gameObject.name}!"); // TODO --- remove debug
-        return hit_transform.gameObject.GetComponent<PlayerMovement>() != null;
+        bool result = hit_transform.gameObject.GetComponent<PlayerMovement>() != null;
+        Debug.LogWarning($"cover raycast hit {hit_transform.gameObject.name}! => result = {result}"); // TODO --- remove debug
+        return result;
     }
 
     public static bool PositionHasCoverFrom(Vector3 cover_from, Vector3 end, bool draw_debug_ray = false) {
@@ -121,6 +125,7 @@ public static class NavMeshUtils {
             // if raycast hits something other than the player
             return !RaycastHitsPlayer(hit);
         }
+        Debug.LogWarning($"cover raycast hit nothing at all!!");
         return false; // raycast hit nothing, or hit the player, so there is not cover
     }
 

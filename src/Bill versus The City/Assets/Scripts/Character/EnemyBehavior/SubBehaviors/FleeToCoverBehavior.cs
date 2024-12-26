@@ -22,7 +22,8 @@ public class FleeToCoverBehavior : ISubBehavior  {
         // recalculate destination
         if (last_calculation_at + calculations_per_second <= Time.time) {
             last_calculation_at = Time.time;
-            parent.controller.ctrl_waypoint = NavMeshUtils.GetRetreatWithCover(start, cover_from);
+            Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start, cover_from);
+            parent.controller.ctrl_waypoint = dest.position;
             Debug.DrawLine(start, parent.controller.ctrl_waypoint, Color.green, Time.deltaTime);
         }
     }
