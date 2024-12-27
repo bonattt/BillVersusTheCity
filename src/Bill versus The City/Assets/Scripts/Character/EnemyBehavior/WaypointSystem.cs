@@ -89,8 +89,10 @@ public class WaypointSystem : MonoBehaviour {
         Vector3 enemy_direction = (cover_from - start_pos).normalized;  
         Vector3 travel_direction = (destination - start_pos).normalized;
         // get a number 2-1 representing how towards the player character the destination is, to avoid taking cover in the direction of the threat you're taking cover from.
-        float towards_enemy_score = Vector3.Dot(enemy_direction, travel_direction) + 1f;
+        float dot_product = Vector3.Dot(enemy_direction, travel_direction);
+        float towards_enemy_score = dot_product + 1f / Mathf.Max(0.25f, Mathf.Abs(dot_product));
         // +1 added to dot-product to avoid multiplying by ZERO
+        // divide by dot-product to favor moving sideways from player, rather than directly away, and Mathf.Max to avoid div-by-zero
 
         return towards_enemy_score * travel_distance;
     }
