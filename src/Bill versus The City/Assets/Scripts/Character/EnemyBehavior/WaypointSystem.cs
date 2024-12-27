@@ -55,20 +55,20 @@ public class WaypointSystem : MonoBehaviour {
 
     private static float RawDistanceScore(Vector3 start_pos, Vector3 destination) {
         // returns a score that sorts for the closest point
-        return -TravelDistanceToPoint(start_pos, destination);
+        return TravelDistanceToPoint(start_pos, destination);
     }
 
     private Transform _GetBestPosition(Vector3 start_point, Func<Vector3, Vector3, float> score_funct, Func<Transform, bool> filter_func) {
         // takes a start_point, scoring method, and filtering method.
-        // returns the Waypoint with the highest score which is not excluded by the filter.
-        // highest score is returned. filter_func should return true to include a waypoint in the decision.
-        float best_score = float.NegativeInfinity;
+        // returns the Waypoint with the lowest distance-score which is not excluded by the filter.
+        // lowest score is returned. filter_func should return true to include a waypoint in the decision.
+        float best_score = float.PositiveInfinity;
         Transform best_destination = null;
         foreach(Transform p in waypoints) {
             if (! filter_func(p)) { continue; }
-            float score = score_funct(start_point, p.position);
-            if (score > best_score) {
-                best_score = score;
+            float distance_score = score_funct(start_point, p.position);
+            if (distance_score < best_score) {
+                best_score = distance_score;
                 best_destination = p;
             }
         }
@@ -84,8 +84,14 @@ public class WaypointSystem : MonoBehaviour {
         // returns a score that values short travel distance, and also distance from an enemy. 
         // distance from an enemy is square-rooted to give it diminishing returns the further from the enemy you go.
         float travel_distance = TravelDistanceToPoint(start_pos, destination);
-        float distance_from_enemy = TravelDistanceToPoint(destination, cover_from);
-        return Mathf.Sqrt(distance_from_enemy) - Mathf.Pow(travel_distance/4, 2);
+       
+        Vector3 enemy_direction = (cover_from - start_pos).normalized;
+        Vector3 travel_direction = (destination - start_pos).normalized;
+        // get a number 2-1 representing how towards the player character the destination is, to avoid taking cover in the direction of the threat you're taking cover from.
+        float towards_enemy_score = Vector3.Dot(enemy_direction, travel_direction) + 1f;
+        // +1 added to dot-product to avoid multiplying by ZERO
+
+        return towards_enemy_score * travel_distance;
     }
 
     public static float TravelDistanceToPoint(Vector3 start_point, Vector3 end_point) {

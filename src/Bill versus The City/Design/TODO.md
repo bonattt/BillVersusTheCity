@@ -278,13 +278,16 @@ SOOSH:
         [ ] Enemies can reload when they run out
         [ ] Enemies will reposition somewhere out of the way to reload when they do
         [ ] UI indicates if an enemy is reloading
-    [~] Retreat SubBehavior
+    [+] Retreat SubBehavior
         [+] Enemies find a semi optimal position to take cover from the player
-        [~] Bugfix
+        [+] Bugfix
             [+] Cover detection broken
             [+] Finding cover proceedurally is buggy --> replaced with waypoint system.
-            [ ] Enemies on a point count themselves as cover <--- you are here 
-        [ ] Optimize
+            [+] Enemies on a point count themselves as cover <--- you are here 
+            [+] Enemies are too willing to run past the player to find cover
+                -> replace distance from player in distance score
+                -> use player direction and travel direction instead
+        [X] Optimize
 
 [~] Tactiacal positions
     [+] Cover positions exist, and can be used by the player
