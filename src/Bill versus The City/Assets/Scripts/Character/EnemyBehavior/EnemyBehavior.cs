@@ -13,6 +13,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
 
     public float _shooting_rate = 1f;
     private float _shooting_rate_variation = 0f;
+    public const float SHOOTING_RATE_VARIATION = 0.5f;
     public float shooting_rate {
         get { 
             return _shooting_rate * GetSubBehavior().shooting_rate + _shooting_rate_variation; 
@@ -57,7 +58,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     
     void Start()
     {
-        _shooting_rate_variation = Random.Range(-0.3f, 0.3f);
+        _shooting_rate_variation = Random.Range(-SHOOTING_RATE_VARIATION/2, SHOOTING_RATE_VARIATION/2);
         InitializeBehaviorsDict();
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
 
