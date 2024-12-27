@@ -12,9 +12,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     public float max_attack_range = 11f;
 
     public float _shooting_rate = 1f;
+    private float _shooting_rate_variation = 0f;
     public float shooting_rate {
         get { 
-            return _shooting_rate * GetSubBehavior().shooting_rate; 
+            return _shooting_rate * GetSubBehavior().shooting_rate + _shooting_rate_variation; 
         }
     }
 
@@ -56,6 +57,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     
     void Start()
     {
+        _shooting_rate_variation = Random.Range(-0.3f, 0.3f);
         InitializeBehaviorsDict();
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
 
