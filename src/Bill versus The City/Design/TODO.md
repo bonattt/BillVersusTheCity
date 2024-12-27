@@ -283,7 +283,7 @@ SOOSH:
         [~] Bugfix
             [+] Cover detection broken
             [+] Finding cover proceedurally is buggy --> replaced with waypoint system.
-            [ ] Enemies on a point count themselves as cover <--- you are here
+            [ ] Enemies on a point count themselves as cover <--- you are here 
         [ ] Optimize
 
 [~] Tactiacal positions

@@ -14,6 +14,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
         // parent.controller.ctrl_waypoint = new Vector3(0, 0, 0);
         parent.controller.ctrl_target = player;
         parent.controller.ctrl_will_shoot = false;
+        parent.controller.ctrl_sprint = true;
         parent.controller.ctrl_move_mode = MovementTarget.waypoint;
         parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
 

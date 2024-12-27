@@ -10,5 +10,6 @@ public class StationaryBehavior : ISubBehavior {
         parent.controller.ctrl_will_shoot = false;
         parent.controller.ctrl_move_mode = MovementTarget.stationary;
         parent.controller.ctrl_aim_mode = AimingTarget.stationary;
+        parent.controller.ctrl_sprint = false;
     }
 }

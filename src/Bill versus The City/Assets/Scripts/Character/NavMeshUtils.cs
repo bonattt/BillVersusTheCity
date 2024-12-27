@@ -123,9 +123,11 @@ public static class NavMeshUtils {
         Vector3 raycast_direction = end - cover_from;
         RaycastHit hit;
         float ray_length = raycast_direction.magnitude;
+        LayerMask mask = LayerMaskSystem.inst.has_cover_raycast;
+
 
         if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, Color.cyan, Time.deltaTime); }
-        if (Physics.Raycast(cover_from, raycast_direction, out hit, raycast_direction.magnitude)) {
+        if (Physics.Raycast(cover_from, raycast_direction, out hit, raycast_direction.magnitude, mask)) {
             // if raycast hits something other than the player
             return !RaycastHitsPlayer(hit);
         }

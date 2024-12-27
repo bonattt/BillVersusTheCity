@@ -14,6 +14,7 @@ public class SearchingBehavior : ISubBehavior  {
         parent.controller.ctrl_waypoint = parent.perception.last_seen_at;
         parent.controller.ctrl_will_shoot = false;
         parent.controller.ctrl_move_mode = MovementTarget.waypoint;
+        parent.controller.ctrl_sprint = false;
         if (parent.controller.seeing_target) {
             parent.controller.ctrl_aim_mode = AimingTarget.target;
         }

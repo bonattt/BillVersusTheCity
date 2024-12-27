@@ -27,6 +27,12 @@ using UnityEngine.AI;
     public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
     public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
     public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
+    public bool ctrl_sprint = false; // used by Behavior to instruct the controller to sprint
+    public override bool is_spinting {
+        get {
+            return ctrl_sprint;
+        }
+    }
 
     public NavMeshAgent nav_mesh_agent;
 

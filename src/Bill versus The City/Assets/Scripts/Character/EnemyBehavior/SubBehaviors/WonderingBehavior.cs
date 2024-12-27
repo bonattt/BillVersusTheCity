@@ -21,6 +21,7 @@ public class WonderingBehavior : ISubBehavior  {
     
     public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
 
+        parent.controller.ctrl_sprint = false;
         parent.controller.ctrl_will_shoot = false;
         float distance = Vector3.Distance(parent.transform.position, destination);
         // waiting before moving towards new destination

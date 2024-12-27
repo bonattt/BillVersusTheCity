@@ -74,7 +74,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    public bool is_spinting {
+    public virtual bool is_spinting {
         get {
             return this.current_action == ActionCode.sprint;
         }
