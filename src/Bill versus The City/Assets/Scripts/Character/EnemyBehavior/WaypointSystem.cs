@@ -85,7 +85,8 @@ public class WaypointSystem : MonoBehaviour {
         // distance from an enemy is square-rooted to give it diminishing returns the further from the enemy you go.
         float travel_distance = TravelDistanceToPoint(start_pos, destination);
        
-        Vector3 enemy_direction = (cover_from - start_pos).normalized;
+        // TODO --- maybe getting the travel direction of the first movement on the NavMesh path, instead of bird's eye direction to the destination will be more reliable here???
+        Vector3 enemy_direction = (cover_from - start_pos).normalized;  
         Vector3 travel_direction = (destination - start_pos).normalized;
         // get a number 2-1 representing how towards the player character the destination is, to avoid taking cover in the direction of the threat you're taking cover from.
         float towards_enemy_score = Vector3.Dot(enemy_direction, travel_direction) + 1f;
