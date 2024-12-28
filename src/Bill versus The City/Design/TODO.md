@@ -272,12 +272,12 @@ SOOSH:
         [+] Enemies do not always know exactly where the player is when aggressive
         [+] Enemies eventually lose track of the player
         [ ] Enemies will search out the player if they know the player is present on the map
-    [ ] Enemies can seek out an use tactical positions
-    [ ] Enemies can retreat to reload weapons
-        [ ] Enemies track ammo as they shoot
-        [ ] Enemies can reload when they run out
-        [ ] Enemies will reposition somewhere out of the way to reload when they do
-        [ ] UI indicates if an enemy is reloading
+    [X] Enemies can seek out an use tactical positions
+    [+] Enemies can retreat to reload weapons
+        [+] Enemies track ammo as they shoot
+        [+] Enemies can reload when they run out
+        [+] Enemies will reposition somewhere out of the way to reload when they do
+        [+] UI indicates if an enemy is reloading
     [+] Retreat SubBehavior
         [+] Enemies find a semi optimal position to take cover from the player
         [+] Bugfix
@@ -291,6 +291,7 @@ SOOSH:
 
     [ ] Cleanup dead code maked with // TODO --- remove this
     [ ] FIX: enemy state updates UIs should be destroyed if they still exist when a new update is usued
+    [ ] FIX: Enemy reloads instantly sometimes
 
 [~] Tactiacal positions
     [+] Cover positions exist, and can be used by the player

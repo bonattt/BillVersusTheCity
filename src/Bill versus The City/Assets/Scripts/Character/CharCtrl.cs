@@ -24,6 +24,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float rotation_speed = 0.85f;
     public ActionCode current_action = ActionCode.none;
 
+    public float reload_rate = 1f; // multiplies how fast weapons are reloaded; 1f is the weapons unmodified reload time, 0.5 takes twice as long, and 2f takes half as long
     public float reload_move_multiplier = 0.33f;
     public float walk_speed = 4.0f;
     public float sprint_multiplier = 1.75f;
@@ -118,7 +119,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float reload_progress {
         get {
             if (! reloading) { return 0f; }
-            float progress_seconds = Time.time - start_reload_at;
+            float progress_seconds = (Time.time - start_reload_at) * reload_rate;
             return progress_seconds / reload_time;
         }
     }
@@ -300,7 +301,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         if (!reloading) {
             return false;
         }
-        return Time.time >= start_reload_at + this.reload_time;
+        return reload_progress >= 1f;
     }
 
     public void CancelReload() {

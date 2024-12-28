@@ -20,14 +20,32 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
-    public bool needs_reload = false;
+    private bool _needs_reload = false;
+    public bool needs_reload {
+        get { return _needs_reload; }
+        set { 
+            _needs_reload = value; 
+            if(! _needs_reload) {
+                _reload_behavior = null;
+            }
+        }
+    }
 
     public BehaviorMode behavior_mode { get; private set; }
 
     private PlayerCombat player_combat;
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors;
-    private ISubBehavior reload_behavior = new ReloadFromCoverBehavior();
+    private ISubBehavior _reload_behavior = null;
+    public ISubBehavior reload_behavior {
+        get {
+            if(_reload_behavior == null) {
+                _reload_behavior = new ReloadFromCoverBehavior();
+            }
+            return _reload_behavior; 
+        }
+    }
+
 
     private EnemyPerception _perception = null;
     public EnemyPerception perception {

@@ -592,6 +592,10 @@ PrefabInstance:
       propertyPath: drop_weapon
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3396656997431563555, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: reload_rate
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 6372002721478199582, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.12
