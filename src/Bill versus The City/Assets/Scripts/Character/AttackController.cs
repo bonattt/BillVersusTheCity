@@ -127,6 +127,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         UpdateRecoil();
         // if (! _aim_this_frame) { StopAim(); }
         // _aim_this_frame = false;
+        UpdateDebugFields();
     }
 
     private void UpdateRecoil() {
@@ -168,9 +169,11 @@ public class AttackController : MonoBehaviour, IWeaponManager
             &&(! InputSystem.IsNullPoint(attack_direction))
         ) {
             if (current_weapon.current_ammo > 0) {
+                Debug.LogWarning($"attack with ammo {current_weapon.current_ammo}!!"); // TODO --- remove debug
                 _FireAttack(attack_direction);
             }
             else {
+                Debug.LogWarning("EmptyAttack!!"); // TODO --- remove debug
                 _EmptyAttack();
             }
         }
@@ -237,5 +240,13 @@ public class AttackController : MonoBehaviour, IWeaponManager
         }
 
         return rotated_direction * multiplier;
+    }
+
+
+    /// DEBUG CODE
+    public int debug_ammo_count = 0;
+
+    private void UpdateDebugFields() {
+        debug_ammo_count = current_weapon.current_ammo;
     }
 }

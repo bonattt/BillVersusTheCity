@@ -15,6 +15,7 @@ using UnityEngine.AI;
 
     public float ctrl_shooting_rate = 0.75f;
     private EnemyPerception perception;
+    private EnemyBehavior behavior;
 
     public GameObject weapon_pickup_prefab;
 
@@ -28,6 +29,8 @@ using UnityEngine.AI;
     public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
     public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
     public bool ctrl_sprint = false; // used by Behavior to instruct the controller to sprint
+    public bool ctrl_start_reload = false; // used by Behavior to instruct the controller to sprint
+    public bool ctrl_cancel_reload = false; // used by Behavior to instruct the controller to sprint
     public override bool is_spinting {
         get {
             return ctrl_sprint;
@@ -43,6 +46,7 @@ using UnityEngine.AI;
     public override void SetupCharacter() {
         base.SetupCharacter();
         perception = GetComponent<EnemyPerception>();
+        behavior = GetComponent<EnemyBehavior>();
         EnemiesManager.inst.AddEnemy(this);
     }
 
@@ -54,6 +58,10 @@ using UnityEngine.AI;
         else {
             nav_mesh_agent.speed = this.movement_speed;
             nav_mesh_agent.SetDestination(MoveVector());
+        }
+        // REFACTOR: find a better home for code below here
+        if (attack_controller.current_weapon.current_ammo == 0) {
+            behavior.needs_reload = true;
         }
     }
 
@@ -94,6 +102,14 @@ using UnityEngine.AI;
         }
         return false;
     }
+    
+    public override bool ReloadInput() {
+        return ctrl_start_reload;
+        // return attack_controller.current_weapon.current_ammo == 0
+        //     && !reloading
+        //     && AttackInput();
+    }
+
 
     public override Vector3 ShootVector() {
         return ShootTarget() - attack_controller.shoot_point.position; //  VectorFromLookTarget(ShootTarget());
@@ -156,9 +172,9 @@ using UnityEngine.AI;
         obj.transform.position = transform.position;
         WeaponPickupInteraction pickup = obj.GetComponent<WeaponPickupInteraction>();
         pickup.pickup_weapon = attack_controller.current_weapon;
-        if (pickup.pickup_weapon.current_ammo == 0) {
-            pickup.pickup_weapon.current_ammo = pickup.pickup_weapon.ammo_capacity;
-        }
+        // if (pickup.pickup_weapon.current_ammo == 0) {
+        //     pickup.pickup_weapon.current_ammo = pickup.pickup_weapon.ammo_capacity;
+        // }
     }
 
     /////////////////////////////

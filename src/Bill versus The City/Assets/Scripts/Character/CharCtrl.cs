@@ -275,9 +275,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public virtual bool ReloadInput() {
-        return attack_controller.current_weapon.current_ammo == 0
-            && !reloading
-            && AttackInput();
+        return false;
     }
 
     public virtual bool SprintInput() {
@@ -289,6 +287,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public void StartReload() {
+        Debug.LogWarning($"reloading {gameObject.name}");
         // initiate a reload
         reloading = true;
         start_reload_at = Time.time;

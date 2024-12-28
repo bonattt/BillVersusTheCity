@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehavior : MonoBehaviour, IPlayerObserver
+public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 {
     public EnemyController controller;
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
@@ -20,11 +20,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
         }
     }
 
+    public bool needs_reload = false;
+
     public BehaviorMode behavior_mode { get; private set; }
 
     private PlayerCombat player_combat;
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors;
+    private ISubBehavior reload_behavior = new ReloadFromCoverBehavior();
 
     private EnemyPerception _perception = null;
     public EnemyPerception perception {
@@ -61,6 +64,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
         _shooting_rate_variation = Random.Range(-SHOOTING_RATE_VARIATION/2, SHOOTING_RATE_VARIATION/2);
         InitializeBehaviorsDict();
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
+        GetComponent<IReloadManager>().Subscribe(this);
 
         behavior_mode = default_behavior;
         if (controller == null) {
@@ -72,18 +76,37 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     {
         SetBehaviorMode();
         
+        SetDefaultBehaviorPatterns();
         GetSubBehavior().SetControllerFlags(this, player_combat.movement);
-        SetStandardBehaviorPatterns();
         SetDebug();
     }
 
     void OnDestroy() {
         PlayerCharacter.inst.UnsubscribeFromPlayer(this);
+        GetComponent<IReloadManager>().Subscribe(this);
+    }
+    
+    public void StartReload(IReloadManager manager, IWeapon weapon) {
+        // do nothing
+        Debug.LogWarning("EnemyBehavior.StartReload"); // TODO --- remove debug
+    }
+    public void FinishReload(IReloadManager manager, IWeapon weapon) {
+        // if reload is finished, clear `needs_reload` if the weapon is fully loaded, otherwise do not clear it.
+        Debug.LogWarning("EnemyBehavior.FinishReload"); // TODO --- remove debug
+        needs_reload = weapon.current_ammo < weapon.ammo_capacity;
+    }
+    public void CancelReload(IReloadManager manager, IWeapon weapon) {
+        // if reload is canceled, but the weapon has no ammo still, leave `needs_reload` as true, otherwise clear it.
+        Debug.LogWarning("EnemyBehavior.CancelReload"); // TODO --- remove debug
+        needs_reload = weapon.current_ammo == 0;
     }
 
-    protected void SetStandardBehaviorPatterns() {
-        // sets control fields that are standardized to properties
+    protected void SetDefaultBehaviorPatterns() {
+        // sets control fields that are standardized to properties, and some default flags, which can be overwriten by the actual behavior
         controller.ctrl_shooting_rate = this.shooting_rate;
+        controller.ctrl_start_reload = false;
+        controller.ctrl_cancel_reload = false;
+        controller.ctrl_sprint = false;
     }
 
     public float DistanceToTarget() {
@@ -92,6 +115,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver
     }
 
     protected ISubBehavior GetSubBehavior() {
+        if (needs_reload && behavior_mode != BehaviorMode.routed) {
+            return reload_behavior;
+        }
         return behaviors[behavior_mode];
     }
 

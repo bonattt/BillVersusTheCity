@@ -32,9 +32,7 @@ public class EnemyAwarenessUpdateTextEffect : MonoBehaviour
     public virtual void SetupEffect() {
         text_color.a = 1f;
         outline_color.a = 1f;
-        Debug.LogWarning($"ui_doc: {ui_doc}"); // TODO --- remove debug
         effect_label = ui_doc.rootVisualElement.Q<Label>();
-        Debug.LogWarning($"effect_label: {effect_label}"); // TODO --- remove debug
         _time_created = Time.time;
     }
     public virtual void UpdateEffect() {

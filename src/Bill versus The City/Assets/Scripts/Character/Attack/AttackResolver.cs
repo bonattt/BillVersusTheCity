@@ -118,7 +118,7 @@ public static class AttackResolver {
         float og_split = armor.armor_protection - attack.armor_penetration;
         float split = Mathf.Max(0.95f, Mathf.Min(0.05f, og_split));
         if (og_split != split) {
-            Debug.LogWarning($"unbalanced damage split: {og_split} => {split}");
+            // Debug.LogWarning($"unbalanced damage split: {og_split} => {split}");  // TODO --- uncomment warning!
         }
         return split;
     }
@@ -159,7 +159,7 @@ public static class AttackResolver {
             Debug.LogWarning($"Overflow damage more than base: {total_attack_damage} => {health_damage} + {overflow_damage}");
         }
         if (armor_before >= status.armor.armor_durability) {
-            Debug.LogWarning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}");
+            // Debug.LogWarning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}"); // TODO --- uncomment warning!
         }    
         return (health_damage, armor_damage);
     }

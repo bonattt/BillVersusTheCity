@@ -582,10 +582,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505927797627387282, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_Name
-      value: RetreatEnemy
+      value: EnemyTesting
       objectReference: {fileID: 0}
     - target: {fileID: 1505927797627387282, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3396656997431563555, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: drop_weapon
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6372002721478199582, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
@@ -632,6 +636,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 338529279}
+    - target: {fileID: 6935893205124348823, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: initialize_weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 70a199f5c4d7d064b9dcab613670c104, type: 2}
     - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: player
       value: 
@@ -642,7 +650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: default_behavior
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: optimal_attack_range
