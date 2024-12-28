@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class FleeToCoverBehavior : ISubBehavior  {
+public class ReloadFromCoverBehavior : ISubBehavior  {
 
     public float shooting_rate { get { return 1f; }}
 
     public float calculations_per_second = 1f;  // controls how frequently the behavior recalculates it's destination
     private float last_calculation_at = -1f;
     
-    public FleeToCoverBehavior() { /* do nothing */ }
+    public ReloadFromCoverBehavior() { /* do nothing */ }
     
     public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
         // parent.controller.ctrl_waypoint = new Vector3(0, 0, 0);

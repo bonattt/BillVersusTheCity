@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttackController : AttackController
 {
-    public ScriptableObject[] init_slots;
     public IWeapon[] weapon_slots = new IWeapon[10];
     public bool[] weapon_slots_enabled = new bool[]{true, true, true, false, false, false, false, false, false, false};
 
@@ -24,19 +23,12 @@ public class PlayerAttackController : AttackController
     }
 
     protected override void AttackControllerStart() {
-        for (int i = 0; i < 10; i++) {
-            if (init_slots[i] != null) {
-                weapon_slots[i] = (IWeapon) Instantiate(init_slots[i]);
-                weapon_slots[i].current_ammo = weapon_slots[i].ammo_capacity;
-            }
-        }
-        PlayerCharacter.inst.inventory.SetWeapons(this);
+        ClearWeapons();
         SwitchWeaponBySlot(_current_slot);
         UpdateSubscribers();
     }
     
     public void SetWeaponsFromInventory(PlayerInventory inventory) {
-
         ClearWeapons();
         AssignWeaponSlot(0, inventory.handgun);
         AssignWeaponSlot(1, inventory.rifle);
