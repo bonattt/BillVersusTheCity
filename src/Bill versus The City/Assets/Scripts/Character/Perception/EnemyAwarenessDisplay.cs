@@ -37,8 +37,8 @@ public class EnemyAwarenessDisplay : MonoBehaviour, IPerceptionSubscriber
             Destroy(previous_display);
         }
 
-        GameObject display_obj = Instantiate<GameObject>(Resources.Load<GameObject>(PREFAB_RESOURCE));
-        EnemyAwarenessUpdateTextEffect awareness_update = display_obj.GetComponent<EnemyAwarenessUpdateTextEffect>();
+        previous_display = Instantiate(Resources.Load<GameObject>(PREFAB_RESOURCE));
+        EnemyAwarenessUpdateTextEffect awareness_update = previous_display.GetComponent<EnemyAwarenessUpdateTextEffect>();
         
         awareness_update.text_color = text_colors[new_state];
         awareness_update.outline_color = outline_colors[new_state];
