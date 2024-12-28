@@ -32,7 +32,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private ISubBehavior[] possible_reload_behaviors = new ISubBehavior[]{
-        new ReloadFromCoverBehavior(), new ReloadFromStandingBehavior(),
+        new ReloadFromCoverBehavior(), 
+        new ReloadFromCoverBehavior(), 
+        new ReloadFromCoverBehavior(), 
+        new ReloadFromStandingBehavior(),
     };
     public ISubBehavior RandomReloadBehavior() {
         int r = Random.Range(0, possible_reload_behaviors.Length + 1); 
