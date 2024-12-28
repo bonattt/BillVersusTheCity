@@ -31,6 +31,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
+    private ISubBehavior[] possible_reload_behaviors = new ISubBehavior[]{
+        new ReloadFromCoverBehavior(), new ReloadFromStandingBehavior(),
+    };
+    public ISubBehavior RandomReloadBehavior() {
+        int r = Random.Range(0, possible_reload_behaviors.Length + 1); 
+        return possible_reload_behaviors[r];
+    }
+
     public BehaviorMode behavior_mode { get; private set; }
 
     private PlayerCombat player_combat;
@@ -40,7 +48,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public ISubBehavior reload_behavior {
         get {
             if(_reload_behavior == null) {
-                _reload_behavior = new ReloadFromCoverBehavior();
+                _reload_behavior = RandomReloadBehavior();
             }
             return _reload_behavior; 
         }

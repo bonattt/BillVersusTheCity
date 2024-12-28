@@ -278,6 +278,10 @@ SOOSH:
         [+] Enemies can reload when they run out
         [+] Enemies will reposition somewhere out of the way to reload when they do
         [+] UI indicates if an enemy is reloading
+        [ ] Random chance for different reload behaviors
+        [ ] Reload works with single-shot reload weapons
+            [ ] Enemies can fully reload if not interupted
+            [ ] Enemies will cancel reloading if they are interupted, and start shooting again after only partially reloading.
     [+] Retreat SubBehavior
         [+] Enemies find a semi optimal position to take cover from the player
         [+] Bugfix
