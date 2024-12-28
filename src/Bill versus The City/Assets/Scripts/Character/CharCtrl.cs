@@ -133,6 +133,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public bool debug_full_auto;
     public int debug_current_ammo;
     public bool debug_reloading = false;
+    public float debug_reload_progress = 0f;
 
     public float debug_inaccuracy = 0f;
     public float debug_recoil = 0f;
@@ -153,6 +154,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             debug_current_ammo = -1;
         }
         debug_reloading = reloading;
+        debug_reload_progress = reload_progress;
         debug_inaccuracy = attack_controller.current_inaccuracy;
         debug_recoil = attack_controller.current_recoil;
         debug_aim_percent = attack_controller.aim_percent;

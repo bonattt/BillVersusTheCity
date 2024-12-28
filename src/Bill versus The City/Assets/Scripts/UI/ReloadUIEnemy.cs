@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro; 
 
-public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
+public class ReloadUIEnemy : MonoBehaviour, IReloadSubscriber
 {
+    public Transform follow_target;
     public RectTransform reload_ui; 
-    public Vector3 mouse_offset = new Vector3(50f, -75f, 0f);
+    public Vector3 offset = new Vector3(50f, -75f, 0f);
     public Image progress_bar;
     private IReloadManager manager;
 
@@ -18,22 +19,13 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
     
     void Start()
     {
-        NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
-    }
-    
-    public void NewPlayerObject(PlayerCombat player) {
-        if (player == null) {
-            Debug.LogWarning("new player is null!");
-            return;
-        }
-        manager = player.reloading;    
+        manager = follow_target.gameObject.GetComponent<IReloadManager>();
         manager.Subscribe(this);
         ClearUI();
     }
-
+    
     void OnDestroy() {
         manager.Unsubscribe(this);
-        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
     }
 
     // Update is called once per frame
@@ -46,8 +38,9 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
     }
 
     private void UpdatePosition() {
-        Vector3 mouse = InputSystem.current.MouseScreenPosition();
-        reload_ui.position = mouse + mouse_offset;
+        Vector3 new_position = Camera.main.WorldToScreenPoint(follow_target.position);
+        reload_ui.position = new_position + offset;
+        Debug.Log($"enemy reload ui position set to: {reload_ui.position}");
     }
 
     private void UpdateProgress() {

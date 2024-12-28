@@ -111,7 +111,6 @@ public static class NavMeshUtils {
             hit_transform = hit_transform.parent;
         }
         bool result = hit_transform.gameObject.GetComponent<PlayerMovement>() != null;
-        Debug.LogWarning($"cover raycast hit {hit_transform.gameObject.name}! => result = {result}"); // TODO --- remove debug
         return result;
     }
 
@@ -131,7 +130,6 @@ public static class NavMeshUtils {
             // if raycast hits something other than the player
             return !RaycastHitsPlayer(hit);
         }
-        Debug.LogWarning($"cover raycast hit nothing at all!!");
         return false; // raycast hit nothing, or hit the player, so there is not cover
     }
 

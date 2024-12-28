@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CombatHUDManager : MonoBehaviour
 {
-    
+    // TODO --- remove this    
     public static CombatHUDManager inst { get; private set; }
 
     void Awake() {

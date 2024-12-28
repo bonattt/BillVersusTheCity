@@ -289,6 +289,9 @@ SOOSH:
                 -> use player direction and travel direction instead
         [X] Optimize
 
+    [ ] Cleanup dead code maked with // TODO --- remove this
+    [ ] FIX: enemy state updates UIs should be destroyed if they still exist when a new update is usued
+
 [~] Tactiacal positions
     [+] Cover positions exist, and can be used by the player
     [ ] Enemies can use cover
