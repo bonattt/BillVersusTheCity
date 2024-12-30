@@ -142,7 +142,6 @@ public static class NavMeshUtils {
 
         for (int i = 0; i < n; i++) {
             float angle = i * incriment;
-            Debug.LogWarning($"i = {i}: angle {angle}"); // TODO --- remove debug
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
             vectors.Add(rotation * base_vector);
         }

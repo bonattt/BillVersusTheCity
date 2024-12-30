@@ -92,7 +92,6 @@ public class PlayerInteractor : MonoBehaviour
 
     void OnTriggerEnter(Collider c) {
         Interaction interaction = GetInteractionFromCollider(c);
-        Debug.LogWarning($"PlayerInteractor Trigger Enter for {c.gameObject.name}");  // TODO --- remove debug
         if (interaction != null) {
             interaction.interaction_targeted = false;
             interaction.interaction_tracked = true;
@@ -101,7 +100,6 @@ public class PlayerInteractor : MonoBehaviour
     }
 
     void OnTriggerExit(Collider c) {
-        Debug.LogWarning($"PlayerInteractor Trigger Exit for {c.gameObject.name}");  // TODO --- remove debug
         Interaction interaction = GetInteractionFromCollider(c);
         if (interaction != null) {
             interaction.interaction_targeted = false;

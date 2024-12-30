@@ -16,7 +16,6 @@ public class MenuManager : MonoBehaviour
         get { return _inst; }
     }
 
-    [SerializeField]  // TODO --- remove debug
     private bool _paused = false;
     public bool paused {
         get { return _paused; }
@@ -29,7 +28,7 @@ public class MenuManager : MonoBehaviour
                 Time.timeScale = 1f;
             }
             if (PlayerCharacter.inst != null) {
-                Debug.Log("!!!???");  // TODO --- remove debug, after figuring out what this does
+                // Debug.Log("!!!???");  // TODO --- remove debug, after figuring out what this does
                 PlayerCharacter.inst.is_active = ! _paused;
             }
         }

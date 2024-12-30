@@ -15,7 +15,6 @@ public class TestGetNDirections : MonoBehaviour
     void Update()
     {
         output_rays = NavMeshUtils.GetNDirections(n_directions);
-        Debug.LogWarning($"ray count: {output_rays.Count}"); // TODO --- remove debug
         foreach(Vector3 ray in output_rays) {
             Debug.DrawRay(transform.position, ray.normalized * ray_length, ray_color, Time.deltaTime * 1.5f);
         }

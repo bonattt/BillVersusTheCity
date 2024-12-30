@@ -42,7 +42,6 @@ public static class ScenesUtil {
 
     private static GameObject GetPlayerObjectFromScene() {
         GameObject[] game_objects = SceneManager.GetActiveScene().GetRootGameObjects();
-        Debug.LogWarning($"");  // TODO --- remove debug
         for (int i = 0; i < game_objects.Length; i++) {
             if (game_objects[i].name.Equals("Player")) {
                 return game_objects[i];

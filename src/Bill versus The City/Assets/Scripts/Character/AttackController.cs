@@ -169,11 +169,9 @@ public class AttackController : MonoBehaviour, IWeaponManager
             &&(! InputSystem.IsNullPoint(attack_direction))
         ) {
             if (current_weapon.current_ammo > 0) {
-                Debug.LogWarning($"attack with ammo {current_weapon.current_ammo}!!"); // TODO --- remove debug
                 _FireAttack(attack_direction);
             }
             else {
-                Debug.LogWarning("EmptyAttack!!"); // TODO --- remove debug
                 _EmptyAttack();
             }
         }

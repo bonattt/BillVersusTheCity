@@ -117,16 +117,13 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     
     public void StartReload(IReloadManager manager, IWeapon weapon) {
         // do nothing
-        Debug.LogWarning("EnemyBehavior.StartReload"); // TODO --- remove debug
     }
     public void FinishReload(IReloadManager manager, IWeapon weapon) {
         // if reload is finished, clear `needs_reload` if the weapon is fully loaded, otherwise do not clear it.
-        Debug.LogWarning("EnemyBehavior.FinishReload"); // TODO --- remove debug
         needs_reload = weapon.current_ammo < weapon.ammo_capacity;
     }
     public void CancelReload(IReloadManager manager, IWeapon weapon) {
         // if reload is canceled, but the weapon has no ammo still, leave `needs_reload` as true, otherwise clear it.
-        Debug.LogWarning("EnemyBehavior.CancelReload"); // TODO --- remove debug
         needs_reload = weapon.current_ammo == 0;
     }
 
