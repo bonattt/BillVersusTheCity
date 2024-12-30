@@ -191,10 +191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc584b5809a17e4caefc27e7b5b1428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interaction_range: 6
+  interaction_targeted: 0
+  interaction_tracked: 0
   interaction_enabled: 0
   interaction_order:
   - {fileID: 1669012711162536639}
+  debug_distance_to_interactor: 0
 --- !u!114 &1669012711162536639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,14 +522,6 @@ PrefabInstance:
     - target: {fileID: 5270007170674367688, guid: 44f2954524542c045b69ed5ebcc1788f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5340420236082459938, guid: 44f2954524542c045b69ed5ebcc1788f, type: 3}
-      propertyPath: m_Size.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5340420236082459938, guid: 44f2954524542c045b69ed5ebcc1788f, type: 3}
-      propertyPath: m_Center.y
-      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
