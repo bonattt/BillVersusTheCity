@@ -254,6 +254,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         else if (AimInput()) {
             return ActionCode.aim;
         }
+        else if (CrouchInput()) {
+            return ActionCode.crouch;
+        }
         else if (SprintInput()) {
             return ActionCode.sprint;
         }
@@ -425,55 +428,13 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         attack_controller.FireAttack(ShootVector());
     }
     
-    // public void SetMovementAction(IMovementAction action) {
-    //     this.movement_action = action;
-    //     action.new_this_frame = true;
-    //     action.remaining_duration = action.action_duration;
-    // }
-
     protected abstract void Move();
 
-    // private void MoveWithAction() {
-    //     LookWithAction();
-    //     movement_action.action_used_for += Time.deltaTime;
-    //     Vector3 dir;
-    //     if (movement_action.overrides_move_vector) {
-    //         dir = movement_action.move_vector;   
-    //     } else {
-    //         dir = MoveVector();
-    //     }
-    //     dir *= movement_action.move_speed_multiplier;
-
-    //     controller.SimpleMove(dir);
-    // }
-
-    // public bool MoveActionNameMatch(string name) {
-    //     return movement_action != null 
-    //         && movement_action.action_name.Equals(name);
-    // }
     protected void LookWithAction() {
-        // Handles adjusting the player character's rotation with hooks to
-        // allow a movement_action to override the value
         Vector3 forward; 
-        // if (movement_action == null) {
-        //     forward = LookVector();
-        // }
-        // else if (movement_action.overrides_look_vector) {
-        //     forward = movement_action.look_vector;
-        // } 
-        // else if (movement_action.overrides_look_target) {
-        //     forward = VectorFromLookTarget(movement_action.look_target);
-        // }
-        // else {
             forward = LookVector();
-        // }
         LookRotate(forward);
     }
-
-    // private void LookNormal() {
-    //     Vector3 forward = LookVector();
-    //     LookRotate(forward);
-    // }
 
     private void LookRotate(Vector3 forward) {
         float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
@@ -585,6 +546,7 @@ public enum ActionCode {
     // list of action choices returned by subclasses to pick action
     none,
     sprint,
+    crouch,
     reload,
     cancel_reload,
     aim,
