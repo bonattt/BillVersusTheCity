@@ -21,11 +21,15 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect
     }
 
     private void UpdateUIText() {
-        if (ui != null) {
-            ui.SetNewText($"Pickup {pickup_weapon.item_name}");
-        } else {
+        if (ui == null) {
             Debug.LogWarning("no ui set for pickup!");
+            return;
         }
+        string verb = "Pickup";
+        if (PlayerCharacter.inst.inventory.pickup != null) {
+            verb = "Swap to";
+        }
+        ui.SetNewText($"{verb} {pickup_weapon.item_name}");
     }
 
     public void Interact(GameObject actor) {
