@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PopupController : MonoBehaviour
+public class PopupController : MonoBehaviour, ISubMenu
 {
     protected VisualElement root_visual;
 
@@ -12,12 +12,20 @@ public class PopupController : MonoBehaviour
     public string content_text = "";
     public string confirm_text = "Continue"; 
 
+    public bool allow_escape = true; // if true, the menu can be closed by hitting escape.
+
     protected Label header_label, content_label, confirm_label;
     public Button confirm_button { get; protected set; }
 
     void Start() {
         Configure();
         UpdateLabels();
+    }
+
+    public virtual void MenuNavigation() {
+        if (allow_escape && InputSystem.current.MenuCancelInput()) {
+            MenuManager.inst.CloseMenu();
+        }
     }
 
     public virtual void Configure() {

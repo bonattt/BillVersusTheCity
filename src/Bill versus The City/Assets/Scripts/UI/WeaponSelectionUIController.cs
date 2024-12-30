@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponSelectionUIController : MonoBehaviour
+public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
 {
     /// <summary>
     ///  UI Controller that displays the player's availible AND currently equipped weapons
@@ -58,6 +58,12 @@ public class WeaponSelectionUIController : MonoBehaviour
         Debug.Log("UpdateContents");
         PopulateContents(left_content, PlayerCharacter.inst.inventory.availible_rifles);
         PopulateContents(right_content, PlayerCharacter.inst.inventory.availible_handguns);
+    }
+
+    public void MenuNavigation() {
+        if (allow_cancel && InputSystem.current.MenuCancelInput()) {
+            CancelButtonClicked();
+        }
     }
 
     private void SelectEquipped(IWeapon equipped, VisualElement parent) {

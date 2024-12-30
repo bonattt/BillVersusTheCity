@@ -173,6 +173,7 @@ public class MenuManager : MonoBehaviour
         popup.content_text = "You have been killed";
         popup.confirm_text = "Restart Level";
         popup.reject_text = "Quit";
+        popup.allow_escape = false;
         
         popup.confirm_button.clicked += ScenesUtil.RestartLevel;
         popup.cancel_button.clicked += PauseMenuController.ExitGame;  // TODO --- move this helper somewhere more appropriate

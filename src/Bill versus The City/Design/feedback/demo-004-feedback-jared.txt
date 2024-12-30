@@ -1,0 +1,15 @@
+Interaction: hit E to switch weapons, got the speak action instead
+
+	- still don't like the mouse to interact, even when highlighting is working
+
+- change text for the pickup weapon that actually swaps weapons
+- weapon pickups can block each other
+- enemies get really close before shooting
+- the middle of the fence can be crawled over
+- can shoot through the wall while crouched
+- camera jitter
+- aiming line isn't blocked by the truck
+- aim line is short when mouse is near the player, maybe
+- enemies cannot spot you from long distance, but can shoot you if they're hostile, and can keep track of you at a longer distance
+- check if enemy is actually on screen before INITIATING hostility, but allow enemies to still shoot from further off screen if already hostile
+- can `escape` out of weapon select and death menus

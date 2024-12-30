@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ManagersManager : MonoBehaviour
 {
-    // TODO --- remove this
+    // this class creates a singleton for the managers prefab, so it doesn't get reinstantiated on level load if it already exists.
     public static ManagersManager inst { get; private set; }
 
     void Awake() {
