@@ -18,6 +18,8 @@ public abstract class AbstractInteractionText : MonoBehaviour
         additional_text.style.fontSize = font_size;
         additional_text.style.unityTextAlign = TextAnchor.UpperLeft;
         additional_text.style.alignSelf = Align.FlexStart;
+        additional_text.style.overflow = Overflow.Visible; 
+        additional_text.style.whiteSpace = WhiteSpace.Normal;  // this is needed for the text overflow to actually work...
         root.Add(additional_text);
         UpdateText();
     }
