@@ -7889,10 +7889,6 @@ PrefabInstance:
       propertyPath: default_opacity
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 4107506074741886963, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
-      propertyPath: m_Center.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5345889260223724624, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
     m_RemovedGameObjects:

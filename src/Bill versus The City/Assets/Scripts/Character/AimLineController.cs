@@ -47,9 +47,12 @@ public class AimLineController : MonoBehaviour
         // if there is a wall in the way, don't draw aim-lines past it
         if (Physics.Raycast(start_pos, direction, out hit, direction.magnitude, layer_mask)) {
             end_pos = hit.point;
+            Debug.LogWarning($"aim line raycast hit!!! {hit.collider.gameObject.name}");
         } 
         else {
             end_pos = direction + start_pos;
+            Debug.LogWarning("aim line forever...");
+            // Debug.LogWarning($"unit_vector length: {unit_vector.magnitude}, direction: {direction.magnitude}, line to end length: {(end_pos - start_pos).magnitude}, end_dir: {(end_pos - start_pos).normalized} end_pos: {end_pos}");  // TODO --- remove debug
         }
 
         // int n = 10; // iterations of adding the line to itself to extend the line past the mouse
