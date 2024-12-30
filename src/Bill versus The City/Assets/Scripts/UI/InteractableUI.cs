@@ -47,12 +47,10 @@ public class InteractableUI : MonoBehaviour
     }
 
     public void SetAsTargeted() {
-        Debug.Log("SetAsHovered"); // TODO --- remove debug
         UpdateOpacity(hover_opacity);
     }
 
     public void SetAsNotTargeted() {
-        Debug.Log("SetAsNotHovered"); // TODO --- remove debug
         UpdateOpacity(default_opacity);
     }
 
@@ -72,8 +70,10 @@ public class InteractableUI : MonoBehaviour
             root.style.visibility = Visibility.Visible;
             if (IsTargeted()) {
                 SetAsTargeted();
+                SetLabels();
             } else {
                 SetAsNotTargeted();
+                SetLabels();
             }
         } else {
             root.style.visibility = Visibility.Hidden;
@@ -93,6 +93,12 @@ public class InteractableUI : MonoBehaviour
         if (interaction_label == null) {
             Configure();
         }
-        interaction_label.text = $"{name_header} [{InputSystem.current.InputTypeDisplay(InputType.interact)}]";
+        string interaction_input = "";
+        if (IsTargeted()) {
+            // only show the keystroke to interact with the interaction if it is actually targetted to interact with
+            interaction_input = $"[{InputSystem.current.InputTypeDisplay(InputType.interact)}]";
+        }
+
+        interaction_label.text = $"{name_header} {interaction_input}";
     }
 }
