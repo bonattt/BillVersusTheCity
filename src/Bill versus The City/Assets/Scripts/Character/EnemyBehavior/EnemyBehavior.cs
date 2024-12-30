@@ -9,7 +9,11 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
 
     public float optimal_attack_range = 6f;
-    public float max_attack_range = 11f;
+    public float max_attack_range {
+        get {
+            return perception.max_alert_vision_range;
+        }
+    }
 
     public float _shooting_rate = 1f;
     private float _shooting_rate_variation = 0f;

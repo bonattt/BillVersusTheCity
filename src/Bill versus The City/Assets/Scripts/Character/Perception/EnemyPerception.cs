@@ -17,6 +17,9 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public float notice_player_rate = 2f;
     public float forget_player_rate = 0.25f;
 
+    public float max_alert_vision_range = 24f; // enemies will see the player a this longer range once alerted
+    public float max_notice_range = 13f; // enemies will not notice players further than this
+
     protected bool _saw_target_last_frame = false; // saw the target last frame
     public bool saw_target_last_frame { 
         get { 
@@ -251,8 +254,15 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         Vector3 start = raycast_start.position;
         Vector3 end = target_node.position;
         Vector3 direction = end - start;
+
+        float vision_range = direction.magnitude;
+        if (state == PerceptionState.alert || state == PerceptionState.seeing) {
+            vision_range = Mathf.Min(vision_range, max_alert_vision_range);
+        } else {
+            vision_range = Mathf.Min(vision_range, max_notice_range);
+        }
         // Debug.DrawRay(start, direction, Color.red);
-        if (Physics.Raycast(start, direction, out hit, direction.magnitude, vision_mask)) {
+        if (Physics.Raycast(start, direction, out hit, vision_range, vision_mask)) {
             bool los_to_target = hit.transform == target_node || hit.transform == target;
             return los_to_target;
         }
