@@ -118,7 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 149d9b7b767dd4d43ae1502aaac023f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   reload_ui: {fileID: 5465863806294445765}
   mouse_offset: {x: 50, y: -75, z: 0}
   progress_bar: {fileID: 6536164766815121059}
