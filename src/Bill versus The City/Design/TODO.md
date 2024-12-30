@@ -293,9 +293,24 @@ SOOSH:
                 -> use player direction and travel direction instead
         [X] Optimize
 
-    [ ] Cleanup dead code maked with // TODO --- remove this
     [+] FIX: enemy state updates UIs should be destroyed if they still exist when a new update is usued
-    [ ] FIX: Enemy reloads instantly sometimes
+    [~] FIX: Enemies should avoid shooting each other (raycast to look for fellow enemies)
+    [~] FIX: Enemies should avoid getting stuck in doorways
+        - this and previous task aren't totally fixed, but they are improved by widening the NavMeshAgent.radius so enemies don't come too close to each other
+    [+] FIX: interactions feel deceptive about which interaction actually triggers
+    [+] FIX: weapon pickups can block each other
+    [+] FIX: enemies need to get too close before they start shooting
+    [X] FIX: the middle of the fence can be crawled over
+    [+] FIX: can shoot through the wall while crouched
+    [+] FIX: aiming line isn't blocked by the truck
+    [+] FIX: aim line is short when mouse is near the player, maybe
+    
+    [+] FIX: can `escape` out of weapon select and death menus
+    [+] FIX: Crouch dive prevents shooting without aim until you uncrouch and recrouch
+    [~] FIX: fix pause on level-start weapon select
+    [X] FIX: enemy awareness notification moves around the enemy when rotating
+    [X] FIX: camera jitter when mousing over walls
+    [?] FIX: Enemy reloads instantly sometimes
 
 [ ] Tutorial Text
 [ ] Levels
@@ -308,6 +323,7 @@ SOOSH:
 =============================
 
 [ ] Milestone 4: enemy behavior improvements
+[ ] Milestone ???: Add player and enemy placeholder-animations from Unity asset store.
 [ ] Milestone ???: Level config (level )
 [ ] Milestone ???: Hub World (Bill's House and Gunstore), Saving level
 [ ] Milestone ???: More Levels
@@ -319,17 +335,15 @@ SOOSH:
 ==== Unplanned features =====
 =============================
 
+[ ] "swarm intelligence" ememy AI
+    - randomly offset destinations when enemy is traveling to waypoints
+    - enemies should account for other enemy positons when setting destinations
+    - maybe add additional raycasts to player, to make the AI seek more clean-shots to the player, rather than shots it can make with a 0 width raycast, but not a bullet with a small non-zero width.
+    [ ] FIX: check if enemy is actually on screen before INITIATING hostility, but allow enemies to still shoot from further off screen if already hostile
+
+[ ] Move camera closer to ground while crouching (reduce vision radius)
+
 [ ] Menus
-
-[ ] Fix Movement
-
-[ ] Add aiming line
-
-[ ] Enemy Detection
-    [ ] Hearing
-    [ ] Vision Range
-    [ ] Vision Direction
-
 
 [ ] Difficulty System
     [ ] override availible equipment
