@@ -18,6 +18,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected AttackController attack_controller;
     protected ICharacterStatus char_status;
     public Transform aim_target;
+    public Transform crouch_target; // moves up and down when the character crouches
 
     public float last_attack_time { get; protected set; }
     public float rotation_degrees_per_second = 400;
@@ -544,10 +545,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public Transform GetAimTarget() {
         if (aim_target == null) { 
-            Debug.LogWarning($"{this} using implicit aim_target!");
+            Debug.LogWarning($"{this.gameObject.name} using implicit aim_target!");
             return transform; 
         }
         return aim_target;
+    }
+    
+    public Transform GetCrouchTarget() {
+        // gets the transform that needs to be adjusted for crouching
+        if (crouch_target == null) {
+            Debug.LogWarning($"{this.gameObject.name} using implicit crouch_target!");
+            return transform;
+        }
+        return crouch_target;
     }
 
     private List<IReloadSubscriber> _reload_subscribers = new List<IReloadSubscriber>();

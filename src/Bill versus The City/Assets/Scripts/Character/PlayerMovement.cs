@@ -78,7 +78,7 @@ public class PlayerMovement : CharCtrl
     }
     public float crouch_height = 0.6f;
     public float crouched_speed = 0.25f;
-    public float uncrouched_height = 1.2f;
+    public float uncrouched_height = 1.4f;
     public float crouch_rate = 4f;
     public float uncrouch_rate = 4f;
 
@@ -116,16 +116,17 @@ public class PlayerMovement : CharCtrl
             }
         }
         Vector3 destination;
+        Transform _crouch_target = GetCrouchTarget();
         if (crouch_percent == 1) {
-            destination = new Vector3(aim_target.position.x, crouch_height, aim_target.position.z);
+            destination = new Vector3(_crouch_target.position.x, crouch_height, _crouch_target.position.z);
         } else if (crouch_percent == 0) {
-            destination = new Vector3(aim_target.position.x, uncrouched_height, aim_target.position.z);
+            destination = new Vector3(_crouch_target.position.x, uncrouched_height, _crouch_target.position.z);
         }
         else {
             float y = (uncrouched_height * (1 - crouch_percent)) + (crouch_height * crouch_percent);
-            destination = new Vector3(aim_target.position.x, y, aim_target.position.z);
+            destination = new Vector3(_crouch_target.position.x, y, _crouch_target.position.z);
         }
-        aim_target.position = destination;
+        _crouch_target.position = destination;
     }
     
     protected override void Move() {
