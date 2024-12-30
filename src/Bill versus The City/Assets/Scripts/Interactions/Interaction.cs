@@ -7,6 +7,14 @@ public class Interaction : MonoBehaviour
 {
     // public List<MonoBehaviour> effects;
     public float interaction_range = 1f;
+    public bool interaction_targeted = false;
+    // public bool interaction_targeted {
+    //     get { return _interaction_targeted; }
+    //     set {
+    //         _interaction_targeted = value;
+    //         // TODO ---
+    //     }
+    // }
     public bool interaction_enabled = true;
     public List<MonoBehaviour> interaction_order = new List<MonoBehaviour>();
 
@@ -25,6 +33,15 @@ public class Interaction : MonoBehaviour
         }
     }
 
+    void Update() {
+        UpdateDebug();
+    }
+
+    void OnDestroy() {
+        // cleans up the interaction if it is tracked by the interactor when this obejct is destroyed.
+        PlayerInteractor.inst.InteractionDestroyed(this);
+    }
+
     public IEnumerable<IInteractionEffect> GetInteractions() {
         if (interaction_order == null || interaction_order.Count == 0) {
             // by default, just grab all interactions in any order
@@ -40,6 +57,12 @@ public class Interaction : MonoBehaviour
             }
         }
         return interactions;
+    }
+
+    /// ////////////////////////////// DEBUG ///////////////////////////////// <summary>
+    public float debug_distance_to_interactor = 0f;
+    private void UpdateDebug() {
+        debug_distance_to_interactor = PlayerInteractor.inst.InteractionDistance(this);
     }
     
 }

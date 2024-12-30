@@ -128,8 +128,18 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
         return this.ammo_max[type] - this.ammo_count[type];
     }
 
+    private static AmmoContainer FindAmmoContainer(GameObject obj) {
+        // tries to find an AmmoContainer script on the given object or a parent
+        AmmoContainer container = obj.GetComponent<AmmoContainer>();
+        while (container == null && obj.transform.parent != null) {
+            obj = obj.transform.parent.gameObject;
+            container = obj.GetComponent<AmmoContainer>();
+        }
+        return container;
+    }
+
     public void Interact(GameObject obj) {
-        AmmoContainer other = obj.GetComponent<AmmoContainer>();
+        AmmoContainer other = FindAmmoContainer(obj);
         if (other == null) {
             Debug.LogError($"unable to find AmmoContainer on {obj}!");
         }

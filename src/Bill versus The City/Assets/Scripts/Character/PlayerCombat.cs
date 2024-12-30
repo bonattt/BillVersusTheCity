@@ -70,6 +70,7 @@ public class PlayerCombat : MonoBehaviour  {
         }
     }
 
+    [SerializeField]
     private PlayerInteractor _interactor = null;
     public PlayerInteractor interactor {
         get {

@@ -31,8 +31,8 @@ public class InteractableUI : MonoBehaviour
         ui_doc = GetComponent<UIDocument>();
         root = ui_doc.rootVisualElement;
         background_pannel = root.Q<VisualElement>("Panel");
-        background_pannel.RegisterCallback<MouseEnterEvent>(evnt => SetAsHovered());
-        background_pannel.RegisterCallback<MouseLeaveEvent>(evnt => SetAsNotHovered());
+        // background_pannel.RegisterCallback<MouseEnterEvent>(evnt => SetAsTargeted());
+        // background_pannel.RegisterCallback<MouseLeaveEvent>(evnt => SetAsNotTargeted());
         
         interaction_label = root.Q<Label>("InteractionLabel");
     }
@@ -46,15 +46,12 @@ public class InteractableUI : MonoBehaviour
         UpdateVisibility();
     }
 
-    private bool is_hovered { get { return false; }}
-
-
-    public void SetAsHovered() {
+    public void SetAsTargeted() {
         Debug.Log("SetAsHovered"); // TODO --- remove debug
         UpdateOpacity(hover_opacity);
     }
 
-    public void SetAsNotHovered() {
+    public void SetAsNotTargeted() {
         Debug.Log("SetAsNotHovered"); // TODO --- remove debug
         UpdateOpacity(default_opacity);
     }
@@ -73,6 +70,12 @@ public class InteractableUI : MonoBehaviour
     protected void UpdateVisibility() {
         if(IsVisible()) {
             root.style.visibility = Visibility.Visible;
+            if (target_manager.interaction_targeted) {
+                SetAsTargeted();
+            } else {
+                SetAsNotTargeted();
+            }
+
         } else {
             root.style.visibility = Visibility.Hidden;
         }

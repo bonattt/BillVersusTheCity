@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3248578231678520843}
+  - component: {fileID: 6279291985989408473}
   m_Layer: 0
   m_Name: Stairs
   m_TagString: Untagged
@@ -34,6 +35,33 @@ Transform:
   - {fileID: 8112191144767058633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6279291985989408473
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4210656339829587065}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5250763506706159453
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,6 +101,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3248578231678520843}
     m_Modifications:
+    - target: {fileID: 4067069590266020524, guid: d5b509ce29506834782c98fe502b44da, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067069590266020524, guid: d5b509ce29506834782c98fe502b44da, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067069590266020524, guid: d5b509ce29506834782c98fe502b44da, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067069590266020524, guid: d5b509ce29506834782c98fe502b44da, type: 3}
+      propertyPath: m_Center.y
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 4482736395864285959, guid: d5b509ce29506834782c98fe502b44da, type: 3}
       propertyPath: m_Name
       value: StairsInteraction
