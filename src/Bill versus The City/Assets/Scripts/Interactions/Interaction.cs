@@ -6,8 +6,8 @@ using UnityEngine;
 public class Interaction : MonoBehaviour
 {
     // public List<MonoBehaviour> effects;
-    public float interaction_range = 1f;
     public bool interaction_targeted = false;
+    public bool interaction_tracked = false;
     // public bool interaction_targeted {
     //     get { return _interaction_targeted; }
     //     set {
@@ -20,11 +20,6 @@ public class Interaction : MonoBehaviour
 
     public float DistanceTo(Transform actor) {
         return Vector3.Distance(transform.position, actor.position);
-    }
-
-    public bool IsInRange(Transform actor) {
-        float distance = DistanceTo(actor);
-        return distance <= interaction_range;
     }
 
     public void InteractWith(GameObject actor) {

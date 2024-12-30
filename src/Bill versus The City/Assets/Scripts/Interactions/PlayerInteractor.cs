@@ -94,6 +94,8 @@ public class PlayerInteractor : MonoBehaviour
         Interaction interaction = GetInteractionFromCollider(c);
         Debug.LogWarning($"PlayerInteractor Trigger Enter for {c.gameObject.name}");  // TODO --- remove debug
         if (interaction != null) {
+            interaction.interaction_targeted = false;
+            interaction.interaction_tracked = true;
             near_interactions.Add(interaction);
         }
     }
@@ -103,6 +105,7 @@ public class PlayerInteractor : MonoBehaviour
         Interaction interaction = GetInteractionFromCollider(c);
         if (interaction != null) {
             interaction.interaction_targeted = false;
+            interaction.interaction_tracked = false;
             near_interactions.Remove(interaction);
         }
     }

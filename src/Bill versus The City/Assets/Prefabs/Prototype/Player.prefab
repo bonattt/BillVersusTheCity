@@ -553,6 +553,7 @@ MonoBehaviour:
     m_Bits: 0
   debug_can_interact: 0
   interaction_distance_from: {fileID: 8800919946435970585}
+  interaction_range: 2
   debug_n_interactions: 0
 --- !u!135 &1338644710439304203
 SphereCollider:

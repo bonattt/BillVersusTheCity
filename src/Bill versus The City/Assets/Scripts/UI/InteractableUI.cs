@@ -70,19 +70,22 @@ public class InteractableUI : MonoBehaviour
     protected void UpdateVisibility() {
         if(IsVisible()) {
             root.style.visibility = Visibility.Visible;
-            if (target_manager.interaction_targeted) {
+            if (IsTargeted()) {
                 SetAsTargeted();
             } else {
                 SetAsNotTargeted();
             }
-
         } else {
             root.style.visibility = Visibility.Hidden;
         }
     }
 
     protected bool IsVisible() {
-        return PlayerInteractor.inst.CanInteractWith(target_manager);
+        return target_manager.interaction_tracked;
+    }
+     
+    protected bool IsTargeted() {
+        return target_manager.interaction_targeted;
     }
 
     protected void SetLabels() {
