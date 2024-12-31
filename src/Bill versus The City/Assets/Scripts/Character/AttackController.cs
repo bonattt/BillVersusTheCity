@@ -77,8 +77,15 @@ public class AttackController : MonoBehaviour, IWeaponManager
             if (start_aim_at == null) { return 0f; }
             
             float aimed_for = Time.time - ((float) start_aim_at);
+
+            float time_to_aim;
+            if (current_weapon == null) {
+                time_to_aim = float.PositiveInfinity;
+            } else {
+                time_to_aim = current_weapon.time_to_aim;
+            }
             return Mathf.Clamp(
-                (aimed_for / current_weapon.time_to_aim), 0f, 1f
+                (aimed_for / time_to_aim), 0f, 1f
             );
         }
     }

@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-public class ActivateInteractionEvents : MonoBehaviour, IGameEvent, IInteractionEffect {
+public class ActivateInteractionEvent : MonoBehaviour, IGameEvent, IInteractionEffect {
     
     public Interaction interaction; 
 

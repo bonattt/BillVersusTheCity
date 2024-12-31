@@ -1,0 +1,8 @@
+alias cashier as bill show cashier
+
+enter bill left
+enter cashier right
+say bill hey, man, are you alright
+say cashier is it over? what just happened
+say bill I think I got that guy. I'm gonna call the cops, alright. 
+say bill (Does't look like I'm gonna be finishing my road trip tonight after all...)

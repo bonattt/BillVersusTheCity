@@ -13,6 +13,7 @@ public class InteractableUI : MonoBehaviour
     protected VisualElement root, background_pannel;
     protected Label interaction_label; 
     public string name_header = "name"; 
+    public bool hide_until_enabled = false;
 
     public float hover_opacity = 1f;
     public float default_opacity = 0.5f;
@@ -66,6 +67,10 @@ public class InteractableUI : MonoBehaviour
     }
 
     protected void UpdateVisibility() {
+        if (hide_until_enabled && target_manager.enabled) {
+            Debug.Log($"clear hide until enabled on {gameObject.name} for {target_manager.gameObject.name}");
+            hide_until_enabled = false;
+        }
         if(IsVisible()) {
             root.style.visibility = Visibility.Visible;
             if (IsTargeted()) {
@@ -81,7 +86,7 @@ public class InteractableUI : MonoBehaviour
     }
 
     protected bool IsVisible() {
-        return target_manager.interaction_tracked;
+        return !hide_until_enabled && target_manager.interaction_tracked;
     }
      
     protected bool IsTargeted() {

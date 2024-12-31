@@ -16,6 +16,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public int max_vision_nodes = 1; // max number of visible nodes that will add to how quickly the player is noticed
     public float notice_player_rate = 2f;
     public float forget_player_rate = 0.25f;
+    public bool disable_spot = false;
 
     public float max_alert_vision_range = 24f; // enemies will see the player a this longer range once alerted
     public float max_notice_range = 13f; // enemies will not notice players further than this
@@ -127,6 +128,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
 
     public void Alert() {
         // alerts the enemy
+        disable_spot = false;
         _percent_noticed += 0.5f;
         last_seen_at = target.position;
         if (visible_nodes_this_frame >= 1) {
@@ -194,6 +196,12 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         // lazy update line of sight once per frame
         // to guarantee consistency, this must be called when LoS is queries, because the order scripts call `Update` is not known. 
         // must also be called once per frame in `Update`, so ensure `saw_target_last_frame` is called
+        if (disable_spot) {
+            // if spot is disabled, do not visually notice the player
+            _seeing_target = false;
+            _saw_target_last_frame = false;
+            return;
+        }
         if (! updated_this_frame) {
             _saw_target_last_frame = _seeing_target;
             visible_nodes_this_frame = VisibleNodes().Count;
