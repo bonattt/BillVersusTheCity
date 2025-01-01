@@ -12,6 +12,7 @@ using UnityEngine.AI;
     public bool seeing_target { get { return perception.seeing_target; }  } // seeing the target last frame
 
     public bool drop_weapon = false;
+    public bool use_full_auto = false;
 
     public float ctrl_shooting_rate = 0.75f;
     private EnemyPerception perception;
@@ -93,6 +94,7 @@ using UnityEngine.AI;
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
         if (seeing_target && ctrl_will_shoot) {
             if (saw_target) {
+                if (use_full_auto) { return true; }
                 return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
             }
             else {

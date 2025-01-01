@@ -14,8 +14,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     public GameObject bullet_prefab;
 
-    public bool use_full_auto = true; // use full auto with select fire weapons
-
     public float inaccuracy_modifier = 0f;
     
     // set the script to be inactive while game is paused

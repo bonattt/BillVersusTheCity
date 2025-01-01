@@ -15,6 +15,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
+    public bool always_use_cover_to_reload = false;
+    public bool never_use_cover_to_reload = false;
     public float _shooting_rate = 1f;
     private float _shooting_rate_variation = 0f;
     public const float SHOOTING_RATE_VARIATION = 0.5f;
@@ -42,6 +44,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         new ReloadFromStandingBehavior(),
     };
     public ISubBehavior RandomReloadBehavior() {
+        if (always_use_cover_to_reload) { return new ReloadFromCoverBehavior(); }
+        if (never_use_cover_to_reload) { return new ReloadFromStandingBehavior(); }
         int r = Random.Range(0, possible_reload_behaviors.Length + 1); 
         return possible_reload_behaviors[r];
     }

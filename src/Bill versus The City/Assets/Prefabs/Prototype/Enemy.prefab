@@ -138,6 +138,7 @@ MonoBehaviour:
   max_vision_nodes: 1
   notice_player_rate: 2
   forget_player_rate: 0.25
+  disable_spot: 0
   max_alert_vision_range: 24
   max_notice_range: 11
   _state: 0
@@ -187,6 +188,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   drop_weapon: 0
+  use_full_auto: 0
   ctrl_shooting_rate: 0.75
   weapon_pickup_prefab: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
   ctrl_target: {fileID: 0}
@@ -217,7 +219,6 @@ MonoBehaviour:
   initialize_weapon: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   shoot_point: {fileID: 4280276152886177003}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
-  use_full_auto: 1
   inaccuracy_modifier: 0
   _current_recoil: 0
   debug_ammo_count: 0
@@ -306,7 +307,8 @@ MonoBehaviour:
   controller: {fileID: 3396656997431563555}
   default_behavior: 6
   optimal_attack_range: 5
-  max_attack_range: 20
+  always_use_cover_to_reload: 0
+  never_use_cover_to_reload: 0
   _shooting_rate: 1
   debug_distance_to_target: 0
   debug_sub_behavior: 
