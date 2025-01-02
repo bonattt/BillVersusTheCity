@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffect
 {
-    public int handgun_max = 80;
-    public int handgun_start = 80;
+    public int handgun_max = 85;  // 5 mags of 17 shots
+    public int handgun_start = 85;
+    public int magnum_max = 50;
+    public int magnum_start = 50;
     public int rifle_max = 30;
     public int rifle_start = 30;
     public int shotgun_max = 10;
@@ -19,7 +21,7 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
 
     // guarantees a consisten order to which fields are displayed
     // guarantees a consisten order to which fields are displayed
-    public static readonly AmmoType[] display_order = new AmmoType[]{AmmoType.handgun, AmmoType.rifle, AmmoType.shotgun, AmmoType.handgun};
+    public static readonly AmmoType[] display_order = new AmmoType[]{AmmoType.handgun, AmmoType.rifle, AmmoType.shotgun, AmmoType.magnum};
 
     private Dictionary<AmmoType, int> ammo_count = new Dictionary<AmmoType, int>();
     private Dictionary<AmmoType, int> ammo_max = new Dictionary<AmmoType, int>();
@@ -44,8 +46,10 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
     }
 
     public void Initialize() {
-        // ammo_count[AmmoType.handgun] = handgun_start;
-        // ammo_max[AmmoType.handgun] = handgun_max;
+        ammo_count[AmmoType.handgun] = handgun_start;
+        ammo_max[AmmoType.handgun] = handgun_max;
+        ammo_count[AmmoType.magnum] = magnum_start;
+        ammo_max[AmmoType.magnum] = magnum_max;
         ammo_count[AmmoType.rifle] = rifle_start;
         ammo_max[AmmoType.rifle] = rifle_max;
         ammo_count[AmmoType.shotgun] = shotgun_start;

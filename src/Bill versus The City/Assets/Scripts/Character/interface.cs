@@ -137,9 +137,10 @@ public enum FiringMode {
 
 
 public enum AmmoType {
-    handgun,
-    rifle,
-    shotgun
+    handgun, // 9mm for handguns or SMGs
+    magnum,  // .357 magnum for revolvers
+    rifle,   // .223 for AR-15
+    shotgun  // buckshot shotgun shells
 }
 
 public interface IWeaponManager {

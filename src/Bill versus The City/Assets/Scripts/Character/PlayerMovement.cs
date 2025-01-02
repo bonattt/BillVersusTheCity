@@ -72,6 +72,9 @@ public class PlayerMovement : CharCtrl
             }
             else if (_crouch_percent <= 0f) {
                 _crouch_percent = 0f;
+                if (current_action == ActionCode.crouch) {
+                    current_action = ActionCode.none;
+                }
             }
             
         }

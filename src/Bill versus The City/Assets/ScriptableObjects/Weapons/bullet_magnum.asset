@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bullet_magnum
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: .357 magnum
-  ammo_type: 0
+  ammo_type: 1
   n_shots: 1
   aimed_inaccuracy: 2
   initial_inaccuracy: 3
