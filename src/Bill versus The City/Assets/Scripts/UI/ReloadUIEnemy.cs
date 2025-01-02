@@ -40,7 +40,6 @@ public class ReloadUIEnemy : MonoBehaviour, IReloadSubscriber
     private void UpdatePosition() {
         Vector3 new_position = Camera.main.WorldToScreenPoint(follow_target.position);
         reload_ui.position = new_position + offset;
-        Debug.Log($"enemy reload ui position set to: {reload_ui.position}");
     }
 
     private void UpdateProgress() {

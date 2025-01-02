@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
 
@@ -9,6 +10,7 @@ public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
 
     public List<MonoBehaviour> init_game_events;
     private List<IGameEvent> game_events;
+    public bool destroy_after_trigger = true;
 
     void Start() {
         game_events = new List<IGameEvent>();
@@ -42,11 +44,16 @@ public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
     }
 
     public void Trigger() {
+        // do not trigger if enemies are destroyed b/c of a level restart
+        if (ScenesUtil.IsRestartInProgress()) { return; }
+        
         // iterate in guaranteed order
         for (int i = 0; i < game_events.Count; i++) {
             game_events[i].ActivateEvent();
         }
-        Destroy(this);
+        if (destroy_after_trigger) {
+            Destroy(this); 
+        }
     }
 
     void OnDestroy() {

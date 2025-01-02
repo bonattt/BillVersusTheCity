@@ -9,6 +9,11 @@ public static class ScenesUtil {
     
     private static HashSet<string> loaded_floors = new HashSet<string>();
 
+    private static bool restarting = false;
+    public static bool IsRestartInProgress() {
+        return restarting;
+    }
+
     private static void ResetResources() {
         Debug.LogWarning("ResetResources");
         if (EnemiesManager.inst != null) {
@@ -17,9 +22,11 @@ public static class ScenesUtil {
     }
 
     public static void RestartLevel() {
+        restarting = true;
         ResetResources();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log($"Scene count {SceneManager.sceneCount}"); // TODO --- remove debug
+        restarting = false;
     }
 
     public static void NextLevel(string next_level) {
