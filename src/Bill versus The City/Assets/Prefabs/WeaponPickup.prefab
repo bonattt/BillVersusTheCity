@@ -49,9 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc584b5809a17e4caefc27e7b5b1428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interaction_range: 4
+  interaction_targeted: 0
+  interaction_tracked: 0
   interaction_enabled: 1
   interaction_order: []
+  debug_distance_to_interactor: 0
 --- !u!136 &4310183008043015336
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -89,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 309189556352468440}
   unity_weapon: {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
-  full_ammo: 0
+  full_ammo: 1
 --- !u!54 &2467660966307343145
 Rigidbody:
   m_ObjectHideFlags: 0

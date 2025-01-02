@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3396656997431563555}
-  default_behavior: 6
+  default_behavior: 4
   optimal_attack_range: 5
   always_use_cover_to_reload: 0
   never_use_cover_to_reload: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2869392785723021276}
   - component: {fileID: 4302876944562101421}
   m_Layer: 10
-  m_Name: TruckInteraction
+  m_Name: AmmoSupplyInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,9 +84,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc584b5809a17e4caefc27e7b5b1428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interaction_range: 4
+  interaction_targeted: 0
+  interaction_tracked: 0
   interaction_enabled: 1
   interaction_order: []
+  debug_distance_to_interactor: 0
 --- !u!114 &2869392785723021276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handgun_max: 80
   handgun_start: 80
+  magnum_max: 50
+  magnum_start: 50
   rifle_max: 30
   rifle_start: 30
   shotgun_max: 10
@@ -180,8 +184,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6023930620580158426, guid: 5a43788cfe824b14eb067fad8a942d48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4131024362730793531}
   m_SourcePrefab: {fileID: 100100000, guid: 5a43788cfe824b14eb067fad8a942d48, type: 3}
+--- !u!1 &3366367406412365533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6023930620580158426, guid: 5a43788cfe824b14eb067fad8a942d48, type: 3}
+  m_PrefabInstance: {fileID: 9020412814873732359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4131024362730793531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366367406412365533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ecc07d2d7ff51488e13b8732a9dbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  font_size: 20
+  ammo_container: {fileID: 4302876944562101421}
 --- !u!4 &6702212073096276975 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2318786422914600680, guid: 5a43788cfe824b14eb067fad8a942d48, type: 3}
