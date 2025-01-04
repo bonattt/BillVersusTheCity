@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue_files:
-  - Tutorial002/finish_encounter
+  - Tutorial02/enemies_defeated
   endless_dialogue: 0
   random_dialouge: 0
   dialogue_finished: {fileID: 0}
@@ -1432,7 +1432,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2788073036257827572, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
       propertyPath: m_Name
-      value: DialogueInteraction
+      value: FrontDoorDialogue
       objectReference: {fileID: 0}
     - target: {fileID: 4998390857074393151, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
       propertyPath: endless_dialogue
@@ -1440,7 +1440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4998390857074393151, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
       propertyPath: dialogue_files.Array.data[0]
-      value: Tutorial002/front_door
+      value: Tutorial02/front_door
       objectReference: {fileID: 0}
     - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3646,7 +3646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue_files:
-  - Tutorial002/start_level
+  - Tutorial02/start_level
   endless_dialogue: 0
   random_dialouge: 0
   dialogue_finished: {fileID: 0}
