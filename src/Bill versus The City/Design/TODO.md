@@ -310,25 +310,53 @@ SOOSH:
     [~] FIX: fix pause on level-start weapon select
     [X] FIX: enemy awareness notification moves around the enemy when rotating
     [X] FIX: camera jitter when mousing over walls
-    [?] FIX: Enemy reloads instantly sometimes
+    [?] FIX: Enemy reloads instantly sometimes --> cannot reproduce
 
-[ ] Tutorial Text
-[ ] Levels
-    [ ] Cover Level
+[+] Tutorial Text
+[+] Levels
+    [+] Cover Level
 
+===================
+==== DEMO 005 =====
+===================
 
+[ ] Use placeholder character for player and enemy animations
+    [ ] animate walking
+    [ ] animate running
+    [ ] animate weapon switching
+    [ ] animate crouching
+    [ ] animate crawling
+
+[ ] Fixes
+    [ ] Aim line appears underneath the street
+    [ ] Better FPS display
 
 =============================
 ========== Roadmap ==========
 =============================
 
-[ ] Milestone 4: enemy behavior improvements
-[ ] Milestone ???: Add player and enemy placeholder-animations from Unity asset store.
-[ ] Milestone ???: Level config (level )
-[ ] Milestone ???: Hub World (Bill's House and Gunstore), Saving level
+[+] Milestone 4: enemy behavior improvements
+[ ] Milestone 5 Add player and enemy placeholder-animations from Unity asset store.
+[ ] Milestone 6: Level config
+    --> automate configs for setting up scripts for verious possible level features. (Win condition, victory dialogue, start dialogue, weapon selections)
+    --> Allow levels to start with pre-set weapons instead of the weapon selection screen
+    --> implement level music
+    --> enemy ammo drops
+    GOAL: make it easier to configure commonly variable elements of levels
+
+
+[ ] Milestone 7: Progression and Hub World(s) (Bill's House and Gunstore), Saving
+    --> Save the player's current level
+    --> save settings
+    --> restore to saved level
+    --> create player owned weapons, which can be purchased for money at the gun store.
+    --> add pickups in levels for cash
+    --> Semi-auto shotgun
+    
 [ ] Milestone ???: More Levels
 [ ] Milestone ???: More Dialogue
 [ ] Milestone ???: Art assets
+[ ] Milestone ???: Better tutorials
 
 
 =============================
