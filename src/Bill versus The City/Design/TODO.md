@@ -327,8 +327,9 @@ SOOSH:
     [ ] animate crouching
     [ ] animate crawling
 
-[ ] Fixes
-    [ ] Aim line appears underneath the street
+[~] Fixes
+    [+] Aim line appears underneath the street
+    [ ] Aim line too short when mouse close to player 
     [ ] Better FPS display
 
 =============================
