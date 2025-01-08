@@ -34,7 +34,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public float start_reload_at;
 
-    public IAnimationFacade animator_facade;
+    public GameObject animatior_controller_ref;
+    private IAnimationFacade _animator_facade;
     private float hit_stun_until = -1f;
     
     private bool _is_active = true;
@@ -178,6 +179,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         controller = GetComponent<CharacterController>();
         attack_controller = GetComponent<AttackController>();
         ammo_container = GetComponent<AmmoContainer>();
+        if (animatior_controller_ref != null) {
+            _animator_facade = animatior_controller_ref.GetComponent<IAnimationFacade>();
+        } else {
+            _animator_facade = null;
+            Debug.LogWarning($"{gameObject.name} initialized animator facade to null!");
+        }
     }
 
     // Update is called once per frame
@@ -195,12 +202,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void HandleAnimation() {
-        if (animator_facade == null) { 
+        if (_animator_facade == null) { 
+            Debug.Log($"{gameObject.name} animator is null!");
             return; // no animation set, do nothing.
         }
 
-        animator_facade.forward = this.transform.forward;
-        animator_facade.move_velocity = MoveVector();
+        _animator_facade.forward = this.transform.forward;
+        _animator_facade.move_velocity = MoveVector();
+        _animator_facade.action = AnimationActionType.idle;
     }
 
     protected virtual void PreUpdate() {
