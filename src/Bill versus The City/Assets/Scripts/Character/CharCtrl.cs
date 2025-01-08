@@ -33,6 +33,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     private AmmoContainer ammo_container;
 
     public float start_reload_at;
+
+    public IAnimationFacade animator_facade;
     private float hit_stun_until = -1f;
     
     private bool _is_active = true;
@@ -189,6 +191,16 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         SetDebugData();
         UpdatePauseAttackLock();
         PostUpdate();
+        HandleAnimation();
+    }
+
+    protected virtual void HandleAnimation() {
+        if (animator_facade == null) { 
+            return; // no animation set, do nothing.
+        }
+
+        animator_facade.forward = this.transform.forward;
+        animator_facade.move_velocity = MoveVector();
     }
 
     protected virtual void PreUpdate() {
@@ -428,6 +440,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         attack_controller.FireAttack(ShootVector());
     }
     
+    public abstract Vector3 MoveDirection();
+    public abstract Vector3 MoveVector();
     protected abstract void Move();
 
     protected void LookWithAction() {
@@ -465,8 +479,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // Indicates that a main attack should be made this frame.
         return false;
     }
-
-    public abstract Vector3 MoveVector();
 
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target) {
         // TODO

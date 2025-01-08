@@ -135,15 +135,7 @@ public class PlayerMovement : CharCtrl
     protected override void Move() {
         LookWithAction();
         HandleCrouch();
-        Vector3 move;
-        if (crouch_dive_remaining > 0f) {
-            Debug.Log($"crouch_dive_remaining: {crouch_dive_remaining}, crouch_dive_direction: {crouch_dive_direction}");
-            move = crouch_dive_direction;
-        } else {
-            move = MoveVector();
-        }        
-        move = ModifyMoveVector(move);
-        controller.SimpleMove(move);
+        controller.SimpleMove(MoveVector());
     }
 
     protected override void PostUpdate() {
@@ -158,28 +150,31 @@ public class PlayerMovement : CharCtrl
         }
     }
 
-    protected Vector3 ModifyMoveVector(Vector3 move) {
-        return move * this.movement_speed;
-    }
+    // protected Vector3 ModifyMoveVector(Vector3 move) {
+    //     return move * this.movement_speed;
+    // }
 
     public override Vector3 LookTarget() {
         Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
         Vector3 look_target = new Vector3(mouse_pos.x, transform.position.y, mouse_pos.z);
         return look_target;
     }
+
+    public override Vector3 MoveDirection() {
+        Vector3 move;
+        if (crouch_dive_remaining > 0f) {
+            move = crouch_dive_direction;
+        } else {
+            // float move_x, move_y;
+            float move_x = InputSystem.current.MoveXInput();
+            float move_y = InputSystem.current.MoveYInput();
+            move = new Vector3(move_x, 0, move_y);
+        }        
+        return move.normalized;
+    }
     
     public override Vector3 MoveVector() {
-        // float move_x, move_y;
-        float move_x = InputSystem.current.MoveXInput();
-        float move_y = InputSystem.current.MoveYInput();
-        if (move_x != 0 && move_y != 0) {
-            // remove crabwalk
-            move_x = move_x / 1.4f;
-            move_y = move_y / 1.4f;
-        }
-        Vector3 move_vector = new Vector3(move_x, 0, move_y);
-
-        return move_vector;
+        return MoveDirection() * movement_speed;
     }
 
     

@@ -58,7 +58,7 @@ using UnityEngine.AI;
         }
         else {
             nav_mesh_agent.speed = this.movement_speed;
-            nav_mesh_agent.SetDestination(MoveVector());
+            nav_mesh_agent.SetDestination(MoveDestination());
         }
         // REFACTOR: find a better home for code below here
         if (attack_controller.current_weapon.current_ammo == 0) {
@@ -66,7 +66,16 @@ using UnityEngine.AI;
         }
     }
 
+    public override Vector3 MoveDirection() {
+        return (nav_mesh_agent.nextPosition - transform.position).normalized;
+    }
+
+    
     public override Vector3 MoveVector() {
+        return MoveDirection() * movement_speed;
+    }
+
+    public Vector3 MoveDestination() {
         switch (ctrl_move_mode) {
             case MovementTarget.stationary:
                 return transform.position;
@@ -150,7 +159,8 @@ using UnityEngine.AI;
                 break;
         }
         // TODO --- default case should make aiming not change, rather than pusing it to 
-        return new Vector3(0f, 0f, 0f);  
+        // return new Vector3(0f, 0f, 0f);  
+        return transform.forward + transform.position;
     }
 
     protected override void CharacterDeath() {
@@ -184,13 +194,14 @@ using UnityEngine.AI;
     /////////////////////////////
     
     public bool debug_seeing_target, debug_saw_target;
-    public Vector3 debug_move_vector, debug_look_target;
+    public Vector3 debug_move_vector, debug_move_destination, debug_look_target;
 
     protected override void SetDebugData() {
         base.SetDebugData();
         debug_seeing_target = seeing_target;
         debug_saw_target = saw_target;
         debug_move_vector = MoveVector();
+        debug_move_destination = MoveDestination();
         debug_look_target = LookTarget();
     }
 }
