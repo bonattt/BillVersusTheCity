@@ -4,9 +4,31 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
 
     public Vector3 move_velocity { get; set; }
-    public Vector3 forward { get; set; }
+    public Vector3 forward_direction { get; set; }
+    public Vector3 left_direction { get; set; }
     public AnimationActionType action { get; set; }
 
+
+    public float _velocity_forward;
+    public float velocity_forward { 
+        get {
+            return _velocity_forward;
+        }
+        set {
+            _velocity_forward = value;
+            animator.SetFloat("velocity_forward", value);
+        }
+    }
+    public float _velocity_left;
+    public float velocity_left { 
+        get {
+            return _velocity_left;
+        }
+        set {
+            _velocity_left = value;
+            animator.SetFloat("velocity_left", value);
+        }
+    }
 
     private bool _move_left = false;
     public bool move_left { 
@@ -74,16 +96,18 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
 
     void Start() {
         move_velocity = new Vector3(0f, 0f, 0f);
-        forward = new Vector3(0f, 0f, 0f);
+        forward_direction = new Vector3(0f, 0f, 0f);
     }
 
     void Update() {
         UpdateAnimationController();
+        UpdateDebugFields();
     }
 
 
     private void UpdateAnimationController() {
-        
+        velocity_forward = Vector3.Dot(move_velocity, forward_direction);
+        velocity_left = Vector3.Dot(move_velocity, left_direction);
         speed = move_velocity.magnitude;
         Debug.Log($"{gameObject.name} animation; move speed: {speed}");
         if (move_velocity == new Vector3(0f, 0f, 0)) {
@@ -96,7 +120,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
         is_moving = true;
         // if moving, determine which directions
-        float dot_product = Vector3.Dot(move_velocity, forward);
+        float dot_product = Vector3.Dot(move_velocity, forward_direction);
         if (dot_product > 0) {
             move_forward = true;
             move_backward = false;
@@ -104,5 +128,18 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
             move_forward = false;
             move_backward = true;
         }
+    }
+
+    //////////////////////////////
+    //////// DEBUG FIELDS ////////
+    //////////////////////////////
+    
+    public Vector3 debug_velocity, debug_forward, debug_left;
+    
+
+    public void UpdateDebugFields() {
+        debug_velocity = move_velocity;
+        debug_forward = forward_direction;
+        debug_left = left_direction;
     }
 }

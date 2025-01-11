@@ -206,8 +206,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             Debug.Log($"{gameObject.name} animator is null!");
             return; // no animation set, do nothing.
         }
-
-        _animator_facade.forward = this.transform.forward;
+        // model is rotated weird...
+        _animator_facade.forward_direction = this.transform.right;
+        _animator_facade.left_direction = this.transform.forward;
         _animator_facade.move_velocity = MoveVector();
         _animator_facade.action = AnimationActionType.idle;
     }

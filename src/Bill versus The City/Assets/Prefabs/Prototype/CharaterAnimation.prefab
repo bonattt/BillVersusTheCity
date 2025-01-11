@@ -45,7 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886edd3c3f4444d40bbbe7484128836b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _velocity_forward: 0
+  _velocity_left: 0
   animator: {fileID: 6589630929290752803}
+  debug_velocity: {x: 0, y: 0, z: 0}
+  debug_forward: {x: 0, y: 0, z: 0}
+  debug_left: {x: 0, y: 0, z: 0}
 --- !u!1001 &6589630929300194883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101,7 +106,11 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: 4c89d8affd612674b9c238ff8651667e, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 82685210168f30347a9f395767bfb27d, type: 2}
+      objectReference: {fileID: 9100000, guid: 2d05bd9cace604a4a966a0e5a18ad05f, type: 2}
+    - target: {fileID: 9500000, guid: 4c89d8affd612674b9c238ff8651667e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
