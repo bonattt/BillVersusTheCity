@@ -315,6 +315,18 @@ SOOSH:
 [+] Tutorial Text
 [+] Levels
     [+] Cover Level
+	
+===================
+FEEDBACK: Soosh
+	- Movement feels like it has momentum
+	- Cover functionality is not clear
+	- What is and is not cover is not clear
+	- Level too hard
+	- Aim line still follows mouse if you pause while aiming
+	- HP < 0.5 shows in UI as HP 0, but does not kill you
+	- sometimes enemies can see you before you see them
+	- "the shotgun got nerfed"
+	- red line goes through fence
 
 ===================
 ==== DEMO 005 =====
@@ -331,6 +343,8 @@ SOOSH:
     [+] Aim line appears underneath the street
     [ ] Aim line too short when mouse close to player 
     [ ] Better FPS display
+	[ ] HP < 0.5 shows in UI as HP 0, but does not kill you
+	[ ] Aim line still follows mouse if you pause while aiming
 
 =============================
 ========== Roadmap ==========
@@ -338,6 +352,10 @@ SOOSH:
 
 [+] Milestone 4: enemy behavior improvements
 [ ] Milestone 5 Add player and enemy placeholder-animations from Unity asset store.
+[ ] Milestone 6: improvements to gameplay
+	- detection based on whether they're on-screen
+	- fix cover
+	- ???
 [ ] Milestone 6: Level config
     --> automate configs for setting up scripts for verious possible level features. (Win condition, victory dialogue, start dialogue, weapon selections)
     --> Allow levels to start with pre-set weapons instead of the weapon selection screen
