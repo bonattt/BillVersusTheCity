@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Rifle
   _item_icon: {fileID: 21300000, guid: 362b9c4654ab6d24f8ed03fb2d65ff7e, type: 3}
+  _weapon_slot: 1
+  _weapon_class: 1
   _weapon_settings:
   - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
   - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
@@ -29,3 +31,7 @@ MonoBehaviour:
   _aim_zoom: 0.95
   _aim_move_speed: 0.35
   _max_zoom_range: 7
+  _gunshot_sound: 
+  _empty_gunshot_sound: 
+  _reload_start_sound: 
+  _reload_complete_sound: 

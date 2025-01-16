@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ammo_slug
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: shotgun slug
-  ammo_type: 2
+  ammo_type: 3
   n_shots: 1
   aimed_inaccuracy: 3
   initial_inaccuracy: 6

@@ -83,6 +83,7 @@ public interface IItem {
 
 public interface IWeapon : IItem {
     // equipment
+    public WeaponSlot weapon_slot { get; }
     public WeaponClass weapon_class { get; }
     // ammo
     public AmmoType ammo_type { get; }

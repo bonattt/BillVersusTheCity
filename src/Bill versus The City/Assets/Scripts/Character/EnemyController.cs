@@ -164,10 +164,20 @@ using UnityEngine.AI;
     }
 
     protected override void CharacterDeath() {
+        base.CharacterDeath();
         SpawnWeaponPickup();
-        Destroy(gameObject);
-        EnemiesManager.inst.KillEnemy(this);
+        DisableCollision();
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
+        EnemiesManager.inst.KillEnemy(this);
+    }
+
+    private void DisableCollision() {
+        Debug.LogWarning("# TODO --- disable collision for killed enemies!");
+    }
+
+    protected override void DelayedDeathEffects() {
+        base.DelayedDeathEffects();
+        Destroy(gameObject);
     }
 
     protected void SpawnWeaponPickup() {

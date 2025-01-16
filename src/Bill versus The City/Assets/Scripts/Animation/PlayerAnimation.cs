@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     public Vector3 forward_direction { get; set; }
     public Vector3 right_direction { get; set; }
     public AnimationActionType action { get; set; }
-
+    public WeaponClass weapon_class { get; set; }
 
     public float _velocity_forward;
     public float velocity_forward { 
@@ -92,11 +92,45 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
     }
 
+    // set to true while the character is aiming
+    public float aim_percent { get; set; } 
+
+    // how long should the shooting animation play for
+    public float _shot_duration = 0.1f; // start value settable in inspector
+    public float shot_duration { 
+        get {
+            return _shot_duration;
+        }
+        set {
+            _shot_duration = value;
+        }
+    }
+    
+    public float shot_at { get; set; } // time of the last gunshot
+    
+    // how long should the hurt animation play for
+    public float _hurt_duration = 0.1f; // start value settable in inspector
+    public float hurt_duration { 
+        get {
+            return _hurt_duration;
+        }
+        set {
+            _hurt_duration = value;
+        }
+    }
+    public float hurt_at { get; set; } // time last time the character took damage
+    public bool is_killed { get; set; } // time last time the character took damage
+
     public Animator animator;
 
     void Start() {
         move_velocity = new Vector3(0f, 0f, 0f);
         forward_direction = new Vector3(0f, 0f, 0f);
+        weapon_class = WeaponClass.handgun;
+        aim_percent = 0f;
+        shot_at = -1f;
+        hurt_at = -1f;
+        is_killed = false;
     }
 
     void Update() {
@@ -106,10 +140,21 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
 
 
     private void UpdateAnimationController() {
+        UpdateMovementFields();
+        UpdateCombatFields();
+    }
+
+    private void UpdateCombatFields() {
+        animator.SetFloat("aim_percent", aim_percent);
+        animator.SetBool("is_killed", is_killed);
+        animator.SetBool("is_hurt", Time.time + hurt_duration < hurt_at);
+        animator.SetBool("is_shooting", Time.time + shot_duration < shot_at);
+    }
+
+    private void UpdateMovementFields() {
         velocity_forward = Vector3.Dot(move_velocity, forward_direction);
         velocity_right = Vector3.Dot(move_velocity, right_direction);
         speed = move_velocity.magnitude;
-        Debug.Log($"{gameObject.name} animation; move speed: {speed}");
         if (move_velocity == new Vector3(0f, 0f, 0)) {
             move_left = false;
             move_right = false;
@@ -135,11 +180,12 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     //////////////////////////////
     
     public Vector3 debug_velocity, debug_forward, debug_left;
-    
+    public bool debug_is_killed;
 
     public void UpdateDebugFields() {
         debug_velocity = move_velocity;
         debug_forward = forward_direction;
         debug_left = right_direction;
+        debug_is_killed = is_killed;
     }
 }

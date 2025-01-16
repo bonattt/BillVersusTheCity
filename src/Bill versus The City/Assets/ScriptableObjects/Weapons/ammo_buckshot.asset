@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ammo_buckshot
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: buckshot
-  ammo_type: 2
+  ammo_type: 3
   n_shots: 9
   aimed_inaccuracy: 10
   initial_inaccuracy: 10

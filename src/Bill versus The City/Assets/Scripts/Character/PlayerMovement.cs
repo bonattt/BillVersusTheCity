@@ -178,7 +178,8 @@ public class PlayerMovement : CharCtrl
     }
 
     
-    protected override void CharacterDeath() {
+    protected override void DelayedDeathEffects() {
+        base.DelayedDeathEffects();
         MenuManager.inst.PlayerDefeatPopup();
     }
 }

@@ -64,10 +64,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
             if (aiming) {
                 float aim_multiplier;
-                if (attack_controller.current_weapon == null) {
+                if (current_weapon == null) {
                     aim_multiplier = 0.75f;
                 } else {
-                    aim_multiplier = attack_controller.current_weapon.aim_move_speed;
+                    aim_multiplier = current_weapon.aim_move_speed;
                 }
                 move_speed *= aim_multiplier;
             }
@@ -112,10 +112,16 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public float reload_time {
         get {
-            if (attack_controller.current_weapon == null) {
+            if (current_weapon == null) {
                 return 0f;
             }
-            return attack_controller.current_weapon.reload_time;
+            return current_weapon.reload_time;
+        }
+    }
+
+    protected IWeapon current_weapon {
+        get {
+            return attack_controller.current_weapon;
         }
     }
 
@@ -150,10 +156,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected virtual void SetDebugData() {
         debug_attack_input = AttackInput();
         debug_can_attack = CanAttack();
-        debug_weapon_isnull = attack_controller.current_weapon == null;
+        debug_weapon_isnull = current_weapon == null;
         if (!debug_weapon_isnull) {
-            debug_full_auto = attack_controller.current_weapon.auto_fire;
-            debug_current_ammo = attack_controller.current_weapon.current_ammo;
+            debug_full_auto = current_weapon.auto_fire;
+            debug_current_ammo = current_weapon.current_ammo;
         } else {
             debug_full_auto = false;
             debug_current_ammo = -1;
@@ -190,6 +196,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // Update is called once per frame
     void Update()
     {   
+        TryDelayedDeathEffects(); // character will be inactive after death, so test for this first
         if (! is_active) { return; } // do nothing while controller disabled
         PreUpdate();
         SetAction();
@@ -211,6 +218,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.right_direction = -this.transform.forward;
         _animator_facade.move_velocity = MoveVector();
         _animator_facade.action = AnimationActionType.idle;
+        _animator_facade.weapon_class = current_weapon.weapon_class;
+        _animator_facade.aim_percent = attack_controller.aim_percent;
+        _animator_facade.shot_at = last_attack_time;
     }
 
     protected virtual void PreUpdate() {
@@ -320,7 +330,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // initiate a reload
         reloading = true;
         start_reload_at = Time.time;
-        UpdateStartReload(attack_controller.current_weapon);
+        UpdateStartReload(current_weapon);
     }
 
     public bool ReloadIsFinished() {
@@ -334,14 +344,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // end reload before it's finished
         reloading = false;
         current_action = ActionCode.none;
-        UpdateCancelReload(attack_controller.current_weapon);
+        UpdateCancelReload(current_weapon);
     }
     
     private void FinishReload() {
         // complete a reload successfully.
         reloading = false;
         current_action = ActionCode.none;
-        IWeapon wpn = attack_controller.current_weapon;
+        IWeapon wpn = current_weapon;
 
         if (ShouldReloadWithContainer(wpn)) {
             _ReloadFromContainer(wpn);
@@ -350,7 +360,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             _ReloadGeneric(wpn);
         }
         attack_controller.UpdateSubscribers();
-        UpdateFinishReload(attack_controller.current_weapon);
+        UpdateFinishReload(current_weapon);
 
         // for weapons that reload single rounds, keep reloading
         if(wpn.current_ammo != wpn.ammo_capacity) {
@@ -362,7 +372,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
     public bool CanReload() {
         // returns if the character can reload with the current_weapon.
-        IWeapon current = attack_controller.current_weapon;
+        IWeapon current = current_weapon;
         if (current == null) { 
             Debug.LogWarning("cannot reload, current weapon is null!");
             return false; 
@@ -516,7 +526,27 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    protected abstract void CharacterDeath();
+    protected float killed_at = float.PositiveInfinity;
+    public float delayed_death_effects_seconds = 3f;
+    private bool delayed_death_effects_triggered = false;
+
+    protected virtual void CharacterDeath() {
+        Debug.Log($"{gameObject.name} has been killed!");
+        killed_at = Time.time;
+        _is_active = false;
+        if (_animator_facade != null) {
+            _animator_facade.is_killed = true;
+        }
+    }
+    protected virtual void DelayedDeathEffects() {
+        Debug.Log($"DelayedDeathEffects: {gameObject.name}");
+    }
+    private void TryDelayedDeathEffects() {
+        if (!delayed_death_effects_triggered && (Time.time - delayed_death_effects_seconds > killed_at)) {
+            delayed_death_effects_triggered = true;
+            DelayedDeathEffects();
+        }
+    }
 
     public ICharacterStatus GetStatus() {
         return this.char_status;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ammo_rifle
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: rilfle .223
-  ammo_type: 1
+  ammo_type: 2
   n_shots: 1
   aimed_inaccuracy: 0
   initial_inaccuracy: 5

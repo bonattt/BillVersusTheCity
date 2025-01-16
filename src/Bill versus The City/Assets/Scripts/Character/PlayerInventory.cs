@@ -100,9 +100,15 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     // }
 }
 
-public enum WeaponClass {
+public enum WeaponSlot {
     handgun, 
     longgun, 
     pickup
 }
 
+public enum WeaponClass {
+    handgun, 
+    rifle,
+    shotgun,
+    empty
+}
