@@ -118,7 +118,20 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
             _hurt_duration = value;
         }
     }
-    public float hurt_at { get; set; } // time last time the character took damage
+    private float _hurt_at = float.NegativeInfinity;
+    private int n_hurt_animations = 3;
+    public float hurt_at { // time last time the character took damage
+        get {
+            return _hurt_at;
+        }
+        set {
+            if (value != _hurt_at) {
+                // pick a random hurt animation
+                animator.SetInteger("hurt_animation", Random.Range(0, n_hurt_animations));
+            }
+            _hurt_at = value;
+        }
+    } 
     public bool is_killed { get; set; } // time last time the character took damage
 
     public Animator animator;
@@ -144,11 +157,19 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         UpdateCombatFields();
     }
 
+    public bool is_hurt {
+        get { return Time.time - hurt_duration < hurt_at; }
+    }
+
+    public bool is_shooting {
+        get { return Time.time - shot_duration < shot_at; }
+    }
+
     private void UpdateCombatFields() {
         animator.SetFloat("aim_percent", aim_percent);
         animator.SetBool("is_killed", is_killed);
-        animator.SetBool("is_hurt", Time.time + hurt_duration < hurt_at);
-        animator.SetBool("is_shooting", Time.time + shot_duration < shot_at);
+        animator.SetBool("is_hurt", is_hurt);
+        animator.SetBool("is_shooting", is_shooting);
     }
 
     private void UpdateMovementFields() {
@@ -180,12 +201,14 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     //////////////////////////////
     
     public Vector3 debug_velocity, debug_forward, debug_left;
-    public bool debug_is_killed;
+    public bool debug_is_killed, debug_is_hurt, debug_is_shooting;
 
     public void UpdateDebugFields() {
         debug_velocity = move_velocity;
         debug_forward = forward_direction;
         debug_left = right_direction;
         debug_is_killed = is_killed;
+        debug_is_hurt = is_hurt;
+        debug_is_shooting = is_shooting;
     }
 }

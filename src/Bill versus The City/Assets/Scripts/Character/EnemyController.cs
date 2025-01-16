@@ -169,6 +169,8 @@ using UnityEngine.AI;
         DisableCollision();
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
         EnemiesManager.inst.KillEnemy(this);
+        behavior.Kill();
+        nav_mesh_agent.SetDestination(transform.position);
     }
 
     private void DisableCollision() {

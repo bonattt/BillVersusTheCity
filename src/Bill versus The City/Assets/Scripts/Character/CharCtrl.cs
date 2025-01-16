@@ -509,6 +509,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // char_status.GetAttackTarget().OnAttackHitRecieved(attack, attacker);
         // Debug.Log($"{this} was hit by an attack {attack}!");
         SetHitStun(attack);
+        if (_animator_facade != null) {
+            _animator_facade.hurt_at = Time.time;
+        }
     }     
 
     public void SetHitStun(IAttack attack) {

@@ -7557,6 +7557,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4651740638231061892, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
+      propertyPath: _hurt_duration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6586359110877128584, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
       propertyPath: crouch_height
       value: 0.6

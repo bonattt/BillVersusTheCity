@@ -87,7 +87,12 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             {BehaviorMode.wondering, new WonderingBehavior(this)},
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
             {BehaviorMode.routed, new FleeToCoverBehavior()},
+            {BehaviorMode.dead, new DeadBehavior()},
         };
+    }
+
+    public void Kill() {
+        behavior_mode = BehaviorMode.dead;
     }
 
     public void NewPlayerObject(PlayerCombat new_player) {
@@ -155,10 +160,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     protected void SetBehaviorMode() {
         // routed is permanent, and the enemy will run away forever
-        if (behavior_mode == BehaviorMode.routed) { 
+        if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) { 
             return; 
         }
-
         switch(perception.state) {
             case PerceptionState.seeing:
                 float dist = DistanceToTarget();
@@ -207,5 +211,6 @@ public enum BehaviorMode {
     patrol,  // enemy will patrol through a sequence of pre-set points
     wondering,  // enemy is unaware of the player, and wonders idly 
     routed,  // enemy is paniced and will run away forever. (probably mostly for testing retreat behaviors and pathfinding)
+    dead // enemy is dead
 
 }
