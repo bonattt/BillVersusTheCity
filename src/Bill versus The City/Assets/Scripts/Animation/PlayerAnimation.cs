@@ -5,7 +5,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
 
     public Vector3 move_velocity { get; set; }
     public Vector3 forward_direction { get; set; }
-    public Vector3 left_direction { get; set; }
+    public Vector3 right_direction { get; set; }
     public AnimationActionType action { get; set; }
 
 
@@ -19,14 +19,14 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
             animator.SetFloat("velocity_forward", value);
         }
     }
-    public float _velocity_left;
-    public float velocity_left { 
+    public float _velocity_right;
+    public float velocity_right { 
         get {
-            return _velocity_left;
+            return _velocity_right;
         }
         set {
-            _velocity_left = value;
-            animator.SetFloat("velocity_left", value);
+            _velocity_right = value;
+            animator.SetFloat("velocity_right", value);
         }
     }
 
@@ -37,7 +37,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
         protected set {
             _move_left = value;
-            animator.SetBool("move_left", value);
+            // animator.SetBool("move_left", value);
         }
     }
     private bool _move_right = false;
@@ -47,7 +47,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
         protected set {
             _move_right = value;
-            animator.SetBool("move_right", value);
+            // animator.SetBool("move_right", value);
         }
     }
     private bool _move_forward = false;
@@ -57,7 +57,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
         protected set {
             _move_forward = value;
-            animator.SetBool("move_forward", value);
+            // animator.SetBool("move_forward", value);
         }
     }
     private bool _move_backward = false;
@@ -67,7 +67,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
         protected set {
             _move_backward = value;
-            animator.SetBool("move_backward", value);
+            // animator.SetBool("move_backward", value);
         }
     }
 
@@ -88,7 +88,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         }
         set {
             _speed = value;
-            animator.SetFloat("speed", move_velocity.magnitude);
+            // animator.SetFloat("speed", move_velocity.magnitude);
         }
     }
 
@@ -107,7 +107,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
 
     private void UpdateAnimationController() {
         velocity_forward = Vector3.Dot(move_velocity, forward_direction);
-        velocity_left = Vector3.Dot(move_velocity, left_direction);
+        velocity_right = Vector3.Dot(move_velocity, right_direction);
         speed = move_velocity.magnitude;
         Debug.Log($"{gameObject.name} animation; move speed: {speed}");
         if (move_velocity == new Vector3(0f, 0f, 0)) {
@@ -140,6 +140,6 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     public void UpdateDebugFields() {
         debug_velocity = move_velocity;
         debug_forward = forward_direction;
-        debug_left = left_direction;
+        debug_left = right_direction;
     }
 }
