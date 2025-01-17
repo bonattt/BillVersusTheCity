@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5199268784748629768}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.3333287, y: -25.332119, z: 10.044405}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6589630929300069601}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &7253767703810587300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,11 +46,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _velocity_forward: 0
-  _velocity_left: 0
+  _velocity_right: 0
+  _shot_duration: 0.1
+  _hurt_duration: 0.1
   animator: {fileID: 6589630929290752803}
   debug_velocity: {x: 0, y: 0, z: 0}
   debug_forward: {x: 0, y: 0, z: 0}
   debug_left: {x: 0, y: 0, z: 0}
+  debug_is_killed: 0
+  debug_is_hurt: 0
+  debug_is_shooting: 0
+  debug_crouch_percent: 0
+  debug_aim_percent: 0
 --- !u!1001 &6589630929300194883
 PrefabInstance:
   m_ObjectHideFlags: 0
