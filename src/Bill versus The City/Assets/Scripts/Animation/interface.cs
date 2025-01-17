@@ -14,6 +14,7 @@ public interface IAnimationFacade {
     public float hurt_duration { get; set; } // how long the hurt animation should play for
     public float hurt_at { get; set; } // time last time the character took damage
     public bool is_killed { get; set; } // time last time the character took damage
+    public float crouch_percent { get; set; } // percentage crouched
 
 }
 

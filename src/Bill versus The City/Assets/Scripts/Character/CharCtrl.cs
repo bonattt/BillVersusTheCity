@@ -35,7 +35,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float start_reload_at;
 
     public GameObject animatior_controller_ref;
-    private IAnimationFacade _animator_facade;
+    protected IAnimationFacade _animator_facade;
     private float hit_stun_until = -1f;
     
     private bool _is_active = true;
@@ -221,6 +221,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.weapon_class = current_weapon.weapon_class;
         _animator_facade.aim_percent = attack_controller.aim_percent;
         _animator_facade.shot_at = last_attack_time;
+        _animator_facade.crouch_percent = 0f;
+        
     }
 
     protected virtual void PreUpdate() {

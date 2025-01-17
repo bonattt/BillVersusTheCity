@@ -134,6 +134,8 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     } 
     public bool is_killed { get; set; } // time last time the character took damage
 
+    public float crouch_percent { get; set; }
+
     public Animator animator;
 
     void Start() {
@@ -144,6 +146,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         shot_at = -1f;
         hurt_at = -1f;
         is_killed = false;
+        crouch_percent = 0f;
     }
 
     void Update() {
@@ -173,6 +176,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     }
 
     private void UpdateMovementFields() {
+        animator.SetFloat("crouch_percent", crouch_percent);
         velocity_forward = Vector3.Dot(move_velocity, forward_direction);
         velocity_right = Vector3.Dot(move_velocity, right_direction);
         speed = move_velocity.magnitude;
@@ -202,6 +206,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     
     public Vector3 debug_velocity, debug_forward, debug_left;
     public bool debug_is_killed, debug_is_hurt, debug_is_shooting;
+    public float debug_crouch_percent, debug_aim_percent;
 
     public void UpdateDebugFields() {
         debug_velocity = move_velocity;
@@ -210,5 +215,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         debug_is_killed = is_killed;
         debug_is_hurt = is_hurt;
         debug_is_shooting = is_shooting;
+        debug_crouch_percent = crouch_percent;
+        debug_aim_percent = aim_percent;
     }
 }
