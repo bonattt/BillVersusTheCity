@@ -351,7 +351,7 @@ FEEDBACK: Soosh
         [ ] FIX: reload UI sticks around after enemy is killed
     [ ] FIX: enemy detection not working with animations!! 
         ---> I had this happen on tutorial 1, and could not reproduce on level 1
-    [ ] FIX: enemies sometimes continue to rotate after being killed
+    [+] FIX: enemies sometimes continue to rotate after being killed
     [ ] REFACTOR: make animator read the character controller, instead of having the character controller write to the animator
 
 [~] Fixes

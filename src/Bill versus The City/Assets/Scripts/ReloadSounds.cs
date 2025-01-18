@@ -11,6 +11,8 @@ public class ReloadSounds : MonoBehaviour, IReloadSubscriber
     private static SoundEffect reload_start_effect, reload_complete_effect, reload_cancel_effect;
     private IReloadManager manager;
 
+    private bool killed = false;
+
     void Awake() {
         // Resource.Load cannot be called in static class constructor
         reload_start_effect = new ReloadStartSoundEffect();
@@ -36,19 +38,25 @@ public class ReloadSounds : MonoBehaviour, IReloadSubscriber
     void OnDestroy() {
         manager.Unsubscribe(this);
     }
+
+    public void OnDeath(ICharacterStatus _)  {
+        killed = true;
+    }
     
     public void StartReload(IReloadManager manager, IWeapon weapon) {
         // SFXSystem.instance.PlaySound(reload_start_sound, transform.position);
+        if (killed) { return; } // don't play sounds if enemy is killed while reloading
         reload_start_effect.DisplayWeaponEffect(transform.position, weapon);
     }
 
     public void FinishReload(IReloadManager manager, IWeapon weapon) {
         // SFXSystem.instance.PlaySound(reload_complete_sound, transform.position);
+        if (killed) { return; } // don't play sounds if enemy is killed while reloading
         reload_complete_effect.DisplayWeaponEffect(transform.position, weapon);
     }
 
     public void CancelReload(IReloadManager manager, IWeapon weapon) {
-        // do nothing
+        if (killed) { return; } // don't play sounds if enemy is killed while reloading
         reload_cancel_effect.DisplayWeaponEffect(transform.position, weapon);
     }
 

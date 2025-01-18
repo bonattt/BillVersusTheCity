@@ -550,6 +550,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     } 
 
     public ICharacterStatus GetStatus() {
+        if (char_status == null) {
+            char_status = GetComponent<CharacterStatus>();
+        }
         return this.char_status;
     }
 

@@ -173,7 +173,6 @@ using UnityEngine.AI;
     }
 
     private void DisableCollision() {
-        // Debug.LogWarning("# TODO --- disable collision for killed enemies!");
         GetComponent<CapsuleCollider>().enabled = false;
     }
     public override void DelayedOnDeath(ICharacterStatus status) {

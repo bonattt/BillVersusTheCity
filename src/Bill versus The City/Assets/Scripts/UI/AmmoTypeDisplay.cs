@@ -6,6 +6,7 @@ using UnityEngine;
 public static class AmmoTypeDisplay {
     private static readonly Dictionary<AmmoType, string> display_values = new Dictionary<AmmoType, string>{
         {AmmoType.handgun, "handgun"},
+        {AmmoType.magnum, "magnum"},
         {AmmoType.rifle, "rifle"},
         {AmmoType.shotgun, "shotgun"}
     };
