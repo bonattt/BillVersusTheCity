@@ -163,9 +163,8 @@ using UnityEngine.AI;
         return transform.forward + transform.position;
     }
 
-    protected override void CharacterDeath() {
-        base.CharacterDeath();
-        SpawnWeaponPickup();
+    public override void OnDeath(ICharacterStatus status) {
+        base.OnDeath(status);
         DisableCollision();
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
         EnemiesManager.inst.KillEnemy(this);
@@ -176,9 +175,13 @@ using UnityEngine.AI;
     private void DisableCollision() {
         Debug.LogWarning("# TODO --- disable collision for killed enemies!");
     }
+    public override void DelayedOnDeath(ICharacterStatus status) {
+        base.DelayedOnDeath(status);
+        SpawnWeaponPickup();
+    }
 
-    protected override void DelayedDeathEffects() {
-        base.DelayedDeathEffects();
+    public override void OnDeathCleanup(ICharacterStatus status) {
+        base.OnDeathCleanup(status);
         Destroy(gameObject);
     }
 

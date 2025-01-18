@@ -20,6 +20,9 @@ public interface ICharacterStatus {
 
 public interface ICharStatusSubscriber {
     public void StatusUpdated(ICharacterStatus status);
+    public void OnDeath(ICharacterStatus status) { /* do nothing by default */ } // triggers immediately on death
+    public void DelayedOnDeath(ICharacterStatus status) { /* do nothing by default */ } // triggers after a death animation finishes playing
+    public void OnDeathCleanup(ICharacterStatus status) { /* do nothing by default */ } // triggers some time after death to despawn the character
 }
 
 

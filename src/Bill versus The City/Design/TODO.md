@@ -333,11 +333,26 @@ FEEDBACK: Soosh
 ===================
 
 [ ] Use placeholder character for player and enemy animations
-    [ ] animate walking
-    [ ] animate running
-    [ ] animate weapon switching
-    [ ] animate crouching
-    [ ] animate crawling
+    [+] animate walking
+    [~] animate running
+    [X] animate weapon switching --> no animation for this
+    [~] animate crouching
+        [+] Crouching animates
+        [ ] figure out something for crouch dive
+        [ ] Fix crouch dive not working
+    [X] animate crawling --> no animation for this
+    [+] Animate shooting
+        [+] Animate aiming handgun
+        [ ] Animate aiming rifle
+    [ ] Polish up Enemy
+        [ ] implement aiming for enemies when in optimal combat range
+        [ ] Disable collider immediately on death
+        [ ] split clean up and delayed effects so enemy can drop pickup after animation plays
+        [ ] FIX: reload UI sticks around after enemy is killed
+    [ ] FIX: enemy detection not working with animations!! 
+        ---> I had this happen on tutorial 1, and could not reproduce on level 1
+    [ ] FIX: enemies sometimes continue to rotate after being killed
+    [ ] REFACTOR: make animator read the character controller, instead of having the character controller write to the animator
 
 [~] Fixes
     [+] Aim line appears underneath the street

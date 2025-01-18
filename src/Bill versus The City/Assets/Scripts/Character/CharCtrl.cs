@@ -196,7 +196,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // Update is called once per frame
     void Update()
     {   
-        TryDelayedDeathEffects(); // character will be inactive after death, so test for this first
         if (! is_active) { return; } // do nothing while controller disabled
         PreUpdate();
         SetAction();
@@ -520,38 +519,35 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         hit_stun_until = Time.time + 0.25f;
     }
 
-    private int times_killed = 0;
     public void StatusUpdated(ICharacterStatus status) {
-        if (char_status.health <= 0) {
-            if (times_killed == 0) {
-                // prevent CharacterDeath from being called multiple times in shotgun deaths
-                CharacterDeath();
-            }
-            times_killed += 1;
-        }
+        // if (char_status.health <= 0) {
+        //     if (times_killed == 0) {
+        //         // prevent CharacterDeath from being called multiple times in shotgun deaths
+        //         CharacterDeath();
+        //     }
+        //     times_killed += 1;
+        // }
+
+        // do nothing?
     }
 
-    protected float killed_at = float.PositiveInfinity;
-    public float delayed_death_effects_seconds = 3f;
-    private bool delayed_death_effects_triggered = false;
-
-    protected virtual void CharacterDeath() {
+    
+    public virtual void OnDeath(ICharacterStatus status) {
+        // triggers immediately on death
         Debug.Log($"{gameObject.name} has been killed!");
-        killed_at = Time.time;
         _is_active = false;
         if (_animator_facade != null) {
             _animator_facade.is_killed = true;
         }
-    }
-    protected virtual void DelayedDeathEffects() {
-        Debug.Log($"DelayedDeathEffects: {gameObject.name}");
-    }
-    private void TryDelayedDeathEffects() {
-        if (!delayed_death_effects_triggered && (Time.time - delayed_death_effects_seconds > killed_at)) {
-            delayed_death_effects_triggered = true;
-            DelayedDeathEffects();
-        }
-    }
+    } 
+    public virtual void DelayedOnDeath(ICharacterStatus status) {
+        // triggers after a death animation finishes playing
+        Debug.Log($"DelayedOnDeath: {gameObject.name}");
+    } 
+    public virtual void OnDeathCleanup(ICharacterStatus status) {
+        // triggers some time after death to despawn the character
+        Debug.Log($"OnDeathCleanup: {gameObject.name}");
+    } 
 
     public ICharacterStatus GetStatus() {
         return this.char_status;

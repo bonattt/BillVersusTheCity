@@ -176,12 +176,12 @@ public class PlayerMovement : CharCtrl
     public override Vector3 MoveVector() {
         return MoveDirection() * movement_speed;
     }
-    
-    protected override void DelayedDeathEffects() {
-        base.DelayedDeathEffects();
+
+    public override void DelayedOnDeath(ICharacterStatus status) {
+        base.DelayedOnDeath(status);
         MenuManager.inst.PlayerDefeatPopup();
     }
-
+    
     protected override void HandleAnimation() {
         base.HandleAnimation();
         _animator_facade.crouch_percent = crouch_percent;

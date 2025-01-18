@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserver {
     
+    public float death_effect_delay_seconds = 1f;
+    public float death_cleanup_delay_seconds = 15f;
+    
+    private float killed_at = float.NaN;
+    private bool delay_triggered = false;
+    private bool cleanup_triggered = false;
     public float _health = 0;
     public float health { 
         get {
@@ -15,6 +21,10 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
             _health = value;
             if (_health < 0) {
                 _health = 0;
+                if (float.IsNaN(killed_at)) {
+                    killed_at = Time.time;
+                    UpdateOnDeath();
+                }
             }
             else if (_health > _max_health) {
                 _health = _max_health;
@@ -154,8 +164,57 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     }
 
     void Update() {
+        if (!delay_triggered) {
+            if (Time.time - death_effect_delay_seconds > killed_at) {
+                UpdateDelayedOnDeath();
+                delay_triggered = true;
+            }
+        }
+
+        else if (!cleanup_triggered) {
+            if (Time.time - death_cleanup_delay_seconds > killed_at) {
+                UpdateOnDeathCleanup();
+                cleanup_triggered = true;
+            }
+        }
         SetDebug();
     }
+    
+    public void Subscribe(ICharStatusSubscriber sub) => subscribers.Add(sub);
+
+    public void Unsubscribe(ICharStatusSubscriber sub) => subscribers.Remove(sub);
+
+    public void UpdateStatus() {
+        foreach(ICharStatusSubscriber sub in subscribers) {
+            sub.StatusUpdated(this);
+        }
+    }
+
+    public void UpdateOnDeath() {
+        foreach(ICharStatusSubscriber sub in subscribers) {
+            sub.OnDeath(this);
+        }
+    }
+
+    public void UpdateDelayedOnDeath() {
+        foreach(ICharStatusSubscriber sub in subscribers) {
+            sub.DelayedOnDeath(this);
+        }
+    }
+
+    public void UpdateOnDeathCleanup() {
+        foreach(ICharStatusSubscriber sub in subscribers) {
+            sub.OnDeathCleanup(this);
+        }
+    }
+    
+    // public void OnDeath(ICharacterStatus status) { /* do nothing by default */ } // triggers immediately on death
+    // public void DelayedOnDeath(ICharacterStatus status) { /* do nothing by default */ } // triggers after a death animation finishes playing
+    // public void OnDeathCleanup(ICharacterStatus status) { /* do nothing by default */ } // triggers some time after death to despawn the character
+
+    //////////////////////////
+    ///////// DEBUG //////////
+    //////////////////////////
 
     public bool _debug_has_armor = false;
     public float _debug_max_armor = -1f;
@@ -177,15 +236,5 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
             _debug_armor_protection = armor.armor_protection;
         }
         _debug_is_player = is_player;
-    }
-
-    public void Subscribe(ICharStatusSubscriber sub) => subscribers.Add(sub);
-
-    public void Unsubscribe(ICharStatusSubscriber sub) => subscribers.Remove(sub);
-
-    public void UpdateStatus() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
-            sub.StatusUpdated(this);
-        }
     }
 }
