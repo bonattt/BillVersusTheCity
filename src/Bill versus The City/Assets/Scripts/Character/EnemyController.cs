@@ -169,11 +169,12 @@ using UnityEngine.AI;
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
         EnemiesManager.inst.KillEnemy(this);
         behavior.Kill();
-        nav_mesh_agent.SetDestination(transform.position);
+        nav_mesh_agent.enabled = false;
     }
 
     private void DisableCollision() {
-        Debug.LogWarning("# TODO --- disable collision for killed enemies!");
+        // Debug.LogWarning("# TODO --- disable collision for killed enemies!");
+        GetComponent<CapsuleCollider>().enabled = false;
     }
     public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
