@@ -536,6 +536,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // triggers immediately on death
         Debug.Log($"{gameObject.name} has been killed!");
         _is_active = false;
+        CancelReload();
         if (_animator_facade != null) {
             _animator_facade.is_killed = true;
         }
