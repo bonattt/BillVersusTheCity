@@ -6,15 +6,15 @@ public class SFXSystem : MonoBehaviour
 {
 
     public AudioSource sfx_object_prefab;
-    private static SFXSystem _instance = null;
-    public static SFXSystem instance {
+    private static SFXSystem _inst = null;
+    public static SFXSystem inst {
         get {
-            return _instance;
+            return _inst;
         }
     }
 
     void Awake() {
-        _instance = this;
+        _inst = this;
     }
 
     public void PlaySound(ISoundSet sound, Vector3 target) {

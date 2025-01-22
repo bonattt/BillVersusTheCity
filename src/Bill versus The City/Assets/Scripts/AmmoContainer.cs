@@ -159,7 +159,7 @@ public class AmmoContainer : MonoBehaviour, IGenericObservable, IInteractionEffe
             return; // do not play sound if there is no sound
         }
         ISoundSet sounds = SFXLibrary.LoadSound(interaction_sound_path);
-        SFXSystem.instance.PlaySound(sounds, transform.position);
+        SFXSystem.inst.PlaySound(sounds, transform.position);
     }
 
     void Update() {

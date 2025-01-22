@@ -41,7 +41,7 @@ public class SoundEffect : IAttackHitEffect,
     }
 
     public void PlaySound(Vector3 point, IWeapon weapon) {
-        SFXSystem.instance.PlaySound(GetSound(weapon), point);
+        SFXSystem.inst.PlaySound(GetSound(weapon), point);
     }
 }
 

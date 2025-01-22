@@ -397,6 +397,11 @@ FEEDBACK: Soosh
 ==== Unplanned features =====
 =============================
 
+[ ] Skip Level System
+[ ] Speed-run dialogue mode (hold to click through fast)
+[ ] Additional controls to advance dialogue (press-e)
+[ ] Dialogue anti-buffering (block inputs for a short time after dialogue opens, to prevent playes skipping dialogue if it opens while they're shooting)
+
 [ ] "swarm intelligence" ememy AI
     - randomly offset destinations when enemy is traveling to waypoints
     - enemies should account for other enemy positons when setting destinations

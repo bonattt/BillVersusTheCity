@@ -144,7 +144,7 @@ public class MenuManager : MonoBehaviour
     public static void PlayMenuSound(string sound_name) {
         ISoundSet sound = SFXLibrary.LoadSound(sound_name);
         Vector3 target = Camera.main.transform.position;
-        SFXSystem.instance.PlaySound(sound, target);
+        SFXSystem.inst.PlaySound(sound, target);
     } 
 
     public static void AddGenericEvents(Button button) {

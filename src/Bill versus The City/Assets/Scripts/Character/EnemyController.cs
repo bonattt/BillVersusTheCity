@@ -167,7 +167,6 @@ using UnityEngine.AI;
         base.OnDeath(status);
         DisableCollision();
         MetricSystem.instance.IncrimentMetric("enemies_killed", 1);
-        EnemiesManager.inst.KillEnemy(this);
         behavior.Kill();
         nav_mesh_agent.enabled = false;
     }
@@ -178,6 +177,7 @@ using UnityEngine.AI;
     public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
         SpawnWeaponPickup();
+        EnemiesManager.inst.KillEnemy(this);
     }
 
     public override void OnDeathCleanup(ICharacterStatus status) {

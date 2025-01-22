@@ -13,9 +13,9 @@ public class TestSoundSystem : MonoBehaviour
     {
         if (StringIsSet(sound_path)) {
             ISoundSet sound = SFXLibrary.LoadSound(sound_path);
-            SFXSystem.instance.PlaySound(sound, transform.position);
+            SFXSystem.inst.PlaySound(sound, transform.position);
         } else {
-            SFXSystem.instance.PlaySound(clip, transform.position, volume);
+            SFXSystem.inst.PlaySound(clip, transform.position, volume);
         }
         Destroy(gameObject);
     }

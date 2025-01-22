@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7771750986634287957}
   - component: {fileID: 2365366885385776978}
   - component: {fileID: 7349087969400524599}
+  - component: {fileID: 5133534592285428890}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -185,7 +186,6 @@ MonoBehaviour:
   debug_sprint_inputp: 0
   debug_pause_blocked_for: 0
   debug_pause_blocked: 0
-  delayed_death_effects_seconds: 15
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8433efe4cf285824e9dc3e1c1af8a959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  death_effect_delay_seconds: 1
+  death_cleanup_delay_seconds: 15
   _health: 100
   _max_health: 100
   armor_init: {fileID: 0}
@@ -351,6 +353,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd805de725c4fc40941c74e0a395991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5133534592285428890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505927797627387282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4334b2cbcebe945856cdc351c5a087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target_character: {fileID: 3396656997431563555}
 --- !u!1 &1839156641765836538
 GameObject:
   m_ObjectHideFlags: 0
