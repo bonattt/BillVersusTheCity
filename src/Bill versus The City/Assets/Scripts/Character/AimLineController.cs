@@ -13,6 +13,7 @@ public class AimLineController : MonoBehaviour
 
     public Color base_color = Color.red;
     public PlayerAttackController attack_controller;
+    public PlayerMovement player_movement;
 
     public LayerMask layer_mask;
 
@@ -61,8 +62,21 @@ public class AimLineController : MonoBehaviour
         return new Color(base_color.r, base_color.g, base_color.b, alpha);
     }
 
+    public Color GetBlankColor() {
+        // gets a transparent color
+        return new Color(base_color.r, base_color.g, base_color.b, 0);
+    }
+
     void Update()
     {
+        if (!player_movement.is_alive) {
+            // if the player is dead, erase the line
+            lineRenderer.material.color = GetBlankColor();
+            return;
+        }
+        else if (! player_movement.is_active) {
+            return; // do nothing when the game is pasued
+        }
         Color new_color = GetColor();
         if (lineRenderer.material.color.a == 0 && new_color.a == 0) {
             // optimization: if the line is not shown, and will still not be shown this frame, do not draw it

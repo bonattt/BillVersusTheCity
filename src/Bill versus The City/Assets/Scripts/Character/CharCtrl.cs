@@ -38,6 +38,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected IAnimationFacade _animator_facade;
     private float hit_stun_until = -1f;
     
+    private bool _is_alive = true;
+    public bool is_alive { get { return _is_alive; }}
     private bool _is_active = true;
     private float _attack_paused_locked_for = 0f;
     private const float ATTACK_LOCK_AFTER_PAUSE = 0.75f; // how long will attacking be blocked after unpausing
@@ -525,6 +527,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     
     public virtual void OnDeath(ICharacterStatus status) {
         // triggers immediately on death
+        _is_alive = false;
         Debug.Log($"{gameObject.name} has been killed!");
         _is_active = false;
         CancelReload();

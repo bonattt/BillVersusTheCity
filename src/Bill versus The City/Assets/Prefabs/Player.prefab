@@ -478,6 +478,7 @@ MonoBehaviour:
   y_offset: 0.05
   base_color: {r: 1, g: 0, b: 0, a: 1}
   attack_controller: {fileID: 4665821343985391478}
+  player_movement: {fileID: 6586359110877128584}
   layer_mask:
     serializedVersion: 2
     m_Bits: 67

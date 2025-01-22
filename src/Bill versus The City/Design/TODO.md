@@ -335,7 +335,7 @@ FEEDBACK: Soosh
 [ ] Use placeholder character for player and enemy animations
     [+] animate walking
     [~] animate running
-        [ ] rotate the character to the move direction while sprinting
+        [+] rotate the character to the move direction while sprinting
         [ ] add a sprint animation so the character doesn't skate like shadow the hedgehog
     [X] animate weapon switching --> no animation for this
     [+] animate crouching
@@ -345,7 +345,7 @@ FEEDBACK: Soosh
     [X] animate crawling --> no animation for this
     [+] Animate shooting
         [+] Animate aiming handgun
-        [ ] Animate aiming rifle
+        [+] Animate aiming rifle
     [~] Polish up Enemy
         [ ] implement aiming for enemies when in optimal combat range
         [+] Disable collider immediately on death
@@ -361,8 +361,8 @@ FEEDBACK: Soosh
     [+] Aim line appears underneath the street
     [ ] Aim line too short when mouse close to player 
     [ ] Better FPS display
-	[ ] HP < 0.5 shows in UI as HP 0, but does not kill you
-	[ ] Aim line still follows mouse if you pause while aiming
+	[+] 0 < HP < 1 shows in UI as HP 0, but does not kill you
+	[+] Aim line still follows mouse if you pause while aiming
 
 =============================
 ========== Roadmap ==========
