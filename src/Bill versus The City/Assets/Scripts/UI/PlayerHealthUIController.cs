@@ -52,7 +52,7 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
         health_slider.minValue = 0;
         health_slider.maxValue = status.max_health;
         health_slider.value = status.health;
-        health_text.text = $"{(int) status.health} / {(int) status.max_health}";
+        health_text.text = $"{GetDisplayNumber(status.health)} / {(int) status.max_health}";
 
         if (status.armor == null || status.armor.armor_durability <= 0) {
             armor_slider.minValue = 0;
@@ -63,8 +63,18 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
             armor_slider.minValue = 0;
             armor_slider.maxValue = status.armor.armor_max_durability;
             armor_slider.value = status.armor.armor_durability;
-            armor_text.text = $"{(int) status.armor.armor_durability} / {(int) status.armor.armor_max_durability}";
+            armor_text.text = $"{GetDisplayNumber(status.armor.armor_durability)} / {(int) status.armor.armor_max_durability}";
         }
+    }
+
+    private int GetDisplayNumber(float value) {
+        // takes a float, and returns a displayble int for that float
+        if (value < 1f && value > 0f) {
+            // normally just casting to an int and truncating is fine, but for values less than 1 greater than 0, 
+            // it's weird to display "0 HP" while the player is not yet dead, so we return 1 in this case
+            return 1;
+        }
+        return (int) value;
     }
 
     public void StatusUpdated(ICharacterStatus status) {
