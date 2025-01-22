@@ -88,7 +88,6 @@ public class PlayerMovement : CharCtrl
     public override float movement_speed {
         get {
             if (crouch_dive_remaining > 0f) {
-                Debug.Log($"crouch dive speed: {walk_speed} * {sprint_multiplier}");
                 return walk_speed * sprint_multiplier;
             }
             float move_speed = base.movement_speed;
@@ -105,10 +104,10 @@ public class PlayerMovement : CharCtrl
         if (crouch_dive_remaining >= 0) { crouch_dive_remaining -= Time.deltaTime; }
         bool is_moving =  MoveVector() != new Vector3(0f, 0f, 0f);
         if (is_moving && CrouchInput() && SprintInput() && crouch_percent <= 0f && crouch_dive_remaining <= 0) { // crouch diving
-            crouch_percent = 1;
-            crouch_dive_remaining = crouch_dive_duration;
             crouch_dive_direction = MoveVector();
-            Debug.Log("start crouch dive!");
+            // WARNING: , crouch_dive_remaining must be set AFTER setting crouch_dive_direction, because it effects the output of MoveDirection()
+            crouch_dive_remaining = crouch_dive_duration;  
+            crouch_percent = 1;
         } else if (CrouchInput()) {  // is crouching
             crouch_percent += crouch_rate * Time.deltaTime;
         } 
@@ -186,5 +185,15 @@ public class PlayerMovement : CharCtrl
         base.HandleAnimation();
         _animator_facade.crouch_percent = crouch_percent;
         _animator_facade.crouch_dive = crouch_dive_remaining > 0f;
+    }
+
+    
+    ////////// debug fields /////////
+
+    public Vector3 debug_crouch_dive_direction;
+    
+    protected override void SetDebugData() { 
+        base.SetDebugData();
+        debug_crouch_dive_direction = crouch_dive_direction;
     }
 }

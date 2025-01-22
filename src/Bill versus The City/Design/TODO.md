@@ -335,11 +335,13 @@ FEEDBACK: Soosh
 [ ] Use placeholder character for player and enemy animations
     [+] animate walking
     [~] animate running
+        [ ] rotate the character to the move direction while sprinting
+        [ ] add a sprint animation so the character doesn't skate like shadow the hedgehog
     [X] animate weapon switching --> no animation for this
-    [~] animate crouching
+    [+] animate crouching
         [+] Crouching animates
-        [ ] figure out some animation for crouch dive
-        [ ] Fix crouch dive not working
+        [+] figure out some animation for crouch dive
+        [+] Fix crouch dive not working --> crouch dive speed is far too slow
     [X] animate crawling --> no animation for this
     [+] Animate shooting
         [+] Animate aiming handgun

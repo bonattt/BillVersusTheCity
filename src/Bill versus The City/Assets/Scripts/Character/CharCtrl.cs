@@ -138,22 +138,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     ////////// debug fields /////////
     public ActionCode debug_action_input = ActionCode.none;
-    public bool debug_attack_input;
-    public bool debug_can_attack;
-    public bool debug_weapon_isnull;
-    public bool debug_full_auto;
+    public bool debug_attack_input, debug_can_attack, debug_weapon_isnull, debug_full_auto, debug_reloading, debug_sprint_input, debug_pause_blocked;
     public int debug_current_ammo;
-    public bool debug_reloading = false;
-    public float debug_reload_progress = 0f;
+    public float debug_movement_speed, debug_reload_progress, debug_inaccuracy, debug_recoil, debug_aim_percent, debug_pause_blocked_for;
 
-    public float debug_inaccuracy = 0f;
-    public float debug_recoil = 0f;
-    public float debug_aim_percent = 0f;
-    public bool debug_sprint_inputp = false;
-    public float debug_pause_blocked_for; 
-    public bool debug_pause_blocked; 
-    
     protected virtual void SetDebugData() {
+        debug_movement_speed = this.movement_speed;
         debug_attack_input = AttackInput();
         debug_can_attack = CanAttack();
         debug_weapon_isnull = current_weapon == null;
@@ -170,7 +160,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         debug_recoil = attack_controller.current_recoil;
         debug_aim_percent = attack_controller.aim_percent;
         debug_action_input = GetActionInput();
-        debug_sprint_inputp = SprintInput();
+        debug_sprint_input = SprintInput();
         debug_pause_blocked_for = _attack_paused_locked_for;
         debug_pause_blocked = AttackPauseLocked();
     }
