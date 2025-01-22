@@ -349,8 +349,9 @@ FEEDBACK: Soosh
         [+] Disable collider immediately on death
         [+] split clean up and delayed effects so enemy can drop pickup after animation plays
         [+] FIX: reload UI sticks around after enemy is killed
-    [ ] FIX: enemy detection not working with animations!! 
+    [X] FIX: enemy detection not working with animations!! 
         ---> I had this happen on tutorial 1, and could not reproduce on level 1
+        ---> not a bug, notice speed was turned really low on the enemy.
     [+] FIX: enemies sometimes continue to rotate after being killed
     [ ] REFACTOR: make animator read the character controller, instead of having the character controller write to the animator
 

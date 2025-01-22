@@ -185,5 +185,6 @@ public class PlayerMovement : CharCtrl
     protected override void HandleAnimation() {
         base.HandleAnimation();
         _animator_facade.crouch_percent = crouch_percent;
+        _animator_facade.crouch_dive = crouch_dive_remaining > 0f;
     }
 }

@@ -135,6 +135,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     public bool is_killed { get; set; } // time last time the character took damage
 
     public float crouch_percent { get; set; }
+    public bool crouch_dive { get; set; } // character is performing a crouch dive
 
     public Animator animator;
 
@@ -147,6 +148,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         hurt_at = -1f;
         is_killed = false;
         crouch_percent = 0f;
+        crouch_dive = false;
     }
 
     void Update() {
@@ -173,6 +175,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         animator.SetBool("is_killed", is_killed);
         animator.SetBool("is_hurt", is_hurt);
         animator.SetBool("is_shooting", is_shooting);
+        animator.SetBool("crouch_dive", crouch_dive);
     }
 
     private void UpdateMovementFields() {
@@ -205,7 +208,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     //////////////////////////////
     
     public Vector3 debug_velocity, debug_forward, debug_left;
-    public bool debug_is_killed, debug_is_hurt, debug_is_shooting;
+    public bool debug_is_killed, debug_is_hurt, debug_is_shooting, debug_crouch_dive;
     public float debug_crouch_percent, debug_aim_percent;
 
     public void UpdateDebugFields() {
@@ -217,5 +220,6 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         debug_is_shooting = is_shooting;
         debug_crouch_percent = crouch_percent;
         debug_aim_percent = aim_percent;
+        debug_crouch_dive = crouch_dive;
     }
 }

@@ -221,6 +221,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.aim_percent = attack_controller.aim_percent;
         _animator_facade.shot_at = last_attack_time;
         _animator_facade.crouch_percent = 0f;
+        _animator_facade.crouch_dive = false;
         
     }
 
