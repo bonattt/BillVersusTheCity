@@ -159,6 +159,14 @@ public class PlayerMovement : CharCtrl
         return look_target;
     }
 
+    protected  override Vector3 LookVector() {
+        if (is_spinting || crouch_dive_remaining > 0) {
+            return MoveDirection();
+        } else {
+            return base.LookVector();
+        }
+    }
+
     public override Vector3 MoveDirection() {
         Vector3 move;
         if (crouch_dive_remaining > 0f) {

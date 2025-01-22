@@ -1,8 +1,15 @@
+using System.Collections.Generic;
 
 using UnityEngine;
 
-public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
+public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubscriber {
 
+    public readonly Dictionary<WeaponClass, int> weapon_enum_to_int = new Dictionary<WeaponClass, int>{
+        {WeaponClass.handgun, 0},
+        {WeaponClass.empty, 1},
+        {WeaponClass.rifle, 2},
+        {WeaponClass.shotgun, 3}
+    };
     public Vector3 move_velocity { get; set; }
     public Vector3 forward_direction { get; set; }
     public Vector3 right_direction { get; set; }
@@ -138,17 +145,34 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
     public bool crouch_dive { get; set; } // character is performing a crouch dive
 
     public Animator animator;
+    
+    private float previous_health = -1f;
+    private ICharacterStatus status;
+    public void StatusUpdated(ICharacterStatus status) {
+        if(previous_health > status.health) {
+            animator.SetTrigger("trigger_hurt");
+        }
+        previous_health = status.health;
+    }
+    public void OnDeath(ICharacterStatus status) {
+        // triggers immediately on death
+        animator.SetTrigger("trigger_killed");
+    } 
 
     void Start() {
         move_velocity = new Vector3(0f, 0f, 0f);
         forward_direction = new Vector3(0f, 0f, 0f);
-        weapon_class = WeaponClass.handgun;
+        weapon_class = WeaponClass.empty;
         aim_percent = 0f;
         shot_at = -1f;
         hurt_at = -1f;
         is_killed = false;
         crouch_percent = 0f;
         crouch_dive = false;
+
+        // TODO --- refactor this
+        status = GetComponent<ICharacterStatus>();
+        status.Subscribe(this);
     }
 
     void Update() {
@@ -176,6 +200,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade {
         animator.SetBool("is_hurt", is_hurt);
         animator.SetBool("is_shooting", is_shooting);
         animator.SetBool("crouch_dive", crouch_dive);
+        animator.SetInteger("weapon_class", weapon_enum_to_int[weapon_class]);
     }
 
     private void UpdateMovementFields() {

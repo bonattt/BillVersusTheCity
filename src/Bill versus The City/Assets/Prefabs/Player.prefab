@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 4205565970539061229}
   - component: {fileID: 8741898434085393183}
   - component: {fileID: 1130132745889624254}
+  - component: {fileID: 4280093944734587331}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -363,16 +364,16 @@ MonoBehaviour:
   debug_can_attack: 0
   debug_weapon_isnull: 0
   debug_full_auto: 0
-  debug_current_ammo: 0
   debug_reloading: 0
+  debug_sprint_input: 0
+  debug_pause_blocked: 0
+  debug_current_ammo: 0
+  debug_movement_speed: 0
   debug_reload_progress: 0
   debug_inaccuracy: 0
   debug_recoil: 0
   debug_aim_percent: 0
-  debug_sprint_inputp: 0
   debug_pause_blocked_for: 0
-  debug_pause_blocked: 0
-  delayed_death_effects_seconds: 1
   vision_target: {fileID: 7902831743066966521}
   crouch_dive_duration: 0.5
   _crouch_percent: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   uncrouched_height: 1.2
   crouch_rate: 4
   uncrouch_rate: 4
+  debug_crouch_dive_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &4665821343985391478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8433efe4cf285824e9dc3e1c1af8a959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  death_effect_delay_seconds: 1
+  death_cleanup_delay_seconds: 15
   _health: 50
   _max_health: 50
   armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
@@ -477,6 +481,20 @@ MonoBehaviour:
   layer_mask:
     serializedVersion: 2
     m_Bits: 67
+--- !u!114 &4280093944734587331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4334b2cbcebe945856cdc351c5a087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target_character: {fileID: 6586359110877128584}
+  only_death_sounds: 1
 --- !u!1 &3411905732680101244
 GameObject:
   m_ObjectHideFlags: 0
