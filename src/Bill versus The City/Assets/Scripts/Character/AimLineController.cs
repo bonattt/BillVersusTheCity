@@ -35,6 +35,7 @@ public class AimLineController : MonoBehaviour
         if (PlayerCharacter.inst.player_object == null) { return; } 
 
         Vector3 start_pos = PlayerCharacter.inst.player_object.transform.position;
+        start_pos = new Vector3(start_pos.x, y_offset, start_pos.z);
         Vector3 base_end_pos = new Vector3(x, y_offset, z);
         
         // get a unit vector in the direction of the mouse position
@@ -46,10 +47,12 @@ public class AimLineController : MonoBehaviour
         Vector3 end_pos;
         RaycastHit hit;
         // if there is a wall in the way, don't draw aim-lines past it
-        if (Physics.Raycast(start_pos, direction, out hit, direction.magnitude, layer_mask)) {
+        if (Physics.Raycast(start_pos, unit_vector, out hit, float.PositiveInfinity, layer_mask)) {
+            Debug.LogWarning($"Aim Line hits {hit.collider.gameObject.name}!");
             end_pos = hit.point;
         } 
         else {
+            Debug.LogWarning("Aim Line hits nothing!");
             end_pos = direction + start_pos;
         }
         lineRenderer.SetPosition(0, start_pos); // Start
