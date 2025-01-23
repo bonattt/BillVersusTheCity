@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -27,13 +28,17 @@ public class FPSCounter : MonoBehaviour
     
     private void UpdateFPS() {
         if (GameSettings.inst.general_settings.show_fps) {
-            if (sampled_at + sample_rate_seconds < Time.time) {
-                float fps = Mathf.Round(1 / Time.deltaTime);
-                sampled_at = Time.time;
+            if (sampled_at + sample_rate_seconds < Time.unscaledTime) {
+                float fps = GetFPS();
+                sampled_at = Time.unscaledTime;
                 fps_label.text = $"{fps} FPS";
             } // for readability, only update the FPS once per <sample_rate>
         } else {
             fps_label.text = "";
         }
+    }
+
+    public static float GetFPS() {
+        return (float) Math.Round(1 / Time.unscaledDeltaTime, 1);
     }
 }

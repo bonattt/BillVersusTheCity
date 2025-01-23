@@ -336,7 +336,7 @@ FEEDBACK: Soosh
     [+] animate walking
     [~] animate running
         [+] rotate the character to the move direction while sprinting
-        [ ] add a sprint animation so the character doesn't skate like shadow the hedgehog
+        [~] add a sprint animation so the character doesn't skate like shadow the hedgehog
     [X] animate weapon switching --> no animation for this
     [+] animate crouching
         [+] Crouching animates
@@ -357,10 +357,10 @@ FEEDBACK: Soosh
     [+] FIX: enemies sometimes continue to rotate after being killed
     [ ] REFACTOR: make animator read the character controller, instead of having the character controller write to the animator
 
-[~] Fixes
+[+] Fixes
     [+] Aim line appears underneath the street
-    [ ] Aim line too short when mouse close to player 
-    [ ] Better FPS display
+    [+] Aim line too short when mouse close to player 
+    [+] Better FPS display
 	[+] 0 < HP < 1 shows in UI as HP 0, but does not kill you
 	[+] Aim line still follows mouse if you pause while aiming
 
