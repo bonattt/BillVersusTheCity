@@ -32,7 +32,7 @@ using UnityEngine.AI;
     public bool ctrl_sprint = false; // used by Behavior to instruct the controller to sprint
     public bool ctrl_start_reload = false; // used by Behavior to instruct the controller to sprint
     public bool ctrl_cancel_reload = false; // used by Behavior to instruct the controller to sprint
-    public override bool is_spinting {
+    public override bool is_sprinting {
         get {
             return ctrl_sprint;
         }

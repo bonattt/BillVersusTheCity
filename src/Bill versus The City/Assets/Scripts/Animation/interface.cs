@@ -16,6 +16,7 @@ public interface IAnimationFacade {
     public bool is_killed { get; set; } // time last time the character took damage
     public float crouch_percent { get; set; } // percentage crouched
     public bool crouch_dive { get; set; } // character is performing a crouch dive
+    public bool is_sprinting { get; set; }
 
 }
 

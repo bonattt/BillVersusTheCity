@@ -56,7 +56,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public virtual float movement_speed {
         get {
             float move_speed = walk_speed;
-            if (is_spinting) {
+            if (is_sprinting) {
                 move_speed *= sprint_multiplier;
             }
 
@@ -81,7 +81,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    public virtual bool is_spinting {
+    public virtual bool is_sprinting {
         get {
             return this.current_action == ActionCode.sprint;
         }
@@ -214,6 +214,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.shot_at = last_attack_time;
         _animator_facade.crouch_percent = 0f;
         _animator_facade.crouch_dive = false;
+        _animator_facade.is_sprinting = this.is_sprinting;
         
     }
 
@@ -419,7 +420,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private bool CanAttack() {
-        return !is_hit_stunned && !reloading && !is_spinting && !AttackPauseLocked();
+        return !is_hit_stunned && !reloading && !is_sprinting && !AttackPauseLocked();
     }
 
     private void UpdatePauseAttackLock() {

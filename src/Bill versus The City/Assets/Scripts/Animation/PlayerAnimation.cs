@@ -87,6 +87,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
         }
     }
 
+    public bool is_sprinting { get; set; }
 
     private float _speed = 0f;
     public float speed {
@@ -171,8 +172,8 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
         crouch_dive = false;
 
         // TODO --- refactor this
-        status = GetComponent<ICharacterStatus>();
-        status.Subscribe(this);
+        // status = GetComponent<ICharacterStatus>();
+        // status.Subscribe(this);
     }
 
     void Update() {
@@ -200,6 +201,11 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
         animator.SetBool("is_hurt", is_hurt);
         animator.SetBool("is_shooting", is_shooting);
         animator.SetBool("crouch_dive", crouch_dive);
+        if (crouch_dive || is_sprinting) {
+            animator.SetBool("is_sprinting", true);
+        } else {
+            animator.SetBool("is_sprinting", false);
+        }
         animator.SetInteger("weapon_class", weapon_enum_to_int[weapon_class]);
     }
 

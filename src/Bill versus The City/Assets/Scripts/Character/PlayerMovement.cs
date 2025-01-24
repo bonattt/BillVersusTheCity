@@ -92,7 +92,7 @@ public class PlayerMovement : CharCtrl
             }
             float move_speed = base.movement_speed;
             float crouch_multiplier = (1 - crouch_percent) + (this.crouched_speed * crouch_percent);
-            if ((is_spinting && crouch_percent >= 1f) || CrouchInput()) {
+            if ((is_sprinting && crouch_percent >= 1f) || CrouchInput()) {
                 // disallow sprinting while fully crouched, but not while standing up
                 move_speed = move_speed / sprint_multiplier;
             }
@@ -160,7 +160,7 @@ public class PlayerMovement : CharCtrl
     }
 
     protected  override Vector3 LookVector() {
-        if (is_spinting || crouch_dive_remaining > 0) {
+        if (is_sprinting || crouch_dive_remaining > 0) {
             return MoveDirection();
         } else {
             return base.LookVector();
