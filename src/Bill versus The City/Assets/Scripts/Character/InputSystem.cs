@@ -16,6 +16,7 @@ public class InputSystem : ISettingsObserver
     public const KeyCode INTERACT = KeyCode.E;
     public const KeyCode RELOAD = KeyCode.R;
     public const KeyCode CROUCH = KeyCode.Space;
+    public const KeyCode CROUCH_SECONDARY = KeyCode.LeftControl;
     public const KeyCode INVENTORY_MENU = KeyCode.I;
     public const KeyCode DEBUG_KEY = KeyCode.BackQuote;
     public const KeyCode DEBUG2_KEY = KeyCode.Mouse3;
@@ -71,7 +72,7 @@ public class InputSystem : ISettingsObserver
     }
      
     public bool CrouchInput() {
-        return Input.GetKey(CROUCH);
+        return Input.GetKey(CROUCH) || Input.GetKey(CROUCH_SECONDARY);
     }
 
     public GameObject GetHoveredObject() {

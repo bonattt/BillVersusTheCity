@@ -143,8 +143,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public bool debug_attack_input, debug_can_attack, debug_weapon_isnull, debug_full_auto, debug_reloading, debug_sprint_input, debug_pause_blocked;
     public int debug_current_ammo;
     public float debug_movement_speed, debug_reload_progress, debug_inaccuracy, debug_recoil, debug_aim_percent, debug_pause_blocked_for;
+    public Vector3 debug_move_dir;
 
     protected virtual void SetDebugData() {
+        debug_move_dir = MoveDirection();
         debug_movement_speed = this.movement_speed;
         debug_attack_input = AttackInput();
         debug_can_attack = CanAttack();
@@ -215,6 +217,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.crouch_percent = 0f;
         _animator_facade.crouch_dive = false;
         _animator_facade.is_sprinting = this.is_sprinting;
+        _animator_facade.is_reloading = this.reloading;
         
     }
 

@@ -50,7 +50,6 @@ public class AimLineController : MonoBehaviour
         RaycastHit hit;
         // if there is a wall in the way, don't draw aim-lines past it
         if (Physics.Raycast(start_pos, unit_vector, out hit, float.PositiveInfinity, layer_mask)) {
-            Debug.LogWarning($"Aim Line hits {hit.collider.gameObject.name}!");
             end_pos = hit.point;
         } 
         else {

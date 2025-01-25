@@ -5509,6 +5509,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1576669166}
   - component: {fileID: 1576669167}
+  - component: {fileID: 1576669168}
   m_Layer: 0
   m_Name: Tests
   m_TagString: Untagged
@@ -5548,6 +5549,29 @@ MonoBehaviour:
   n_directions: 30
   ray_length: 5
   ray_color: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &1576669168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576669165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1246d614cc64bb94ab4df3d7c472b3ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pause_menu_input: 0
+  menu_next: 0
+  cancel_menu: 0
+  interact: 0
+  reload: 0
+  crouch: 0
+  crouch_secondary: 0
+  inventory_menu: 0
+  debug_key: 0
+  debug2_key: 0
+  next_weapon_mode: 0
 --- !u!1 &1592770362
 GameObject:
   m_ObjectHideFlags: 0

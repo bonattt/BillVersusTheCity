@@ -144,6 +144,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
 
     public float crouch_percent { get; set; }
     public bool crouch_dive { get; set; } // character is performing a crouch dive
+    public bool is_reloading { get; set; } // character is reloading
 
     public Animator animator;
     
@@ -201,6 +202,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
         animator.SetBool("is_hurt", is_hurt);
         animator.SetBool("is_shooting", is_shooting);
         animator.SetBool("crouch_dive", crouch_dive);
+        animator.SetBool("is_reloading", is_reloading);
         if (crouch_dive || is_sprinting) {
             animator.SetBool("is_sprinting", true);
         } else {

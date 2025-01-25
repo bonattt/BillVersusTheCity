@@ -364,8 +364,16 @@ FEEDBACK: Soosh
 	[+] 0 < HP < 1 shows in UI as HP 0, but does not kill you
 	[+] Aim line still follows mouse if you pause while aiming
     [+] move aim line to the hight of "shoot_from" so it passes through cover when not crouched
-    [ ] FIX: crouch dive doesn't trigger if move right is held
-    [ ] FIX: Animation siezes up if you START aiming, then start shooting before aiming finishes
+    [X] FIX: crouch dive doesn't trigger if move right is held ---> hardware issue, not a bug
+        ---> crouch input is false any time move right is held!?!?
+        ---> Unity's Input.GetKey(KeyCode.space) fails here 
+        ---> issue with my keyboard...
+    [+] FIX: crouching without moving gets stuck in crouch
+    [X] FIX: Animation siezes up if you START aiming, then start shooting before aiming finishes
+        ---> not fixing this time around
+    [ ] FIX: slow hipfire animation for rifles
+    [ ] FIX: giant muzzleflash on hipfire animation...
+    [ ] FIX: enemy alertness UI shows up while enemy is dead
 
 =============================
 ========== Roadmap ==========

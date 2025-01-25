@@ -17,6 +17,7 @@ public interface IAnimationFacade {
     public float crouch_percent { get; set; } // percentage crouched
     public bool crouch_dive { get; set; } // character is performing a crouch dive
     public bool is_sprinting { get; set; }
+    public bool is_reloading { get; set; }
 
 }
 
