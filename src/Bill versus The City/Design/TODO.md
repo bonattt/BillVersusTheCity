@@ -365,6 +365,7 @@ FEEDBACK: Soosh
 	[+] Aim line still follows mouse if you pause while aiming
     [+] move aim line to the hight of "shoot_from" so it passes through cover when not crouched
     [ ] FIX: crouch dive doesn't trigger if move right is held
+    [ ] FIX: Animation siezes up if you START aiming, then start shooting before aiming finishes
 
 =============================
 ========== Roadmap ==========
