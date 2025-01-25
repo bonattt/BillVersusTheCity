@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _velocity_forward: 0
   _velocity_right: 0
-  _shot_duration: 0.1
+  _shot_duration: 0.3
   _hurt_duration: 0.1
   animator: {fileID: 6589630929290752803}
   debug_velocity: {x: 0, y: 0, z: 0}
@@ -56,6 +56,7 @@ MonoBehaviour:
   debug_is_killed: 0
   debug_is_hurt: 0
   debug_is_shooting: 0
+  debug_crouch_dive: 0
   debug_crouch_percent: 0
   debug_aim_percent: 0
 --- !u!1001 &6589630929300194883

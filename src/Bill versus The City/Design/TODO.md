@@ -363,7 +363,7 @@ FEEDBACK: Soosh
     [+] Better FPS display
 	[+] 0 < HP < 1 shows in UI as HP 0, but does not kill you
 	[+] Aim line still follows mouse if you pause while aiming
-    [ ] move aim line to the hight of "shoot_from" so it passes through cover when not crouched
+    [+] move aim line to the hight of "shoot_from" so it passes through cover when not crouched
     [ ] FIX: crouch dive doesn't trigger if move right is held
 
 =============================

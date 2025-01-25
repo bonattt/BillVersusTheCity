@@ -6,7 +6,8 @@ public class AimLineController : MonoBehaviour
 {
     public float line_width = 0.05f;
     public float line_length = 25f;
-    public float y_offset = 0.05f;
+    // public float y_pos = 0.05f;
+    public Transform start_at;
     
 
     private LineRenderer lineRenderer;
@@ -34,9 +35,10 @@ public class AimLineController : MonoBehaviour
         // player character not initialized this frame, ignore
         if (PlayerCharacter.inst.player_object == null) { return; } 
 
-        Vector3 start_pos = PlayerCharacter.inst.player_object.transform.position;
-        start_pos = new Vector3(start_pos.x, y_offset, start_pos.z);
-        Vector3 base_end_pos = new Vector3(x, y_offset, z);
+        Vector3 start_pos = start_at.position;  // PlayerCharacter.inst.player_object.transform.position;
+        // start_pos = new Vector3(start_pos.x, y_pos, start_pos.z);
+        float y_pos = start_pos.y;
+        Vector3 base_end_pos = new Vector3(x, y_pos, z);
         
         // get a unit vector in the direction of the mouse position
         Vector3 unit_vector = (base_end_pos - start_pos).normalized;
