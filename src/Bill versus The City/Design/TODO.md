@@ -373,7 +373,24 @@ FEEDBACK: Soosh
         ---> not fixing this time around
     [ ] FIX: slow hipfire animation for rifles
     [ ] FIX: giant muzzleflash on hipfire animation...
-    [ ] FIX: enemy alertness UI shows up while enemy is dead
+    [+] FIX: enemy alertness UI shows up while enemy is dead
+===================
+FEEDBACK:
+===================
+
+===================
+===== DEMO 06 =====
+===================
+    [ ] Level Config system: allows easily configuring several options for level
+        [ ] TOGGLE: weapon select on level start
+        [ ] TOGGLE: combat enabled
+        [ ] setup starting weapons
+        [ ] setup victory conditions, which can be sequential
+            [ ] Survive for X time
+            [ ] Escape to truck
+            [ ] Defeat X number of enemies
+        [ ] Level music
+
 
 =============================
 ========== Roadmap ==========
@@ -381,10 +398,6 @@ FEEDBACK: Soosh
 
 [+] Milestone 4: enemy behavior improvements
 [ ] Milestone 5 Add player and enemy placeholder-animations from Unity asset store.
-[ ] Milestone 6: improvements to gameplay
-	- detection based on whether they're on-screen
-	- fix cover
-	- ???
 [ ] Milestone 6: Level config
     --> automate configs for setting up scripts for verious possible level features. (Win condition, victory dialogue, start dialogue, weapon selections)
     --> Allow levels to start with pre-set weapons instead of the weapon selection screen
@@ -392,8 +405,13 @@ FEEDBACK: Soosh
     --> enemy ammo drops
     GOAL: make it easier to configure commonly variable elements of levels
 
+[ ] Milestone 7: improvements to gameplay
+	- detection based on whether they're on-screen
+	- fix cover
+	- ???
 
-[ ] Milestone 7: Progression and Hub World(s) (Bill's House and Gunstore), Saving
+
+[ ] Milestone 8: Progression and Hub World(s) (Bill's House and Gunstore), Saving
     --> Save the player's current level
     --> save settings
     --> restore to saved level
@@ -405,6 +423,16 @@ FEEDBACK: Soosh
 [ ] Milestone ???: More Dialogue
 [ ] Milestone ???: Art assets
 [ ] Milestone ???: Better tutorials
+
+
+=====================================
+=== Known Bugs / Missing Features ===
+=====================================
+    [ ] FIX: slow hipfire animation for rifles
+    [ ] FIX: giant muzzleflash on hipfire animation...
+    [X] FIX: Animation siezes up if you START aiming, then start shooting before aiming finishes
+    [ ] implement aiming for enemies when in optimal combat range
+
 
 
 =============================
