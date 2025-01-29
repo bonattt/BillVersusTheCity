@@ -36,6 +36,9 @@ public class EnemyAwarenessDisplay : MonoBehaviour, IPerceptionSubscriber
         if (previous_display != null) {
             Destroy(previous_display);
         }
+        if (new_state == PerceptionState.dead || previous_state == PerceptionState.dead) {
+            return; // do nothing if dead
+        }
 
         previous_display = Instantiate(Resources.Load<GameObject>(PREFAB_RESOURCE));
         EnemyAwarenessUpdateTextEffect awareness_update = previous_display.GetComponent<EnemyAwarenessUpdateTextEffect>();

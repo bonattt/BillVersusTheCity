@@ -163,6 +163,12 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         }
     }
 
+    
+    public void OnDeath(ICharacterStatus status) { 
+        /* triggers immediately on death */ 
+        state = PerceptionState.dead;
+    }
+
     void Update() {
         UpdateLineOfSight(); // sets lazy values for line of sight
         UpdateNoticePlayer();
@@ -299,6 +305,7 @@ public enum PerceptionState {
     searching,  // enemy knows the player exists, AND knows the player is not near the waypoint
     alert,  // enemy is aware the player exists, and has some waypoint they are investigating
     seeing,  // enemy is seeing the player this frame
+    dead // enemy has been killed
     
 }
 
