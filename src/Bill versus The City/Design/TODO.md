@@ -381,10 +381,10 @@ FEEDBACK:
 ===================
 ===== DEMO 06 =====
 ===================
-    [ ] Level Config system: allows easily configuring several options for level
-        [ ] TOGGLE: weapon select on level start
-        [ ] TOGGLE: combat enabled
-        [ ] setup starting weapons
+    [~] Level Config system: allows easily configuring several options for level
+        [+] TOGGLE: weapon select on level start
+        [+] TOGGLE: combat enabled
+        [+] setup starting weapons
         [ ] setup victory conditions, which can be sequential
             [ ] Survive for X time
             [ ] Escape to truck

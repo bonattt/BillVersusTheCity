@@ -23,7 +23,6 @@ public class PlayerAttackController : AttackController
     }
 
     protected override void AttackControllerStart() {
-        ClearWeapons();
         SwitchWeaponBySlot(_current_slot);
         UpdateSubscribers();
     }
@@ -38,6 +37,7 @@ public class PlayerAttackController : AttackController
     // Update is called once per frame
     protected override void AttackControllerUpdate()
     {
+        base.AttackControllerUpdate();
         TrySwitchWeapons();
         // UpdateSubscribers();
         UpdateAimSensitivity();
@@ -49,7 +49,6 @@ public class PlayerAttackController : AttackController
             sub.UpdateWeapon(current_slot, current_weapon);
         }
     }
-    
 
     private void TrySwitchWeapons() {
         // Polls for player inputs, and switches weapons if necessary
@@ -90,5 +89,16 @@ public class PlayerAttackController : AttackController
         if (previous_weapon != new_weapon) {
             UpdateSubscribers();
         }
+    }
+
+
+    /////////////////// DEBUG CODE /////////////////////////////
+    
+    public string debug_rifle_equipped, debug_handgun_equipped, debug_pickup_equipped;
+    protected override void UpdateDebugFields() {
+        base.UpdateDebugFields();
+        debug_rifle_equipped = $"{weapon_slots[0]}";
+        debug_handgun_equipped = $"{weapon_slots[1]}";
+        debug_pickup_equipped = $"{weapon_slots[2]}";
     }
 }

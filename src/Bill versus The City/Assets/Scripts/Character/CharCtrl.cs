@@ -532,7 +532,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public virtual void OnDeath(ICharacterStatus status) {
         // triggers immediately on death
         _is_alive = false;
-        Debug.Log($"{gameObject.name} has been killed!");
         _is_active = false;
         CancelReload();
         if (_animator_facade != null) {
@@ -541,11 +540,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     } 
     public virtual void DelayedOnDeath(ICharacterStatus status) {
         // triggers after a death animation finishes playing
-        Debug.Log($"DelayedOnDeath: {gameObject.name}");
     } 
     public virtual void OnDeathCleanup(ICharacterStatus status) {
         // triggers some time after death to despawn the character
-        Debug.Log($"OnDeathCleanup: {gameObject.name}");
     } 
 
     public ICharacterStatus GetStatus() {

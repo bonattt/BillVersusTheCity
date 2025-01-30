@@ -82,11 +82,6 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     }
 
     public void MenuNavigation() {
-        // // TODO --- remove debug (below)
-        // if (InputSystem.current.MenuCancelInput()) {
-        //     MenuManager.inst.CloseAllMenus();
-        // } // TODO --- remove debug ^^^
-
         if (InputSystem.current.MenuNextInput()) {
             MenuManager.PlayMenuSound("menu_click");
             NextDialogueStep();

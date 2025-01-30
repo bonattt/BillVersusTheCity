@@ -249,7 +249,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
     /// DEBUG CODE
     public int debug_ammo_count = 0;
 
-    private void UpdateDebugFields() {
+    protected virtual void UpdateDebugFields() {
         debug_ammo_count = current_weapon.current_ammo;
     }
 }

@@ -25,14 +25,12 @@ public static class ScenesUtil {
         restarting = true;
         ResetResources();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log($"Scene count {SceneManager.sceneCount}"); // TODO --- remove debug
         restarting = false;
     }
 
     public static void NextLevel(string next_level) {
         ResetResources();
         SceneManager.LoadScene(next_level);
-        Debug.Log($"Scene count {SceneManager.sceneCount}"); // TODO --- remove debug
     }
 
     private static PlayerCombat RegisterScenePlayer() {

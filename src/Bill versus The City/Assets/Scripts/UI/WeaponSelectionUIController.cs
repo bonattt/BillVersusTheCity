@@ -55,7 +55,6 @@ public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
     }
 
     public void UpdateContents() {
-        Debug.Log("UpdateContents");
         PopulateContents(left_content, PlayerCharacter.inst.inventory.availible_rifles);
         PopulateContents(right_content, PlayerCharacter.inst.inventory.availible_handguns);
     }

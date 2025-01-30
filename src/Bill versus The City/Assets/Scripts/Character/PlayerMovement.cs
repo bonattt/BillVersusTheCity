@@ -103,9 +103,7 @@ public class PlayerMovement : CharCtrl
     private void HandleCrouch() {
         if (crouch_dive_remaining >= 0) { crouch_dive_remaining -= Time.deltaTime; }
         bool is_moving =  MoveVector() != new Vector3(0f, 0f, 0f);
-        Debug.LogWarning($"is_moving {is_moving} && CrouchInput() {CrouchInput()} && SprintInput() {SprintInput()} && crouch_percent {crouch_percent} <= 0f && crouch_dive_remaining {crouch_dive_remaining} <= 0"); // TODO --- remove debug
         if (is_moving && CrouchInput() && SprintInput() && crouch_percent <= 0f && crouch_dive_remaining <= 0) { // crouch diving
-            Debug.LogWarning("activate crouch dive!!"); // TODO --- remove debug
             crouch_dive_direction = MoveVector();
             // WARNING: , crouch_dive_remaining must be set AFTER setting crouch_dive_direction, because it effects the output of MoveDirection()
             crouch_dive_remaining = crouch_dive_duration;  

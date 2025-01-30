@@ -64,6 +64,7 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     }
 
     public static EquipmentSet GetStartingEquipment() {
+        // gets a config for the players initial availible equipment
         return Resources.Load<EquipmentSet>("StartingEquipment");
     }
 
