@@ -8,8 +8,20 @@ public class LevelConfig : MonoBehaviour
     public bool combat_enabled = true;
     public bool weapon_select_on_start = true;
 
+    public static LevelConfig inst = null;
+
+    void Awake() {
+        inst = this;
+    }
+
     void Start()
     {
+        if (inst != null && inst != this) {
+            Debug.LogWarning("clearing old level config"); // TODO --- remove debug
+            Destroy(inst);
+            Destroy(inst.gameObject);
+        }
+        inst = this;
         // TODO ---
         if (weapon_select_on_start) {
             MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);

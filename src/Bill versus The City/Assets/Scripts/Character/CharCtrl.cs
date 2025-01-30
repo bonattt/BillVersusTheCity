@@ -423,7 +423,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private bool CanAttack() {
-        return !is_hit_stunned && !reloading && !is_sprinting && !AttackPauseLocked();
+        return !is_hit_stunned && !reloading && !is_sprinting && !AttackPauseLocked() && LevelConfig.inst.combat_enabled;
     }
 
     private void UpdatePauseAttackLock() {
