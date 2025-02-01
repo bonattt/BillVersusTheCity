@@ -923,6 +923,8 @@ MonoBehaviour:
   init_starting_rifle: {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
   init_starting_handgun: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   init_starting_pickup: {fileID: 0}
+  init_level_conditions:
+  - {fileID: 2362460712577357884}
 --- !u!4 &278342780
 Transform:
   m_ObjectHideFlags: 0
@@ -7593,6 +7595,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8565994284512590852, guid: cf9d6efee5f3fd14aa8e526035928852, type: 3}
   m_PrefabInstance: {fileID: 2362460712577357882}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2362460712577357884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2654757413582734240, guid: cf9d6efee5f3fd14aa8e526035928852, type: 3}
+  m_PrefabInstance: {fileID: 2362460712577357882}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345b073d19cff604e939e9065ea546af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5342343658664017690
 PrefabInstance:
   m_ObjectHideFlags: 0
