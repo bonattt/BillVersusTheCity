@@ -9,15 +9,15 @@ public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
     public bool was_triggered = false;
 
     public List<MonoBehaviour> init_game_events;
-    private List<IGameEvent> game_events;
+    private List<IGameEventEffect> game_events;
     public bool destroy_after_trigger = true;
 
     void Start() {
-        game_events = new List<IGameEvent>();
+        game_events = new List<IGameEventEffect>();
         // iterate in guaranteed order
         for(int i = 0; i < init_game_events.Count; i++) {
             try {
-                game_events.Add((IGameEvent) init_game_events[i]);
+                game_events.Add((IGameEventEffect) init_game_events[i]);
             } catch (InvalidCastException) {
                 Debug.LogError($"invalid IGameEvent {init_game_events[i].gameObject.name} included in game events list for {gameObject.name}");
             }
@@ -25,8 +25,8 @@ public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
 
         // if we still don't have any game events, try to find one by GetComponent
         if (game_events.Count == 0) {
-            game_events = new List<IGameEvent>();
-            IGameEvent game_event = GetComponent<IGameEvent>();
+            game_events = new List<IGameEventEffect>();
+            IGameEventEffect game_event = GetComponent<IGameEventEffect>();
             if (game_event != null) {
                 game_events.Add(game_event);
             } else {
@@ -49,7 +49,7 @@ public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
         
         // iterate in guaranteed order
         for (int i = 0; i < game_events.Count; i++) {
-            game_events[i].ActivateEvent();
+            game_events[i].ActivateEffect();
         }
         if (destroy_after_trigger) {
             Destroy(this); 

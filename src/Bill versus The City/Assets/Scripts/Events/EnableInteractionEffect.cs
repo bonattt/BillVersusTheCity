@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-public class ActivateInteractionEvent : MonoBehaviour, IGameEventEffect, IInteractionEffect {
+public class EnableInteractionEffect : MonoBehaviour, IGameEventEffect, IInteractionEffect {
     
     public Interaction interaction; 
     public bool set_interaction_enabled = true;

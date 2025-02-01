@@ -17,12 +17,16 @@ public class LevelConfig : MonoBehaviour
     public ScriptableObject init_starting_rifle, init_starting_handgun, init_starting_pickup;
     private IWeapon starting_rifle, starting_handgun, starting_pickup;
 
+    public List<MonoBehaviour> init_level_conditions;
+    private List<ILevelCondition> level_conditions = new List<ILevelCondition>();
+
     void Awake() {
         inst = this;
     }
 
     void Start()
     {
+        InitLevelConditions();
         if (inst != null && inst != this) {
             Debug.LogWarning("clearing old level config"); // TODO --- remove debug
             Destroy(inst);
@@ -34,6 +38,44 @@ public class LevelConfig : MonoBehaviour
             MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
         } else if (use_starting_weapons) {
             EquipStartingWeapons();
+        }
+    }
+
+    void Update() {
+        CheckLevelConditionsSequentially();
+    }
+
+
+    private void CheckLevelConditionsSequentially() {
+        for (int i = 0; i < level_conditions.Count; i++) {
+            ILevelCondition current_condition = level_conditions[i];
+            if (current_condition.was_triggered) { 
+                Debug.LogWarning($"current condition was already triggered, skip."); // TODO --- remove debug
+                continue; 
+            } // skip already triggered conditions
+            else if (!current_condition.ConditionMet()) {
+                // current condition is NOT met, so we stop iterating. 
+                Debug.LogWarning($"condition NOT met, break!"); // TODO --- remove debug
+                break;
+            } else {
+                // current condition was met, trigger it's effects, mark as done, and continue to next condition
+                Debug.LogWarning($"condition met, trigger!"); // TODO --- remove debug
+                current_condition.TriggerEffects(); // sets `was_triggered = true`
+            }
+        }
+
+    }
+
+    private void InitLevelConditions() {
+        for(int i = 0; i < init_level_conditions.Count; i++) {
+            MonoBehaviour b = init_level_conditions[i];
+            try {
+                ILevelCondition c = (ILevelCondition) b;
+                c.was_triggered = false;
+                level_conditions.Add(c);
+            } catch (InvalidCastException) {
+                Debug.LogWarning($"script {b} cannot be cast to ILevelCondition");
+            }
         }
     }
 

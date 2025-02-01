@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VictoryEvent : MonoBehaviour, IGameEvent, IInteractionEffect
+public class VictoryEvent : MonoBehaviour, IGameEventEffect, IInteractionEffect
 {
     // // Start is called before the first frame update
     // void Start()
@@ -20,10 +20,10 @@ public class VictoryEvent : MonoBehaviour, IGameEvent, IInteractionEffect
 
     
     public void Interact(GameObject actor) {
-        ActivateEvent();
+        ActivateEffect();
     }
     
-    public void ActivateEvent() {
+    public void ActivateEffect() {
         MenuManager.inst.WinGamePopup();
     }
 }

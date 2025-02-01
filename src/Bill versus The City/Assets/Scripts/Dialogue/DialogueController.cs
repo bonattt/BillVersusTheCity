@@ -295,9 +295,9 @@ public class DialogueController : MonoBehaviour, ISubMenu {
 
     public void DialogueFinished() {
         if (dialogue_finished != null) {
-            IGameEvent g_event = (IGameEvent) dialogue_finished;
+            IGameEventEffect g_event = (IGameEventEffect) dialogue_finished;
             if (g_event != null) {
-                g_event.ActivateEvent();
+                g_event.ActivateEffect();
             } else {
                 Debug.LogError("unable to use IGameEvent dialogue_finished");
             }

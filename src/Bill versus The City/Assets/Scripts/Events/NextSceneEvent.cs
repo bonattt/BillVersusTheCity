@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NextSceneEvent : MonoBehaviour, IGameEvent, IInteractionEffect
+public class NextSceneEvent : MonoBehaviour, IGameEventEffect, IInteractionEffect
 {
 
     public string next_scene = "Demo001--level01";
     
-    public void ActivateEvent() {
+    public void ActivateEffect() {
         Effect();
     }
     

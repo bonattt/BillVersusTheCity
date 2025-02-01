@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RemovePickupWeapons : MonoBehaviour, IInteractionEffect, IGameEvent
+public class RemovePickupWeapons : MonoBehaviour, IInteractionEffect, IGameEventEffect
 {
     public string cleanup_triggered_dialogue;
     public MonoBehaviour dialogue_finished;
 
-    public void ActivateEvent() {
+    public void ActivateEffect() {
         if (PlayerCharacter.inst.inventory.pickup != null) {
             PlayerCharacter.inst.inventory.pickup = null;
             DialogueController ctrl = MenuManager.inst.OpenDialoge(cleanup_triggered_dialogue);
@@ -15,16 +15,16 @@ public class RemovePickupWeapons : MonoBehaviour, IInteractionEffect, IGameEvent
         }
         else {
             if (dialogue_finished == null) { return; }
-            IGameEvent g_event = (IGameEvent) dialogue_finished;
+            IGameEventEffect g_event = (IGameEventEffect) dialogue_finished;
             if (g_event == null) {
                 Debug.LogWarning($"{dialogue_finished} does not have a game event attached!");
             } else {
-                g_event.ActivateEvent();
+                g_event.ActivateEffect();
             }
         }
     }
 
     public void Interact(GameObject actor) {
-        ActivateEvent();
+        ActivateEffect();
     }
 }

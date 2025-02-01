@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
+public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEventEffect
 {
     public List<string> dialogue_files;
     
@@ -26,7 +26,7 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
         index = 0;
     }
     
-    public void ActivateEvent() {
+    public void ActivateEffect() {
         if (index >= dialogue_files.Count) {
             if (endless_dialogue) {
                 index -= 1; // repeat the final dialogue
@@ -51,6 +51,6 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
     }
 
     public void Interact(GameObject actor) {
-        ActivateEvent();
+        ActivateEffect();
     }
 }
