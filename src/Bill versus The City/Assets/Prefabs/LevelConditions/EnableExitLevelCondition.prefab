@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8565994284512590852}
   - component: {fileID: 2654757413582734240}
   - component: {fileID: 3156474896540078672}
+  - component: {fileID: 1080794899629885904}
   m_Layer: 0
   m_Name: EnableExitLevelCondition
   m_TagString: Untagged
@@ -45,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345b073d19cff604e939e9065ea546af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  remaining_enemies_target: 0
   init_effects:
+  - {fileID: 1080794899629885904}
   - {fileID: 3156474896540078672}
 --- !u!114 &3156474896540078672
 MonoBehaviour:
@@ -61,3 +64,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction: {fileID: 0}
   set_interaction_enabled: 1
+--- !u!114 &1080794899629885904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7494019667010016562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e6ae37dc58674429f40df5f25d72d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue_files:
+  - 
+  endless_dialogue: 0
+  random_dialouge: 0
+  dialogue_finished: {fileID: 0}
+  index: 0

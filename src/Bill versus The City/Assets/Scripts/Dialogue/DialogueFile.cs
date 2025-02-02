@@ -129,6 +129,10 @@ public class DialogueFile {
 
     public IDialogueAction GetNextAction() {
         // gets the next action in the dialogue, or returns null at the end
+        if (actions == null) {
+            Debug.LogWarning($"Dialogue actions is null, the dialogue file path may be invalid! file_name: '{file_name}'");
+            return null;
+        }
         if (_index >= actions.Count) {
             return null;
         }
