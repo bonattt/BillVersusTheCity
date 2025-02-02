@@ -186,7 +186,7 @@ public class PlayerMovement : CharCtrl
 
     public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
-        MenuManager.inst.PlayerDefeatPopup();
+        LevelConfig.inst.FailLevel();
     }
     
     protected override void HandleAnimation() {
