@@ -211,7 +211,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.right_direction = -this.transform.forward;
         _animator_facade.move_velocity = MoveVector();
         _animator_facade.action = AnimationActionType.idle;
-        _animator_facade.weapon_class = current_weapon.weapon_class;
+        _animator_facade.weapon_class = current_weapon != null ? current_weapon.weapon_class : WeaponClass.empty;
         _animator_facade.aim_percent = attack_controller.aim_percent;
         _animator_facade.shot_at = last_attack_time;
         _animator_facade.crouch_percent = 0f;

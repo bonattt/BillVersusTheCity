@@ -61,13 +61,10 @@ public class CameraFollow : MonoBehaviour
 
     private float ShiftToMousePercent() {
         // returns a percent (float 0-1) determining how shifted towards the mouse the camera follow should be
-        // 0 follows the target, 1 follows the mouse, and 0.5 follows the exact midpoint between
-        
+        // 0 follows the target, 1 follows the mouse, and 0.5 follows the exact midpoint between        
         if (current_weapon == null) {
-            Debug.LogWarning("no weapon");
             return 0f;
         }
-
         return attack_controller.aim_percent * current_weapon.aim_zoom;
     }
 

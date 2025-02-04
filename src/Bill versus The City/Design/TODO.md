@@ -385,11 +385,13 @@ FEEDBACK:
         [+] TOGGLE: weapon select on level start
         [+] TOGGLE: combat enabled
         [+] setup starting weapons
-        [ ] setup victory conditions, which can be sequential
+        [+] setup victory conditions, which can be sequential
             [ ] Survive for X time
-            [ ] Escape to truck
-            [ ] Defeat X number of enemies
+            [+] Escape to truck
+            [+] Defeat X number of enemies
         [ ] Level music
+
+    [ ] Create Hub World between levels
 
 
 =============================

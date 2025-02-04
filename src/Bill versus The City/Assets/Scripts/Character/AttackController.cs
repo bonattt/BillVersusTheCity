@@ -136,7 +136,12 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
 
     private void UpdateRecoil() {
-        float recoil_decay = current_weapon.recoil_recovery;
+        float recoil_decay;
+        if (current_weapon == null) {
+            recoil_decay = 0;
+        } else {
+            recoil_decay = current_weapon.recoil_recovery;
+        }
         if (_aim_this_frame) {
             recoil_decay *= 2;
         }
@@ -250,6 +255,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
     public int debug_ammo_count = 0;
 
     protected virtual void UpdateDebugFields() {
-        debug_ammo_count = current_weapon.current_ammo;
+        debug_ammo_count = (current_weapon == null)? -1 : current_weapon.current_ammo;
     }
 }

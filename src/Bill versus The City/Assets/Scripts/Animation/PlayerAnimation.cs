@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubscriber {
 
     public readonly Dictionary<WeaponClass, int> weapon_enum_to_int = new Dictionary<WeaponClass, int>{
-        {WeaponClass.handgun, 0},
-        {WeaponClass.empty, 1},
+        {WeaponClass.empty, 0},
+        {WeaponClass.handgun, 1},
         {WeaponClass.rifle, 2},
         {WeaponClass.shotgun, 3}
     };

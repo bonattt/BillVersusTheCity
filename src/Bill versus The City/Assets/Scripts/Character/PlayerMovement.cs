@@ -23,7 +23,8 @@ public class PlayerMovement : CharCtrl
     }
 
     public override bool AttackInput() {
-        if (attack_controller.current_weapon.auto_fire) {
+        if (current_weapon == null) { return false; }
+        if (current_weapon.auto_fire) {
             return InputSystem.current.AttackHoldInput();
         } 
         return InputSystem.current.AttackClickInput();
