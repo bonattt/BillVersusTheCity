@@ -72,7 +72,7 @@ public class LevelConfig : MonoBehaviour
         if (victory_type == LevelVictoryType.leave_by_truck) {
             ActivateTruckLevelExit();
         } else if (victory_type == LevelVictoryType.instant) {
-            Debug.LogWarning("TODO ---");
+            NextLevel();
         }
         else {
             Debug.LogError($"unknown level victory type: '{victory_type}'");
@@ -102,6 +102,7 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void NextLevel() {
+        Debug.Log("LevelConfig.NextLevel()");
         ScenesUtil.NextLevel(next_level);
     }
 
