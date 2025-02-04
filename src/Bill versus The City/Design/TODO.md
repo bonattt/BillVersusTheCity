@@ -393,6 +393,10 @@ FEEDBACK:
 
     [ ] Create Hub World between levels
 
+    [+] FIX: player doesn't animate without weapon equipped
+    [ ] FIX: weapon select UI should display error if weapons not selected
+        - error message in red
+        - error noise 
 
 =============================
 ========== Roadmap ==========

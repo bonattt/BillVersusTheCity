@@ -4,11 +4,22 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+
+public enum LevelVictoryType {
+    leave_by_truck,
+    instant
+}
+
 public class LevelConfig : MonoBehaviour
 {
 
     public bool combat_enabled = true;
     public bool weapon_select_on_start = true;
+
+    [SerializeField]
+    private int sequential_conditions_index = 0;
+
+    public LevelVictoryType victory_type = LevelVictoryType.leave_by_truck;
 
     public static LevelConfig inst = null;
 
@@ -54,12 +65,48 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
+    public void CompleteLevelObjectives() {
+        // public method to be called when all a level's objectives are cleared
+        // Exact effects of clearing the objectives may vary
+        if (victory_type == LevelVictoryType.leave_by_truck) {
+            ActivateTruckLevelExit();
+        } else if (victory_type == LevelVictoryType.instant) {
+            Debug.LogWarning("TODO ---");
+        }
+        else {
+            Debug.LogError($"unknown level victory type: '{victory_type}'");
+        }
+
+    }
+
+    public void ActivateTruckLevelExit() {
+        GameObject truck = GameObject.Find("PlayerTruck");
+        if (truck == null) { 
+            Debug.LogError("cannot find 'PlayerTruck' in the scene to activate level exit!");
+            return;
+        }
+        Transform child = truck.transform.Find("FinishLevelInteraction");
+        if (child == null) {
+            Debug.LogError("'PlayerTruck' is missing its finish level interaction!!");
+            return;
+        }
+        Interaction finish_level = child.gameObject.GetComponent<Interaction>();
+        if (finish_level == null) {
+            Debug.LogError("FinishLevelInteraction is missing it's `Interaction` component!");
+            return;
+        }
+        finish_level.interaction_enabled = true;
+        child.gameObject.SetActive(true);
+
+    }
+
     public void FailLevel() {
         MenuManager.inst.PlayerDefeatPopup();
     }
 
     private void CheckSequentialLevelConditions() {
-        for (int i = 0; i < sequential_level_conditions.Count; i++) {
+        for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++) {
+            Debug.Log($"i = {i}, sequential_conditions_index {sequential_conditions_index}");
             ILevelCondition current_condition = sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
                 Debug.LogWarning($"current condition was already triggered, skip."); // TODO --- remove debug
@@ -73,6 +120,7 @@ public class LevelConfig : MonoBehaviour
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
                 Debug.LogWarning($"condition met, trigger!"); // TODO --- remove debug
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
+                sequential_conditions_index = i + 1;
             }
         }
     }
@@ -140,5 +188,6 @@ public class LevelConfig : MonoBehaviour
         weapon.current_ammo = weapon.ammo_capacity;
         return weapon;
     }
+
 
 }
