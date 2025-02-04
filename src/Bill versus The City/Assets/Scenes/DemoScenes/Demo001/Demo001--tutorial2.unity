@@ -3237,13 +3237,13 @@ PrefabInstance:
       propertyPath: init_effects.Array.size
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3257804293507679489, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
-      propertyPath: init_effects.Array.data[1]
-      value: 
-      objectReference: {fileID: 1425793105}
     - target: {fileID: 3869858843225825369, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: m_Name
       value: LevelConfig
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: next_level
+      value: Demo001--level1
       objectReference: {fileID: 0}
     - target: {fileID: 4876229712870012581, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3290,17 +3290,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
---- !u!114 &1425793105 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2463347233875956977, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
-  m_PrefabInstance: {fileID: 1425793104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a068ac2b9baae6a4aafce1a7847286c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1428862855
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,7 +4314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8673137286306914175, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
       propertyPath: next_scene
-      value: Demo001--level1
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -390,6 +390,7 @@ FEEDBACK:
             [+] Escape to truck
             [+] Defeat X number of enemies
         [ ] Level music
+    [ ] Carryover level config between levels
 
     [ ] Create Hub World between levels
 
@@ -397,6 +398,8 @@ FEEDBACK:
     [ ] FIX: weapon select UI should display error if weapons not selected
         - error message in red
         - error noise 
+        - if weapons are null, set them to the first weapons availible. Otherwise, set to previously equipped.
+    [ ] Crouch while aiming locks into aim animation
 
 =============================
 ========== Roadmap ==========

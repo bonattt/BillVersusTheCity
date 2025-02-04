@@ -13,6 +13,7 @@ public enum LevelVictoryType {
 public class LevelConfig : MonoBehaviour
 {
 
+    public string next_level;
     public bool combat_enabled = true;
     public bool weapon_select_on_start = true;
 
@@ -98,6 +99,10 @@ public class LevelConfig : MonoBehaviour
         finish_level.interaction_enabled = true;
         child.gameObject.SetActive(true);
 
+    }
+
+    public void NextLevel() {
+        ScenesUtil.NextLevel(next_level);
     }
 
     public void FailLevel() {
