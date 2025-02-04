@@ -386,11 +386,13 @@ FEEDBACK:
         [+] TOGGLE: combat enabled
         [+] setup starting weapons
         [+] setup victory conditions, which can be sequential
-            [ ] Survive for X time
+            [+] Survive for X time
             [+] Escape to truck
             [+] Defeat X number of enemies
         [ ] Level music
+        [ ] add start/end level dialogue options to level config 
     [ ] Carryover level config between levels
+
 
     [ ] Create Hub World between levels
 
