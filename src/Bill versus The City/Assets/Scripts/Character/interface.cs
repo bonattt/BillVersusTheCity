@@ -8,6 +8,7 @@ public interface ICharacterStatus {
     public float max_health { get; set; }
     public IArmor armor { get; }
 
+    public void ApplyNewArmor(IArmor armor_template); // create new armor from IArmor as a template
     public void ApplyNewArmor(ScriptableObject armor_template); // create new armor from ScriptableObject template
     public void ApplyExistingArmor(IArmor existing_armor); // set an existing armor, and preserve stats
     public void RemoveArmor(); // set armor to null
@@ -63,6 +64,7 @@ public interface IArmor : IItem, IDifficultyAdjusted {
 
     // percentage of damage dealt to the wearer of the armor
     public float armor_protection { get; }
+    public IArmor CopyArmor();
 }
 
 public interface IBullet : IAttack {

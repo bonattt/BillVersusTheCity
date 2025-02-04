@@ -124,7 +124,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         }
         this.armor = null;
         if (armor_init != null) { 
-            ApplyNewArmor(armor_init);
+            ApplyNewArmor((IArmor) armor_init);
         }
         UpdateStatus();
     }  
@@ -132,14 +132,17 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     public void ApplyNewArmor(ScriptableObject armor_template) {
         // takes a ScriptableObject, instantiates a new copy of it with full durability
         try {
-            IArmor new_armor = (IArmor) Instantiate(armor_init);
-            RemoveArmor();
-            this.armor = new_armor;
-            SetArmorDifficulty();
-            UpdateStatus();
+            IArmor new_armor = (IArmor) armor_template;
+            ApplyNewArmor(new_armor);
         } catch (InvalidCastException) {
             Debug.LogError($"invalid init armor: {armor_init}");
         }
+    }
+    public void ApplyNewArmor(IArmor armor_template) {
+        // takes a ScriptableObject, instantiates a new copy of it with full durability
+        IArmor new_armor = armor_template.CopyArmor();
+        new_armor.armor_durability = new_armor.armor_max_durability;
+        ApplyExistingArmor(new_armor);
     }
 
     public void ApplyExistingArmor(IArmor existing_armor) {
@@ -147,6 +150,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         RemoveArmor();
         this.armor = existing_armor;
         SetArmorDifficulty();  // 
+        UpdateStatus();
     }
 
     public void RemoveArmor() {

@@ -15,7 +15,15 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint};
 
     protected CharacterController controller;
-    protected AttackController attack_controller;
+    private AttackController _attack_controller;
+    protected AttackController attack_controller {
+        get {
+            if (_attack_controller == null) {
+                _attack_controller = GetComponent<AttackController>();
+            }
+            return _attack_controller;
+        }
+    }
     protected ICharacterStatus char_status;
     public Transform aim_target;
     public Transform crouch_target; // moves up and down when the character crouches
@@ -121,10 +129,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    protected IWeapon current_weapon {
+    public virtual IWeapon current_weapon {
         get {
             return attack_controller.current_weapon;
         }
+        set {
+            attack_controller.current_weapon = value;
+        }
+        
     }
 
     // percent (0f - 1f) progress on reload completion
@@ -177,7 +189,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         char_status = GetComponent<CharacterStatus>();
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();
-        attack_controller = GetComponent<AttackController>();
         ammo_container = GetComponent<AmmoContainer>();
         if (animatior_controller_ref != null) {
             _animator_facade = animatior_controller_ref.GetComponent<IAnimationFacade>();

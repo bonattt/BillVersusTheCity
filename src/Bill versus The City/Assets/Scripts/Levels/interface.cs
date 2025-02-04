@@ -14,3 +14,21 @@ public interface ILevelCondition {
     }
     public List<IGameEventEffect> effects { get; }
 }
+
+
+public enum LevelMusicStart {
+    load_scene,
+    start_level
+}
+
+public enum LevelMusicStop {
+    complete_objectives,
+    exit_scene
+}
+
+public interface ILevelMusic {
+    public LevelMusicStart music_start { get; }
+    public LevelMusicStop music_stop { get; }
+    public void StartLevelMusic();
+    public void StopLevelMusic();
+}

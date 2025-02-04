@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f83a2aeff7e8c469a495750b717029, type: 3}
+  m_Name: SimpleEnemySpawnConfig
+  m_EditorClassIdentifier: 
+  rare_weapon_chance: 1.1
+  armor_chance: 0
+  enemy_prefag: {fileID: 0}
+  armor_prefab: {fileID: 0}
+  rare_weapons:
+  - {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
+  - {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}

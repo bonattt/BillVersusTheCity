@@ -162,7 +162,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     protected virtual void AttackControllerStart() {
          // allow extending classes to add to `Start`    
-        if (initialize_weapon != null) {
+        if (initialize_weapon != null && current_weapon == null) {
             current_weapon = (IWeapon) Instantiate(initialize_weapon);
         }
         current_weapon.current_ammo = current_weapon.ammo_capacity;

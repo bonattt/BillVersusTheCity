@@ -71,4 +71,8 @@ public class ArmorPlate : ScriptableObject, IArmor
         }
     }
 
+    public IArmor CopyArmor() {
+        return Instantiate(this);
+    }
+
 }
