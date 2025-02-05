@@ -29,29 +29,25 @@ public class LevelConfig : MonoBehaviour
     public string next_level;
     public bool combat_enabled = true;
     public bool weapon_select_on_start = true;
-
-    public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
-    public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
+    public bool use_starting_weapons = false;
 
     [SerializeField]
     private int sequential_conditions_index = 0;
 
+    public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
+    public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
     public LevelVictoryType victory_type = LevelVictoryType.leave_by_truck;
-
-
-    public bool use_starting_weapons = false;
 
     public ScriptableObject init_starting_rifle, init_starting_handgun, init_starting_pickup;
     private IWeapon starting_rifle, starting_handgun, starting_pickup;
 
-    public List<MonoBehaviour> init_sequential_level_conditions, init_fail_level_conditions;
-    private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
-    private List<ILevelCondition> fail_level_conditions = new List<ILevelCondition>();
-
-    public string dialogue_file_start_level, dialogue_file_objectives_complete, dialogue_file_level_failed;
-    public string dialogue_file_level_finished = "Default\\finish_level";
+    public string dialogue_file_start_level, dialogue_file_objectives_complete, dialogue_file_level_failed, dialogue_file_level_finished;
 
     public float preset_config_countdown_timer_seconds = 75;
+
+    public List<MonoBehaviour> init_extra_sequential_level_conditions, init_extra_non_sequential_level_conditions;
+    private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
+    private List<ILevelCondition> non_sequential_level_conditions = new List<ILevelCondition>();
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
 
     void Awake() {
@@ -75,8 +71,8 @@ public class LevelConfig : MonoBehaviour
     public void StartLevel() {
         Validate();
         // init condition lists
-        sequential_level_conditions = InitConditions(init_sequential_level_conditions);
-        fail_level_conditions = InitConditions(init_fail_level_conditions);
+        sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
+        non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         ApplyPresetVictoryCondition();
         ApplyPresetFailureCondition();
 
@@ -109,7 +105,7 @@ public class LevelConfig : MonoBehaviour
             Debug.LogWarning("victory and failure conditions are both countdown!!");
         }
 
-        if (victory_conditions_preset == LevelVictoryConditions.none && init_sequential_level_conditions.Count == 0) {
+        if (victory_conditions_preset == LevelVictoryConditions.none && init_extra_sequential_level_conditions.Count == 0) {
             Debug.LogWarning("neither preset nor custom victory conditions provided!");
         }
     }
@@ -142,7 +138,7 @@ public class LevelConfig : MonoBehaviour
         condition.AddEffect(new SimpleActionEvent(this.FailLevel));
 
         // add the condition to the level for evaluation
-        fail_level_conditions.Add(condition);
+        non_sequential_level_conditions.Add(condition);
 
         return condition;
     }
@@ -305,8 +301,8 @@ public class LevelConfig : MonoBehaviour
     private bool CheckFailLevelConditions() {
         /* checks all the level fail conditions, if any is true, returns true and evaluates that conditions triggers.
          */
-        for (int i = 0; i < fail_level_conditions.Count; i++) {
-            ILevelCondition current_condition = fail_level_conditions[i];
+        for (int i = 0; i < non_sequential_level_conditions.Count; i++) {
+            ILevelCondition current_condition = non_sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
                 Debug.LogWarning($"current condition was already triggered, skip."); // TODO --- remove debug
                 continue; 
