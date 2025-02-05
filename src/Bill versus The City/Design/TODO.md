@@ -389,13 +389,14 @@ FEEDBACK:
             [+] Survive for X time
             [+] Escape to truck
             [+] Defeat X number of enemies
-        [ ] Level music
         [+] Level Dialogue
             [+] Start Level Dialogue
             [+] Clear Objectives Dialogue
             [+] Finish Level Dialogue
-        [ ] REFACTOR: fail_level_conditions --> non-sequential conditions
+        [+] REFACTOR: fail_level_conditions --> non-sequential conditions
+        [ ] Level music
         [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
+        [ ] FIX: countdown condition triggers immediately on level restart
 
     [ ] Carryover level config between levels (for hub-worlds)
 
