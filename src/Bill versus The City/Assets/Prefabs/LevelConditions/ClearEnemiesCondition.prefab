@@ -10,10 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8565994284512590852}
   - component: {fileID: 2654757413582734240}
-  - component: {fileID: 5253127214721589070}
-  - component: {fileID: 1080794899629885904}
   m_Layer: 0
-  m_Name: EnableExitLevelCondition
+  m_Name: ClearEnemiesCondition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,36 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   remaining_enemies_target: 0
-  init_effects:
-  - {fileID: 1080794899629885904}
-  - {fileID: 5253127214721589070}
---- !u!114 &5253127214721589070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7494019667010016562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98d8b6d7a44c9a74fb0d4508551f91cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1080794899629885904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7494019667010016562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24e6ae37dc58674429f40df5f25d72d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue_files:
-  - 
-  endless_dialogue: 0
-  random_dialouge: 0
-  dialogue_finished: {fileID: 0}
-  index: 0
+  init_effects: []

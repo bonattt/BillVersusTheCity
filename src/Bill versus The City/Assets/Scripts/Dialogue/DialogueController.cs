@@ -33,7 +33,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     // flexible assignment for effects after finishing the dialogue.
     // if null, nothing happens.
     // if it's not null, try to use it as an IGameEvent. If that doesn't work, use it as a prefab.
-    public MonoBehaviour dialogue_finished = null;
+    public MonoBehaviour dialogue_finished = null; // WARNING: Depricated, use AddDialogueCallback(IGameEventEffect)
 
     private void ResetAliases() {
         // resets aliases to the default aliases

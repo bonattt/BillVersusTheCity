@@ -2980,23 +2980,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 986714525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1388802463 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3051515982286697355, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
-  m_PrefabInstance: {fileID: 1425793104}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1388802468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388802463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98d8b6d7a44c9a74fb0d4508551f91cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1425793104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3046,12 +3029,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
-      propertyPath: weapon_select_on_start
-      value: 1
+      propertyPath: victory_conditions_preset
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_sequential_level_conditions.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: init_sequential_level_conditions.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4876229712870012581, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3108,14 +3095,11 @@ PrefabInstance:
     - target: {fileID: 7309342715057992840, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_effects.Array.data[0]
       value: 
-      objectReference: {fileID: 1388802468}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3051515982286697355, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1388802468}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
 --- !u!1 &1513121233
 GameObject:

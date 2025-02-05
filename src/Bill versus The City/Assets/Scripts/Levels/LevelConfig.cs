@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using log4net.Core;
 using UnityEngine;
 
 
@@ -10,19 +10,34 @@ public enum LevelVictoryType {
     instant
 }
 
+// enum implements a dropdown in the unity inspector for pre-configured options for victory conditions
+public enum LevelVictoryConditions {
+    none,
+    clear_enemies,
+    escape_to_truck, 
+    survive_countdown, 
+}
+
+public enum LevelFailuerConditions {
+    none,
+    countdown,
+}
+
 public class LevelConfig : MonoBehaviour
 {
-
+    public static LevelConfig inst { get; private set; }
     public string next_level;
     public bool combat_enabled = true;
     public bool weapon_select_on_start = true;
+
+    public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
+    public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
 
     [SerializeField]
     private int sequential_conditions_index = 0;
 
     public LevelVictoryType victory_type = LevelVictoryType.leave_by_truck;
 
-    public static LevelConfig inst = null;
 
     public bool use_starting_weapons = false;
 
@@ -33,15 +48,21 @@ public class LevelConfig : MonoBehaviour
     private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
     private List<ILevelCondition> fail_level_conditions = new List<ILevelCondition>();
 
+    public float preset_config_countdown_timer_seconds = 75;
+    public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
+
     void Awake() {
         inst = this;
     }
-
+    
     void Start()
     {
+        Validate();
         // init condition lists
         sequential_level_conditions = InitConditions(init_sequential_level_conditions);
         fail_level_conditions = InitConditions(init_fail_level_conditions);
+        ApplyPresetVictoryCondition();
+        ApplyPresetFailureCondition();
 
         if (inst != null && inst != this) {
             Debug.LogWarning("clearing old level config"); // TODO --- remove debug
@@ -58,11 +79,116 @@ public class LevelConfig : MonoBehaviour
     }
 
     void Update() {
-        bool level_failed = CheckFailLevelConditions();
         CheckSequentialLevelConditions();
+        bool level_failed = CheckFailLevelConditions();
 
         if(level_failed) {
             FailLevel();
+        }
+    }
+
+    protected void Validate() {
+        // Logs warnings for some invalid configuration states
+        if (victory_type == LevelVictoryType.leave_by_truck && victory_conditions_preset == LevelVictoryConditions.escape_to_truck) {
+            Debug.LogWarning("Objective cannot be escape by truck if victory type is also to escape by truck"); 
+        }
+
+        if (victory_conditions_preset == LevelVictoryConditions.survive_countdown && failure_conditions_preset == LevelFailuerConditions.countdown) {
+            Debug.LogWarning("victory and failure conditions are both countdown!!");
+        }
+
+        if (victory_conditions_preset == LevelVictoryConditions.none && init_sequential_level_conditions.Count == 0) {
+            Debug.LogWarning("neither preset nor custom victory conditions provided!");
+        }
+    }
+
+    protected ILevelCondition InstantiateConditionFromPrefab(GameObject prefab) {
+        GameObject condition_obj = Instantiate(prefab);
+        condition_obj.transform.parent = transform;
+
+        ILevelCondition condition = condition_obj.GetComponent<ILevelCondition>();
+        if (condition == null) {
+            Debug.LogWarning($"instantiated condition prefab without ILevelCondition component! {condition_obj.name}");
+        }
+        return condition;
+    }
+
+    protected ILevelCondition InstantiateVictoryConditionInstant(GameObject prefab) {
+        // instantiates a victory condition from a prefab of a GameObject containing an ILevelCondition script,
+        // and sets the condition to instantly end the level
+        ILevelCondition condition = InstantiateConditionFromPrefab(prefab);
+        condition.AddEffect(new SimpleActionEvent(LevelObjectivesCleared));
+
+        sequential_level_conditions.Add(condition);
+        return condition;
+    }
+
+
+    protected ILevelCondition InstantiateFailureCondition(GameObject prefab) {
+        // create conditions from prefab
+        ILevelCondition condition = InstantiateConditionFromPrefab(prefab);
+        condition.AddEffect(new SimpleActionEvent(this.FailLevel));
+
+        // add the condition to the level for evaluation
+        fail_level_conditions.Add(condition);
+
+        return condition;
+    }
+
+    private void ApplyPresetVictoryCondition() {
+        switch(victory_conditions_preset) {
+            case LevelVictoryConditions.none:
+                return; // do nothing
+            
+            case LevelVictoryConditions.clear_enemies:
+                InstantiateVictoryConditionInstant(prefab_clear_enemies_condition);
+                return;
+                
+            case LevelVictoryConditions.escape_to_truck:
+                // no conditions are required, just activate the truck exit
+                ActivateTruckLevelExit();
+                return; 
+
+            case LevelVictoryConditions.survive_countdown:
+                ILevelCondition condition = InstantiateVictoryConditionInstant(prefab_countdown_timer_condition);
+                ConfigureCountdownCondition(condition, Color.green, preset_config_countdown_timer_seconds);
+                return;
+                
+            default:
+                Debug.LogWarning($"unknown victory condition(s) preset '{victory_conditions_preset}'");
+                return;
+        }
+    }
+
+    private void ApplyPresetFailureCondition() {
+        if (failure_conditions_preset == LevelFailuerConditions.none) {
+            return; // do nothing
+        } else if (failure_conditions_preset == LevelFailuerConditions.countdown) {
+            // Debug.LogWarning("ApplyPresetFailureCondition: Not implented // TODO --- implement"); // TODO --- implement
+            ILevelCondition condition = InstantiateFailureCondition(prefab_countdown_timer_condition);
+            ConfigureCountdownCondition(condition, Color.red, preset_config_countdown_timer_seconds);
+
+        } else {
+            Debug.LogWarning($"unrecognized preset failure condition enum {failure_conditions_preset}");
+        }
+    }
+
+    private static void ConfigureCountdownCondition(ILevelCondition condition, Color color, float countdown_start) {
+        /* takes a level condition, which should be a Countdown Condition,
+         * gets the associated UI and sets it's text color.
+         * Handles error cases for all of the above
+         */
+        try {
+            CountdownCondition countdown_condition = (CountdownCondition) condition;
+            TimerUIController ui_ctrl = countdown_condition.gameObject.GetComponent<TimerUIController>();
+            if (ui_ctrl == null) {
+                Debug.LogError("Unable to get TimerUIController from countdown prefab!!");
+                return;
+            }
+            ui_ctrl.text_color = color;
+            countdown_condition.start_time_seconds = countdown_start;
+        } catch (InvalidCastException) {
+            Debug.LogError($"Casting error trying to setup countdown failure condition");
         }
     }
 
@@ -72,7 +198,7 @@ public class LevelConfig : MonoBehaviour
         if (victory_type == LevelVictoryType.leave_by_truck) {
             ActivateTruckLevelExit();
         } else if (victory_type == LevelVictoryType.instant) {
-            NextLevel();
+            LevelObjectivesCleared();
         }
         else {
             Debug.LogError($"unknown level victory type: '{victory_type}'");
@@ -98,7 +224,26 @@ public class LevelConfig : MonoBehaviour
         }
         finish_level.interaction_enabled = true;
         child.gameObject.SetActive(true);
+    }
 
+    public void LevelObjectivesCleared() {
+        switch (this.victory_type) {
+            case LevelVictoryType.instant:
+                CompleteLevel();
+                return;
+            case LevelVictoryType.leave_by_truck:
+                ActivateTruckLevelExit();
+                return;
+
+            default:
+                Debug.LogError($"unhandled victory type '{this.victory_type}'");
+                break;
+        }
+    }
+
+    public void CompleteLevel() {
+        // TODO --- play end of level dialogue
+        NextLevel();
     }
 
     public void NextLevel() {
@@ -158,6 +303,10 @@ public class LevelConfig : MonoBehaviour
         List<ILevelCondition> conditions = new List<ILevelCondition>();
         for(int i = 0; i < init_scripts.Count; i++) {
             MonoBehaviour b = init_scripts[i];
+            if (b == null) {
+                Debug.LogWarning("empty script slot in LevelConfig init conditions");
+                continue;
+            }
             try {
                 ILevelCondition c = (ILevelCondition) b;
                 c.was_triggered = false;

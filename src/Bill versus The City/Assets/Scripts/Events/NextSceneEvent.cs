@@ -18,6 +18,6 @@ public class NextSceneEvent : MonoBehaviour, IGameEventEffect, IInteractionEffec
 
 
     private void Effect() {
-        LevelConfig.inst.NextLevel();
+        LevelConfig.inst.CompleteLevel();
     }
 }

@@ -13,6 +13,7 @@ public interface ILevelCondition {
         was_triggered = true;
     }
     public List<IGameEventEffect> effects { get; }
+    public void AddEffect(IGameEventEffect new_effect);
 }
 
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CountdownCondition : MonoBehaviour, ILevelCondition, ITimer {
+public class CountdownCondition : AbstractLevelCondition, ITimer {
     
     [SerializeField]
     private bool _paused = false;
@@ -20,14 +20,13 @@ public class CountdownCondition : MonoBehaviour, ILevelCondition, ITimer {
     // public int remaining_seconds_remainder { get { return (int) (_countdown - (remaining_minutes * 60)); }} // returns the seconds left in the current minute
     // public int remaining_seconds_full { get { return (int) _countdown; }}
     
-    public bool is_active { get; set; }
-    public bool was_triggered { get; set; }
+    // public bool is_active { get; set; }
+    // public bool was_triggered { get; set; }
 
-    public List<MonoBehaviour> init_effects;
-    public List<IGameEventEffect> effects { get; private set; }
+    // public List<MonoBehaviour> init_effects;
+    // public List<IGameEventEffect> effects { get; private set; }
 
-    void Start() {
-        effects = GameEventEffectUtil.LoadEventsFromMonoBehaviour(init_effects);
+    protected override void ExtendStart() {
         _countdown = start_time_seconds;
     }
 
@@ -38,7 +37,7 @@ public class CountdownCondition : MonoBehaviour, ILevelCondition, ITimer {
         UpdateDebugData();
     }
 
-    public bool ConditionMet() {
+    public override bool ConditionMet() {
         return _countdown <= 0f;
     }
 

@@ -391,7 +391,14 @@ FEEDBACK:
             [+] Defeat X number of enemies
         [ ] Level music
         [ ] add start/end level dialogue options to level config 
-    [ ] Carryover level config between levels
+        [ ] Add level config 
+        [ ] Level Dialogue
+            [ ] Start Level Dialogue
+            [ ] Clear Objectives Dialogue
+            [ ] Finish Level Dialogue
+        [ ] REFACTOR: fail_level_conditions --> non-sequential conditions
+
+    [ ] Carryover level config between levels (for hub-worlds)
 
 
     [ ] Create Hub World between levels
