@@ -390,12 +390,10 @@ FEEDBACK:
             [+] Escape to truck
             [+] Defeat X number of enemies
         [ ] Level music
-        [ ] add start/end level dialogue options to level config 
-        [ ] Add level config 
-        [ ] Level Dialogue
-            [ ] Start Level Dialogue
-            [ ] Clear Objectives Dialogue
-            [ ] Finish Level Dialogue
+        [+] Level Dialogue
+            [+] Start Level Dialogue
+            [+] Clear Objectives Dialogue
+            [+] Finish Level Dialogue
         [ ] REFACTOR: fail_level_conditions --> non-sequential conditions
         [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
 
