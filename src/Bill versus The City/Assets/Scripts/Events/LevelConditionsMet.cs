@@ -9,6 +9,6 @@ public class LevelConditionsMet : MonoBehaviour, IGameEventEffect, IInteractionE
     }
     
     public void ActivateEffect() {
-        LevelConfig.inst.CompleteLevelObjectives();
+        LevelConfig.inst.LevelObjectivesCleared();
     }
 }

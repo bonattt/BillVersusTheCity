@@ -55,9 +55,12 @@ MonoBehaviour:
   init_starting_rifle: {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
   init_starting_handgun: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   init_starting_pickup: {fileID: 0}
-  init_sequential_level_conditions:
-  - {fileID: 0}
+  init_sequential_level_conditions: []
   init_fail_level_conditions: []
+  start_level_dialogue_file: 
+  complete_objectives_dialogue_file: 
+  fail_level_dialogue_file: 
+  finish_level_dialogue_file: Default\finish_level
   preset_config_countdown_timer_seconds: 75
   prefab_countdown_timer_condition: {fileID: 8906276981621872786, guid: 65325dd3d5d73b14e9b72a6c9c8d9781, type: 3}
   prefab_clear_enemies_condition: {fileID: 7494019667010016562, guid: cf9d6efee5f3fd14aa8e526035928852, type: 3}

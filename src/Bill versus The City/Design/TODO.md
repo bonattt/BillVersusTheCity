@@ -397,6 +397,7 @@ FEEDBACK:
             [ ] Clear Objectives Dialogue
             [ ] Finish Level Dialogue
         [ ] REFACTOR: fail_level_conditions --> non-sequential conditions
+        [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
 
     [ ] Carryover level config between levels (for hub-worlds)
 

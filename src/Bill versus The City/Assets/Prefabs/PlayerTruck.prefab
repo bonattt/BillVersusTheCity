@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169f4992fca71c741b822523ed9e149f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deprication_warning: '`next_scene` variable is no longer used!?'
   next_scene: Demo001--level01
 --- !u!1 &4988230370517091649
 GameObject:
@@ -209,8 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5c9aa41b27dbc4987a84e95c5b0f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cleanup_triggered_dialogue: test\\remove_illegal_items
-  dialogue_finished: {fileID: 3144694336298380374}
+  cleanup_triggered_dialogue: Default\\remove_illegal_items
+  dialogue_finished: {fileID: 8673137286306914175}
 --- !u!114 &3144694336298380374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +219,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4988230370517091649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24e6ae37dc58674429f40df5f25d72d6, type: 3}
   m_Name: 

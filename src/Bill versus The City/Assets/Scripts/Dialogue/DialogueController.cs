@@ -34,6 +34,9 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     // if null, nothing happens.
     // if it's not null, try to use it as an IGameEvent. If that doesn't work, use it as a prefab.
     public MonoBehaviour dialogue_finished = null; // WARNING: Depricated, use AddDialogueCallback(IGameEventEffect)
+    private List<IGameEventEffect> dialogue_callbacks = new List<IGameEventEffect>();
+    public void AddDialogueCallback(IGameEventEffect new_effect) => dialogue_callbacks.Add(new_effect);
+
 
     private void ResetAliases() {
         // resets aliases to the default aliases
@@ -294,6 +297,11 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     }
 
     public void DialogueFinished() {
+        foreach(IGameEventEffect e in dialogue_callbacks) {
+            e.ActivateEffect();
+        }
+
+        // WARNING: the following block of code is depricated
         if (dialogue_finished != null) {
             IGameEventEffect g_event = (IGameEventEffect) dialogue_finished;
             if (g_event != null) {

@@ -48,6 +48,9 @@ public class LevelConfig : MonoBehaviour
     private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
     private List<ILevelCondition> fail_level_conditions = new List<ILevelCondition>();
 
+    public string dialogue_file_start_level, dialogue_file_objectives_complete, dialogue_file_level_failed;
+    public string dialogue_file_level_finished = "Default\\finish_level";
+
     public float preset_config_countdown_timer_seconds = 75;
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
 
@@ -57,6 +60,19 @@ public class LevelConfig : MonoBehaviour
     
     void Start()
     {
+        StartLevel();
+    }
+
+    void Update() {
+        CheckSequentialLevelConditions();
+        bool level_failed = CheckFailLevelConditions();
+
+        if(level_failed) {
+            FailLevel();
+        }
+    }
+    
+    public void StartLevel() {
         Validate();
         // init condition lists
         sequential_level_conditions = InitConditions(init_sequential_level_conditions);
@@ -70,21 +86,17 @@ public class LevelConfig : MonoBehaviour
             Destroy(inst.gameObject);
         }
         inst = this;
-        // TODO ---
+        
+        // TODO --- handle order of operations for select weapons UI
+        if (dialogue_file_start_level != null && !dialogue_file_start_level.Equals("")) {
+            MenuManager.inst.OpenDialoge(dialogue_file_start_level);
+        }
         if (weapon_select_on_start) {
             MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
         } else if (use_starting_weapons) {
             EquipStartingWeapons();
         }
-    }
 
-    void Update() {
-        CheckSequentialLevelConditions();
-        bool level_failed = CheckFailLevelConditions();
-
-        if(level_failed) {
-            FailLevel();
-        }
     }
 
     protected void Validate() {
@@ -192,18 +204,14 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
-    public void CompleteLevelObjectives() {
-        // public method to be called when all a level's objectives are cleared
-        // Exact effects of clearing the objectives may vary
-        if (victory_type == LevelVictoryType.leave_by_truck) {
-            ActivateTruckLevelExit();
-        } else if (victory_type == LevelVictoryType.instant) {
-            LevelObjectivesCleared();
+    private DialogueController OpenDialogueIfDefined(string dialogue_file) {
+        // takes a string defining a filepath to a dialogue file.
+        // if the string is valid (not null and not empty), open a dialouge and return the controller
+        // if the string is invalid (null or empty) return null, and do not open a dialogue
+        if (dialogue_file == null || dialogue_file.Equals("")) {
+            return null;
         }
-        else {
-            Debug.LogError($"unknown level victory type: '{victory_type}'");
-        }
-
+        return MenuManager.inst.OpenDialoge(dialogue_file);
     }
 
     public void ActivateTruckLevelExit() {
@@ -227,9 +235,17 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void LevelObjectivesCleared() {
+        DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_objectives_complete);
+
         switch (this.victory_type) {
             case LevelVictoryType.instant:
-                CompleteLevel();
+                if (ctrl == null) {
+                    // if there is no dialogue, immediately CompleteLevel
+                    CompleteLevel();
+                } else {
+                    // if there is dialogue, set CompleteLevel as a callback on the dialogue controller
+                    ctrl.AddDialogueCallback(new SimpleActionEvent(CompleteLevel));
+                }
                 return;
             case LevelVictoryType.leave_by_truck:
                 ActivateTruckLevelExit();
@@ -242,8 +258,13 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void CompleteLevel() {
-        // TODO --- play end of level dialogue
-        NextLevel();
+        // TODO --- add configurations for what "next level" does, besides just loading a new scene
+        DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_finished);
+        if (ctrl == null) {
+            NextLevel(); 
+        } else {
+            ctrl.AddDialogueCallback(new SimpleActionEvent(NextLevel));
+        }
     }
 
     public void NextLevel() {
@@ -252,7 +273,12 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void FailLevel() {
-        MenuManager.inst.PlayerDefeatPopup();
+        DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_failed);
+        if (ctrl == null) {
+            MenuManager.inst.PlayerDefeatPopup();
+        } else {
+            ctrl.AddDialogueCallback(new SimpleActionEvent(MenuManager.inst.PlayerDefeatPopup));
+        }
     }
 
     private void CheckSequentialLevelConditions() {
