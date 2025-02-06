@@ -394,11 +394,13 @@ FEEDBACK:
             [+] Clear Objectives Dialogue
             [+] Finish Level Dialogue
         [+] REFACTOR: fail_level_conditions --> non-sequential conditions
-        [ ] Level music
+        [+] Level music
         [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
-        [ ] FIX: countdown condition triggers immediately on level restart
+        [+] FIX: countdown condition triggers immediately on level restart
 
-    [ ] Implement a defense mission
+    [~] Implement a defense mission
+        [+] Basic Level layout
+        [ ] Iterate on level layout
         [ ] implement special behaviors
             - special behavior does something unique while the enemy hasn't yet spotted the player
             - once the player is spotted, special behavior is removed
@@ -411,15 +413,15 @@ FEEDBACK:
         - error message in red
         - error noise 
         - if weapons are null, set them to the first weapons availible. Otherwise, set to previously equipped.
-    [ ] Crouch while aiming locks into aim animation
+    [ ] FIX: Crouch while aiming locks into aim animation
 
 =============================
 ========== Roadmap ==========
 =============================
 
 [+] Milestone 4: enemy behavior improvements
-[ ] Milestone 5 Add player and enemy placeholder-animations from Unity asset store.
-[ ] Milestone 6: Level config
+[+] Milestone 5 Add player and enemy placeholder-animations from Unity asset store.
+[~] Milestone 6: Level config
     --> automate configs for setting up scripts for verious possible level features. (Win condition, victory dialogue, start dialogue, weapon selections)
     --> Allow levels to start with pre-set weapons instead of the weapon selection screen
     --> implement level music
