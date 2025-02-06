@@ -401,6 +401,7 @@ FEEDBACK:
     [ ] Implement a defense mission
 
     [+] FIX: player doesn't animate without weapon equipped
+    [ ] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
     [ ] FIX: weapon select UI should display error if weapons not selected
         - error message in red
         - error noise 

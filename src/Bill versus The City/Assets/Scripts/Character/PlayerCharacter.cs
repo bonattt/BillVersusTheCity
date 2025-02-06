@@ -50,6 +50,7 @@ public class PlayerCharacter {
     private PlayerInventory _inventory; // = new PlayerInventory();
     public PlayerInventory inventory { get { return _inventory; }}
 
+    // TODO --- is this okay???
     public Transform player_transform { get { 
         if (combat == null) { return null; }
         return combat.transform; 

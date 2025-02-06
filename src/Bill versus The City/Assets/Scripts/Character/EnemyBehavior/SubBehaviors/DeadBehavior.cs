@@ -9,7 +9,6 @@ public class DeadBehavior : ISubBehavior  {
     ~DeadBehavior() { /* do nothing */ }
     
     public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
-        Debug.Log("DeadBehavior!!");
         parent.controller.ctrl_waypoint = parent.transform.position;
         parent.controller.ctrl_sprint = false;
         parent.controller.ctrl_target = player;

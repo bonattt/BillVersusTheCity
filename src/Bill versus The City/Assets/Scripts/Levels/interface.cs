@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
 
+using UnityEngine;
 
 public interface ILevelCondition {
     public bool is_active { get; set; }
     public bool was_triggered { get; set; }
     public bool ConditionMet();
     public void TriggerEffects() {
+        if (effects == null) { 
+            Debug.LogWarning($"effects null in ILevelCondition: {this}");
+            return; 
+        }
         for (int i = 0; i < effects.Count; i++) {
             effects[i].ActivateEffect();
         }

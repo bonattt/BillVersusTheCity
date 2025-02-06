@@ -23,6 +23,12 @@ public enum LevelFailuerConditions {
     countdown,
 }
 
+// public enum LevelMusicStart {
+//     never,
+//     on_load,
+//     after_dialogue,
+// }
+
 public class LevelConfig : MonoBehaviour
 {
     public static LevelConfig inst { get; private set; }
@@ -33,6 +39,8 @@ public class LevelConfig : MonoBehaviour
 
     [SerializeField]
     private int sequential_conditions_index = 0;
+    public string level_music_name;
+    private ISounds level_music;
 
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
     public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
@@ -56,6 +64,7 @@ public class LevelConfig : MonoBehaviour
     
     void Start()
     {
+        Configure();
         StartLevel();
     }
 
@@ -67,15 +76,31 @@ public class LevelConfig : MonoBehaviour
             FailLevel();
         }
     }
-    
-    public void StartLevel() {
+
+    void OnDestroy() {
+        CleanupLevel();
+    }
+
+    private ISounds LoadLevelMusic() {
+        if (level_music_name == null || level_music_name.Equals("")) {
+            Debug.Log($"no level music set: '{level_music_name}'");
+            return null;
+        }
+        ISounds sound = SFXLibrary.LoadSound(level_music_name);
+        return sound;
+    }
+
+    public void Configure() {
         Validate();
         // init condition lists
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
+        level_music = LoadLevelMusic();
         ApplyPresetVictoryCondition();
         ApplyPresetFailureCondition();
-
+    }
+    
+    public void StartLevel() {
         if (inst != null && inst != this) {
             Debug.LogWarning("clearing old level config"); // TODO --- remove debug
             Destroy(inst);
@@ -92,7 +117,12 @@ public class LevelConfig : MonoBehaviour
         } else if (use_starting_weapons) {
             EquipStartingWeapons();
         }
+        StartLevelMusic();
+    }
 
+    public void StartLevelMusic() {
+        if (level_music == null) { return; } // level has no music
+        SFXSystem.inst.PlayMusic(level_music);
     }
 
     protected void Validate() {
@@ -253,6 +283,10 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
+    public void CleanupLevel() {
+        SFXSystem.inst.StopMusic();
+    }
+
     public void CompleteLevel() {
         // TODO --- add configurations for what "next level" does, besides just loading a new scene
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_finished);
@@ -264,6 +298,7 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void NextLevel() {
+        CleanupLevel();
         Debug.Log("LevelConfig.NextLevel()");
         ScenesUtil.NextLevel(next_level);
     }
@@ -279,19 +314,15 @@ public class LevelConfig : MonoBehaviour
 
     private void CheckSequentialLevelConditions() {
         for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++) {
-            Debug.Log($"i = {i}, sequential_conditions_index {sequential_conditions_index}");
             ILevelCondition current_condition = sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
-                Debug.LogWarning($"current condition was already triggered, skip."); // TODO --- remove debug
                 continue; 
             } // skip already triggered conditions
             else if (!current_condition.ConditionMet()) {
                 // current condition is NOT met, so we stop iterating. 
-                Debug.LogWarning($"condition NOT met, break!"); // TODO --- remove debug
                 break;
             } else {
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
-                Debug.LogWarning($"condition met, trigger!"); // TODO --- remove debug
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
                 sequential_conditions_index = i + 1;
             }
@@ -304,16 +335,13 @@ public class LevelConfig : MonoBehaviour
         for (int i = 0; i < non_sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = non_sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
-                Debug.LogWarning($"current condition was already triggered, skip."); // TODO --- remove debug
                 continue; 
             } // skip already triggered conditions
             else if (!current_condition.ConditionMet()) {
                 // current condition is NOT met, so we stop iterating. 
-                Debug.LogWarning($"condition NOT met, break!"); // TODO --- remove debug
                 continue;
             } else {
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
-                Debug.LogWarning($"condition met, trigger!"); // TODO --- remove debug
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
                 return true;
             }

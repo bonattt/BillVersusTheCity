@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LevelMusic01
   m_EditorClassIdentifier: 
   _sound_name: Level 1 Music
-  _clip: {fileID: 0}
-  _volume: 1
+  _clip: {fileID: 8300000, guid: f7fcc44182d7a974dbceb9fb447059e8, type: 3}
+  _volume: 0.5
   _default_category: 1
