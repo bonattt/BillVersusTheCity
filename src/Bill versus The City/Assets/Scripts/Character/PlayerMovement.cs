@@ -142,7 +142,7 @@ public class PlayerMovement : CharCtrl
         if (InputSystem.current.NextWeaponModeInput()) {
             attack_controller.current_weapon.NextWeaponSetting();
             if (attack_controller.current_weapon.HasWeaponSettings()) {
-                ISoundSet sound = SFXLibrary.LoadSound("weapon_mode_switch");
+                ISounds sound = SFXLibrary.LoadSound("weapon_mode_switch");
                 SFXSystem.inst.PlaySound(sound, transform.position);
 
             }

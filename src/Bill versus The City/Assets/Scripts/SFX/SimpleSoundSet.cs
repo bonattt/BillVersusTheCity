@@ -4,15 +4,15 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName ="New Sound Set", menuName ="Data/SimpleSoundSet")]
-public class SimpleSoundSet : ScriptableObject, ISoundSet
+public class SimpleSoundSet : ScriptableObject, ISounds
 {
     public string sound_name = "new sound set";
     public List<AudioClip> sounds;
     public float volume = 1f;
     public SoundCategory default_category = SoundCategory.sound_effect;
 
-    public List<ISound> GetSounds() {
-        List<ISound> output_sounds = new List<ISound>();
+    public List<ISingleSound> GetSounds() {
+        List<ISingleSound> output_sounds = new List<ISingleSound>();
         for(int i = 0; i < sounds.Count; i++) {
             AudioClip clip  = sounds[i];
             GenericSound new_sound = new GenericSound();

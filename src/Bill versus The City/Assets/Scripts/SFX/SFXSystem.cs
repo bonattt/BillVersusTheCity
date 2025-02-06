@@ -17,7 +17,7 @@ public class SFXSystem : MonoBehaviour
         _inst = this;
     }
 
-    public void PlaySound(ISoundSet sound, Vector3 target) {
+    public void PlaySound(ISounds sound, Vector3 target) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return;
@@ -25,7 +25,7 @@ public class SFXSystem : MonoBehaviour
         PlaySound(sound.GetRandomSound(), target);
     }
 
-    public void PlaySound(ISound sound, Vector3 target) {
+    public void PlaySound(ISingleSound sound, Vector3 target) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return;
@@ -56,12 +56,12 @@ public class SFXSystem : MonoBehaviour
         PlaySound(audio_clips[rand], target, volume);
     }
 
-    public void PlayRandomClip(ISoundSet sound_set, Vector3 target) {
+    public void PlayRandomClip(ISounds sound_set, Vector3 target) {
         PlaySound(sound_set.GetRandomSound(), target);
         PlaySound(sound_set.GetRandomSound(), target);
     }
 
-    public static float GetVolume(ISound sound) {
+    public static float GetVolume(ISingleSound sound) {
         // gets the volume level (0-1 percent) by applying the master volume, category volume, and clip volume
         AudioSettings settings = GameSettings.inst.audio_settings;
         return sound.volume * settings.GetVolume(sound.default_category);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericSound : ISound, ISoundSet {
+public class GenericSound : ISingleSound, ISounds {
     public string sound_name  { get; set; }
     public AudioClip clip  { get; set; }
 
@@ -16,7 +16,7 @@ public class GenericSound : ISound, ISoundSet {
         default_category = SoundCategory.sound_effect;
     }
 
-    public List<ISound> GetSounds() {
-        return new List<ISound>(new ISound[]{this});
+    public List<ISingleSound> GetSounds() {
+        return new List<ISingleSound>(new ISingleSound[]{this});
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public interface ISound {
+public interface ISingleSound {
     public string sound_name { get; set; }
     public AudioClip clip { get; set; }
     public float volume { get; set; }
@@ -11,11 +11,11 @@ public interface ISound {
 }
 
 
-public interface ISoundSet {
-    public List<ISound> GetSounds();
+public interface ISounds {
+    public List<ISingleSound> GetSounds();
 
-    public ISound GetRandomSound() {
-        List<ISound> sounds = GetSounds();
+    public ISingleSound GetRandomSound() {
+        List<ISingleSound> sounds = GetSounds();
         if (sounds.Count <= 0) {
             return null;
         }

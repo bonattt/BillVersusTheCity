@@ -6,7 +6,7 @@ public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
 {
     public const string DAMAGE_GRUNT_SOUND_PATH = "damage_grunt";
     // private ISoundSet reload_start_sound, reload_complete_sound;
-    private static ISoundSet damage_grunts;
+    private static ISounds damage_grunts;
     private ICharacterStatus status;
     public CharCtrl target_character;
 
