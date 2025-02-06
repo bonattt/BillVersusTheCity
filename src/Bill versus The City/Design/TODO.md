@@ -398,10 +398,7 @@ FEEDBACK:
         [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
         [ ] FIX: countdown condition triggers immediately on level restart
 
-    [ ] Carryover level config between levels (for hub-worlds)
-
-
-    [ ] Create Hub World between levels
+    [ ] Implement a defense mission
 
     [+] FIX: player doesn't animate without weapon equipped
     [ ] FIX: weapon select UI should display error if weapons not selected
@@ -425,7 +422,7 @@ FEEDBACK:
 
 [ ] Milestone 7: improvements to gameplay
 	- detection based on whether they're on-screen
-	- fix cover
+	X fix cover ---> already did this, kinda
 	- ???
 
 
