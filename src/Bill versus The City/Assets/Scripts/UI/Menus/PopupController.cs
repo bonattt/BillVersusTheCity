@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PopupController : MonoBehaviour, ISubMenu
+public class PopupController : AbstractCloseEventMenu
 {
     protected VisualElement root_visual;
 
@@ -22,7 +22,7 @@ public class PopupController : MonoBehaviour, ISubMenu
         UpdateLabels();
     }
 
-    public virtual void MenuNavigation() {
+    public override void MenuNavigation() {
         if (allow_escape && InputSystem.current.MenuCancelInput()) {
             MenuManager.inst.CloseMenu();
         }

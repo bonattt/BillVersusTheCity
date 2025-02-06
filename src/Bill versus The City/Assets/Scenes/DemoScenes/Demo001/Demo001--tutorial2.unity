@@ -3249,6 +3249,14 @@ PrefabInstance:
       propertyPath: next_level
       value: Demo001--level1
       objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: dialogue_file_start_level
+      value: Tutorial02/start_level
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: dialogue_file_objectives_complete
+      value: Tutorial02/enemies_defeated
+      objectReference: {fileID: 0}
     - target: {fileID: 4876229712870012581, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3617,7 +3625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1574921885
 MonoBehaviour:
   m_ObjectHideFlags: 0

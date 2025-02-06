@@ -72,7 +72,12 @@ public class MenuManager : MonoBehaviour
             Debug.LogWarning("CloseMenu called with no menus open!");
             return;
         }
-        Destroy(sub_menus.Pop());
+        GameObject sub_menu = sub_menus.Pop();
+        ICloseEventMenu callback_menu = sub_menu.GetComponent<ICloseEventMenu>();
+        if (callback_menu != null) {
+            callback_menu.ResolveMenuClosedCallbacks();
+        }
+        Destroy(sub_menu);
 
         if (sub_menus.Count == 0) {
             paused = false;

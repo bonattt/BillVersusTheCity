@@ -15,5 +15,5 @@ MonoBehaviour:
   sound_name: pain grunt
   sounds:
   - {fileID: 8300000, guid: a6dfe2e4b559cdd448c6ecda37aeb40f, type: 3}
-  volume: 1
+  volume: 0.75
   default_category: 0

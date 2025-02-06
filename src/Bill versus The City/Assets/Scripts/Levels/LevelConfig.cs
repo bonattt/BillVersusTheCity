@@ -57,6 +57,14 @@ public class LevelConfig : MonoBehaviour
     private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
     private List<ILevelCondition> non_sequential_level_conditions = new List<ILevelCondition>();
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
+    public bool level_started = false;
+    public bool level_restarted = false;
+
+    public bool has_start_dialogue {
+        get {
+            return true;
+        }
+    }
 
     void Awake() {
         inst = this;
@@ -64,11 +72,13 @@ public class LevelConfig : MonoBehaviour
     
     void Start()
     {
-        Configure();
-        StartLevel();
+        ConfigureLevel();
+        SetupStartLevelCallbackOrStart();
+        // StartLevel();
     }
 
     void Update() {
+        if (!level_started) { return; } // level not started yet
         CheckSequentialLevelConditions();
         bool level_failed = CheckFailLevelConditions();
 
@@ -90,7 +100,42 @@ public class LevelConfig : MonoBehaviour
         return sound;
     }
 
-    public void Configure() {
+    public bool has_level_start_dialogue {
+        get {
+            // returns a bool if dialogue should open before the level starts.
+            // never open dialogue if the level was restarted
+            return !level_restarted && DialogueFileNameValid(dialogue_file_start_level);
+        }
+    }
+
+    public bool DialogueFileNameValid(string file_name) {
+        return file_name != null && !file_name.Equals("");
+    }
+
+    public void SetupStartLevelCallbackOrStart() {
+        if (weapon_select_on_start) {
+            GameObject menu_obj = MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
+            ICloseEventMenu menu = menu_obj.GetComponent<ICloseEventMenu>();
+            if (has_level_start_dialogue) {
+                menu.AddCloseCallback(new SimpleActionEvent(OpenLevelStartDialouge));
+            } else {
+                menu.AddCloseCallback(new SimpleActionEvent(StartLevel));
+            }
+        } 
+        else if (has_level_start_dialogue) {
+            OpenLevelStartDialouge();
+        } else {
+            // just start the level immediately, no start menus
+            StartLevel();
+        }
+    }
+
+    public void OpenLevelStartDialouge() {
+        DialogueController ctrl = MenuManager.inst.OpenDialoge(dialogue_file_start_level);
+        ctrl.AddCloseCallback(new SimpleActionEvent(StartLevel));
+    }
+
+    public void ConfigureLevel() {
         Validate();
         // init condition lists
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
@@ -98,6 +143,12 @@ public class LevelConfig : MonoBehaviour
         level_music = LoadLevelMusic();
         ApplyPresetVictoryCondition();
         ApplyPresetFailureCondition();
+        level_started = false;
+        inst = this;
+
+        if (use_starting_weapons) {
+            EquipStartingWeapons();
+        }
     }
     
     public void StartLevel() {
@@ -106,18 +157,8 @@ public class LevelConfig : MonoBehaviour
             Destroy(inst);
             Destroy(inst.gameObject);
         }
-        inst = this;
-        
-        // TODO --- handle order of operations for select weapons UI
-        if (dialogue_file_start_level != null && !dialogue_file_start_level.Equals("")) {
-            MenuManager.inst.OpenDialoge(dialogue_file_start_level);
-        }
-        if (weapon_select_on_start) {
-            MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
-        } else if (use_starting_weapons) {
-            EquipStartingWeapons();
-        }
         StartLevelMusic();
+        level_started = true;
     }
 
     public void StartLevelMusic() {

@@ -15,5 +15,5 @@ MonoBehaviour:
   sound_name: reload finish
   sounds:
   - {fileID: 8300000, guid: dc31417231701054e87614a395b508d3, type: 3}
-  volume: 1
+  volume: 0.75
   default_category: 0

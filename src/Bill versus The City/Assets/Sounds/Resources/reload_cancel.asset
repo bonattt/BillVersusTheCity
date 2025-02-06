@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound_name: reload finish
   sounds: []
-  volume: 1
+  volume: 0.75
   default_category: 0

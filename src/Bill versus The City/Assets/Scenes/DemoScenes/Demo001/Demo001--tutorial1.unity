@@ -2982,7 +2982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1574921885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue_files:
-  - Tutorial01/start_level
+  - 
   endless_dialogue: 0
   random_dialouge: 0
   dialogue_finished: {fileID: 0}
@@ -3694,6 +3694,10 @@ PrefabInstance:
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: weapon_select_on_start
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: dialogue_file_start_level
+      value: Tutorial01/start_level
       objectReference: {fileID: 0}
     - target: {fileID: 4876229712870012581, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: m_LocalPosition.x

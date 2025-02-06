@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class SettingsMenuController : MonoBehaviour, ISubMenu
+public class SettingsMenuController : AbstractCloseEventMenu
 {
 
     public UIDocument main_doc;
@@ -86,7 +86,7 @@ public class SettingsMenuController : MonoBehaviour, ISubMenu
     }
 
     
-    public void MenuNavigation() {
+    public override void MenuNavigation() {
         if (InputSystem.current.MenuCancelInput()) {
             if (open_settings_controller == null || !open_settings_controller.HasUnsavedChanges()) {
                 MenuManager.inst.CloseMenu();

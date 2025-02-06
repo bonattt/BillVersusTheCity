@@ -399,6 +399,11 @@ FEEDBACK:
         [ ] FIX: countdown condition triggers immediately on level restart
 
     [ ] Implement a defense mission
+        [ ] implement special behaviors
+            - special behavior does something unique while the enemy hasn't yet spotted the player
+            - once the player is spotted, special behavior is removed
+            [ ] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
+            [ ] Covering Fire: just shoots a gun towards a specified point
 
     [+] FIX: player doesn't animate without weapon equipped
     [ ] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...

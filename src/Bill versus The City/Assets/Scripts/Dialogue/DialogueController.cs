@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class DialogueController : MonoBehaviour, ISubMenu {
+public class DialogueController : AbstractCloseEventMenu {
     // class controlling a single dialogue session
 
     private DialogueFile dialogue_file;
@@ -33,9 +33,10 @@ public class DialogueController : MonoBehaviour, ISubMenu {
     // flexible assignment for effects after finishing the dialogue.
     // if null, nothing happens.
     // if it's not null, try to use it as an IGameEvent. If that doesn't work, use it as a prefab.
+    // TODO --- depricated, use ICloseEventMenu.AddCloseCallback
     public MonoBehaviour dialogue_finished = null; // WARNING: Depricated, use AddDialogueCallback(IGameEventEffect)
-    private List<IGameEventEffect> dialogue_callbacks = new List<IGameEventEffect>();
-    public void AddDialogueCallback(IGameEventEffect new_effect) => dialogue_callbacks.Add(new_effect);
+    private List<IGameEventEffect> dialogue_callbacks = new List<IGameEventEffect>(); // TODO --- depricated, use ICloseEventMenu.AddCloseCallback
+    public void AddDialogueCallback(IGameEventEffect new_effect) => dialogue_callbacks.Add(new_effect);  // TODO --- depricated, use ICloseEventMenu.AddCloseCallback
 
 
     private void ResetAliases() {
@@ -84,7 +85,7 @@ public class DialogueController : MonoBehaviour, ISubMenu {
         NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
 
-    public void MenuNavigation() {
+    public override void MenuNavigation() {
         if (InputSystem.current.MenuNextInput()) {
             MenuManager.PlayMenuSound("menu_click");
             NextDialogueStep();

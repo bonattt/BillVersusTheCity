@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
+public class WeaponSelectionUIController : AbstractCloseEventMenu
 {
     /// <summary>
     ///  UI Controller that displays the player's availible AND currently equipped weapons
@@ -59,7 +59,7 @@ public class WeaponSelectionUIController : MonoBehaviour, ISubMenu
         PopulateContents(right_content, PlayerCharacter.inst.inventory.availible_handguns);
     }
 
-    public void MenuNavigation() {
+    public override void MenuNavigation() {
         if (allow_cancel && InputSystem.current.MenuCancelInput()) {
             CancelButtonClicked();
         }
