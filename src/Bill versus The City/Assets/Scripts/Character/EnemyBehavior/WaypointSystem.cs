@@ -21,6 +21,16 @@ public class WaypointSystem : MonoBehaviour {
         }
     }
 
+    public static Vector3 FlattenVector(Vector3 v) {
+        // returns a "flattened" vector, with the height set to 0
+        return new Vector3(v.x, 0f, v.z);
+    }
+
+    public static bool ReachedDestination(Vector3 position, Vector3 destination, float distance_threshold=0.25f) {
+        float dist = Vector3.Distance(FlattenVector(position), FlattenVector(destination));
+        return dist <= distance_threshold;
+    }
+
     private static bool UseAllTransforms(Transform t) => true; // include all Transforms in the method 
 
     private Func<Transform, bool> GetCoverFromFilter(Vector3 cover_from) {
@@ -30,6 +40,21 @@ public class WaypointSystem : MonoBehaviour {
     public Transform GetClosestWaypoint(Vector3 start_point) {
         // gets the closest waypoint to `start_point` by NavMesh travel distance 
         return _GetClosestPoint(start_point, UseAllTransforms);
+    }
+
+    public Transform GetClosestCoverPositionNotInSet(Vector3 start_point, Vector3 cover_from, HashSet<Transform> excluded_positions) {
+        // finds a cover position from the Waypoints, while excluding the 
+        Func<Transform, bool> Filter = CurriedAndFilter(GetExcludeSetFilter(excluded_positions), GetCoverFromFilter(cover_from));
+        return _GetBestPosition(start_point, GetCurriedCoverDistanceScore(cover_from), Filter);
+    }
+
+    private static Func<Transform, bool> GetExcludeSetFilter(HashSet<Transform> excluded_positions) {
+        return (Transform t) => !excluded_positions.Contains(t);
+    }
+
+    private static Func<Transform, bool> CurriedAndFilter(Func<Transform, bool> filter_func1, Func<Transform, bool> filter_func2) {
+        // returns a composite filter that requires 2 filters to both be passed
+        return (Transform t) => filter_func1(t) && filter_func2(t);
     }
 
     public Transform GetClosestCoverPosition(Vector3 start_point, Vector3 cover_from) {

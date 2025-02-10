@@ -23,6 +23,10 @@ public abstract class AbstractEnemySpawner : MonoBehaviour
     public Transform spawn_location;
     public ScriptableObject init_spawner_config;
     private IEnemySpawnConfig spawner_config;
+
+    public bool override_default_behavior = false;
+    public BehaviorMode default_behavior = BehaviorMode.searching;
+    public Vector3 initial_move_target = new Vector3(float.NaN, float.NaN, float.NaN);
     
     void Start()
     {
@@ -51,9 +55,29 @@ public abstract class AbstractEnemySpawner : MonoBehaviour
             enemy_ctrl.GetStatus().ApplyNewArmor(armor);
         }
 
+        ConfigureEnemyBehavior(enemy_ctrl.GetComponent<EnemyBehavior>());
         // TODO --- apply behaviors
         string spawned_at_str = transform.parent == null ? "" : $"at {transform.parent.gameObject.name}";
         Debug.Log($"Spawn new enemy {enemy_ctrl.gameObject.name} spawned by {this.gameObject.name} {spawned_at_str} (spawn time {Time.time})");
+    }
+
+    public virtual void ConfigureEnemyBehavior(EnemyBehavior spawned_enemy) {
+        // configures the behavior of a newly spawned enemy
+        if (override_default_behavior) {
+            spawned_enemy.default_behavior = default_behavior;
+        }
+
+        spawned_enemy.initial_movement_target = initial_move_target;
+        if (EnemyBehavior.ValidVectorTarget(initial_move_target)) {
+            spawned_enemy.use_initial_movement_target = true;
+        } else {
+            spawned_enemy.use_initial_movement_target = false;
+            
+        }
+    }
+    
+    private void ConfigureSearchBehavior(EnemyBehavior spawned_enemy) {
+        SearchingBehavior search_behavior;
     }
 
     public GameObject GetPrefab() {

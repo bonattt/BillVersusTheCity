@@ -14,6 +14,11 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             return perception.max_alert_vision_range;
         }
     }
+    
+    [Tooltip("NOTE: not all behaviors support initial_movement_target")]
+    public bool use_initial_movement_target = true; 
+    [Tooltip("NOTE: not all behaviors support initial_movement_target")]
+    public Vector3 initial_movement_target = new Vector3(float.NaN, float.NaN, float.NaN);
 
     public bool always_use_cover_to_reload = false;
     public bool never_use_cover_to_reload = false;
@@ -80,8 +85,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             // agressive behaviors
             {BehaviorMode.engaged, new StandAndShootBehavior()},
             {BehaviorMode.persuing, new ChasePlayerBehavior()},
-            {BehaviorMode.retreating, new StationaryBehavior()},  // TODO --- placeholder behavior value
-            {BehaviorMode.searching, new SearchingBehavior()},
+            {BehaviorMode.retreating, new FleeToCoverBehavior()},  // TODO --- placeholder behavior value
+            {BehaviorMode.searching, new SearchingBehavior(use_initial_movement_target, initial_movement_target)},
             // passive behaviors
             {BehaviorMode.passive, new StationaryBehavior()},
             {BehaviorMode.wondering, new WonderingBehavior(this)},
@@ -189,6 +194,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                 Debug.LogError($"unhandled PerceptionState {perception.state}");
                 break;
         }
+    }
+    
+    public static bool ValidVectorTarget(Vector3 target) {
+        return ValidVectorFloat(target.x) && ValidVectorFloat(target.y) && ValidVectorFloat(target.z);
+    }
+
+    private static bool ValidVectorFloat(float n) {
+        return !float.IsNaN(n) && float.IsFinite(n);
     }
     
     public float debug_distance_to_target;

@@ -407,6 +407,9 @@ FEEDBACK:
             [ ] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
             [ ] Covering Fire: just shoots a gun towards a specified point
 
+    [ ] REFACTOR: Spawners should support more than one spawn point, which can share a config
+
+    [ ] FIX: Level fails immediately after restart!
     [+] FIX: player doesn't animate without weapon equipped
     [ ] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
     [ ] FIX: weapon select UI should display error if weapons not selected
@@ -414,6 +417,7 @@ FEEDBACK:
         - error noise 
         - if weapons are null, set them to the first weapons availible. Otherwise, set to previously equipped.
     [ ] FIX: Crouch while aiming locks into aim animation
+    [ ] FIX: Errors when game is closed during dialogues
 
 =============================
 ========== Roadmap ==========
