@@ -204,13 +204,17 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         return !float.IsNaN(n) && float.IsFinite(n);
     }
     
-    public float debug_distance_to_target;
+    public float debug_distance_to_target, debug_distance_to_waypoint;
     public string debug_sub_behavior;
+    public string debug_sub_behavior_message;
     public BehaviorMode debug_behavior_mode;
     public void SetDebug() {
         debug_behavior_mode = behavior_mode;
         debug_distance_to_target = DistanceToTarget();
-        debug_sub_behavior = $"{GetSubBehavior()}";
+        // debug_distance_to_waypoint = WaypointSystem.FlattenedDistance(transform.position, move)
+        ISubBehavior sub_behavior = GetSubBehavior();
+        debug_sub_behavior = $"{sub_behavior}";
+        debug_sub_behavior_message = sub_behavior.GetDebugMessage(this);
     }
 }
 

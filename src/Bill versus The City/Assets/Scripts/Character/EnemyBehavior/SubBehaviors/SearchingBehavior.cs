@@ -25,6 +25,10 @@ public class SearchingBehavior : ISubBehavior  {
         // if (Vector3.Distance(parent.transform.position, parent.perception.last_seen_at) <= 0.25f) {
         if (ReachedDestination(parent, parent.perception.last_seen_at)) {
             parent.perception.last_seen_at_investigated = true;
+            target_not_found = true;
+        }
+        else if (use_initial_search_target && first_search && ReachedDestination(parent, initial_search_target)) {
+            target_not_found = true;
         }
         if (ReachedDestination(parent)) {
             UpdateNextTarget(parent);
@@ -79,5 +83,10 @@ public class SearchingBehavior : ISubBehavior  {
     public Transform GetNextSearchDestination(EnemyBehavior parent) {
         Vector3 start_pos = parent.transform.position;
         return WaypointSystem.inst.GetClosestCoverPositionNotInSet(start_pos, start_pos, waypoints_searched);
+    }
+
+    public string GetDebugMessage(EnemyBehavior parent) {
+        float dist = WaypointSystem.FlattenedDistance(parent.transform.position, current_search_target);
+        return $"dist: {dist}, n waypoints searched: {waypoints_searched.Count}, use_initial_search_target: {use_initial_search_target}, first_search: {first_search}, target_not_found: {target_not_found}";
     }
 }

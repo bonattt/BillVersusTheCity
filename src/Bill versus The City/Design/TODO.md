@@ -401,15 +401,16 @@ FEEDBACK:
     [~] Implement a defense mission
         [+] Basic Level layout
         [ ] Iterate on level layout
-        [ ] implement special behaviors
+        [~] implement special behaviors
+            [ ] FIX: Enemies are moving toward a point, but the point is off from where I set it!
             - special behavior does something unique while the enemy hasn't yet spotted the player
             - once the player is spotted, special behavior is removed
             [ ] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
             [ ] Covering Fire: just shoots a gun towards a specified point
 
-    [ ] REFACTOR: Spawners should support more than one spawn point, which can share a config
+    [+] REFACTOR: Spawners should support more than one spawn point, which can share a config
 
-    [ ] FIX: Level fails immediately after restart!
+    [ ] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
     [+] FIX: player doesn't animate without weapon equipped
     [ ] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
     [ ] FIX: weapon select UI should display error if weapons not selected

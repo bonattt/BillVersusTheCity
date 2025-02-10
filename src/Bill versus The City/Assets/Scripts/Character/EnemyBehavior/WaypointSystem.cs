@@ -26,8 +26,12 @@ public class WaypointSystem : MonoBehaviour {
         return new Vector3(v.x, 0f, v.z);
     }
 
-    public static bool ReachedDestination(Vector3 position, Vector3 destination, float distance_threshold=0.25f) {
-        float dist = Vector3.Distance(FlattenVector(position), FlattenVector(destination));
+    public static float FlattenedDistance(Vector3 v1, Vector3 v2) {
+        return Vector3.Distance(FlattenVector(v1), FlattenVector(v2));
+    }
+
+    public static bool ReachedDestination(Vector3 position, Vector3 destination, float distance_threshold=0.75f) {
+        float dist = FlattenedDistance(position, destination);
         return dist <= distance_threshold;
     }
 

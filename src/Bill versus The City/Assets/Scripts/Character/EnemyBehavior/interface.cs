@@ -8,5 +8,5 @@ public interface ISubBehavior {
 
     public void AssumeBehavior(EnemyBehavior parent, PlayerMovement player) { /* do nothing by default */ }
     public void EndBehavior(EnemyBehavior parent, PlayerMovement player) { /* do nothing by default */ }
-
+    public string GetDebugMessage(EnemyBehavior parent) { return ""; }
 }
