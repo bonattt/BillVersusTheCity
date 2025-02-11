@@ -232,6 +232,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         
     }
 
+    public virtual void SetPosition(Vector3 new_position) {
+        transform.position = new_position;
+    }
+
     protected virtual void PreUpdate() {
         // do nothing. Extension hook for subclasses.
     }

@@ -51,6 +51,10 @@ using UnityEngine.AI;
         EnemiesManager.inst.AddEnemy(this);
     }
 
+    public override void SetPosition(Vector3 new_position) {
+        nav_mesh_agent.Warp(new_position);
+    }
+
     protected override void Move() {
         LookWithAction();
         if (this.is_hit_stunned) {

@@ -68,8 +68,8 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         GameObject enemy = Instantiate(prefab);
 
         
-        enemy.transform.position = GetSpawnPoint().GetSpawnPosition();
         EnemyController enemy_ctrl = enemy.GetComponent<EnemyController>();
+        enemy_ctrl.SetPosition(GetSpawnPoint().GetSpawnPosition());
         IWeapon weapon = GetWeapon();
         if (weapon != null) {
             enemy_ctrl.current_weapon = weapon;
