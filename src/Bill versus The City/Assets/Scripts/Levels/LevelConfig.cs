@@ -98,6 +98,10 @@ public class LevelConfig : MonoBehaviour
             Debug.Log($"no level music set: '{level_music_name}'");
             return null;
         }
+        if (test_mode) {
+            Debug.LogWarning($"skipping level music because of test mode");
+            return null;
+        }
         ISounds sound = SFXLibrary.LoadSound(level_music_name);
         return sound;
     }
@@ -129,9 +133,11 @@ public class LevelConfig : MonoBehaviour
             }
         } 
         else if (has_level_start_dialogue) {
+            Debug.Log("has start level dialogue!");// TODO --- remove debug
             OpenLevelStartDialouge();
         } else {
             // just start the level immediately, no start menus
+            Debug.Log("NO start level dialogue!"); // TODO --- remove debug
             StartLevel();
         }
     }
@@ -421,9 +427,10 @@ public class LevelConfig : MonoBehaviour
         starting_handgun = InstantiateStartingWeapon(init_starting_handgun);
         starting_pickup = InstantiateStartingWeapon(init_starting_pickup);
 
-        PlayerCharacter.inst.inventory.rifle = starting_rifle;
-        PlayerCharacter.inst.inventory.handgun = starting_handgun;
-        PlayerCharacter.inst.inventory.pickup = starting_pickup;
+        PlayerCharacter.inst.inventory.EquipStartingWeapons(starting_rifle, starting_handgun, starting_pickup);
+        // PlayerCharacter.inst.inventory.rifle = starting_rifle;
+        // PlayerCharacter.inst.inventory.handgun = starting_handgun;
+        // PlayerCharacter.inst.inventory.pickup = starting_pickup;
     }
 
     private IWeapon InstantiateStartingWeapon(ScriptableObject scriptable_object) {

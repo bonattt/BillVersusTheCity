@@ -83,6 +83,7 @@ public class PlayerCharacter {
         SubscribeToPlayer(sub);
         return this.combat;
     }
+
 }
 
 public interface IPlayerObserver {

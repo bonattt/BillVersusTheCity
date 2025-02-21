@@ -24,6 +24,7 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
         get { return _rifle; }
         set {
             _rifle = value;
+            Debug.LogWarning($"combat is null: {combat == null}, attacks is null {combat == null || combat.attacks == null}"); // TODO --- remove debug
             combat.attacks.AssignWeaponSlot(0, _rifle);
         }
     }
@@ -89,6 +90,12 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     
     public void NewPlayerObject(PlayerCombat player) {
         combat = player;
+        if (starting_weapons_queued) {
+            rifle = starting_rifle;
+            handgun = starting_handgun;
+            pickup = starting_pickup;
+            starting_weapons_queued = false;
+        }
         player.attacks.SetWeaponsFromInventory(this);
     }
     // private List<IGenericObserver> subscribers = new List<IGenericObserver>();
@@ -99,6 +106,18 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     //         sub.UpdateObserver(this);
     //     }
     // }
+    private bool starting_weapons_queued;
+    private IWeapon starting_rifle;
+    private IWeapon starting_handgun;
+    private IWeapon starting_pickup;
+
+    public void EquipStartingWeapons(IWeapon starting_rifle, IWeapon starting_handgun, IWeapon starting_pickup) {
+        // if there is a current player, equips starting weapons to that player. otherwise, sets those weapons once the player is initialized
+        this.starting_weapons_queued = true;
+        this.starting_rifle = starting_rifle;
+        this.starting_handgun = starting_handgun;
+        this.starting_pickup = starting_pickup;
+    }
 }
 
 public enum WeaponSlot {
