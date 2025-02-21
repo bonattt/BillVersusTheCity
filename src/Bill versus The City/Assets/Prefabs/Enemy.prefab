@@ -177,15 +177,17 @@ MonoBehaviour:
   debug_can_attack: 0
   debug_weapon_isnull: 0
   debug_full_auto: 0
-  debug_current_ammo: 0
   debug_reloading: 0
+  debug_sprint_input: 0
+  debug_pause_blocked: 0
+  debug_current_ammo: 0
+  debug_movement_speed: 0
   debug_reload_progress: 0
   debug_inaccuracy: 0
   debug_recoil: 0
   debug_aim_percent: 0
-  debug_sprint_inputp: 0
   debug_pause_blocked_for: 0
-  debug_pause_blocked: 0
+  debug_move_dir: {x: 0, y: 0, z: 0}
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
@@ -313,11 +315,15 @@ MonoBehaviour:
   controller: {fileID: 3396656997431563555}
   default_behavior: 4
   optimal_attack_range: 5
+  use_initial_movement_target: 1
+  initial_movement_target: {x: NaN, y: NaN, z: NaN}
   always_use_cover_to_reload: 0
   never_use_cover_to_reload: 0
   _shooting_rate: 1
   debug_distance_to_target: 0
+  debug_distance_to_waypoint: 0
   debug_sub_behavior: 
+  debug_sub_behavior_message: 
   debug_behavior_mode: 0
 --- !u!195 &2365366885385776978
 NavMeshAgent:
@@ -328,7 +334,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1505927797627387282}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.25
+  m_Radius: 1
   m_Speed: 4.5
   m_Acceleration: 12
   avoidancePriority: 50
@@ -366,6 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_character: {fileID: 3396656997431563555}
+  only_death_sounds: 1
 --- !u!1 &1839156641765836538
 GameObject:
   m_ObjectHideFlags: 0

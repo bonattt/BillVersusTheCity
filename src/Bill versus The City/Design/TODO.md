@@ -405,11 +405,16 @@ FEEDBACK:
             [+] FIX: Enemies are moving toward a point, but the point is off from where I set it!
             - special behavior does something unique while the enemy hasn't yet spotted the player
             - once the player is spotted, special behavior is removed
-            [ ] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
+            [+] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
+                [+] implement basic searching (random)
+                [ ] implement smarter searching
+                [+] FIX: multiple enemies arriving at a point together will get stuck
+                [ ] FIX: searching enemies get stuck on terrain sometimes
             [ ] Covering Fire: just shoots a gun towards a specified point
 
     [+] REFACTOR: Spawners should support more than one spawn point, which can share a config
 
+    [ ] FIX: start_weapons level config starts with the wrong weapons on initial start up
     [ ] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
     [+] FIX: player doesn't animate without weapon equipped
     [ ] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
@@ -421,6 +426,18 @@ FEEDBACK:
     [ ] FIX: Errors when game is closed during dialogues
     [ ] FIX: input detectioin at start of level using starting weapons
     [ ] Add damage drop off to weapons 
+
+
+    [ ] DEBUG settings
+        [ ] Debug mode on (show debug info)
+        [ ] Debug actions
+            [ ] Skip level
+            [ ] kill all enemies
+        [ ] player invisible
+        [ ] player invulnerable 
+        [ ] settings preserved between play sessions
+            [ ] Actual build
+            [ ] Unity Editor
 
 =============================
 ========== Roadmap ==========

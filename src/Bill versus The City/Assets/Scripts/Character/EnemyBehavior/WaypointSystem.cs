@@ -14,6 +14,17 @@ public class WaypointSystem : MonoBehaviour {
 
     public List<Transform> waypoints;
 
+    public List<Transform> GetWaypointsWithout(ICollection<Transform> excluded) {
+        // returns a copy of the list of waypoints, with all the elements of `excluded` removed.
+        List<Transform> result = new List<Transform>();
+        foreach(Transform t in waypoints) {
+            if (!excluded.Contains(t)) {
+                result.Add(t);
+            }
+        }
+        return result;
+    }
+
     void Start() {
         _inst = this;
         foreach (Transform child in transform) {
@@ -30,7 +41,7 @@ public class WaypointSystem : MonoBehaviour {
         return Vector3.Distance(FlattenVector(v1), FlattenVector(v2));
     }
 
-    public static bool ReachedDestination(Vector3 position, Vector3 destination, float distance_threshold=0.75f) {
+    public static bool ReachedDestination(Vector3 position, Vector3 destination, float distance_threshold=1.1f) {
         float dist = FlattenedDistance(position, destination);
         return dist <= distance_threshold;
     }
@@ -38,6 +49,7 @@ public class WaypointSystem : MonoBehaviour {
     private static bool UseAllTransforms(Transform t) => true; // include all Transforms in the method 
 
     private Func<Transform, bool> GetCoverFromFilter(Vector3 cover_from) {
+        // filter allows only positions which have cover from the `cover_from` position
         return (Transform t) => NavMeshUtils.PositionHasCoverFrom(cover_from, t.position);
     }
 
@@ -48,8 +60,11 @@ public class WaypointSystem : MonoBehaviour {
 
     public Transform GetClosestCoverPositionNotInSet(Vector3 start_point, Vector3 cover_from, HashSet<Transform> excluded_positions) {
         // finds a cover position from the Waypoints, while excluding the 
+        Debug.Log($"excluded_positions {excluded_positions} has {excluded_positions.Count} positions excluded!"); // TODO --- remove debug
         Func<Transform, bool> Filter = CurriedAndFilter(GetExcludeSetFilter(excluded_positions), GetCoverFromFilter(cover_from));
-        return _GetBestPosition(start_point, GetCurriedCoverDistanceScore(cover_from), Filter);
+        Transform result = _GetBestPosition(start_point, GetCurriedCoverDistanceScore(cover_from), Filter);
+        Debug.Log($"best position {result} out of {waypoints.Count} waypoints"); // TODO --- remove debug
+        return result;
     }
 
     private static Func<Transform, bool> GetExcludeSetFilter(HashSet<Transform> excluded_positions) {

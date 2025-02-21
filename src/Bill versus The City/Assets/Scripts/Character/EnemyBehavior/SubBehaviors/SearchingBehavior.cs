@@ -29,11 +29,14 @@ public class SearchingBehavior : ISubBehavior  {
         if (ReachedDestination(parent, parent.perception.last_seen_at)) {
             parent.perception.last_seen_at_investigated = true;
             target_not_found = true;
+            Debug.Log("set target_not_found = true");
         }
-        else if (use_initial_search_target && first_search && ReachedDestination(parent, initial_search_target)) {
+        else if (!target_not_found && use_initial_search_target && first_search && ReachedDestination(parent, initial_search_target)) {
+            Debug.Log("set target_not_found = true");
             target_not_found = true;
         }
         if (ReachedDestination(parent)) {
+            Debug.LogWarning($"{parent.gameObject.name}: REACHED DEST!!"); // TODO --- remove debug
             UpdateNextTarget(parent);
         }
 
@@ -51,8 +54,6 @@ public class SearchingBehavior : ISubBehavior  {
             // don't aim at unseen target
             parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
         }
-
-        //current_search_target = GetNextSearchDestination(parent);
     }
     public void AssumeBehavior(EnemyBehavior parent) {
         ResetSearch(parent);
@@ -67,7 +68,7 @@ public class SearchingBehavior : ISubBehavior  {
     }
 
     public void ResetSearch(EnemyBehavior parent) {
-        // Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.ResetSearch"); // TODO --- remove debug
+        Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.ResetSearch"); // TODO --- remove debug
         if (first_search && use_initial_search_target) {
             current_search_target = initial_search_target;
         } else {
@@ -80,18 +81,29 @@ public class SearchingBehavior : ISubBehavior  {
     }
 
     private void UpdateNextTarget(EnemyBehavior parent) {
-        // Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.UpdateNextTarget"); // TODO --- remove debug
+        Vector3 previous_target = current_search_target;
+        use_initial_search_target = false;
         if (current_search_waypoint != null) {
             waypoints_searched.Add(current_search_waypoint);
         }
         current_search_waypoint = GetNextSearchDestination(parent);
         current_search_target = current_search_waypoint.position;
+        Debug.LogWarning($"Update Search target {previous_target} --> {current_search_target}");
     }
     
     public Transform GetNextSearchDestination(EnemyBehavior parent) {
         // Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.GetNextSearchDestination"); // TODO --- remove debug
         Vector3 start_pos = parent.transform.position;
-        return WaypointSystem.inst.GetClosestCoverPositionNotInSet(start_pos, start_pos, waypoints_searched);
+        // return WaypointSystem.inst.GetClosestCoverPositionNotInSet(start_pos, start_pos, waypoints_searched);
+        // return WaypointSystem.inst.GetClosestCoverPosition(start_pos, start_pos);
+        return RandomNextWaypoint();
+    }
+
+    public Transform RandomNextWaypoint() {
+        // selects a waypoint at random, excluding any waypoints in `waypoints_searched`
+        List<Transform> valid_waypoints = WaypointSystem.inst.GetWaypointsWithout(waypoints_searched);
+        int i = Random.Range(0, valid_waypoints.Count);
+        return valid_waypoints[i];
     }
 
     public string GetDebugMessage(EnemyBehavior parent) {
