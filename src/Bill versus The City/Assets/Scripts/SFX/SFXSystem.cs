@@ -58,7 +58,6 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         } else {
             start_pos = new Vector3(0, 0, 0);
         }
-        Debug.LogWarning($"playing music as start position {start_pos}"); // TODO --- remove debug
         music_player = CreatePlayer(sound.clip, start_pos, GetVolume(sound));
         music_player.Play();
         music_player.loop = true;

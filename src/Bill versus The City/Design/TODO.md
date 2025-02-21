@@ -402,7 +402,7 @@ FEEDBACK:
         [+] Basic Level layout
         [ ] Iterate on level layout
         [~] implement special behaviors
-            [ ] FIX: Enemies are moving toward a point, but the point is off from where I set it!
+            [+] FIX: Enemies are moving toward a point, but the point is off from where I set it!
             - special behavior does something unique while the enemy hasn't yet spotted the player
             - once the player is spotted, special behavior is removed
             [ ] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
@@ -419,6 +419,8 @@ FEEDBACK:
         - if weapons are null, set them to the first weapons availible. Otherwise, set to previously equipped.
     [ ] FIX: Crouch while aiming locks into aim animation
     [ ] FIX: Errors when game is closed during dialogues
+    [ ] FIX: input detectioin at start of level using starting weapons
+    [ ] Add damage drop off to weapons 
 
 =============================
 ========== Roadmap ==========

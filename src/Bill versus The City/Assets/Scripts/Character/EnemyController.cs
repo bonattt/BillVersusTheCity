@@ -100,6 +100,7 @@ using UnityEngine.AI;
                 Debug.LogWarning($"movement for {ctrl_move_mode} is not implemented!");
                 break;
         }
+        Debug.LogWarning("Don't move (not implemented correctly!)");
         return new Vector3(0f, 0f, 0f); // don't move
     }
 

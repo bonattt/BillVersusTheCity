@@ -31,14 +31,23 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
 
     public bool override_default_behavior = false;
     public BehaviorMode default_behavior = BehaviorMode.searching;
-    public Vector3 initial_move_target = new Vector3(float.NaN, float.NaN, float.NaN);
+    public Transform initial_move_target;
 
     public List<MonoBehaviour> init_spawn_points;
     protected List<ISpawnPoint> spawn_points = new List<ISpawnPoint>();
+
+    public string base_enemy_name = "Enemy";
+    private int spawns_count = 0;
     
     void Start()
     {
         InitializeSpawner();
+    }
+
+    public string GetNextEnemyName() {
+        // 
+        spawns_count += 1;
+        return $"{base_enemy_name} ({spawns_count})";
     }
 
     protected virtual void InitializeSpawnPoints() {
@@ -66,7 +75,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
     public void SpawnEnemy() {
         GameObject prefab = GetPrefab();
         GameObject enemy = Instantiate(prefab);
-
+        enemy.name = GetNextEnemyName();
         
         EnemyController enemy_ctrl = enemy.GetComponent<EnemyController>();
         enemy_ctrl.SetPosition(GetSpawnPoint().GetSpawnPosition());
@@ -81,24 +90,40 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         }
 
         ConfigureEnemyBehavior(enemy_ctrl.GetComponent<EnemyBehavior>());
-        // TODO --- apply behaviors
-        string spawned_at_str = transform.parent == null ? "" : $"at {transform.parent.gameObject.name}";
-        Debug.Log($"Spawn new enemy {enemy_ctrl.gameObject.name} spawned by {this.gameObject.name} {spawned_at_str} (spawn time {Time.time})");
+        // TODO --- apply behaviors // --- I think this is handled?
+        LogSpawn(enemy_ctrl);
+    }
+
+    public bool log_spawns = false;
+    private void LogSpawn(EnemyController enemy_ctrl) {
+        // logs that a new enemy was spawned
+        if (log_spawns) {
+            string spawned_at_str = transform.parent == null ? "" : $"at {transform.parent.gameObject.name}";
+            Debug.Log($"Spawn new enemy {enemy_ctrl.gameObject.name} spawned by {this.gameObject.name} {spawned_at_str} (spawn time {Time.time})"); // TODO --- remove debug
+        }
+
     }
 
     public virtual void ConfigureEnemyBehavior(EnemyBehavior spawned_enemy) {
         // configures the behavior of a newly spawned enemy
+        // Debug.LogWarning($"initial move target ({spawned_enemy.gameObject}): {spawned_enemy.initial_movement_target}"); // TODO --- remove debug
         if (override_default_behavior) {
             spawned_enemy.default_behavior = default_behavior;
         }
-
-        spawned_enemy.initial_movement_target = initial_move_target;
-        if (EnemyBehavior.ValidVectorTarget(initial_move_target)) {
+        Vector3 initial_move_position;
+        if (initial_move_target != null) {
+            initial_move_position = initial_move_target.position;
+        } else {
+            initial_move_position = new Vector3(float.NaN, float.NaN, float.NaN);
+        }
+        spawned_enemy.initial_movement_target = initial_move_position;
+        if (EnemyBehavior.ValidVectorTarget(initial_move_position)) {
             spawned_enemy.use_initial_movement_target = true;
         } else {
             spawned_enemy.use_initial_movement_target = false;
             
         }
+        // Debug.LogWarning($"configured move target ({spawned_enemy.gameObject}): {spawned_enemy.initial_movement_target}"); // TODO --- remove debug
     }
     
     public GameObject GetPrefab() {

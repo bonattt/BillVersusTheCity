@@ -53,7 +53,17 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         return possible_reload_behaviors[r];
     }
 
-    public BehaviorMode behavior_mode { get; private set; }
+    protected BehaviorMode previous_behavior_mode;
+    private BehaviorMode _behavior_mode;
+    public BehaviorMode behavior_mode { 
+        get {
+            return _behavior_mode;
+        } 
+        protected set {
+            previous_behavior_mode = _behavior_mode;
+            _behavior_mode = value;
+        }
+    }
 
     private PlayerCombat player_combat;
 
@@ -108,9 +118,11 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     {
         _shooting_rate_variation = Random.Range(-SHOOTING_RATE_VARIATION/2, SHOOTING_RATE_VARIATION/2);
         InitializeBehaviorsDict();
+        // Debug.LogWarning($"{gameObject.name}.initial_search_target: {initial_movement_target}, use: {use_initial_movement_target}"); // TODO --- remove debug
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
         GetComponent<IReloadManager>().Subscribe(this);
 
+        behavior_mode = default_behavior; // sets previous_behavior
         behavior_mode = default_behavior;
         if (controller == null) {
             controller = GetComponent<EnemyController>();
@@ -157,6 +169,11 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     protected ISubBehavior GetSubBehavior() {
+        if (behavior_mode != previous_behavior_mode) {
+            behaviors[previous_behavior_mode].EndBehavior(this);
+            behaviors[behavior_mode].AssumeBehavior(this);
+            Debug.Log($"{gameObject.name}.EnemyBehavior.GetSubBehavio({behavior_mode} -> {previous_behavior_mode})"); // TODO --- remove debug
+        } 
         if (needs_reload && behavior_mode != BehaviorMode.routed) {
             return reload_behavior;
         }

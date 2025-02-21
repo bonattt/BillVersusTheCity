@@ -9,17 +9,16 @@ public class SimpleEnemySpawnerConfig : ScriptableObject, IEnemySpawnConfig
     public float rare_weapon_chance = 0.1f;
     public float armor_chance = 0f;
 
-    public GameObject enemy_prefag;
+    public GameObject enemy_prefab;
     public ArmorPlate armor_prefab;
     public List<DetailedWeapon> rare_weapons;
 
     public GameObject GetPrefab() {
-        return enemy_prefag; // null tells the spawner to use default setting
+        return enemy_prefab; // null tells the spawner to use default setting
     }
     public IWeapon GetWeapon() {
         if (Random.Range(0f, 1f) < rare_weapon_chance) {
             IWeapon weapon = GetRandomWeapon();
-            Debug.Log($"spawn enemy with rare weapon '{weapon.item_name}'!");
             return weapon;
         }
         return null; // null tells the spawner to use default setting

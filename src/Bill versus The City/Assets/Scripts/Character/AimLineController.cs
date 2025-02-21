@@ -53,7 +53,6 @@ public class AimLineController : MonoBehaviour
             end_pos = hit.point;
         } 
         else {
-            Debug.LogWarning("Aim Line hits nothing!");
             end_pos = direction + start_pos;
         }
         lineRenderer.SetPosition(0, start_pos); // Start

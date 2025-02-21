@@ -12,6 +12,9 @@ public class SearchingBehavior : ISubBehavior  {
     public SearchingBehavior(bool use_initial_search_position, Vector3 initial_search_position) { 
         this.initial_search_target = initial_search_position;
         this.use_initial_search_target = use_initial_search_position;
+        if (use_initial_search_position) {
+            current_search_target = initial_search_position;
+        }
     }
 
     private bool use_initial_search_target = false;
@@ -33,8 +36,11 @@ public class SearchingBehavior : ISubBehavior  {
         if (ReachedDestination(parent)) {
             UpdateNextTarget(parent);
         }
+
+        // Debug.LogWarning($"{parent.gameObject.name}.current_search_target: {current_search_target}"); // TODO --- remove debug
         parent.controller.ctrl_target = player;
         parent.controller.ctrl_waypoint = current_search_target;
+        // Debug.LogWarning($"initial_move_target: {initial_search_target}, current_search_targe: {current_search_target}"); // TODO --- remove debug
         parent.controller.ctrl_will_shoot = false;
         parent.controller.ctrl_move_mode = MovementTarget.waypoint;
         parent.controller.ctrl_sprint = false;
@@ -61,6 +67,7 @@ public class SearchingBehavior : ISubBehavior  {
     }
 
     public void ResetSearch(EnemyBehavior parent) {
+        // Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.ResetSearch"); // TODO --- remove debug
         if (first_search && use_initial_search_target) {
             current_search_target = initial_search_target;
         } else {
@@ -73,6 +80,7 @@ public class SearchingBehavior : ISubBehavior  {
     }
 
     private void UpdateNextTarget(EnemyBehavior parent) {
+        // Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.UpdateNextTarget"); // TODO --- remove debug
         if (current_search_waypoint != null) {
             waypoints_searched.Add(current_search_waypoint);
         }
@@ -81,6 +89,7 @@ public class SearchingBehavior : ISubBehavior  {
     }
     
     public Transform GetNextSearchDestination(EnemyBehavior parent) {
+        // Debug.LogWarning($"{parent.gameObject.name}.SearchingBehavior.GetNextSearchDestination"); // TODO --- remove debug
         Vector3 start_pos = parent.transform.position;
         return WaypointSystem.inst.GetClosestCoverPositionNotInSet(start_pos, start_pos, waypoints_searched);
     }
