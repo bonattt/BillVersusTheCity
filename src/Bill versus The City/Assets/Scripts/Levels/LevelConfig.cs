@@ -60,6 +60,8 @@ public class LevelConfig : MonoBehaviour
     public bool level_started = false;
     public bool level_restarted = false;
 
+    public bool test_mode = false; // disables some level features to streamline testing
+
     public bool has_start_dialogue {
         get {
             return true;
@@ -104,7 +106,11 @@ public class LevelConfig : MonoBehaviour
         get {
             // returns a bool if dialogue should open before the level starts.
             // never open dialogue if the level was restarted
-            return !level_restarted && DialogueFileNameValid(dialogue_file_start_level);
+            bool _has_dialogue = !level_restarted && DialogueFileNameValid(dialogue_file_start_level);
+            if (test_mode && _has_dialogue) {
+                Debug.LogWarning("skipping level dialogue because level is in test mode!");
+            }
+            return !test_mode && _has_dialogue;
         }
     }
 
@@ -153,7 +159,7 @@ public class LevelConfig : MonoBehaviour
     
     public void StartLevel() {
         if (inst != null && inst != this) {
-            Debug.LogWarning("clearing old level config"); // TODO --- remove debug
+            // Debug.LogWarning("clearing old level config"); // TODO --- remove debug
             Destroy(inst);
             Destroy(inst.gameObject);
         }
