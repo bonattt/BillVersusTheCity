@@ -3166,12 +3166,16 @@ PrefabInstance:
       value: Music/LevelMusic02
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: init_starting_rifle
+      value: 
+      objectReference: {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: use_starting_weapons
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: weapon_select_on_start
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_start_level

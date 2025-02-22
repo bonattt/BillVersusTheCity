@@ -29,8 +29,8 @@ public class PlayerAttackController : AttackController
     
     public void SetWeaponsFromInventory(PlayerInventory inventory) {
         ClearWeapons();
-        AssignWeaponSlot(0, inventory.handgun);
-        AssignWeaponSlot(1, inventory.rifle);
+        AssignWeaponSlot(0, inventory.rifle);
+        AssignWeaponSlot(1, inventory.handgun);
         AssignWeaponSlot(2, inventory.pickup);
     }
 
@@ -80,6 +80,7 @@ public class PlayerAttackController : AttackController
     }
 
     public void AssignWeaponSlot(int slot, IWeapon new_weapon) {
+        Debug.LogWarning($"slot {slot} set to {new_weapon}"); // TODO --- remove debug
         IWeapon previous_weapon = weapon_slots[slot];
         weapon_slots[slot] = new_weapon;
         if (slot == current_slot) {
