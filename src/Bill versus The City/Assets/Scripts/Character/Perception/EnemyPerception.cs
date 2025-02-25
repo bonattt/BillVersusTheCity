@@ -202,7 +202,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         // lazy update line of sight once per frame
         // to guarantee consistency, this must be called when LoS is queries, because the order scripts call `Update` is not known. 
         // must also be called once per frame in `Update`, so ensure `saw_target_last_frame` is called
-        if (disable_spot) {
+        if (disable_spot || GameSettings.inst.debug_settings.player_invisible) {
             // if spot is disabled, do not visually notice the player
             _seeing_target = false;
             _saw_target_last_frame = false;
