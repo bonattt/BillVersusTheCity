@@ -29,6 +29,15 @@ public class GameSettings {
         }
     }
     
+    private DebugSettings _debug_settings = new DebugSettings();
+    public DebugSettings debug_settings {
+        get { return _debug_settings; }
+        set {
+            ReplaceModule(_debug_settings, value);
+            _debug_settings = value;
+        }
+    }
+    
     private AudioSettings _audio_settings = new AudioSettings();
     public AudioSettings audio_settings { 
         get { return _audio_settings; }
@@ -78,6 +87,7 @@ public class GameSettings {
         data.SetObject("gameplay", JsonParser.ReadAsDuckDict(game_play_settings.AsJson()));
         data.SetObject("audio", JsonParser.ReadAsDuckDict(audio_settings.AsJson()));
         data.SetObject("graphics", new DuckDict());
+        data.SetObject("debug", JsonParser.ReadAsDuckDict(debug_settings.AsJson()));
 
         return data.Jsonify();
     }
@@ -89,6 +99,8 @@ public class GameSettings {
         difficulty_settings.LoadFromJson(data.GetObject("difficulty").Jsonify());
         game_play_settings.LoadFromJson(data.GetObject("gameplay").Jsonify());
         audio_settings.LoadFromJson(data.GetObject("audio").Jsonify());
+        // videos_settings.LoadFromJson(data.GetObject("debug").Jsonify()); // TODO --- implement graphics settings
+        debug_settings.LoadFromJson(data.GetObject("debug").Jsonify());
     }
 
     // private Dictionary<string, ISettingsModule> settings_modules = new Dictionary<string, ISettingsModule>();

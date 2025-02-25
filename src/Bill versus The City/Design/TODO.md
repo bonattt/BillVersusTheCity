@@ -414,17 +414,18 @@ FEEDBACK:
 
     [+] REFACTOR: Spawners should support more than one spawn point, which can share a config
 
-    [ ] FIX: start_weapons level config starts with the wrong weapons on initial start up
+    [?] FIX: start_weapons level config starts with the wrong weapons on initial start up
     [ ] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
     [+] FIX: player doesn't animate without weapon equipped
-    [ ] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
+    [+] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
     [ ] FIX: weapon select UI should display error if weapons not selected
         - error message in red
         - error noise 
         - if weapons are null, set them to the first weapons availible. Otherwise, set to previously equipped.
     [ ] FIX: Crouch while aiming locks into aim animation
     [ ] FIX: Errors when game is closed during dialogues
-    [ ] FIX: input detectioin at start of level using starting weapons
+    [X] FIX: input detection at start of level using starting weapons ---> Play Focused fixes this, I was dropping inputs b/c they didn't go 
+        to the game
     [ ] Add damage drop off to weapons 
 
 

@@ -9,7 +9,7 @@ public class SettingsMenuController : AbstractCloseEventMenu
 {
 
     public UIDocument main_doc;
-    public VisualTreeAsset general_settings_ui, graphics_settings_ui, audio_settings_ui, gameplay_settings_ui, difficulty_settings_ui;
+    public VisualTreeAsset general_settings_ui, debug_settings_ui, graphics_settings_ui, audio_settings_ui, gameplay_settings_ui, difficulty_settings_ui;
 
     private VisualElement root, tabs_list, sub_menu_root, sub_menu_panel;
 
@@ -17,11 +17,12 @@ public class SettingsMenuController : AbstractCloseEventMenu
     private string open_tab_name = "";
 
     public const string GENERAL_TAB = "General";
+    public const string DEBUG_TAB = "Debug";
     public const string GAMEPLAY_TAB = "Gameplay";
     public const string DIFFICULTY_TAB = "Difficulty";
     public const string GRAPHICS_TAB = "Graphics";
     public const string AUDIO_TAB = "Audio";
-    public readonly string[] tabs_order = new string[]{GENERAL_TAB, GAMEPLAY_TAB, DIFFICULTY_TAB, GRAPHICS_TAB, AUDIO_TAB};
+    public readonly string[] tabs_order = new string[]{GENERAL_TAB, GAMEPLAY_TAB, DIFFICULTY_TAB, GRAPHICS_TAB, AUDIO_TAB, DEBUG_TAB};
     /** ADDING A NEW TAB
       * 1) add the tab to `tabs_order`
       * 2) Add the tab to `GetTabUI`
@@ -34,6 +35,7 @@ public class SettingsMenuController : AbstractCloseEventMenu
         // needs to be a method, because the VisualTreeAssets are dynamic
         switch(tab_name) {
             case GENERAL_TAB: return general_settings_ui;
+            case DEBUG_TAB: return debug_settings_ui;
             case GRAPHICS_TAB: return graphics_settings_ui;
             case DIFFICULTY_TAB: return difficulty_settings_ui;
             case GAMEPLAY_TAB: return gameplay_settings_ui;
@@ -52,6 +54,8 @@ public class SettingsMenuController : AbstractCloseEventMenu
             case DIFFICULTY_TAB: return new DifficultySettingsMenuCtrl();
             case GENERAL_TAB: return new GeneralSettingsMenuCtrl();
             case GAMEPLAY_TAB: return new GameplaySettingsMenuCtrl();
+            case DEBUG_TAB: return new DebugSettingsMenuCtrl();
+            // case GRAPHICS_TAB: // TODO --- implement!
             default:
                 Debug.LogWarning($"Unknown settings tab `{tab_name}`");
                 return new PlaceholderSettingsMenuCtrl();

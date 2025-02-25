@@ -67,28 +67,28 @@ public static class AttackResolver {
     }
 
     private static IAttackHitEffect[] GetDamageEffects() {
-        if (!DebugMode.inst.debug_enabled) {
+        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
             return DAMAGE_EFFECTS;
         }
         return ConcatinateArrays(DAMAGE_EFFECTS, DEBUG_DAMAGE_EFFECTS);
     }
 
     private static IAttackShootEffect[] GetShootEffects() {
-        if (!DebugMode.inst.debug_enabled) {
+        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
             return SHOOT_EFFECTS;
         }
         return ConcatinateArrays(SHOOT_EFFECTS, DEBUG_SHOOT_EFFECTS);
     }
 
     private static IAttackMissEffect[] GetMissEffects() {
-        if (!DebugMode.inst.debug_enabled) {
+        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
             return MISS_EFFECTS;
         }
         return ConcatinateArrays(MISS_EFFECTS, DEBUG_MISS_EFFECTS);
     }
 
     private static IWeaponEffect[] GetEmptyShotEffects() {
-        if (!DebugMode.inst.debug_enabled) {
+        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
             return EMPTY_SHOOT_EFFECT;
         }
         return ConcatinateArrays(EMPTY_SHOOT_EFFECT, DEBUG_EMPTY_SHOOT_EFFECT);

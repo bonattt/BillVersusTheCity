@@ -27,7 +27,7 @@ public class FPSCounter : MonoBehaviour
     }
     
     private void UpdateFPS() {
-        if (GameSettings.inst.general_settings.show_fps) {
+        if (GameSettings.inst.debug_settings.show_fps) {
             if (sampled_at + sample_rate_seconds < Time.unscaledTime) {
                 float fps = GetFPS();
                 sampled_at = Time.unscaledTime;

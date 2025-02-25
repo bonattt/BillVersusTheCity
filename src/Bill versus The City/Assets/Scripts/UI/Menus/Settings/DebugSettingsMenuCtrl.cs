@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
+public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
-    private Toggle placeholder_toggle;
+    private Toggle show_fps_toggle, show_damage_toggle, debug_mode_toggle;
 
-    public GeneralSettingsMenuCtrl() {
+    public DebugSettingsMenuCtrl() {
         // do nothing
     }
 
@@ -19,10 +19,15 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
         this.LoadTemplate(root);
-        header_label.text = "General Settings";
+        header_label.text = "Debug Settings";
+        VisualElement show_fps_div = AddToggle("Show FPS");
+        show_fps_toggle = show_fps_div.Q<Toggle>();
         
-        VisualElement debug_mode_div = AddToggle("Placeholder");
-        placeholder_toggle = debug_mode_div.Q<Toggle>();
+        VisualElement show_damage_div = AddToggle("Show Damage Numbers");
+        show_damage_toggle = show_damage_div.Q<Toggle>();
+        
+        VisualElement debug_mode_div = AddToggle("Debug Mode");
+        debug_mode_toggle = debug_mode_div.Q<Toggle>();
 
         LoadSettings();
     }
@@ -54,23 +59,27 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
     public override void SaveSettings() {
         // Saves the menu's changes to settings    
-        GeneralSettings settings = GameSettings.inst.general_settings;
+        DebugSettings settings = GameSettings.inst.debug_settings;
 
-        settings.placeholder = placeholder_toggle.value;
+        settings.show_fps = show_fps_toggle.value;
+        settings.debug_mode = debug_mode_toggle.value;
+        settings.show_damage_numbers = show_damage_toggle.value;
     }
 
     public override void LoadSettings() {
         // sets the UI's elements to match what is stored in settings (reverting any changes)
-        GeneralSettings settings = GameSettings.inst.general_settings;
+        DebugSettings settings = GameSettings.inst.debug_settings;
         
-        placeholder_toggle.value = settings.placeholder;
+        show_fps_toggle.value = settings.show_fps;
+        debug_mode_toggle.value = settings.debug_mode;
+        show_damage_toggle.value = settings.show_damage_numbers;
         UpdateUI();
     }
     
     
     public override bool HasUnsavedChanges() {
-        GeneralSettings settings = GameSettings.inst.general_settings;
-        return placeholder_toggle.value != settings.placeholder;
+        DebugSettings settings = GameSettings.inst.debug_settings;
+        return show_fps_toggle.value != settings.show_fps || debug_mode_toggle.value != settings.debug_mode || show_damage_toggle.value != settings.show_damage_numbers;
     }
 
 }
