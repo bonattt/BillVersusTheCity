@@ -1,0 +1,4 @@
+.DebugAction {
+    font-size: 20px;
+    flex-direction: row;
+}

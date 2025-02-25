@@ -415,6 +415,7 @@ FEEDBACK:
     [+] REFACTOR: Spawners should support more than one spawn point, which can share a config
 
     [?] FIX: start_weapons level config starts with the wrong weapons on initial start up
+    [ ] FIX: Level Start dialogue doesn't pause without weapon select UI
     [ ] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
     [+] FIX: player doesn't animate without weapon equipped
     [+] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
@@ -429,16 +430,17 @@ FEEDBACK:
     [ ] Add damage drop off to weapons 
 
 
-    [ ] DEBUG settings
-        [ ] Debug mode on (show debug info)
+    [~] DEBUG settings
+        [X] Debug mode on (show debug info)
         [ ] Debug actions
             [ ] Skip level
             [ ] kill all enemies
+            [ ] Reset Game
         [ ] player invisible
         [ ] player invulnerable 
-        [ ] settings preserved between play sessions
+        [+] settings preserved between play sessions
             [ ] Actual build
-            [ ] Unity Editor
+            [+] Unity Editor
 
 =============================
 ========== Roadmap ==========
@@ -487,6 +489,9 @@ FEEDBACK:
 ==== Unplanned features =====
 =============================
 
+[ ] Reduce boilerplate to adding new fields to settings!
+    [ ] FIX: allow save files to assume defaults for missing fields in save file
+    [ ] Allow fields to be added from a type-based config of some sort?
 [ ] Skip Level System
 [ ] Speed-run dialogue mode (hold to click through fast)
 [ ] Additional controls to advance dialogue (press-e)

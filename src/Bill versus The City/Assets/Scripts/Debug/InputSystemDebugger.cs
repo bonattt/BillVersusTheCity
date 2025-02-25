@@ -43,8 +43,7 @@ public class InputSystemDebugger : MonoBehaviour
         move_y_input = InputSystem.current.MoveYInput();
         interact_input = InputSystem.current.InteractInput();
         reload_input = InputSystem.current.ReloadInput();
-        test_input = InputSystem.current.TestInput();
-        test_input2 = InputSystem.current.TestInput2();
+        test_input = InputSystem.current.DebugInput();
         menu_cancel_input = InputSystem.current.MenuCancelInput();
         pause_menu_input = InputSystem.current.PauseMenuInput();
         weapon_slot_input = InputSystem.current.WeaponSlotInput();

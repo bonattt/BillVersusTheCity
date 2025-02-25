@@ -7,7 +7,8 @@ using UnityEngine.UIElements;
 
 public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
-    private Toggle show_fps_toggle, show_damage_toggle, debug_mode_toggle;
+    private Toggle show_fps_toggle, show_damage_toggle, debug_mode_toggle, player_invincibility_toggle, 
+            player_invisible_toggle, allow_debug_actions_toggle;
 
     public DebugSettingsMenuCtrl() {
         // do nothing
@@ -20,14 +21,24 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
     public override void Initialize(VisualElement root) {
         this.LoadTemplate(root);
         header_label.text = "Debug Settings";
+        
+        VisualElement debug_mode_div = AddToggle("Debug Mode");
+        debug_mode_toggle = debug_mode_div.Q<Toggle>();
+
         VisualElement show_fps_div = AddToggle("Show FPS");
         show_fps_toggle = show_fps_div.Q<Toggle>();
         
         VisualElement show_damage_div = AddToggle("Show Damage Numbers");
         show_damage_toggle = show_damage_div.Q<Toggle>();
         
-        VisualElement debug_mode_div = AddToggle("Debug Mode");
-        debug_mode_toggle = debug_mode_div.Q<Toggle>();
+        VisualElement player_invincibility_div = AddToggle("Player Invincibility");
+        player_invincibility_toggle = player_invincibility_div.Q<Toggle>();
+        
+        VisualElement player_invisible_div = AddToggle("Player Invisible");
+        player_invisible_toggle = player_invisible_div.Q<Toggle>();
+        
+        VisualElement allow_debug_actions_div = AddToggle("Allow Debug Actions");
+        allow_debug_actions_toggle = allow_debug_actions_div.Q<Toggle>();
 
         LoadSettings();
     }
@@ -64,6 +75,9 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         settings.show_fps = show_fps_toggle.value;
         settings.debug_mode = debug_mode_toggle.value;
         settings.show_damage_numbers = show_damage_toggle.value;
+        settings.player_invincibility = player_invincibility_toggle.value;
+        settings.player_invisible = player_invisible_toggle.value;
+        settings.allow_debug_actions = allow_debug_actions_toggle.value;
     }
 
     public override void LoadSettings() {
@@ -73,6 +87,9 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         show_fps_toggle.value = settings.show_fps;
         debug_mode_toggle.value = settings.debug_mode;
         show_damage_toggle.value = settings.show_damage_numbers;
+        player_invincibility_toggle.value = settings.player_invincibility;
+        player_invisible_toggle.value = settings.player_invisible;
+        allow_debug_actions_toggle.value = settings.allow_debug_actions;
         UpdateUI();
     }
     

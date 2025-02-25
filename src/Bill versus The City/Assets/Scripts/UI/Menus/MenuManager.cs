@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab, weapon_menu_prefab;
+    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab, weapon_menu_prefab, debug_action_menu_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -96,6 +96,9 @@ public class MenuManager : MonoBehaviour
     public void TryOpenPauseMenu() {
         if (InputSystem.current.PauseMenuInput()) {
             OpenSubMenuPrefab(pause_menu_prefab);
+        }
+        else if (GameSettings.inst.debug_settings.allow_debug_actions && InputSystem.current.DebugInput()) {
+            OpenSubMenuPrefab(debug_action_menu_prefab);
         }
     }
 

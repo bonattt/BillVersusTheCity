@@ -34,7 +34,6 @@ public class TestInputs : MonoBehaviour
         crouch_secondary = Input.GetKey(InputSystem.CROUCH_SECONDARY);
         inventory_menu = Input.GetKey(InputSystem.INVENTORY_MENU);
         debug_key = Input.GetKey(InputSystem.DEBUG_KEY);
-        debug2_key = Input.GetKey(InputSystem.DEBUG2_KEY);
         next_weapon_mode = Input.GetKey(InputSystem.NEXT_WEAPON_MODE);
     }
 }

@@ -157,15 +157,10 @@ public class InputSystem : ISettingsObserver
         return Input.GetKeyDown(RELOAD);
     }
 
-    public bool TestInput() {
+    public bool DebugInput() {
         // input key used purely for testing functionality
         // Debug.Log("TestInput: " + Input.GetKeyDown(DEBUG_KEY));
         return Input.GetKeyDown(DEBUG_KEY);
-    }
-
-    public bool TestInput2() {
-        // input key used purely for testing functionality
-        return Input.GetKeyDown(DEBUG2_KEY);
     }
 
     public bool MenuCancelInput() {

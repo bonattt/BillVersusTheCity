@@ -1,0 +1,7 @@
+2025-02-24 Monday:
+    - did some work on debug settings, but did not finish implementing it
+    - did a little research on Git LFS, and imported some models into Artillery Jam
+
+2025-02-25 Tuesday:
+    - finished adding debug setting menu
+    - started adding debug actions (level skip, etc...)

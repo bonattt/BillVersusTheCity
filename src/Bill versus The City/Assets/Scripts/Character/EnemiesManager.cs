@@ -70,6 +70,13 @@ using UnityEngine;
     //     UpdateSubscribers();
     // }
 
+    public void DebugKillAll() {
+        // debug action to kill all enemies
+        foreach(EnemyController e in enemies) {
+            e.GetStatus().health = -999;
+        }
+    }
+
     public void KillEnemy(EnemyController enemy) {
         // only add enemy to defeated enemies if it's actually in the scene
         // if the enemy is not in the scene, it's being cleaned up on a scene load
