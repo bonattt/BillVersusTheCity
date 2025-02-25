@@ -432,12 +432,12 @@ FEEDBACK:
 
     [~] DEBUG settings
         [X] Debug mode on (show debug info)
-        [ ] Debug actions
-            [ ] Skip level
-            [ ] kill all enemies
-            [ ] Reset Game
-        [ ] player invisible
-        [ ] player invulnerable 
+        [+] Debug actions
+            [+] Skip level
+            [+] kill all enemies
+            [X] Reset Game
+        [+] player invisible
+        [+] player invulnerable 
         [+] settings preserved between play sessions
             [ ] Actual build
             [+] Unity Editor
