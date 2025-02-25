@@ -12,11 +12,11 @@ public class DebugActionsMenuController : MonoBehaviour {
     public const string FAIL_LEVEL  = "Fail Level";
     public const string COMPLETE_OBJECTIVE  = "Complete Objective";
     public const string KILL_ENEMIES = "Kill Enemies";
-    public const string KILL_PLAYER = "Kill Player";
-    public const string RESET_HEALTH = "Reset Health";
-    public const string RESET_GAME  = "Reset Game";
+    public const string KILL_PLAYER = "Kill Player (NOT IMPLEMENTED)";
+    public const string RESET_HEALTH = "Reset Health (NOT IMPLEMENTED)";
+    public const string RESET_GAME  = "Reset Game (NOT IMPLEMENTED)";
     private string[] debug_actions = new string[]{
-        SKIP_LEVEL, FAIL_LEVEL, COMPLETE_OBJECTIVE, KILL_ENEMIES, KILL_PLAYER, RESET_GAME,
+        SKIP_LEVEL, FAIL_LEVEL, COMPLETE_OBJECTIVE, KILL_ENEMIES, KILL_PLAYER, RESET_HEALTH, RESET_GAME,
     };
 
     private Dictionary<string, Action> GetCallbacks() {
