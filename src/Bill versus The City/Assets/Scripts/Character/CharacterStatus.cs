@@ -9,6 +9,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     public float death_effect_delay_seconds = 1f;
     public float death_cleanup_delay_seconds = 15f;
     
+    // private bool is_player = false;
     private float killed_at = float.NaN;
     private bool delay_triggered = false;
     private bool cleanup_triggered = false;
@@ -18,6 +19,10 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
             return _health;
         }
         set {
+            if (this.is_invulnerable && value <= _health) {
+                Debug.LogWarning($"{gameObject.name}: skip damage to player because debug player invulnerability is turned on!");
+                return;
+            }
             _health = value;
             if (_health < 0) {
                 _health = 0;
@@ -32,6 +37,12 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
             UpdateStatus();
         }
     }
+
+    private bool is_invulnerable { 
+        // returns true if damage should be ignored due to debug settings
+        get { return this.is_player && GameSettings.inst.debug_settings.player_invincibility; }
+    }
+
     public float _max_health = 100;
     public float max_health { 
         get {
