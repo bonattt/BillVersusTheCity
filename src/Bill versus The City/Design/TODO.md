@@ -381,138 +381,56 @@ FEEDBACK:
 ===================
 ===== DEMO 06 =====
 ===================
-    [~] Level Config system: allows easily configuring several options for level
-        [+] TOGGLE: weapon select on level start
-        [+] TOGGLE: combat enabled
-        [+] setup starting weapons
-        [+] setup victory conditions, which can be sequential
-            [+] Survive for X time
-            [+] Escape to truck
-            [+] Defeat X number of enemies
-        [+] Level Dialogue
-            [+] Start Level Dialogue
-            [+] Clear Objectives Dialogue
-            [+] Finish Level Dialogue
-        [+] REFACTOR: fail_level_conditions --> non-sequential conditions
-        [+] Level music
-        [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
-        [+] FIX: countdown condition triggers immediately on level restart
+[~] Level Config system: allows easily configuring several options for level
+    [+] TOGGLE: weapon select on level start
+    [+] TOGGLE: combat enabled
+    [+] setup starting weapons
+    [+] setup victory conditions, which can be sequential
+        [+] Survive for X time
+        [+] Escape to truck
+        [+] Defeat X number of enemies
+    [+] Level Dialogue
+        [+] Start Level Dialogue
+        [+] Clear Objectives Dialogue
+        [+] Finish Level Dialogue
+    [+] REFACTOR: fail_level_conditions --> non-sequential conditions
+    [+] Level music
+    [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
+    [+] FIX: countdown condition triggers immediately on level restart
 
-    [~] Implement a defense mission
-        [+] Basic Level layout
-        [ ] Iterate on level layout
-        [~] implement special behaviors
-            [+] FIX: Enemies are moving toward a point, but the point is off from where I set it!
-            - special behavior does something unique while the enemy hasn't yet spotted the player
-            - once the player is spotted, special behavior is removed
-            [+] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
-                [+] implement basic searching (random)
-                [ ] implement smarter searching
-                [+] FIX: multiple enemies arriving at a point together will get stuck
-                [ ] FIX: searching enemies get stuck on terrain sometimes
-            [ ] Covering Fire: just shoots a gun towards a specified point
+[~] Implement a defense mission
+    [+] Basic Level layout
+    [X] Iterate on level layout
+    [~] implement special behaviors
+        [+] FIX: Enemies are moving toward a point, but the point is off from where I set it!
+        - special behavior does something unique while the enemy hasn't yet spotted the player
+        - once the player is spotted, special behavior is removed
+        [+] "Attack" behavior moves to an attack possition, and switches to patroling randomly or searching unless the player is found
+            [+] implement basic searching (random)
+            [X] implement smarter searching
+            [+] FIX: multiple enemies arriving at a point together will get stuck
 
-    [+] REFACTOR: Spawners should support more than one spawn point, which can share a config
+[+] REFACTOR: Spawners should support more than one spawn point, which can share a config
 
-    [?] FIX: start_weapons level config starts with the wrong weapons on initial start up
-    [ ] FIX: Level Start dialogue doesn't pause without weapon select UI
-    [ ] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
-    [+] FIX: player doesn't animate without weapon equipped
-    [+] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
-    [ ] FIX: weapon select UI should display error if weapons not selected
-        - error message in red
-        - error noise 
-        - if weapons are null, set them to the first weapons availible. Otherwise, set to previously equipped.
-    [ ] FIX: Crouch while aiming locks into aim animation
-    [ ] FIX: Errors when game is closed during dialogues
-    [X] FIX: input detection at start of level using starting weapons ---> Play Focused fixes this, I was dropping inputs b/c they didn't go 
-        to the game
-    [ ] Add damage drop off to weapons 
+[ ] FIX: SOMETIMES start_weapons level config starts with the wrong weapons on initial start up
+    - steps to reproduc: ???
+[ ] FIX: Level ~~Start dialogue~~ doesn't pause without weapon select UI
+[?] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
+[+] FIX: player doesn't animate without weapon equipped
+[+] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
+
+[X] FIX: input detection at start of level using starting weapons ---> Play Focused fixes this, I was dropping inputs b/c they didn't go 
+    to the game
 
 
-    [~] DEBUG settings
-        [X] Debug mode on (show debug info)
-        [+] Debug actions
-            [+] Skip level
-            [+] kill all enemies
-            [X] Reset Game
-        [+] player invisible
-        [+] player invulnerable 
-        [+] settings preserved between play sessions
-            [ ] Actual build
-            [+] Unity Editor
-
-=============================
-========== Roadmap ==========
-=============================
-
-[+] Milestone 4: enemy behavior improvements
-[+] Milestone 5 Add player and enemy placeholder-animations from Unity asset store.
-[~] Milestone 6: Level config
-    --> automate configs for setting up scripts for verious possible level features. (Win condition, victory dialogue, start dialogue, weapon selections)
-    --> Allow levels to start with pre-set weapons instead of the weapon selection screen
-    --> implement level music
-    --> enemy ammo drops
-    GOAL: make it easier to configure commonly variable elements of levels
-
-[ ] Milestone 7: improvements to gameplay
-	- detection based on whether they're on-screen
-	X fix cover ---> already did this, kinda
-	- ???
-
-
-[ ] Milestone 8: Progression and Hub World(s) (Bill's House and Gunstore), Saving
-    --> Save the player's current level
-    --> save settings
-    --> restore to saved level
-    --> create player owned weapons, which can be purchased for money at the gun store.
-    --> add pickups in levels for cash
-    --> Semi-auto shotgun
-    
-[ ] Milestone ???: More Levels
-[ ] Milestone ???: More Dialogue
-[ ] Milestone ???: Art assets
-[ ] Milestone ???: Better tutorials
-
-
-=====================================
-=== Known Bugs / Missing Features ===
-=====================================
-    [ ] FIX: slow hipfire animation for rifles
-    [ ] FIX: giant muzzleflash on hipfire animation...
-    [X] FIX: Animation siezes up if you START aiming, then start shooting before aiming finishes
-    [ ] implement aiming for enemies when in optimal combat range
-
-
-
-=============================
-==== Unplanned features =====
-=============================
-
-[ ] Reduce boilerplate to adding new fields to settings!
-    [ ] FIX: allow save files to assume defaults for missing fields in save file
-    [ ] Allow fields to be added from a type-based config of some sort?
-[ ] Skip Level System
-[ ] Speed-run dialogue mode (hold to click through fast)
-[ ] Additional controls to advance dialogue (press-e)
-[ ] Dialogue anti-buffering (block inputs for a short time after dialogue opens, to prevent playes skipping dialogue if it opens while they're shooting)
-
-[ ] "swarm intelligence" ememy AI
-    - randomly offset destinations when enemy is traveling to waypoints
-    - enemies should account for other enemy positons when setting destinations
-    - maybe add additional raycasts to player, to make the AI seek more clean-shots to the player, rather than shots it can make with a 0 width raycast, but not a bullet with a small non-zero width.
-    [ ] FIX: check if enemy is actually on screen before INITIATING hostility, but allow enemies to still shoot from further off screen if already hostile
-
-[ ] Move camera closer to ground while crouching (reduce vision radius)
-
-[ ] Menus
-
-[ ] Difficulty System
-    [ ] override availible equipment
-    [ ] override reload
-    [ ] truck medkit limit
-    [ ] truck armor plates limit
-    [ ] medkit healing rate
-    [ ] player damage rate
-    [ ] enemy damage rate
-    [ ] Enemy detection effectiveness
+[~] DEBUG settings
+    [X] Debug mode on (show debug info)
+    [+] Debug actions
+        [+] Skip level
+        [+] kill all enemies
+        [X] Reset Game
+    [+] player invisible
+    [+] player invulnerable 
+    [+] settings preserved between play sessions
+        [ ] Actual build
+        [+] Unity Editor

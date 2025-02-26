@@ -4,4 +4,8 @@
 
 2025-02-25 Tuesday:
     - finished adding debug setting menu
-    - started adding debug actions (level skip, etc...)
+    - implemented adding debug actions and settings.
+
+
+2025-02-26 Wednesday:
+    - 
