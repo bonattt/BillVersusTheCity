@@ -52,7 +52,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        paused = false;
+        paused = sub_menus.Count != 0;
     }
 
     public void CloseAllMenus() {
@@ -123,6 +123,11 @@ public class MenuManager : MonoBehaviour
         DialogueController ctrl = obj.GetComponent<DialogueController>();
         ctrl.StartDialogue(file_name);
         return ctrl;
+    }
+
+    public GameObject OpenWeaponSelectMenu() {
+        GameObject menu = OpenSubMenuPrefab(weapon_menu_prefab);
+        return menu;
     }
     
     public void DefaultMenuNavigation() {

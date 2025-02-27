@@ -14,3 +14,4 @@
 [ ] FIX: Crouch while aiming locks into aim animation
 [ ] FIX: Errors when game is closed during dialogues
 [ ] FIX: searching enemies get stuck on terrain sometimes
+[ ] FIX: restarting a countdown level causes the "complete objective" dialogue to show up before the level restarts, and linger under the weapon select menu

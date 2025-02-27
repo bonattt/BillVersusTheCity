@@ -8,4 +8,11 @@
 
 
 2025-02-26 Wednesday:
-    - 
+    - reorganized TODOs
+    - fixed bugs
+    - started reworking victory conditions UI to integrate with LevelConfig
+
+
+2025-02-27 Thursday:
+    - hungover....
+    - finished making victory UI based on level config

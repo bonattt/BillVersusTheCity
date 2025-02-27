@@ -395,8 +395,9 @@ FEEDBACK:
         [+] Finish Level Dialogue
     [+] REFACTOR: fail_level_conditions --> non-sequential conditions
     [+] Level music
-    [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
     [+] FIX: countdown condition triggers immediately on level restart
+    [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
+
 
 [~] Implement a defense mission
     [+] Basic Level layout
@@ -414,7 +415,7 @@ FEEDBACK:
 
 [ ] FIX: SOMETIMES start_weapons level config starts with the wrong weapons on initial start up
     - steps to reproduc: ???
-[ ] FIX: Level ~~Start dialogue~~ doesn't pause without weapon select UI
+[+] FIX!!! first menu from level config doesn't actually pause!
 [?] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)
 [+] FIX: player doesn't animate without weapon equipped
 [+] FIX: sometimes, start weapons equip to the wrong slot, and start without properly copying and setting ammo to full...
@@ -432,5 +433,5 @@ FEEDBACK:
     [+] player invisible
     [+] player invulnerable 
     [+] settings preserved between play sessions
-        [ ] Actual build
+        [+] Actual build
         [+] Unity Editor

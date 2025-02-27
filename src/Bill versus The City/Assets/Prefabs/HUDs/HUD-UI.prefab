@@ -285,6 +285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6488e1ceb2eca8f48b21295977c81481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kill_enemies_objective_prefab: {fileID: 8208764492480553892, guid: 3854f33cf1d334a4ca05320f839a36a5, type: 3}
+  escape_to_truck_objective_prefab: {fileID: 8208764492480553892, guid: 9f872fa579449bc429809ae702e6abbe, type: 3}
+  survive_objective_prefab: {fileID: 8208764492480553892, guid: c80c4583a3a18db49823ea7971d0834a, type: 3}
 --- !u!1 &6913535546542857390
 GameObject:
   m_ObjectHideFlags: 0

@@ -122,7 +122,7 @@ public class LevelConfig : MonoBehaviour
 
     public void SetupStartLevelCallbackOrStart() {
         if (weapon_select_on_start) {
-            GameObject menu_obj = MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.weapon_menu_prefab);
+            GameObject menu_obj = MenuManager.inst.OpenWeaponSelectMenu();
             ICloseEventMenu menu = menu_obj.GetComponent<ICloseEventMenu>();
             if (has_level_start_dialogue) {
                 menu.AddCloseCallback(new SimpleActionEvent(OpenLevelStartDialouge));
@@ -148,6 +148,7 @@ public class LevelConfig : MonoBehaviour
     public void ConfigureLevel() {
         Validate();
         // init condition lists
+        CombatHUDManager.inst.victory_type = victory_conditions_preset;
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();

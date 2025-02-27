@@ -38,6 +38,7 @@
 ==== Unplanned features =====
 =============================
 
+[ ] Add remove illegal weapons dialogue to level config
 [ ] Add damage drop off to weapons 
 [ ] Add armor effectiveness to weapons
 [ ] Reduce boilerplate to adding new fields to settings!
