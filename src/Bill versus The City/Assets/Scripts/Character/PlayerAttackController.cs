@@ -24,7 +24,6 @@ public class PlayerAttackController : AttackController
 
     protected override void AttackControllerStart() {
         SwitchWeaponBySlot(_current_slot);
-        UpdateSubscribers();
     }
     
     public void SetWeaponsFromInventory(PlayerInventory inventory) {
@@ -80,7 +79,6 @@ public class PlayerAttackController : AttackController
     }
 
     public void AssignWeaponSlot(int slot, IWeapon new_weapon) {
-        Debug.LogWarning($"slot {slot} set to {new_weapon}"); // TODO --- remove debug
         IWeapon previous_weapon = weapon_slots[slot];
         weapon_slots[slot] = new_weapon;
         if (slot == current_slot) {

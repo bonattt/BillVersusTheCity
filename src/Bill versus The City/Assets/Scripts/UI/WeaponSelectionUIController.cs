@@ -126,7 +126,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
             throw new WeaponNotSelectedException("handgun not selected!");
         }
 
-        PlayerCharacter.inst.inventory.pickup = null;
+        // PlayerCharacter.inst.inventory.pickup = null; // don't remove pickup weapons
     }
 }
 

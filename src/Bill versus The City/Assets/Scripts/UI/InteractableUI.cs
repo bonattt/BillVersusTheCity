@@ -68,7 +68,7 @@ public class InteractableUI : MonoBehaviour
 
     protected void UpdateVisibility() {
         if (hide_until_enabled && target_manager.enabled) {
-            Debug.Log($"clear hide until enabled on {gameObject.name} for {target_manager.gameObject.name}");
+            // Debug.Log($"clear hide until enabled on {gameObject.name} for {target_manager.gameObject.name}");
             hide_until_enabled = false;
         }
         if(IsVisible()) {

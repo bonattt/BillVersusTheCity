@@ -175,7 +175,7 @@ public class LevelConfig : MonoBehaviour
         inst = this;
 
         if (level_weapons == LevelWeaponSelect.level_weapons) {
-            EquipStartingWeapons();
+            EquipLevelWeapons();
         } else if (level_weapons == LevelWeaponSelect.none) {
             Debug.LogWarning("`LevelWeaponSelect.none` is not implemented!");
         }
@@ -183,7 +183,6 @@ public class LevelConfig : MonoBehaviour
     
     public void StartLevel() {
         if (inst != null && inst != this) {
-            // Debug.LogWarning("clearing old level config"); // TODO --- remove debug
             Destroy(inst);
             Destroy(inst.gameObject);
         }
@@ -217,7 +216,7 @@ public class LevelConfig : MonoBehaviour
 
         ILevelCondition condition = condition_obj.GetComponent<ILevelCondition>();
         if (condition == null) {
-            Debug.LogWarning($"instantiated condition prefab without ILevelCondition component! {condition_obj.name}");
+            Debug.LogError($"instantiated condition prefab without ILevelCondition component! {condition_obj.name}");
         }
         return condition;
     }
@@ -264,7 +263,7 @@ public class LevelConfig : MonoBehaviour
                 return;
                 
             default:
-                Debug.LogWarning($"unknown victory condition(s) preset '{victory_conditions_preset}'");
+                Debug.LogError($"unknown victory condition(s) preset '{victory_conditions_preset}'");
                 return;
         }
     }
@@ -273,7 +272,6 @@ public class LevelConfig : MonoBehaviour
         if (failure_conditions_preset == LevelFailuerConditions.none) {
             return; // do nothing
         } else if (failure_conditions_preset == LevelFailuerConditions.countdown) {
-            // Debug.LogWarning("ApplyPresetFailureCondition: Not implented // TODO --- implement"); // TODO --- implement
             ILevelCondition condition = InstantiateFailureCondition(prefab_countdown_timer_condition);
             ConfigureCountdownCondition(condition, Color.red, preset_config_countdown_timer_seconds);
 
@@ -332,8 +330,6 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void LevelObjectivesCleared() {
-        Debug.LogWarning($"LevelObjectivesCleared. restart_in_progress: {ScenesUtil.IsRestartInProgress()}, level started: {level_started}"); // TODO --- remove debug
-        // if (ScenesUtil.IsRestartInProgress()) { return; /* skip if in the middle of a restart */ } // TODO --- remove debug
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_objectives_complete);
 
         switch (this.victory_type) {
@@ -407,7 +403,6 @@ public class LevelConfig : MonoBehaviour
         /* checks all the level fail conditions, if any is true, returns true and evaluates that conditions triggers.
          */
         if (!level_started) { return false; /* don't check if level isn't started yet */ }
-        // if (ScenesUtil.IsRestartInProgress()) { return false; /* skip evaluating conditions during restart */ } // TODO --- remove debug
         for (int i = 0; i < non_sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = non_sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
@@ -438,17 +433,18 @@ public class LevelConfig : MonoBehaviour
                 c.was_triggered = false;
                 conditions.Add(c);
             } catch (InvalidCastException) {
-                Debug.LogWarning($"script {b} cannot be cast to ILevelCondition");
+                Debug.LogError($"script {b} cannot be cast to ILevelCondition");
             }
         }
         return conditions;
     }
 
-    private void EquipStartingWeapons() {
+    private void EquipLevelWeapons() {
         Debug.Log("use starting weapons!");
         starting_rifle = InstantiateStartingWeapon(init_starting_rifle);
         starting_handgun = InstantiateStartingWeapon(init_starting_handgun);
         starting_pickup = InstantiateStartingWeapon(init_starting_pickup);
+        Debug.Log($"rifle: {starting_rifle}, handgun: {starting_handgun}, pickup: {starting_pickup}"); // TODO --- remove debug
 
         PlayerCharacter.inst.inventory.EquipStartingWeapons(starting_rifle, starting_handgun, starting_pickup);
         // PlayerCharacter.inst.inventory.rifle = starting_rifle;

@@ -15,7 +15,6 @@ public abstract class AbstractCloseEventMenu : MonoBehaviour, ISubMenu, ICloseEv
     public abstract void MenuNavigation();
 
     public void ResolveMenuClosedCallbacks() {
-        Debug.Log($"{gameObject.name}.ResolveMenuClosedCallbacks"); // TODO --- remove debug
         foreach (IGameEventEffect cb in callbacks) {
             cb.ActivateEffect();
         }

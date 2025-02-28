@@ -10,12 +10,24 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
       */
     public int dollars = 0;
 
+    public int? slot_selected {
+        get {
+            if (combat == null) {
+                return null;
+            }
+            return combat.attacks._current_slot;
+        }
+    }
+
     private IWeapon _handgun; // weapon slot for a handgun
     public IWeapon handgun {
         get { return _handgun; }
         set {
             _handgun = value;
             combat.attacks.AssignWeaponSlot(1, _handgun);
+            if (combat.attacks.current_slot == 1) {
+                combat.attacks.SwitchWeaponBySlot(1);
+            }
         }
     }
 
@@ -26,6 +38,9 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
             _rifle = value;
             Debug.LogWarning($"combat is null: {combat == null}, attacks is null {combat == null || combat.attacks == null}"); // TODO --- remove debug
             combat.attacks.AssignWeaponSlot(0, _rifle);
+            if (combat.attacks.current_slot == 0) {
+                combat.attacks.SwitchWeaponBySlot(0);
+            }
         }
     }
     private IWeapon _pickup; // weapon slot for picking up dropped, potentially illegal, weapons
@@ -34,6 +49,9 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
         set {
             _pickup = value;
             combat.attacks.AssignWeaponSlot(2, _pickup);
+            if (combat.attacks.current_slot == 2) {
+                combat.attacks.SwitchWeaponBySlot(2);
+            }
         }
     }
     private PlayerCombat combat;
@@ -71,8 +89,8 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
 
     public PlayerInventory() {
         combat = null; // subscribing to the PlayerCharacter here creates infinite recursion
-        _handgun = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.HANDGUN);
-        _rifle = PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.SHOTGUN);
+        _handgun = null; // PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.HANDGUN);
+        _rifle = null; // PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.SHOTGUN);
         _pickup = null;
     }
 
@@ -91,11 +109,15 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
     public void NewPlayerObject(PlayerCombat player) {
         combat = player;
         if (starting_weapons_queued) {
+            Debug.LogWarning("setting weapons from queued starting weapons!"); // TODO --- remove debug
             rifle = starting_rifle;
             handgun = starting_handgun;
             pickup = starting_pickup;
             starting_weapons_queued = false;
+        } else {
+            Debug.LogWarning("weapons already setup!"); // TODO --- remove debug
         }
+        Debug.LogWarning($"rifle: {starting_rifle}, handgun: {starting_handgun}, pickup: {starting_pickup}!"); // TODO --- remove debug
         player.attacks.SetWeaponsFromInventory(this);
     }
     // private List<IGenericObserver> subscribers = new List<IGenericObserver>();
@@ -113,10 +135,18 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
 
     public void EquipStartingWeapons(IWeapon starting_rifle, IWeapon starting_handgun, IWeapon starting_pickup) {
         // if there is a current player, equips starting weapons to that player. otherwise, sets those weapons once the player is initialized
-        this.starting_weapons_queued = true;
-        this.starting_rifle = starting_rifle;
-        this.starting_handgun = starting_handgun;
-        this.starting_pickup = starting_pickup;
+        Debug.LogWarning("PlayerInventory.EquipStartingWeapons"); // TODO --- remove debug
+        if (combat == null) {
+            this.starting_weapons_queued = true;
+            this.starting_rifle = starting_rifle;
+            this.starting_handgun = starting_handgun;
+            this.starting_pickup = starting_pickup;
+        } else {
+            rifle = starting_rifle;
+            handgun = starting_handgun;
+            pickup = starting_pickup;
+            starting_weapons_queued = false;
+        }
     }
 }
 
