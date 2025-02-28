@@ -19,4 +19,6 @@
 
 
 2025-02-28 Friday:
-    - 
+    - improved the HUD layout around victory and countdown
+    - added level music to tutorial 1
+    - refactored LevelConfig to use an enum for starting weapons, instead of multiple bools that should've been mutually exclusive

@@ -46,21 +46,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   next_level: 
   combat_enabled: 1
-  weapon_select_on_start: 1
+  sequential_conditions_index: 0
+  level_music_name: 
+  level_weapons: 2
   victory_conditions_preset: 1
   failure_conditions_preset: 0
-  sequential_conditions_index: 0
   victory_type: 0
-  use_starting_weapons: 0
-  init_starting_rifle: {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
+  init_starting_rifle: {fileID: 0}
   init_starting_handgun: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   init_starting_pickup: {fileID: 0}
-  init_sequential_level_conditions: []
-  init_fail_level_conditions: []
-  start_level_dialogue_file: 
-  complete_objectives_dialogue_file: 
-  fail_level_dialogue_file: 
-  finish_level_dialogue_file: Default\finish_level
+  dialogue_file_start_level: 
+  dialogue_file_objectives_complete: 
+  dialogue_file_level_failed: 
+  dialogue_file_level_finished: 
   preset_config_countdown_timer_seconds: 75
+  init_extra_sequential_level_conditions: []
+  init_extra_non_sequential_level_conditions: []
   prefab_countdown_timer_condition: {fileID: 8906276981621872786, guid: 65325dd3d5d73b14e9b72a6c9c8d9781, type: 3}
   prefab_clear_enemies_condition: {fileID: 7494019667010016562, guid: cf9d6efee5f3fd14aa8e526035928852, type: 3}
+  level_started: 0
+  level_restarted: 0
+  test_mode: 0

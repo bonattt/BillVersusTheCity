@@ -21,6 +21,12 @@ public enum LevelFailuerConditions {
     countdown,
 }
 
+public enum LevelWeaponSelect {
+    none, // start with no weapons equipped
+    level_weapons, // gives the player weapons specified by the level config
+    weapon_select, // opens weapon select UI at the start of the level
+}
+
 // public enum LevelMusicStart {
 //     never,
 //     on_load,
@@ -32,14 +38,19 @@ public class LevelConfig : MonoBehaviour
     public static LevelConfig inst { get; private set; }
     public string next_level;
     public bool combat_enabled = true;
-    public bool weapon_select_on_start = true;
-    public bool use_starting_weapons = false;
 
     [SerializeField]
     private int sequential_conditions_index = 0;
     public string level_music_name;
     private ISounds level_music;
 
+    public bool weapon_select_on_start { 
+        get {
+            // NOTE: planning to add additional options here that change the availible selection of weapons between all, or just weapons unlocked by the player
+            return level_weapons == LevelWeaponSelect.weapon_select;
+        }
+    }
+    public LevelWeaponSelect level_weapons = LevelWeaponSelect.weapon_select;
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
     public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
     public LevelVictoryType victory_type = LevelVictoryType.leave_by_truck;
@@ -157,8 +168,10 @@ public class LevelConfig : MonoBehaviour
         level_started = false;
         inst = this;
 
-        if (use_starting_weapons) {
+        if (level_weapons == LevelWeaponSelect.level_weapons) {
             EquipStartingWeapons();
+        } else if (level_weapons == LevelWeaponSelect.none) {
+            Debug.LogWarning("`LevelWeaponSelect.none` is not implemented!");
         }
     }
     
