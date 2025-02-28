@@ -19,7 +19,7 @@ public static class ScenesUtil {
     }
 
     private static void ResetResources() {
-        Debug.LogWarning("ResetResources");
+        LevelConfig.inst.PreSceneChange();
         if (EnemiesManager.inst != null) {
             EnemiesManager.inst.Reset();
         }
@@ -29,7 +29,6 @@ public static class ScenesUtil {
         restarting = true;
         was_restarted = true;
         ResetResources();
-        LevelConfig.inst.PreRestart();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         // LevelConfig.inst.PostRestart();
         // LevelConfig.inst.level_restarted = true;

@@ -125,7 +125,6 @@ public class LevelConfig : MonoBehaviour
             if (test_mode && _has_dialogue) {
                 Debug.LogWarning("skipping level dialogue because level is in test mode!");
             }
-            Debug.Log($"has_level_start_dialogue: {!test_mode && _has_dialogue}, _has_dialogue: {_has_dialogue}, level_restarted: {level_restarted}"); // TODO --- remove debug
             return !test_mode && _has_dialogue;
         }
     }
@@ -145,25 +144,18 @@ public class LevelConfig : MonoBehaviour
             }
         } 
         else if (has_level_start_dialogue) {
-            Debug.Log("has start level dialogue!");// TODO --- remove debug
             OpenLevelStartDialouge();
         } else {
             // just start the level immediately, no start menus
-            Debug.Log("NO start level dialogue!"); // TODO --- remove debug
             StartLevel();
         }
     }
 
-    public void PreRestart() {
-        // TODO --- implement???
+    public void PreSceneChange() {
+        // prepare LevelConfig for a level scene change to avoid side effects 
         sequential_level_conditions = new List<ILevelCondition>();
         non_sequential_level_conditions = new List<ILevelCondition>();
     }
-    // public void PostRestart() {
-    //     // TODO --- implement???
-    //     Debug.Log("PostRestart called!");
-    //     level_restarted = true;
-    // }
 
     public void OpenLevelStartDialouge() {
         DialogueController ctrl = MenuManager.inst.OpenDialoge(dialogue_file_start_level);
