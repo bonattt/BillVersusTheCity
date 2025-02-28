@@ -113,15 +113,17 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
         IWeaponUI selected_rifle = GetSelectedElementFrom(left_content);
         IWeaponUI selected_handgun = GetSelectedElementFrom(right_content);
         if (selected_rifle != null) {
-            PlayerCharacter.inst.inventory.rifle = selected_rifle.weapon.CopyWeapon();
-            PlayerCharacter.inst.inventory.rifle.current_ammo = PlayerCharacter.inst.inventory.rifle.ammo_capacity;
+            IWeapon new_weapon = selected_rifle.weapon.CopyWeapon();
+            new_weapon.current_ammo = new_weapon.ammo_capacity;
+            PlayerCharacter.inst.inventory.rifle = new_weapon; // NOTE: use property to update subscibers AFTER setting the ammo
         } else {
             throw new WeaponNotSelectedException("rifle not selected!");
         }
 
         if (selected_handgun != null) {
-            PlayerCharacter.inst.inventory.handgun = selected_handgun.weapon.CopyWeapon();
-            PlayerCharacter.inst.inventory.handgun.current_ammo = PlayerCharacter.inst.inventory.handgun.ammo_capacity;
+            IWeapon new_weapon = selected_handgun.weapon.CopyWeapon();
+            new_weapon.current_ammo = new_weapon.ammo_capacity;
+            PlayerCharacter.inst.inventory.handgun = new_weapon; // NOTE: use property to update subscibers AFTER setting the ammo
         } else {
             throw new WeaponNotSelectedException("handgun not selected!");
         }

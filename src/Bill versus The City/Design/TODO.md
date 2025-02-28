@@ -413,7 +413,7 @@ FEEDBACK:
 
 [+] REFACTOR: Spawners should support more than one spawn point, which can share a config
 
-[ ] FIX: SOMETIMES start_weapons level config starts with the wrong weapons on initial start up
+[+] FIX: SOMETIMES start_weapons level config starts with the wrong weapons on initial start up
     - steps to reproduc: ???
 [+] FIX!!! first menu from level config doesn't actually pause!
 [?] FIX: Level fails immediately after restart! (countdown failure condition may not reset properly, or may be started immediately on restart, instead of after callbacks)

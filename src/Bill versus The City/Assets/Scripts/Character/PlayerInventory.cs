@@ -27,6 +27,7 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
             combat.attacks.AssignWeaponSlot(1, _handgun);
             if (combat.attacks.current_slot == 1) {
                 combat.attacks.SwitchWeaponBySlot(1);
+                combat.attacks.UpdateSubscribers();
             }
         }
     }
