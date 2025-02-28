@@ -9,9 +9,13 @@ public static class ScenesUtil {
     
     private static HashSet<string> loaded_floors = new HashSet<string>();
 
+    private static bool was_restarted = false;
     private static bool restarting = false;
     public static bool IsRestartInProgress() {
         return restarting;
+    }
+    public static bool WasRestarted() {
+        return was_restarted;
     }
 
     private static void ResetResources() {
@@ -23,12 +27,17 @@ public static class ScenesUtil {
 
     public static void RestartLevel() {
         restarting = true;
+        was_restarted = true;
         ResetResources();
+        LevelConfig.inst.PreRestart();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // LevelConfig.inst.PostRestart();
+        // LevelConfig.inst.level_restarted = true;
         restarting = false;
     }
 
     public static void NextLevel(string next_level) {
+        was_restarted = false;
         ResetResources();
         SceneManager.LoadScene(next_level);
     }

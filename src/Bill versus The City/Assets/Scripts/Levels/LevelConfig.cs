@@ -67,7 +67,9 @@ public class LevelConfig : MonoBehaviour
     private List<ILevelCondition> non_sequential_level_conditions = new List<ILevelCondition>();
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
     public bool level_started = false;
-    public bool level_restarted = false;
+    public bool level_restarted {
+        get { return ScenesUtil.WasRestarted(); }
+    }
 
     public bool test_mode = false; // disables some level features to streamline testing
 
@@ -123,6 +125,7 @@ public class LevelConfig : MonoBehaviour
             if (test_mode && _has_dialogue) {
                 Debug.LogWarning("skipping level dialogue because level is in test mode!");
             }
+            Debug.Log($"has_level_start_dialogue: {!test_mode && _has_dialogue}, _has_dialogue: {_has_dialogue}, level_restarted: {level_restarted}"); // TODO --- remove debug
             return !test_mode && _has_dialogue;
         }
     }
@@ -150,6 +153,17 @@ public class LevelConfig : MonoBehaviour
             StartLevel();
         }
     }
+
+    public void PreRestart() {
+        // TODO --- implement???
+        sequential_level_conditions = new List<ILevelCondition>();
+        non_sequential_level_conditions = new List<ILevelCondition>();
+    }
+    // public void PostRestart() {
+    //     // TODO --- implement???
+    //     Debug.Log("PostRestart called!");
+    //     level_restarted = true;
+    // }
 
     public void OpenLevelStartDialouge() {
         DialogueController ctrl = MenuManager.inst.OpenDialoge(dialogue_file_start_level);
@@ -326,6 +340,8 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void LevelObjectivesCleared() {
+        Debug.LogWarning($"LevelObjectivesCleared. restart_in_progress: {ScenesUtil.IsRestartInProgress()}, level started: {level_started}"); // TODO --- remove debug
+        // if (ScenesUtil.IsRestartInProgress()) { return; /* skip if in the middle of a restart */ } // TODO --- remove debug
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_objectives_complete);
 
         switch (this.victory_type) {
@@ -378,6 +394,7 @@ public class LevelConfig : MonoBehaviour
     }
 
     private void CheckSequentialLevelConditions() {
+        if (!level_started) { return; /* don't check if level isn't started yet */ }
         for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
@@ -397,6 +414,8 @@ public class LevelConfig : MonoBehaviour
     private bool CheckFailLevelConditions() {
         /* checks all the level fail conditions, if any is true, returns true and evaluates that conditions triggers.
          */
+        if (!level_started) { return false; /* don't check if level isn't started yet */ }
+        // if (ScenesUtil.IsRestartInProgress()) { return false; /* skip evaluating conditions during restart */ } // TODO --- remove debug
         for (int i = 0; i < non_sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = non_sequential_level_conditions[i];
             if (current_condition.was_triggered) { 
