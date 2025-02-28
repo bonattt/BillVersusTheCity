@@ -19,6 +19,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
 
     public bool confirm_selection = true;
     public bool allow_cancel = false;
+    public bool clear_pickup_weapon = true;
 
     void Start() {
         SetupUI();
@@ -128,7 +129,9 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
             throw new WeaponNotSelectedException("handgun not selected!");
         }
 
-        // PlayerCharacter.inst.inventory.pickup = null; // don't remove pickup weapons
+        if (clear_pickup_weapon) {
+            PlayerCharacter.inst.inventory.pickup = null; 
+        }
     }
 }
 
