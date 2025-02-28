@@ -50,7 +50,7 @@ public class DebugSettings : AbstractSettingsModule {
         }
     }
 
-    private bool _allow_debug_actions = false;
+    private bool _allow_debug_actions = true;
     public bool allow_debug_actions { 
         get { return _allow_debug_actions; }
         set {

@@ -19,7 +19,9 @@ public static class ScenesUtil {
     }
 
     private static void ResetResources() {
-        LevelConfig.inst.PreSceneChange();
+        if (LevelConfig.inst != null) {
+            LevelConfig.inst.PreSceneChange();
+        }
         if (EnemiesManager.inst != null) {
             EnemiesManager.inst.Reset();
         }
