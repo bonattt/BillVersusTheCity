@@ -17,7 +17,6 @@
 	X fix cover ---> already did this, kinda
 	- ???
 
-
 [ ] Milestone 8: Progression and Hub World(s) (Bill's House and Gunstore), Saving
     --> Save the player's current level
     --> save settings
@@ -26,6 +25,8 @@
     --> add pickups in levels for cash
     --> Semi-auto shotgun
     
+[ ] Milestone ???: Start making the game look better
+    - find some simple ways to make the game look better
 [ ] Milestone ???: More Levels
 [ ] Milestone ???: More Dialogue
 [ ] Milestone ???: Art assets

@@ -435,3 +435,18 @@ FEEDBACK:
     [+] settings preserved between play sessions
         [+] Actual build
         [+] Unity Editor
+
+
+
+====================
+===== Demo 007 =====
+====================
+GAMEPLAY IMPROVEMENTS
+
+[ ] tweak aiming to slow the player less
+[ ] Change enemy perception to not see the player if the enemy is not visible on screen
+[ ] add "reaction_time" to enemies
+    [ ] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
+        - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
+        [ ] Reaction time can be configured on enemy configs
+        [ ] Reaction time can be configured as a difficulty setting
