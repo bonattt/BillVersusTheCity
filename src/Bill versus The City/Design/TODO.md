@@ -396,7 +396,7 @@ FEEDBACK:
     [+] REFACTOR: fail_level_conditions --> non-sequential conditions
     [+] Level music
     [+] FIX: countdown condition triggers immediately on level restart
-    [ ] FIX: update UI to communicate when the level doesn't require clearing all enemies
+    [+] FIX: update UI to communicate when the level doesn't require clearing all enemies
 
 
 [~] Implement a defense mission
