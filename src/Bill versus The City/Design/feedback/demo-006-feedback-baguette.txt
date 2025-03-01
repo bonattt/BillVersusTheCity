@@ -1,0 +1,29 @@
+
+BAGUETTE
+
+different resolutions are different
+couldn't shoot
+confused by not starting with handgun equipped
+
+sneak around back isn't clear in tutorial 2
+
+while shooting at an enemy, the mouse happened to be over quit game button. when the popup appeared, baguette shot it and exited out.
+
+enemies can be cheesed by getting them stuck on corners
+
+confused by shotgun reloading one shell at a time --> figured it out after a little while
+
+unresponsive death animations are very confusing
+
+felt like there was a delay when shooting. (maybe due to sprinting when trying to shoot??)
+
+Level 1: always misses the one enemy below in the penultimate room
+
+did not realize you could shoot without aiming
+
+using shotgun at beyond optimal range
+
+
+FEEDBACK FROM BAGUETTE:
+- bullet travel time is maybe too slow
+- shoot enemies and they still shoot you and die

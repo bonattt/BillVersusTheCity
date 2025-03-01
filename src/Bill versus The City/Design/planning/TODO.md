@@ -443,6 +443,9 @@ FEEDBACK:
 ====================
 GAMEPLAY IMPROVEMENTS
 
+[ ] FIX: countdown failure loops forever
+[ ] Camera Zoom
+    [ ] FIX: Camera jitters in some conditions
 [ ] tweak aiming to slow the player less
 [ ] Change enemy perception to not see the player if the enemy is not visible on screen
 [ ] add "reaction_time" to enemies
