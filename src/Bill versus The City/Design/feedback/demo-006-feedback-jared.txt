@@ -1,0 +1,15 @@
+
+- can switch while fully aimed with handgun to aim rifle faster
+- should be able to reload while aimed
+- change player and enemy damage sounds to not be the same
+- enemy can see through car, but not shoot through car
+
+
+FEEDBACK
+- maybe rifle aiming takes a LITTLE too long?
+- reason to use rifle shouldn't be trying to look further down a corridore
+- slightly frustrated by not seeing people Bill should be able to see
+- slow aim is a debuff to trying to look how a person would look
+
+- split camera aim and accuracy aim, and add cone showing accuracy of shooting???
+- MUCH BETTER --> look in a direction without aiming
