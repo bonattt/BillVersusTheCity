@@ -443,17 +443,35 @@ FEEDBACK:
 ====================
 GAMEPLAY IMPROVEMENTS
 
-[ ] FIX: countdown failure loops forever
-[ ] Camera Zoom
-    [ ] FIX: Camera jitters in some conditions
+[~] Aim System
+    [+] Camera always follows mouse
+    [+] FIX: Camera jitters in some conditions
+    [ ] Visible Accuracy
+    
+    REQUIREMENTS
     [ ] Improve visibility
-[ ] Change enemy perception to not see the player if the enemy is not visible on screen
-[ ] add "reaction_time" to enemies
-    [ ] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
-        - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
-        [ ] Reaction time can be configured on enemy configs
-        [ ] Reaction time can be configured as a difficulty setting
+    [ ] Remove using weapon to look through walls
+    [ ] Ranged and close combat should still work
+    
 [ ] Improve enemy AI 
-    [ ] ????
+    [ ] Cover fire
+    [ ] Swarm intelligence
+        [ ] Search different points from each other
 
+[ ] Enemy Perception
+    [ ] Better hearing
+    [ ] add "reaction_time" to enemies
+        [ ] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
+            - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
+            [ ] Reaction time can be configured on enemy configs
+            [ ] Reaction time can be configured as a difficulty setting
+    [ ] Change enemy perception to not see the player if the enemy is not visible on screen
+ 
 [ ] Implement armor effectiveness on weapons
+
+[ ] New enemy type: melee????
+[ ] New Weapon type: grenade 
+
+[ ] BUGFIXES:
+    [ ] FIX: countdown failure loops forever
+    [ ] FIX: Camera jitters in some conditions

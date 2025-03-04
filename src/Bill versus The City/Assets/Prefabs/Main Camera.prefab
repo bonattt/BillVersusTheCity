@@ -105,8 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b46aded8bd28c149b01fa04adbebbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  un_zoomed_height: 15
-  zoomed_height: 25
+  un_zoomed_height: 20
+  zoomed_height: 30
   slerp: 0.7
   follow_mouse_percent: 0.25
   max_vision_range: 6
