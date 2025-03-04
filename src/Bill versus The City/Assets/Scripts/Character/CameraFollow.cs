@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class LegacyCameraFollow : MonoBehaviour
 {
     public float x_offset = 0f;
     public float y_offset = 10f;
@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour
     private float desired_camera_height {
         get {
             // returns the desired height of the camera
-            return this.target.position.y + this.offset.y;
+            return this.offset.y + this.target.position.y;
         }
     }
 

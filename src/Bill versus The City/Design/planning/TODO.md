@@ -446,10 +446,14 @@ GAMEPLAY IMPROVEMENTS
 [ ] FIX: countdown failure loops forever
 [ ] Camera Zoom
     [ ] FIX: Camera jitters in some conditions
-[ ] tweak aiming to slow the player less
+    [ ] Improve visibility
 [ ] Change enemy perception to not see the player if the enemy is not visible on screen
 [ ] add "reaction_time" to enemies
     [ ] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
         - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
         [ ] Reaction time can be configured on enemy configs
         [ ] Reaction time can be configured as a difficulty setting
+[ ] Improve enemy AI 
+    [ ] ????
+
+[ ] Implement armor effectiveness on weapons
