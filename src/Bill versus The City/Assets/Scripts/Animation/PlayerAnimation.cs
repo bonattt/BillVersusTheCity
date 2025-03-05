@@ -148,14 +148,28 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
 
     public Animator animator;
     
-    private float previous_health = -1f;
-    private ICharacterStatus status;
+    // private float previous_health = -1f;
+    // private ICharacterStatus status;
     public void StatusUpdated(ICharacterStatus status) {
-        if(previous_health > status.health) {
-            animator.SetTrigger("trigger_hurt");
-        }
-        previous_health = status.health;
+        // if(previous_health > status.health) {
+        //     animator.SetTrigger("trigger_hurt");
+        // }
+        // previous_health = status.health;
+
+        // do nothing, implementation was replaced by OnDamage
     }
+    
+    public void OnDamage(ICharacterStatus status) {
+        // do nothing
+        // NOTE: this is not used, this script is managed by CharCtrl, and status subscription is commented out...
+        hurt_at = Time.time;
+        animator.SetTrigger("trigger_hurt");
+    }
+
+    public void OnHeal(ICharacterStatus status) {
+        // do nothing
+    }
+
     public void OnDeath(ICharacterStatus status) {
         // triggers immediately on death
         animator.SetTrigger("trigger_killed");

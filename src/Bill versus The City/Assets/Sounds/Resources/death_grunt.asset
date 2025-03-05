@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 316e498e6a4421a4e9d34348fb704497, type: 3}
-  m_Name: damage_chiptone
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleSoundSet
-  sound_name: damage sounds
+  m_Name: death_grunt
+  m_EditorClassIdentifier: 
+  sound_name: pain grunt
   sounds:
-  - {fileID: 8300000, guid: 8b9d42b0b13d26f4e9862a8e3d526ddc, type: 3}
-  - {fileID: 8300000, guid: b583450413b8556469b85e6bd4c1f8e5, type: 3}
-  - {fileID: 8300000, guid: 51cb6f788a5dc4543ab8fd81a02591a5, type: 3}
+  - {fileID: 8300000, guid: a6dfe2e4b559cdd448c6ecda37aeb40f, type: 3}
   volume: 0.75
   default_category: 0

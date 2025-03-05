@@ -3201,6 +3201,10 @@ PrefabInstance:
       value: Demo001--level1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: victory_type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: level_weapons
       value: 1
       objectReference: {fileID: 0}

@@ -449,7 +449,7 @@ GAMEPLAY IMPROVEMENTS
     [ ] Visible Accuracy
     
     REQUIREMENTS
-    [ ] Improve visibility
+    [+] Improve visibility
     [ ] Remove using weapon to look through walls
     [ ] Ranged and close combat should still work
     
@@ -467,11 +467,28 @@ GAMEPLAY IMPROVEMENTS
             [ ] Reaction time can be configured as a difficulty setting
     [ ] Change enemy perception to not see the player if the enemy is not visible on screen
  
-[ ] Implement armor effectiveness on weapons
-
-[ ] New enemy type: melee????
-[ ] New Weapon type: grenade 
+[ ] Weapons System(s)
+    [ ] Implement armor effectiveness on weapons
+    [ ] New enemy type: melee????
+    [ ] New Weapon type: grenade 
 
 [ ] BUGFIXES:
     [ ] FIX: countdown failure loops forever
     [ ] FIX: Camera jitters in some conditions
+
+
+
+[ ] reload/aim TWEAKS
+    [ ] Can reload while aiming, it cancels aim
+    [ ] ALSO reload or shoot while sprinting,
+    [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
+    [ ] Aiming blocks switching
+
+
+[ ] Level tweaks
+    [+] Don't end tutorial 2 by exiting from truck
+    [ ] Tutorial 1: Alert enemy after clearing dialogue, which triggeres immediately on entering shop
+
+
+- BUGFIXES:
+    [ ] player can turn while level-start dialogue is open

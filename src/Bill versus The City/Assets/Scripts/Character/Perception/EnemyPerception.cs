@@ -152,15 +152,22 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
 
     public void StatusUpdated(ICharacterStatus status) {
         // instantly notice the player if you take damage
-        if (status.health < status.max_health) {
-            Alert();
-            return;
-        }
-        if (status.armor != null) {
-            if (status.armor.armor_durability < status.armor.armor_max_durability) {
-                Alert();
-            }
-        }
+        // if (status.health < status.max_health) {
+        //     Alert();
+        //     return;
+        // }
+        // if (status.armor != null) {
+        //     if (status.armor.armor_durability < status.armor.armor_max_durability) {
+        //         Alert(); 
+        //     }
+        // }
+    }
+
+    public void OnDamage(ICharacterStatus status) {
+        Alert();        
+    }
+    public void OnHeal(ICharacterStatus status) {
+        // do nothing
     }
 
     

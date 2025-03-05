@@ -542,6 +542,13 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
         // do nothing?
     }
+    
+    public void OnDamage(ICharacterStatus status) {
+        // do nothing
+    }
+    public void OnHeal(ICharacterStatus status) {
+        // do nothing
+    }
 
     
     public virtual void OnDeath(ICharacterStatus status) {

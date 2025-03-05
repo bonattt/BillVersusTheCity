@@ -76,6 +76,13 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
         }
         return (int) value;
     }
+    
+    public void OnDamage(ICharacterStatus status) {
+        // do nothing
+    }
+    public void OnHeal(ICharacterStatus status) {
+        // do nothing
+    }
 
     public void StatusUpdated(ICharacterStatus status) {
         UpdateUI(status);

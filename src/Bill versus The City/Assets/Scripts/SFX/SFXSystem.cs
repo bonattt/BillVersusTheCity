@@ -80,32 +80,33 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
     }
 
-    public void PlaySound(ISounds sound, Vector3 target) {
+    public AudioSource PlaySound(ISounds sound, Vector3 target) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
-            return;
+            return null;
         }
-        PlaySound(sound.GetRandomSound(), target);
+        return PlaySound(sound.GetRandomSound(), target);
     }
 
-    public void PlaySound(ISingleSound sound, Vector3 target) {
+    public AudioSource PlaySound(ISingleSound sound, Vector3 target) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
-            return;
+            return null;
         }
-        PlaySound(sound.clip, target, GetVolume(sound));
+        return PlaySound(sound.clip, target, GetVolume(sound));
     }
 
-    public void PlaySound(AudioClip audio_clip, Vector3 target, float volume) {
+    public AudioSource PlaySound(AudioClip audio_clip, Vector3 target, float volume) {
         if (audio_clip == null) {
             Debug.LogWarning("empty sound effect");
-            return;
+            return null;
         }
         AudioSource audio_source = CreatePlayer(audio_clip, target, volume);
         audio_source.Play();
         // destroy when sound finishes  
         float clip_length = audio_source.clip.length;
         Destroy(audio_source.gameObject, clip_length);
+        return audio_source;
     }
 
     private AudioSource CreatePlayer(AudioClip audio_clip, Vector3 target, float volume) {

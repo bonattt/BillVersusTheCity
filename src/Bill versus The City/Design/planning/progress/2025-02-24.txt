@@ -27,3 +27,12 @@
     - changed tutorial 2 to use the safe and start with only a handgun. Tweaked dialogues to match this.
     - finished the build and uploaded to google drive!
     - worked on next milestone planning
+
+
+2025-03-03: nothing, no work
+
+2025-03-04:
+    - implemented new camera system
+
+2025-03-05:
+    - 

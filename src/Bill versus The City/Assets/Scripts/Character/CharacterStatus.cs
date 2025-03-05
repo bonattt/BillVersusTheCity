@@ -23,6 +23,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
                 Debug.LogWarning($"{gameObject.name}: skip damage to player because debug player invulnerability is turned on!");
                 return;
             }
+            float previous_health = _health;
             _health = value;
             if (_health < 0) {
                 _health = 0;
@@ -34,6 +35,12 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
             else if (_health > _max_health) {
                 _health = _max_health;
             }  
+            if (previous_health < _health) {
+                UpdateOnHeal();
+            }
+            else if (previous_health > _health) {
+                UpdateOnDamage();
+            }
             UpdateStatus();
         }
     }
@@ -202,6 +209,17 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     public void UpdateStatus() {
         foreach(ICharStatusSubscriber sub in subscribers) {
             sub.StatusUpdated(this);
+        }
+    }
+
+    public void UpdateOnHeal() {
+        foreach(ICharStatusSubscriber sub in subscribers) {
+            sub.OnHeal(this);
+        }
+    }
+    public void UpdateOnDamage() {
+        foreach(ICharStatusSubscriber sub in subscribers) {
+            sub.OnDamage(this);
         }
     }
 
