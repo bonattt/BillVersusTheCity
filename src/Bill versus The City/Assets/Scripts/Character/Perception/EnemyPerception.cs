@@ -18,6 +18,14 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public float forget_player_rate = 0.25f;
     public bool disable_spot = false;
 
+    public float _reaction_time = 0.1f;
+    public float reaction_time {
+        get {
+            return _reaction_time * GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.ENEMY_REACTION_TIME);
+        }
+    }
+    private float reaction_time_passed = 0f;
+
     public float max_alert_vision_range = 24f; // enemies will see the player a this longer range once alerted
     public float max_notice_range = 13f; // enemies will not notice players further than this
 
@@ -221,7 +229,20 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
             if (visible_nodes_this_frame > max_vision_nodes) {
                 visible_nodes_this_frame = max_vision_nodes;
             } 
-            _seeing_target = visible_nodes_this_frame > 0;
+
+            if (visible_nodes_this_frame > 0) {
+                if (reaction_time_passed >= reaction_time) {
+                    _seeing_target = true;
+                }
+                else {
+                    _seeing_target = false;
+                    reaction_time_passed += Time.deltaTime;
+                }
+            }
+            else {
+                _seeing_target = false;
+                reaction_time_passed = 0f;
+            }
             updated_this_frame = true;
         }
     }

@@ -460,11 +460,12 @@ GAMEPLAY IMPROVEMENTS
 
 [ ] Enemy Perception
     [ ] Better hearing
-    [ ] add "reaction_time" to enemies
-        [ ] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
+    [+] add "reaction_time" to enemies
+        [+] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
             - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
-            [ ] Reaction time can be configured on enemy configs
-            [ ] Reaction time can be configured as a difficulty setting
+        [+] Reaction time can be configured on enemy instance
+        [ ] reaction time can be configured by spawner
+        [ ] Reaction time can be configured as a difficulty setting
     [ ] Change enemy perception to not see the player if the enemy is not visible on screen
 
 [~] reload/aim TWEAKS
@@ -475,7 +476,7 @@ GAMEPLAY IMPROVEMENTS
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons
-    [ ] Damage fall off
+    [+] Damage fall off
     [ ] New enemy type: melee????
     [ ] New Weapon type: grenade 
 
@@ -483,6 +484,8 @@ GAMEPLAY IMPROVEMENTS
     [ ] FIX: countdown failure loops forever
     [ ] FIX: Camera jitters in some conditions
     [ ] player can turn while level-start dialogue is open
+    [ ] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 
+    [ ] FIX: changing difficulty settings changes player/enemy health, causing the damaged sound to play
 
 
 [ ] Level tweaks

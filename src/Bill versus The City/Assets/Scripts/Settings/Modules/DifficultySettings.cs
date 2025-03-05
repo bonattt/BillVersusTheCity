@@ -12,12 +12,14 @@ public class DifficultySettings : AbstractSettingsModule {
     public const string PLAYER_HEALTH = "player_health";
     public const string ENEMY_ARMOR = "enemy_armor";
     public const string ENEMY_HEALTH = "enemy_health";
+    public const string ENEMY_REACTION_TIME = "enemy_reaction_time";
 
     public readonly List<string> FIELDS = new List<string>(){
         PLAYER_ARMOR,
         PLAYER_HEALTH,
         ENEMY_ARMOR,
         ENEMY_HEALTH,
+        ENEMY_REACTION_TIME,
     };
     
     public DifficultySettings() {
@@ -157,6 +159,7 @@ public static class DifficultyTemplates {
         {DifficultySettings.PLAYER_HEALTH, 2f},
         {DifficultySettings.ENEMY_ARMOR, 1f},
         {DifficultySettings.ENEMY_HEALTH, 0.5f},
+        {DifficultySettings.ENEMY_REACTION_TIME, 2f},
     };
 
     public static readonly Dictionary<string, float> MEDIUM_TEMPLATE = new Dictionary<string, float>(){
@@ -164,14 +167,16 @@ public static class DifficultyTemplates {
         {DifficultySettings.PLAYER_HEALTH, 1f},
         {DifficultySettings.ENEMY_ARMOR, 1f},
         {DifficultySettings.ENEMY_HEALTH, 1f},
+        {DifficultySettings.ENEMY_REACTION_TIME, 1f},
     };
     
 
     public static readonly Dictionary<string, float> HARD_TEMPLATE = new Dictionary<string, float>(){
-        {DifficultySettings.PLAYER_ARMOR, 1f},
+        {DifficultySettings.PLAYER_ARMOR, 0.5f},
         {DifficultySettings.PLAYER_HEALTH, 0.75f},
         {DifficultySettings.ENEMY_ARMOR, 3f},
         {DifficultySettings.ENEMY_HEALTH, 1.5f},
+        {DifficultySettings.ENEMY_REACTION_TIME, 0.5f},
     };
 
     public static Dictionary<string, float> GetTemplate(DifficultyLevel level) {
