@@ -20,4 +20,4 @@ MonoBehaviour:
   bullet_speed: 55
   weapon_damage_min: 85
   weapon_damage_max: 105
-  armor_penetration: 1
+  armor_effectiveness: 1.25

@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour, IBullet
     public IWeapon weapon { get; set; }
     public float attack_damage_min { get; set; }
     public float attack_damage_max { get; set; }
-    public float armor_penetration { get; set; }
+    public float armor_effectiveness { get; set; }
     // public float armor_damage { get; set; }
     public bool ignore_armor { get { return false; }}
     public float final_health_damage { get; set; }

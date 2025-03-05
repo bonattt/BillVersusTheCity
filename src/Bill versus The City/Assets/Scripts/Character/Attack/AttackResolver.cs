@@ -115,7 +115,7 @@ public static class AttackResolver {
     } 
 
     public static float CalculateDamageSplit(IAttack attack, IArmor armor) {
-        float og_split = armor.armor_protection - attack.armor_penetration;
+        float og_split = armor.armor_protection - attack.armor_effectiveness;
         float split = Mathf.Max(0.95f, Mathf.Min(0.05f, og_split));
         if (og_split != split) {
             // Debug.LogWarning($"unbalanced damage split: {og_split} => {split}");  // TODO --- uncomment warning!
@@ -128,7 +128,7 @@ public static class AttackResolver {
         float damage_split = CalculateDamageSplit(attack, armor);
         float attack_damage = total_attack_damage * (1 - damage_split);
         float base_armor_damage = total_attack_damage * damage_split;
-        float armor_damage = base_armor_damage;
+        float armor_damage = base_armor_damage * attack.armor_effectiveness;
 
         attack_damage = Mathf.Max(1, attack_damage);
         armor_damage = Mathf.Max(1, armor_damage);

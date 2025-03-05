@@ -35,7 +35,7 @@ public interface IAttack {
     public IWeapon weapon { get; }
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
-    public float armor_penetration { get; }
+    public float armor_effectiveness { get; }
     public bool ignore_armor { get; }
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
@@ -48,7 +48,7 @@ public class GenericAttack : IAttack {
     public IWeapon weapon { get; set; }
     public float attack_damage_min { get; set; }
     public float attack_damage_max { get; set; }
-    public float armor_penetration { get; set; }
+    public float armor_effectiveness { get; set; }
     public bool ignore_armor { get; set; }
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
@@ -115,10 +115,11 @@ public interface IWeapon : IItem {
     public float recoil_recovery { get; }
     public float recoil_shake { get; }
 
+    // damage
     public float bullet_speed { get; }
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
-    public float armor_penetration { get; }
+    public float armor_effectiveness { get; }
 
     // aiming
     public float aim_zoom { get; }

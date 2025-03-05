@@ -117,8 +117,8 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public float weapon_damage_max { 
         get { return bullet_effect.weapon_damage_max; }
     }
-    public float armor_penetration { 
-        get { return bullet_effect.armor_penetration; }
+    public float armor_effectiveness { 
+        get { return bullet_effect.armor_effectiveness; }
     }
 
     public string gunshot_sound {

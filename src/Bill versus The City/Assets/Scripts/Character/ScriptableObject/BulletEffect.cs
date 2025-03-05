@@ -23,7 +23,7 @@ public class BulletEffect : ScriptableObject {
     public float bullet_speed = 35f;
     public float weapon_damage_min = 30f;
     public float weapon_damage_max = 50f;
-    public float armor_penetration = 1f;
+    public float armor_effectiveness = 1f;
     
 
     public override string ToString() {
