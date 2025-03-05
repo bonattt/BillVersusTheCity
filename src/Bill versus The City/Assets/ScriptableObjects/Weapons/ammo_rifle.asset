@@ -21,3 +21,4 @@ MonoBehaviour:
   weapon_damage_min: 90
   weapon_damage_max: 110
   armor_effectiveness: 1.5
+  damage_falloff_rate: 0

@@ -18,7 +18,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     private int current_setting = 0;
     public WeaponSetting weapon_setting { get { return _weapon_settings[current_setting]; }}
 
-    public BulletEffect bullet_effect;
+    public BulletAttributes bullet_effect;
 
     public int _ammo_capacity = 30;
     public int _reload_amount = 30;
@@ -107,7 +107,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
         get { return _max_zoom_range; }
     }
     
-    
+    // damage
     public float bullet_speed { 
         get { return bullet_effect.bullet_speed; }
     }
@@ -119,6 +119,9 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     }
     public float armor_effectiveness { 
         get { return bullet_effect.armor_effectiveness; }
+    }
+    public float damage_falloff_rate {
+        get { return bullet_effect.damage_falloff_rate; }
     }
 
     public string gunshot_sound {

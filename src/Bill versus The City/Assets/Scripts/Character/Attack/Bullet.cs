@@ -18,10 +18,19 @@ public class Bullet : MonoBehaviour, IBullet
     public float time_to_live = 30f;
     private float start_time;
     private Rigidbody rb; 
+    public float damage_falloff_rate = 0f;
+    private Vector3 start_position;
+    public float damage_falloff {
+        get {
+            float distance_from_start = Vector3.Distance(start_position, transform.position);
+            return damage_falloff_rate * distance_from_start;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        start_position = transform.position;
         start_time = Time.time;
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;

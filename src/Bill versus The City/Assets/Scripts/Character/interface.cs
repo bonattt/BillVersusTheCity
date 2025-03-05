@@ -33,6 +33,7 @@ public interface IAttack {
     // TODO
     public IAttackTarget attacker { get; }
     public IWeapon weapon { get; }
+    public float damage_falloff { get; }
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
     public float armor_effectiveness { get; }
@@ -52,6 +53,7 @@ public class GenericAttack : IAttack {
     public bool ignore_armor { get; set; }
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
+    public float damage_falloff { get; set; }
 }
 
 public interface IArmor : IItem, IDifficultyAdjusted {
@@ -120,6 +122,7 @@ public interface IWeapon : IItem {
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
     public float armor_effectiveness { get; }
+    public float damage_falloff_rate { get; }
 
     // aiming
     public float aim_zoom { get; }

@@ -213,6 +213,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
             bullet.attack_damage_max = current_weapon.weapon_damage_max;
             bullet.attack_damage_min = current_weapon.weapon_damage_min;
             bullet.armor_effectiveness = current_weapon.armor_effectiveness;
+            bullet.damage_falloff_rate = current_weapon.damage_falloff_rate;
             bullet.attacker = attacker;
         }
         current_recoil += current_weapon.recoil_inaccuracy;

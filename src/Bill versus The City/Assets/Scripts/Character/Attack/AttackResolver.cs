@@ -110,8 +110,10 @@ public static class AttackResolver {
     }
 
     public static float RandomDamage(IAttack attack) {
-        return Mathf.Max(1f, UnityEngine.Random.Range(attack.attack_damage_min, 
-                attack.attack_damage_max));
+        float random_damage = UnityEngine.Random.Range(attack.attack_damage_min, attack.attack_damage_max);
+        random_damage -= attack.damage_falloff;
+        Debug.LogWarning($"damage falloff: {attack.damage_falloff}"); // TODO --- remove debug
+        return Mathf.Max(1f, random_damage);
     } 
 
     public static float CalculateDamageSplit(IAttack attack, IArmor armor) {
