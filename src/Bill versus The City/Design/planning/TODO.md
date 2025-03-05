@@ -466,6 +466,12 @@ GAMEPLAY IMPROVEMENTS
             [ ] Reaction time can be configured on enemy configs
             [ ] Reaction time can be configured as a difficulty setting
     [ ] Change enemy perception to not see the player if the enemy is not visible on screen
+
+[ ] reload/aim TWEAKS
+    [ ] Can reload while aiming, it cancels aim
+    [ ] ALSO reload or shoot while sprinting,
+    [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
+    [ ] Aiming blocks switching weapons OR resets aim-percent
  
 [ ] Weapons System(s)
     [ ] Implement armor effectiveness on weapons
@@ -475,20 +481,9 @@ GAMEPLAY IMPROVEMENTS
 [ ] BUGFIXES:
     [ ] FIX: countdown failure loops forever
     [ ] FIX: Camera jitters in some conditions
-
-
-
-[ ] reload/aim TWEAKS
-    [ ] Can reload while aiming, it cancels aim
-    [ ] ALSO reload or shoot while sprinting,
-    [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
-    [ ] Aiming blocks switching
+    [ ] player can turn while level-start dialogue is open
 
 
 [ ] Level tweaks
     [+] Don't end tutorial 2 by exiting from truck
     [ ] Tutorial 1: Alert enemy after clearing dialogue, which triggeres immediately on entering shop
-
-
-- BUGFIXES:
-    [ ] player can turn while level-start dialogue is open

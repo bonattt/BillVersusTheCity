@@ -149,6 +149,13 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
 
     }
+
+    protected void AimOnSwitch() {
+        // handles aim when the player switches weapons
+        if (start_aim_at == null) { return; /* not aiming, do nothing */ }
+        StopAim();
+        StartAim();
+    }
     
     public void StartAim() {
         _aim_this_frame = true;

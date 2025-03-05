@@ -61,6 +61,9 @@ public class PlayerAttackController : AttackController
     
     public bool SwitchWeaponBySlot(int slot, bool force=false) {
         if (force || (weapon_slots_enabled[slot] && weapon_slots[slot] != null)) {
+            if (_current_slot != slot) {
+                AimOnSwitch();
+            }
             _current_slot = slot;
             current_weapon = weapon_slots[slot];
             UpdateSubscribers();
