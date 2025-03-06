@@ -3261,9 +3261,7 @@ GameObject:
   - component: {fileID: 1634804022}
   - component: {fileID: 1634804021}
   - component: {fileID: 1634804025}
-  - component: {fileID: 1634804020}
-  - component: {fileID: 1634804027}
-  - component: {fileID: 1634804026}
+  - component: {fileID: 1634804029}
   - component: {fileID: 1634804028}
   m_Layer: 13
   m_Name: EnemyDialogueTrigger
@@ -3272,27 +3270,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1634804020
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634804019}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 13}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1634804021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3333,7 +3310,7 @@ Transform:
   m_GameObject: {fileID: 1634804019}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.79, y: 0.5, z: -8.19}
+  m_LocalPosition: {x: -28.76, y: 0.5, z: -11.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3355,50 +3332,8 @@ MonoBehaviour:
   - Tutorial01/start_encounter
   endless_dialogue: 0
   random_dialouge: 0
-  dialogue_finished: {fileID: 0}
+  dialogue_finished: {fileID: 1634804029}
   index: 0
---- !u!65 &1634804026
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634804019}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 5}
-  m_Center: {x: 2.25, y: 0, z: -7}
---- !u!65 &1634804027
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634804019}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6, y: 1, z: 3}
-  m_Center: {x: -7, y: 0, z: 2.5}
 --- !u!65 &1634804028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3419,7 +3354,20 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3, y: 1, z: 3.4}
-  m_Center: {x: -2.2, y: 0, z: -4.1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1634804029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634804019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cfe0360959c6a4d8a5f0533524a2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect_callback: {fileID: 0}
 --- !u!1 &1701641256
 GameObject:
   m_ObjectHideFlags: 0
