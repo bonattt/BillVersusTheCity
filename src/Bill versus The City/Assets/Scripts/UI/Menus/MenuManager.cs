@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab, weapon_menu_prefab, debug_action_menu_prefab;
     public GameObject debug_action_menu_prefab, dialogue_prefab, pause_menu_prefab, settings_menu_prefab, tutorial_popup_prefab, 
             weapon_menu_prefab, yes_no_popup_prefab;
 
