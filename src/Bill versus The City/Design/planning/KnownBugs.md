@@ -15,3 +15,9 @@
 [ ] FIX: Errors when game is closed during dialogues
 [ ] FIX: searching enemies get stuck on terrain sometimes
 [+] FIX: restarting a countdown level causes the "complete objective" dialogue to show up before the level restarts, and linger under the weapon select menu
+
+
+
+[X] FIX: Player keeps sliding when move inupt is released near my new test-tutorial interaction
+    ---> setting physics layer to interaction fixed this.
+    ---> I'm leaving note of this, because soosh reported experienceing something like this, so I want to remember the steps to reproduce, incase is see it again.

@@ -485,7 +485,7 @@ GAMEPLAY IMPROVEMENTS
     [ ] FIX: Camera jitters in some conditions
     [ ] player can turn while level-start dialogue is open
     [ ] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 
-    [ ] FIX: changing difficulty settings changes player/enemy health, causing the damaged sound to play
+    [ ] FIX: changing difficulty settings changes player/enemy health, causing the damaged sound to play 
 
 
 [ ] Level tweaks

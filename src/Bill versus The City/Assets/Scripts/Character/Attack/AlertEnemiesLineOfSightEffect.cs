@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class AlertEnemiesEffect : IAttackHitEffect, 
+public class AlertEnemiesLineOfSightEffect : IAttackHitEffect, 
         IAttackShootEffect, IAttackMissEffect, IWeaponEffect {
     
     public Vector3 offset = new Vector3(0f, 0f, 0f);
 
-    public AlertEnemiesEffect() {
+    public AlertEnemiesLineOfSightEffect() {
         // do nothing
     }
     public void DisplayDamageEffect(GameObject hit_target,

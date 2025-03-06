@@ -13,7 +13,7 @@ public static class AttackResolver {
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB),
         new SoundEffect(PLACEHOLDER_DAMAGE_SOUND_EFFECT),
-        new AlertEnemiesEffect()
+        new AlertEnemiesLineOfSightEffect()
     };
 
     private static IAttackHitEffect[] DEBUG_DAMAGE_EFFECTS = new IAttackHitEffect[]{
@@ -25,7 +25,7 @@ public static class AttackResolver {
     private static IAttackShootEffect[] SHOOT_EFFECTS = new IAttackShootEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_PREFAB),
         new GunshotSoundEffect(),
-        new AlertEnemiesEffect()
+        new AlertEnemiesLineOfSightEffect()
     };
     
 
@@ -33,7 +33,7 @@ public static class AttackResolver {
 
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB),
-        new AlertEnemiesEffect()
+        new AlertEnemiesLineOfSightEffect()
     };
     private static IAttackMissEffect[] DEBUG_MISS_EFFECTS = new IAttackMissEffect[]{};
     private static IWeaponEffect[] EMPTY_SHOOT_EFFECT = new IWeaponEffect[]{

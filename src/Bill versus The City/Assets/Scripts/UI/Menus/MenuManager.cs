@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 public class MenuManager : MonoBehaviour
 {
     public GameObject pause_menu_prefab, yes_no_popup_prefab, settings_menu_prefab, dialogue_prefab, weapon_menu_prefab, debug_action_menu_prefab;
+    public GameObject debug_action_menu_prefab, dialogue_prefab, pause_menu_prefab, settings_menu_prefab, tutorial_popup_prefab, 
+            weapon_menu_prefab, yes_no_popup_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -115,6 +117,14 @@ public class MenuManager : MonoBehaviour
                 menu_ctrl.MenuNavigation();
             }
         }
+    }
+
+    public TutorialPopupController OpenTutorial(TutorialConfig tutorial_config) {
+        // NOTE: this method should be called through TutorialLibrary.OpenTutorial method, which managed more tutorial stuff
+        GameObject menu = OpenSubMenuPrefab(tutorial_popup_prefab);
+        TutorialPopupController tutorial = menu.GetComponent<TutorialPopupController>();
+        tutorial.ApplyConfig(tutorial_config);
+        return tutorial;
     }
 
     public DialogueController OpenDialoge(string file_name) {

@@ -1,0 +1,33 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UXML/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
+    <ui:VisualElement name="root" class="menu_root" style="flex-grow: 1;">
+        <ui:VisualElement name="panel" class="menu_panel" style="flex-grow: 1; width: 1000px; height: 700px; max-height: 700px;">
+            <ui:VisualElement name="Header" style="flex-grow: 1; height: 10%;">
+                <ui:Label tabindex="-1" text="Tutorial" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderLabel" style="font-size: 50px; -unity-text-align: upper-center;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ImagePane" style="flex-grow: 1; height: 40%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-bottom-width: 1px; border-top-width: 1px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                <ui:VisualElement name="Image" style="flex-grow: 1; background-color: rgb(255, 255, 255);">
+                    <ui:Label tabindex="-1" text="[placeholder for image]" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center; -unity-text-align: middle-center; font-size: 32px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="TextPane" style="flex-grow: 1; height: 40%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; font-size: 20px;">
+                <ui:Label tabindex="-1" text="Lorem ipsum odor amet, consectetuer adipiscing elit. Leo id rutrum duis diam libero nostra. Feugiat natoque ultrices ac facilisi scelerisque tristique dui. Fusce libero vivamus fames tristique a cras integer dictum taciti? Quisque vivamus eleifend in enim tellus auctor himenaeos ullamcorper. Rhoncus pharetra fames eleifend, mus ex sem? Sollicitudin mollis metus himenaeos metus suscipit duis. Ultrices pulvinar amet nascetur lobortis taciti. Scelerisque ornare vitae purus maecenas congue consequat." parse-escape-sequences="true" display-tooltip-when-elided="true" name="TutorialLabel" style="white-space: normal; font-size: 28px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Footer" style="flex-grow: 1;">
+                <ui:VisualElement name="FooterCheckboxes" style="flex-grow: 1; height: 10%; flex-direction: row; justify-content: center;">
+                    <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+                        <ui:Label tabindex="-1" text="Don&apos;t Show this Tutorial Again" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="true" class="menu_text" />
+                        <ui:Toggle name="DontShowAgain" value="true" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+                        <ui:Label tabindex="-1" text="Skip All Tutorials" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="true" class="menu_text" />
+                        <ui:Toggle name="SkipAllTutorials" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="FooterButtons" style="flex-grow: 1; height: 10%; flex-direction: row; justify-content: center;">
+                    <ui:Button text="Okay" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="true" name="ContinueButton" class="menu_button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

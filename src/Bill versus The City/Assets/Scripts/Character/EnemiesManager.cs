@@ -86,15 +86,27 @@ using UnityEngine;
         UpdateSubscribers();
     }
 
+    public void AlertAll() {
+        // alerts all enemies currently in the map
+        foreach (EnemyController ctrl in GetRemainingEnemies()) {
+            EnemyPerception perception = ctrl.GetComponent<EnemyPerception>();
+            if (perception == null) {
+                Debug.LogError($"EnemyPerception is null for '{ctrl.gameObject}'!");
+                continue;
+            }
+            perception.Alert();
+        }
+    }
+
     public void AlertEnemiesNear(Vector3 start) {
         // Alerts all nearby enemies to the given point
         foreach(EnemyController ctrl in GetRemainingEnemies()) {
-            TryAlertOneEnemy(start, ctrl.GetComponent<EnemyPerception>());
+            TryAlertOneEnemyNear(start, ctrl.GetComponent<EnemyPerception>());
         }
     }
 
 
-    private void TryAlertOneEnemy(Vector3 start, EnemyPerception perception) {
+    private void TryAlertOneEnemyNear(Vector3 start, EnemyPerception perception) {
         if (perception == null) {
             Debug.LogError("EnemyPerception is null!");
             return;

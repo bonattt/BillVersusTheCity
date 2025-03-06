@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
-    private Toggle placeholder_toggle;
+    private Toggle reset_tutorials_toggle, skip_tutorials_toggle;
 
     public GeneralSettingsMenuCtrl() {
         // do nothing
@@ -21,8 +21,11 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
         this.LoadTemplate(root);
         header_label.text = "General Settings";
         
-        VisualElement debug_mode_div = AddToggle("Placeholder");
-        placeholder_toggle = debug_mode_div.Q<Toggle>();
+        VisualElement skip_tutorials_div = AddToggle("Skip All Tutorials");
+        skip_tutorials_toggle = skip_tutorials_div.Q<Toggle>();
+
+        VisualElement reset_tutorials_div = AddToggle("Reset Tutorials");
+        reset_tutorials_toggle = reset_tutorials_div.Q<Toggle>();
 
         LoadSettings();
     }
@@ -56,21 +59,27 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
         // Saves the menu's changes to settings    
         GeneralSettings settings = GameSettings.inst.general_settings;
 
-        settings.placeholder = placeholder_toggle.value;
+        settings.skip_all_tutorials = skip_tutorials_toggle.value;
+        if (reset_tutorials_toggle.value) {
+            settings.skipped_tutorials = new HashSet<string>();
+        }
+        reset_tutorials_toggle.value = false;
     }
 
     public override void LoadSettings() {
         // sets the UI's elements to match what is stored in settings (reverting any changes)
         GeneralSettings settings = GameSettings.inst.general_settings;
         
-        placeholder_toggle.value = settings.placeholder;
+        skip_tutorials_toggle.value = settings.skip_all_tutorials;
+        reset_tutorials_toggle.value = false;
         UpdateUI();
     }
     
     
     public override bool HasUnsavedChanges() {
         GeneralSettings settings = GameSettings.inst.general_settings;
-        return placeholder_toggle.value != settings.placeholder;
+        // reset_tutorials is never actually stored, it clears "skipped_tutorials" whenever saved
+        return skip_tutorials_toggle.value != settings.skip_all_tutorials || reset_tutorials_toggle.value;
     }
 
 }
