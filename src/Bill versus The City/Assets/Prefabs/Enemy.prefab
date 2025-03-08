@@ -141,14 +141,19 @@ MonoBehaviour:
   notice_player_rate: 2
   forget_player_rate: 0.25
   disable_spot: 0
-  max_alert_vision_range: 24
-  max_notice_range: 11
+  on_screen_test_offset: -0.5
+  offscreen_notice_multiplier: 0.05
+  _reaction_time: 0.25
+  max_alert_vision_range: 28
+  max_notice_range: 22
   _state: 0
   _percent_noticed: 0
   _last_seen_at: {x: 0, y: 0, z: 0}
   last_seen_at_investigated: 0
   debug_knows_player_location: 0
   debug_player_noticed: 0
+  debug_on_screen: 0
+  debug_distance_from_player: 0
 --- !u!114 &3396656997431563555
 MonoBehaviour:
   m_ObjectHideFlags: 0

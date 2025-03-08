@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+////////////// NOTES ON ENEMY VISIBILITY RANGE //////////////
+// fully extended vision [left/right]: 25
+// centered vision [left/right]: 19
+// fully retracted vision [left/right]: 13
+//
+// fully extended vision [up/down]: 17
+// centered vision [up/down]: 11
+// fully retracted vision [up/down]: 5
+
 public class CameraFollowZoom : MonoBehaviour
 {
     public float un_zoomed_height = 15f;

@@ -17,6 +17,14 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public float notice_player_rate = 2f;
     public float forget_player_rate = 0.25f;
     public bool disable_spot = false;
+    
+    [Tooltip("offsets the test point to check if the enemy is on screen toward the player to adjust how much of the enemy must be on screen")]
+    public float on_screen_test_offset = -0.5f; 
+
+    [Tooltip("if the enemy is offscreen, notice rate is miltiplied by this value")]
+    public float offscreen_notice_multiplier = 0.05f;
+
+    private Camera visiblity_camera;
 
     public float _reaction_time = 0.1f;
     public float reaction_time {
@@ -132,6 +140,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
         visible_nodes_this_frame = 0;
         GetComponent<ICharacterStatus>().Subscribe(this);
+        visiblity_camera = Camera.main; // cache Camera.main to avoid repeated slow lookups by tag
     }
 
     public void Alert() {
@@ -198,11 +207,14 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     void UpdateNoticePlayer() {
-        if (visible_nodes_this_frame == 0) { // && percent_noticed < 1f) {
+        if (!_seeing_target) {
             percent_noticed -= forget_player_rate * Time.deltaTime;
         } else {
             int effective_nodes = Math.Min(max_vision_nodes, visible_nodes_this_frame);
             float notice_rate = this.notice_player_rate * effective_nodes;
+            if (!IsOnScreen()) {
+                notice_rate *= offscreen_notice_multiplier;
+            }
             if (player_noticed) { notice_rate *= 2; } // notice the player faster if the enemy is already alert;
             percent_noticed += notice_rate * Time.deltaTime;
             // updating state is handled by percent_noticed
@@ -291,17 +303,24 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     //     return VisibleNodes().Count > 0;
     // }
 
+    private float DistanceToPlayer(Transform target_node) {
+        Vector3 start = raycast_start.position;
+        Vector3 end = target_node.position;
+        Vector3 direction = end - start;
+        return direction.magnitude;
+    }
+
     private bool CanSeeNode(Transform target_node) {
         RaycastHit hit;
         Vector3 start = raycast_start.position;
         Vector3 end = target_node.position;
         Vector3 direction = end - start;
 
-        float vision_range = direction.magnitude;
+        float vision_range;
         if (state == PerceptionState.alert || state == PerceptionState.seeing) {
-            vision_range = Mathf.Min(vision_range, max_alert_vision_range);
+            vision_range = Mathf.Min(DistanceToPlayer(target_node), max_alert_vision_range);
         } else {
-            vision_range = Mathf.Min(vision_range, max_notice_range);
+            vision_range = Mathf.Min(DistanceToPlayer(target_node), max_notice_range);
         }
         // Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, vision_range, vision_mask)) {
@@ -311,12 +330,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         return false;
 
     }
-    
-    public bool debug_knows_player_location, debug_player_noticed;
-    public void SetDebugData() {
-        debug_knows_player_location = knows_player_location;
-        debug_player_noticed = player_noticed;
-    }
 
     private List<IPerceptionSubscriber> subscribers = new List<IPerceptionSubscriber>();
     public void Subscribe(IPerceptionSubscriber new_sub) => subscribers.Add(new_sub);
@@ -325,6 +338,39 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         foreach(IPerceptionSubscriber sub in subscribers) {
             sub.UpdatePerceptionState(old_state, new_state);
         }
+    }
+
+    public bool IsOnScreen() {
+        // returns true if this enemy is visible on-screen
+        Vector3 test_point = GetOnScreenTestPoint();
+        Vector3 viewport_position = visiblity_camera.WorldToViewportPoint(test_point);
+        // NOTE: do not check `viewport_position.z < 1`, z < 0 is behind camera, > 0 is in front of the camera. other dimensions check if point is 
+        //   off either side/top/bottom of the screen
+        return viewport_position.z > 0 && viewport_position.x > 0 && viewport_position.x < 1 && viewport_position.y > 0 && viewport_position.y < 1;
+    }
+
+    private Vector3 GetOnScreenTestPoint() {
+        // shifts the test point slightly off the enemy, to make sure the WHOLE enemy is on screen
+        Vector3 towards_player = target.position - transform.position;
+        towards_player = new Vector3(towards_player.x, 0f, towards_player.z).normalized;
+        return  transform.position + (towards_player * on_screen_test_offset);
+    }
+
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.gray;
+    //     Gizmos.DrawSphere(GetOnScreenTestPoint(), 0.25f);
+    // }
+
+    /////////////////////////////// DEBUG FIELDS //////////////////////////////////
+
+    public bool debug_knows_player_location, debug_player_noticed, debug_on_screen;
+    public float debug_distance_from_player;
+    public void SetDebugData() {
+        debug_knows_player_location = knows_player_location;
+        debug_player_noticed = player_noticed;
+        debug_on_screen = IsOnScreen();
+        debug_distance_from_player = DistanceToPlayer(PlayerCharacter.inst.vision_nodes[0]);
     }
 }
 

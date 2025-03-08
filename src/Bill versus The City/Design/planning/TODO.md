@@ -459,13 +459,13 @@ GAMEPLAY IMPROVEMENTS
         [ ] Search different points from each other
 
 [ ] Enemy Perception
-    [ ] Better hearing
+    [?] Better hearing
     [+] add "reaction_time" to enemies
         [+] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
             - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
         [+] Reaction time can be configured on enemy instance
         [ ] reaction time can be configured by spawner
-        [ ] Reaction time can be configured as a difficulty setting
+        [+] Reaction time can be configured as a difficulty setting
     [ ] Change enemy perception to not see the player if the enemy is not visible on screen
 
 [~] reload/aim TWEAKS
@@ -490,4 +490,6 @@ GAMEPLAY IMPROVEMENTS
 
 [ ] Level tweaks
     [+] Don't end tutorial 2 by exiting from truck
+        [ ] End feels jaring,
     [ ] Tutorial 1: Alert enemy after clearing dialogue, which triggeres immediately on entering shop
+        --> sloppy old dialogue code and issues opening menus from callbacks made this trickier than previously though.
