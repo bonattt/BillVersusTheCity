@@ -29,6 +29,7 @@ public class PlayerMovement : CharCtrl
         } 
         return InputSystem.current.AttackClickInput();
     }
+    public override bool is_player { get { return true; }}
 
     public override bool ReloadInput() {
         if (this.reloading) {

@@ -46,6 +46,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected IAnimationFacade _animator_facade;
     private float hit_stun_until = -1f;
     
+    public virtual bool is_player { get { return false; }}
     private bool _is_alive = true;
     public bool is_alive { get { return _is_alive; }}
     private bool _is_active = true;

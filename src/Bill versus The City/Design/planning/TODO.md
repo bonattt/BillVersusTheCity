@@ -450,23 +450,23 @@ GAMEPLAY IMPROVEMENTS
     
     REQUIREMENTS
     [+] Improve visibility
-    [ ] Remove using weapon to look through walls
-    [ ] Ranged and close combat should still work
+    [+] Remove using weapon to look through walls
+    [+] Ranged and close combat should still work
     
 [ ] Improve enemy AI 
     [ ] Cover fire
     [ ] Swarm intelligence
         [ ] Search different points from each other
 
-[ ] Enemy Perception
+[+] Enemy Perception
     [?] Better hearing
     [+] add "reaction_time" to enemies
         [+] enemy can only see the player if they've been seeing them for "reaction_time" time, or something. Separate from buidling awareness
             - an enemy that is hostile and chases the player around a corner still needs 0.1second to react 
         [+] Reaction time can be configured on enemy instance
-        [ ] reaction time can be configured by spawner
+        [X] reaction time can be configured by spawner -- decided not to do this
         [+] Reaction time can be configured as a difficulty setting
-    [ ] Change enemy perception to not see the player if the enemy is not visible on screen
+    [+] Change enemy perception to not see the player if the enemy is not visible on screen
 
 [~] reload/aim TWEAKS
     [ ] Can reload while aiming, it cancels aim

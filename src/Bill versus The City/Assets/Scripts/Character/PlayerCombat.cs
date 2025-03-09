@@ -6,7 +6,6 @@ public class PlayerCombat : MonoBehaviour  {
       * Script that does nothing but contain references to other player scripts
       */
     
-
     private bool _is_active = true;
     public bool is_active {
         get { return _is_active; }

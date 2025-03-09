@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour, IBullet
 {
     
+    public Transform location { get { return transform; } }
     public IAttackTarget attacker { get; set; }
     public IWeapon weapon { get; set; }
     public float attack_damage_min { get; set; }
@@ -27,6 +28,8 @@ public class Bullet : MonoBehaviour, IBullet
         }
     }
 
+    private static ulong bullet_count = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,8 @@ public class Bullet : MonoBehaviour, IBullet
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         // rb.constraints = RigidbodyConstraints.FreezePositionY;
+        gameObject.name = $"bullet {++bullet_count}";
+        BulletTracking.inst.TrackNewBullet(this);
     }
 
     // Update is called once per frame
@@ -66,10 +71,12 @@ public class Bullet : MonoBehaviour, IBullet
         }
         else if (target != null) {
             AttackResolver.ResolveAttackHit(this, target, hit_location);
+            BulletTracking.inst.TrackHit(this, target, hit_location);
             DestroyProjectile();
         } 
         else {
             AttackResolver.AttackMiss(this, hit_location);
+            BulletTracking.inst.TrackHit(this, null, hit_location);
             DestroyProjectile();
         }
 
@@ -77,5 +84,9 @@ public class Bullet : MonoBehaviour, IBullet
 
     private void DestroyProjectile() {
         Destroy(this.gameObject);
+    }
+
+    void OnDestroy() {
+        BulletTracking.inst.UnTrackBullet(this);
     }
 }

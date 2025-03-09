@@ -72,11 +72,13 @@ public interface IArmor : IItem, IDifficultyAdjusted {
 }
 
 public interface IBullet : IAttack {
+    public Transform location { get; }
     public void ResolveHit(GameObject hit, Vector3 point);
 }
 
 public interface IAttackTarget {
     // TODO
+    public bool is_player { get; }
     public ICharacterStatus GetStatus();
     public GameObject GetHitTarget(); // game object for handling effects when a target is hit
     public Transform GetAimTarget(); // return a transform to aim at when the character is targetted with attacks
