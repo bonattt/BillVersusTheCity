@@ -22,6 +22,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     public bool always_use_cover_to_reload = false;
     public bool never_use_cover_to_reload = false;
+
+    [Tooltip("Debug flag: if true, enemy will always stand still and do nothing.")]
+    public bool lock_to_passive = false;
     public float _shooting_rate = 1f;
     private float _shooting_rate_variation = 0f;
     public const float SHOOTING_RATE_VARIATION = 0.5f;
@@ -66,6 +69,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private PlayerCombat player_combat;
+    private EnemyThreatTracking threat_tracking;
+    private IReloadManager reload_manager;
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors;
     private ISubBehavior _reload_behavior = null;
@@ -95,12 +100,13 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             // agressive behaviors
             {BehaviorMode.engaged, new StandAndShootBehavior()},
             {BehaviorMode.persuing, new ChasePlayerBehavior()},
-            {BehaviorMode.retreating, new FleeToCoverBehavior()},  // TODO --- placeholder behavior value
+            {BehaviorMode.retreating, new FleeToCoverBehavior()},
             {BehaviorMode.searching, new SearchingBehavior(use_initial_movement_target, initial_movement_target)},
             // passive behaviors
             {BehaviorMode.passive, new StationaryBehavior()},
             {BehaviorMode.wondering, new WonderingBehavior(this)},
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
+            {BehaviorMode.suppressed, new FleeToCoverBehavior()},
             {BehaviorMode.routed, new FleeToCoverBehavior()},
             {BehaviorMode.dead, new DeadBehavior()},
         };
@@ -120,7 +126,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         InitializeBehaviorsDict();
         // Debug.LogWarning($"{gameObject.name}.initial_search_target: {initial_movement_target}, use: {use_initial_movement_target}"); // TODO --- remove debug
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
-        GetComponent<IReloadManager>().Subscribe(this);
+        reload_manager = GetComponent<IReloadManager>();
+        reload_manager.Subscribe(this);
+        threat_tracking = GetComponent<EnemyThreatTracking>();
 
         behavior_mode = default_behavior; // sets previous_behavior
         behavior_mode = default_behavior;
@@ -181,9 +189,18 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     protected void SetBehaviorMode() {
+        if (lock_to_passive) {
+            behavior_mode = BehaviorMode.passive;
+            return;
+        }
+
         // routed is permanent, and the enemy will run away forever
-        if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) { 
+        else if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) { 
             return; 
+        }
+        else if (threat_tracking.is_suppressed) {
+            behavior_mode = BehaviorMode.suppressed;
+            return;
         }
         switch(perception.state) {
             case PerceptionState.seeing:
@@ -245,6 +262,7 @@ public enum BehaviorMode {
     patrol,  // enemy will patrol through a sequence of pre-set points
     wondering,  // enemy is unaware of the player, and wonders idly 
     routed,  // enemy is paniced and will run away forever. (probably mostly for testing retreat behaviors and pathfinding)
+    suppressed, // enemy will retreat to cover until recovering from suppressed
     dead // enemy is dead
 
 }

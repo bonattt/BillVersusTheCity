@@ -6631,7 +6631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4597022462186920448, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: threshold
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4597022462186920448, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: suppression_rate
@@ -6639,7 +6639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4597022462186920448, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: suppression_recovery_rate
-      value: 1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6372002721478199582, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6693,6 +6693,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 338529279}
+    - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: lock_to_passive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: default_behavior
       value: 4

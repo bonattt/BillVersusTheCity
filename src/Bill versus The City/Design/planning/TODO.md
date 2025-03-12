@@ -457,9 +457,12 @@ GAMEPLAY IMPROVEMENTS
     [ ] Cover fire
         [X] navmesh obstacles on bullets --> doesn't work, 
         [X] try NavMeshModifierVolume to avoid bullets --> requires re-baking navmesh
-        [ ] Homebrew bullet avoidance --> it's more work, but other solutions don't seem to work. I think I want more control over whether enemies 
+        [~] Homebrew bullet avoidance --> it's more work, but other solutions don't seem to work. I think I want more control over whether enemies 
                 are actively avoiding anyways.
-            [ ] suppression system.
+            [+] suppression system.
+            [+] retreat to cover when suppressed
+            [ ] Check if there is no viable retreat, and start fighting
+            [ ] polish values
         [ ] play with acceleration to improve enemy movement
     [ ] Swarm intelligence
         [ ] Search different points from each other

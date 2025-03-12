@@ -15,16 +15,20 @@ public class EnemyThreatTracking : MonoBehaviour
     public float suppression_recovery_rate = 0.2f;
 
     [SerializeField]
+    private bool _is_suppressed = false;
+    public bool is_suppressed { get { return _is_suppressed; }}
+
+    [SerializeField]
     [Tooltip("tracks the number of bullets near this character on the current frame before updating supression")]
     private int bullets_near = 0;
 
     public bool draw_debug_lines = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    // // Start is called before the first frame update
+    // void Start()
+    // {
         
-    }
+    // }
 
     // Update is called once per frame
     void Update()
@@ -72,10 +76,12 @@ public class EnemyThreatTracking : MonoBehaviour
 
     public void UpdateRecoveredFromSuppression() {
         // TODO --- not sure if I will have a subscriber
+        _is_suppressed = false;
     }
 
     public void UpdateBecomeSuppressed() {
         // TODO --- not sure if I will have a subscriber
+        _is_suppressed = true;
     }
 
 }
