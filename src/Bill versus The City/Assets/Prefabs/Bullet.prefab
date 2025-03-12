@@ -231,3 +231,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_to_live: 10
+  damage_falloff_rate: 0

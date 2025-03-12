@@ -70,6 +70,23 @@ public class BulletTracking : MonoBehaviour {
         }
     }
 
+    
+
+    public IEnumerable<IBullet> NearbyBullets(Vector3 position, float threshold=1f) {
+        foreach(IBullet bullet in AllBullets()) {
+            float distance = FlatDistance(position, bullet.location.position);
+            if (distance <= threshold) {
+                yield return bullet;
+            }
+        }
+    }
+
+    private static float FlatDistance(Vector3 a, Vector3 b) {
+        a = new Vector3(a.x, 0, a.z);
+        b = new Vector3(b.x, 0, b.z);
+        return Vector3.Distance(a, b);
+    }
+
 }
 
 public struct TrackedHit {

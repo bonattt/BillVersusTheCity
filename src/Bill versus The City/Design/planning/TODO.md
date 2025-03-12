@@ -455,6 +455,12 @@ GAMEPLAY IMPROVEMENTS
     
 [ ] Improve enemy AI 
     [ ] Cover fire
+        [X] navmesh obstacles on bullets --> doesn't work, 
+        [X] try NavMeshModifierVolume to avoid bullets --> requires re-baking navmesh
+        [ ] Homebrew bullet avoidance --> it's more work, but other solutions don't seem to work. I think I want more control over whether enemies 
+                are actively avoiding anyways.
+            [ ] suppression system.
+        [ ] play with acceleration to improve enemy movement
     [ ] Swarm intelligence
         [ ] Search different points from each other
 

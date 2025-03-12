@@ -35,4 +35,13 @@
     - implemented new camera system
 
 2025-03-05:
-    - 
+    - ???
+
+
+2025-03-10:
+    no dev, felt terrible
+
+
+2035-03-11: 
+    very little dev. I explored the possibility of using NavMeshObstacles on bullets, but it VERY doesn't work, enemies jerk out of position 
+        to avoid bullets.
