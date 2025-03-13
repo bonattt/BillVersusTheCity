@@ -9,10 +9,14 @@ public class PatrolBehavior : MonoBehaviour, ISubBehavior  {
     public float shooting_rate { get { return 1f; }}
     public List<Transform> patrol_points;
     public bool loop = false;
+    
+    [SerializeField]
     private int iteration_step = 1;
+
+    [SerializeField]
     private int current = 0; 
 
-    private const float distance_to_arrival = 0.1f;
+    private const float distance_to_arrival = 0.75f;
     private bool initialized = false;
 
     public float pause_at_point = 1f;
@@ -59,19 +63,32 @@ public class PatrolBehavior : MonoBehaviour, ISubBehavior  {
         parent.controller.ctrl_aim_mode = AimingTarget.stationary;
         cooldown = pause_at_point;
         
-        if (current == patrol_points.Count - 1) {
-            if (loop) {
-                iteration_step = 1;
+        if (loop) {
+            if (current == patrol_points.Count - 1) {
                 current = 0;
             } else {
+                current += iteration_step;
+            }
+
+        } else {
+            if (current == patrol_points.Count - 1) {
                 iteration_step = -1;
             }
+            else if (current == 0) {
+                iteration_step = 1;
+            }
+            current += iteration_step;
         }
-        else if (current == 0) {
-            iteration_step = 1;
-        }
-
-        current += iteration_step;
         destination = patrol_points[current].position;
+
+        
+        //     if (loop) {
+        //         iteration_step = 1;
+        //         current = 0;
+        //     } else {
+        //         iteration_step = -1;
+        //     }
+        // }
+
     }
 }
