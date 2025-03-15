@@ -454,16 +454,18 @@ GAMEPLAY IMPROVEMENTS
     [+] Ranged and close combat should still work
     
 [ ] Improve enemy AI 
-    [ ] Cover fire
+    [~] Cover fire
         [X] navmesh obstacles on bullets --> doesn't work, 
         [X] try NavMeshModifierVolume to avoid bullets --> requires re-baking navmesh
         [~] Homebrew bullet avoidance --> it's more work, but other solutions don't seem to work. I think I want more control over whether enemies 
                 are actively avoiding anyways.
             [+] suppression system.
             [+] retreat to cover when suppressed
-            [ ] Check if there is no viable retreat, and start fighting
+            [+] Check if there is no viable retreat, and start fighting
+            [ ] Refactor to have FleeToCoverBehavior(reload=true) instead of ReloadFromCoverBehavior and FleeToCoverBehavior
+            [ ] check if calling CancelReload in EnemyBehavior is correct, or if I should be setting ctrl_reload = false, or something like that
             [ ] polish values
-        [ ] play with acceleration to improve enemy movement
+        [~] play with acceleration to improve enemy movement
     [ ] Swarm intelligence
         [ ] Search different points from each other
 
