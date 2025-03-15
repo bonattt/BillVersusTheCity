@@ -191,7 +191,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             behaviors[behavior_mode].AssumeBehavior(this);
             Debug.Log($"{gameObject.name}.EnemyBehavior.GetSubBehavio({behavior_mode} -> {previous_behavior_mode})"); // TODO --- remove debug
         } 
-        if (needs_reload && behavior_mode != BehaviorMode.routed) {
+        if (needs_reload && behavior_mode != BehaviorMode.routed && behavior_mode != BehaviorMode.suppressed) {
             Debug.LogWarning($"{gameObject.name} using reload behavior! (behavior_mode = {behavior_mode}), needs_reload: {needs_reload}, reload_behavior is null {_reload_behavior == null}");
             return reload_behavior;
         } else if (!needs_reload && controller.reloading) {

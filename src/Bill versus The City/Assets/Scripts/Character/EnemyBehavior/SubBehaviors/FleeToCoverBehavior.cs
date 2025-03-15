@@ -30,11 +30,14 @@ public class FleeToCoverBehavior : ISubBehavior  {
         parent.controller.ctrl_target = player;
         parent.controller.ctrl_move_mode = MovementTarget.waypoint;
         if (is_cornered) {
-            // TODO --- aim_mode, ctrl_sprint, and will_shoot need to be set in an if/else block
-        }    
-        parent.controller.ctrl_sprint = true;
-        parent.controller.ctrl_will_shoot = false;
-        parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
+            parent.controller.ctrl_sprint = false;
+            parent.controller.ctrl_will_shoot = fights_when_cornered;
+            parent.controller.ctrl_aim_mode = AimingTarget.target;
+        } else {
+            parent.controller.ctrl_sprint = true;
+            parent.controller.ctrl_will_shoot = false;
+            parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
+        }
         Color color = is_cornered ? Color.red : Color.green;
         Debug.DrawLine(parent.controller.transform.position, parent.controller.ctrl_waypoint, color);
     }
