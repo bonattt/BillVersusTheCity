@@ -10,6 +10,8 @@ public class AttackController : MonoBehaviour, IWeaponManager
     public IWeapon current_weapon { get; set; }
     public IAttackTarget attacker = null;
 
+    public bool start_weapon_loaded = true;
+
     public Transform shoot_point; // bullets start here
 
     public GameObject bullet_prefab;
@@ -172,7 +174,11 @@ public class AttackController : MonoBehaviour, IWeaponManager
         if (initialize_weapon != null && current_weapon == null) {
             current_weapon = (IWeapon) Instantiate(initialize_weapon);
         }
-        current_weapon.current_ammo = current_weapon.ammo_capacity;
+        if (start_weapon_loaded) {
+            current_weapon.current_ammo = current_weapon.ammo_capacity;
+        } else {
+            current_weapon.current_ammo = 0;
+        }
     }
 
     protected virtual void AttackControllerUpdate() {

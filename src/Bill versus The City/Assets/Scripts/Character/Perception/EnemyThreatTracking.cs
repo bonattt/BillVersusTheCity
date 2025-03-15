@@ -8,6 +8,9 @@ public class EnemyThreatTracking : MonoBehaviour
     [Tooltip("displays how suppressed the character is this frame. Suppression rises when bullets are near the character, and goes down when no bullets are nearby.")]
     private float suppression = 0f;
 
+    [Tooltip("Debug field to force `is_suppressed` to always be true")]
+    public bool always_suppressed = false;
+
     [Tooltip("distance at which a bullet is considered 'nearby'")]
     public float threshold = 3f;
 
@@ -16,7 +19,7 @@ public class EnemyThreatTracking : MonoBehaviour
 
     [SerializeField]
     private bool _is_suppressed = false;
-    public bool is_suppressed { get { return _is_suppressed; }}
+    public bool is_suppressed { get { return _is_suppressed || always_suppressed; }}
 
     [SerializeField]
     [Tooltip("tracks the number of bullets near this character on the current frame before updating supression")]

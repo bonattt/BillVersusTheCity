@@ -340,7 +340,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public void StartReload() {
-        Debug.LogWarning($"reloading {gameObject.name}");
         // initiate a reload
         reloading = true;
         start_reload_at = Time.time;

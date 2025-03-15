@@ -34,10 +34,12 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
+    [SerializeField]
     private bool _needs_reload = false;
     public bool needs_reload {
         get { return _needs_reload; }
         set { 
+            Debug.Log("NEEDS RELOAD SET!"); // TODO --- remove debug
             _needs_reload = value; 
             if(! _needs_reload) {
                 _reload_behavior = null;
@@ -100,14 +102,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             // agressive behaviors
             {BehaviorMode.engaged, new StandAndShootBehavior()},
             {BehaviorMode.persuing, new ChasePlayerBehavior()},
-            {BehaviorMode.retreating, new FleeToCoverBehavior()},
+            {BehaviorMode.retreating, new FleeToCoverBehavior(fights_when_cornered: true)},
             {BehaviorMode.searching, new SearchingBehavior(use_initial_movement_target, initial_movement_target)},
             // passive behaviors
             {BehaviorMode.passive, new StationaryBehavior()},
             {BehaviorMode.wondering, new WonderingBehavior(this)},
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
-            {BehaviorMode.suppressed, new FleeToCoverBehavior()},
-            {BehaviorMode.routed, new FleeToCoverBehavior()},
+            {BehaviorMode.suppressed, new FleeToCoverBehavior(fights_when_cornered: true)},
+            {BehaviorMode.routed, new FleeToCoverBehavior(fights_when_cornered: false)},
             {BehaviorMode.dead, new DeadBehavior()},
         };
     }
@@ -156,7 +158,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
     public void FinishReload(IReloadManager manager, IWeapon weapon) {
         // if reload is finished, clear `needs_reload` if the weapon is fully loaded, otherwise do not clear it.
-        needs_reload = weapon.current_ammo < weapon.ammo_capacity;
+        if (perception.seeing_target) {
+            Debug.LogWarning($"FinishReload while seeing player! {weapon.current_ammo} {weapon.current_ammo != 0}"); // TODO --- remove debug
+            needs_reload = weapon.current_ammo == 0;
+        } else {
+            Debug.LogWarning($"FinishReload in cover! {weapon.current_ammo} <= {weapon.ammo_capacity}"); // TODO --- remove debug
+            needs_reload = weapon.current_ammo < weapon.ammo_capacity;
+        }
+        Debug.LogWarning($"FinishReload {gameObject.name}: still needs reload?? {needs_reload} ammo ({weapon.current_ammo} / {weapon.ammo_capacity})"); // TODO --- remove debug
     }
     public void CancelReload(IReloadManager manager, IWeapon weapon) {
         // if reload is canceled, but the weapon has no ammo still, leave `needs_reload` as true, otherwise clear it.
@@ -183,7 +192,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             Debug.Log($"{gameObject.name}.EnemyBehavior.GetSubBehavio({behavior_mode} -> {previous_behavior_mode})"); // TODO --- remove debug
         } 
         if (needs_reload && behavior_mode != BehaviorMode.routed) {
+            Debug.LogWarning($"{gameObject.name} using reload behavior! (behavior_mode = {behavior_mode}), needs_reload: {needs_reload}, reload_behavior is null {_reload_behavior == null}");
             return reload_behavior;
+        } else if (!needs_reload && controller.reloading) {
+            controller.CancelReload();
         }
         return behaviors[behavior_mode];
     }

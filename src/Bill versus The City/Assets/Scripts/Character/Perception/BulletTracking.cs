@@ -27,22 +27,18 @@ public class BulletTracking : MonoBehaviour {
 
     private void RemoveOldHits() {
         while(tracked_hits.First != null && tracked_hits.First.Value.time < (Time.time - track_hits_for_seconds)) {
-            Debug.LogWarning($"{Time.time}: removing {HitOrMissString(tracked_hits.First.Value.hit)} from {tracked_hits.First.Value.time}"); // TODO --- remove debug
             tracked_hits.RemoveFirst();
         }
     }
 
     public void TrackNewBullet(IBullet bullet) {
         tracked_bullets.Add(bullet);
-        Debug.LogWarning($"track bullet {gameObject.name}. {tracked_bullets.Count} bullets now tracked!"); // TODO --- remove debug
     }
     public void UnTrackBullet(IBullet bullet) {
         tracked_bullets.Remove(bullet);
-        Debug.LogWarning($"UnTrackBullet {this.gameObject.name}. {tracked_bullets.Count} bullets still tracked!");  // TODO --- remove debug
     }
 
     public void TrackHit(IBullet bullet, IAttackTarget hit_target, Vector3 hit_location) {
-        Debug.LogWarning($"track {HitOrMissString(hit_target)} for {bullet}. Hits tracked: {tracked_hits.Count}");  // TODO --- remove debug
         tracked_hits.AddLast(new TrackedHit(bullet.attacker, Time.time, hit_target, hit_location));
     }
 

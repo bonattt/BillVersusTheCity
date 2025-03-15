@@ -104,6 +104,16 @@ public static class NavMeshUtils {
     //     return valid_positions;
     // }
 
+    public static bool RaycastTowardPlayer(EnemyBehavior enemy, PlayerMovement player, out RaycastHit hit, bool debug_ray=false) {
+        Vector3 start_pos = new Vector3(enemy.transform.position.x, 0.85f, enemy.transform.position.z);
+        Vector3 end_pos = new Vector3(player.transform.position.x, .85f, player.transform.position.z);
+        Vector3 towards_player = end_pos - start_pos;
+        if (debug_ray) {
+            Debug.DrawRay(start_pos, towards_player, Color.red, 0.25f);
+        }
+        return Physics.Raycast(start_pos, towards_player, out hit, towards_player.magnitude, LayerMaskSystem.inst.has_cover_raycast);
+    }
+
     public static bool RaycastHitsPlayer(RaycastHit hit) {
         // TODO --- find a better home for this helper method
         Transform hit_transform = hit.transform;
