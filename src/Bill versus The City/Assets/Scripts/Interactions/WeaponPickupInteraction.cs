@@ -20,6 +20,10 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect
         UpdateUIText();
     }
 
+    void Update() {
+        UpdateUIText(); // TODO --- optimize this to not be called in update???
+    }
+
     private void UpdateUIText() {
         if (ui == null) {
             Debug.LogWarning("no ui set for pickup!");

@@ -46,7 +46,6 @@ public class EnemyThreatTracking : MonoBehaviour
         bullets_near = 0;
         foreach (IBullet bullet_near in BulletTracking.inst.NearbyPlayerBullets(transform.position, distance_threshold)) {
             if (bullet_near.attacker == attacker) {
-                Debug.Log("skip bullet shot by myself!"); // TODO --- remove debug
                 continue;
             }
             bullets_near += 1;
@@ -56,11 +55,9 @@ public class EnemyThreatTracking : MonoBehaviour
 
     protected void UpdateSuppression() {
         if (bullets_near == 0) {
-            Debug.Log("no bullets near!"); // TODO --- remove debug
             ReduceSuppresion();
         }
         else {
-            Debug.Log($"increase suppression {bullets_near}"); // TODO --- remove debug
             IncreaseSuppression();
         }
     }

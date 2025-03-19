@@ -48,6 +48,16 @@ public class PlayerCombat : MonoBehaviour  {
             return _reloading;
         }
     }
+
+    private AmmoContainer _reload_ammo = null;
+    public AmmoContainer reload_ammo {
+        get {
+            if (_reload_ammo == null) {
+                _reload_ammo = GetComponent<AmmoContainer>();
+            }
+            return _reload_ammo;
+        }
+    }
     
     private CharacterController _character_controller = null;
     public CharacterController character_controller {

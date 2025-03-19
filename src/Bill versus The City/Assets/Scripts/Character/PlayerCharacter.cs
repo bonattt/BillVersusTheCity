@@ -50,6 +50,13 @@ public class PlayerCharacter {
     private PlayerInventory _inventory; // = new PlayerInventory();
     public PlayerInventory inventory { get { return _inventory; }}
 
+    public AmmoContainer reload_ammo {
+        get {
+            if (combat == null) { return null; }
+            return combat.reload_ammo;
+        }
+    }
+
     // TODO --- is this okay???
     public Transform player_transform { get { 
         if (combat == null) { return null; }
