@@ -102,6 +102,7 @@ public interface IWeapon : IItem {
     public int reload_amount { get; }
     public float reload_time { get; }
     public int current_ammo { get; set; }
+    public int ammo_drop_size { get; }
 
     // rate of fire
     public FiringMode firing_mode { get; }

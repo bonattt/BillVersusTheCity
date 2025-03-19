@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: .357 magnum
   ammo_type: 1
+  ammo_drop_size: 12
   n_shots: 1
   aimed_inaccuracy: 2
   initial_inaccuracy: 3
@@ -21,3 +22,4 @@ MonoBehaviour:
   weapon_damage_min: 85
   weapon_damage_max: 105
   armor_effectiveness: 1.25
+  damage_falloff_rate: 0.25

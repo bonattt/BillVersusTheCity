@@ -45,6 +45,10 @@ public class DetailedWeapon : ScriptableObject, IWeapon
     public AmmoType ammo_type { 
         get { return bullet_effect.ammo_type; } 
     }
+    
+    public int ammo_drop_size { 
+        get { return bullet_effect.ammo_drop_size; }
+    }
     public int ammo_capacity { 
         get { return _ammo_capacity; } 
     }

@@ -11,6 +11,7 @@ public class BulletAttributes : ScriptableObject {
     public string _name;
     // ammo
     public AmmoType ammo_type;
+    public int ammo_drop_size = 5;
 
     // rate of fire
     public int n_shots = 1;

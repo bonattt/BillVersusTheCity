@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: shotgun slug
   ammo_type: 3
+  ammo_drop_size: 4
   n_shots: 1
   aimed_inaccuracy: 3
   initial_inaccuracy: 6
@@ -21,3 +22,4 @@ MonoBehaviour:
   weapon_damage_min: 100
   weapon_damage_max: 120
   armor_effectiveness: 1.75
+  damage_falloff_rate: 0.25

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
   _name: handgun 9mm
   ammo_type: 0
+  ammo_drop_size: 17
   n_shots: 1
   aimed_inaccuracy: 2
   initial_inaccuracy: 3
   bullet_speed: 35
   weapon_damage_min: 35
   weapon_damage_max: 45
-  armor_penetration: 1
+  armor_effectiveness: 1
+  damage_falloff_rate: 0.25
