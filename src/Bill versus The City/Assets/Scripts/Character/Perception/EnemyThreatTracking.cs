@@ -12,7 +12,7 @@ public class EnemyThreatTracking : MonoBehaviour
     public bool always_suppressed = false;
 
     [Tooltip("distance at which a bullet is considered 'nearby'")]
-    public float threshold = 3f;
+    public float distance_threshold = 5f;
 
     public float suppression_rate = 0.1f;
     public float suppression_recovery_rate = 0.2f;
@@ -24,14 +24,16 @@ public class EnemyThreatTracking : MonoBehaviour
     [SerializeField]
     [Tooltip("tracks the number of bullets near this character on the current frame before updating supression")]
     private int bullets_near = 0;
+    private IAttackTarget attacker;
 
     public bool draw_debug_lines = true;
 
     // // Start is called before the first frame update
-    // void Start()
-    // {
-        
-    // }
+    void Start()
+    {
+        attacker = GetComponent<IAttackTarget>();
+        if (attacker == null) { Debug.LogError($"{gameObject.name}.EnemyThreatTracking.attacker is null!!"); }
+    }
 
     // Update is called once per frame
     void Update()
@@ -42,7 +44,11 @@ public class EnemyThreatTracking : MonoBehaviour
 
     protected void UpdateBulletsNear() {
         bullets_near = 0;
-        foreach (IBullet bullet_near in BulletTracking.inst.NearbyBullets(transform.position, threshold)) {
+        foreach (IBullet bullet_near in BulletTracking.inst.NearbyPlayerBullets(transform.position, distance_threshold)) {
+            if (bullet_near.attacker == attacker) {
+                Debug.Log("skip bullet shot by myself!"); // TODO --- remove debug
+                continue;
+            }
             bullets_near += 1;
             Debug.DrawLine(transform.position, bullet_near.location.position, Color.magenta);
         }

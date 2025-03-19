@@ -3524,6 +3524,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3184021359275399683, guid: 0e61d6a35b388d54e98a14af66a276e0, type: 3}
+      propertyPath: gizmo_color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184021359275399683, guid: 0e61d6a35b388d54e98a14af66a276e0, type: 3}
+      propertyPath: gizmo_color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184021359275399683, guid: 0e61d6a35b388d54e98a14af66a276e0, type: 3}
+      propertyPath: gizmo_color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184021359275399683, guid: 0e61d6a35b388d54e98a14af66a276e0, type: 3}
+      propertyPath: gizmo_color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184021359275399683, guid: 0e61d6a35b388d54e98a14af66a276e0, type: 3}
       propertyPath: always_draw_gizmos
       value: 1
       objectReference: {fileID: 0}

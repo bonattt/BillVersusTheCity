@@ -879,6 +879,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1034086256320115388, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: _health
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1034086256320115388, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: _max_health
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 1229702735197554014, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: disable_spot
       value: 0
@@ -4169,14 +4177,6 @@ PrefabInstance:
     - target: {fileID: 3658742417150927902, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
       propertyPath: hide_until_enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6828463536557817257, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 6828463536557817257, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.4
       objectReference: {fileID: 0}
     - target: {fileID: 8673137286306914175, guid: c0b7404eff53e094fa6a77d0bae842bb, type: 3}
       propertyPath: next_scene

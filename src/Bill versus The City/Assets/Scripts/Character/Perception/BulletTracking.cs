@@ -68,10 +68,20 @@ public class BulletTracking : MonoBehaviour {
 
     
 
-    public IEnumerable<IBullet> NearbyBullets(Vector3 position, float threshold=1f) {
+    public IEnumerable<IBullet> NearbyBullets(Vector3 position, float distance_threshold=1f) {
         foreach(IBullet bullet in AllBullets()) {
             float distance = FlatDistance(position, bullet.location.position);
-            if (distance <= threshold) {
+            if (distance <= distance_threshold) {
+                yield return bullet;
+            }
+        }
+    }
+    
+
+    public IEnumerable<IBullet> NearbyPlayerBullets(Vector3 position, float distance_threshold=1f) {
+        foreach(IBullet bullet in PlayerBullets()) {
+            float distance = FlatDistance(position, bullet.location.position);
+            if (distance <= distance_threshold) {
                 yield return bullet;
             }
         }
