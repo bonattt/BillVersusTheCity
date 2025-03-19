@@ -443,10 +443,10 @@ FEEDBACK:
 ====================
 GAMEPLAY IMPROVEMENTS
 
-[~] Aim System
+[+] Aim System
     [+] Camera always follows mouse
     [+] FIX: Camera jitters in some conditions
-    [ ] Visible Accuracy
+    [X] Visible Accuracy
     
     REQUIREMENTS
     [+] Improve visibility
@@ -466,8 +466,9 @@ GAMEPLAY IMPROVEMENTS
             [ ] check if calling CancelReload in EnemyBehavior is correct, or if I should be setting ctrl_reload = false, or something like that
             [ ] polish values
         [~] play with acceleration to improve enemy movement
-    [ ] Swarm intelligence
-        [ ] Search different points from each other
+    [~] Swarm intelligence
+        [+] Search different points from each other
+        [ ] Detect enemies stuck on each other, and unstick them
 
 [+] Enemy Perception
     [?] Better hearing
