@@ -61,9 +61,11 @@ public class SearchingBehavior : ISubBehavior  {
     // public void EndBehavior() { /* do nothing by default */ }
 
     private bool ReachedDestination(EnemyBehavior parent) {
+        // returns true if the enemy has reached it's current destination
         return ReachedDestination(parent, current_search_target);
     }
     private bool ReachedDestination(EnemyBehavior parent, Vector3 dest) {
+        // returns true if the enemy has reached it's current destination
         return WaypointSystem.ReachedDestination(parent.transform.position, dest);
     }
 
@@ -88,7 +90,7 @@ public class SearchingBehavior : ISubBehavior  {
         }
         current_search_waypoint = GetNextSearchDestination(parent);
         current_search_target = current_search_waypoint.position;
-        Debug.LogWarning($"Update Search target {previous_target} --> {current_search_target}");
+        // Debug.LogWarning($"Update Search target {previous_target} --> {current_search_target}");
     }
     
     public Transform GetNextSearchDestination(EnemyBehavior parent) {
@@ -101,9 +103,10 @@ public class SearchingBehavior : ISubBehavior  {
 
     public Transform RandomNextWaypoint() {
         // selects a waypoint at random, excluding any waypoints in `waypoints_searched`
-        List<Transform> valid_waypoints = WaypointSystem.inst.GetWaypointsWithout(waypoints_searched);
-        int i = Random.Range(0, valid_waypoints.Count);
-        return valid_waypoints[i];
+        // List<Transform> valid_waypoints = WaypointSystem.inst.GetWaypointsWithout(waypoints_searched);
+        // int i = Random.Range(0, valid_waypoints.Count);
+        // return valid_waypoints[i];
+        return SwarmIntelligence.inst.GetNewPoint();
     }
 
     public string GetDebugMessage(EnemyBehavior parent) {

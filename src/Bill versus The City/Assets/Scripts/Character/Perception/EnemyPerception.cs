@@ -150,6 +150,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         last_seen_at = target.position;
         if (visible_nodes_this_frame >= 1) {
             state = PerceptionState.seeing;
+            SwarmIntelligence.inst.SeePlayer(last_seen_at, Time.time);
         } else {
             state = PerceptionState.alert;
         }
@@ -165,6 +166,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         // the enemy no longer knows where the player is, if it ever did.
         if (state == PerceptionState.unaware) { return; } // do nothing if the enemy didn't know about the player
         state = PerceptionState.searching;
+        SwarmIntelligence.inst.SeePlayer(last_seen_at, Time.time);
     }
 
     public void StatusUpdated(ICharacterStatus status) {
