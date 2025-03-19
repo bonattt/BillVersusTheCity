@@ -12,7 +12,15 @@ public class WaypointSystem : MonoBehaviour {
         get { return _inst; }
     }
 
-    public List<Transform> waypoints;
+    private List<Transform> _waypoints = null;
+    public List<Transform> waypoints {
+        get {
+            if (_waypoints == null) {
+                _waypoints = CalculateWaypoints();
+            }
+            return _waypoints;
+        }
+    }
 
     public List<Transform> GetWaypointsWithout(ICollection<Transform> excluded) {
         // returns a copy of the list of waypoints, with all the elements of `excluded` removed.
@@ -27,9 +35,15 @@ public class WaypointSystem : MonoBehaviour {
 
     void Start() {
         _inst = this;
+    }
+
+    protected List<Transform> CalculateWaypoints() {
+        List<Transform> waypoints_calculated = new List<Transform>();
+        // calculates the waypoints from children of this GameObject, rather than a stored list
         foreach (Transform child in transform) {
-            waypoints.Add(child);
+            waypoints_calculated.Add(child);
         }
+        return waypoints_calculated;
     }
 
     public static Vector3 FlattenVector(Vector3 v) {
