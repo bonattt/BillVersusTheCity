@@ -162,6 +162,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
     public void OnDamage(ICharacterStatus status) {
         // do nothing
         // NOTE: this is not used, this script is managed by CharCtrl, and status subscription is commented out...
+        if (status.adjusting_difficulty) { return; }
         hurt_at = Time.time;
         animator.SetTrigger("trigger_hurt");
     }

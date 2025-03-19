@@ -84,8 +84,10 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         }
     }
 
+    public bool adjusting_difficulty { get; protected set; }
     private float health_multiplier = 1f; // set by difficulty
     private void SetHealthDifficulty() {
+        adjusting_difficulty = true;
         // adjusts health and max_healht based on the games difficulty settings 
         float previous_multiplier = health_multiplier; 
         if (is_player) {
@@ -97,6 +99,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         _max_health = Mathf.Round(_max_health * health_multiplier / previous_multiplier);
         // setting property updates subscribers automagically
         health = Mathf.Round(_health * health_multiplier / previous_multiplier);
+        adjusting_difficulty = true;
     }
 
     private string health_difficulty_field { 
@@ -135,6 +138,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     }
 
     void Start() {
+        adjusting_difficulty = false;
         GameSettings.inst.difficulty_settings.Subscribe(this);
         SetHealthDifficulty();
         if (_health <= 0 || _health > max_health) {
@@ -179,10 +183,12 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
 
     private void SetArmorDifficulty() {
         if (armor == null) { return; }
+        adjusting_difficulty = true;
         
         float difficulty = GameSettings.inst.difficulty_settings.GetMultiplier(armor_difficulty_field);
         this.armor.SetDiffcultyMultiplier(difficulty);
         UpdateStatus();
+        adjusting_difficulty = false;
     }
 
     void Update() {

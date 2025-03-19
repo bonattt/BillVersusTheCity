@@ -183,6 +183,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     public void OnDamage(ICharacterStatus status) {
+        if (status.adjusting_difficulty) { return; } // don't alert enemies because you lowered the difficulty, which reduces their health
         Alert();        
     }
     public void OnHeal(ICharacterStatus status) {

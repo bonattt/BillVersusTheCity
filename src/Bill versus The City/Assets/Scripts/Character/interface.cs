@@ -6,6 +6,7 @@ using UnityEngine;
 public interface ICharacterStatus {
     public float health { get; set; }
     public float max_health { get; set; }
+    public bool adjusting_difficulty { get; } // flag set to true while values are adjusted for difficulty, to avoid triggering on-damage effects when a character's health is adjusted for difficulty level
     public IArmor armor { get; }
 
     public void ApplyNewArmor(IArmor armor_template); // create new armor from IArmor as a template

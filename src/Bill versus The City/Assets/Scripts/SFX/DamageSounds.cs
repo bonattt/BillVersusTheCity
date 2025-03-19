@@ -53,7 +53,7 @@ public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
     }
     
     public void OnDamage(ICharacterStatus status) {
-        // do nothing
+        if (status.adjusting_difficulty) { return; } // don't play damage sounds if health was adjusted for difficulty
         PlayDamageSound();
     }
     public void OnHeal(ICharacterStatus status) {
