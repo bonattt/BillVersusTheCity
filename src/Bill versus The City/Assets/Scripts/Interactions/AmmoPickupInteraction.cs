@@ -26,7 +26,7 @@ public class AmmoPickupInteraction : MonoBehaviour, IInteractionEffect {
         if(CanPlayerPickupAmmo()) {
             ui.SetNewText($"Pickup {ammo_amount} {ammo_type} ammo");
         } else {
-            ui.SetNewText($"{ammo_type} is full!");
+            ui.SetNewText($"{ammo_type} ammo is full!");
         } 
     }
 
