@@ -56,14 +56,14 @@ using UnityEngine.AI;
         nav_mesh_agent.Warp(new_position);
     }
 
-    protected override void Move() {
+    public override void Move() {
         LookWithAction();
         if (this.is_hit_stunned) {
             nav_mesh_agent.SetDestination(transform.position);
         }
         else {
             nav_mesh_agent.speed = this.movement_speed;
-            nav_mesh_agent.SetDestination(MoveDestination());
+            nav_mesh_agent.SetDestination(GetMoveDestination());
         }
         // REFACTOR: find a better home for code below here
         if (attack_controller.current_weapon.current_ammo == 0) {
@@ -80,7 +80,7 @@ using UnityEngine.AI;
         return MoveDirection() * movement_speed;
     }
 
-    public Vector3 MoveDestination() {
+    public Vector3 GetMoveDestination() {
         switch (ctrl_move_mode) {
             case MovementTarget.stationary:
                 return transform.position;
@@ -105,30 +105,30 @@ using UnityEngine.AI;
         return new Vector3(0f, 0f, 0f); // don't move
     }
 
-    public override bool AttackInput() {
-        // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-        if (seeing_target && ctrl_will_shoot) {
-            if (saw_target) {
-                if (use_full_auto) { return true; }
-                return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
-            }
-            else {
-                // start countdown to shoot once target is seen
-                this.last_attack_time = Time.time;
-            }
-        }
-        return false;
-    }
+    // public override bool AttackInput() {
+    //     // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
+    //     if (seeing_target && ctrl_will_shoot) {
+    //         if (saw_target) {
+    //             if (use_full_auto) { return true; }
+    //             return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
+    //         }
+    //         else {
+    //             // start countdown to shoot once target is seen
+    //             this.last_attack_time = Time.time;
+    //         }
+    //     }
+    //     return false;
+    // }
     
-    public override bool ReloadInput() {
-        return ctrl_start_reload;
-        // return attack_controller.current_weapon.current_ammo == 0
-        //     && !reloading
-        //     && AttackInput();
-    }
+    // public override bool ReloadInput() {
+    //     return ctrl_start_reload;
+    //     // return attack_controller.current_weapon.current_ammo == 0
+    //     //     && !reloading
+    //     //     && AttackInput();
+    // }
 
 
-    public override Vector3 ShootVector() {
+    public override Vector3 GetShootVector() {
         return ShootTarget() - attack_controller.shoot_point.position; //  VectorFromLookTarget(ShootTarget());
     }
 
@@ -140,7 +140,7 @@ using UnityEngine.AI;
         return ctrl_target.GetAimTarget().position;
     }
     
-    public override Vector3 LookTarget() {
+    public override Vector3 GetLookTarget() {
         switch (ctrl_aim_mode) {
             case AimingTarget.stationary:
                 return new Vector3(0f, 0f, 0f);
@@ -231,21 +231,21 @@ using UnityEngine.AI;
         // }
     }
 
-    /////////////////////////////
-    /// DEBUG FIELDS ////////////
-    /////////////////////////////
+    // /////////////////////////////
+    // /// DEBUG FIELDS ////////////
+    // /////////////////////////////
     
-    public bool debug_seeing_target, debug_saw_target;
-    public Vector3 debug_move_vector, debug_move_destination, debug_look_target;
+    // public bool debug_seeing_target, debug_saw_target;
+    // public Vector3 debug_move_vector, debug_move_destination, debug_look_target;
 
-    protected override void SetDebugData() {
-        base.SetDebugData();
-        debug_seeing_target = seeing_target;
-        debug_saw_target = saw_target;
-        debug_move_vector = MoveVector();
-        debug_move_destination = MoveDestination();
-        debug_look_target = LookTarget();
-    }
+    // protected override void SetDebugData() {
+    //     base.SetDebugData();
+    //     debug_seeing_target = seeing_target;
+    //     debug_saw_target = saw_target;
+    //     debug_move_vector = MoveVector();
+    //     debug_move_destination = MoveDestination();
+    //     debug_look_target = GetLookTarget();
+    // }
 }
 
 public enum MovementTarget {

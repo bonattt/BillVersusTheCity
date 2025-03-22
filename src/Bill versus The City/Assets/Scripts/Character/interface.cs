@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public interface ICharacterStatus {
+public interface ICharacterStatus { // : IAttackTarget { // TODO --- make CharacterStatus handle attacks, instead of movement
     public float health { get; set; }
     public float max_health { get; set; }
     public bool adjusting_difficulty { get; } // flag set to true while values are adjusted for difficulty, to avoid triggering on-damage effects when a character's health is adjusted for difficulty level
@@ -77,10 +77,14 @@ public interface IBullet : IAttack {
     public void ResolveHit(GameObject hit, Vector3 point);
 }
 
+public interface ICharacterMovement {
+    
+}
+
 public interface IAttackTarget {
     // TODO
     public bool is_player { get; }
-    public ICharacterStatus GetStatus();
+    public ICharacterStatus GetStatus(); // TODO --- remove this, make ICharacterStatus extend this interface instead. 
     public GameObject GetHitTarget(); // game object for handling effects when a target is hit
     public Transform GetAimTarget(); // return a transform to aim at when the character is targetted with attacks
     public void OnAttackHitRecieved(IAttack attack);
@@ -181,9 +185,9 @@ public interface IReloadManager {
     public float reload_time { get; }
     public float reload_progress { get; }
     public bool is_active { get; set; }
-    public void UpdateStartReload(IWeapon weapon);
-    public void UpdateFinishReload(IWeapon weapon);
-    public void UpdateCancelReload(IWeapon weapon);
+    public void UpdateReloadStarted(IWeapon weapon);
+    public void UpdateReloadFinished(IWeapon weapon);
+    public void UpdateReloadCancelled(IWeapon weapon);
     public void Subscribe(IReloadSubscriber sub);
     public void Unsubscribe(IReloadSubscriber sub);
 }
@@ -199,6 +203,6 @@ public interface IGenericObservable {
 
 public interface IReloadSubscriber {
     public void StartReload(IReloadManager manager, IWeapon weapon);
-    public void FinishReload(IReloadManager manager, IWeapon weapon);
-    public void CancelReload(IReloadManager manager, IWeapon weapon);
+    public void ReloadFinished(IReloadManager manager, IWeapon weapon);
+    public void ReloadCancelled(IReloadManager manager, IWeapon weapon);
 }

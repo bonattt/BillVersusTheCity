@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : CharCtrl
+public class ManualCharacterMovement : CharCtrl
 {
     // returns a list of all the nodes which enemies raycast to see the player
     public Transform vision_target;
@@ -22,47 +22,9 @@ public class PlayerMovement : CharCtrl
         }
     }
 
-    public override bool AttackInput() {
-        if (current_weapon == null) { return false; }
-        if (current_weapon.auto_fire) {
-            return InputSystem.current.AttackHoldInput();
-        } 
-        return InputSystem.current.AttackClickInput();
-    }
     public override bool is_player { get { return true; }}
 
-    public override bool ReloadInput() {
-        if (this.reloading) {
-            return false;
-        }
-        return InputSystem.current.ReloadInput();
-    }
 
-    public override bool SprintInput() {
-        return InputSystem.current.SprintInput();
-    }
-
-    public override bool CancelReloadInput() {
-        if (! this.reloading) {
-            return false;
-        }
-        return InputSystem.current.ReloadInput() || InputSystem.current.AttackClickInput();
-    }
-    
-    public override bool AimInput() {
-        return InputSystem.current.AimAttackInput();
-    }
-
-    public override bool CrouchInput() {
-        return InputSystem.current.CrouchInput();
-    }
-
-    public override bool CancelAimInput() {
-        if (this.aiming) {
-            return !AimInput();
-        }
-        return false;
-    }
 
     public float _crouch_percent = 0f;
     public float crouch_percent {
@@ -101,6 +63,18 @@ public class PlayerMovement : CharCtrl
             return move_speed * crouch_multiplier;
         }
     }
+    
+    void Update()
+    {   
+        // SetDebugData();
+        if (! is_active) { return; } // do nothing while controller disabled
+        // SetAction();
+        HandleAnimation();
+        // Move();
+        // TryToAttack();
+        UpdatePauseAttackLock();
+        PostUpdate();
+    }
 
     private void HandleCrouch() {
         if (crouch_dive_remaining >= 0) { crouch_dive_remaining -= Time.deltaTime; }
@@ -133,7 +107,7 @@ public class PlayerMovement : CharCtrl
         _crouch_target.position = destination;
     }
     
-    protected override void Move() {
+    public override void Move() {
         LookWithAction();
         HandleCrouch();
         controller.SimpleMove(MoveVector());
@@ -155,7 +129,7 @@ public class PlayerMovement : CharCtrl
     //     return move * this.movement_speed;
     // }
 
-    public override Vector3 LookTarget() {
+    public override Vector3 GetLookTarget() {
         Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
         Vector3 look_target = new Vector3(mouse_pos.x, transform.position.y, mouse_pos.z);
         return look_target;
@@ -196,17 +170,5 @@ public class PlayerMovement : CharCtrl
         _animator_facade.crouch_percent = crouch_percent;
         _animator_facade.crouch_dive = crouch_dive_remaining > 0f;
     }
-
     
-    ////////// debug fields /////////
-
-    public Vector3 debug_crouch_dive_direction;
-    public bool debug_crouch_input, debug_space_held;
-    
-    protected override void SetDebugData() { 
-        base.SetDebugData();
-        debug_crouch_dive_direction = crouch_dive_direction;
-        debug_crouch_input = CrouchInput();
-        debug_space_held = Input.GetKey(KeyCode.Space);
-    }
 }

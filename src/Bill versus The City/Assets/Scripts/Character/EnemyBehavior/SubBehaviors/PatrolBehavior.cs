@@ -29,7 +29,7 @@ public class PatrolBehavior : MonoBehaviour, ISubBehavior  {
         initialized = false;
     }
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         if (!initialized) {
             SetNewDestination(parent);
             initialized = true;

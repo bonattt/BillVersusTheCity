@@ -7,7 +7,7 @@ public class CrudeCrouchAnimator : MonoBehaviour
 
     public Transform target_object;
     public float crouched_y = 0.25f;
-    public PlayerMovement player;
+    public ManualCharacterMovement player;
     private float uncrouched_y;
     
     // Start is called before the first frame update

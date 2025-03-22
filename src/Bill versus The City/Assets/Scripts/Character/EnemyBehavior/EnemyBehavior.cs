@@ -146,6 +146,45 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         SetDefaultBehaviorPatterns();
         GetSubBehavior().SetControllerFlags(this, player_combat.movement);
         SetDebug();
+
+        /// actively control EnemyController (new refactor)
+        if (! controller.is_active) { return; } 
+        if (ReloadInput()) {
+            controller.StartReload();
+        } else if (CancelReloadInput()) {
+            controller.CancelReload();
+        }
+        else if (AttackInput()) {
+            controller.TryToAttack();
+        }
+        controller.Move();
+    }
+
+    
+    public bool AttackInput() {
+        // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
+        if (perception.seeing_target && controller.ctrl_will_shoot && !controller.reloading) {
+            if (perception.saw_target_last_frame) {
+                if (controller.use_full_auto) { return true; }
+                return Time.time >= (controller.last_attack_time + controller.ctrl_shooting_rate);
+            }
+            else {
+                // start countdown to shoot once target is seen
+                controller.last_attack_time = Time.time;
+            }
+        }
+        return false;
+    }
+    
+    public bool ReloadInput() {
+        return controller.ctrl_start_reload && !controller.reloading; 
+        // return attack_controller.current_weapon.current_ammo == 0
+        //     && !reloading
+        //     && AttackInput();
+    }
+
+    public bool CancelReloadInput() {
+        return controller.ctrl_cancel_reload && controller.reloading;
     }
 
     void OnDestroy() {
@@ -156,7 +195,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public void StartReload(IReloadManager manager, IWeapon weapon) {
         // do nothing
     }
-    public void FinishReload(IReloadManager manager, IWeapon weapon) {
+    public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
         // if reload is finished, clear `needs_reload` if the weapon is fully loaded, otherwise do not clear it.
         if (perception.seeing_target) {
             Debug.LogWarning($"FinishReload while seeing player! {weapon.current_ammo} {weapon.current_ammo != 0}"); // TODO --- remove debug
@@ -167,7 +206,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
         Debug.LogWarning($"FinishReload {gameObject.name}: still needs reload?? {needs_reload} ammo ({weapon.current_ammo} / {weapon.ammo_capacity})"); // TODO --- remove debug
     }
-    public void CancelReload(IReloadManager manager, IWeapon weapon) {
+    public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
         // if reload is canceled, but the weapon has no ammo still, leave `needs_reload` as true, otherwise clear it.
         needs_reload = weapon.current_ammo == 0;
     }

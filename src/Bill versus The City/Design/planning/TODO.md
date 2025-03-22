@@ -480,11 +480,19 @@ GAMEPLAY IMPROVEMENTS
         [+] Reaction time can be configured as a difficulty setting
     [+] Change enemy perception to not see the player if the enemy is not visible on screen
 
-[~] reload/aim TWEAKS
-    [ ] Can reload while aiming, it cancels aim
-    [ ] ALSO reload or shoot while sprinting,
-    [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
-    [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
+[ ] Character Controller --> need to fix messy character controller code
+    [+] change CharCtrl from a framework pattern to a library pattern
+    [ ] refactor "EnemyController" to "NavMeshAgentMovement"
+    [ ] Reimplement sprinting controls
+    [ ] Reimplement crouching controls
+    [ ] Move EnemyController.ctrl_* control fields into EnemyBehavior
+    [ ] Refactor damage to be handled exclusively by CharacterStatus, which should implement IAttackTarget instead of character movement
+    [ ] Reimplement Death triggers
+    [~] reload/aim TWEAKS
+        [ ] Can reload while aiming, it cancels aim
+        [ ] ALSO reload or shoot while sprinting,
+        [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
+        [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons

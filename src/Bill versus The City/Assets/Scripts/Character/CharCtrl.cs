@@ -9,7 +9,7 @@ public enum CharacterActionKey {
     sprint,
 }
 
-public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager
+public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager, ICharacterMovement
 {
     // list of codes which don't correspond to actual actions, and should be reset to ActionCode.none
     public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint};
@@ -28,7 +28,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public Transform aim_target;
     public Transform crouch_target; // moves up and down when the character crouches
 
-    public float last_attack_time { get; protected set; }
+    public float last_attack_time { get; set; }
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
     public ActionCode current_action = ActionCode.none;
@@ -111,7 +111,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     private bool _aiming = false;
     public bool aiming {
         get { return _aiming; }
-        protected set {
+        set {
             _aiming = value;
             if (_aiming) {
                 attack_controller.StartAim();
@@ -151,37 +151,37 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public bool is_hit_stunned { get { return hit_stun_until > Time.time; }}
 
-    ////////// debug fields /////////
-    public ActionCode debug_action_input = ActionCode.none;
-    public bool debug_attack_input, debug_can_attack, debug_weapon_isnull, debug_full_auto, debug_reloading, debug_sprint_input, debug_pause_blocked;
-    public int debug_current_ammo;
-    public float debug_movement_speed, debug_reload_progress, debug_inaccuracy, debug_recoil, debug_aim_percent, debug_pause_blocked_for;
-    public Vector3 debug_move_dir;
+    // ////////// debug fields /////////
+    // public ActionCode debug_action_input = ActionCode.none;
+    // public bool debug_attack_input, debug_can_attack, debug_weapon_isnull, debug_full_auto, debug_reloading, debug_sprint_input, debug_pause_blocked;
+    // public int debug_current_ammo;
+    // public float debug_movement_speed, debug_reload_progress, debug_inaccuracy, debug_recoil, debug_aim_percent, debug_pause_blocked_for;
+    // public Vector3 debug_move_dir;
 
-    protected virtual void SetDebugData() {
-        debug_move_dir = MoveDirection();
-        debug_movement_speed = this.movement_speed;
-        debug_attack_input = AttackInput();
-        debug_can_attack = CanAttack();
-        debug_weapon_isnull = current_weapon == null;
-        if (!debug_weapon_isnull) {
-            debug_full_auto = current_weapon.auto_fire;
-            debug_current_ammo = current_weapon.current_ammo;
-        } else {
-            debug_full_auto = false;
-            debug_current_ammo = -1;
-        }
-        debug_reloading = reloading;
-        debug_reload_progress = reload_progress;
-        debug_inaccuracy = attack_controller.current_inaccuracy;
-        debug_recoil = attack_controller.current_recoil;
-        debug_aim_percent = attack_controller.aim_percent;
-        debug_action_input = GetActionInput();
-        debug_sprint_input = SprintInput();
-        debug_pause_blocked_for = _attack_paused_locked_for;
-        debug_pause_blocked = AttackPauseLocked();
-    }
-    /////////////////////////////////
+    // protected virtual void SetDebugData() {
+    //     debug_move_dir = MoveDirection();
+    //     debug_movement_speed = this.movement_speed;
+    //     debug_attack_input = AttackInput();
+    //     debug_can_attack = CanAttack();
+    //     debug_weapon_isnull = current_weapon == null;
+    //     if (!debug_weapon_isnull) {
+    //         debug_full_auto = current_weapon.auto_fire;
+    //         debug_current_ammo = current_weapon.current_ammo;
+    //     } else {
+    //         debug_full_auto = false;
+    //         debug_current_ammo = -1;
+    //     }
+    //     debug_reloading = reloading;
+    //     debug_reload_progress = reload_progress;
+    //     debug_inaccuracy = attack_controller.current_inaccuracy;
+    //     debug_recoil = attack_controller.current_recoil;
+    //     debug_aim_percent = attack_controller.aim_percent;
+    //     debug_action_input = GetActionInput();
+    //     debug_sprint_input = SprintInput();
+    //     debug_pause_blocked_for = _attack_paused_locked_for;
+    //     debug_pause_blocked = AttackPauseLocked();
+    // }
+    // /////////////////////////////////
 
     void Start() {
         SetupCharacter();
@@ -199,19 +199,18 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {   
-        if (! is_active) { return; } // do nothing while controller disabled
-        PreUpdate();
-        SetAction();
-        Move();
-        TryToAttack();
-        SetDebugData();
-        UpdatePauseAttackLock();
-        PostUpdate();
-        HandleAnimation();
-    }
+    // // Update is called once per frame
+    // void Update()
+    // {   
+    //     if (! is_active) { return; } // do nothing while controller disabled
+    //     SetAction();
+    //     Move();
+    //     TryToAttack();
+    //     SetDebugData();
+    //     UpdatePauseAttackLock();
+    //     PostUpdate();
+    //     HandleAnimation();
+    // }
 
     protected virtual void HandleAnimation() {
         if (_animator_facade == null) { 
@@ -235,10 +234,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public virtual void SetPosition(Vector3 new_position) {
         transform.position = new_position;
-    }
-
-    protected virtual void PreUpdate() {
-        // do nothing. Extension hook for subclasses.
     }
 
     protected virtual void PostUpdate() {
@@ -343,7 +338,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // initiate a reload
         reloading = true;
         start_reload_at = Time.time;
-        UpdateStartReload(current_weapon);
+        UpdateReloadStarted(current_weapon);
     }
 
     public bool ReloadIsFinished() {
@@ -357,7 +352,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // end reload before it's finished
         reloading = false;
         current_action = ActionCode.none;
-        UpdateCancelReload(current_weapon);
+        UpdateReloadCancelled(current_weapon);
     }
     
     private void FinishReload() {
@@ -373,7 +368,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             _ReloadGeneric(wpn);
         }
         attack_controller.UpdateSubscribers();
-        UpdateFinishReload(current_weapon);
+        UpdateReloadFinished(current_weapon);
 
         // for weapons that reload single rounds, keep reloading
         if(wpn.current_ammo != wpn.ammo_capacity) {
@@ -437,11 +432,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    private bool CanAttack() {
+    public bool CanAttack() {
         return !is_hit_stunned && !reloading && !is_sprinting && !AttackPauseLocked() && LevelConfig.inst.combat_enabled;
     }
 
-    private void UpdatePauseAttackLock() {
+    protected void UpdatePauseAttackLock() {
         _attack_paused_locked_for -= Time.deltaTime;
         if (_attack_paused_locked_for <= 0f) {
             _attack_paused_locked_for = 0f;
@@ -457,25 +452,25 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return _attack_paused_locked_for > 0f;
     }
 
-    private void TryToAttack() {
-        if (AttackInput() && CanAttack()) {
-            if (current_action == ActionCode.cancel_reload) {
-                // shooting can be used to cancel reload. in that case, cancel reload instead of shooting
-                // cannot shoot the same frame you cancel reload
-                return; 
-            }
+    public void TryToAttack() {
+        if (CanAttack()) {
+            // if (current_action == ActionCode.cancel_reload) {
+            //     // shooting can be used to cancel reload. in that case, cancel reload instead of shooting
+            //     // cannot shoot the same frame you cancel reload
+            //     return; 
+            // }
             PerformAttack();
         }
     }
 
     protected virtual void PerformAttack() {
         last_attack_time = Time.time;
-        attack_controller.FireAttack(ShootVector());
+        attack_controller.FireAttack(GetShootVector());
     }
     
     public abstract Vector3 MoveDirection();
     public abstract Vector3 MoveVector();
-    protected abstract void Move();
+    public abstract void Move();
 
     protected void LookWithAction() {
         Vector3 forward; 
@@ -491,10 +486,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
  
     protected virtual Vector3 LookVector() {
         // Returns a vector of the direction to look in
-        return VectorFromLookTarget(LookTarget());
+        return VectorFromLookTarget(GetLookTarget());
     }
 
-    protected Vector3 VectorFromLookTarget(Vector3 look_target) {
+    public Vector3 VectorFromLookTarget(Vector3 look_target) {
         Vector3 v = look_target - transform.position;
         Vector3 forward = new Vector3(
             v.x, 0, v.z
@@ -502,15 +497,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return forward;
     }
 
-    public abstract Vector3 LookTarget();  // Vector3 position to look at.
+    public abstract Vector3 GetLookTarget();  // Vector3 position to look at.
 
-    public virtual Vector3 ShootVector() {
+    public virtual Vector3 GetShootVector() {
         return LookVector();
-    }
-
-    public virtual bool AttackInput() {
-        // Indicates that a main attack should be made this frame.
-        return false;
     }
 
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target) {
@@ -596,19 +586,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private List<IReloadSubscriber> _reload_subscribers = new List<IReloadSubscriber>();
-    public void UpdateStartReload(IWeapon weapon) {
+    public void UpdateReloadStarted(IWeapon weapon) {
         foreach (IReloadSubscriber sub in _reload_subscribers) {
             sub.StartReload(this, weapon);
         }
     }
-    public void UpdateFinishReload(IWeapon weapon) {
+    public void UpdateReloadFinished(IWeapon weapon) {
         foreach (IReloadSubscriber sub in _reload_subscribers) {
-            sub.FinishReload(this, weapon);
+            sub.ReloadFinished(this, weapon);
         }
     }
-    public void UpdateCancelReload(IWeapon weapon) {
+    public void UpdateReloadCancelled(IWeapon weapon) {
         foreach (IReloadSubscriber sub in _reload_subscribers) {
-            sub.CancelReload(this, weapon);
+            sub.ReloadCancelled(this, weapon);
         }
     }
     public void Subscribe(IReloadSubscriber sub) => _reload_subscribers.Add(sub);

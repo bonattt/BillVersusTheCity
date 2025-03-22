@@ -21,10 +21,10 @@ public class InteractionTrigger : MonoBehaviour
 
     private bool IsPlayer(Collider c) {
         GameObject other = c.gameObject;
-        PlayerMovement player = other.GetComponent<PlayerMovement>();
+        ManualCharacterMovement player = other.GetComponent<ManualCharacterMovement>();
         while (player == null && other.transform.parent != null) {
             other = other.transform.parent.gameObject;
-            player = other.GetComponent<PlayerMovement>();
+            player = other.GetComponent<ManualCharacterMovement>();
         }
         return player != null;
     }

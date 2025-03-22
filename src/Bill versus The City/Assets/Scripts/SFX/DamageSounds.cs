@@ -33,7 +33,7 @@ public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
         status = target_character.GetStatus();
         status.Subscribe(this);
         try {
-            PlayerMovement _ = (PlayerMovement) target_character;
+            ManualCharacterMovement _ = (ManualCharacterMovement) target_character;
             is_player = true;
         } catch (InvalidCastException) {
             is_player = false;

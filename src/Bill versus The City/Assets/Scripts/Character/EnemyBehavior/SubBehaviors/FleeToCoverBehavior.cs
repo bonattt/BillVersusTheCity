@@ -19,7 +19,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
         this.reload = reload;
     }
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         // parent.controller.ctrl_waypoint = new Vector3(0, 0, 0);
 
         // recalculate destination
@@ -42,14 +42,14 @@ public class FleeToCoverBehavior : ISubBehavior  {
         Debug.DrawLine(parent.controller.transform.position, parent.controller.ctrl_waypoint, color);
     }
 
-    private void UpdateIsCornered(EnemyBehavior parent, PlayerMovement player) {
+    private void UpdateIsCornered(EnemyBehavior parent, ManualCharacterMovement player) {
         if (!is_cornered) {
             is_cornered = WillBecomeCornered(parent, player);
         }
         is_cornered = WillStayCornered(parent, player);
     }
 
-    private Vector3 RecalculatePath(EnemyBehavior parent, PlayerMovement player) {
+    private Vector3 RecalculatePath(EnemyBehavior parent, ManualCharacterMovement player) {
         last_calculation_at = Time.time;
         UpdatePlayerRaycast(parent, player);
         UpdateIsCornered(parent, player);
@@ -83,7 +83,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
     }
 
     private bool has_los_to_player = false; // cached 
-    private void UpdatePlayerRaycast(EnemyBehavior parent, PlayerMovement player) {
+    private void UpdatePlayerRaycast(EnemyBehavior parent, ManualCharacterMovement player) {
         // RaycastHit hit;
         // if (NavMeshUtils.RaycastTowardPlayer(parent, player, out hit, debug_ray: true)) {
         //     // if raycast hits something other than the player
@@ -99,7 +99,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
         has_los_to_player = false;
     }
 
-    private bool WillStayCornered(EnemyBehavior parent, PlayerMovement player) {
+    private bool WillStayCornered(EnemyBehavior parent, ManualCharacterMovement player) {
         // if (!is_cornered) { return false; } // can only stay cornered if you're already cornered
         // bool stay_cornered = false;
         // if (NavMeshUtils.RaycastTowardPlayer(parent, player, out hit, debug_ray: true)) {
@@ -110,7 +110,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
         return is_cornered && has_los_to_player; 
     }
 
-    private bool WillBecomeCornered(EnemyBehavior parent, PlayerMovement player) {
+    private bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player) {
         if (is_cornered) { return false; } // already cornered, don't BECOME cornered
         
         // Vector3 start = parent.controller.transform.position;
@@ -151,7 +151,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
     //     return PathBlocked(parent, player, destination) >= towards_player_threshold;
     // }
 
-    private static Vector3 DestinationAwayFromPlayer(EnemyBehavior parent, PlayerMovement player) {
+    private static Vector3 DestinationAwayFromPlayer(EnemyBehavior parent, ManualCharacterMovement player) {
         Debug.LogWarning("DestinationAwayFromPlayer"); // TODO --- remove debug
         Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
         Debug.DrawRay(parent.transform.position, toward_player, Color.red);
@@ -173,7 +173,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
 
 
     public string GetDebugMessage(EnemyBehavior parent) {
-        PlayerMovement player = PlayerCharacter.inst.player_transform.gameObject.GetComponent<PlayerMovement>();
+        ManualCharacterMovement player = PlayerCharacter.inst.player_transform.gameObject.GetComponent<ManualCharacterMovement>();
         return $"is_cornered: {is_cornered}, destination: {parent.controller.ctrl_waypoint}";
     }
 }

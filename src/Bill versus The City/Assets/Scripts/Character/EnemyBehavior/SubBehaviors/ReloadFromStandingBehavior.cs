@@ -6,7 +6,7 @@ public class ReloadFromStandingBehavior : ISubBehavior  {
 
     public ReloadFromStandingBehavior() { /* do nothing */ }
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         parent.controller.ctrl_target = player;
         parent.controller.ctrl_will_shoot = false;
 

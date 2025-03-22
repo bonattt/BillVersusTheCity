@@ -13,7 +13,7 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
         this.cancel_reload_to_retreat = cancel_reload_to_retreat;
      }
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         if (last_calculation_at + calculations_per_second > Time.time) {
             return;
         }

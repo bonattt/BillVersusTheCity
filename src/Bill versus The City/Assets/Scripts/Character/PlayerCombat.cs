@@ -19,11 +19,11 @@ public class PlayerCombat : MonoBehaviour  {
         }
     }
 
-    private PlayerMovement _movement = null;
-    public PlayerMovement movement {
+    private ManualCharacterMovement _movement = null;
+    public ManualCharacterMovement movement {
         get {
             if (_movement == null) {
-                _movement = GetComponent<PlayerMovement>();
+                _movement = GetComponent<ManualCharacterMovement>();
             }
             return _movement;
         }

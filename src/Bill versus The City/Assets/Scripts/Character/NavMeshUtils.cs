@@ -104,7 +104,7 @@ public static class NavMeshUtils {
     //     return valid_positions;
     // }
 
-    public static bool RaycastTowardPlayer(EnemyBehavior enemy, PlayerMovement player, out RaycastHit hit, bool debug_ray=false) {
+    public static bool RaycastTowardPlayer(EnemyBehavior enemy, ManualCharacterMovement player, out RaycastHit hit, bool debug_ray=false) {
         Vector3 start_pos = new Vector3(enemy.transform.position.x, 0.85f, enemy.transform.position.z);
         Vector3 end_pos = new Vector3(player.transform.position.x, .85f, player.transform.position.z);
         Vector3 towards_player = end_pos - start_pos;
@@ -120,7 +120,7 @@ public static class NavMeshUtils {
         while (hit_transform.parent != null) {
             hit_transform = hit_transform.parent;
         }
-        bool result = hit_transform.gameObject.GetComponent<PlayerMovement>() != null;
+        bool result = hit_transform.gameObject.GetComponent<ManualCharacterMovement>() != null;
         return result;
     }
 

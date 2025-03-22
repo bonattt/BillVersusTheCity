@@ -8,7 +8,7 @@ public class DeadBehavior : ISubBehavior  {
     public DeadBehavior() { /* do nothing */ }
     ~DeadBehavior() { /* do nothing */ }
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         parent.controller.ctrl_waypoint = parent.transform.position;
         parent.controller.ctrl_sprint = false;
         parent.controller.ctrl_target = player;

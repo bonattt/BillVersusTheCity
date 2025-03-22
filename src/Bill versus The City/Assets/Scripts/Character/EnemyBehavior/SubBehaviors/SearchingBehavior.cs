@@ -24,7 +24,7 @@ public class SearchingBehavior : ISubBehavior  {
     private bool target_not_found = false;
     private HashSet<Transform> waypoints_searched = new HashSet<Transform>();
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         // if (Vector3.Distance(parent.transform.position, parent.perception.last_seen_at) <= 0.25f) {
         if (ReachedDestination(parent, parent.perception.last_seen_at)) {
             parent.perception.last_seen_at_investigated = true;

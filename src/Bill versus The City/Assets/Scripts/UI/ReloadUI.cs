@@ -60,11 +60,11 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
         UpdateProgress();
     }
 
-    public void FinishReload(IReloadManager manager, IWeapon weapon) {
+    public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
         ClearUI();
     }
 
-    public void CancelReload(IReloadManager manager, IWeapon weapon) {
+    public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
         ClearUI();
     }
 

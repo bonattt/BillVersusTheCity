@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 3633326187336503762}
   - component: {fileID: 7243860271420088886}
   - component: {fileID: 5536909008189705540}
+  - component: {fileID: 2369998920330595195}
   - component: {fileID: 6586359110877128584}
   - component: {fileID: 4665821343985391478}
   - component: {fileID: 2012941016556226390}
@@ -336,6 +337,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactor: {fileID: 1103222215490961864}
+--- !u!114 &2369998920330595195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7652fe06a15e5439619bd0f0b22449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeholder_sprint: 0
+  debug_aim: 0
+  player_movement: {fileID: 6586359110877128584}
 --- !u!114 &6586359110877128584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,21 +375,6 @@ MonoBehaviour:
   sprint_multiplier: 1.75
   start_reload_at: 0
   animatior_controller_ref: {fileID: 7783136410653839400}
-  debug_action_input: 0
-  debug_attack_input: 0
-  debug_can_attack: 0
-  debug_weapon_isnull: 0
-  debug_full_auto: 0
-  debug_reloading: 0
-  debug_sprint_input: 0
-  debug_pause_blocked: 0
-  debug_current_ammo: 0
-  debug_movement_speed: 0
-  debug_reload_progress: 0
-  debug_inaccuracy: 0
-  debug_recoil: 0
-  debug_aim_percent: 0
-  debug_pause_blocked_for: 0
   vision_target: {fileID: 7902831743066966521}
   crouch_dive_duration: 0.5
   _crouch_percent: 0
@@ -382,7 +383,6 @@ MonoBehaviour:
   uncrouched_height: 1.2
   crouch_rate: 4
   uncrouch_rate: 4
-  debug_crouch_dive_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &4665821343985391478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,6 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialize_weapon: {fileID: 0}
+  start_weapon_loaded: 1
   shoot_point: {fileID: 2506234290457545205}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
@@ -404,6 +405,9 @@ MonoBehaviour:
   weapon_slots_enabled: 01010101010100000000
   switch_weapons_blocked: 0
   _current_slot: 0
+  debug_rifle_equipped: 
+  debug_handgun_equipped: 
+  debug_pickup_equipped: 
 --- !u!114 &2012941016556226390
 MonoBehaviour:
   m_ObjectHideFlags: 0

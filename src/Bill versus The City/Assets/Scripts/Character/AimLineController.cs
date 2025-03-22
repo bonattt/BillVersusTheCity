@@ -14,7 +14,7 @@ public class AimLineController : MonoBehaviour
 
     public Color base_color = Color.red;
     public PlayerAttackController attack_controller;
-    public PlayerMovement player_movement;
+    public ManualCharacterMovement player_movement;
 
     public LayerMask layer_mask;
 

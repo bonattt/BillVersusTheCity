@@ -49,13 +49,13 @@ public class ReloadSounds : MonoBehaviour, IReloadSubscriber
         reload_start_effect.DisplayWeaponEffect(transform.position, weapon);
     }
 
-    public void FinishReload(IReloadManager manager, IWeapon weapon) {
+    public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
         // SFXSystem.instance.PlaySound(reload_complete_sound, transform.position);
         if (killed) { return; } // don't play sounds if enemy is killed while reloading
         reload_complete_effect.DisplayWeaponEffect(transform.position, weapon);
     }
 
-    public void CancelReload(IReloadManager manager, IWeapon weapon) {
+    public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
         if (killed) { return; } // don't play sounds if enemy is killed while reloading
         reload_cancel_effect.DisplayWeaponEffect(transform.position, weapon);
     }

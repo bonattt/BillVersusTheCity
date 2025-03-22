@@ -19,7 +19,7 @@ public class WonderingBehavior : ISubBehavior  {
         SetNewDestination(parent);
     }
     
-    public void SetControllerFlags(EnemyBehavior parent, PlayerMovement player) {
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
 
         parent.controller.ctrl_sprint = false;
         parent.controller.ctrl_will_shoot = false;
