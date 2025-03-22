@@ -6,8 +6,8 @@ using UnityEngine;
 
  public class EnemiesManager : MonoBehaviour, IGenericObservable
 {
-    private HashSet<EnemyController> enemies = new HashSet<EnemyController>();
-    private HashSet<EnemyController> enemies_defeated = new HashSet<EnemyController>();
+    private HashSet<NavMeshAgentMovement> enemies = new HashSet<NavMeshAgentMovement>();
+    private HashSet<NavMeshAgentMovement> enemies_defeated = new HashSet<NavMeshAgentMovement>();
 
     public int remaining_enemies {
         get {
@@ -36,12 +36,12 @@ using UnityEngine;
         } 
     }
 
-    private HashSet<EnemyController> _enemies_remaining = null;
-    public HashSet<EnemyController> GetRemainingEnemies() {
+    private HashSet<NavMeshAgentMovement> _enemies_remaining = null;
+    public HashSet<NavMeshAgentMovement> GetRemainingEnemies() {
         // returns a new HashSet containing all the enemies in the current scene
         if (_enemies_remaining == null) {
-            _enemies_remaining = new HashSet<EnemyController>(enemies);
-            foreach (EnemyController e in enemies_defeated) {
+            _enemies_remaining = new HashSet<NavMeshAgentMovement>(enemies);
+            foreach (NavMeshAgentMovement e in enemies_defeated) {
                 if (_enemies_remaining.Contains(e)) {
                     _enemies_remaining.Remove(e);
                 }
@@ -59,7 +59,7 @@ using UnityEngine;
         UpdateSubscribers();
     }
 
-    public void AddEnemy(EnemyController enemy) {
+    public void AddEnemy(NavMeshAgentMovement enemy) {
         enemies.Add(enemy);
         UpdateSubscribers();
     }
@@ -72,12 +72,12 @@ using UnityEngine;
 
     public void DebugKillAll() {
         // debug action to kill all enemies
-        foreach(EnemyController e in enemies) {
+        foreach(NavMeshAgentMovement e in enemies) {
             e.GetStatus().health = -999;
         }
     }
 
-    public void KillEnemy(EnemyController enemy) {
+    public void KillEnemy(NavMeshAgentMovement enemy) {
         // only add enemy to defeated enemies if it's actually in the scene
         // if the enemy is not in the scene, it's being cleaned up on a scene load
         if (enemies.Contains(enemy)) {
@@ -88,7 +88,7 @@ using UnityEngine;
 
     public void AlertAll() {
         // alerts all enemies currently in the map
-        foreach (EnemyController ctrl in GetRemainingEnemies()) {
+        foreach (NavMeshAgentMovement ctrl in GetRemainingEnemies()) {
             EnemyPerception perception = ctrl.GetComponent<EnemyPerception>();
             if (perception == null) {
                 Debug.LogError($"EnemyPerception is null for '{ctrl.gameObject}'!");
@@ -100,7 +100,7 @@ using UnityEngine;
 
     public void AlertEnemiesNear(Vector3 start) {
         // Alerts all nearby enemies to the given point
-        foreach(EnemyController ctrl in GetRemainingEnemies()) {
+        foreach(NavMeshAgentMovement ctrl in GetRemainingEnemies()) {
             TryAlertOneEnemyNear(start, ctrl.GetComponent<EnemyPerception>());
         }
     }
@@ -145,13 +145,13 @@ using UnityEngine;
         debug_enemies = new List<string>();
         debug_enemies_remaining = new List<string>();
         debug_enemeis_defeated = new List<string>();
-        foreach (EnemyController e in enemies) {
+        foreach (NavMeshAgentMovement e in enemies) {
             debug_enemies.Add($"{e}");
         }
-        foreach (EnemyController e in enemies_defeated) {
+        foreach (NavMeshAgentMovement e in enemies_defeated) {
             debug_enemeis_defeated.Add($"{e}");
         }
-        foreach (EnemyController e in GetRemainingEnemies()) {
+        foreach (NavMeshAgentMovement e in GetRemainingEnemies()) {
             debug_enemies_remaining.Add($"{e}");
         }
     }

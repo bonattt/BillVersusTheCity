@@ -482,7 +482,8 @@ GAMEPLAY IMPROVEMENTS
 
 [ ] Character Controller --> need to fix messy character controller code
     [+] change CharCtrl from a framework pattern to a library pattern
-    [ ] refactor "EnemyController" to "NavMeshAgentMovement"
+    [ ] remove "extend Start" hooks, and just use a virtual start method that can be directly overridden
+    [+] refactor "EnemyController" to "NavMeshAgentMovement"
     [ ] Reimplement sprinting controls
     [ ] Reimplement crouching controls
     [ ] Move EnemyController.ctrl_* control fields into EnemyBehavior

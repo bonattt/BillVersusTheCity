@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
- public class EnemyController : CharCtrl
+ public class NavMeshAgentMovement : CharCtrl
 {
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
