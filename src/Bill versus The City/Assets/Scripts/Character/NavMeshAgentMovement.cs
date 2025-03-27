@@ -45,19 +45,24 @@ using UnityEngine.AI;
     //     // DO nothing
     // }
 
-    public override void SetupCharacter() {
-        base.SetupCharacter();
+    public override void Start() {
+        base.Start();
         perception = GetComponent<EnemyPerception>();
         behavior = GetComponent<EnemyBehavior>();
         EnemiesManager.inst.AddEnemy(this);
+    }
+    
+    void Update() {
+        UpdateReload();
     }
 
     public override void SetPosition(Vector3 new_position) {
         nav_mesh_agent.Warp(new_position);
     }
 
-    public override void Move() {
-        LookWithAction();
+    public void Move(bool sprint=false) {
+        Vector3 look_direction = DirectionFromLookTarget(GetLookTarget());
+        LookRotate(look_direction);
         if (this.is_hit_stunned) {
             nav_mesh_agent.SetDestination(transform.position);
         }
@@ -70,13 +75,19 @@ using UnityEngine.AI;
             behavior.needs_reload = true;
         }
     }
+    
+    private void LookRotate(Vector3 forward) {
+        float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+        Quaternion target_rot = Quaternion.AngleAxis(angle - 90, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, rotation_speed);
+    }
 
-    public override Vector3 MoveDirection() {
+    public Vector3 MoveDirection() {
         return (nav_mesh_agent.nextPosition - transform.position).normalized;
     }
 
     
-    public override Vector3 MoveVector() {
+    public override Vector3 GetVelocity() {
         return MoveDirection() * movement_speed;
     }
 
@@ -129,7 +140,7 @@ using UnityEngine.AI;
 
 
     public override Vector3 GetShootVector() {
-        return ShootTarget() - attack_controller.shoot_point.position; //  VectorFromLookTarget(ShootTarget());
+        return ShootTarget() - attack_controller.shoot_point.position; //  DirectionFromLookTarget(ShootTarget());
     }
 
     private Vector3 ShootTarget() {
@@ -140,7 +151,7 @@ using UnityEngine.AI;
         return ctrl_target.GetAimTarget().position;
     }
     
-    public override Vector3 GetLookTarget() {
+    public Vector3 GetLookTarget() {
         switch (ctrl_aim_mode) {
             case AimingTarget.stationary:
                 return new Vector3(0f, 0f, 0f);

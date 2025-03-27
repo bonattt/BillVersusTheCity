@@ -90,17 +90,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    public virtual bool is_sprinting {
-        get {
-            return this.current_action == ActionCode.sprint;
-        }
-    }
+    public virtual bool is_sprinting { get; protected set; }
 
     private bool _reloading = false;
     public bool reloading {
         get { return _reloading; }
         protected set {
             _reloading = value;
+            Debug.Log($"reloading set: {_reloading}"); // TODO --- remove debug
             try {
                 ((PlayerAttackController) attack_controller).switch_weapons_blocked = value;
             } catch (InvalidCastException) {
@@ -183,10 +180,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // }
     // /////////////////////////////////
 
-    void Start() {
-        SetupCharacter();
-    }
-    public virtual void SetupCharacter() {
+    public virtual void Start() {
         char_status = GetComponent<CharacterStatus>();
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();
@@ -212,6 +206,15 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //     HandleAnimation();
     // }
 
+    protected void UpdateReload() {
+        // Debug.Log($"{gameObject.name}.UpdateReload() -- reloading: {reloading}, finished: {ReloadIsFinished()}");// TODO --- remove debug
+        if (reloading && ReloadIsFinished()) {
+            FinishReload();
+        } else if (reloading) { // TODO --- remove debug
+            // Debug.Log($"~~~reloading!");
+        }
+    }
+
     protected virtual void HandleAnimation() {
         if (_animator_facade == null) { 
             Debug.Log($"{gameObject.name} animator is null!");
@@ -220,7 +223,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // model is rotated weird...
         _animator_facade.forward_direction = this.transform.right;
         _animator_facade.right_direction = -this.transform.forward;
-        _animator_facade.move_velocity = MoveVector();
+        _animator_facade.move_velocity = GetVelocity();
         _animator_facade.action = AnimationActionType.idle;
         _animator_facade.weapon_class = current_weapon != null ? current_weapon.weapon_class : WeaponClass.empty;
         _animator_facade.aim_percent = attack_controller.aim_percent;
@@ -240,99 +243,99 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // do nothing. Extension hook for subclasses.
     }
 
-    protected void SetAction() {
-        if (NON_ACTIONABLE_CODES.Contains(current_action)) {
-            current_action = ActionCode.none;
-        }
-        ActionCode action_input = GetActionInput();
-        if (reloading) {
-            if (ReloadIsFinished()) {
-                FinishReload();
-            }
-            else if (
-                    action_input == ActionCode.cancel_reload || 
-                    action_input == ActionCode.sprint ||  
-                    action_input == ActionCode.aim 
-            ) {
-                CancelReload();
-            }
-        }
+    // protected void SetAction() {
+    //     if (NON_ACTIONABLE_CODES.Contains(current_action)) {
+    //         current_action = ActionCode.none;
+    //     }
+    //     ActionCode action_input = GetActionInput();
+    //     if (reloading) {
+    //         if (ReloadIsFinished()) {
+    //             FinishReload();
+    //         }
+    //         else if (
+    //                 action_input == ActionCode.cancel_reload || 
+    //                 action_input == ActionCode.sprint ||  
+    //                 action_input == ActionCode.aim 
+    //         ) {
+    //             CancelReload();
+    //         }
+    //     }
 
-        else if (aiming) {
-            if (action_input == ActionCode.cancel_aim || action_input == ActionCode.sprint) {
-                aiming = false;
-                current_action = ActionCode.none;
-            }
-        }
+    //     else if (aiming) {
+    //         if (action_input == ActionCode.cancel_aim || action_input == ActionCode.sprint) {
+    //             aiming = false;
+    //             current_action = ActionCode.none;
+    //         }
+    //     }
 
-        if (current_action == ActionCode.none) {
-            current_action = action_input;
+    //     if (current_action == ActionCode.none) {
+    //         current_action = action_input;
 
-            switch (current_action) {
-                case ActionCode.none:
-                    break;
+    //         switch (current_action) {
+    //             case ActionCode.none:
+    //                 break;
 
-                case ActionCode.reload:
-                    if (CanReload()) {
-                        StartReload();
-                    } else {
-                        // cannot reload, reset action code.
-                        current_action = ActionCode.none;
-                    }
-                    break;
+    //             case ActionCode.reload:
+    //                 if (CanReload()) {
+    //                     StartReload();
+    //                 } else {
+    //                     // cannot reload, reset action code.
+    //                     current_action = ActionCode.none;
+    //                 }
+    //                 break;
 
-                case ActionCode.aim:
-                    aiming = true;
-                    break;
-            }
-        }
-    }
+    //             case ActionCode.aim:
+    //                 aiming = true;
+    //                 break;
+    //         }
+    //     }
+    // }
 
-    public virtual ActionCode GetActionInput() {
-        if (ReloadInput()) {
-            return ActionCode.reload;
-        }
-        else if (AimInput()) {
-            return ActionCode.aim;
-        }
-        else if (CrouchInput()) {
-            return ActionCode.crouch;
-        }
-        else if (SprintInput()) {
-            return ActionCode.sprint;
-        }
-        else if (CancelReloadInput()) {
-            return ActionCode.cancel_reload;
-        }
-        else if (CancelAimInput()) {
-            return ActionCode.cancel_aim;
-        }
-        return ActionCode.none;
-    }
+    // public virtual ActionCode GetActionInput() {
+    //     if (ReloadInput()) {
+    //         return ActionCode.reload;
+    //     }
+    //     else if (AimInput()) {
+    //         return ActionCode.aim;
+    //     }
+    //     else if (CrouchInput()) {
+    //         return ActionCode.crouch;
+    //     }
+    //     else if (SprintInput()) {
+    //         return ActionCode.sprint;
+    //     }
+    //     else if (CancelReloadInput()) {
+    //         return ActionCode.cancel_reload;
+    //     }
+    //     else if (CancelAimInput()) {
+    //         return ActionCode.cancel_aim;
+    //     }
+    //     return ActionCode.none;
+    // }
     
-    public virtual bool CrouchInput() { 
-        return false;
-    }
+    // public virtual bool CrouchInput() { 
+    //     return false;
+    // }
 
-    public virtual bool AimInput() {
-        return false;
-    }
+    // public virtual bool AimInput() {
+    //     return false;
+    // }
 
-    public virtual bool CancelAimInput() {
-        return false;
-    }
+    // public virtual bool CancelAimInput() {
+    //     return false;
+    // }
 
-    public virtual bool ReloadInput() {
-        return false;
-    }
+    // public virtual bool ReloadInput() {
+    //     return false;
+    // }
 
-    public virtual bool SprintInput() {
-        return false;
-    }
+    // public virtual bool SprintInput() {
+    //     return false;
+    // }
 
-    public virtual bool CancelReloadInput() {
-        return false;
-    }
+    // public virtual bool CancelReloadInput() {
+    //     return false;
+    // }
 
     public void StartReload() {
         // initiate a reload
@@ -378,6 +381,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             } 
         }
     }
+    public virtual bool CanSprint() {
+        return true;
+    }
+
     public bool CanReload() {
         // returns if the character can reload with the current_weapon.
         IWeapon current = current_weapon;
@@ -468,28 +475,31 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         attack_controller.FireAttack(GetShootVector());
     }
     
-    public abstract Vector3 MoveDirection();
-    public abstract Vector3 MoveVector();
-    public abstract void Move();
+    // public abstract Vector3 MoveDirection();
+    public abstract Vector3 GetVelocity();
+    // public abstract void Move(bool sprint=false);
 
-    protected void LookWithAction() {
-        Vector3 forward; 
-            forward = LookVector();
-        LookRotate(forward);
-    }
+    // protected void LookWithAction() {
+    //     Vector3 forward; 
+    //         forward = GetLookVector();
+    //     LookRotate(forward);
+    // }
 
-    private void LookRotate(Vector3 forward) {
-        float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
-        Quaternion target_rot = Quaternion.AngleAxis(angle - 90, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, rotation_speed);
-    }
+    // private void LookRotate(Vector3 forward) {
+    //     float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+    //     Quaternion target_rot = Quaternion.AngleAxis(angle - 90, Vector3.up);
+    //     transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, rotation_speed);
+    // }
  
-    protected virtual Vector3 LookVector() {
-        // Returns a vector of the direction to look in
-        return VectorFromLookTarget(GetLookTarget());
+    protected Vector3 GetLookVector() {
+        return transform.rotation.eulerAngles;
     }
+    //  {
+    //     // Returns a vector of the direction to look in
+    //     return DirectionFromLookTarget(GetLookTarget());
+    // }
 
-    public Vector3 VectorFromLookTarget(Vector3 look_target) {
+    public Vector3 DirectionFromLookTarget(Vector3 look_target) {
         Vector3 v = look_target - transform.position;
         Vector3 forward = new Vector3(
             v.x, 0, v.z
@@ -497,10 +507,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return forward;
     }
 
-    public abstract Vector3 GetLookTarget();  // Vector3 position to look at.
+    // public abstract Vector3 GetLookTarget();  // Vector3 position to look at.
 
     public virtual Vector3 GetShootVector() {
-        return LookVector();
+        return GetLookVector();
     }
 
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target) {
