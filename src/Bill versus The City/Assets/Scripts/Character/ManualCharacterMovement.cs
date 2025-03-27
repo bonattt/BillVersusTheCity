@@ -195,11 +195,6 @@ public class ManualCharacterMovement : CharCtrl
         return walk_speed;
     }
 
-    public void SetCharacterLookDirection(Vector3 look_direction) {
-        Quaternion desired_rotation = Quaternion.LookRotation(look_direction, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, desired_rotation, rotation_speed);
-    }
-
     // public override void Move(bool sprint=false) {
     //     sprint = sprint && CanSprint();
     //     LookWithAction();

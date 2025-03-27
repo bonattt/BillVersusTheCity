@@ -235,6 +235,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         
     }
 
+    public void SetCharacterLookDirection(Vector3 look_direction) {
+        Quaternion desired_rotation = Quaternion.LookRotation(look_direction, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, desired_rotation, rotation_speed);
+    }
+
     public virtual void SetPosition(Vector3 new_position) {
         transform.position = new_position;
     }

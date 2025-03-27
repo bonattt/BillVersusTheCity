@@ -62,7 +62,7 @@ using UnityEngine.AI;
 
     public void Move(bool sprint=false) {
         Vector3 look_direction = DirectionFromLookTarget(GetLookTarget());
-        LookRotate(look_direction);
+        SetCharacterLookDirection(look_direction);
         if (this.is_hit_stunned) {
             nav_mesh_agent.SetDestination(transform.position);
         }
