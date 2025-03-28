@@ -37,7 +37,7 @@ public class PlayerControls : MonoBehaviour {
                 player_movement.TryToAttack();
             }
         }
-        else if (!sprinting && !player_movement.reloading && ReloadInput() ) {
+        else if (!sprinting && !player_movement.reloading && player_movement.CanReload() && ReloadInput() ) {
             player_movement.StartReload();
             // Debug.LogWarning("~~Start Reload!"); // TODO --- remove debug
         } else if (CancelReloadInput() && player_movement.reloading) {

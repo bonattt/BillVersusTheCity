@@ -480,7 +480,7 @@ GAMEPLAY IMPROVEMENTS
         [+] Reaction time can be configured as a difficulty setting
     [+] Change enemy perception to not see the player if the enemy is not visible on screen
 
-[ ] Character Controller --> need to fix messy character controller code
+[~] Character Controller --> need to fix messy character controller code
     [+] change CharCtrl from a framework pattern to a library pattern
     [+] remove "extend Start" hooks, and just use a virtual start method that can be directly overridden
     [+] refactor "EnemyController" to "NavMeshAgentMovement"
@@ -489,10 +489,11 @@ GAMEPLAY IMPROVEMENTS
     [+] Reimplement reloads
     [ ] Reimplement enemy reloads
     [ ] Move EnemyController.ctrl_* control fields into EnemyBehavior
-    [ ] Refactor damage to be handled exclusively by CharacterStatus, which should implement IAttackTarget instead of character movement
-    [ ] Reimplement Death triggers
+    [X] Refactor damage to be handled exclusively by CharacterStatus, which should implement IAttackTarget instead of character movement
+    [X] Reimplement Death triggers
     [ ] control movement speed from new controller scripts (PlayerControls and EnemyBehavior) instead of movement scripts.
     [ ] Clean up commented code
+    [ ] FIX: movement speed while reloading
     [+] FIX: aim-line height
     [+] FIX crouch behind cover
     [~] FIX: character axis, Z should be forward
