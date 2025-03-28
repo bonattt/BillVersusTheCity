@@ -21,10 +21,6 @@ public class ManualCharacterMovement : CharCtrl
 
     public override bool is_player { get { return true; }}
 
-
-    public float crouch_height = 0.6f;
-    public float uncrouched_height = 1.4f;
-
     public override float movement_speed {
         get {
             // TODO --- move this to PlayerControls

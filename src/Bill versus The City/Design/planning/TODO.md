@@ -493,7 +493,8 @@ GAMEPLAY IMPROVEMENTS
     [ ] Reimplement Death triggers
     [ ] control movement speed from new controller scripts (PlayerControls and EnemyBehavior) instead of movement scripts.
     [ ] Clean up commented code
-    [ ] FIX: aim-line height
+    [+] FIX: aim-line height
+    [+] FIX crouch behind cover
     [~] FIX: character axis, Z should be forward
         [+] Fix player axis
         [+] FIX: player bullets shoot up instead of forward now

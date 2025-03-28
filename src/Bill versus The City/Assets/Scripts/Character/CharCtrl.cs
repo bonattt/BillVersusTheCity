@@ -40,6 +40,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float crouched_speed = 0.25f;
     public float crouch_rate = 4f;
     public float uncrouch_rate = 4f;
+    public float crouch_height = 0.5f;
+    public float uncrouched_height = 1.1f;
 
     private AmmoContainer ammo_container;
 
@@ -409,11 +411,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                     current_action = ActionCode.none;
                 }
             }
-            
         }
     }
 
-    protected void UpdateCrouch(bool crouch) {
+    protected virtual void UpdateCrouch(bool crouch) {
         if (crouch_dive_remaining > 0) {
             crouch_dive_remaining -= Time.deltaTime;
             crouch_percent = 1f;
@@ -422,6 +423,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         } else {
             crouch_percent -= uncrouch_rate * Time.deltaTime;
         }
+        float current_height = (crouch_height * crouch_percent) + (uncrouched_height * (1- crouch_percent));
+        crouch_target.position = new Vector3(crouch_target.position.x, current_height, crouch_target.position.z);
     }
     
     private bool _crouch_last_frame = false;
