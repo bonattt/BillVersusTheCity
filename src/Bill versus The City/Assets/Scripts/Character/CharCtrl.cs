@@ -37,6 +37,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float reload_move_multiplier = 0.33f;
     public float walk_speed = 4.0f;
     public float sprint_multiplier = 1.75f;
+    public float crouched_speed = 0.25f;
+    public float crouch_rate = 4f;
+    public float uncrouch_rate = 4f;
 
     private AmmoContainer ammo_container;
 
@@ -89,6 +92,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             return move_speed;
         }
     }
+    
+    public float crouch_dive_duration = 1f; // how long does a crouch dive last
+    protected Vector3 crouch_dive_direction = new Vector3(0, 0, 0);
+    [SerializeField]
+    protected float crouch_dive_remaining = 0f; // how long is left in the current crouch dive you crouch dive for
 
     public virtual bool is_sprinting { get; protected set; }
 
@@ -386,6 +394,65 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             } 
         }
     }
+
+    public float _crouch_percent = 0f;
+    public float crouch_percent {
+        get { return _crouch_percent; }
+        set {
+            _crouch_percent = value;
+            if (_crouch_percent >= 1f) { 
+                _crouch_percent = 1f;
+            }
+            else if (_crouch_percent <= 0f) {
+                _crouch_percent = 0f;
+                if (current_action == ActionCode.crouch) {
+                    current_action = ActionCode.none;
+                }
+            }
+            
+        }
+    }
+
+    protected void UpdateCrouch(bool crouch) {
+        if (crouch_dive_remaining > 0) {
+            crouch_dive_remaining -= Time.deltaTime;
+            crouch_percent = 1f;
+        } else if (crouch) {
+            crouch_percent += crouch_rate * Time.deltaTime;
+        } else {
+            crouch_percent -= uncrouch_rate * Time.deltaTime;
+        }
+    }
+    
+    private bool _crouch_last_frame = false;
+    public virtual void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false) {
+        is_sprinting = sprint && CanSprint();
+        if (crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero) {
+            // if crouch diving, continue in that direction for the duration of the crouch dive
+            // Debug.Log("continue crouch dive!"); // TODO --- remove debug
+            move_direction = crouch_dive_direction;
+        } else if (crouch && sprint && !_crouch_last_frame && crouch_dive_remaining <= 0) {
+            // Start crouch dive
+            // Debug.Log("start crouch dive!"); // TODO --- remove debug
+            crouch_dive_remaining = crouch_dive_duration;
+            crouch_dive_direction = move_direction;
+            crouch_percent = 1f;
+        } else {
+            if (crouch) {
+                // cannot crouch and sprint at the same time, if there is no crouch dive
+                is_sprinting = false;
+            }
+        }
+
+        if (crouch_dive_remaining > 0f || is_sprinting) {
+            // always face forward during crouch dive or sprint!
+            look_direction = move_direction;
+        }
+        UpdateCrouch(crouch);
+        SetCharacterLookDirection(look_direction);
+        _crouch_last_frame = crouch;
+    }
+
     public virtual bool CanSprint() {
         return true;
     }
@@ -497,7 +564,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // }
  
     protected Vector3 GetLookVector() {
-        return transform.rotation.eulerAngles;
+        return transform.forward;
     }
     //  {
     //     // Returns a vector of the direction to look in

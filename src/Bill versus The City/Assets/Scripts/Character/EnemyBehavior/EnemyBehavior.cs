@@ -154,10 +154,51 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         } else if (CancelReloadInput()) {
             controller.CancelReload();
         }
-        else if (AttackInput()) {
+        else if (AttackInput() && controller.current_weapon.current_ammo > 0) {
             controller.TryToAttack();
         }
-        controller.Move();
+        controller.MoveCharacter(GetMoveTarget(), GetLookDirection(), sprint:false, crouch:false);
+    }
+
+    private Vector3 GetMoveTarget() {
+        switch (controller.ctrl_move_mode) {
+            case MovementTarget.target:
+                return controller.ctrl_target.transform.position;
+
+            case MovementTarget.waypoint:
+                return controller.ctrl_waypoint;
+
+            case MovementTarget.stationary:
+                return controller.transform.position;
+
+            default:
+                Debug.Log($"unknown move mode '{controller.ctrl_move_mode}'");
+                return controller.transform.position;
+        }
+    }
+
+    private Vector3 GetLookDirection() {
+        return controller.DirectionFromLookTarget(GetLookTarget());
+    }
+
+    private Vector3 GetLookTarget() {
+        switch (controller.ctrl_aim_mode) {
+            case AimingTarget.movement_direction:
+                return controller.GetVelocity();
+
+            case AimingTarget.target:
+                return controller.ctrl_target.transform.position;
+
+            case AimingTarget.waypoint:
+                return controller.ctrl_waypoint;
+
+            case AimingTarget.stationary:
+                return InputSystem.NULL_POINT;
+
+            default:
+                Debug.Log($"unknown aim mode '{controller.ctrl_aim_mode}'");
+                return controller.ctrl_waypoint;
+        }
     }
 
     

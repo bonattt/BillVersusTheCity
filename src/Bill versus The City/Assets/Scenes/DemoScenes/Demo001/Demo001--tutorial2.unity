@@ -901,7 +901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505927797627387282, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3396656997431563555, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: drop_weapon
@@ -1993,7 +1993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5637590974488604821, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.85
+      value: -7.2
       objectReference: {fileID: 0}
     - target: {fileID: 5637590974488604821, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2001,7 +2001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5637590974488604821, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.1
+      value: 14.94
       objectReference: {fileID: 0}
     - target: {fileID: 5637590974488604821, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4694,7 +4694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3633326187336503762, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.3
+      value: 14.94
       objectReference: {fileID: 0}
     - target: {fileID: 3633326187336503762, guid: 83c026d4f92fed54291b5e84e2932139, type: 3}
       propertyPath: m_LocalRotation.w

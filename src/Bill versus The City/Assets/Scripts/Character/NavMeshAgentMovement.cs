@@ -59,28 +59,43 @@ using UnityEngine.AI;
     public override void SetPosition(Vector3 new_position) {
         nav_mesh_agent.Warp(new_position);
     }
-
-    public void Move(bool sprint=false) {
-        Vector3 look_direction = DirectionFromLookTarget(GetLookTarget());
-        SetCharacterLookDirection(look_direction);
-        if (this.is_hit_stunned) {
-            nav_mesh_agent.SetDestination(transform.position);
-        }
-        else {
-            nav_mesh_agent.speed = this.movement_speed;
-            nav_mesh_agent.SetDestination(GetMoveDestination());
-        }
-        // REFACTOR: find a better home for code below here
-        if (attack_controller.current_weapon.current_ammo == 0) {
-            behavior.needs_reload = true;
-        }
-    }
     
-    private void LookRotate(Vector3 forward) {
-        float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
-        Quaternion target_rot = Quaternion.AngleAxis(angle - 90, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, rotation_speed);
+    public Vector3 debug_look_direction;
+    public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint=false, bool crouch=false) {
+        // TODO --- crouch not implemented 
+        SetCharacterLookDirection(look_direction);
+        // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
+        debug_look_direction = look_direction;
+
+        if (is_hit_stunned) {
+            nav_mesh_agent.SetDestination(transform.position);
+        } else if (move_target != nav_mesh_agent.destination) {
+            nav_mesh_agent.SetDestination(move_target);
+        }
+
     }
+
+    // public void Move(bool sprint=false) {
+    //     Vector3 look_direction = DirectionFromLookTarget(GetLookTarget());
+    //     SetCharacterLookDirection(look_direction);
+    //     if (this.is_hit_stunned) {
+    //         nav_mesh_agent.SetDestination(transform.position);
+    //     }
+    //     else {
+    //         nav_mesh_agent.speed = this.movement_speed;
+    //         nav_mesh_agent.SetDestination(GetMoveDestination());
+    //     }
+    //     // REFACTOR: find a better home for code below here
+    //     if (attack_controller.current_weapon.current_ammo == 0) {
+    //         behavior.needs_reload = true;
+    //     }
+    // }
+    
+    // private void LookRotate(Vector3 forward) {
+    //     float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+    //     Quaternion target_rot = Quaternion.AngleAxis(angle - 90, Vector3.up);
+    //     transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, rotation_speed);
+    // }
 
     public Vector3 MoveDirection() {
         return (nav_mesh_agent.nextPosition - transform.position).normalized;

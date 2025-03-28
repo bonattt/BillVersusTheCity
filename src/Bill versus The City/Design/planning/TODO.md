@@ -484,24 +484,26 @@ GAMEPLAY IMPROVEMENTS
     [+] change CharCtrl from a framework pattern to a library pattern
     [+] remove "extend Start" hooks, and just use a virtual start method that can be directly overridden
     [+] refactor "EnemyController" to "NavMeshAgentMovement"
-    [ ] Reimplement sprinting controls
-    [ ] Reimplement crouching controls
-    [ ] Reimplement reloads
+    [+] Reimplement sprinting controls
+    [+] Reimplement crouching controls
+    [+] Reimplement reloads
+    [ ] Reimplement enemy reloads
     [ ] Move EnemyController.ctrl_* control fields into EnemyBehavior
     [ ] Refactor damage to be handled exclusively by CharacterStatus, which should implement IAttackTarget instead of character movement
     [ ] Reimplement Death triggers
     [ ] control movement speed from new controller scripts (PlayerControls and EnemyBehavior) instead of movement scripts.
     [ ] Clean up commented code
     [ ] FIX: aim-line height
-    [ ] FIX: character axis, Z should be forward
+    [~] FIX: character axis, Z should be forward
         [+] Fix player axis
-        [ ] FIX: player bullets shoot up instead of forward now
-        [ ] Fix Enemy axis
+        [+] FIX: player bullets shoot up instead of forward now
+        [+] Fix Enemy axis
     [~] reload/aim TWEAKS
         [ ] Can reload while aiming, it cancels aim
         [ ] ALSO reload or shoot while sprinting,
         [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
         [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
+    [ ] remove "extend update" hook in AttackController, and just make `Update` virtual
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons

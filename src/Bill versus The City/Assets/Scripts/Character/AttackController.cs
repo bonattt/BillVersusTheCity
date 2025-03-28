@@ -205,6 +205,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
 
     private void _FireAttack(Vector3 attack_direction) {
+        Debug.LogWarning($"attack direction {attack_direction}"); // TODO --- remove debug
         _last_shot_at = Time.time;
         Bullet bullet = null;
         for (int i = 0; i < current_weapon.n_shots; i++) {
