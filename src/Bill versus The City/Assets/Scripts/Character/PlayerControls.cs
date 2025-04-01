@@ -5,49 +5,102 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour {
     // class for handling player inputs, and calling methods on ManualCharacterMovement to move the player
 
-    public bool sprinting, debug_aim;
+    public bool sprint_input, aim_input, cancel_aim_input, reload_input;
     public ManualCharacterMovement player_movement;
+
+    public bool resume_aim_after_reload = false;
+    public bool resume_sprint_after_reload = false;
 
     protected IWeapon current_weapon { get { return player_movement.current_weapon; }}
 
     void Update() {
         if (!player_movement.is_active) { return; /* do nothing while character inactive */ }
-        sprinting = SprintInput();
-        if (sprinting) {
+        sprint_input = SprintInput();
+        aim_input = AimInput();
+        cancel_aim_input = CancelAimInput();
+        reload_input = ReloadInput();
+
+        // if not reloading, don't carryover sprint or aim
+        if (!player_movement.reloading) {
+            resume_aim_after_reload = false;
+            resume_sprint_after_reload = false;
+        }
+
+        // resume aim while reloading if aim is held, but don't actually aim
+        if (resume_aim_after_reload && aim_input) {
+            resume_aim_after_reload = true;
+            aim_input = false;
+        } else if (resume_aim_after_reload) {
+            resume_aim_after_reload = false;
+        }
+
+        // resume sprint while reloading if sprint is held, but don't actually sprint
+        if (resume_sprint_after_reload && sprint_input) {
+            resume_sprint_after_reload = true;
+            sprint_input = false;
+        } else if (resume_sprint_after_reload) {
+            resume_sprint_after_reload = false;
+        }
+
+        if (sprint_input) {
             player_movement.aiming = false;
         } else {
-            player_movement.aiming = AimInput();
+            player_movement.aiming = aim_input;
+            if (player_movement.reloading && player_movement.aiming) {
+                player_movement.CancelReload();
+            }
         }
-        if (player_movement.reloading && sprinting) {
+        if (player_movement.reloading && sprint_input) {
             player_movement.CancelReload();
         }
 
-        if (!sprinting && AimInput()) {
+        if (!sprint_input && aim_input) {
             player_movement.aiming = true;
-        } else if (!AimInput() || sprinting) {
+        } else if (!aim_input || sprint_input) {
             player_movement.aiming = false;
         } else {
             // ????
         }
 
-        if (!sprinting && AttackInput()) {
+        if (!sprint_input && AttackInput()) {
             if (player_movement.reloading) {
                 player_movement.CancelReload();
             } else {
                 player_movement.TryToAttack();
             }
-        }
-        else if (!sprinting && !player_movement.reloading && player_movement.CanReload() && ReloadInput() ) {
+        } else if (sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
             player_movement.StartReload();
+            resume_aim_after_reload = false;
+            resume_sprint_after_reload = true;
+        } else if (aim_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
+            player_movement.StartReload();
+            resume_aim_after_reload = true;
+            resume_sprint_after_reload = false;
+        } else if (!sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
+            player_movement.StartReload();
+            resume_aim_after_reload = false;
+            resume_sprint_after_reload = false;
             // Debug.LogWarning("~~Start Reload!"); // TODO --- remove debug
         } else if (CancelReloadInput() && player_movement.reloading) {
             // Debug.LogWarning("~~Cancel Reload!"); // TODO --- remove debug
             player_movement.CancelReload();
         }
-        // player_movement.Move(sprint:sprinting);
+
         Vector3 move_dir = MoveDirection();
         // Debug.Log($"move_dir 1: {move_dir}"); // TODO --- remove debug
-        player_movement.MoveCharacter(move_dir, LookAtMouseVector(), sprint:sprinting, crouch:CrouchInput());
+        player_movement.MoveCharacter(move_dir, LookAtMouseVector(), sprint:sprint_input, crouch:CrouchInput());
+    }
+
+    public void StartReload(bool sprint_input, bool aim_input) {
+        player_movement.StartReload();
+        resume_aim_after_reload = aim_input;
+        resume_sprint_after_reload = sprint_input;
+    }
+
+    public void CancelReload() {
+        resume_aim_after_reload = false;
+        resume_sprint_after_reload = false;
+        player_movement.CancelReload();
     }
     
     public bool AttackInput() {

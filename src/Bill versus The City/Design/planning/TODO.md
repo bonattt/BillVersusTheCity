@@ -502,8 +502,8 @@ GAMEPLAY IMPROVEMENTS
         [+] FIX: player bullets shoot up instead of forward now
         [+] Fix Enemy axis
     [~] reload/aim TWEAKS
-        [ ] Can reload while aiming, it cancels aim
-        [ ] ALSO reload or shoot while sprinting,
+        [+] Can reload while aiming, it cancels aim
+        [+] ALSO reload or shoot while sprinting,
         [ ] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
         [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
     [ ] remove "extend update" hook in AttackController, and just make `Update` virtual

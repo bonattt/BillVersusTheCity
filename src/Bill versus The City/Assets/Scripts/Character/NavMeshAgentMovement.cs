@@ -22,7 +22,7 @@ using UnityEngine.AI;
 
     public override bool is_sprinting {
         get {
-            return ctrl_sprint;
+            return behavior.ctrl_sprint;
         }
     }
 
@@ -94,24 +94,24 @@ using UnityEngine.AI;
     }
 
     public Vector3 GetMoveDestination() {
-        switch (ctrl_move_mode) {
+        switch (behavior.ctrl_move_mode) {
             case MovementTarget.stationary:
                 return transform.position;
 
             case MovementTarget.target:
-                if (ctrl_target != null) {
-                    return ctrl_target.transform.position;
+                if (behavior.ctrl_target != null) {
+                    return behavior.ctrl_target.transform.position;
                 }
                 break;
 
             case MovementTarget.waypoint:
-                if (ctrl_waypoint != null) {
-                    return ctrl_waypoint;
+                if (behavior.ctrl_waypoint != null) {
+                    return behavior.ctrl_waypoint;
                 }
                 break;
 
             default:
-                Debug.LogWarning($"movement for {ctrl_move_mode} is not implemented!");
+                Debug.LogWarning($"movement for {behavior.ctrl_move_mode} is not implemented!");
                 break;
         }
         Debug.LogWarning("Don't move (not implemented correctly!)");
@@ -119,11 +119,11 @@ using UnityEngine.AI;
     }
 
     // public override bool AttackInput() {
-    //     // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-    //     if (seeing_target && ctrl_will_shoot) {
+    //     // Debug.Log($"{Time.time} >= {this.last_attack_time} + {behavior.ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + behavior.ctrl_shooting_rate)}");
+    //     if (seeing_target && behavior.ctrl_will_shoot) {
     //         if (saw_target) {
     //             if (use_full_auto) { return true; }
-    //             return Time.time >= (this.last_attack_time + ctrl_shooting_rate);
+    //             return Time.time >= (this.last_attack_time + behavior.ctrl_shooting_rate);
     //         }
     //         else {
     //             // start countdown to shoot once target is seen
@@ -134,7 +134,7 @@ using UnityEngine.AI;
     // }
     
     // public override bool ReloadInput() {
-    //     return ctrl_start_reload;
+    //     return behavior.ctrl_start_reload;
     //     // return attack_controller.current_weapon.current_ammo == 0
     //     //     && !reloading
     //     //     && AttackInput();
@@ -150,23 +150,23 @@ using UnityEngine.AI;
         // float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
         // Vector3 rand = new Vector3(rand_x, 0, rand_z);
         // return LookTarget() + rand;
-        return ctrl_target.GetAimTarget().position;
+        return behavior.ctrl_target.GetAimTarget().position;
     }
     
     public Vector3 GetLookTarget() {
-        switch (ctrl_aim_mode) {
+        switch (behavior.ctrl_aim_mode) {
             case AimingTarget.stationary:
                 return new Vector3(0f, 0f, 0f);
 
             case AimingTarget.target:
-                if (ctrl_target != null) {
-                    return ctrl_target.GetAimTarget().position;
+                if (behavior.ctrl_target != null) {
+                    return behavior.ctrl_target.GetAimTarget().position;
                 }
                 break;
 
             case AimingTarget.waypoint:
-                if (ctrl_target != null) {
-                    return ctrl_waypoint;
+                if (behavior.ctrl_target != null) {
+                    return behavior.ctrl_waypoint;
                 }
                 break;
 
@@ -174,7 +174,7 @@ using UnityEngine.AI;
                 return nav_mesh_agent.velocity + transform.position;
 
             default:
-                Debug.LogWarning($"aiming for {ctrl_aim_mode} is not implemented!");
+                Debug.LogWarning($"aiming for {behavior.ctrl_aim_mode} is not implemented!");
                 break;
         }
         // TODO --- default case should make aiming not change, rather than pusing it to 
