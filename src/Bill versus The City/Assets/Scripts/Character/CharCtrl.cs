@@ -231,8 +231,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             return; // no animation set, do nothing.
         }
         // model is rotated weird...
-        _animator_facade.forward_direction = this.transform.right;
-        _animator_facade.right_direction = -this.transform.forward;
+        _animator_facade.forward_direction = this.transform.forward;
+        _animator_facade.right_direction = this.transform.right;
         _animator_facade.move_velocity = GetVelocity();
         _animator_facade.action = AnimationActionType.idle;
         _animator_facade.weapon_class = current_weapon != null ? current_weapon.weapon_class : WeaponClass.empty;
