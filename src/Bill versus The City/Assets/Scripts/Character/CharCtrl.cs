@@ -42,6 +42,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float uncrouch_rate = 4f;
     public float crouch_height = 0.5f;
     public float uncrouched_height = 1.1f;
+    
+    [Tooltip("if true, the character will reload again if a reload is completed and the gun is not full.")]
+    public bool keep_reloading = true;
 
     private AmmoContainer ammo_container;
 
@@ -218,7 +221,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     protected void UpdateReload() {
         // Debug.Log($"{gameObject.name}.UpdateReload() -- reloading: {reloading}, finished: {ReloadIsFinished()}");// TODO --- remove debug
-        if (reloading && ReloadIsFinished()) {
+        if (reloading && IsReloadFinished()) {
             FinishReload();
         } else if (reloading) { // TODO --- remove debug
             // Debug.Log($"~~~reloading!");
@@ -359,7 +362,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         UpdateReloadStarted(current_weapon);
     }
 
-    public bool ReloadIsFinished() {
+    public bool IsReloadFinished() {
         if (!reloading) {
             return false;
         }
@@ -389,7 +392,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         UpdateReloadFinished(current_weapon);
 
         // for weapons that reload single rounds, keep reloading
-        if(wpn.current_ammo != wpn.ammo_capacity) {
+        if(keep_reloading && wpn.current_ammo < wpn.ammo_capacity) {
             // if you have infinite ammo, OR if there is at least 1 bullet left, keep reloading
             if (CanReload(wpn.ammo_type)) {
                 StartReload();

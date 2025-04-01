@@ -42,6 +42,9 @@ public class PlayerControls : MonoBehaviour {
             resume_sprint_after_reload = false;
         }
 
+        // resume
+        player_movement.keep_reloading = !(resume_aim_after_reload || resume_sprint_after_reload);
+
         if (sprint_input) {
             player_movement.aiming = false;
         } else {
