@@ -7,9 +7,9 @@ public class StationaryBehavior : ISubBehavior {
     public StationaryBehavior() { /* do nothing */ }
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
-        parent.controller.ctrl_will_shoot = false;
-        parent.controller.ctrl_move_mode = MovementTarget.stationary;
-        parent.controller.ctrl_aim_mode = AimingTarget.stationary;
-        parent.controller.ctrl_sprint = false;
+        parent.ctrl_will_shoot = false;
+        parent.ctrl_move_mode = MovementTarget.stationary;
+        parent.ctrl_aim_mode = AimingTarget.stationary;
+        parent.ctrl_sprint = false;
     }
 }

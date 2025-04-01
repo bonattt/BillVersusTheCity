@@ -18,34 +18,34 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
             return;
         }
         last_calculation_at = Time.time;
-        parent.controller.ctrl_target = player;
-        parent.controller.ctrl_will_shoot = false;
+        parent.ctrl_target = player;
+        parent.ctrl_will_shoot = false;
 
         bool can_see_player = parent.perception.seeing_target;
         if (!can_see_player) {
             Debug.Log("in cover, perform reload");
             // player cannot be seen, so just reload
-            parent.controller.ctrl_sprint = false;
-            parent.controller.ctrl_move_mode = MovementTarget.waypoint;
-            parent.controller.ctrl_aim_mode = AimingTarget.target;
-            parent.controller.ctrl_start_reload = true;
-            parent.controller.ctrl_cancel_reload = false;
+            parent.ctrl_sprint = false;
+            parent.ctrl_move_mode = MovementTarget.waypoint;
+            parent.ctrl_aim_mode = AimingTarget.target;
+            parent.ctrl_start_reload = true;
+            parent.ctrl_cancel_reload = false;
 
         } else {
             Debug.Log("Player has LoS, retreat before reload");
             // player has a shot at the enemy, so retreat to cover
-            parent.controller.ctrl_start_reload = false;
-            parent.controller.ctrl_cancel_reload = cancel_reload_to_retreat;
-            parent.controller.ctrl_sprint = true;
-            parent.controller.ctrl_move_mode = MovementTarget.waypoint;
-            parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
+            parent.ctrl_start_reload = false;
+            parent.ctrl_cancel_reload = cancel_reload_to_retreat;
+            parent.ctrl_sprint = true;
+            parent.ctrl_move_mode = MovementTarget.waypoint;
+            parent.ctrl_aim_mode = AimingTarget.movement_direction;
 
             Vector3 start = parent.controller.transform.position;
             Vector3 cover_from = player.transform.position;
 
             Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start, cover_from);
-            parent.controller.ctrl_waypoint = dest.position;
-            Debug.DrawLine(start, parent.controller.ctrl_waypoint, Color.green, Time.deltaTime);
+            parent.ctrl_waypoint = dest.position;
+            Debug.DrawLine(start, parent.ctrl_waypoint, Color.green, Time.deltaTime);
         }
 
         // recalculate destination

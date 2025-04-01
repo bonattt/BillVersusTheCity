@@ -34,6 +34,23 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
+    //////////////////////////////
+    /// Behavior controls ////////
+    //////////////////////////////
+    
+    public CharCtrl ctrl_target;
+    public bool ctrl_will_shoot = true;  // set by behavior, determines if the character will shoot if able
+    public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
+    public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
+    public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
+    public bool ctrl_sprint = false; // used by Behavior to instruct the controller to sprint
+    public bool ctrl_start_reload = false; // used by Behavior to instruct the controller to sprint
+    public bool ctrl_cancel_reload = false; // used by Behavior to instruct the controller to sprint
+    public float ctrl_shooting_rate = 0.75f;
+
+    //////////////////////////////
+    
+
     [SerializeField]
     private bool _needs_reload = false;
     public bool needs_reload {
@@ -161,18 +178,18 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private Vector3 GetMoveTarget() {
-        switch (controller.ctrl_move_mode) {
+        switch (ctrl_move_mode) {
             case MovementTarget.target:
-                return controller.ctrl_target.transform.position;
+                return ctrl_target.transform.position;
 
             case MovementTarget.waypoint:
-                return controller.ctrl_waypoint;
+                return ctrl_waypoint;
 
             case MovementTarget.stationary:
                 return controller.transform.position;
 
             default:
-                Debug.Log($"unknown move mode '{controller.ctrl_move_mode}'");
+                Debug.Log($"unknown move mode '{ctrl_move_mode}'");
                 return controller.transform.position;
         }
     }
@@ -182,32 +199,32 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private Vector3 GetLookTarget() {
-        switch (controller.ctrl_aim_mode) {
+        switch (ctrl_aim_mode) {
             case AimingTarget.movement_direction:
                 return controller.GetVelocity();
 
             case AimingTarget.target:
-                return controller.ctrl_target.transform.position;
+                return ctrl_target.transform.position;
 
             case AimingTarget.waypoint:
-                return controller.ctrl_waypoint;
+                return ctrl_waypoint;
 
             case AimingTarget.stationary:
                 return InputSystem.NULL_POINT;
 
             default:
-                Debug.Log($"unknown aim mode '{controller.ctrl_aim_mode}'");
-                return controller.ctrl_waypoint;
+                Debug.Log($"unknown aim mode '{ctrl_aim_mode}'");
+                return ctrl_waypoint;
         }
     }
 
     
     public bool AttackInput() {
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-        if (perception.seeing_target && controller.ctrl_will_shoot && !controller.reloading) {
+        if (perception.seeing_target && ctrl_will_shoot && !controller.reloading) {
             if (perception.saw_target_last_frame) {
                 if (controller.use_full_auto) { return true; }
-                return Time.time >= (controller.last_attack_time + controller.ctrl_shooting_rate);
+                return Time.time >= (controller.last_attack_time + ctrl_shooting_rate);
             }
             else {
                 // start countdown to shoot once target is seen
@@ -218,14 +235,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
     
     public bool ReloadInput() {
-        return controller.ctrl_start_reload && !controller.reloading; 
+        return ctrl_start_reload && !controller.reloading; 
         // return attack_controller.current_weapon.current_ammo == 0
         //     && !reloading
         //     && AttackInput();
     }
 
     public bool CancelReloadInput() {
-        return controller.ctrl_cancel_reload && controller.reloading;
+        return ctrl_cancel_reload && controller.reloading;
     }
 
     void OnDestroy() {
@@ -254,10 +271,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     protected void SetDefaultBehaviorPatterns() {
         // sets control fields that are standardized to properties, and some default flags, which can be overwriten by the actual behavior
-        controller.ctrl_shooting_rate = this.shooting_rate;
-        controller.ctrl_start_reload = false;
-        controller.ctrl_cancel_reload = false;
-        controller.ctrl_sprint = false;
+        ctrl_shooting_rate = this.shooting_rate;
+        ctrl_start_reload = false;
+        ctrl_cancel_reload = false;
+        ctrl_sprint = false;
     }
 
     public float DistanceToTarget() {

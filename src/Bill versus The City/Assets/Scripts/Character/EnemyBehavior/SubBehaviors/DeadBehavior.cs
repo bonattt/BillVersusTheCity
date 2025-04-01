@@ -9,11 +9,11 @@ public class DeadBehavior : ISubBehavior  {
     ~DeadBehavior() { /* do nothing */ }
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
-        parent.controller.ctrl_waypoint = parent.transform.position;
-        parent.controller.ctrl_sprint = false;
-        parent.controller.ctrl_target = player;
-        parent.controller.ctrl_will_shoot = false;
-        parent.controller.ctrl_move_mode = MovementTarget.stationary;
-        parent.controller.ctrl_aim_mode = AimingTarget.stationary;
+        parent.ctrl_waypoint = parent.transform.position;
+        parent.ctrl_sprint = false;
+        parent.ctrl_target = player;
+        parent.ctrl_will_shoot = false;
+        parent.ctrl_move_mode = MovementTarget.stationary;
+        parent.ctrl_aim_mode = AimingTarget.stationary;
     }
 }

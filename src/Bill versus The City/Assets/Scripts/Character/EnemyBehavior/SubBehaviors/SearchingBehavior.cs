@@ -41,18 +41,18 @@ public class SearchingBehavior : ISubBehavior  {
         }
 
         // Debug.LogWarning($"{parent.gameObject.name}.current_search_target: {current_search_target}"); // TODO --- remove debug
-        parent.controller.ctrl_target = player;
-        parent.controller.ctrl_waypoint = current_search_target;
+        parent.ctrl_target = player;
+        parent.ctrl_waypoint = current_search_target;
         // Debug.LogWarning($"initial_move_target: {initial_search_target}, current_search_targe: {current_search_target}"); // TODO --- remove debug
-        parent.controller.ctrl_will_shoot = false;
-        parent.controller.ctrl_move_mode = MovementTarget.waypoint;
-        parent.controller.ctrl_sprint = false;
+        parent.ctrl_will_shoot = false;
+        parent.ctrl_move_mode = MovementTarget.waypoint;
+        parent.ctrl_sprint = false;
         if (parent.controller.seeing_target) {
-            parent.controller.ctrl_aim_mode = AimingTarget.target;
+            parent.ctrl_aim_mode = AimingTarget.target;
         }
         else {
             // don't aim at unseen target
-            parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
+            parent.ctrl_aim_mode = AimingTarget.movement_direction;
         }
     }
     public void AssumeBehavior(EnemyBehavior parent) {

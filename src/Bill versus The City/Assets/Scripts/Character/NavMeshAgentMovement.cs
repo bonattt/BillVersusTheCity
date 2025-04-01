@@ -15,24 +15,11 @@ using UnityEngine.AI;
     public bool drop_ammo = false;
     public bool use_full_auto = false;
 
-    public float ctrl_shooting_rate = 0.75f;
     private EnemyPerception perception;
     private EnemyBehavior behavior;
 
     public GameObject ammo_pickup_prefab, weapon_pickup_prefab;
 
-
-    //////////////////////////////
-    /// Behavior controls ////////
-    //////////////////////////////
-    public CharCtrl ctrl_target;
-    public bool ctrl_will_shoot = true;  // set by behavior, determines if the character will shoot if able
-    public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
-    public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
-    public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
-    public bool ctrl_sprint = false; // used by Behavior to instruct the controller to sprint
-    public bool ctrl_start_reload = false; // used by Behavior to instruct the controller to sprint
-    public bool ctrl_cancel_reload = false; // used by Behavior to instruct the controller to sprint
     public override bool is_sprinting {
         get {
             return ctrl_sprint;

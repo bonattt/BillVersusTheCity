@@ -20,26 +20,26 @@ public class FleeToCoverBehavior : ISubBehavior  {
     }
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
-        // parent.controller.ctrl_waypoint = new Vector3(0, 0, 0);
+        // parent.ctrl_waypoint = new Vector3(0, 0, 0);
 
         // recalculate destination
         if (last_calculation_at + recalculation_period <= Time.time) {
-            parent.controller.ctrl_waypoint = RecalculatePath(parent, player);
+            parent.ctrl_waypoint = RecalculatePath(parent, player);
         }
 
-        parent.controller.ctrl_target = player;
-        parent.controller.ctrl_move_mode = MovementTarget.waypoint;
+        parent.ctrl_target = player;
+        parent.ctrl_move_mode = MovementTarget.waypoint;
         if (is_cornered) {
-            parent.controller.ctrl_sprint = false;
-            parent.controller.ctrl_will_shoot = fights_when_cornered;
-            parent.controller.ctrl_aim_mode = AimingTarget.target;
+            parent.ctrl_sprint = false;
+            parent.ctrl_will_shoot = fights_when_cornered;
+            parent.ctrl_aim_mode = AimingTarget.target;
         } else {
-            parent.controller.ctrl_sprint = true;
-            parent.controller.ctrl_will_shoot = false;
-            parent.controller.ctrl_aim_mode = AimingTarget.movement_direction;
+            parent.ctrl_sprint = true;
+            parent.ctrl_will_shoot = false;
+            parent.ctrl_aim_mode = AimingTarget.movement_direction;
         }
         Color color = is_cornered ? Color.red : Color.green;
-        Debug.DrawLine(parent.controller.transform.position, parent.controller.ctrl_waypoint, color);
+        Debug.DrawLine(parent.controller.transform.position, parent.ctrl_waypoint, color);
     }
 
     private void UpdateIsCornered(EnemyBehavior parent, ManualCharacterMovement player) {
@@ -62,22 +62,22 @@ public class FleeToCoverBehavior : ISubBehavior  {
         if (is_cornered) {
             Vector3 destination = DestinationAwayFromPlayer(parent, player);
             return destination;
-            // Debug.DrawLine(start_pos, parent.controller.ctrl_waypoint, Color.red);
+            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.red);
         } 
         else {
             Vector3 cover_from = player.transform.position;
             Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);
             return dest.position;
-            // Debug.DrawLine(start_pos, parent.controller.ctrl_waypoint, Color.green);
+            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);
         }
 
         // if (IsPathBlocked(parent, player, dest.position)) {
         //     // Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
-        //     // parent.controller.ctrl_waypoint = parent.transform.position + (-toward_player * 3);
+        //     // parent.ctrl_waypoint = parent.transform.position + (-toward_player * 3);
         //     // Debug.LogWarning($"path blocked!"); // TODO --- remove debug
-        //     parent.controller.ctrl_waypoint = DestinationAwayFromPlayer(parent, player);
+        //     parent.ctrl_waypoint = DestinationAwayFromPlayer(parent, player);
         // } else {
-            // parent.controller.ctrl_waypoint = dest.position;
+            // parent.ctrl_waypoint = dest.position;
         //     // Debug.LogWarning($"path clear"); // TODO --- remove debug
         // }
     }
@@ -120,9 +120,9 @@ public class FleeToCoverBehavior : ISubBehavior  {
 
         // if (IsPathBlocked(parent, player, dest.position)) {
         //     // Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
-        //     // parent.controller.ctrl_waypoint = parent.transform.position + (-toward_player * 3);
+        //     // parent.ctrl_waypoint = parent.transform.position + (-toward_player * 3);
         //     // Debug.LogWarning($"path blocked!"); // TODO --- remove debug
-        //     parent.controller.ctrl_waypoint = DestinationAwayFromPlayer(parent, player);
+        //     parent.ctrl_waypoint = DestinationAwayFromPlayer(parent, player);
         // }
         // }
         Vector3 travel_direction = parent.controller.nav_mesh_agent.velocity.normalized;
@@ -133,7 +133,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
     }
 
     // private static float PathBlocked(EnemyBehavior parent, PlayerMovement player) {
-    //     Vector3 destination = parent.controller.ctrl_waypoint;
+    //     Vector3 destination = parent.ctrl_waypoint;
     //     Vector3 start = parent.controller.transform.position;
     //     bool path_found = NavMesh.CalculatePath(start, destination, NavMesh.AllAreas, parent.controller.nav_mesh_agent.path);
         
@@ -174,6 +174,6 @@ public class FleeToCoverBehavior : ISubBehavior  {
 
     public string GetDebugMessage(EnemyBehavior parent) {
         ManualCharacterMovement player = PlayerCharacter.inst.player_transform.gameObject.GetComponent<ManualCharacterMovement>();
-        return $"is_cornered: {is_cornered}, destination: {parent.controller.ctrl_waypoint}";
+        return $"is_cornered: {is_cornered}, destination: {parent.ctrl_waypoint}";
     }
 }
