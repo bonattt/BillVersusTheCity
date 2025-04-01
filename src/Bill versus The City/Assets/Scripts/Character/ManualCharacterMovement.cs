@@ -147,6 +147,9 @@ public class ManualCharacterMovement : CharCtrl
         else if (is_sprinting) {
             return sprint_multiplier * walk_speed;
         }
+        else if (reloading) {
+            return reload_move_multiplier * walk_speed; 
+        }
         return walk_speed;
     }
 
