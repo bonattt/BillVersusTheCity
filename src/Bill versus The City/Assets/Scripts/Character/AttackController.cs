@@ -117,20 +117,26 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
     private bool _aim_this_frame = false;
 
-    void Start() {
-       AttackControllerStart();
-       // TODO --- make this better
-       UpdateSubscribers();
+    protected virtual void Start() {
+        if (initialize_weapon != null && current_weapon == null) {
+            current_weapon = (IWeapon) Instantiate(initialize_weapon);
+        }
+        if (start_weapon_loaded && current_weapon != null) {
+            current_weapon.current_ammo = current_weapon.ammo_capacity;
+        } else if (current_weapon != null) {
+            current_weapon.current_ammo = 0;
+        }
+        UpdateSubscribers();
     }
 
-    void Update() {
+    protected virtual void Update() {
         if (! is_active) { return; } // do nothing while controller disabled
         
         attacker = GetComponent<CharCtrl>();
         if (attacker == null) {
             Debug.LogWarning("attacker is null!");
         }
-        AttackControllerUpdate();
+        // AttackControllerUpdate();
         UpdateRecoil();
         // if (! _aim_this_frame) { StopAim(); }
         // _aim_this_frame = false;
@@ -169,19 +175,11 @@ public class AttackController : MonoBehaviour, IWeaponManager
         start_aim_at = null;
     }
 
-    protected virtual void AttackControllerStart() {
+    protected void AttackControllerStart() {
          // allow extending classes to add to `Start`    
-        if (initialize_weapon != null && current_weapon == null) {
-            current_weapon = (IWeapon) Instantiate(initialize_weapon);
-        }
-        if (start_weapon_loaded) {
-            current_weapon.current_ammo = current_weapon.ammo_capacity;
-        } else {
-            current_weapon.current_ammo = 0;
-        }
     }
 
-    protected virtual void AttackControllerUpdate() {
+    protected void AttackControllerUpdate() {
         // allow extending classes to add to `Update`
     }
 

@@ -506,7 +506,7 @@ GAMEPLAY IMPROVEMENTS
         [+] ALSO reload or shoot while sprinting,
         [+] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
         [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
-    [ ] remove "extend update" hook in AttackController, and just make `Update` virtual
+    [+] remove "extend update" hook in AttackController, and just make `Update` virtual
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons

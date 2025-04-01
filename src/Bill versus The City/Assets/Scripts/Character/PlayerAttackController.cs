@@ -22,7 +22,8 @@ public class PlayerAttackController : AttackController
         InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
 
-    protected override void AttackControllerStart() {
+    protected override void Start() {
+        base.Start();
         SwitchWeaponBySlot(_current_slot);
     }
     
@@ -34,9 +35,9 @@ public class PlayerAttackController : AttackController
     }
 
     // Update is called once per frame
-    protected override void AttackControllerUpdate()
+    protected override void Update()
     {
-        base.AttackControllerUpdate();
+        base.Update();
         TrySwitchWeapons();
         // UpdateSubscribers();
         UpdateAimSensitivity();
