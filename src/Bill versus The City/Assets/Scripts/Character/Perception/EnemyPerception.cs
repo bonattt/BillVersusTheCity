@@ -80,23 +80,29 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
                 _percent_noticed = 1.1f;
             }
 
-            if (state == PerceptionState.alert || state == PerceptionState.seeing) {
-                if (_percent_noticed <= 0) {
-                    LosePlayer();
-                }
-                else if (visible_nodes_this_frame >= 1) {
-                    state = PerceptionState.seeing;
-                }
-            }
+            switch(state) {
+                case PerceptionState.alert | PerceptionState.seeing:
+                    if (_percent_noticed <= 0) {
+                        LosePlayer();
+                    }
+                    else if (visible_nodes_this_frame >= 1) {
+                        state = PerceptionState.seeing;
+                    }
+                    break;
 
-            else if (state == PerceptionState.searching || state == PerceptionState.unaware) {
-                if (_percent_noticed >= 1) {
-                    Alert();
-                }
-            }
+                case PerceptionState.searching | PerceptionState.unaware:
+                    if (_percent_noticed >= 1) {
+                        Alert();
+                    }
+                    break;
 
-            else {
-                Debug.LogError($"unhandled perception state {state}");
+                case PerceptionState.dead:
+                    _percent_noticed = 0f;
+                    break;
+
+                default:
+                    // Debug.LogError($"unhandled perception state {state}");
+                    break;
             }
 
             // if (value >= 1f) {

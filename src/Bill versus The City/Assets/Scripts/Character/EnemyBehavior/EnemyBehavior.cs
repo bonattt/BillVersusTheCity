@@ -265,7 +265,13 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         return Vector3.Distance(controller.transform.position, PlayerCharacter.inst.player_transform.position);  
     }
 
+    protected void TryToStartReload() {
+        if (needs_reload) { return; }
+        needs_reload = controller.current_weapon.current_ammo == 0;
+    }
+
     protected ISubBehavior GetSubBehavior() {
+        TryToStartReload();
         if (behavior_mode != previous_behavior_mode) {
             behaviors[previous_behavior_mode].EndBehavior(this);
             behaviors[behavior_mode].AssumeBehavior(this);

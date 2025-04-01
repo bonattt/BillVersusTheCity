@@ -487,11 +487,11 @@ GAMEPLAY IMPROVEMENTS
     [+] Reimplement sprinting controls
     [+] Reimplement crouching controls
     [+] Reimplement reloads
-    [ ] Reimplement enemy reloads
+    [+] Reimplement enemy reloads
     [ ] Move EnemyController.ctrl_* control fields into EnemyBehavior
     [X] Refactor damage to be handled exclusively by CharacterStatus, which should implement IAttackTarget instead of character movement
     [X] Reimplement Death triggers
-    [ ] control movement speed from new controller scripts (PlayerControls and EnemyBehavior) instead of movement scripts.
+    [+] control movement speed from new controller scripts (PlayerControls and EnemyBehavior) instead of movement scripts.
     [ ] Clean up commented code
     [ ] FIX: movement speed while reloading
     [+] FIX: aim-line height
