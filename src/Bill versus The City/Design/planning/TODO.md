@@ -497,7 +497,7 @@ GAMEPLAY IMPROVEMENTS
     [+] FIX: movement direction animations
     [+] FIX: aim-line height
     [+] FIX crouch behind cover
-    [~] FIX: character axis, Z should be forward
+    [+] FIX: character axis, Z should be forward
         [+] Fix player axis
         [+] FIX: player bullets shoot up instead of forward now
         [+] Fix Enemy axis

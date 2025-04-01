@@ -83,14 +83,11 @@ public class PlayerControls : MonoBehaviour {
             player_movement.StartReload();
             resume_aim_after_reload = false;
             resume_sprint_after_reload = false;
-            // Debug.LogWarning("~~Start Reload!"); // TODO --- remove debug
         } else if (CancelReloadInput() && player_movement.reloading) {
-            // Debug.LogWarning("~~Cancel Reload!"); // TODO --- remove debug
             player_movement.CancelReload();
         }
 
         Vector3 move_dir = MoveDirection();
-        // Debug.Log($"move_dir 1: {move_dir}"); // TODO --- remove debug
         player_movement.MoveCharacter(move_dir, LookAtMouseVector(), sprint:sprint_input, crouch:CrouchInput());
     }
 
@@ -153,14 +150,6 @@ public class PlayerControls : MonoBehaviour {
         return look_target;
     }
 
-    // protected Vector3 LookVector() {
-    //     if (is_sprinting || crouch_dive_remaining > 0) {
-    //         return MoveDirection();
-    //     } else {
-    //         return base.LookVector();
-    //     }
-    // }
-
     protected Vector3 LookAtMouseVector() {
         // gets the vector from the character toward the mouse, and removes any Y component
         Vector3 look_target = GetMousePosition();
@@ -172,11 +161,9 @@ public class PlayerControls : MonoBehaviour {
     }
 
     public Vector3 MoveDirection() {
-        // float move_x, move_y;
         float move_x = InputSystem.current.MoveXInput();
         float move_y = InputSystem.current.MoveYInput();
         Vector3 move = new Vector3(move_x, 0, move_y);
-        // Debug.Log($"x: {move_x}, y: {move_y}, move: {move}, normalized: {move.normalized}"); // TODO --- remove debug
         return move.normalized;
     }
 }

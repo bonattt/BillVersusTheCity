@@ -236,9 +236,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     
     public bool ReloadInput() {
         return ctrl_start_reload && !controller.reloading; 
-        // return attack_controller.current_weapon.current_ammo == 0
-        //     && !reloading
-        //     && AttackInput();
     }
 
     public bool CancelReloadInput() {

@@ -14,10 +14,6 @@ public class PlayerAttackController : AttackController
         get { return _current_slot; }
     }
 
-    // public void UpdateWeapon(int slot, IWeapon weapon) {
-    //     current_weapon = weapon;
-    // }
-
     private void UpdateAimSensitivity() {
         InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
@@ -39,7 +35,6 @@ public class PlayerAttackController : AttackController
     {
         base.Update();
         TrySwitchWeapons();
-        // UpdateSubscribers();
         UpdateAimSensitivity();
     }
     
@@ -93,7 +88,6 @@ public class PlayerAttackController : AttackController
             UpdateSubscribers();
         }
     }
-
 
     /////////////////// DEBUG CODE /////////////////////////////
     

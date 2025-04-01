@@ -28,10 +28,6 @@ using UnityEngine.AI;
 
     public NavMeshAgent nav_mesh_agent;
 
-    // void OnDestroy() {
-    //     // DO nothing
-    // }
-
     public override void Start() {
         base.Start();
         perception = GetComponent<EnemyPerception>();
@@ -62,32 +58,9 @@ using UnityEngine.AI;
 
     }
 
-    // public void Move(bool sprint=false) {
-    //     Vector3 look_direction = DirectionFromLookTarget(GetLookTarget());
-    //     SetCharacterLookDirection(look_direction);
-    //     if (this.is_hit_stunned) {
-    //         nav_mesh_agent.SetDestination(transform.position);
-    //     }
-    //     else {
-    //         nav_mesh_agent.speed = this.movement_speed;
-    //         nav_mesh_agent.SetDestination(GetMoveDestination());
-    //     }
-    //     // REFACTOR: find a better home for code below here
-    //     if (attack_controller.current_weapon.current_ammo == 0) {
-    //         behavior.needs_reload = true;
-    //     }
-    // }
-    
-    // private void LookRotate(Vector3 forward) {
-    //     float angle = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
-    //     Quaternion target_rot = Quaternion.AngleAxis(angle - 90, Vector3.up);
-    //     transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, rotation_speed);
-    // }
-
     public Vector3 MoveDirection() {
         return (nav_mesh_agent.nextPosition - transform.position).normalized;
     }
-
     
     public override Vector3 GetVelocity() {
         return MoveDirection() * movement_speed;
@@ -118,38 +91,11 @@ using UnityEngine.AI;
         return new Vector3(0f, 0f, 0f); // don't move
     }
 
-    // public override bool AttackInput() {
-    //     // Debug.Log($"{Time.time} >= {this.last_attack_time} + {behavior.ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + behavior.ctrl_shooting_rate)}");
-    //     if (seeing_target && behavior.ctrl_will_shoot) {
-    //         if (saw_target) {
-    //             if (use_full_auto) { return true; }
-    //             return Time.time >= (this.last_attack_time + behavior.ctrl_shooting_rate);
-    //         }
-    //         else {
-    //             // start countdown to shoot once target is seen
-    //             this.last_attack_time = Time.time;
-    //         }
-    //     }
-    //     return false;
-    // }
-    
-    // public override bool ReloadInput() {
-    //     return behavior.ctrl_start_reload;
-    //     // return attack_controller.current_weapon.current_ammo == 0
-    //     //     && !reloading
-    //     //     && AttackInput();
-    // }
-
-
     public override Vector3 GetShootVector() {
         return ShootTarget() - attack_controller.shoot_point.position; //  DirectionFromLookTarget(ShootTarget());
     }
 
     private Vector3 ShootTarget() {
-        // float rand_x = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
-        // float rand_z = Random.Range(-shoot_inaccuracy, shoot_inaccuracy);
-        // Vector3 rand = new Vector3(rand_x, 0, rand_z);
-        // return LookTarget() + rand;
         return behavior.ctrl_target.GetAimTarget().position;
     }
     
@@ -220,9 +166,6 @@ using UnityEngine.AI;
         AmmoPickupInteraction pickup = obj.GetComponent<AmmoPickupInteraction>();
         pickup.ammo_type = attack_controller.current_weapon.ammo_type;
         pickup.ammo_amount = attack_controller.current_weapon.ammo_drop_size;
-        // if (pickup.pickup_weapon.current_ammo == 0) {
-        //     pickup.pickup_weapon.current_ammo = pickup.pickup_weapon.ammo_capacity;
-        // }
     }
 
     protected void SpawnWeaponPickup() {
@@ -239,26 +182,7 @@ using UnityEngine.AI;
         obj.transform.position = transform.position + new Vector3(0f, 0f, -0.25f);;
         WeaponPickupInteraction pickup = obj.GetComponent<WeaponPickupInteraction>();
         pickup.pickup_weapon = attack_controller.current_weapon;
-        // if (pickup.pickup_weapon.current_ammo == 0) {
-        //     pickup.pickup_weapon.current_ammo = pickup.pickup_weapon.ammo_capacity;
-        // }
     }
-
-    // /////////////////////////////
-    // /// DEBUG FIELDS ////////////
-    // /////////////////////////////
-    
-    // public bool debug_seeing_target, debug_saw_target;
-    // public Vector3 debug_move_vector, debug_move_destination, debug_look_target;
-
-    // protected override void SetDebugData() {
-    //     base.SetDebugData();
-    //     debug_seeing_target = seeing_target;
-    //     debug_saw_target = saw_target;
-    //     debug_move_vector = MoveVector();
-    //     debug_move_destination = MoveDestination();
-    //     debug_look_target = GetLookTarget();
-    // }
 }
 
 public enum MovementTarget {

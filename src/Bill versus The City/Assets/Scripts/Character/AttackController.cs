@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour, IWeaponManager
 {
-    // public const float RECOIL_DECAY = 15f;
-    // public const float MAX_RECOIL = 15f;
     public ScriptableObject initialize_weapon;
     public IWeapon current_weapon { get; set; }
     public IAttackTarget attacker = null;
@@ -136,10 +134,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         if (attacker == null) {
             Debug.LogWarning("attacker is null!");
         }
-        // AttackControllerUpdate();
         UpdateRecoil();
-        // if (! _aim_this_frame) { StopAim(); }
-        // _aim_this_frame = false;
         UpdateDebugFields();
     }
 
@@ -173,14 +168,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
     }
     public void StopAim() {
         start_aim_at = null;
-    }
-
-    protected void AttackControllerStart() {
-         // allow extending classes to add to `Start`    
-    }
-
-    protected void AttackControllerUpdate() {
-        // allow extending classes to add to `Update`
     }
 
     public void FireAttack(Vector3 attack_direction) {
