@@ -99,14 +99,12 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         // logs that a new enemy was spawned
         if (log_spawns) {
             string spawned_at_str = transform.parent == null ? "" : $"at {transform.parent.gameObject.name}";
-            Debug.Log($"Spawn new enemy {enemy_ctrl.gameObject.name} spawned by {this.gameObject.name} {spawned_at_str} (spawn time {Time.time})"); // TODO --- remove debug
         }
 
     }
 
     public virtual void ConfigureEnemyBehavior(EnemyBehavior spawned_enemy) {
         // configures the behavior of a newly spawned enemy
-        // Debug.LogWarning($"initial move target ({spawned_enemy.gameObject}): {spawned_enemy.initial_movement_target}"); // TODO --- remove debug
         if (override_default_behavior) {
             spawned_enemy.default_behavior = default_behavior;
         }
@@ -121,9 +119,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
             spawned_enemy.use_initial_movement_target = true;
         } else {
             spawned_enemy.use_initial_movement_target = false;
-            
         }
-        // Debug.LogWarning($"configured move target ({spawned_enemy.gameObject}): {spawned_enemy.initial_movement_target}"); // TODO --- remove debug
     }
     
     public GameObject GetPrefab() {

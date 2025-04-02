@@ -74,10 +74,8 @@ public class WaypointSystem : MonoBehaviour {
 
     public Transform GetClosestCoverPositionNotInSet(Vector3 start_point, Vector3 cover_from, HashSet<Transform> excluded_positions) {
         // finds a cover position from the Waypoints, while excluding the 
-        Debug.Log($"excluded_positions {excluded_positions} has {excluded_positions.Count} positions excluded!"); // TODO --- remove debug
         Func<Transform, bool> Filter = CurriedAndFilter(GetExcludeSetFilter(excluded_positions), GetCoverFromFilter(cover_from));
         Transform result = _GetBestPosition(start_point, GetCurriedCoverDistanceScore(cover_from), Filter);
-        Debug.Log($"best position {result} out of {waypoints.Count} waypoints"); // TODO --- remove debug
         return result;
     }
 
@@ -97,17 +95,6 @@ public class WaypointSystem : MonoBehaviour {
     }
 
     private Transform _GetClosestPoint(Vector3 start_point, Func<Transform, bool> use_transform) {
-        // float closest_distance = float.PositiveInfinity;
-        // Transform closet_destination = null;
-        // foreach(Transform p in waypoints) {
-        //     if (! use_transform(p)) { continue; }
-        //     float dist = DistanceToPoint(start_point, p.position);
-        //     if (dist < closest_distance) {
-        //         closest_distance = dist;
-        //         closet_destination = p;
-        //     }
-        // }
-        // return closet_destination;
         return _GetBestPosition(start_point, RawDistanceScore, use_transform);
     }
 

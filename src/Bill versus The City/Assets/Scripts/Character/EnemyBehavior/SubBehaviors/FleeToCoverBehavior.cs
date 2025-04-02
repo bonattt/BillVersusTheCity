@@ -70,28 +70,10 @@ public class FleeToCoverBehavior : ISubBehavior  {
             return dest.position;
             // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);
         }
-
-        // if (IsPathBlocked(parent, player, dest.position)) {
-        //     // Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
-        //     // parent.ctrl_waypoint = parent.transform.position + (-toward_player * 3);
-        //     // Debug.LogWarning($"path blocked!"); // TODO --- remove debug
-        //     parent.ctrl_waypoint = DestinationAwayFromPlayer(parent, player);
-        // } else {
-            // parent.ctrl_waypoint = dest.position;
-        //     // Debug.LogWarning($"path clear"); // TODO --- remove debug
-        // }
     }
 
     private bool has_los_to_player = false; // cached 
     private void UpdatePlayerRaycast(EnemyBehavior parent, ManualCharacterMovement player) {
-        // RaycastHit hit;
-        // if (NavMeshUtils.RaycastTowardPlayer(parent, player, out hit, debug_ray: true)) {
-        //     // if raycast hits something other than the player
-        //     bool hit_player = NavMeshUtils.RaycastHitsPlayer(hit);
-        //     has_los_to_player = hit_player;
-        // } else {
-        //     has_los_to_player = false;
-        // }
         has_los_to_player = parent.perception.seeing_target;
     }
     public void StartBehavior(EnemyBehavior parent) { 
@@ -100,31 +82,12 @@ public class FleeToCoverBehavior : ISubBehavior  {
     }
 
     private bool WillStayCornered(EnemyBehavior parent, ManualCharacterMovement player) {
-        // if (!is_cornered) { return false; } // can only stay cornered if you're already cornered
-        // bool stay_cornered = false;
-        // if (NavMeshUtils.RaycastTowardPlayer(parent, player, out hit, debug_ray: true)) {
-        //     // if raycast hits something other than the player
-        //     bool hit_player = NavMeshUtils.RaycastHitsPlayer(hit);
-        //     stay_cornered = hit_player;
-        // }
         return is_cornered && has_los_to_player; 
     }
 
     private bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player) {
         if (is_cornered) { return false; } // already cornered, don't BECOME cornered
         
-        // Vector3 start = parent.controller.transform.position;
-        // Vector3 cover_from = player.transform.position;
-        
-        // Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start, cover_from);
-
-        // if (IsPathBlocked(parent, player, dest.position)) {
-        //     // Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
-        //     // parent.ctrl_waypoint = parent.transform.position + (-toward_player * 3);
-        //     // Debug.LogWarning($"path blocked!"); // TODO --- remove debug
-        //     parent.ctrl_waypoint = DestinationAwayFromPlayer(parent, player);
-        // }
-        // }
         Vector3 travel_direction = parent.controller.nav_mesh_agent.velocity.normalized;
         Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
 
@@ -132,31 +95,10 @@ public class FleeToCoverBehavior : ISubBehavior  {
         return dot >= towards_player_threshold;
     }
 
-    // private static float PathBlocked(EnemyBehavior parent, PlayerMovement player) {
-    //     Vector3 destination = parent.ctrl_waypoint;
-    //     Vector3 start = parent.controller.transform.position;
-    //     bool path_found = NavMesh.CalculatePath(start, destination, NavMesh.AllAreas, parent.controller.nav_mesh_agent.path);
-        
-    //     if (!path_found) { return -1; } // no path, so path is blocked
-    //     if (parent.controller.nav_mesh_agent.path.corners.Length <= 1) { return -1; } // no path
-
-    //     Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
-    //     Vector3 first_corner = parent.controller.nav_mesh_agent.path.corners[1];
-    //     Vector3 start_direction = (first_corner - parent.transform.position).normalized;
-
-    //     float dot = Vector3.Dot(toward_player, start_direction);
-    //     return dot;
-    // }
-    // private static bool IsPathBlocked(EnemyBehavior parent, PlayerMovement player, Vector3 destination) {
-    //     return PathBlocked(parent, player, destination) >= towards_player_threshold;
-    // }
 
     private static Vector3 DestinationAwayFromPlayer(EnemyBehavior parent, ManualCharacterMovement player) {
-        Debug.LogWarning("DestinationAwayFromPlayer"); // TODO --- remove debug
         Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
         Debug.DrawRay(parent.transform.position, toward_player, Color.red);
-
-        // Vector3 destination = parent.transform.position + (-toward_player * 3);
 
         Vector3 raycast_start = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);
         Vector3 raycast_target = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);

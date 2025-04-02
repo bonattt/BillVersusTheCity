@@ -50,7 +50,7 @@ public class ManualCharacterMovement : CharCtrl
         PostUpdate();
     }
 
-    [SerializeField]  // TODO --- remove debug
+    [SerializeField]
     private Vector3 _last_move;
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false) {
         base.MoveCharacter(move_direction, look_direction, sprint, crouch);

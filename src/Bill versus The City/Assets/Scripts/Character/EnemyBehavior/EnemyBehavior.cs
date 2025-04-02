@@ -56,7 +56,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public bool needs_reload {
         get { return _needs_reload; }
         set { 
-            Debug.Log("NEEDS RELOAD SET!"); // TODO --- remove debug
             _needs_reload = value; 
             if(! _needs_reload) {
                 _reload_behavior = null;
@@ -143,7 +142,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     {
         _shooting_rate_variation = Random.Range(-SHOOTING_RATE_VARIATION/2, SHOOTING_RATE_VARIATION/2);
         InitializeBehaviorsDict();
-        // Debug.LogWarning($"{gameObject.name}.initial_search_target: {initial_movement_target}, use: {use_initial_movement_target}"); // TODO --- remove debug
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
         reload_manager = GetComponent<IReloadManager>();
         reload_manager.Subscribe(this);
@@ -253,13 +251,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
         // if reload is finished, clear `needs_reload` if the weapon is fully loaded, otherwise do not clear it.
         if (perception.seeing_target) {
-            Debug.LogWarning($"FinishReload while seeing player! {weapon.current_ammo} {weapon.current_ammo != 0}"); // TODO --- remove debug
             needs_reload = weapon.current_ammo == 0;
         } else {
-            Debug.LogWarning($"FinishReload in cover! {weapon.current_ammo} <= {weapon.ammo_capacity}"); // TODO --- remove debug
             needs_reload = weapon.current_ammo < weapon.ammo_capacity;
         }
-        Debug.LogWarning($"FinishReload {gameObject.name}: still needs reload?? {needs_reload} ammo ({weapon.current_ammo} / {weapon.ammo_capacity})"); // TODO --- remove debug
     }
     public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
         // if reload is canceled, but the weapon has no ammo still, leave `needs_reload` as true, otherwise clear it.
@@ -289,7 +284,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         if (behavior_mode != previous_behavior_mode) {
             behaviors[previous_behavior_mode].EndBehavior(this);
             behaviors[behavior_mode].AssumeBehavior(this);
-            Debug.Log($"{gameObject.name}.EnemyBehavior.GetSubBehavio({behavior_mode} -> {previous_behavior_mode})"); // TODO --- remove debug
         } 
         if (needs_reload && behavior_mode != BehaviorMode.routed && behavior_mode != BehaviorMode.suppressed) {
             Debug.LogWarning($"{gameObject.name} using reload behavior! (behavior_mode = {behavior_mode}), needs_reload: {needs_reload}, reload_behavior is null {_reload_behavior == null}");

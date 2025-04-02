@@ -444,12 +444,8 @@ public class LevelConfig : MonoBehaviour
         starting_rifle = InstantiateStartingWeapon(init_starting_rifle);
         starting_handgun = InstantiateStartingWeapon(init_starting_handgun);
         starting_pickup = InstantiateStartingWeapon(init_starting_pickup);
-        Debug.Log($"rifle: {starting_rifle}, handgun: {starting_handgun}, pickup: {starting_pickup}"); // TODO --- remove debug
 
         PlayerCharacter.inst.inventory.EquipStartingWeapons(starting_rifle, starting_handgun, starting_pickup);
-        // PlayerCharacter.inst.inventory.rifle = starting_rifle;
-        // PlayerCharacter.inst.inventory.handgun = starting_handgun;
-        // PlayerCharacter.inst.inventory.pickup = starting_pickup;
     }
 
     private IWeapon InstantiateStartingWeapon(ScriptableObject scriptable_object) {

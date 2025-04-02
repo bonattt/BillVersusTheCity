@@ -110,7 +110,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         get { return _reloading; }
         protected set {
             _reloading = value;
-            Debug.Log($"reloading set: {_reloading}"); // TODO --- remove debug
             try {
                 ((PlayerAttackController) attack_controller).switch_weapons_blocked = value;
             } catch (InvalidCastException) {
@@ -220,11 +219,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // }
 
     protected void UpdateReload() {
-        // Debug.Log($"{gameObject.name}.UpdateReload() -- reloading: {reloading}, finished: {ReloadIsFinished()}");// TODO --- remove debug
         if (reloading && IsReloadFinished()) {
             FinishReload();
-        } else if (reloading) { // TODO --- remove debug
-            // Debug.Log($"~~~reloading!");
         }
     }
 
@@ -261,99 +257,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // do nothing. Extension hook for subclasses.
     }
 
-    // protected void SetAction() {
-    //     if (NON_ACTIONABLE_CODES.Contains(current_action)) {
-    //         current_action = ActionCode.none;
-    //     }
-    //     ActionCode action_input = GetActionInput();
-    //     if (reloading) {
-    //         if (ReloadIsFinished()) {
-    //             FinishReload();
-    //         }
-    //         else if (
-    //                 action_input == ActionCode.cancel_reload || 
-    //                 action_input == ActionCode.sprint ||  
-    //                 action_input == ActionCode.aim 
-    //         ) {
-    //             CancelReload();
-    //         }
-    //     }
-
-    //     else if (aiming) {
-    //         if (action_input == ActionCode.cancel_aim || action_input == ActionCode.sprint) {
-    //             aiming = false;
-    //             current_action = ActionCode.none;
-    //         }
-    //     }
-
-    //     if (current_action == ActionCode.none) {
-    //         current_action = action_input;
-
-    //         switch (current_action) {
-    //             case ActionCode.none:
-    //                 break;
-
-    //             case ActionCode.reload:
-    //                 if (CanReload()) {
-    //                     StartReload();
-    //                 } else {
-    //                     // cannot reload, reset action code.
-    //                     current_action = ActionCode.none;
-    //                 }
-    //                 break;
-
-    //             case ActionCode.aim:
-    //                 aiming = true;
-    //                 break;
-    //         }
-    //     }
-    // }
-
-    // public virtual ActionCode GetActionInput() {
-    //     if (ReloadInput()) {
-    //         return ActionCode.reload;
-    //     }
-    //     else if (AimInput()) {
-    //         return ActionCode.aim;
-    //     }
-    //     else if (CrouchInput()) {
-    //         return ActionCode.crouch;
-    //     }
-    //     else if (SprintInput()) {
-    //         return ActionCode.sprint;
-    //     }
-    //     else if (CancelReloadInput()) {
-    //         return ActionCode.cancel_reload;
-    //     }
-    //     else if (CancelAimInput()) {
-    //         return ActionCode.cancel_aim;
-    //     }
-    //     return ActionCode.none;
-    // }
-    
-    // public virtual bool CrouchInput() { 
-    //     return false;
-    // }
-
-    // public virtual bool AimInput() {
-    //     return false;
-    // }
-
-    // public virtual bool CancelAimInput() {
-    //     return false;
-    // }
-
-    // public virtual bool ReloadInput() {
-    //     return false;
-    // }
-
-    // public virtual bool SprintInput() {
-    //     return false;
-    // }
-
-    // public virtual bool CancelReloadInput() {
-    //     return false;
-    // }
 
     public void StartReload() {
         // initiate a reload
@@ -435,11 +338,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         is_sprinting = sprint && CanSprint();
         if (crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero) {
             // if crouch diving, continue in that direction for the duration of the crouch dive
-            // Debug.Log("continue crouch dive!"); // TODO --- remove debug
             move_direction = crouch_dive_direction;
         } else if (crouch && sprint && !_crouch_last_frame && crouch_dive_remaining <= 0) {
             // Start crouch dive
-            // Debug.Log("start crouch dive!"); // TODO --- remove debug
             crouch_dive_remaining = crouch_dive_duration;
             crouch_dive_direction = move_direction;
             crouch_percent = 1f;
