@@ -80,50 +80,27 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
                 _percent_noticed = 1.1f;
             }
 
-            switch(state) {
-                case PerceptionState.alert | PerceptionState.seeing:
-                    if (_percent_noticed <= 0) {
-                        LosePlayer();
-                    }
-                    else if (visible_nodes_this_frame >= 1) {
-                        state = PerceptionState.seeing;
-                    }
-                    break;
-
-                case PerceptionState.searching | PerceptionState.unaware:
-                    if (_percent_noticed >= 1) {
-                        Alert();
-                    }
-                    break;
-
-                case PerceptionState.dead:
-                    _percent_noticed = 0f;
-                    break;
-
-                default:
-                    // Debug.LogError($"unhandled perception state {state}");
-                    break;
+            if (state == PerceptionState.alert | state == PerceptionState.seeing) {
+                if (_percent_noticed <= 0) {
+                    LosePlayer();
+                }
+                else if (visible_nodes_this_frame >= 1) {
+                    state = PerceptionState.seeing;
+                }
             }
-
-            // if (value >= 1f) {
-            //     if (_percent_noticed < 1f) {
-            //         Alert();
-            //     }
-            //     // _percent_noticed = 1f;
-            // } else if (value <= 0) {
-            //     LosePlayer();
-            //     _percent_noticed = 0f;
-            // } else {
-            //     _percent_noticed = value;
-            // }
-
-            // _percent_noticed = value;
-            // if(_percent_noticed <= 0) {
-            //     _percent_noticed = 0f;
-            // } 
-            // // else if (_percent_noticed >= 1) {
-            // //     _percent_noticed = 1f;
-            // // }
+            else if(state == PerceptionState.searching | state == PerceptionState.unaware) {
+                Debug.Log($"handled perception state {state}");
+                if (_percent_noticed >= 1) {
+                    Debug.LogWarning($"Alert!"); // TODO --- remove debug
+                    Alert();
+                }
+            }
+            else if(state == PerceptionState.dead) {
+                _percent_noticed = 0f;
+            }
+            else {
+                Debug.LogError($"unhandled perception state {state}");
+            }
         }
     }
 

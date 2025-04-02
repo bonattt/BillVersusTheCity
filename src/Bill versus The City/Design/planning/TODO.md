@@ -507,7 +507,7 @@ GAMEPLAY IMPROVEMENTS
         [+] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
         [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
     [+] remove "extend update" hook in AttackController, and just make `Update` virtual
-    [ ] FIX: enemy perception doesn't trigger when notice is up
+    [+] FIX: enemy perception doesn't trigger when notice is up
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons
@@ -517,7 +517,7 @@ GAMEPLAY IMPROVEMENTS
 
 [ ] BUGFIXES:
     [ ] FIX: countdown failure loops forever
-    [ ] FIX: Camera jitters in some conditions
+    [+] FIX: Camera jitters in some conditions
     [ ] player can turn while level-start dialogue is open
     [+] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 
     [+] FIX: changing difficulty settings changes player/enemy health, causing the damaged sound to play 
