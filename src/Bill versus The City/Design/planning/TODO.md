@@ -507,6 +507,7 @@ GAMEPLAY IMPROVEMENTS
         [+] if you hold sprint or aim, then hit reload, you will reload once, then resume aim or sprint
         [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
     [+] remove "extend update" hook in AttackController, and just make `Update` virtual
+    [ ] FIX: enemy perception doesn't trigger when notice is up
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons
