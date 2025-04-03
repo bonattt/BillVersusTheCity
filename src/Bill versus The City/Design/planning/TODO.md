@@ -462,9 +462,9 @@ GAMEPLAY IMPROVEMENTS
             [+] suppression system.
             [+] retreat to cover when suppressed
             [+] Check if there is no viable retreat, and start fighting
-            [ ] Refactor to have FleeToCoverBehavior(reload=true) instead of ReloadFromCoverBehavior and FleeToCoverBehavior
-            [ ] check if calling CancelReload in EnemyBehavior is correct, or if I should be setting ctrl_reload = false, or something like that
-            [ ] polish values
+            ~~[ ] Refactor to have FleeToCoverBehavior(reload=true) instead of ReloadFromCoverBehavior and FleeToCoverBehavior~~
+            ~~[ ] check if calling CancelReload in EnemyBehavior is correct, or if I should be setting ctrl_reload = false, or something like that~~
+            ~~[ ] polish values~~
         [~] play with acceleration to improve enemy movement
     [~] Swarm intelligence
         [+] Search different points from each other
@@ -518,7 +518,7 @@ GAMEPLAY IMPROVEMENTS
 [ ] BUGFIXES:
     [ ] FIX: countdown failure loops forever
     [+] FIX: Camera jitters in some conditions
-    [ ] player can turn while level-start dialogue is open
+    [+] player can turn while level-start dialogue is open
     [+] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 
     [+] FIX: changing difficulty settings changes player/enemy health, causing the damaged sound to play 
 
