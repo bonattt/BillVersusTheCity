@@ -126,9 +126,11 @@ public class MenuManager : MonoBehaviour
         return tutorial;
     }
 
+    private static int dialogue_counter = 0;
     public DialogueController OpenDialoge(string file_name) {
         // Opens a new dialogue from a dialogue file
         GameObject obj = OpenSubMenuPrefab(dialogue_prefab);
+        obj.name = $"Dialogue {++dialogue_counter} ({file_name})";
         DialogueController ctrl = obj.GetComponent<DialogueController>();
         ctrl.StartDialogue(file_name);
         return ctrl;
@@ -189,6 +191,7 @@ public class MenuManager : MonoBehaviour
 
     public void PlayerDefeatPopup() {
         // click event for when the restart level button is clicked
+        CloseAllMenus();
         YesNoPopupController popup = OpenNewPopup();
         popup.header_text = "Defeat!";
         popup.content_text = "You have been killed";

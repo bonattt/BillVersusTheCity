@@ -508,6 +508,8 @@ GAMEPLAY IMPROVEMENTS
         [+] Aiming ~~blocks switching weapons OR~~ resets aim-percent
     [+] remove "extend update" hook in AttackController, and just make `Update` virtual
     [+] FIX: enemy perception doesn't trigger when notice is up
+
+[X] Implement control method switching
  
 [~] Weapons System(s)
     [+] Implement armor effectiveness on weapons
@@ -516,7 +518,9 @@ GAMEPLAY IMPROVEMENTS
     [ ] New Weapon type: grenade 
 
 [ ] BUGFIXES:
-    [ ] FIX: countdown failure loops forever
+    [~] FIX: countdown failure loops forever
+        --> I did not fix it, but the bug only shows up occasionally, maybe 1/4 times, so it's not totally game breaking anymore...
+    [ ] FIX: Enemy shotgun bullets get messed up
     [+] FIX: Camera jitters in some conditions
     [+] player can turn while level-start dialogue is open
     [+] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 

@@ -35,6 +35,10 @@ public enum LevelWeaponSelect {
 
 public class LevelConfig : MonoBehaviour
 {
+    [SerializeField]
+    private uint level_number = 0;
+    [SerializeField]
+    private static uint level_counter = 1;
     public static LevelConfig inst { get; private set; }
     public string next_level;
     public bool combat_enabled = true;
@@ -85,9 +89,14 @@ public class LevelConfig : MonoBehaviour
     
     void Start()
     {
+        level_number = level_counter++;
+        gameObject.name += $" ({level_number})";
         ConfigureLevel();
         SetupStartLevelCallbackOrStart();
         // StartLevel();
+        if (inst != this) {
+            Debug.LogWarning("level not set to inst");
+        }
     }
 
     void Update() {
@@ -212,6 +221,7 @@ public class LevelConfig : MonoBehaviour
 
     protected ILevelCondition InstantiateConditionFromPrefab(GameObject prefab) {
         GameObject condition_obj = Instantiate(prefab);
+        condition_obj.name += $" ({level_number})";
         condition_obj.transform.parent = transform;
 
         ILevelCondition condition = condition_obj.GetComponent<ILevelCondition>();
@@ -373,6 +383,13 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void FailLevel() {
+        Debug.LogWarning($"fail level number {level_number} (level counter {level_counter})"); // TODO --- remove debug
+        Debug.LogWarning(Environment.StackTrace); // TODO --- remove debug
+        // try { // TODO --- remove debug
+        //     throw new Exception("TEST EXPOSE STACK TRACE");
+        // } catch(Exception e) {
+        //     Debug.LogException(e);
+        // } // TODO --- remove debug ^^^
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_failed);
         if (ctrl == null) {
             MenuManager.inst.PlayerDefeatPopup();
