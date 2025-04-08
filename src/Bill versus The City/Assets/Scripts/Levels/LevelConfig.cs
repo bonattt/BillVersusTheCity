@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -37,8 +38,8 @@ public class LevelConfig : MonoBehaviour
 {
     [SerializeField]
     private uint level_number = 0;
-    [SerializeField]
     private static uint level_counter = 1;
+
     public static LevelConfig inst { get; private set; }
     public string next_level;
     public bool combat_enabled = true;
@@ -76,6 +77,9 @@ public class LevelConfig : MonoBehaviour
     }
 
     public bool test_mode = false; // disables some level features to streamline testing
+    [SerializeField]
+    [Tooltip("if true, the unity editor will pause whenever a level is failed, so the state of the game can be inspected.")]
+    private bool pause_on_level_failure = false;
 
     public bool has_start_dialogue {
         get {
@@ -385,6 +389,9 @@ public class LevelConfig : MonoBehaviour
     public void FailLevel() {
         Debug.LogWarning($"fail level number {level_number} (level counter {level_counter})"); // TODO --- remove debug
         Debug.LogWarning(Environment.StackTrace); // TODO --- remove debug
+        #if UNITY_EDITOR
+            EditorApplication.isPaused = true;
+        #endif
         // try { // TODO --- remove debug
         //     throw new Exception("TEST EXPOSE STACK TRACE");
         // } catch(Exception e) {

@@ -2,6 +2,8 @@
 =====================================
 === Known Bugs / Missing Features ===
 =====================================
+[ ] FIX: sometimes, if a level with countdown failure condition is failed, the level will fail again immediately on restart. The issue is now
+        intermittent.
 [ ] FIX: slow hipfire animation for rifles
 [ ] FIX: giant muzzleflash on hipfire animation...
 [X] FIX: Animation siezes up if you START aiming, then start shooting before aiming finishes
