@@ -200,6 +200,7 @@ MonoBehaviour:
   uncrouch_rate: 4
   crouch_height: 0.5
   uncrouched_height: 1.1
+  keep_reloading: 1
   start_reload_at: 0
   animatior_controller_ref: {fileID: 7047603838670989609}
   crouch_dive_duration: 1
@@ -212,17 +213,8 @@ MonoBehaviour:
   drop_weapon: 0
   drop_ammo: 0
   use_full_auto: 0
-  ctrl_shooting_rate: 0.75
   ammo_pickup_prefab: {fileID: 112494599611690591, guid: f0d851401056f0743a202ab06969c0c7, type: 3}
   weapon_pickup_prefab: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
-  ctrl_target: {fileID: 0}
-  ctrl_will_shoot: 1
-  ctrl_waypoint: {x: 0, y: 0, z: 0}
-  ctrl_move_mode: 0
-  ctrl_aim_mode: 1
-  ctrl_sprint: 0
-  ctrl_start_reload: 0
-  ctrl_cancel_reload: 0
   nav_mesh_agent: {fileID: 2365366885385776978}
   debug_look_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &7771750986634287957
@@ -246,6 +238,15 @@ MonoBehaviour:
   never_use_cover_to_reload: 0
   lock_to_passive: 0
   _shooting_rate: 1
+  ctrl_target: {fileID: 0}
+  ctrl_will_shoot: 1
+  ctrl_waypoint: {x: 0, y: 0, z: 0}
+  ctrl_move_mode: 0
+  ctrl_aim_mode: 1
+  ctrl_sprint: 0
+  ctrl_start_reload: 0
+  ctrl_cancel_reload: 0
+  ctrl_shooting_rate: 0.75
   _needs_reload: 0
   debug_distance_to_target: 0
   debug_distance_to_waypoint: 0
@@ -471,7 +472,7 @@ Transform:
   m_GameObject: {fileID: 2741102800901688509}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

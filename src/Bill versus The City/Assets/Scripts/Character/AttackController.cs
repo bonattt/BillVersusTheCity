@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class AttackController : MonoBehaviour, IWeaponManager
@@ -197,6 +198,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
             bullet_obj.transform.position = GetShootPoint(i);
             Vector3 velocity = GetAttackVector(attack_direction, i);
+            Debug.LogWarning($"set velocity to {velocity.magnitude}");
             bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
             bullet = bullet_obj.GetComponent<Bullet>();
@@ -216,6 +218,9 @@ public class AttackController : MonoBehaviour, IWeaponManager
             Debug.LogWarning("bullet is null!");
         }
         UpdateSubscribers();
+        // #if UNITY_EDITOR
+        //     EditorApplication.isPaused = true;
+        // #endif
     }
 
     private Vector3 GetShootPoint(int i) {

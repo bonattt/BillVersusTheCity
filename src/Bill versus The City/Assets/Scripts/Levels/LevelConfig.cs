@@ -390,7 +390,7 @@ public class LevelConfig : MonoBehaviour
         Debug.LogWarning($"fail level number {level_number} (level counter {level_counter})"); // TODO --- remove debug
         Debug.LogWarning(Environment.StackTrace); // TODO --- remove debug
         #if UNITY_EDITOR
-            EditorApplication.isPaused = true;
+            EditorApplication.isPaused = pause_on_level_failure;
         #endif
         // try { // TODO --- remove debug
         //     throw new Exception("TEST EXPOSE STACK TRACE");

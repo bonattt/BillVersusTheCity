@@ -89,7 +89,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
                 }
             }
             else if(state == PerceptionState.searching | state == PerceptionState.unaware) {
-                Debug.Log($"handled perception state {state}");
                 if (_percent_noticed >= 1) {
                     Debug.LogWarning($"Alert!"); // TODO --- remove debug
                     Alert();

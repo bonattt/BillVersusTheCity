@@ -368,7 +368,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // returns if the character can reload with the current_weapon.
         IWeapon current = current_weapon;
         if (current == null) { 
-            Debug.LogWarning("cannot reload, current weapon is null!");
+            // Debug.LogWarning("cannot reload, current weapon is null!");
             return false; 
         }
         return CanReload(current);
