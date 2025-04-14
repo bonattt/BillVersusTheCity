@@ -520,7 +520,7 @@ GAMEPLAY IMPROVEMENTS
 [ ] BUGFIXES:
     [~] FIX: countdown failure loops forever
         --> I did not fix it, but the bug only shows up occasionally, maybe 1/4 times, so it's not totally game breaking anymore...
-    [ ] FIX: Enemy shotgun bullets get messed up
+    [+] FIX: Enemy shot bullets get messed up sometimes
     [+] FIX: Camera jitters in some conditions
     [+] player can turn while level-start dialogue is open
     [+] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 

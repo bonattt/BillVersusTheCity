@@ -66,6 +66,28 @@ public static class ScenesUtil {
         return null;  
     }
 
+    public static void ExitToMainMenu() {
+        MenuManager.inst.CloseAllMenus();
+        NextLevel("MainMenu");
+    }
+
+    public static void ExitGame() {
+        // TODO --- move this code somewhere more suitable
+        Debug.Log("Game is exiting...");
+        if(SaveFile.current_save != null) {
+            SaveFile.current_save.SaveOnExit();
+        }
+
+        // preprocessor #if, #else, #endif optimizes the code by excluding code sections at compile time instead of runtime
+        #if UNITY_EDITOR
+            // If running in the Unity Editor, stop playing the scene
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            // If running in a standalone build, quit the application
+            Application.Quit();
+        #endif
+    }
+
     // public static void LoadFloor(string scene_name) {
     //     loaded_floors.Add(SceneManager.GetActiveScene().name);
     //     loaded_floors.Add(scene_name);

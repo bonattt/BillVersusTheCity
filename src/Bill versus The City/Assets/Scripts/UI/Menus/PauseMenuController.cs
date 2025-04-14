@@ -73,26 +73,9 @@ public class PauseMenuController : MonoBehaviour
     }
 
     public void ExitGameConfirmClick(ClickEvent _) {
-        ExitGame();
+        ScenesUtil.ExitToMainMenu();
     }
 
-    public static void ExitGame() {
-        // TODO --- move this code somewhere more suitable
-        Debug.Log("Game is exiting...");
-        if(SaveFile.current_save != null) {
-            SaveFile.current_save.SaveOnExit();
-        }
-
-        // preprocessor #if, #else, #endif optimizes the code by excluding code sections at compile time instead of runtime
-        #if UNITY_EDITOR
-            // If running in the Unity Editor, stop playing the scene
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            // If running in a standalone build, quit the application
-            Application.Quit();
-        #endif
-    }
-    
     public void MenuNavigation() {
         if (InputSystem.current.MenuCancelInput()) {
             MenuManager.inst.CloseMenu();

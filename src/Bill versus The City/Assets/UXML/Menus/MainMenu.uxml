@@ -1,6 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UXML/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
     <ui:VisualElement name="root" style="flex-grow: 1; font-size: 40px; justify-content: center;">
         <ui:Label tabindex="-1" text="Bill vs the City" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TitleLabel" style="-unity-text-align: upper-center; font-size: 100px;" />
-        <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartGameButton" style="font-size: 60px; align-self: center; color: rgb(0, 0, 0);" />
+        <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartGameButton" style="font-size: 60px; align-self: center; color: rgb(0, 0, 0); min-width: 20%;" />
+        <ui:Button text="Exit Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitGameButton" style="font-size: 60px; align-self: center; color: rgb(0, 0, 0); background-color: rgb(165, 52, 52); min-width: 20%;" />
     </ui:VisualElement>
 </ui:UXML>
