@@ -70,6 +70,7 @@ public class SettingsMenuController : AbstractCloseEventMenu
         tabs_list = root.Q<VisualElement>("tabs_list");
         sub_menu_panel = root.Q<VisualElement>("options_panel");
 
+        AddCloseCallback(new SimpleActionEvent(() => SaveFile.current_save.SaveSettings())); // TODO --- save settings
         OpenSubDocument(tabs_order[0]);
         UpdateTabs();
     }

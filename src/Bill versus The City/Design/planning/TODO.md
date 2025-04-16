@@ -525,6 +525,8 @@ GAMEPLAY IMPROVEMENTS
     [+] player can turn while level-start dialogue is open
     [+] FIX: loweing difficulty settings changes enemy health, alerting every enemy to the player's exact position. 
     [+] FIX: changing difficulty settings changes player/enemy health, causing the damaged sound to play 
+    [ ] FIX: settings save if you exit pause menu by button, but not by hitting escape
+        --> change it so the save happens in a SETTINGS menu close event, not a button event
 
 
 [ ] Level tweaks

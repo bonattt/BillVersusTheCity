@@ -47,19 +47,30 @@ public class SaveFile {
         return save;
     }
 
-    public string AsJson() {
-        DuckDict data = new DuckDict();
+    // public string AsJson() {
+    //     DuckDict data = new DuckDict();
+    //     return data.Jsonify();
+    // }
+
+    private void WriteSettingsData(DuckDict data) {
         data.SetObject("settings", JsonParser.ReadAsDuckDict(GameSettings.inst.AsJson()));
-        return data.Jsonify();
     }
 
-    public void Save() {
-        File.WriteAllText(this.filepath, AsJson());
+    public void SaveAll() {
+        DuckDict data = new DuckDict();
+        WriteSettingsData(data);
+        File.WriteAllText(this.filepath, data.Jsonify());
+    }
+
+    public void SaveSettings() {
+        DuckDict data = new DuckDict();
+        WriteSettingsData(data);
+        File.WriteAllText(this.filepath, data.Jsonify());
     }
 
     public void SaveOnExit() {
         // saves SOME save data, such as settings 
-        Save();
+        SaveSettings();
     }
 
     public void LoadFromJson(string json_str) {
