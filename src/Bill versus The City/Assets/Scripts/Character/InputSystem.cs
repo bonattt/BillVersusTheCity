@@ -354,6 +354,10 @@ public class InputSystem : ISettingsObserver
                 Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
                 return "D";
 
+            case InputType.crouch:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "space";
+
             case InputType.interact:
                 return $"{INTERACT}";
             case InputType.reload:
@@ -392,6 +396,8 @@ public class InputSystem : ISettingsObserver
                 return MoveDownInputHold();
             case InputType.move_right:
                 return MoveRightInputHold();
+            case InputType.crouch:
+                return CrouchInput();
             case InputType.interact:
                 return InteractInput();
             case InputType.reload:
@@ -418,6 +424,7 @@ public enum InputType {
     interact,
     reload,
     sprint,
+    crouch,
     menu_cancel,  // cancels out of the current menu
     pause_menu,  // opens the pause menu while in normal gameplay
     next_weapon, // scroll up for next weapon

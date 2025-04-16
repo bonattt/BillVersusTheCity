@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TutorialHUD : MonoBehaviour {
+public class TutorialHUD : MonoBehaviour, IGameEventEffect {
 
     public UIDocument ui_document;
     public string tutorial_text = "";
@@ -78,6 +78,11 @@ public class TutorialHUD : MonoBehaviour {
     public void CloseTutorialHUD() {
         is_open = false;
         ui_document.rootVisualElement.style.display = DisplayStyle.None;
+    }
+
+    
+    public void ActivateEffect() {
+        OpenTutorialHUD();
     }
 
     public void OpenTutorialHUD() {

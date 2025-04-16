@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TutorialText : MonoBehaviour, IInteractionEffect
+public class LegacyTutorialText : MonoBehaviour, IInteractionEffect
 {
     public float font_size = 20f;
     public string tutorial_name = "";
