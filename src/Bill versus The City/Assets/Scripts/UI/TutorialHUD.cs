@@ -26,7 +26,6 @@ public class TutorialHUD : MonoBehaviour {
     void Start() {
         tutorial_label = ui_document.rootVisualElement.Q<Label>();
         tutorial_label.text = tutorial_text;
-        Debug.LogWarning("TODO: implement key- tutorial input checking");
 
         if (open_on_start) {
             OpenTutorialHUD();

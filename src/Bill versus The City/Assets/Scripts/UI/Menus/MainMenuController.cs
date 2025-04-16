@@ -28,6 +28,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void ExitGame() {
+        Debug.LogWarning("EXIT GAME CLICKED!"); // TODO --- remove debug
         ScenesUtil.ExitGame();
     }
 }

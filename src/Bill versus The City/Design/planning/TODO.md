@@ -517,6 +517,17 @@ GAMEPLAY IMPROVEMENTS
     [ ] New enemy type: melee????
     [ ] New Weapon type: grenade 
 
+[+] Tutorials
+    [+] Tutorial Popup
+        [+] Tutorial popup menu
+        [+] individual tutorials can be configured not to be shown again
+        [+] all tutorials can be configured not to be shown
+    [+] Tutorial HUDS
+        [+] Tutorial HUDS
+        [+] Clear after timer
+        [+] Clear after specific inputs
+    [ ] Implement new tutorials
+
 [ ] BUGFIXES:
     [~] FIX: countdown failure loops forever
         --> I did not fix it, but the bug only shows up occasionally, maybe 1/4 times, so it's not totally game breaking anymore...

@@ -37,7 +37,6 @@ public class TutorialPopupLibrary : MonoBehaviour
 
     public bool ShouldSkipTutorial(string tutorial_name) {
         if (GameSettings.inst.general_settings.skip_all_tutorials) { return true; }
-        if (GameSettings.inst.debug_settings.debug_mode) { return false; } // never skip tutorials in debug mode??
         if (GameSettings.inst.general_settings.skipped_tutorials.Contains(tutorial_name)) {
             return true;
         }
@@ -61,6 +60,7 @@ public class TutorialPopupLibrary : MonoBehaviour
     }
 
     private TutorialConfig MissingTutorial(string tutorial_name) {
+        // returns a TutorialConfig to display if a tutorial lookup fails
         string str_keys = "";
         foreach(string key in configs.Keys) {
             str_keys += $"{key}, ";
