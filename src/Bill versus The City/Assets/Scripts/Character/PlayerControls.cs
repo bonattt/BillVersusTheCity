@@ -130,7 +130,7 @@ public class PlayerControls : MonoBehaviour {
     }
     
     public bool AimInput() {
-        return InputSystem.current.AimAttackInput();
+        return InputSystem.current.AimHoldInput();
     }
 
     public bool CrouchInput() {

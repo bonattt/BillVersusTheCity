@@ -8,7 +8,9 @@ public class OpenTutorialEffect : MonoBehaviour, IGameEventEffect, IInteractionE
     private IGameEventEffect _tutorial_callback = null;
 
     void Start() {
-        _tutorial_callback = tutorial_callback.GetComponent<IGameEventEffect>();
+        if (tutorial_callback != null) {
+            _tutorial_callback = tutorial_callback.GetComponent<IGameEventEffect>();
+        }
     }
 
     public void Interact(GameObject actor) {

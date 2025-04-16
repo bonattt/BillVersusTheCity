@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class AlertEnemies : MonoBehaviour, IGameEventEffect, IInteractionEffect {
 
-    public GameObject effect_callback = null;
-
     public void Interact(GameObject actor) {
         ActivateEffect();
     }

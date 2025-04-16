@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class InputSystem : ISettingsObserver 
+public class InputSystem : ISettingsObserver
 {
     public const string MOVE_X = "Horizontal";
     public const string MOVE_Y = "Vertical";
@@ -129,7 +129,7 @@ public class InputSystem : ISettingsObserver
         return Input.GetAxis(ATTACK_INPUT) != 0;
     }
 
-    public bool AimAttackInput() {
+    public bool AimHoldInput() {
         return Input.GetAxis(AIM_ATTACK) != 0;
     }
 
@@ -145,8 +145,24 @@ public class InputSystem : ISettingsObserver
         return Input.GetAxis(MOVE_X);
     }
 
+    public bool MoveLeftInputHold() {
+        return MoveXInput() < 0;
+    }
+
+    public bool MoveRightInputHold() {
+        return MoveXInput() > 0;
+    }
+
     public float MoveYInput() {
         return Input.GetAxis(MOVE_Y);
+    }
+
+    public bool MoveUpInputHold() {
+        return MoveYInput() > 0;
+    }
+
+    public bool MoveDownInputHold() {
+        return MoveYInput() < 0;
     }
 
     public bool InteractInput() {
@@ -178,8 +194,8 @@ public class InputSystem : ISettingsObserver
     }
 
     public int? WeaponSlotInput() {
-        // returns a nullable int, containing the weapon slot input
-        // for this frame, and null if no input was made
+        // returns a nullable int, containing the weapon slot input for this frame.
+        // if no weapon-slot keys are pressed, return null.
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) {
             return 0;
         }
@@ -267,12 +283,16 @@ public class InputSystem : ISettingsObserver
         return false;
     }
 
+    public float GetScroll() {
+        return Input.GetAxis("Mouse ScrollWheel");
+    }
+
     public bool NextWeaponInput() {
-        return false; // TODO --- implement
+        return GetScroll() > 0;
     }
 
     public bool PreviousWeaponInput() {
-        return false; // TODO --- implement
+        return GetScroll() < 0;
     }
 
     public bool NextWeaponModeInput() {
@@ -307,9 +327,33 @@ public class InputSystem : ISettingsObserver
         // takes an input type and returns a string display value for whatever control that input type is currently mapped to
         switch (input_type) {
             case InputType.fire_weapon:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
                 return "LMB";
             case InputType.aim_weapon:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
                 return "RMB";
+            case InputType.next_weapon:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "Scroll Wheel Up";
+            case InputType.previous_weapon:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "Scroll Wheel down";
+            case InputType.select_weapon:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "[Number Key]";
+            case InputType.move_up:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "W";
+            case InputType.move_left:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "A";
+            case InputType.move_down:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "S";
+            case InputType.move_right:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "D";
+
             case InputType.interact:
                 return $"{INTERACT}";
             case InputType.reload:
@@ -326,6 +370,44 @@ public class InputSystem : ISettingsObserver
                 return "null";
         }
     }
+
+    public bool GetGenericInput(InputType input_type) {
+        // takes an InputType, and returns bool if that key is being held this frame
+        switch (input_type) {
+            case InputType.fire_weapon:
+                return AttackHoldInput();
+            case InputType.aim_weapon:
+                return AimHoldInput();
+            case InputType.next_weapon:
+                return NextWeaponInput();
+            case InputType.previous_weapon:
+                return PreviousWeaponInput();
+            case InputType.select_weapon:
+                return WeaponSlotInput() != null; // if a number key is pressed, int? will be not null
+            case InputType.move_up:
+                return MoveUpInputHold();
+            case InputType.move_left:
+                return MoveLeftInputHold();
+            case InputType.move_down:
+                return MoveDownInputHold();
+            case InputType.move_right:
+                return MoveRightInputHold();
+            case InputType.interact:
+                return InteractInput();
+            case InputType.reload:
+                return ReloadInput();
+            case InputType.sprint:
+                return SprintInput();
+            case InputType.menu_cancel:
+                return MenuCancelInput();
+            case InputType.pause_menu:
+                return PauseMenuInput();
+
+            default:
+                Debug.LogError($"unhandled InputType: {input_type}");
+                return false;
+        }
+    }
 }
 
 
@@ -337,5 +419,13 @@ public enum InputType {
     reload,
     sprint,
     menu_cancel,  // cancels out of the current menu
-    pause_menu  // opens the pause menu while in normal gameplay
+    pause_menu,  // opens the pause menu while in normal gameplay
+    next_weapon, // scroll up for next weapon
+    previous_weapon, // scroll down for previous weapon
+    select_weapon, // number key to select a weapon
+    move_up, // W
+    move_left, // A
+    move_down, // S
+    move_right, // D
+
 }

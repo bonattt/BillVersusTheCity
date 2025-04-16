@@ -36,7 +36,7 @@ public class InputSystemDebugger : MonoBehaviour
         mouse_world_position = InputSystem.current.MouseWorldPosition();
         attack_click_input = InputSystem.current.AttackClickInput();
         attack_hold_input = InputSystem.current.AttackHoldInput();
-        aim_attack_input = InputSystem.current.AimAttackInput();
+        aim_attack_input = InputSystem.current.AimHoldInput();
         sprint_input = InputSystem.current.SprintInput();
         dash_input = InputSystem.current.DashInput();
         move_x_input = InputSystem.current.MoveXInput();

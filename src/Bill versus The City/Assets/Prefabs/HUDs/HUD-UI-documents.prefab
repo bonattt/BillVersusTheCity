@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: e1a33280f3e329c488a96e743a778330, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 20c46cae3183dde4c806ef73e7a54e46, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 60cc24253c0d6044e84d482621f2e010, type: 3}
   m_SortingOrder: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: e1a33280f3e329c488a96e743a778330, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 20c46cae3183dde4c806ef73e7a54e46, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 0193aee1851835d42a8e862d92927b89, type: 3}
   m_SortingOrder: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: e1a33280f3e329c488a96e743a778330, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 20c46cae3183dde4c806ef73e7a54e46, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 35ee21ba271843445aef54d4fa871d5f, type: 3}
   m_SortingOrder: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: e1a33280f3e329c488a96e743a778330, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 20c46cae3183dde4c806ef73e7a54e46, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: d6302c7a71882a94aa64d2208a382d2a, type: 3}
   m_SortingOrder: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: e1a33280f3e329c488a96e743a778330, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 20c46cae3183dde4c806ef73e7a54e46, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 5649d9b837addec4d993c697a09a3704, type: 3}
   m_SortingOrder: 0
