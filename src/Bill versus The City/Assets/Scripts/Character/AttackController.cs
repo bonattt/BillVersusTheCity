@@ -198,7 +198,6 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
             bullet_obj.transform.position = GetShootPoint(i);
             Vector3 velocity = GetAttackVector(attack_direction, i);
-            Debug.LogWarning($"set velocity to {velocity.magnitude}");
             bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
             bullet = bullet_obj.GetComponent<Bullet>();

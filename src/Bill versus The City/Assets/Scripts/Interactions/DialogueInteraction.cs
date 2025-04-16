@@ -12,7 +12,7 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
     // if `random_dialogue` is checked, dialouges will be shuffled
     public bool random_dialouge = false;
 
-    public MonoBehaviour dialogue_finished;
+    public MonoBehaviour dialogue_callback;
 
 
     void Start() {
@@ -38,16 +38,22 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
         }
 
         string file_path;
+        int _index;
         if (random_dialouge) {
-            file_path = dialogue_files[Random.Range(0, dialogue_files.Count)];
+            _index = Random.Range(0, dialogue_files.Count);
+            file_path = dialogue_files[_index];
         }
         else {
-            file_path = dialogue_files[index];
-            index += 1;
+            _index = index++;
+            file_path = dialogue_files[_index];
         }
 
         DialogueController ctrl = MenuManager.inst.OpenDialoge(file_path);
-        ctrl.dialogue_finished = dialogue_finished;
+        IGameEventEffect callback = dialogue_callback.GetComponent<IGameEventEffect>();
+        if (callback != null) {
+            ctrl.AddDialogueCallback(callback);
+        }
+        // ctrl.dialogue_finished = dialogue_finished;
     }
 
     public void Interact(GameObject actor) {

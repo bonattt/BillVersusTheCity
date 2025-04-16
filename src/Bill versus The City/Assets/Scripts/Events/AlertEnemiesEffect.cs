@@ -4,10 +4,6 @@ using UnityEngine;
 public class AlertEnemies : MonoBehaviour, IGameEventEffect, IInteractionEffect {
 
     public GameObject effect_callback = null;
-    private IGameEventEffect _effect_callback = null;
-    void Start() {
-        _effect_callback = effect_callback.GetComponent<IGameEventEffect>();
-    }
 
     public void Interact(GameObject actor) {
         ActivateEffect();
@@ -16,12 +12,12 @@ public class AlertEnemies : MonoBehaviour, IGameEventEffect, IInteractionEffect 
     public void ActivateEffect() {
         EnemiesManager.inst.AlertAll();
         
-        if (_effect_callback == null) {
-            // no callback, so do nothing
-            Debug.LogWarning("no tutorial callback!"); // TODO --- remove debug
-        } else {
-            // add callback to trigger when tutorial closed
-            _effect_callback.ActivateEffect();
-        }
+        // if (_effect_callback == null) {
+        //     // no callback, so do nothing
+        //     Debug.LogWarning("no tutorial callback!"); // TODO --- remove debug
+        // } else {
+        //     // add callback to trigger when tutorial closed
+        //     _effect_callback.ActivateEffect();
+        // }
     }
 }
