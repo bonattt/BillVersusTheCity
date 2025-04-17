@@ -29,7 +29,8 @@ public class MainMenuController : MonoBehaviour
         dev_room_button = ui_doc.rootVisualElement.Q<Button>("DevRoomButton");
         dev_room_button.clicked += DevRoomButtonClicked;
 
-        // settings_button = ui_doc.rootVisualElement.Q< inst.OpenSubMenuPrefab(MenuManager.inst.settings_menu_prefab);
+        settings_button = ui_doc.rootVisualElement.Q<Button>("SettingsButton");
+        settings_button.clicked += () => MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.settings_menu_prefab);
 
         change_profile_button = ui_doc.rootVisualElement.Q<Button>("ChangeProfileButton");
         change_profile_button.clicked += MenuManager.PlayMenuClick;
