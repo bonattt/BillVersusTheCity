@@ -81,7 +81,7 @@ public class SaveFile {
     // }
 
     public static bool SaveExists(string save_name) {
-        return (new SaveFile(save_name)).Exists();
+        return new SaveFile(save_name).Exists();
     }
 
     public bool Exists() {
@@ -108,6 +108,7 @@ public class SaveFile {
     public void SaveSettings() {
         DuckDict data = new DuckDict();
         WriteSettingsData(data);
+        WriteProfileData(data);
         File.WriteAllText(this.filepath, data.Jsonify());
     }
 

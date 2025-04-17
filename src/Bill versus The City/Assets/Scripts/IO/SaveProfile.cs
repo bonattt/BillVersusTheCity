@@ -49,6 +49,13 @@ public class SaveProfile {
         save.SaveAll();
     }
 
+    public static void Rename(int profile_slot, string profile_name) {
+        SaveFile save = new SaveFile(GetSaveName(profile_slot));
+        save.LoadFromFile();
+        save.profile_name = profile_name;
+        save.SaveAll();
+    }
+
     public static bool ProfileExists(int? profile_number) {
         if (profile_number == null) { return false; }
         return ProfileExists((int) profile_number);

@@ -9,7 +9,7 @@ public class SelectProfileMenuCtrl : AbstractCloseEventMenu, ISubMenu
 {
     public UIDocument ui_doc;
     private Button profile1, profile2, profile3;
-    private Button select_button, cancel_button, delete_button;
+    private Button select_button, cancel_button, rename_button, delete_button;
 
     private int? _profile_selected = null;
     public int? profile_selected {
@@ -87,6 +87,10 @@ public class SelectProfileMenuCtrl : AbstractCloseEventMenu, ISubMenu
         cancel_button.clicked += MenuManager.inst.CloseMenu;
         cancel_button.clicked += MenuManager.PlayMenuCancelClick;
         
+        rename_button = ui_doc.rootVisualElement.Q<Button>("RenameButton");
+        rename_button.clicked += RenameClicked;
+        rename_button.clicked += MenuManager.PlayMenuClick;
+        
         delete_button = ui_doc.rootVisualElement.Q<Button>("DeleteButton");
         delete_button.clicked += MenuManager.PlayMenuClick;
         delete_button.clicked += DeleteClicked;
@@ -112,20 +116,25 @@ public class SelectProfileMenuCtrl : AbstractCloseEventMenu, ISubMenu
         UpdateProfileNames();
     }
 
-    public void SelectClicked() {
-        MenuManager.PlayMenuCancelClick();
+    public void RenameClicked() {
         SaveProfile.inst.profile_number = profile_selected;
-        Debug.LogWarning($"selected profile {profile_selected}"); // TODO --- remove debug
+        GameObject menu_obj = MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.create_new_save_profile_prefab);
+        CreateProfileMenuCtrl new_menu = menu_obj.GetComponent<CreateProfileMenuCtrl>();
+        new_menu.select_profile_menu = this;
+        new_menu.menu_mode = ProfileEditMenuMode.rename;
+    }
+
+    public void SelectClicked() {
+        SaveProfile.inst.profile_number = profile_selected;
         if (SaveProfile.inst.save_file.Exists()) {
-            Debug.LogWarning($"save exists! {profile_selected}");
             SaveProfile.inst.WriteCurrentProfileNumber();
             MenuManager.inst.CloseMenu();
 
         } else {
-            Debug.LogWarning($"no save found! {profile_selected}");
             GameObject menu_obj = MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.create_new_save_profile_prefab);
             CreateProfileMenuCtrl new_menu = menu_obj.GetComponent<CreateProfileMenuCtrl>();
             new_menu.select_profile_menu = this;
+            new_menu.menu_mode = ProfileEditMenuMode.create;
         }
     }
 

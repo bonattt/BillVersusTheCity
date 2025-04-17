@@ -4,14 +4,15 @@
     <ui:VisualElement name="root" class="menu_root" style="flex-grow: 1;">
         <ui:VisualElement name="Panel" class="menu_panel" style="flex-grow: 0; width: 60%; height: 50%;">
             <ui:Label tabindex="-1" text="Select Profile" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" style="-unity-text-align: upper-center; font-size: 32px;" />
-            <ui:VisualElement name="Profiles" style="flex-grow: 1; flex-direction: row; justify-content: center; max-height: 50%; height: 50%; min-height: 50%;">
+            <ui:VisualElement name="Profiles" style="flex-grow: 1; flex-direction: row; justify-content: center; max-height: 50%; height: 50%; min-height: 50%; font-size: 28px;">
                 <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="save1" class="profile_button profile_button_deselected" />
                 <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="save2" class="profile_button profile_button_deselected profile_button_selected" />
                 <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="save3" class="profile_button profile_button_deselected" />
             </ui:VisualElement>
-            <ui:VisualElement name="Controls" style="flex-grow: 1; flex-direction: row; align-self: flex-end; width: 100%; padding-top: 3%; padding-right: 3%; padding-bottom: 3%; padding-left: 3%; justify-content: center;">
+            <ui:VisualElement name="Controls" style="flex-grow: 1; flex-direction: row; align-self: flex-end; width: 100%; padding-top: 3%; padding-right: 3%; padding-bottom: 3%; padding-left: 3%; justify-content: center; font-size: 28px;">
                 <ui:Button text="Select" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SelectButton" style="align-self: flex-end;" />
                 <ui:Button text="Cancel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="align-self: flex-end;" />
+                <ui:Button text="Rename" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RenameButton" style="align-self: flex-end;" />
                 <ui:Button text="Delete" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DeleteButton" enable-rich-text="true" style="align-self: flex-end; background-color: rgb(157, 102, 102);" />
             </ui:VisualElement>
         </ui:VisualElement>
