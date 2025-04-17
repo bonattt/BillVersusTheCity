@@ -59,7 +59,7 @@ public class TutorialPopupController : AbstractCloseEventMenu
         if (skip_all_tutorials.value) {
             GameSettings.inst.general_settings.skip_all_tutorials = true;
         }
-        SaveFile.current_save.SaveSettings(); // skip-tutorials is stored in settings
+        SaveProfile.inst.save_file.SaveSettings(); // skip-tutorials is stored in settings
         MenuManager.inst.CloseMenu();
     }
 }

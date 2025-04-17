@@ -29,13 +29,15 @@ public class WaypointGizmos : MonoBehaviour
     }
 
     public void DrawWaypointGizmo(Transform waypoint) {
-        Gizmos.color = gizmo_color;
-        Gizmos.DrawWireSphere(waypoint.position, gizmo_size);
-        
-        Handles.color = Color.red;
-        Gizmos.color = Color.red;
-        Handles.Label(waypoint.position + Vector3.up * 0.5f, $"{waypoint.gameObject.name}");
-
+        // prevent the need for including some UnityEditor code in the build. Gizmos shouldn't be used in a build anyways
+        # if UNITY_EDITOR
+            Gizmos.color = gizmo_color;
+            Gizmos.DrawWireSphere(waypoint.position, gizmo_size);
+            
+            Handles.color = Color.red;
+            Gizmos.color = Color.red;
+            Handles.Label(waypoint.position + Vector3.up * 0.5f, $"{waypoint.gameObject.name}");
+        # endif
         // // Create a handle that allows clicking
         // if (Handles.Button(waypoint.position, Quaternion.identity, gizmo_size, gizmo_size*2, Handles.SphereHandleCap)) {
         //     Debug.LogWarning($"clicked on waypoint {waypoint.gameObject.name}");

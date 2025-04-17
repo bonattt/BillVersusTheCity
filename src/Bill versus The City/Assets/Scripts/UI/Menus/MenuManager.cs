@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class MenuManager : MonoBehaviour
 {
     public GameObject debug_action_menu_prefab, dialogue_prefab, pause_menu_prefab, settings_menu_prefab, tutorial_popup_prefab, 
-            weapon_menu_prefab, yes_no_popup_prefab;
+            weapon_menu_prefab, yes_no_popup_prefab, select_save_file_prefab, create_new_save_profile_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -55,6 +55,18 @@ public class MenuManager : MonoBehaviour
     {
         paused = sub_menus.Count != 0;
     }
+
+    public static void DisableHUD() {
+        GetHUD().SetActive(false);
+    }
+
+    public static void EnableHUD() {
+        GetHUD().SetActive(true);
+    } 
+
+    private static GameObject GetHUD() {
+        return GameObject.Find("HUD-UI(Clone)");
+    }    
 
     public void CloseAllMenus() {
         while (sub_menus.Count > 0) {
@@ -157,11 +169,13 @@ public class MenuManager : MonoBehaviour
         return new_menu;
     }
 
-    public static void PlayMenuClick(ClickEvent _) {
+    public static void PlayMenuClick(ClickEvent _) => PlayMenuClick();
+    public static void PlayMenuClick() {
         PlayMenuSound("menu_click");
     }
 
-    public static void PlayMenuCancelClick(ClickEvent _) {
+    public static void PlayMenuCancelClick(ClickEvent _) => PlayMenuCancelClick();
+    public static void PlayMenuCancelClick() {
         PlayMenuSound("menu_click");
     }
 

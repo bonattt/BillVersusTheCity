@@ -74,8 +74,8 @@ public static class ScenesUtil {
     public static void ExitGame() {
         // TODO --- move this code somewhere more suitable
         Debug.Log("Game is exiting...");
-        if(SaveFile.current_save != null) {
-            SaveFile.current_save.SaveOnExit();
+        if(SaveProfile.inst.save_file != null) {
+            SaveProfile.inst.save_file.SaveOnExit();
         }
 
         // preprocessor #if, #else, #endif optimizes the code by excluding code sections at compile time instead of runtime

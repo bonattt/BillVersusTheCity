@@ -51,3 +51,5 @@ MonoBehaviour:
   tutorial_popup_prefab: {fileID: 3085090440084774973, guid: c221e0a6b3e97aa4eaf18f1901aa9588, type: 3}
   weapon_menu_prefab: {fileID: 7782688222122553301, guid: 52e93dd6aad952a448aca650678aa5e5, type: 3}
   yes_no_popup_prefab: {fileID: 4600493022970907218, guid: 7a253e3a1f2fe8e4b9c0353b99b94d3b, type: 3}
+  select_save_file_prefab: {fileID: 3141501204870614716, guid: 2020ed75c722e84408b2109fde8752fc, type: 3}
+  create_new_save_profile_prefab: {fileID: 3460638115665070498, guid: f573402a4a6e0bd478be7cc9c2216e66, type: 3}

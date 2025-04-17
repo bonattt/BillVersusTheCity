@@ -29,3 +29,9 @@
 
 .exit_game_button {
 }
+
+.main_menu_button {
+    min-width: 30%;
+    font-size: 60px;
+    color: rgb(0, 0, 0);
+}
