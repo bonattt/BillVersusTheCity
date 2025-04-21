@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
+    public bool disable_pause_menu = false;
+
     private static MenuManager _inst;
     public static MenuManager inst {
         get { return _inst; }
@@ -56,12 +58,22 @@ public class MenuManager : MonoBehaviour
         paused = sub_menus.Count != 0;
     }
 
-    public static void DisableHUD() {
-        GetHUD().SetActive(false);
+    public static GameObject DisableHUD() {
+        Debug.LogWarning($"REFACTOR NEEDED: extract DisableHUD to a HUD management class, which should not be individual to a scene, not static!"); // TODO --- 
+        GameObject hud = GetHUD();
+        if (hud != null) {
+            hud.SetActive(false);
+        }
+        return hud;
     }
 
-    public static void EnableHUD() {
-        GetHUD().SetActive(true);
+    public static GameObject EnableHUD() {
+        Debug.LogWarning($"REFACTOR NEEDED: extract EnableHUD to a HUD management class, which should not be individual to a scene, not static!"); // TODO --- 
+        GameObject hud = GetHUD();
+        if (hud != null) {
+            hud.SetActive(true);
+        }
+        return hud;
     } 
 
     private static GameObject GetHUD() {
@@ -107,7 +119,8 @@ public class MenuManager : MonoBehaviour
     }
 
     public void TryOpenPauseMenu() {
-        if (InputSystem.current.PauseMenuInput()) {
+        if (disable_pause_menu) { return; }
+        else if (InputSystem.current.PauseMenuInput()) {
             OpenSubMenuPrefab(pause_menu_prefab);
         }
         else if (GameSettings.inst.debug_settings.allow_debug_actions && InputSystem.current.DebugInput()) {

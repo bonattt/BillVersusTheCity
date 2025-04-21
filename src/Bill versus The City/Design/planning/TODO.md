@@ -528,6 +528,15 @@ GAMEPLAY IMPROVEMENTS
         [+] Clear after specific inputs
     [ ] Implement new tutorials
 
+[~] Main Menu
+    [+] Save Profiles
+    [+] Settings from main menu
+    [ ] make scenes directly playable again
+    [ ] Refactor HUD
+        [ ] make HUD not a static "Don't Destroy on Load" feature
+        [ ] move main HUD elements into single UI Document
+
+
 [ ] BUGFIXES:
     [~] FIX: countdown failure loops forever
         --> I did not fix it, but the bug only shows up occasionally, maybe 1/4 times, so it's not totally game breaking anymore...

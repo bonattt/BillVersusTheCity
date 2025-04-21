@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +14,12 @@ public class MainMenuController : MonoBehaviour
 
     private Button start_game_button, demo_level_button, dev_room_button, settings_button, change_profile_button, exit_game_button;
     private Label profile_label;
+    private GameObject hud;
 
     // public GameObject hud, managers;
 
     void Start() {
-        MenuManager.DisableHUD();
+        OpenMainMenu();
 
         start_game_button = ui_doc.rootVisualElement.Q<Button>("StartGameButton");
         MenuManager.AddGenericEvents(start_game_button);
@@ -67,10 +69,9 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void StartGame() {
-        // hud.SetActive(true);
-        // managers.SetActive(true);
+        CloseMainMenu();
         ScenesUtil.NextLevel(first_level);
-        MenuManager.EnableHUD();
+        // SetCallback(0.5f, () => ScenesUtil.NextLevel(first_level)); // TODO --- remove debug
     }
 
     private string GetDemoLevel() {
@@ -82,17 +83,44 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void DemoLevelButtonClicked() {
+        CloseMainMenu();
         ScenesUtil.NextLevel(GetDemoLevel());
-        MenuManager.EnableHUD();
+        // SetCallback(0.5f, () => ScenesUtil.NextLevel(GetDemoLevel())); // TODO --- remove debug
     }
 
     public void DevRoomButtonClicked() {
+        CloseMainMenu();
         ScenesUtil.NextLevel(dev_room_level);
-        MenuManager.EnableHUD();
+        // SetCallback(0.5f, () => ScenesUtil.NextLevel(dev_room_level)); // TODO --- remove debug
     }
 
     public void ExitGameClicked() {
-        Debug.LogWarning("EXIT GAME CLICKED!"); // TODO --- remove debug
         ScenesUtil.ExitGame();
     }
+
+    private void CloseMainMenu() {
+        hud = MenuManager.EnableHUD();
+        MenuManager.inst.disable_pause_menu = false;
+    }
+
+    private void OpenMainMenu() {
+        hud = MenuManager.DisableHUD();
+        MenuManager.inst.disable_pause_menu = true;
+    }
+
+    private float callback_time = float.PositiveInfinity; // TODO --- remove debug
+    private Action Callback = null; // TODO --- remove debug
+    private void SetCallback(float delay, Action cb) { // TODO --- remove debug
+        Callback = cb;
+        callback_time = Time.time + delay;
+    } // TODO --- remove debug
+
+    void Update() { // TODO --- remove debug
+        if (callback_time <= Time.time) {
+            callback_time = float.PositiveInfinity;
+            Callback();
+            Callback = null;
+        } 
+    } // TODO --- remove debug
+
 }
