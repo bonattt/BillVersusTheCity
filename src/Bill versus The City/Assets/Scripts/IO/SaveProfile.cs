@@ -83,6 +83,8 @@ public class SaveProfile {
             string file_text = File.ReadAllText(profile_filepath);
             return (int?) int.Parse(file_text);
         } catch(FileNotFoundException) {
+            return null; 
+        } catch(DirectoryNotFoundException) {
             return null;
         }
     }

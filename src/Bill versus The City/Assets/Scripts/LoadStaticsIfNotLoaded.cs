@@ -5,11 +5,12 @@ using UnityEngine;
 public class LoadStaticsIfNotLoaded : MonoBehaviour
 {
 
+    public bool load_hud = true;
     public GameObject hud_prefab, managers_prefab;
 
     void Awake()
     {
-        if (CombatHUDManager.inst == null) {
+        if (load_hud && CombatHUDManager.inst == null) {
             Instantiate(hud_prefab);
         }
         if (ManagersManager.inst == null) {
