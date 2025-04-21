@@ -25,4 +25,5 @@
 }
 
 .profile_button_deselected {
+    background-color: rgb(143, 143, 143);
 }
