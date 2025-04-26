@@ -11,14 +11,10 @@ using UnityEngine.AI;
     public bool saw_target { get { return perception.saw_target_last_frame; } } // saw the target last frame
     public bool seeing_target { get { return perception.seeing_target; }  } // seeing the target last frame
 
-    public bool drop_weapon = false;
-    public bool drop_ammo = false;
     public bool use_full_auto = false;
 
     private EnemyPerception perception;
     private EnemyBehavior behavior;
-
-    public GameObject ammo_pickup_prefab, weapon_pickup_prefab;
 
     public override bool is_sprinting {
         get {
@@ -141,8 +137,8 @@ using UnityEngine.AI;
     }
     public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
-        SpawnAmmoPickup();
-        SpawnWeaponPickup();
+        // SpawnAmmoPickup();
+        // SpawnWeaponPickup();
         EnemiesManager.inst.KillEnemy(this);
     }
 
@@ -151,38 +147,6 @@ using UnityEngine.AI;
         Destroy(gameObject);
     }
 
-    protected void SpawnAmmoPickup() {
-        // spawns a weapon pickup where the enemy is standing
-        if (!drop_ammo) {
-            return;
-        }
-        if (ammo_pickup_prefab == null || attack_controller.current_weapon == null) {
-            Debug.LogWarning("no weapon to drop ammo from!");
-            return;
-        }
-
-        GameObject obj = Instantiate(ammo_pickup_prefab);
-        obj.transform.position = transform.position + new Vector3(0f, 0f, 0.25f);
-        AmmoPickupInteraction pickup = obj.GetComponent<AmmoPickupInteraction>();
-        pickup.ammo_type = attack_controller.current_weapon.ammo_type;
-        pickup.ammo_amount = attack_controller.current_weapon.ammo_drop_size;
-    }
-
-    protected void SpawnWeaponPickup() {
-        // spawns a weapon pickup where the enemy is standing
-        if (!drop_weapon) {
-            return;
-        }
-        if (weapon_pickup_prefab == null || attack_controller.current_weapon == null) {
-            Debug.LogWarning("no weapon to drop as pickup!");
-            return;
-        }
-
-        GameObject obj = Instantiate(weapon_pickup_prefab);
-        obj.transform.position = transform.position + new Vector3(0f, 0f, -0.25f);;
-        WeaponPickupInteraction pickup = obj.GetComponent<WeaponPickupInteraction>();
-        pickup.pickup_weapon = attack_controller.current_weapon;
-    }
 }
 
 public enum MovementTarget {
