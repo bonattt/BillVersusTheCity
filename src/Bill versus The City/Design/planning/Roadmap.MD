@@ -12,7 +12,7 @@
     --> enemy ammo drops
     GOAL: make it easier to configure commonly variable elements of levels
 
-[ ] Milestone 7: improvements to gameplay
+[+] Milestone 7: improvements to gameplay
 	- detection based on whether they're on-screen
 	X fix cover ---> already did this, kinda
 	- ???
@@ -25,10 +25,11 @@
     --> add pickups in levels for cash
     --> Semi-auto shotgun
     
-[ ] Milestone ???: Start making the game look better
-    - find some simple ways to make the game look better
 [ ] Milestone ???: More Levels
 [ ] Milestone ???: More Dialogue
+
+[ ] Milestone ???: Start making the game look better
+    - find some simple ways to make the game look better
 [ ] Milestone ???: Art assets
 [ ] Milestone ???: Better tutorials
 
