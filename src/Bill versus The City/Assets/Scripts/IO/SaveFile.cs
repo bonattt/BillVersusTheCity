@@ -12,15 +12,14 @@ public class SaveFile {
     public string profile_name {
         get {
             if (_profile_name == null) {
-                LoadProfile(); // if there is no profile name, try reading it from a file. If there is still no profile name, just use the save name.
-                if (_profile_name == null) {
-                    return save_name;
-                }
-                return _profile_name;
+                // if there is no profile name, try reading it from a file. If there is still no profile name, just use the save name.
+                LoadProfile();
             }
-            else {
-                return _profile_name;
+            // if profile is still null after loading, return `save_name`
+            if (_profile_name == null) {
+                _profile_name = save_name;
             }
+            return _profile_name;
         }
         set {
             _profile_name = value;
@@ -98,18 +97,43 @@ public class SaveFile {
         data.SetObject("profile", profile_data);
     }
 
+    private void WriteProgressData(DuckDict data) {
+        DuckDict progress_data = new DuckDict();
+        progress_data.SetInt("dollars", PlayerCharacter.inst.inventory.dollars);
+        data.SetObject("progress", progress_data);
+    }
+
     public void SaveAll() {
-        DuckDict data = new DuckDict();
+        float save_start_time = Time.time;
+        DuckDict data = AsDuckDict();
         WriteSettingsData(data);
         WriteProfileData(data);
+        WriteProgressData(data);
         File.WriteAllText(this.filepath, data.Jsonify());
+
+        float save_end_time = Time.time;
+        Debug.Log($"SaveAll execution took {save_end_time - save_start_time} seconds");
+    }
+
+    public void SaveProgress() {
+        // TODO --- 
+        float save_start_time = Time.time;
+        DuckDict data = AsDuckDict();
+        WriteProgressData(data);
+        File.WriteAllText(filepath, data.Jsonify());
+        float save_end_time = Time.time;
+        Debug.Log($"SaveProgress execution took {save_end_time - save_start_time} seconds");
     }
 
     public void SaveSettings() {
-        DuckDict data = new DuckDict();
+        float save_start_time = Time.time;
+        DuckDict data = AsDuckDict();
         WriteSettingsData(data);
         WriteProfileData(data);
         File.WriteAllText(this.filepath, data.Jsonify());
+        
+        float save_end_time = Time.time;
+        Debug.Log($"SaveSettings execution took {save_end_time - save_start_time} seconds");
     }
 
     public void SaveOnExit() {
@@ -128,9 +152,14 @@ public class SaveFile {
     } 
 
     private void LoadProfile() {
-        string json_text = File.ReadAllText(this.filepath);
-        DuckDict data = JsonParser.ReadAsDuckDict(json_text);
-        LoadProfileFromDuckDict(data);
+        try {
+            string json_text = File.ReadAllText(this.filepath);
+            Debug.LogWarning($"save file text: {json_text}"); // TODO --- remove debug
+            DuckDict data = JsonParser.ReadAsDuckDict(json_text);
+            LoadProfileFromDuckDict(data);
+        } catch (IOException) {
+            _profile_name = null;
+        }
     }
 
     private void LoadProfileFromDuckDict(DuckDict data) {
@@ -142,8 +171,20 @@ public class SaveFile {
     }
 
     public DuckDict AsDuckDict() {
-        string file_text = File.ReadAllText(this.filepath);
-        DuckDict data = JsonParser.ReadAsDuckDict(file_text);
+        DuckDict data;
+        try {
+            string file_text = File.ReadAllText(this.filepath);
+            data = JsonParser.ReadAsDuckDict(file_text);
+        } catch (IOException e) {
+            Debug.LogWarning($"save file '{save_name}' not found at '{filepath}' ({e}).");
+            data = new DuckDict();
+            // DuckDict error_data = new DuckDict();
+            // error_data.SetString("error", $"{e.GetType()}");
+            // // string stack_trace = e.StackTrace;
+            // // stack_trace = stack_trace.Replace("\n", "\\n");
+            // error_data.SetString("stack_trace", "TODO");
+            // data.SetObject("error", error_data);
+        }
         return data;
     }
 
