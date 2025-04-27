@@ -12,7 +12,7 @@ public class MainMenuController : MonoBehaviour
     public string demo_level = "";
     public string dev_room_level = "Demo001--test";
 
-    private Button start_game_button, demo_level_button, dev_room_button, settings_button, change_profile_button, exit_game_button;
+    private Button new_game_button, continue_game_button, demo_level_button, dev_room_button, settings_button, change_profile_button, exit_game_button;
     private Label profile_label;
     private GameObject hud;
 
@@ -21,9 +21,18 @@ public class MainMenuController : MonoBehaviour
     void Start() {
         OpenMainMenu();
 
-        start_game_button = ui_doc.rootVisualElement.Q<Button>("StartGameButton");
-        MenuManager.AddGenericEvents(start_game_button);
-        start_game_button.clicked += StartGame;
+        new_game_button = ui_doc.rootVisualElement.Q<Button>("StartNewGameButton");
+        MenuManager.AddGenericEvents(new_game_button);
+        new_game_button.clicked += StartNewGameClicked;
+
+        continue_game_button = ui_doc.rootVisualElement.Q<Button>("ContinueGameButton");
+        MenuManager.AddGenericEvents(continue_game_button);
+        continue_game_button.clicked += ContinueGameClicked;
+        if (SaveDataExists()) {
+            continue_game_button.SetEnabled(true);
+        } else {
+            continue_game_button.SetEnabled(false);
+        }
 
         demo_level_button = ui_doc.rootVisualElement.Q<Button>("DemoLevelButton");
         demo_level_button.clicked += DemoLevelButtonClicked;
@@ -68,10 +77,45 @@ public class MainMenuController : MonoBehaviour
         select_profile_menu.AddCloseCallback(new SimpleActionEvent(UpdateProfileLabel));
     }
 
-    public void StartGame() {
+    public DuckDict LoadProgressData() {
+        return SaveProfile.inst.save_file.AsDuckDict().GetObject("progress");
+    }
+
+    public bool SaveDataExists() {
+        // returns true if a game has already been started on a given profile.
+        DuckDict progress_data = LoadProgressData();
+        Debug.LogWarning("`progress_data != null` is not the correct check for `SaveDataExists()`"); // TODO --- 
+        Debug.LogWarning("refactor: move `SaveDataExists()` to SaaveFile"); // TODO --- refactor: move `SaveDataExists()` to SaveFile
+        return progress_data != null; 
+    }
+
+    public void StartNewGameClicked() {
+        if (SaveDataExists()) {
+            YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+            popup.header_text = "Erase Progress?";
+            popup.content_text = "Starting a new game will erase your progress on this profile, are you sure? (this cannot be undone!)";
+            popup.UpdateLabels();
+            popup.confirm_button.clicked += StartNewGameConfirmed;
+        } else {
+            StartNewGameConfirmed();
+        }
+    }
+
+    public void StartNewGameConfirmed() {
         CloseMainMenu();
+        PlayerCharacter.inst.StartNewGame();
         ScenesUtil.NextLevel(first_level);
         // SetCallback(0.5f, () => ScenesUtil.NextLevel(first_level)); // TODO --- remove debug
+
+    }
+
+    public void ContinueGameClicked() {
+        // TODO
+        Debug.LogWarning("Continue not (fully) implemented!");
+        CloseMainMenu();
+        DuckDict progress_data = SaveProfile.inst.save_file.AsDuckDict().GetObject("progress");
+        PlayerCharacter.inst.LoadProgress(progress_data);
+        ScenesUtil.NextLevel(first_level); // TODO --- load and store current level 
     }
 
     private string GetDemoLevel() {

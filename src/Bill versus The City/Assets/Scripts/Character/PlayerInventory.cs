@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
+public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObservable {
     /**
       * 
       */
-    public int dollars = 0;
+
+    public const int STARTING_DOLLARS = 350;
+    public int dollars = -1;
 
     public int? slot_selected {
         get {
@@ -43,6 +45,7 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
             }
         }
     }
+
     private IWeapon _pickup; // weapon slot for picking up dropped, potentially illegal, weapons
     public IWeapon pickup {
         get { return _pickup; }
@@ -92,6 +95,14 @@ public class PlayerInventory : IPlayerObserver { //: IGenericObservable {
         _handgun = null; // PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.HANDGUN);
         _rifle = null; // PlayerWeaponsManager.inst.GetWeapon(PlayerWeaponsManager.SHOTGUN);
         _pickup = null;
+    }
+
+    public void StartNewGame() {
+        dollars = STARTING_DOLLARS;
+    }
+
+    public void LoadProgress(DuckDict progress_data) {
+        dollars = (int) progress_data.GetInt("dollars");
     }
 
     public void SetWeapons(PlayerAttackController attack_ctrl) {

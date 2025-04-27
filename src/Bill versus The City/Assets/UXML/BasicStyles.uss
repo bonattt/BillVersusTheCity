@@ -32,6 +32,6 @@
 
 .main_menu_button {
     min-width: 30%;
-    font-size: 60px;
+    font-size: 40px;
     color: rgb(0, 0, 0);
 }

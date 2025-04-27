@@ -1,12 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UXML/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
-    <ui:VisualElement name="root" style="flex-grow: 1; font-size: 40px; justify-content: center;">
+    <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center;">
         <ui:Label tabindex="-1" text="Bill vs the City" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TitleLabel" style="-unity-text-align: upper-center; font-size: 100px;" />
         <ui:Label tabindex="-1" text="profile" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProfileLabel" style="-unity-text-align: upper-center; font-size: 40px;" />
-        <ui:Button text="Switch Profile" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ChangeProfileButton" class="main_menu_button" style="align-self: center; color: rgb(0, 0, 0);" />
-        <ui:Button text="New Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartGameButton" class="main_menu_button" style="align-self: center;" />
+        <ui:Button text="New Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartNewGameButton" class="main_menu_button" style="align-self: center;" />
+        <ui:Button text="Continue" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ContinueGameButton" class="main_menu_button" style="align-self: center;" />
         <ui:Button text="Demo Level" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DemoLevelButton" class="main_menu_button" style="align-self: center;" />
         <ui:Button text="Dev Room" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DevRoomButton" class="main_menu_button" style="align-self: center; color: rgb(0, 0, 0);" />
+        <ui:Button text="Switch Profile" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ChangeProfileButton" class="main_menu_button" style="align-self: center; color: rgb(0, 0, 0);" />
         <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsButton" class="main_menu_button" style="align-self: center;" />
         <ui:Button text="Exit Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitGameButton" class="main_menu_button" style="align-self: center; background-color: rgb(165, 52, 52);" />
     </ui:VisualElement>

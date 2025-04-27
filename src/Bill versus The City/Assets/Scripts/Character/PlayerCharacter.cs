@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class PlayerCharacter {
+public class PlayerCharacter : ISaveProgress {
     /**
       * Non-unity singleton script for tracking player infomration
       * PlayerCharacter can remain consistent accross scenes, both combat, exploration, and dialogue
       *   and track all player stats together in a single place.
       */
+
 
     private PlayerCharacter() {
         _inventory = new PlayerInventory();
@@ -68,6 +69,14 @@ public class PlayerCharacter {
 
     public void SubscribeToPlayer(IPlayerObserver sub) => subscribers.Add(sub);
     public void UnsubscribeFromPlayer(IPlayerObserver sub) => subscribers.Remove(sub);
+    
+    public void StartNewGame() {
+        inventory.StartNewGame();
+    }
+
+    public void LoadProgress(DuckDict progress_data) {
+        inventory.LoadProgress(progress_data);
+    }
 
     public void PlayerUpdated(PlayerCombat new_player) {
         // ensure the old combat script is gone
