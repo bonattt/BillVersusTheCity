@@ -27,11 +27,15 @@ public static class ScenesUtil {
         }
     }
 
+    public static string GetCurrentSceneName() {
+        return SceneManager.GetActiveScene().name;
+    }
+
     public static void RestartLevel() {
         restarting = true;
         was_restarted = true;
         ResetResources();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(GetCurrentSceneName());
         // LevelConfig.inst.PostRestart();
         // LevelConfig.inst.level_restarted = true;
         restarting = false;
@@ -89,7 +93,7 @@ public static class ScenesUtil {
     }
 
     // public static void LoadFloor(string scene_name) {
-    //     loaded_floors.Add(SceneManager.GetActiveScene().name);
+    //     loaded_floors.Add(GetCurrentSceneName());
     //     loaded_floors.Add(scene_name);
     //     SceneManager.LoadScene(scene_name, LoadSceneMode.Additive);
     // }

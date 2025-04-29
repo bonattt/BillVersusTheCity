@@ -83,10 +83,10 @@ public class MainMenuController : MonoBehaviour
 
     public bool SaveDataExists() {
         // returns true if a game has already been started on a given profile.
-        DuckDict progress_data = LoadProgressData();
-        Debug.LogWarning("`progress_data != null` is not the correct check for `SaveDataExists()`"); // TODO --- 
-        Debug.LogWarning("refactor: move `SaveDataExists()` to SaaveFile"); // TODO --- refactor: move `SaveDataExists()` to SaveFile
-        return progress_data != null; 
+        // DuckDict progress_data = LoadProgressData();
+        // Debug.LogWarning("`progress_data != null` is not the correct check for `SaveDataExists()`"); // TODO --- 
+        // Debug.LogWarning("refactor: move `SaveDataExists()` to SaaveFile"); // TODO --- refactor: move `SaveDataExists()` to SaveFile
+        return SaveProfile.inst.save_file.IsGameStarted(); // progress_data != null; 
     }
 
     public void StartNewGameClicked() {
@@ -115,7 +115,9 @@ public class MainMenuController : MonoBehaviour
         CloseMainMenu();
         DuckDict progress_data = SaveProfile.inst.save_file.AsDuckDict().GetObject("progress");
         PlayerCharacter.inst.LoadProgress(progress_data);
-        ScenesUtil.NextLevel(first_level); // TODO --- load and store current level 
+        string scene_name = progress_data.GetObject("level").GetString("current_scene");
+        Debug.Log($"continue game at scene '{scene_name}"); // TODO --- remove debug
+        ScenesUtil.NextLevel(scene_name); // TODO --- load and store current level 
     }
 
     private string GetDemoLevel() {

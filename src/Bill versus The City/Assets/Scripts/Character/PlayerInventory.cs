@@ -10,7 +10,13 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
       */
 
     public const int STARTING_DOLLARS = 350;
-    public int dollars = -1;
+    public int dollars = -1; // total dollars the player has 
+    public int dollars_earned_in_level = 0; // total dollars earned on the current level; if the level restarts, it is reset to 0, if the level is beaten, it's added to `dollars` and saved\
+    public int total_dollars {
+        get {
+            return dollars + dollars_earned_in_level;
+        }
+    }
 
     public int? slot_selected {
         get {
@@ -99,6 +105,11 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     public void StartNewGame() {
         dollars = STARTING_DOLLARS;
+    }
+
+    public void StoreEarnedDollars() {
+        dollars += dollars_earned_in_level;
+        dollars_earned_in_level = 0;
     }
 
     public void LoadProgress(DuckDict progress_data) {

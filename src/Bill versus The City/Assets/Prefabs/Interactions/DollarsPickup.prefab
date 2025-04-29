@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 309189556352468440}
-  dollars: 10
+  dollars: 25
 --- !u!1 &8134730591046602211
 GameObject:
   m_ObjectHideFlags: 0

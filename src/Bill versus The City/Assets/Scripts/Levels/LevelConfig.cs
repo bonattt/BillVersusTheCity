@@ -87,12 +87,16 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private int level_start_dollars = -1; 
+
     void Awake() {
         inst = this;
     }
     
     void Start()
     {
+        PlayerCharacter.inst.inventory.dollars_earned_in_level = 0;
         level_number = level_counter++;
         gameObject.name += $" ({level_number})";
         ConfigureLevel();
@@ -382,7 +386,8 @@ public class LevelConfig : MonoBehaviour
 
     public void NextLevel() {
         CleanupLevel();
-        Debug.Log("LevelConfig.NextLevel()");
+        PlayerCharacter.inst.inventory.StoreEarnedDollars();
+        SaveProfile.inst.save_file.SaveProgress(current_scene: next_level);
         ScenesUtil.NextLevel(next_level);
     }
 

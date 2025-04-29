@@ -7,6 +7,15 @@ public class SaveFile {
     public string save_name { get; protected set; }
     public const string SAVE_FILE_DIR = ".save_files";
 
+    public bool IsGameStarted() {
+        // retuns true if a game has already been started on this save. (progress.level != null)
+        DuckDict data = AsDuckDict();
+        if (!data.ContainsKey("progress")) { return false; }
+        DuckDict progress_data = data.GetObject("progress");
+        if (progress_data == null || !progress_data.ContainsKey("level")) { return false; }
+        return true;
+    }
+
     // public static SaveFile current_save = null;
     private string _profile_name = null;
     public string profile_name {
@@ -97,10 +106,24 @@ public class SaveFile {
         data.SetObject("profile", profile_data);
     }
 
-    private void WriteProgressData(DuckDict data) {
-        DuckDict progress_data = new DuckDict();
+    private void WriteProgressData(DuckDict data, string current_scene, string next_scene) {
+        DuckDict progress_data = data.GetObject("progress");
+        if (progress_data == null) {
+            Debug.LogWarning($"no progress data found for save '{save_name}', creating new data"); // TODO --- remove debug
+            progress_data = new DuckDict();
+        }
+        WriteInventoryProgressData(progress_data);
+        WriteLevelProgressData(progress_data, current_scene, next_scene);
+    }
+
+    private void WriteInventoryProgressData(DuckDict progress_data) {
         progress_data.SetInt("dollars", PlayerCharacter.inst.inventory.dollars);
-        data.SetObject("progress", progress_data);
+    }
+    public void WriteLevelProgressData(DuckDict progress_data, string current_scene, string next_scene) {
+        DuckDict level_data = new DuckDict();
+        level_data.SetString("current_scene", current_scene);
+        level_data.SetString("next_scene", next_scene);
+        progress_data.SetObject("level", level_data);
     }
 
     public void SaveAll() {
@@ -108,22 +131,26 @@ public class SaveFile {
         DuckDict data = AsDuckDict();
         WriteSettingsData(data);
         WriteProfileData(data);
-        WriteProgressData(data);
+        WriteInventoryProgressData(data);
+
         File.WriteAllText(this.filepath, data.Jsonify());
 
         float save_end_time = Time.time;
         Debug.Log($"SaveAll execution took {save_end_time - save_start_time} seconds");
     }
 
-    public void SaveProgress() {
+    public void SaveProgress() => SaveProgress(ScenesUtil.GetCurrentSceneName());
+    public void SaveProgress(string current_scene) => SaveProgress(current_scene, null);
+    public void SaveProgress(string current_scene, string next_scene) {
         // TODO --- 
         float save_start_time = Time.time;
         DuckDict data = AsDuckDict();
-        WriteProgressData(data);
+        WriteProgressData(data, current_scene, next_scene);
         File.WriteAllText(filepath, data.Jsonify());
         float save_end_time = Time.time;
         Debug.Log($"SaveProgress execution took {save_end_time - save_start_time} seconds");
     }
+
 
     public void SaveSettings() {
         float save_start_time = Time.time;
