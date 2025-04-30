@@ -8,14 +8,14 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
 {
 
     private IWeaponManager target_manager = null;
-    private UIDocument ui_doc;
+    public UIDocument ui_doc;
 
     private VisualElement root;
 
     private Label weapon_label, ammo_label; 
     void Start()
     {
-        ui_doc = GetComponent<UIDocument>();
+        // ui_doc = GetComponent<UIDocument>();
         root = ui_doc.rootVisualElement;
         weapon_label  = root.Q<Label>("CurrentWeaponLabel");
         ammo_label = root.Q<Label>("AmmoLabel");
