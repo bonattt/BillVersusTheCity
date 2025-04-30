@@ -11,7 +11,7 @@ public class AmmoBeltUI : MonoBehaviour, IGenericObserver, IPlayerObserver
     private AmmoContainer ammo_container;
 
     void Start() {
-        element_list = ui_doc.rootVisualElement.Q<VisualElement>("contents"); 
+        element_list = ui_doc.rootVisualElement.Q<VisualElement>("AmmoBeltContents"); 
         PlayerCharacter.inst.SubscribeToPlayer(this);
         NewPlayerObject(PlayerCharacter.inst.GetPlayerCombat(this));
     }

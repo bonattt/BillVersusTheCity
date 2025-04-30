@@ -24,7 +24,7 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
     };
 
     void Start() {
-        element_list = ui_doc.rootVisualElement.Q<VisualElement>("List");
+        element_list = ui_doc.rootVisualElement.Q<VisualElement>("EquipmentSlots");
         element_list.Clear();
         element_list.Add(new WeaponIcon());
         element_list.Add(new WeaponIcon());

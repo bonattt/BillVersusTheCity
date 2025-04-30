@@ -6,9 +6,13 @@
 Started on 2025-04-21
 Finished on 2025-??
 
-[+] Collect money, and it's preserved between levels\
+[+] Collect money, and it's preserved between levels
     [+] Refactor item-pickup drops
-    [ ] Save player's money
+    [+] Save player's money when a level is finished
+    [+] Money resets on level restart
+
+[+] Contiune
+    [+] save current level and continue from main menu
 
 [ ] HUB world
     [ ] Bill's house, with NPC you can talk to.
