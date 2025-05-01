@@ -10,6 +10,7 @@ public class UIFloater : MonoBehaviour
 {
     // Script for displaying a UI Document over a GameObject in a scene
 
+    public Vector2 offset = new Vector2(0, 0);
     public Transform TransformToFollow;
 
     private VisualElement m_Bar;
@@ -38,6 +39,6 @@ public class UIFloater : MonoBehaviour
         m_Bar.transform.position = new Vector2(
             newPosition.x - m_Bar.layout.width / 2,
             newPosition.y - m_Bar.layout.height / 2
-        );
+        ) + offset;
     }
 }
