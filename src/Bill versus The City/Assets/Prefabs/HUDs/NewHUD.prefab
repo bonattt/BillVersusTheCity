@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3331622254221340462}
   - component: {fileID: 4347712940653419737}
   - component: {fileID: 1311652664326715525}
+  - component: {fileID: 2629118787167881277}
+  - component: {fileID: 8295099788376001138}
   m_Layer: 0
   m_Name: ReloadCursor
   m_TagString: Untagged
@@ -77,6 +79,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 50, y: 375}
+--- !u!114 &2629118787167881277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105663921012509642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1124b2a36605eb34a93e56b9febb9cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8295099788376001138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105663921012509642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b48ee125813614ba77ec975f711549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: Weirds stuff happens with a child UIDocument, but I want the whole HUD
+    in one prefab
 --- !u!1 &4990327014089610720
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,3 +24,12 @@
 
 .test_reload_progress_label {
 }
+
+.radial-progress {
+
+}
+
+.radial-progress__label {
+    font-size: 18;
+    -unity-font-style: bold;
+}

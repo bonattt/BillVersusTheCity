@@ -21,11 +21,12 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
         progress_dial.AddToClassList(reload_ui_class);
         progress_dial.Q<Label>().AddToClassList($"{reload_ui_class}_label");
         progress_dial.progress_label_type = RadialProgressText.custom_text;
-        progress_dial.progress_label = "alknsdl";
+        progress_dial.progress_label = "reload";
 
         reload_manager = reload_target.GetComponent<IReloadManager>();
         reload_manager.Subscribe(this);
         Debug.LogWarning($"subscribed! to {reload_target.name}'s {reload_manager}"); // TODO --- remove debug
+        UpdateDialVisibility(reload_manager);
     }
     
     void Update() {
@@ -38,7 +39,7 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
         reload_manager.Unsubscribe(this);
     }
 
-    private void UpdateDialState(IReloadManager manager, IWeapon _) {
+    private void UpdateDialVisibility(IReloadManager manager) {
         if (manager.reloading) {
             Debug.LogWarning("Visible!"); // TODO --- remove debug
             progress_dial.style.visibility = Visibility.Visible;
@@ -51,14 +52,14 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
     
     public void StartReload(IReloadManager manager, IWeapon weapon) {
         Debug.LogWarning("ReloadUIController.StartReload"); // TODO --- remove debug
-        UpdateDialState(manager, weapon);
+        UpdateDialVisibility(manager);
     }
     public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
         Debug.LogWarning("ReloadUIController.ReloadFinished"); // TODO --- remove debug
-        UpdateDialState(manager, weapon);
+        UpdateDialVisibility(manager);
     }
     public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
         Debug.LogWarning("ReloadUIController.ReloadCancelled"); // TODO --- remove debug
-        UpdateDialState(manager, weapon);
+        UpdateDialVisibility(manager);
     }
 }
