@@ -182,7 +182,8 @@ public class LevelConfig : MonoBehaviour
     public void ConfigureLevel() {
         Validate();
         // init condition lists
-        CombatHUDManager.inst.victory_type = victory_conditions_preset;
+        Debug.LogWarning("TODO --- reimplement victory condition HUD"); // TODO --- remove debug
+        // CombatHUDManager.inst.victory_type = victory_conditions_preset;
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();

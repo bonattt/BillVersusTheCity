@@ -70,7 +70,8 @@ public class HealthBarController : MonoBehaviour, ICharStatusSubscriber, IPlayer
     }
 
     public static void UpdateHealthbar(VisualElement bar_fill, float stat, float stat_max) {
-        bar_fill.style.width = Length.Percent(100 * (stat / stat_max));
+        // NOTE: setting the width to 100% for 100% health overflows the fill past the background
+        bar_fill.style.width = Length.Percent(97 * (stat / stat_max));
     }
     
 }
