@@ -23,6 +23,8 @@ Finished on 2025-??
         [ ] Can buy new guns, which are added to your usable weapons
 
 [ ] FIX: settings not loaded properly
+[ ] FIX: reload mouse follow only works in 1920x1080 screen resolution (it's hacked to work with a hard-coded offset there)
+[ ] FIX: reload UI coloring doesn't work
 
 [ ] REFACTOR: make the HUD a scene-scoped game object
 [ ] FIX: HUD breaks on retry-level

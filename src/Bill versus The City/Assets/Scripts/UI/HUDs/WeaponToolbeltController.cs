@@ -41,17 +41,17 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
     
     public void NewPlayerObject(PlayerCombat player) {
         // called when a new player replaces the existing player
-        Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject({player})"); // TODO --- remove debug
+        // Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject({player})"); // TODO --- remove debug
         if (attack_ctrl != null) {
-            Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject REMOVE OLD ATTACK CONTROLLER"); // TODO --- remove debug
+            // Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject REMOVE OLD ATTACK CONTROLLER"); // TODO --- remove debug
             attack_ctrl.Unsubscribe(this);
         }
         if (player == null) {
-            Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject NEW PLAYER IS NULL"); // TODO --- remove debug
+            // Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject NEW PLAYER IS NULL"); // TODO --- remove debug
             Debug.LogWarning("new player is null!");
             return;
         }
-        Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject UPDATE TOOLBELT"); // TODO --- remove debug
+        // Debug.LogWarning($"WeaponToolbeltController.NewPlayerObject UPDATE TOOLBELT"); // TODO --- remove debug
         attack_ctrl = player.attacks;
         attack_ctrl.Subscribe(this);
         UpdateToolbelt(null);
@@ -63,7 +63,6 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
     }
 
     private void UpdateToolbelt(int? slot) {
-        Debug.LogWarning($"WeaponToolbeltController.UpdateToolbelt"); // TODO --- remove debug
         for (int i = 0; i < element_list.childCount; i++) {
             WeaponIcon child = (WeaponIcon) element_list[i];  // Get child by index
             child.AddToClassList("weapon_slot_container");

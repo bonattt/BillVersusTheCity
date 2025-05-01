@@ -103,7 +103,7 @@ public class InputSystem : ISettingsObserver
         return MouseWorldPosition(mouse_coordinates);
     }
     public Vector3 MouseWorldPosition(LayerMask mask) {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         // int layer_mask = LayerMask.GetMask(TACTICAL_UI_LAYER);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) { // }, layer_mask)) {

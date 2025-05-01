@@ -1,0 +1,26 @@
+.enemy_reload_progress {
+    --track-color: rgb(130, 130, 130);
+    --progress-color: rgb(200, 40, 40);
+    --text-color: black;
+}
+
+.enemy_reload_progress_label {
+}
+
+.player_reload_progress {
+    --track-color: rgb(130, 130, 130);
+    --progress-color: rgb(40, 255, 40);
+    --text-color: black;
+}
+
+.player_reload_progress_label {
+}
+
+.test_reload_progress {
+    --track-color: rgb(130, 130, 130);
+    --progress-color: rgb(0, 0, 255);
+    --text-color: black;
+}
+
+.test_reload_progress_label {
+}
