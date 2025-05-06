@@ -182,8 +182,8 @@ public class LevelConfig : MonoBehaviour
     public void ConfigureLevel() {
         Validate();
         // init condition lists
-        Debug.LogWarning("TODO --- reimplement victory condition HUD"); // TODO --- remove debug
-        // CombatHUDManager.inst.victory_type = victory_conditions_preset;
+        // Debug.LogWarning("TODO --- reimplement victory condition HUD"); // TODO --- remove debug
+        CombatHUDManager.inst.victory_type = victory_conditions_preset;
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();
@@ -393,16 +393,9 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void FailLevel() {
-        Debug.LogWarning($"fail level number {level_number} (level counter {level_counter})"); // TODO --- remove debug
-        Debug.LogWarning(Environment.StackTrace); // TODO --- remove debug
         #if UNITY_EDITOR
             EditorApplication.isPaused = pause_on_level_failure;
         #endif
-        // try { // TODO --- remove debug
-        //     throw new Exception("TEST EXPOSE STACK TRACE");
-        // } catch(Exception e) {
-        //     Debug.LogException(e);
-        // } // TODO --- remove debug ^^^
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_failed);
         if (ctrl == null) {
             MenuManager.inst.PlayerDefeatPopup();

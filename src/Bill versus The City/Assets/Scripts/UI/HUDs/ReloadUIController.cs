@@ -14,7 +14,6 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
     private IReloadManager reload_manager;
 
     void Start() {
-        Debug.LogWarning($"ReloadUIController.Start()"); // TODO --- remove debug
         ui_doc = GetComponent<UIDocument>();
         progress_dial = ui_doc.rootVisualElement.Q<RadialProgress>();
         string reload_ui_class = $"{style_prefix}_reload_progress";
@@ -25,7 +24,6 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
 
         reload_manager = reload_target.GetComponent<IReloadManager>();
         reload_manager.Subscribe(this);
-        Debug.LogWarning($"subscribed! to {reload_target.name}'s {reload_manager}"); // TODO --- remove debug
         UpdateDialVisibility(reload_manager);
     }
     
@@ -41,25 +39,20 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
 
     private void UpdateDialVisibility(IReloadManager manager) {
         if (manager.reloading) {
-            Debug.LogWarning("Visible!"); // TODO --- remove debug
             progress_dial.style.visibility = Visibility.Visible;
             progress_dial.progress = 100 * manager.reload_progress;
         } else {
-            Debug.LogWarning("Hidden!"); // TODO --- remove debug
             progress_dial.style.visibility = Visibility.Hidden;
         }
     }
     
     public void StartReload(IReloadManager manager, IWeapon weapon) {
-        Debug.LogWarning("ReloadUIController.StartReload"); // TODO --- remove debug
         UpdateDialVisibility(manager);
     }
     public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
-        Debug.LogWarning("ReloadUIController.ReloadFinished"); // TODO --- remove debug
         UpdateDialVisibility(manager);
     }
     public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
-        Debug.LogWarning("ReloadUIController.ReloadCancelled"); // TODO --- remove debug
         UpdateDialVisibility(manager);
     }
 }

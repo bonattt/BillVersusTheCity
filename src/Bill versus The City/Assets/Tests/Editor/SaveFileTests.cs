@@ -12,11 +12,8 @@ public class SaveFileTests {
     public void SetUp() {
         SaveFile.DeleteSave("unit_test_1"); // clear any old data to avoid side-effects
 
-        Debug.Log("1"); // TODO --- remove debug
         save = new SaveFile("unit_test_1");
-        Debug.Log("22"); // TODO --- remove debug
         save.SaveAll();
-        Debug.Log("333"); // TODO --- remove debug
     }
     
     // [Test]

@@ -27,12 +27,12 @@ using UnityEngine;
 
     private void Initialize() {
         if (inst == null) {
-            Debug.LogWarning("setting `inst` to `this`");  // TODO --- remove debug
+            // Debug.LogWarning("setting `inst` to `this`");  // TODO --- remove debug
             inst = this;
         }
         if (inst != this) {
             Destroy(this);
-            Debug.LogWarning("removing redundant EnemiesManager");  // TODO --- remove debug
+            // Debug.LogWarning("removing redundant EnemiesManager");  // TODO --- remove debug
         } 
     }
 

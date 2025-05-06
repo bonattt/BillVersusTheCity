@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3612dd0e8bd4a04687a583c3afe0b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  remaining_enemies_target: 0
+  init_effects: []
   _paused: 0
   start_time_seconds: 300
-  init_effects: []
   debug_remaining_time: 0
   debug_remaining_minutes: 0
   debug_remaining_seconds_remainder: 0

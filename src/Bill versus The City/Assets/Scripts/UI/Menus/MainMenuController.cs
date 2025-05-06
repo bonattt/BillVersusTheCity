@@ -105,7 +105,6 @@ public class MainMenuController : MonoBehaviour
         CloseMainMenu();
         PlayerCharacter.inst.StartNewGame();
         ScenesUtil.NextLevel(first_level);
-        // SetCallback(0.5f, () => ScenesUtil.NextLevel(first_level)); // TODO --- remove debug
 
     }
 
@@ -116,7 +115,7 @@ public class MainMenuController : MonoBehaviour
         DuckDict progress_data = SaveProfile.inst.save_file.AsDuckDict().GetObject("progress");
         PlayerCharacter.inst.LoadProgress(progress_data);
         string scene_name = progress_data.GetObject("level").GetString("current_scene");
-        Debug.Log($"continue game at scene '{scene_name}"); // TODO --- remove debug
+        // Debug.Log($"continue game at scene '{scene_name}"); // TODO --- remove debug
         ScenesUtil.NextLevel(scene_name); // TODO --- load and store current level 
     }
 
@@ -131,13 +130,11 @@ public class MainMenuController : MonoBehaviour
     public void DemoLevelButtonClicked() {
         CloseMainMenu();
         ScenesUtil.NextLevel(GetDemoLevel());
-        // SetCallback(0.5f, () => ScenesUtil.NextLevel(GetDemoLevel())); // TODO --- remove debug
     }
 
     public void DevRoomButtonClicked() {
         CloseMainMenu();
         ScenesUtil.NextLevel(dev_room_level);
-        // SetCallback(0.5f, () => ScenesUtil.NextLevel(dev_room_level)); // TODO --- remove debug
     }
 
     public void ExitGameClicked() {
@@ -154,19 +151,19 @@ public class MainMenuController : MonoBehaviour
         MenuManager.inst.disable_pause_menu = true;
     }
 
-    private float callback_time = float.PositiveInfinity; // TODO --- remove debug
-    private Action Callback = null; // TODO --- remove debug
-    private void SetCallback(float delay, Action cb) { // TODO --- remove debug
-        Callback = cb;
-        callback_time = Time.time + delay;
-    } // TODO --- remove debug
+    // private float callback_time = float.PositiveInfinity; // TODO --- remove debug
+    // private Action Callback = null; // TODO --- remove debug
+    // private void SetCallback(float delay, Action cb) { // TODO --- remove debug
+    //     Callback = cb;
+    //     callback_time = Time.time + delay;
+    // } // TODO --- remove debug
 
-    void Update() { // TODO --- remove debug
-        if (callback_time <= Time.time) {
-            callback_time = float.PositiveInfinity;
-            Callback();
-            Callback = null;
-        } 
-    } // TODO --- remove debug
+    // void Update() { // TODO --- remove debug
+    //     if (callback_time <= Time.time) {
+    //         callback_time = float.PositiveInfinity;
+    //         Callback();
+    //         Callback = null;
+    //     } 
+    // } // TODO --- remove debug
 
 }

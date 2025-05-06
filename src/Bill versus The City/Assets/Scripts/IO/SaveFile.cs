@@ -109,7 +109,6 @@ public class SaveFile {
     private void WriteProgressData(DuckDict data, string current_scene, string next_scene) {
         DuckDict progress_data = data.GetObject("progress");
         if (progress_data == null) {
-            Debug.LogWarning($"no progress data found for save '{save_name}', creating new data"); // TODO --- remove debug
             progress_data = new DuckDict();
         }
         WriteInventoryProgressData(progress_data);
@@ -181,7 +180,6 @@ public class SaveFile {
     private void LoadProfile() {
         try {
             string json_text = File.ReadAllText(this.filepath);
-            Debug.LogWarning($"save file text: {json_text}"); // TODO --- remove debug
             DuckDict data = JsonParser.ReadAsDuckDict(json_text);
             LoadProfileFromDuckDict(data);
         } catch (IOException) {
