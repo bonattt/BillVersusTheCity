@@ -8,17 +8,15 @@ public class TimerUIController : MonoBehaviour
 {
     public Color text_color = Color.red;
     public UIDocument ui_doc;
-    public MonoBehaviour init_timer;
+    // public MonoBehaviour init_timer;
     private ITimer timer;
 
     private VisualElement root;
     private Label digital_clock;
     
 
-    public string text {
-        get {
-            return $"{ZeroPadNumber(timer.remaining_minutes)} : {ZeroPadNumber(timer.remaining_seconds_remainder)}";
-        }
+    public string GetText() {
+        return $"{ZeroPadNumber(timer.remaining_minutes)} : {ZeroPadNumber(timer.remaining_seconds_remainder)}";
     }
 
     public string ZeroPadNumber(int number) {
@@ -28,19 +26,40 @@ public class TimerUIController : MonoBehaviour
         return $"{number}";
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        timer = (ITimer) init_timer;
-        root = ui_doc.rootVisualElement;
-        digital_clock = root.Q<Label>();
-        digital_clock.style.color = text_color;
-        digital_clock.text = this.text;
+    // // Start is called before the first frame update
+    // void Start()
+    // {
+    //     if (init_timer == null) {
+    //         DetachTimer();
+    //     } else {
+    //         AttachTimer((ITimer) init_timer);
+    //     }
+    // }
+
+    void Update() {
+        UpdateClock();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        digital_clock.text = this.text;
+    private void UpdateClock(){
+        if (digital_clock == null) { return; } // no clock configured, do nothing
+        digital_clock.text = GetText();
+    }
+
+    public void AttachTimer(ITimer new_timer) {
+        this.timer = new_timer;
+        if (this.timer == null) {
+            Debug.LogWarning("AttachTimer set to null. use DetachTimer instead!");
+            DetachTimer();
+            return;
+        }
+        root = ui_doc.rootVisualElement;
+        digital_clock = root.Q<Label>("CountdownText");
+        digital_clock.style.color = text_color;
+        UpdateClock();
+    }
+
+    public void DetachTimer() {
+        timer = null;
+        digital_clock = null;
     }
 }

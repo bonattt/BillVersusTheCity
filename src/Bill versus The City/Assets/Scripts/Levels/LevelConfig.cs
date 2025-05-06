@@ -179,6 +179,7 @@ public class LevelConfig : MonoBehaviour
         ctrl.AddCloseCallback(new SimpleActionEvent(StartLevel));
     }
 
+    private bool has_timer_condition = false;
     public void ConfigureLevel() {
         Validate();
         // init condition lists
@@ -189,6 +190,7 @@ public class LevelConfig : MonoBehaviour
         level_music = LoadLevelMusic();
         ApplyPresetVictoryCondition();
         ApplyPresetFailureCondition();
+        ConfigureCountdonwUI();
         level_started = false;
         inst = this;
 
@@ -196,6 +198,14 @@ public class LevelConfig : MonoBehaviour
             EquipLevelWeapons();
         } else if (level_weapons == LevelWeaponSelect.none) {
             Debug.LogWarning("`LevelWeaponSelect.none` is not implemented!");
+        }
+    }
+    private void ConfigureCountdonwUI() {
+        // ensures that the countdonw HUD is disabled if a timer condition was never added
+        if (!has_timer_condition) {
+            CombatHUDManager.inst.HideCountdownHUD();
+        } else {
+            // do nothing, CombatHUDManager.inst.ConfigureCountdown should be called in this.ConfigureCountdownCondition when has_timer_condition is set.
         }
     }
     
@@ -299,20 +309,22 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
-    private static void ConfigureCountdownCondition(ILevelCondition condition, Color color, float countdown_start) {
+    private void ConfigureCountdownCondition(ILevelCondition condition, Color color, float countdown_start) {
         /* takes a level condition, which should be a Countdown Condition,
          * gets the associated UI and sets it's text color.
          * Handles error cases for all of the above
          */
         try {
             CountdownCondition countdown_condition = (CountdownCondition) condition;
-            TimerUIController ui_ctrl = countdown_condition.gameObject.GetComponent<TimerUIController>();
-            if (ui_ctrl == null) {
-                Debug.LogError("Unable to get TimerUIController from countdown prefab!!");
-                return;
-            }
-            ui_ctrl.text_color = color;
+            // TimerUIController ui_ctrl = countdown_condition.gameObject.GetComponent<TimerUIController>();
+            // if (ui_ctrl == null) {
+            //     Debug.LogError("Unable to get TimerUIController from countdown prefab!!");
+            //     return;
+            // }
+            // ui_ctrl.text_color = color;
             countdown_condition.start_time_seconds = countdown_start;
+            CombatHUDManager.inst.ConfigureCountdown(countdown_condition, color);
+            has_timer_condition = true;
         } catch (InvalidCastException) {
             Debug.LogError($"Casting error trying to setup countdown failure condition");
         }

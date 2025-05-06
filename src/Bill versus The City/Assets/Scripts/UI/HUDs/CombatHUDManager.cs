@@ -19,6 +19,7 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     public UIDocument ui_doc;
+    public TimerUIController timer_ui;
 
     private static int _count = 0;
 
@@ -80,6 +81,18 @@ public class CombatHUDManager : MonoBehaviour
 
     public static string GetEnemyCountString() {
         return $"{EnemiesManager.inst.remaining_enemies} / {EnemiesManager.inst.total_enemies}";
+    }
+
+    public void HideCountdownHUD() {
+        VisualElement countdown = ui_doc.rootVisualElement.Q<VisualElement>("CountdownWrapper");
+        countdown.style.visibility = Visibility.Hidden;
+    }
+
+    public void ConfigureCountdown(ITimer timer, Color color) {
+        VisualElement countdown = ui_doc.rootVisualElement.Q<VisualElement>("CountdownWrapper");
+        countdown.style.visibility = Visibility.Visible;
+        timer_ui.text_color = color;
+        timer_ui.AttachTimer(timer);
     }
 
     // private void ClearVictoryHUD() {
