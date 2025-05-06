@@ -270,7 +270,6 @@ GameObject:
   - component: {fileID: 8741898434085393183}
   - component: {fileID: 1130132745889624254}
   - component: {fileID: 4280093944734587331}
-  - component: {fileID: 491915256052117746}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -508,18 +507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target_character: {fileID: 6586359110877128584}
   only_death_sounds: 1
---- !u!114 &491915256052117746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2783782960125533881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc3c811b39b147d4a912f3206941966a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3411905732680101244
 GameObject:
   m_ObjectHideFlags: 0
