@@ -28,8 +28,8 @@ Finished on 2025-??
 
 [~] REFACTOR: make the HUD a scene-scoped game object
     [+] Add old HUD elements
-    [ ] Add money-display to HUD
-    [ ] Move dynamic victory condition HUDs to main HUD UXML
-    [ ] Add countdown HUD to main hud
+    [+] Add money-display to HUD
+    [+] Move dynamic victory condition HUDs to main HUD UXML
+    [+] Add countdown HUD to main hud
     [ ] add non-combat HUD
 [+] FIX: HUD breaks on retry-level

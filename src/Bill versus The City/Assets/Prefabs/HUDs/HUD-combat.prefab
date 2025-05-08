@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 514677297549957055}
   - component: {fileID: 5619074532539418640}
   m_Layer: 0
-  m_Name: NewHUD
+  m_Name: HUD-combat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -179,12 +179,20 @@ public class LevelConfig : MonoBehaviour
         ctrl.AddCloseCallback(new SimpleActionEvent(StartLevel));
     }
 
+    private void SetHUDVictoryConditions(LevelVictoryConditions victory_conditions) {
+        // TODO --- this is not a good solution to two way binding
+        if (CombatHUDManager.inst != null) {
+            CombatHUDManager.inst.victory_type = victory_conditions;
+        }
+        else { Debug.LogWarning("Cannot set HUD victory conditions"); } // TODO --- remove debug
+    }
+
     private bool has_timer_condition = false;
     public void ConfigureLevel() {
         Validate();
         // init condition lists
         // Debug.LogWarning("TODO --- reimplement victory condition HUD"); // TODO --- remove debug
-        CombatHUDManager.inst.victory_type = victory_conditions_preset;
+        SetHUDVictoryConditions(victory_conditions_preset);
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();
@@ -203,7 +211,9 @@ public class LevelConfig : MonoBehaviour
     private void ConfigureCountdonwUI() {
         // ensures that the countdonw HUD is disabled if a timer condition was never added
         if (!has_timer_condition) {
-            CombatHUDManager.inst.HideCountdownHUD();
+            if (CombatHUDManager.inst != null) {
+                CombatHUDManager.inst.HideCountdownHUD();
+            }
         } else {
             // do nothing, CombatHUDManager.inst.ConfigureCountdown should be called in this.ConfigureCountdownCondition when has_timer_condition is set.
         }
@@ -323,7 +333,9 @@ public class LevelConfig : MonoBehaviour
             // }
             // ui_ctrl.text_color = color;
             countdown_condition.start_time_seconds = countdown_start;
-            CombatHUDManager.inst.ConfigureCountdown(countdown_condition, color);
+            if (CombatHUDManager.inst) {
+                CombatHUDManager.inst.ConfigureCountdown(countdown_condition, color);
+            }
             has_timer_condition = true;
         } catch (InvalidCastException) {
             Debug.LogError($"Casting error trying to setup countdown failure condition");
