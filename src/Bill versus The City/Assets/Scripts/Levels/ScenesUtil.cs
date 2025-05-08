@@ -18,6 +18,18 @@ public static class ScenesUtil {
         return was_restarted;
     }
 
+    public static bool LoadSceneAdditively(string scene_name) {
+        // Loads the given scene additively, and returns true if the scene was actually loaded.
+        // before loading the scene, checks if the scene is already loaded, and ignores the load if the scene is already loaded.
+        // (this is mainly to avoid duplicates playing a scene from the editor)
+        Scene scene = SceneManager.GetSceneByName(scene_name);
+        bool already_loaded = scene.isLoaded;
+        if (!already_loaded) {
+            SceneManager.LoadSceneAsync(scene_name, LoadSceneMode.Additive);
+        }
+        return !already_loaded;
+    }
+
     private static void ResetResources() {
         if (LevelConfig.inst != null) {
             LevelConfig.inst.PreSceneChange();

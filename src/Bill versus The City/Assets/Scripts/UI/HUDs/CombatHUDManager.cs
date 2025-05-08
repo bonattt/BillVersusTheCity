@@ -87,13 +87,16 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     private bool _had_countdown = false; // cached `level_config.has_countdown` to only do work when it changes
+    private bool _countdown_setup = false; // cached `level_config.has_countdown` to only do work when it changes
     public void UpdateCountdownUI() {
-        if (level_config.has_countdown != _had_countdown) {
+        if (level_config == null) { Debug.LogWarning("level config is null!"); return; } // TODO --- remove debug
+        if (level_config.has_countdown != _had_countdown || !_countdown_setup) {
             if (level_config.has_countdown) {
                 ConfigureCountdown();
             } else {
                 HideCountdownHUD();
             }
+            _countdown_setup = true;
         }
         _had_countdown = level_config.has_countdown;
     }

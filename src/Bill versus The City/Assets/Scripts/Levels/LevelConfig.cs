@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public enum LevelVictoryType {
@@ -56,6 +57,7 @@ public class LevelConfig : MonoBehaviour
             return level_weapons == LevelWeaponSelect.weapon_select;
         }
     }
+    public List<string> additive_scene_loads;
     public LevelWeaponSelect level_weapons = LevelWeaponSelect.weapon_select;
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
     public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
@@ -96,9 +98,19 @@ public class LevelConfig : MonoBehaviour
     void Awake() {
         inst = this;
     }
+
+    private void LoadAdditiveScenes() {
+        foreach (string scene_name in additive_scene_loads) {
+            bool scene_loaded = ScenesUtil.LoadSceneAdditively(scene_name);
+            if (!scene_loaded) {
+                Debug.LogWarning($"Skipped loading scene '{scene_name}' because it was already loaded!");
+            }
+        }
+    }
     
     void Start()
     {
+        LoadAdditiveScenes();
         PlayerCharacter.inst.inventory.dollars_earned_in_level = 0;
         level_number = level_counter++;
         gameObject.name += $" ({level_number})";
