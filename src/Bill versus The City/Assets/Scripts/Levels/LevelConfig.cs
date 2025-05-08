@@ -28,6 +28,7 @@ public enum LevelWeaponSelect {
     weapon_select, // opens weapon select UI at the start of the level
 }
 
+
 // public enum LevelMusicStart {
 //     never,
 //     on_load,
@@ -89,6 +90,8 @@ public class LevelConfig : MonoBehaviour
 
     [SerializeField]
     private int level_start_dollars = -1; 
+    public ITimer countdown { get; protected set; }
+    public bool has_countdown { get => countdown != null; }
 
     void Awake() {
         inst = this;
@@ -187,7 +190,6 @@ public class LevelConfig : MonoBehaviour
         else { Debug.LogWarning("Cannot set HUD victory conditions"); } // TODO --- remove debug
     }
 
-    private bool has_timer_condition = false;
     public void ConfigureLevel() {
         Validate();
         // init condition lists
@@ -196,9 +198,9 @@ public class LevelConfig : MonoBehaviour
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();
+        countdown = null; // set countdown to null, before potentially adding a countdown from preset victory conditions
         ApplyPresetVictoryCondition();
         ApplyPresetFailureCondition();
-        ConfigureCountdonwUI();
         level_started = false;
         inst = this;
 
@@ -206,16 +208,6 @@ public class LevelConfig : MonoBehaviour
             EquipLevelWeapons();
         } else if (level_weapons == LevelWeaponSelect.none) {
             Debug.LogWarning("`LevelWeaponSelect.none` is not implemented!");
-        }
-    }
-    private void ConfigureCountdonwUI() {
-        // ensures that the countdonw HUD is disabled if a timer condition was never added
-        if (!has_timer_condition) {
-            if (CombatHUDManager.inst != null) {
-                CombatHUDManager.inst.HideCountdownHUD();
-            }
-        } else {
-            // do nothing, CombatHUDManager.inst.ConfigureCountdown should be called in this.ConfigureCountdownCondition when has_timer_condition is set.
         }
     }
     
@@ -333,10 +325,7 @@ public class LevelConfig : MonoBehaviour
             // }
             // ui_ctrl.text_color = color;
             countdown_condition.start_time_seconds = countdown_start;
-            if (CombatHUDManager.inst) {
-                CombatHUDManager.inst.ConfigureCountdown(countdown_condition, color);
-            }
-            has_timer_condition = true;
+            countdown = countdown_condition; // ITimer interface, doesn't support setting `start_time_seconds`
         } catch (InvalidCastException) {
             Debug.LogError($"Casting error trying to setup countdown failure condition");
         }

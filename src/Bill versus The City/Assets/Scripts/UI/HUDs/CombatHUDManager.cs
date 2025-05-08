@@ -20,6 +20,7 @@ public class CombatHUDManager : MonoBehaviour
 
     public UIDocument ui_doc;
     public TimerUIController timer_ui;
+    public LevelConfig level_config;
 
     private static int _count = 0;
 
@@ -43,6 +44,8 @@ public class CombatHUDManager : MonoBehaviour
 
     void Update() {
         _UpdateVictoryHUD();
+        UpdateCountdownUI();
+        UpdateCombatMode();
     }
 
     private Label objective_label;
@@ -52,8 +55,8 @@ public class CombatHUDManager : MonoBehaviour
     }
     private void _UpdateVictoryHUD() {
         // NOTE: private only update call, used in unity Update loop to update text without the DOM lookup to set the a Label object.
-        objective_label.text = GetVictoryDisplayString(victory_type);
-        Debug.LogWarning($"set objective text: objective {victory_type}, text '{objective_label.text}'"); 
+        objective_label.text = GetVictoryDisplayString(_victory_type);
+        Debug.LogWarning($"set objective text: objective {_victory_type}, text '{objective_label.text}'"); 
     }
     
     public static string GetVictoryDisplayString(LevelVictoryConditions condition_type) {
@@ -83,16 +86,67 @@ public class CombatHUDManager : MonoBehaviour
         return $"{EnemiesManager.inst.remaining_enemies} / {EnemiesManager.inst.total_enemies}";
     }
 
+    private bool _had_countdown = false; // cached `level_config.has_countdown` to only do work when it changes
+    public void UpdateCountdownUI() {
+        if (level_config.has_countdown != _had_countdown) {
+            if (level_config.has_countdown) {
+                ConfigureCountdown();
+            } else {
+                HideCountdownHUD();
+            }
+        }
+        _had_countdown = level_config.has_countdown;
+    }
+
     public void HideCountdownHUD() {
         VisualElement countdown = ui_doc.rootVisualElement.Q<VisualElement>("CountdownWrapper");
         countdown.style.visibility = Visibility.Hidden;
     }
 
-    public void ConfigureCountdown(ITimer timer, Color color) {
+    public void ConfigureCountdown() {
         VisualElement countdown = ui_doc.rootVisualElement.Q<VisualElement>("CountdownWrapper");
         countdown.style.visibility = Visibility.Visible;
-        timer_ui.text_color = color;
-        timer_ui.AttachTimer(timer);
+        timer_ui.text_color = GetCountdownColor(level_config);
+        timer_ui.AttachTimer(level_config.countdown);
+    }
+
+    public static Color GetCountdownColor(LevelConfig level_config) {
+        if (level_config.victory_conditions_preset == LevelVictoryConditions.survive_countdown) {
+            return Color.green;
+        } else if (level_config.failure_conditions_preset == LevelFailuerConditions.countdown) {
+            return Color.red;
+        } else {
+            Debug.LogWarning($"unhandled level config conditions for countdown color. victory: {level_config.victory_conditions_preset}, failure: {level_config.failure_conditions_preset}");
+            return Color.yellow;
+        }
+    }
+
+    private bool _was_combat_enabled = false; // cached `level_config.combat_enabled` to only do work when it changes
+    public void UpdateCombatMode() {
+        if (_was_combat_enabled != level_config.combat_enabled) {
+            if (level_config.combat_enabled) {
+                ConfigureForCombat();
+            }
+            else {
+                ConfigureForNonCombat();
+            }
+
+        }
+        _was_combat_enabled = level_config.combat_enabled;
+    }
+    
+    private void ConfigureForNonCombat() {
+        // hide elements of the HUD not used in non-combat 
+        ui_doc.rootVisualElement.Q<VisualElement>("AmmoBeltContents").style.visibility =  Visibility.Hidden;
+        ui_doc.rootVisualElement.Q<VisualElement>("EquipmentSlots").style.visibility =  Visibility.Hidden;
+        ui_doc.rootVisualElement.Q<VisualElement>("EquippedWeapon").style.visibility =  Visibility.Hidden;
+    }
+
+    private void ConfigureForCombat() {
+        // hide elements of the HUD not used in non-combat 
+        ui_doc.rootVisualElement.Q<VisualElement>("AmmoBeltContents").style.visibility =  Visibility.Visible;
+        ui_doc.rootVisualElement.Q<VisualElement>("EquipmentSlots").style.visibility =  Visibility.Visible;
+        ui_doc.rootVisualElement.Q<VisualElement>("EquippedWeapon").style.visibility =  Visibility.Visible;
     }
 
     // private void ClearVictoryHUD() {
