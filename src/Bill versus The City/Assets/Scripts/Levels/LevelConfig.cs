@@ -38,7 +38,6 @@ public enum LevelWeaponSelect {
 
 public class LevelConfig : MonoBehaviour
 {
-    [SerializeField]
     private uint level_number = 0;
     private static uint level_counter = 1;
 
@@ -46,7 +45,6 @@ public class LevelConfig : MonoBehaviour
     public string next_level;
     public bool combat_enabled = true;
 
-    [SerializeField]
     private int sequential_conditions_index = 0;
     public string level_music_name;
     private ISounds level_music;
@@ -70,10 +68,6 @@ public class LevelConfig : MonoBehaviour
 
     public float preset_config_countdown_timer_seconds = 75;
 
-    public List<MonoBehaviour> init_extra_sequential_level_conditions, init_extra_non_sequential_level_conditions;
-    private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
-    private List<ILevelCondition> non_sequential_level_conditions = new List<ILevelCondition>();
-    public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
     public bool level_started = false;
     public bool level_restarted {
         get { return ScenesUtil.WasRestarted(); }
@@ -89,6 +83,10 @@ public class LevelConfig : MonoBehaviour
             return true;
         }
     }
+    public List<MonoBehaviour> init_extra_sequential_level_conditions, init_extra_non_sequential_level_conditions;
+    private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
+    private List<ILevelCondition> non_sequential_level_conditions = new List<ILevelCondition>();
+    public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
 
     [SerializeField]
     private int level_start_dollars = -1; 
