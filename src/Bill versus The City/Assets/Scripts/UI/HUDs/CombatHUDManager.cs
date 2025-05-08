@@ -31,6 +31,7 @@ public class CombatHUDManager : MonoBehaviour
     void Start() {
         inst = this;
         gameObject.name += $" {++_count}";
+        UpdateCombatMode(force_update:true);
     }
 
     void OnDestroy() {
@@ -125,8 +126,8 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     private bool _was_combat_enabled = false; // cached `level_config.combat_enabled` to only do work when it changes
-    public void UpdateCombatMode() {
-        if (_was_combat_enabled != level_config.combat_enabled) {
+    public void UpdateCombatMode(bool force_update=false) {
+        if (_was_combat_enabled != level_config.combat_enabled || force_update) {
             if (level_config.combat_enabled) {
                 ConfigureForCombat();
             }

@@ -31,9 +31,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6828463536557817257}
   - {fileID: 904990004602512216}
   - {fileID: 4197041983022294553}
-  - {fileID: 6828463536557817257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &726694994034773716
@@ -157,6 +157,7 @@ Transform:
   m_Children:
   - {fileID: 1312113829232352297}
   - {fileID: 4007038732138400518}
+  - {fileID: 8297186862227084964}
   m_Father: {fileID: 795017645550784582}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7567799447127125868
@@ -228,8 +229,54 @@ MonoBehaviour:
   - test\\finish_level
   endless_dialogue: 0
   random_dialouge: 0
-  dialogue_finished: {fileID: 8673137286306914175}
+  dialogue_callback: {fileID: 0}
   index: 0
+--- !u!1 &5931382649016971474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8297186862227084964}
+  - component: {fileID: 5656081977737287741}
+  m_Layer: 10
+  m_Name: HubTravelEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8297186862227084964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931382649016971474}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6828463536557817257}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5656081977737287741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931382649016971474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114ee74c3d47f6c448b80c53011c4053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deprication_warning: '`next_scene` variable is no longer used!?'
+  next_scene: Demo001--level01
 --- !u!1001 &3609753179645235905
 PrefabInstance:
   m_ObjectHideFlags: 0

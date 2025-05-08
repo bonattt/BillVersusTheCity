@@ -53,3 +53,5 @@ MonoBehaviour:
   yes_no_popup_prefab: {fileID: 4600493022970907218, guid: 7a253e3a1f2fe8e4b9c0353b99b94d3b, type: 3}
   select_save_file_prefab: {fileID: 3141501204870614716, guid: 2020ed75c722e84408b2109fde8752fc, type: 3}
   create_new_save_profile_prefab: {fileID: 3460638115665070498, guid: f573402a4a6e0bd478be7cc9c2216e66, type: 3}
+  hub_travel_menu_prefab: {fileID: 2936489238251180922, guid: e7bddec8762b12848b6116f7a4e047f0, type: 3}
+  disable_pause_menu: 0

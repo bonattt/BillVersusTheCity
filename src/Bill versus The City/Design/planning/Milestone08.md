@@ -22,8 +22,8 @@ Finished on 2025-??
     [+] add non-combat HUD
 [+] FIX: HUD breaks on retry-level
 
-[ ] Implement addative scene-loading in level_config
-    [ ] figure out how to place level-specific assets in a level using additive scene content. (Implement additive scene guideline prefabs)
+[+] Implement addative scene-loading in level_config
+    [+] figure out how to place level-specific assets in a level using additive scene content. (Implement additive scene guideline prefabs)
 
 [ ] HUB world
     [ ] Bill's house, with NPC you can talk to.
@@ -36,3 +36,5 @@ Finished on 2025-??
 [ ] FIX: settings not loaded properly
 [ ] FIX: reload mouse/character follow only works in 1920x1080 screen resolution (it's hacked to work with a hard-coded offset there)
 [ ] FIX: reload UI coloring doesn't work
+[ ] FIX: loading into non-combat scene doesn't disable combat section of HUD
+[ ] FIX: player cannot move while aiming without a weapon

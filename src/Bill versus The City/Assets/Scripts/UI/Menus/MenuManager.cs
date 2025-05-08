@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class MenuManager : MonoBehaviour
 {
     public GameObject debug_action_menu_prefab, dialogue_prefab, pause_menu_prefab, settings_menu_prefab, tutorial_popup_prefab, 
-            weapon_menu_prefab, yes_no_popup_prefab, select_save_file_prefab, create_new_save_profile_prefab;
+            weapon_menu_prefab, yes_no_popup_prefab, select_save_file_prefab, create_new_save_profile_prefab, hub_travel_menu_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -240,5 +240,9 @@ public class MenuManager : MonoBehaviour
 
         popup.confirm_button.clicked += ScenesUtil.RestartLevel;
         popup.UpdateLabels();
+    }
+
+    public HubTravelMenuCtrl OpenHubTravelMenu() {
+        return OpenSubMenuPrefab(hub_travel_menu_prefab).GetComponent<HubTravelMenuCtrl>();
     }
 }
