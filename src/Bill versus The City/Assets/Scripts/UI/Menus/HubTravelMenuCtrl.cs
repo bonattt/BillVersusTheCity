@@ -7,6 +7,7 @@ public class HubTravelMenuCtrl : MonoBehaviour {
     public string next_scene;
     private UIDocument ui_doc;
     private Button next_level_button, travel_button, cancel_button;
+    public HubTravelEvent travel_effect;
 
     void Start() {
         ui_doc = GetComponent<UIDocument>();
@@ -32,7 +33,7 @@ public class HubTravelMenuCtrl : MonoBehaviour {
     }
 
     public void HubTravelClicked() {
-        Debug.LogWarning("TODO --- implement hub-map travel");
+        travel_effect.ActivateEffect();
     }
 
 

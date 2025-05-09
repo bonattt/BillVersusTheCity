@@ -57,7 +57,6 @@ public class CombatHUDManager : MonoBehaviour
     private void _UpdateVictoryHUD() {
         // NOTE: private only update call, used in unity Update loop to update text without the DOM lookup to set the a Label object.
         objective_label.text = GetVictoryDisplayString(_victory_type);
-        Debug.LogWarning($"set objective text: objective {_victory_type}, text '{objective_label.text}'"); 
     }
     
     public static string GetVictoryDisplayString(LevelVictoryConditions condition_type) {
