@@ -109,7 +109,7 @@ public class LevelConfig : MonoBehaviour
     void Start()
     {
         LoadAdditiveScenes();
-        PlayerCharacter.inst.inventory.dollars_earned_in_level = 0;
+        PlayerCharacter.inst.inventory.dollars_change_in_level = 0;
         level_number = level_counter++;
         gameObject.name += $" ({level_number})";
         ConfigureLevel();
@@ -410,7 +410,7 @@ public class LevelConfig : MonoBehaviour
 
     public void NextLevel() {
         CleanupLevel();
-        PlayerCharacter.inst.inventory.StoreEarnedDollars();
+        PlayerCharacter.inst.inventory.ApplyChangesFromLevel();
         SaveProfile.inst.save_file.SaveProgress(current_scene: next_level);
         ScenesUtil.NextLevel(next_level);
     }

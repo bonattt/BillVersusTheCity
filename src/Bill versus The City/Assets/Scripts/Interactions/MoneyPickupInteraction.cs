@@ -26,7 +26,7 @@ public class MoneyPickupInteraction : MonoBehaviour, IInteractionEffect {
 
     public void Interact(GameObject actor) {
         MenuManager.PlayMenuSound("menu_click");
-        PlayerCharacter.inst.inventory.dollars_earned_in_level += this.dollars;
+        PlayerCharacter.inst.inventory.dollars_change_in_level += this.dollars;
         Destroy(gameObject);
     }
 

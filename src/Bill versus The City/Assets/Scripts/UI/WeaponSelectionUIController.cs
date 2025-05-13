@@ -68,7 +68,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
 
     private void SelectEquipped(IWeapon equipped, VisualElement parent) {
         foreach (IWeaponUI child in GetWeaponUIs(parent)) {
-            if (child.weapon.item_name.Equals(equipped.item_name)) {
+            if (equipped != null && child.weapon.item_name.Equals(equipped.item_name)) {
                 child.SelectSlot();
             } else {
                 child.DeselectSlot();

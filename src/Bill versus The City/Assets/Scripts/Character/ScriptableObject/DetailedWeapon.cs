@@ -7,6 +7,8 @@ using UnityEngine;
 public class DetailedWeapon : ScriptableObject, IWeapon
 {
     public string _name;
+    public string _item_id;
+    public string item_id { get => _item_id; }
     public Sprite _item_icon;
     
     public WeaponSlot _weapon_slot;

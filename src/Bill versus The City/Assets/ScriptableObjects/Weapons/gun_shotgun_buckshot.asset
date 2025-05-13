@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
   m_Name: gun_shotgun_buckshot
   m_EditorClassIdentifier: 
-  _name: shotgun (buckshot)
+  _name: Pump Shotgun (buckshot)
+  _item_id: shotgun_pump
   _item_icon: {fileID: 21300000, guid: 219824c4331c8d64fa6ac45b42d9d582, type: 3}
   _weapon_slot: 1
   _weapon_class: 2

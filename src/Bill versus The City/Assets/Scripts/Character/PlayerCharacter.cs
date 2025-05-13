@@ -77,6 +77,9 @@ public class PlayerCharacter : ISaveProgress {
     public void LoadProgress(DuckDict progress_data) {
         inventory.LoadProgress(progress_data);
     }
+    public void SaveProgress(DuckDict progress_data) {
+        inventory.SaveProgress(progress_data);
+    }
 
     public void PlayerUpdated(PlayerCombat new_player) {
         // ensure the old combat script is gone

@@ -7,6 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Armor", menuName ="Data/Armor")]
 public class ArmorPlate : ScriptableObject, IArmor
 {
+    public string _item_id;
+    public string item_id { get => _item_id; }
     public string _item_name;
     public Sprite _item_icon;
     public float _armor_max_durability;

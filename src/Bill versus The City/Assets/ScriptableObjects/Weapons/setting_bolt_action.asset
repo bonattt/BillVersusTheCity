@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29cb212391a4b8b498dd8bf871a802c8, type: 3}
-  m_Name: Armor
+  m_Script: {fileID: 11500000, guid: 658bbf2cacafdfc4aaf75948a0a0964d, type: 3}
+  m_Name: setting_bolt_action
   m_EditorClassIdentifier: 
-  _item_id: default_armor
-  _item_name: 
-  _item_icon: {fileID: 0}
-  _armor_max_durability: 100
-  _armor_hardness: 5
-  _armor_protection: 0.8
+  _name: bolt action
+  _firing_mode: 0
+  _fire_rate: 0.5

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: gun_california
   m_EditorClassIdentifier: 
   _name: Handgun (california compliant)
+  _item_id: handgun_california
   _item_icon: {fileID: 21300000, guid: 1419e43d1f456314aa821b180bec4a72, type: 3}
+  _weapon_slot: 0
   _weapon_class: 0
   _weapon_settings:
   - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}

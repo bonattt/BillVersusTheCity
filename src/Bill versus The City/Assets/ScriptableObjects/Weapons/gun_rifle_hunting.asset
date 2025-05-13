@@ -10,28 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
-  m_Name: gun_SMG
+  m_Name: gun_rifle_hunting
   m_EditorClassIdentifier: 
-  _name: SMG
-  _item_id: smg
-  _item_icon: {fileID: 21300000, guid: 1419e43d1f456314aa821b180bec4a72, type: 3}
+  _name: Rifle
+  _item_id: rifle_hunting
+  _item_icon: {fileID: 21300000, guid: 362b9c4654ab6d24f8ed03fb2d65ff7e, type: 3}
   _weapon_slot: 1
   _weapon_class: 1
   _weapon_settings:
-  - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
-  - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
-  bullet_effect: {fileID: 11400000, guid: 8ebc6d38bc880e0438d76a176368121f, type: 2}
-  _ammo_capacity: 40
-  _reload_amount: 40
-  _reload_time: 1
-  _time_to_aim: 0.75
-  _recoil_inaccuracy: 10
+  - {fileID: 11400000, guid: 9e64c47327042d540ab97becc818e411, type: 2}
+  bullet_effect: {fileID: 11400000, guid: 1bf148443c6c889419e7498189d8def6, type: 2}
+  _ammo_capacity: 5
+  _reload_amount: 1
+  _reload_time: 0.75
+  _time_to_aim: 2
+  _recoil_inaccuracy: 0.5
   _recoil_max: 15
   _recoil_recovery: 30
   _recoil_shake: 0.1
-  _aim_zoom: 0.75
-  _aim_move_speed: 0.7
-  _max_zoom_range: 4
+  _aim_zoom: 0.95
+  _aim_move_speed: 0.35
+  _max_zoom_range: 7
   _gunshot_sound: 
   _empty_gunshot_sound: 
   _reload_start_sound: 

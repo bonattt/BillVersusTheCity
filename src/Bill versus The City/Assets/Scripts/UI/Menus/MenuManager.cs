@@ -189,7 +189,10 @@ public class MenuManager : MonoBehaviour
 
     public static void PlayMenuCancelClick(ClickEvent _) => PlayMenuCancelClick();
     public static void PlayMenuCancelClick() {
-        PlayMenuSound("menu_click");
+        PlayMenuSound("menu_cancel");
+    }
+    public static void PlayMenuErrorClick() {
+        PlayMenuSound("menu_error");
     }
 
     public static void PlayMenuSound(string sound_name) {

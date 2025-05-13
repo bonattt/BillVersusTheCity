@@ -92,6 +92,7 @@ public interface IAttackTarget {
 }
 
 public interface IItem {
+    public string item_id { get; }
     public string item_name { get; }
     public Sprite item_icon { get; }
 }
@@ -147,6 +148,11 @@ public interface IWeapon : IItem {
     public void NextWeaponSetting();
     public void PreviousWeaponSetting();
     public IWeapon CopyWeapon();
+}
+
+public interface IPurchase {
+    public int purchase_cost { get; }
+    public void ApplyPurchase(PlayerInventory inv);
 }
 
 public enum FiringMode {

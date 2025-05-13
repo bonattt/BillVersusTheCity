@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
-  m_Name: gun_test_reload
+  m_Name: gun_shotgun_double
   m_EditorClassIdentifier: 
-  _name: Musket Reload Test
-  _item_icon: {fileID: 21300000, guid: 631e5b1a22c12a44aa9017efc8a05282, type: 3}
-  _weapon_slot: 0
-  _weapon_class: 0
+  _name: Side-by-Side Shotgun (buckshot)
+  _item_id: shotgun_double
+  _item_icon: {fileID: 21300000, guid: 219824c4331c8d64fa6ac45b42d9d582, type: 3}
+  _weapon_slot: 1
+  _weapon_class: 2
   _weapon_settings:
-  - {fileID: 11400000, guid: 679bb6f2ceacebe42b0a018555febb80, type: 2}
-  bullet_effect: {fileID: 11400000, guid: 1852ebb5c26889740b088e0f972fbd0f, type: 2}
-  _ammo_capacity: 20
-  _reload_amount: 1
-  _reload_time: 2
-  _time_to_aim: 0.75
-  _recoil_inaccuracy: 20
-  _recoil_max: 30
+  - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
+  bullet_effect: {fileID: 11400000, guid: adc61a8755f42d740b642b2a3482c159, type: 2}
+  _ammo_capacity: 2
+  _reload_amount: 2
+  _reload_time: 1
+  _time_to_aim: 1
+  _recoil_inaccuracy: 0.5
+  _recoil_max: 15
   _recoil_recovery: 30
   _recoil_shake: 0.1
   _aim_zoom: 0.75
-  _aim_move_speed: 0.7
+  _aim_move_speed: 0.5
   _max_zoom_range: 2.5
-  _gunshot_sound: 
+  _gunshot_sound: gunshot_shotgun
   _empty_gunshot_sound: 
   _reload_start_sound: 
   _reload_complete_sound: 
