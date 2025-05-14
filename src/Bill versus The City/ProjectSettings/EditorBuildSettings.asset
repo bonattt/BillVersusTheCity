@@ -15,8 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/DemoScenes/Demo001--tutorial2.unity
     guid: f574200be2e23ed4b8b003d3c70b27f3
   - enabled: 1
+    path: Assets/Scenes/DemoScenes/hub-map001.unity
+    guid: db3bd09973de52e4bb5c5688e0a0c480
+  - enabled: 1
     path: Assets/Scenes/DemoScenes/Demo001--level1.unity
     guid: aaa07c54976a1844a8148da42f998203
+  - enabled: 1
+    path: Assets/Scenes/DemoScenes/hub-map002.unity
+    guid: 0220980af5ce6f940987478e2a7c1010
   - enabled: 1
     path: Assets/Scenes/DemoScenes/Demo001--level2.unity
     guid: cb08fb7e7e7ecf04aba200886c6c4ec1
@@ -26,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DemoScenes/map--bills-house.unity
     guid: 2f89a718b32d03b44a3b53fbbe58dceb
+  - enabled: 1
+    path: Assets/Scenes/DemoScenes/map--gun-store.unity
+    guid: 4eb1429f752406743bf917f33a6786ad
   m_configObjects: {}

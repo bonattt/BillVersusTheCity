@@ -16,6 +16,7 @@ public enum LevelVictoryConditions {
     clear_enemies,
     escape_to_truck, 
     survive_countdown, 
+    hub_level,
 }
 
 public enum LevelFailuerConditions {
@@ -27,6 +28,7 @@ public enum LevelWeaponSelect {
     none, // start with no weapons equipped
     level_weapons, // gives the player weapons specified by the level config
     weapon_select, // opens weapon select UI at the start of the level
+    previous, // retains whatever weapons the player had equipped previously
 }
 
 
@@ -43,6 +45,7 @@ public class LevelConfig : MonoBehaviour
 
     public static LevelConfig inst { get; private set; }
     public string next_level;
+    public Interaction level_exit;
     public bool combat_enabled = true;
 
     private int sequential_conditions_index = 0;
@@ -216,8 +219,8 @@ public class LevelConfig : MonoBehaviour
 
         if (level_weapons == LevelWeaponSelect.level_weapons) {
             EquipLevelWeapons();
-        } else if (level_weapons == LevelWeaponSelect.none) {
-            Debug.LogWarning("`LevelWeaponSelect.none` is not implemented!");
+        } else if (level_weapons == LevelWeaponSelect.previous) {
+            Debug.LogError("`LevelWeaponSelect.previous` is not implemented!");
         }
     }
     
@@ -288,6 +291,9 @@ public class LevelConfig : MonoBehaviour
         switch(victory_conditions_preset) {
             case LevelVictoryConditions.none:
                 return; // do nothing
+
+            case LevelVictoryConditions.hub_level:
+                return; // do nothing
             
             case LevelVictoryConditions.clear_enemies:
                 InstantiateVictoryConditionInstant(prefab_clear_enemies_condition);
@@ -295,7 +301,7 @@ public class LevelConfig : MonoBehaviour
                 
             case LevelVictoryConditions.escape_to_truck:
                 // no conditions are required, just activate the truck exit
-                ActivateTruckLevelExit();
+                ActivateLevelExit();
                 return; 
 
             case LevelVictoryConditions.survive_countdown:
@@ -351,24 +357,24 @@ public class LevelConfig : MonoBehaviour
         return MenuManager.inst.OpenDialoge(dialogue_file);
     }
 
-    public void ActivateTruckLevelExit() {
-        GameObject truck = GameObject.Find("PlayerTruck");
-        if (truck == null) { 
-            Debug.LogError("cannot find 'PlayerTruck' in the scene to activate level exit!");
+    public void ActivateLevelExit() {
+        // GameObject truck = GameObject.Find("PlayerTruck");
+        // if (truck == null) { 
+        //     Debug.LogError("cannot find 'PlayerTruck' in the scene to activate level exit!");
+        //     return;
+        // }
+        // Transform child = truck.transform.Find("FinishLevelInteraction");
+        // if (child == null) {
+        //     Debug.LogError("'PlayerTruck' is missing its finish level interaction!!");
+        //     return;
+        // }
+        // Interaction finish_level = child.gameObject.GetComponent<Interaction>();
+        if (level_exit == null) {
+            Debug.LogError("`level_exit` is missing, and cannot be activated!!");
             return;
         }
-        Transform child = truck.transform.Find("FinishLevelInteraction");
-        if (child == null) {
-            Debug.LogError("'PlayerTruck' is missing its finish level interaction!!");
-            return;
-        }
-        Interaction finish_level = child.gameObject.GetComponent<Interaction>();
-        if (finish_level == null) {
-            Debug.LogError("FinishLevelInteraction is missing it's `Interaction` component!");
-            return;
-        }
-        finish_level.interaction_enabled = true;
-        child.gameObject.SetActive(true);
+        level_exit.interaction_enabled = true;
+        level_exit.gameObject.SetActive(true);
     }
 
     public void LevelObjectivesCleared() {
@@ -385,7 +391,7 @@ public class LevelConfig : MonoBehaviour
                 }
                 return;
             case LevelVictoryType.leave_by_truck:
-                ActivateTruckLevelExit();
+                ActivateLevelExit();
                 return;
 
             default:

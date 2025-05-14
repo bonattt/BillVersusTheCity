@@ -31,6 +31,7 @@ public class CombatHUDManager : MonoBehaviour
     void Start() {
         inst = this;
         gameObject.name += $" {++_count}";
+        UpdateVictoryHUD();
         UpdateCombatMode(force_update:true);
     }
 
@@ -44,18 +45,17 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     void Update() {
-        _UpdateVictoryHUD();
+        UpdateVictoryHUD();
         UpdateCountdownUI();
         UpdateCombatMode();
     }
 
     private Label objective_label;
     public void UpdateVictoryHUD() {
-        objective_label = ui_doc.rootVisualElement.Q<Label>("ObjectiveLabel");
-        _UpdateVictoryHUD();
-    }
-    private void _UpdateVictoryHUD() {
-        // NOTE: private only update call, used in unity Update loop to update text without the DOM lookup to set the a Label object.
+        if (objective_label == null) {
+            // NOTE: prevents loading order issues
+            objective_label = ui_doc.rootVisualElement.Q<Label>("ObjectiveLabel");
+        }
         objective_label.text = GetVictoryDisplayString(_victory_type);
     }
     
@@ -75,6 +75,9 @@ public class CombatHUDManager : MonoBehaviour
 
             case LevelVictoryConditions.none:
                 return "<null>";
+
+            case LevelVictoryConditions.hub_level:
+                return "Head to your truck";
 
             default:
                 Debug.LogWarning($"unknown level victory condition {condition_type}");

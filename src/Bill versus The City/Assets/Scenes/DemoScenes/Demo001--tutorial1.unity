@@ -3614,6 +3614,10 @@ PrefabInstance:
       value: LevelConfig
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: level_exit
+      value: 
+      objectReference: {fileID: 270058615}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: next_level
       value: Demo001--tutorial2
       objectReference: {fileID: 0}
