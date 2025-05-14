@@ -154,7 +154,14 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     }
 
     private void LoadWeaponsFromProgress(DuckDict progress_data) {
-        HashSet<string> weapon_unlocks = new HashSet<string>(progress_data.GetStringList("weapon_unlocks"));
+        HashSet<string> weapon_unlocks;
+        List<string> str_ls = progress_data.GetStringList("weapon_unlocks");
+        if (str_ls != null) {
+            weapon_unlocks = new HashSet<string>(str_ls);
+        } else {
+            Debug.LogWarning($"no weapon unlocks found in save file!!");
+            weapon_unlocks = new HashSet<string>();
+        } 
         
         // if the starting weapons have changed, add any missing starting weapons to owned weapons.
         foreach (string starting_id in WeaponSaveLoadConfig.inst.GetStartingWeaponIds()) {

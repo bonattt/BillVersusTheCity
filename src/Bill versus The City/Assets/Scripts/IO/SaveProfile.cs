@@ -73,6 +73,7 @@ public class SaveProfile {
         return save.profile_name;
     }
 
+
     public SaveProfile() {
         profile_number = ReadCurrentProfileNumber();
     }
@@ -87,6 +88,14 @@ public class SaveProfile {
         } catch(DirectoryNotFoundException) {
             return null;
         }
+    }
+
+    public string LoadSaveData() {
+        // loads save data, and returns the current scene name
+        DuckDict progress_data = save_file.AsDuckDict().GetObject("progress");
+        PlayerCharacter.inst.LoadProgress(progress_data);
+        string scene_name = progress_data.GetObject("level").GetString("current_scene");
+        return scene_name;
     }
     
     public static void SetupDirectory() {

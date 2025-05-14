@@ -23,6 +23,12 @@ public class InputSystem : ISettingsObserver
     public const KeyCode NEXT_WEAPON_MODE = KeyCode.X;
     public static readonly Vector3 NULL_POINT = new Vector3(float.NaN, float.NaN, float.NaN);
 
+
+    private float movement_x_flushed_at = 0f;
+    private float movement_y_flushed_at = 0f;
+    private bool movement_flushed_x = false;
+    private bool movement_flushed_y = false;
+
     private InputSystem() {
         // if (_current == null) {
         //     _current = this;
@@ -33,6 +39,49 @@ public class InputSystem : ISettingsObserver
         GameSettings.inst.game_play_settings.Subscribe(this);
         _current = this;
 
+    }
+
+    public void FlushMovement() {
+        // effectively flushes movement, reseting both movement axis 0 immediately
+        movement_x_flushed_at = _MoveXInputRaw();
+        movement_y_flushed_at = _MoveYInputRaw();
+        movement_flushed_x = true;
+        movement_flushed_y = true;
+    }
+
+    protected void HandleFlushedXInput() {
+        if (movement_flushed_x && ShouldStillBeFlushed(_MoveXInputRaw(), movement_x_flushed_at)){
+            movement_flushed_x = true;
+        } else {
+            movement_flushed_x = false;
+            movement_x_flushed_at = 0f;
+        }
+    }
+
+    protected void HandleFlushedYInput() {
+        if (movement_flushed_y && ShouldStillBeFlushed(_MoveYInputRaw(), movement_y_flushed_at)){
+            movement_flushed_y = true;
+        } else {
+            movement_flushed_y = false;
+            movement_y_flushed_at = 0f;
+        }
+    }
+
+    private static bool ShouldStillBeFlushed(float unity_input, float flushed_at) {
+        // looks at the unity Input Axis value, and the "flushed at" value, and returns a bool if that axis should still be considered flushed
+        if (unity_input == 0) {
+            return false;
+        }
+        if (flushed_at > 0) {
+            // flushed while axis has positive input
+            return flushed_at > unity_input; // if unity input is greater, key is pressed again, not just falling away. Return false, and unflush
+        } else if (flushed_at < 0) {
+            // flushed while axis has negative input
+            return flushed_at < unity_input; // if unity input is less, key is pressed again, not just falling away. Return false, and unflush
+        } else {
+            // flushed while axis has no input, should not stay flushed
+            return false;
+        }
     }
 
     private static InputSystem _current = null;
@@ -142,27 +191,47 @@ public class InputSystem : ISettingsObserver
     }
 
     public float MoveXInput() {
+        HandleFlushedXInput();
+        if (movement_flushed_x) { return 0f; }
+        return _MoveXInputRaw();
+    }
+
+    protected float _MoveXInputRaw() {
         return Input.GetAxis(MOVE_X);
     }
 
     public bool MoveLeftInputHold() {
-        return MoveXInput() < 0;
+        HandleFlushedXInput();
+        if (movement_flushed_x) { return false; }
+        return _MoveXInputRaw() < 0;
     }
 
     public bool MoveRightInputHold() {
-        return MoveXInput() > 0;
+        HandleFlushedXInput();
+        if (movement_flushed_x) { return false; }
+        return _MoveXInputRaw() > 0;
+    }
+    
+    public float MoveYInput() {
+        HandleFlushedYInput();
+        if (movement_flushed_y) { return 0f; }
+        return _MoveYInputRaw();
     }
 
-    public float MoveYInput() {
+    protected float _MoveYInputRaw() {
         return Input.GetAxis(MOVE_Y);
     }
 
     public bool MoveUpInputHold() {
-        return MoveYInput() > 0;
+        HandleFlushedYInput();
+        if (movement_flushed_y) { return false; }
+        return _MoveYInputRaw() > 0;
     }
 
     public bool MoveDownInputHold() {
-        return MoveYInput() < 0;
+        HandleFlushedYInput();
+        if (movement_flushed_y) { return false; }
+        return _MoveYInputRaw() < 0;
     }
 
     public bool InteractInput() {

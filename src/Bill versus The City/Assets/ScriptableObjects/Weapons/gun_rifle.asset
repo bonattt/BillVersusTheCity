@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
   m_Name: gun_rifle
   m_EditorClassIdentifier: 
-  _name: Rifle
+  _name: AR-15
   _item_id: rifle_semiauto
   _item_icon: {fileID: 21300000, guid: 362b9c4654ab6d24f8ed03fb2d65ff7e, type: 3}
   _weapon_slot: 1

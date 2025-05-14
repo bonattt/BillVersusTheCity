@@ -112,9 +112,7 @@ public class MainMenuController : MonoBehaviour
         // TODO
         Debug.LogWarning("Continue not (fully) implemented!");
         CloseMainMenu();
-        DuckDict progress_data = SaveProfile.inst.save_file.AsDuckDict().GetObject("progress");
-        PlayerCharacter.inst.LoadProgress(progress_data);
-        string scene_name = progress_data.GetObject("level").GetString("current_scene");
+        string scene_name = SaveProfile.inst.LoadSaveData();
         // Debug.Log($"continue game at scene '{scene_name}"); // TODO --- remove debug
         ScenesUtil.NextLevel(scene_name); // TODO --- load and store current level 
     }
