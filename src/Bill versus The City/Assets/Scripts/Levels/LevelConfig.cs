@@ -92,7 +92,6 @@ public class LevelConfig : MonoBehaviour
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
 
     [SerializeField]
-    private int level_start_dollars = -1; 
     public ITimer countdown { get; protected set; }
     public bool has_countdown { get => countdown != null; }
 
