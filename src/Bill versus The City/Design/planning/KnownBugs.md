@@ -2,7 +2,7 @@
 =====================================
 === Known Bugs / Missing Features ===
 =====================================
-[ ] FIX: some HUD elements break if you exit to main menu and start the game again (requires large refactor)
+[+] FIX: some HUD elements break if you exit to main menu and start the game again (requires large refactor)
 [ ] FIX: sometimes, if a level with countdown failure condition is failed, the level will fail again immediately on restart. 
     --> The issue is now intermittent.
 [ ] FIX: slow hipfire animation for rifles
@@ -17,7 +17,10 @@
 [ ] FIX: Crouch while aiming locks into aim animation
 [ ] FIX: Errors when game is closed during dialogues
 [ ] FIX: searching enemies get stuck on terrain sometimes
-[+] FIX: restarting a countdown level causes the "complete objective" dialogue to show up before the level restarts, and linger under the weapon select menu
+[+] FIX: restarting a countdown level causes the "complete objective" dialogue to show up before the level restarts, and linger under the 
+    weapon select menu
+[ ] FIX: reload UI coloring doesn't work
+
 
 
 

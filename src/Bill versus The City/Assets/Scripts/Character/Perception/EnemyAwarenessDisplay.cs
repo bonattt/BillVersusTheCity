@@ -48,6 +48,7 @@ public class EnemyAwarenessDisplay : MonoBehaviour, IPerceptionSubscriber
         awareness_update.effect_text = display_value[new_state];
         awareness_update.font_size = 80;
         awareness_update.follow = transform;
+        awareness_update.transform.localPosition = Vector3.zero;
 
     }
     
