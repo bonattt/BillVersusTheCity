@@ -21,11 +21,9 @@ public class UIDocFollowMouse : MonoBehaviour    {
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(
             visual_element.panel, InputSystem.current.MouseWorldPosition(), _camera
         ) + offset;
-        // Debug.LogWarning($"mouse screen position: {InputSystem.current.MouseScreenPosition()}"); // TODO --- remove debug
         visual_element.transform.position = new Vector2(
             newPosition.x - (visual_element.layout.width / 2),
             newPosition.y - (visual_element.layout.height / 2)
         );
-        // Debug.LogWarning($"reload position: {visual_element.transform.position}"); // TODO --- remove debug
     }
 }

@@ -28,8 +28,6 @@ public class GeneralSettings : AbstractSettingsModule {
 
     public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string
-        // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
-        Debug.LogWarning($"data: {data}, is null?: {data == null}"); // TODO --- remove debug
         skip_all_tutorials = UnpackBool(data, "skip_all_tutorials");
         skipped_tutorials = UnpackHashSet(data, "skipped_tutorials");
         this.AllFieldsUpdates();

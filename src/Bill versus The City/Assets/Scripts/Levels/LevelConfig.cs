@@ -206,7 +206,6 @@ public class LevelConfig : MonoBehaviour
     public void ConfigureLevel() {
         Validate();
         // init condition lists
-        // Debug.LogWarning("TODO --- reimplement victory condition HUD"); // TODO --- remove debug
         SetHUDVictoryConditions(victory_conditions_preset);
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);

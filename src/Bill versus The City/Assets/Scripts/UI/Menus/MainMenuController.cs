@@ -113,7 +113,6 @@ public class MainMenuController : MonoBehaviour
         Debug.LogWarning("Continue not (fully) implemented!");
         CloseMainMenu();
         string scene_name = SaveProfile.inst.LoadSaveData();
-        // Debug.Log($"continue game at scene '{scene_name}"); // TODO --- remove debug
         ScenesUtil.NextLevel(scene_name); // TODO --- load and store current level 
     }
 
@@ -148,20 +147,4 @@ public class MainMenuController : MonoBehaviour
         hud = MenuManager.DisableHUD();
         MenuManager.inst.disable_pause_menu = true;
     }
-
-    // private float callback_time = float.PositiveInfinity; // TODO --- remove debug
-    // private Action Callback = null; // TODO --- remove debug
-    // private void SetCallback(float delay, Action cb) { // TODO --- remove debug
-    //     Callback = cb;
-    //     callback_time = Time.time + delay;
-    // } // TODO --- remove debug
-
-    // void Update() { // TODO --- remove debug
-    //     if (callback_time <= Time.time) {
-    //         callback_time = float.PositiveInfinity;
-    //         Callback();
-    //         Callback = null;
-    //     } 
-    // } // TODO --- remove debug
-
 }

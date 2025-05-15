@@ -98,10 +98,6 @@ public class GameSettings {
     }
 
     public void LoadFromJson(DuckDict data) {
-        Debug.LogWarning($"settings: {data.Jsonify()}"); // TODO --- remove debug
-        Debug.LogWarning($"settings.general: {data.GetObject("general").Jsonify()}"); // TODO --- remove debug
-        Debug.LogWarning($"settings.general: {data.GetObject("general").Jsonify()}"); // TODO --- remove debug
-
         general_settings.LoadFromJson(data.GetObject("general"));
         difficulty_settings.LoadFromJson(data.GetObject("difficulty"));
         game_play_settings.LoadFromJson(data.GetObject("gameplay"));
