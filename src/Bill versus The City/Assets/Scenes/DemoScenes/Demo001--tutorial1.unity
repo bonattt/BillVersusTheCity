@@ -1934,6 +1934,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 6136826712561840028, guid: 4cb83b385067c18429a1c6683b1e5970, type: 3}
+      propertyPath: level_config
+      value: 
+      objectReference: {fileID: 1847664288}
+    - target: {fileID: 8975633889047704999, guid: 4cb83b385067c18429a1c6683b1e5970, type: 3}
+      propertyPath: attack_ctrl
+      value: 
+      objectReference: {fileID: 338529282}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3694,6 +3702,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+--- !u!114 &1847664288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+  m_PrefabInstance: {fileID: 1847664287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c259bec0e9e8304fb551459d08398a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1929632379
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -40,3 +40,5 @@ Finished on 2025-??
 [+] FIX: player cannot move while aiming without a weapon
 [ ] FIX: reload mouse/character follow only works in 1920x1080 screen resolution (it's hacked to work with a hard-coded offset there)
 [ ] FIX: reload UI coloring doesn't work
+[+] FIX: HUD loads inconsistently
+[ ] FIX: save progress doesn't save purchased guns
