@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0bd6e40d159fc43a1d404437134dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 50, y: 50}
   TransformToFollow: {fileID: 6156155872395548072}
 --- !u!114 &6925155934024980873
 MonoBehaviour:

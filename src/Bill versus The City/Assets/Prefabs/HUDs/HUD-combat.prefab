@@ -78,7 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c89e54a561ef8a41ad9c97fa0bdd40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 50, y: 375}
+  offset: {x: 0, y: 0}
+  debug_mouse_position: {x: 0, y: 0}
 --- !u!114 &2629118787167881277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui_doc: {fileID: 3992093689662693590}
   timer_ui: {fileID: 2635057402713423243}
+  level_config: {fileID: 0}
 --- !u!114 &3992093689662693590
 MonoBehaviour:
   m_ObjectHideFlags: 0

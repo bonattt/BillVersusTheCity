@@ -38,7 +38,7 @@ public class UIFloater : MonoBehaviour
 
         m_Bar.transform.position = new Vector2(
             newPosition.x - m_Bar.layout.width / 2,
-            newPosition.y - m_Bar.layout.height / 2
+            newPosition.y // - m_Bar.layout.height / 2
         ) + offset;
     }
 }
