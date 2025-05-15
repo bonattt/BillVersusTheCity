@@ -72,9 +72,9 @@ public class DebugSettings : AbstractSettingsModule {
         data.SetBool("allow_debug_actions", allow_debug_actions);
         return data.Jsonify();
     }
-    public override void LoadFromJson(string json_str) {
+    public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string
-        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
         show_fps = UnpackBool(data, "show_fps");
         debug_mode = UnpackBool(data, "debug_mode");
         show_damage_numbers = UnpackBool(data, "show_damage_numbers");

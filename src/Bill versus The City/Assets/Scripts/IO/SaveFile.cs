@@ -172,7 +172,7 @@ public class SaveFile {
         // TODO ---
         DuckDict data = JsonParser.ReadAsDuckDict(json_str);
         DuckDict settings_data = data.GetObject("settings");
-        GameSettings.inst.LoadFromJson(settings_data.Jsonify());
+        GameSettings.inst.LoadFromJson(data);
         
         LoadProfileFromDuckDict(data);
     } 

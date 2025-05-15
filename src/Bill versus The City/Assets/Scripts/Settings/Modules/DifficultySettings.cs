@@ -113,9 +113,9 @@ public class DifficultySettings : AbstractSettingsModule {
         return data.Jsonify();
     }
     
-    public override void LoadFromJson(string json_str) {
+    public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string
-        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
         foreach(string field in FIELDS) {
             float? value = data.GetFloat(field);
             if (value == null) {

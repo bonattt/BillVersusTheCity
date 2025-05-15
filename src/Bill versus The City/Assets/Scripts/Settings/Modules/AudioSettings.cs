@@ -66,9 +66,9 @@ public class AudioSettings : AbstractSettingsModule {
         }
     }
     
-    public override void LoadFromJson(string json_str) {
+    public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string
-        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
         master_volume = (float) data.GetFloat("master_volume");
 
         foreach (SoundCategory category in Enum.GetValues(typeof(SoundCategory))) {

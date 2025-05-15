@@ -94,22 +94,29 @@ public class GameSettings {
     public void LoadFromJson(string json_str) {
         // sets the settings module from a JSON string
         DuckDict data = JsonParser.ReadAsDuckDict(json_str);
-        
-        general_settings.LoadFromJson(GetSettingsJson(data, "general"));
-        difficulty_settings.LoadFromJson(GetSettingsJson(data, "difficulty"));
-        game_play_settings.LoadFromJson(GetSettingsJson(data, "gameplay"));
-        audio_settings.LoadFromJson(GetSettingsJson(data, "audio"));
-        // videos_settings.LoadFromJson(data.GetObject("debug").Jsonify()); // TODO --- implement graphics settings
-        debug_settings.LoadFromJson(GetSettingsJson(data, "debug"));
+        LoadFromJson(data);
     }
 
-    public string GetSettingsJson(DuckDict data, string field_name) {
-        DuckDict child_data = data.GetObject(field_name);
-        if (child_data == null) {
-            return "{}";
-        }
-        return child_data.Jsonify();
+    public void LoadFromJson(DuckDict data) {
+        Debug.LogWarning($"settings: {data.Jsonify()}"); // TODO --- remove debug
+        Debug.LogWarning($"settings.general: {data.GetObject("general").Jsonify()}"); // TODO --- remove debug
+        Debug.LogWarning($"settings.general: {data.GetObject("general").Jsonify()}"); // TODO --- remove debug
+
+        general_settings.LoadFromJson(data.GetObject("general"));
+        difficulty_settings.LoadFromJson(data.GetObject("difficulty"));
+        game_play_settings.LoadFromJson(data.GetObject("gameplay"));
+        audio_settings.LoadFromJson(data.GetObject("audio"));
+        debug_settings.LoadFromJson(data.GetObject("debug"));
+        // videos_settings.LoadFromJson(data); // TODO --- implement graphics settings
     }
+
+    // public string GetSettingsJson(DuckDict data, string field_name) {
+    //     DuckDict child_data = data.GetObject(field_name);
+    //     if (child_data == null) {
+    //         return "{}";
+    //     }
+    //     return child_data.Jsonify();
+    // }
 
     // private Dictionary<string, ISettingsModule> settings_modules = new Dictionary<string, ISettingsModule>();
 

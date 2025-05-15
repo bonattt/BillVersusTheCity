@@ -9,7 +9,7 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     public void Unsubscribe(ISettingsObserver sub) => subscribers.Remove(sub);
 
     public abstract string AsJson(); // returns json data for the settings in this module
-    public abstract void LoadFromJson(string json_str);  // sets the settings module from a JSON string
+    public abstract void LoadFromJson(DuckDict data_module);  // sets the settings module from a JSON string
 
     public void UpdateSubscribers(string field) {
         foreach(ISettingsObserver sub in subscribers) {

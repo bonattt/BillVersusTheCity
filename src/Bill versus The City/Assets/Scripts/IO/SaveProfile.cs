@@ -92,6 +92,8 @@ public class SaveProfile {
 
     public string LoadSaveData() {
         // loads save data, and returns the current scene name
+        GameSettings.inst.LoadFromJson(save_file.AsDuckDict().GetObject("settings"));
+
         DuckDict progress_data = save_file.AsDuckDict().GetObject("progress");
         PlayerCharacter.inst.LoadProgress(progress_data);
         string scene_name = progress_data.GetObject("level").GetString("current_scene");

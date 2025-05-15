@@ -30,9 +30,9 @@ public class GamePlaySettings : AbstractSettingsModule {
 
         return data.Jsonify();
     }
-    public override void LoadFromJson(string json_str) {
+    public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string
-        DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
 
         float? ms = data.GetFloat(MOUSE_SENSITIVITY);
         if (ms == null) {
