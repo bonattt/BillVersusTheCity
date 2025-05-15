@@ -116,7 +116,7 @@ public class SaveFile {
     }
 
     private void WriteInventoryProgressData(DuckDict progress_data) {
-        progress_data.SetInt("dollars", PlayerCharacter.inst.inventory.dollars);
+        progress_data.SetObject("inventory", PlayerCharacter.inst.inventory.GetProgressData());
     }
     public void WriteLevelProgressData(DuckDict progress_data, string current_scene, string next_scene) {
         DuckDict level_data = new DuckDict();
@@ -138,7 +138,7 @@ public class SaveFile {
         Debug.Log($"SaveAll execution took {save_end_time - save_start_time} seconds");
     }
 
-    public void SaveProgress() => SaveProgress(ScenesUtil.GetCurrentSceneName());
+    // public void SaveProgress() => SaveProgress(ScenesUtil.GetCurrentSceneName());
     public void SaveProgress(string current_scene) => SaveProgress(current_scene, null);
     public void SaveProgress(string current_scene, string next_scene) {
         // TODO --- 

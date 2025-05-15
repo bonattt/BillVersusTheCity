@@ -42,7 +42,7 @@ public class PurchaseInteraction : MonoBehaviour, IInteractionEffect, IPurchase 
             }
         }
         else {
-            Debug.LogWarning($"insufficient funds! ${PlayerCharacter.inst.inventory.dollars} < ${purchase_cost}");
+            Debug.LogWarning($"insufficient funds! ${PlayerCharacter.inst.inventory.total_dollars} < ${purchase_cost}");
             MenuManager.PlayMenuErrorClick();
         }
         // PlayerCharacter.inst.inventory.dollars_earned_in_level += this.dollars;

@@ -75,10 +75,13 @@ public class PlayerCharacter : ISaveProgress {
     }
 
     public void LoadProgress(DuckDict progress_data) {
-        inventory.LoadProgress(progress_data);
+        inventory.LoadProgress(progress_data.GetObject("inventory"));
     }
-    public void SaveProgress(DuckDict progress_data) {
-        inventory.SaveProgress(progress_data);
+
+    public DuckDict GetProgressData() {
+        DuckDict progress_data = new DuckDict();
+        progress_data.SetObject("inventory", inventory.GetProgressData());
+        return progress_data;
     }
 
     public void PlayerUpdated(PlayerCombat new_player) {

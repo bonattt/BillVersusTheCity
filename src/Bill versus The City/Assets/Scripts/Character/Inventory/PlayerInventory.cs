@@ -143,14 +143,17 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         LoadWeaponsFromProgress(progress_data);
     }
 
-    public void SaveProgress(DuckDict progress_data) {
-        progress_data.SetInt("dollars", dollars);
+    // public void SaveProgress(DuckDict progress_data) {
+    public DuckDict GetProgressData() {
+        DuckDict inventory_progress_data = new DuckDict();
+        inventory_progress_data.SetInt("dollars", dollars);
 
         List<string> weapon_ids = new List<string>();
         foreach (IWeapon weapon in owned_weapons) {
             weapon_ids.Add(weapon.item_id);
         }
-        progress_data.SetStringList("weapons", weapon_ids);
+        inventory_progress_data.SetStringList("weapon_unlocks", weapon_ids);
+        return inventory_progress_data;
     }
 
     private void LoadWeaponsFromProgress(DuckDict progress_data) {
