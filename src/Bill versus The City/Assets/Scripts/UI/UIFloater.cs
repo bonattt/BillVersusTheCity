@@ -13,18 +13,30 @@ public class UIFloater : MonoBehaviour
     public Vector2 offset = new Vector2(0, 0);
     public Transform TransformToFollow;
 
-    private VisualElement m_Bar;
-    private Camera m_MainCamera;
+    private VisualElement root_visual_element;
+    private Camera main_camera;
 
     private void Start() {
-        m_MainCamera = Camera.main;
-        m_Bar = GetComponent<UIDocument>().rootVisualElement;
-        
+        main_camera = Camera.main;
+        root_visual_element = GetComponent<UIDocument>().rootVisualElement;
+
+        ConfigureStyles();
         SetPosition();
     }
 
-    private void LateUpdate() {
-        if (TransformToFollow != null) {
+    private void ConfigureStyles()
+    {
+        // TODO --- refactor this with ReloadUI
+        root_visual_element.style.alignItems = Align.Center;
+        root_visual_element.style.alignSelf = Align.Center;
+        root_visual_element.style.justifyContent = Justify.Center;
+        root_visual_element.style.position = Position.Absolute;
+    }
+
+    private void LateUpdate()
+    {
+        if (TransformToFollow != null)
+        {
             SetPosition();
         }
     }
@@ -33,12 +45,12 @@ public class UIFloater : MonoBehaviour
         // Debug.Log(m_Bar);
         // Transforms a world absolute position to a local coordinate on a panel
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(
-            m_Bar.panel, TransformToFollow.position, m_MainCamera
+            root_visual_element.panel, TransformToFollow.position, main_camera
         );
 
-        m_Bar.transform.position = new Vector2(
-            newPosition.x - m_Bar.layout.width / 2,
-            newPosition.y // - m_Bar.layout.height / 2
+        root_visual_element.transform.position = new Vector2(
+            newPosition.x - root_visual_element.layout.width / 2,
+            newPosition.y - root_visual_element.layout.height / 2
         ) + offset;
     }
 }
