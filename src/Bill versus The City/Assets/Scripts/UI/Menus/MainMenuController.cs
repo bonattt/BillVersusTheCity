@@ -9,14 +9,11 @@ public class MainMenuController : MonoBehaviour
     public bool always_select_profile = false;
     public UIDocument ui_doc;
     public string first_level = "Demo001--tutorial";
-    public string demo_level = "";
+    public string demo_level = "Demo001--tutorial";
     public string dev_room_level = "Demo001--test";
 
     private Button new_game_button, continue_game_button, demo_level_button, dev_room_button, settings_button, change_profile_button, exit_game_button;
     private Label profile_label;
-    private GameObject hud;
-
-    // public GameObject hud, managers;
 
     void Start() {
         OpenMainMenu();
@@ -139,12 +136,10 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void CloseMainMenu() {
-        hud = MenuManager.EnableHUD();
         MenuManager.inst.disable_pause_menu = false;
     }
 
     private void OpenMainMenu() {
-        hud = MenuManager.DisableHUD();
         MenuManager.inst.disable_pause_menu = true;
     }
 }
