@@ -26,13 +26,24 @@ public class DebugSaveJson : MonoBehaviour
     }
 
     private void UpdateOutput() {
-        save_profile = DisplayStr(SaveProfile.inst.save_file.profile_name);
-        save_name = DisplayStr(SaveProfile.inst.save_file.save_name);
-        save_file = DisplayStr(SaveProfile.inst.save_file.filepath);
-        json_lines = new List<string>();
-        raw_json = SaveProfile.inst.save_file.AsDuckDict().Jsonify();
-        foreach (string line in FormatJson(raw_json).Split("\n")) {
-            json_lines.Add(line);
+        if (SaveProfile.inst.save_file == null) {
+            save_profile = "";
+            save_name = "";
+            save_file = "null";
+            json_lines = new List<string>();
+            raw_json = "null";
+        }
+        else
+        {
+            save_profile = DisplayStr(SaveProfile.inst.save_file.profile_name);
+            save_name = DisplayStr(SaveProfile.inst.save_file.save_name);
+            save_file = DisplayStr(SaveProfile.inst.save_file.filepath);
+            json_lines = new List<string>();
+            raw_json = SaveProfile.inst.save_file.AsDuckDict().Jsonify();
+            foreach (string line in FormatJson(raw_json).Split("\n"))
+            {
+                json_lines.Add(line);
+            }
         }
     }
 

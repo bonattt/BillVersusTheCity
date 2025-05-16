@@ -110,6 +110,7 @@ public class SaveFile {
         DuckDict progress_data = data.GetObject("progress");
         if (progress_data == null) {
             progress_data = new DuckDict();
+            data.SetObject("progress", progress_data);
         }
         WriteInventoryProgressData(progress_data);
         WriteLevelProgressData(progress_data, current_scene, next_scene);
@@ -142,12 +143,9 @@ public class SaveFile {
     public void SaveProgress(string current_scene) => SaveProgress(current_scene, null);
     public void SaveProgress(string current_scene, string next_scene) {
         // TODO --- 
-        float save_start_time = Time.time;
         DuckDict data = AsDuckDict();
         WriteProgressData(data, current_scene, next_scene);
         File.WriteAllText(filepath, data.Jsonify());
-        float save_end_time = Time.time;
-        Debug.Log($"SaveProgress execution took {save_end_time - save_start_time} seconds");
     }
 
 

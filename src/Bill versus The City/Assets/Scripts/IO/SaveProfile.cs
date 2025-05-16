@@ -6,6 +6,7 @@ using UnityEngine;
 public class SaveProfile {
     // public const string SAVE_SLOT_1 = "save_1";
     public const string PROFILE_FILE = ".save_files\\profile";
+    public SaveFile save_file { get; private set; }
     private static SaveProfile _inst;
     public static SaveProfile inst {
         get {
@@ -26,14 +27,14 @@ public class SaveProfile {
             if (_profile_number == null) {
                 save_file = null;
             }
-            else {
-                save_file = new SaveFile(GetSaveName((int) _profile_number));
+            else
+            {
+                save_file = new SaveFile(GetSaveFileName((int)_profile_number));
             }
         }
     }
-    public SaveFile save_file { get; private set; }
 
-    public static string GetSaveName(int slot_number) {
+    public static string GetSaveFileName(int slot_number) {
         return $"save_{slot_number}";
     }
 
@@ -44,13 +45,13 @@ public class SaveProfile {
     }
 
     public static void Create(int profile_slot, string profile_name) {
-        SaveFile save = new SaveFile(GetSaveName(profile_slot));
+        SaveFile save = new SaveFile(GetSaveFileName(profile_slot));
         save.profile_name = profile_name;
         save.SaveAll();
     }
 
     public static void Rename(int profile_slot, string profile_name) {
-        SaveFile save = new SaveFile(GetSaveName(profile_slot));
+        SaveFile save = new SaveFile(GetSaveFileName(profile_slot));
         save.LoadFromFile();
         save.profile_name = profile_name;
         save.SaveAll();
@@ -61,12 +62,12 @@ public class SaveProfile {
         return ProfileExists((int) profile_number);
     }
     public static bool ProfileExists(int profile_number) {
-        string save_name = GetSaveName(profile_number);
+        string save_name = GetSaveFileName(profile_number);
         return SaveFile.SaveExists(save_name);
     }
 
     public static string GetProfileName(int profile_number) {
-        SaveFile save = new SaveFile(GetSaveName(profile_number));
+        SaveFile save = new SaveFile(GetSaveFileName(profile_number));
         if (! save.Exists()) {
             return null;
         }
@@ -92,6 +93,7 @@ public class SaveProfile {
 
     public string LoadSaveData() {
         // loads save data, and returns the current scene name
+        if (save_file == null) { return null; }
         GameSettings.inst.LoadFromJson(save_file.AsDuckDict().GetObject("settings"));
 
         DuckDict progress_data = save_file.AsDuckDict().GetObject("progress");
@@ -109,7 +111,7 @@ public class SaveProfile {
     }
 
     public static void DeleteProfile(int profile_number) {
-        SaveFile.DeleteSave(GetSaveName(profile_number));
+        SaveFile.DeleteSave(GetSaveFileName(profile_number));
     }
 
     // public static void Initialize() {

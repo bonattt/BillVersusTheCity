@@ -40,6 +40,10 @@ Finished on 2025-??
 [+] FIX: player cannot move while aiming without a weapon
 [+] FIX: HUD loads inconsistently
 [+] FIX: save progress doesn't save purchased guns
-[ ] FIX: Enemies not alerted by bullets
+[?] FIX: Enemies not alerted by bullets
+    - this is not in all cases, it seems like enemies far away from the player aren't getting alerted. IT may just be raycasts being 
+        blocked. Unclear. 
+    - I think my plan for this will be to replace my placeholder "hearing" system with an actual hearing system
+    - NOTE: bullets detected by the threat detection should alert passive enemies
 [+] FIX: reload mouse/character follow only works in 1920x1080 screen resolution (it's hacked to work with a hard-coded offset there)
-
+[+] FIX: new saves don't have progress, and won't save progress

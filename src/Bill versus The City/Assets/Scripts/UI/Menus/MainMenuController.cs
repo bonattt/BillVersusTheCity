@@ -17,7 +17,6 @@ public class MainMenuController : MonoBehaviour
 
     void Start() {
         OpenMainMenu();
-
         new_game_button = ui_doc.rootVisualElement.Q<Button>("StartNewGameButton");
         MenuManager.AddGenericEvents(new_game_button);
         new_game_button.clicked += StartNewGameClicked;
@@ -83,6 +82,7 @@ public class MainMenuController : MonoBehaviour
         // DuckDict progress_data = LoadProgressData();
         // Debug.LogWarning("`progress_data != null` is not the correct check for `SaveDataExists()`"); // TODO --- 
         // Debug.LogWarning("refactor: move `SaveDataExists()` to SaaveFile"); // TODO --- refactor: move `SaveDataExists()` to SaveFile
+        if (SaveProfile.inst.save_file == null) { return false; }
         return SaveProfile.inst.save_file.IsGameStarted(); // progress_data != null; 
     }
 
