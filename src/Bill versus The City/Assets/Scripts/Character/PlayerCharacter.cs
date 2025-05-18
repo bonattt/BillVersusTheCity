@@ -75,7 +75,13 @@ public class PlayerCharacter : ISaveProgress {
     }
 
     public void LoadProgress(DuckDict progress_data) {
-        inventory.LoadProgress(progress_data.GetObject("inventory"));
+        DuckDict inventory_data = null;
+        if (progress_data == null) {
+            Debug.LogWarning("no 'progress' in save data");
+        } else {
+            inventory_data = progress_data.GetObject("inventory");
+        }
+        inventory.LoadProgress(inventory_data);
     }
 
     public DuckDict GetProgressData() {

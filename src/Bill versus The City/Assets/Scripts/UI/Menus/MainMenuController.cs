@@ -24,11 +24,6 @@ public class MainMenuController : MonoBehaviour
         continue_game_button = ui_doc.rootVisualElement.Q<Button>("ContinueGameButton");
         MenuManager.AddGenericEvents(continue_game_button);
         continue_game_button.clicked += ContinueGameClicked;
-        if (SaveDataExists()) {
-            continue_game_button.SetEnabled(true);
-        } else {
-            continue_game_button.SetEnabled(false);
-        }
 
         demo_level_button = ui_doc.rootVisualElement.Q<Button>("DemoLevelButton");
         demo_level_button.clicked += DemoLevelButtonClicked;
@@ -51,16 +46,34 @@ public class MainMenuController : MonoBehaviour
             SaveProfile.SetupDirectory();
             OpenProfileSelection();
         }
-        UpdateProfileLabel();
+        ProfileUpdated();
     }
 
-    public void UpdateProfileLabel() {
+    public void ProfileUpdated()
+    {
+        _UpdateProfileLabel();
+        _UpdateContinueEnabled();
+    }
+
+    private void _UpdateContinueEnabled()
+    {
+        if (SaveDataExists()) {
+            continue_game_button.SetEnabled(true);
+        } else {
+            continue_game_button.SetEnabled(false);
+        }
+    }
+
+    private void _UpdateProfileLabel()
+    {
         string profile_name;
-        if (SaveProfile.inst.save_file == null || SaveProfile.inst.profile_number == null) {
+        if (SaveProfile.inst.save_file == null || SaveProfile.inst.profile_number == null)
+        {
             SaveProfile.SetupDirectory();
             profile_name = "N/A";
         }
-        else {
+        else
+        {
             profile_name = SaveProfile.inst.save_file.profile_name;
         }
         profile_label.text = $"Profile: {profile_name}";
@@ -70,7 +83,7 @@ public class MainMenuController : MonoBehaviour
         Debug.LogWarning("TODO: implement OpenProfileSelection!"); // TODO --- implement
         GameObject new_menu = MenuManager.inst.OpenSubMenuPrefab(MenuManager.inst.select_save_file_prefab);
         SelectProfileMenuCtrl select_profile_menu = new_menu.GetComponent<SelectProfileMenuCtrl>();
-        select_profile_menu.AddCloseCallback(new SimpleActionEvent(UpdateProfileLabel));
+        select_profile_menu.AddCloseCallback(new SimpleActionEvent(ProfileUpdated));
     }
 
     public DuckDict LoadProgressData() {
@@ -110,6 +123,10 @@ public class MainMenuController : MonoBehaviour
         Debug.LogWarning("Continue not (fully) implemented!");
         CloseMainMenu();
         string scene_name = SaveProfile.inst.LoadSaveData();
+        if (scene_name == null)
+        {
+            Debug.LogError("Cannont continue, save file has no level progress!");
+        }
         ScenesUtil.NextLevel(scene_name); // TODO --- load and store current level 
     }
 
@@ -140,6 +157,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void OpenMainMenu() {
+        Debug.LogWarning($"MenuManager.inst: {MenuManager.inst}, is_null?: {MenuManager.inst == null}"); // TODO --- remove debug
         MenuManager.inst.disable_pause_menu = true;
     }
 }

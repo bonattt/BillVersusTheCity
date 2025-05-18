@@ -139,6 +139,11 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     }
 
     public void LoadProgress(DuckDict progress_data) {
+        if (progress_data == null) {
+            Debug.LogWarning("Inventory data is null!");
+            dollars = STARTING_DOLLARS;
+            return;
+        }
         dollars = (int) progress_data.GetInt("dollars");
         LoadWeaponsFromProgress(progress_data);
     }

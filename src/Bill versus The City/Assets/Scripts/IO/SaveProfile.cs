@@ -98,7 +98,11 @@ public class SaveProfile {
 
         DuckDict progress_data = save_file.AsDuckDict().GetObject("progress");
         PlayerCharacter.inst.LoadProgress(progress_data);
-        string scene_name = progress_data.GetObject("level").GetString("current_scene");
+        string scene_name = null;
+        if (progress_data != null && progress_data.ContainsKey("level")) {
+            scene_name = progress_data.GetObject("level").GetString("current_scene");
+        }
+        else { Debug.LogWarning("no progress data!"); }
         return scene_name;
     }
     
