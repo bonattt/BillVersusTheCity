@@ -8,7 +8,7 @@ Finished on 2025-0????
 
 PLANNED FEATURES
 
-[~] Add some alternate controls
+[+] Add some alternate controls
     [+] e to advance dialogues
     [+] scroll to switch weapon slots
         
