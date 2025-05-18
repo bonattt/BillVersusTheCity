@@ -4,7 +4,7 @@ public class SoundEffect : IAttackHitEffect,
         IAttackShootEffect, IAttackMissEffect, IWeaponEffect {
     
     // private string sound_path;
-    protected ISounds default_sound;
+    protected ISFXSounds default_sound;
     public Vector3 offset = new Vector3(0f, 0f, 0f);
 
     public SoundEffect(string sound_path) {
@@ -29,7 +29,7 @@ public class SoundEffect : IAttackHitEffect,
         return null;
     }
 
-    protected virtual ISounds GetSound(IWeapon weapon) {
+    protected virtual ISFXSounds GetSound(IWeapon weapon) {
         string sound_path = GetAttackSoundPath(weapon);
         // ScriptableObjects make it hard to set a variable to null
         if (sound_path == null || sound_path == "") { 

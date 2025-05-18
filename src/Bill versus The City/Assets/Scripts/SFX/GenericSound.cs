@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericSound : ISingleSound, ISounds {
+public class GenericSound : ISingleSound, ISFXSounds {
     public string sound_name  { get; set; }
     public AudioClip clip  { get; set; }
 

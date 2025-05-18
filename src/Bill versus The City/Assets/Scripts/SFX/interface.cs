@@ -11,7 +11,7 @@ public interface ISingleSound {
 }
 
 
-public interface ISounds {
+public interface ISFXSounds {
     public List<ISingleSound> GetSounds();
 
     public ISingleSound GetRandomSound() {

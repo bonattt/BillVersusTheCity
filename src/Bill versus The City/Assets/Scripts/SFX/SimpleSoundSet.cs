@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName ="New Sound Set", menuName ="Data/SimpleSoundSet")]
-public class SimpleSoundSet : ScriptableObject, ISounds
+public class SimpleSoundSet : ScriptableObject, ISFXSounds
 {
     public string sound_name = "new sound set";
     public List<AudioClip> sounds;

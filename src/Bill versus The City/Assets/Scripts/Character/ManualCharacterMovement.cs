@@ -71,7 +71,7 @@ public class ManualCharacterMovement : CharCtrl
         if (InputSystem.current.NextWeaponModeInput()) {
             attack_controller.current_weapon.NextWeaponSetting();
             if (attack_controller.current_weapon.HasWeaponSettings()) {
-                ISounds sound = SFXLibrary.LoadSound("weapon_mode_switch");
+                ISFXSounds sound = SFXLibrary.LoadSound("weapon_mode_switch");
                 SFXSystem.inst.PlaySound(sound, transform.position);
             }
             attack_controller.UpdateSubscribers();

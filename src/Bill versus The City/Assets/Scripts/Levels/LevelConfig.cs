@@ -50,7 +50,7 @@ public class LevelConfig : MonoBehaviour
 
     private int sequential_conditions_index = 0;
     public string level_music_name;
-    private ISounds level_music;
+    private ISFXSounds level_music;
 
     public bool weapon_select_on_start { 
         get {
@@ -136,7 +136,7 @@ public class LevelConfig : MonoBehaviour
         CleanupLevel();
     }
 
-    private ISounds LoadLevelMusic() {
+    private ISFXSounds LoadLevelMusic() {
         if (level_music_name == null || level_music_name.Equals("")) {
             Debug.Log($"no level music set: '{level_music_name}'");
             return null;
@@ -145,7 +145,7 @@ public class LevelConfig : MonoBehaviour
             Debug.LogWarning($"skipping level music because of test mode");
             return null;
         }
-        ISounds sound = SFXLibrary.LoadSound(level_music_name);
+        ISFXSounds sound = SFXLibrary.LoadSound(level_music_name);
         return sound;
     }
 

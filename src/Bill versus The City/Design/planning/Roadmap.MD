@@ -17,7 +17,7 @@
 	X fix cover ---> already did this, kinda
 	- ???
 
-[ ] Milestone 8: Progression and Hub World(s) (Bill's House and Gunstore), Saving
+[+] Milestone 8: Progression and Hub World(s) (Bill's House and Gunstore), Saving
     --> Save the player's current level
     --> save settings
     --> restore to saved level
@@ -41,7 +41,7 @@
 =============================
 
 [ ] Add remove illegal weapons dialogue to level config
-[ ] Add damage drop off to weapons 
+[+] Add damage drop off to weapons 
 [ ] Add armor effectiveness to weapons
 [ ] Reduce boilerplate to adding new fields to settings!
     [ ] FIX: allow save files to assume defaults for missing fields in save file
@@ -56,8 +56,8 @@
     - maybe add additional raycasts to player, to make the AI seek more clean-shots to the player, rather than shots it can make with a 0 width raycast, but not a bullet with a small non-zero width.
     [ ] FIX: check if enemy is actually on screen before INITIATING hostility, but allow enemies to still shoot from further off screen if already hostile
 
-[ ] Covering Fire: just shoots a gun towards a specified point
-[ ] Move camera closer to ground while crouching (reduce vision radius)
+[+] Covering Fire: just shoots a gun towards a specified point
+[X] Move camera closer to ground while crouching (reduce vision radius)
 
 [ ] Difficulty System
     [ ] override availible equipment

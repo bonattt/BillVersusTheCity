@@ -12,7 +12,7 @@ public class TestSoundSystem : MonoBehaviour
     void Start()
     {
         if (StringIsSet(sound_path)) {
-            ISounds sound = SFXLibrary.LoadSound(sound_path);
+            ISFXSounds sound = SFXLibrary.LoadSound(sound_path);
             SFXSystem.inst.PlaySound(sound, transform.position);
         } else {
             SFXSystem.inst.PlaySound(clip, transform.position, volume);

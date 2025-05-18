@@ -196,7 +196,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public static void PlayMenuSound(string sound_name) {
-        ISounds sound = SFXLibrary.LoadSound(sound_name);
+        ISFXSounds sound = SFXLibrary.LoadSound(sound_name);
         Vector3 target = Camera.main.transform.position;
         SFXSystem.inst.PlaySound(sound, target);
     } 

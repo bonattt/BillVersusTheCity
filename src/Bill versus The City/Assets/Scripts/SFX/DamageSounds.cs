@@ -10,7 +10,7 @@ public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
     public const string DEATH_SOUND_PATH = "death_grunt";
     public const string DEATH_PLAYER_SOUND_PATH = "death_grunt_player";
     // private ISoundSet reload_start_sound, reload_complete_sound;
-    private static ISounds damage_grunts, damage_grunts_player, death_grunts, death_grunts_player;
+    private static ISFXSounds damage_grunts, damage_grunts_player, death_grunts, death_grunts_player;
     private ICharacterStatus status;
     public CharCtrl target_character;
     private bool is_player = false;
@@ -79,7 +79,7 @@ public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
     private void PlayDamageSound() {
         // NOTE: gameObject == null if the gameObject was Destroyed 
         if (current_damage_sounds != null) { return; } // damage sound already playing
-        ISounds sounds;
+        ISFXSounds sounds;
         if (is_player) {
             sounds = damage_grunts_player;
         } else {
@@ -91,7 +91,7 @@ public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
 
 
     private void PlayDeathSound() {
-        ISounds sounds;
+        ISFXSounds sounds;
         if (is_player) {
             sounds = death_grunts_player;
         } else {

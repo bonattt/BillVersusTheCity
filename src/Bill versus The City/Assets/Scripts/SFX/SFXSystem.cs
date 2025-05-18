@@ -22,7 +22,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         GameSettings.inst.audio_settings.Subscribe(this);
     }
 
-    public void PlayMusic(ISounds sounds) {
+    public void PlayMusic(ISFXSounds sounds) {
         // overloads _PlayMusic
         PlayMusic(sounds, PlayerCharacter.inst.player_transform);
     }
@@ -32,7 +32,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         PlayMusic(sound, PlayerCharacter.inst.player_transform);
     }
 
-    public void PlayMusic(ISounds sound, Transform target) {
+    public void PlayMusic(ISFXSounds sound, Transform target) {
         // overloads _PlayMusic
         if (sound == null) {
             Debug.LogWarning("empty music argument");
@@ -80,7 +80,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
     }
 
-    public AudioSource PlaySound(ISounds sound, Vector3 target) {
+    public AudioSource PlaySound(ISFXSounds sound, Vector3 target) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
@@ -124,7 +124,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         PlaySound(audio_clips[rand], target, volume);
     }
 
-    public void PlayRandomClip(ISounds sound_set, Vector3 target) {
+    public void PlayRandomClip(ISFXSounds sound_set, Vector3 target) {
         PlaySound(sound_set.GetRandomSound(), target);
         PlaySound(sound_set.GetRandomSound(), target);
     }

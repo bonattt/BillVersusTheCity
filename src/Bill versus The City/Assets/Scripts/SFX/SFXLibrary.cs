@@ -11,8 +11,8 @@ public static class SFXLibrary
     }
 
 
-    public static ISounds LoadSound(string path) {
-        ISounds sound = (ISounds) Resources.Load<ScriptableObject>(path);
+    public static ISFXSounds LoadSound(string path) {
+        ISFXSounds sound = (ISFXSounds) Resources.Load<ScriptableObject>(path);
         if (sound != null) {
             return sound;
         }

@@ -4,7 +4,7 @@
 =====================
 
 Started on 2025-04-21
-Finished on 2025-??
+Finished on 2025-05-18
 
 [+] Collect money, and it's preserved between levels
     [+] Refactor item-pickup drops
