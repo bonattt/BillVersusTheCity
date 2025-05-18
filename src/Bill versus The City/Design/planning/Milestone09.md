@@ -11,7 +11,7 @@ PLANNED FEATURES
 [~] Add some alternate controls
     [+] e to advance dialogues
     [+] scroll to switch weapon slots
-        [ ] Update tutorial
+        
 [ ] Hearing System
     [ ] Refactor bullet and gunshot effect to use hearing system
 [ ] Melee enemy
