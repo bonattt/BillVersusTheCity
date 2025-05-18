@@ -10,11 +10,56 @@ public class PlayerAttackController : AttackController
     public bool switch_weapons_blocked = false;
 
     public int _current_slot = 0;
-    public override int? current_slot {
+    
+    public override int? current_slot
+    {
         get { return _current_slot; }
     }
 
-    private void UpdateAimSensitivity() {
+    private int? _min_slot = null;
+    public int min_slot
+    {
+        get
+        {
+            if (_min_slot != null) { return _min_slot.Value; }
+
+            Debug.Log("re-evaluate min_slot");
+            int _min = weapon_slots.Length - 1;
+            for (int i = _min; i >= 0; i--)
+            {
+                if (weapon_slots[i] != null && weapon_slots_enabled[i])
+                {
+                    _min = i;
+                }
+            }
+            _min_slot = _min;
+            return _min;
+        }
+    }
+    
+    private int? _max_slot = null;
+    public int max_slot
+    {
+        get
+        {
+            if (_max_slot != null) { return _max_slot.Value; }
+
+            Debug.Log("re-evaluate max_slot");
+            int _max = 0;
+            for (int i = 0; i < weapon_slots.Length; i++)
+            {
+                if (weapon_slots[i] != null && weapon_slots_enabled[i])
+                {
+                    _max = i;
+                }
+            }
+            _max_slot = _max;
+            return _max;
+        }
+    }
+
+    private void UpdateAimSensitivity()
+    {
         InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
 
@@ -40,32 +85,67 @@ public class PlayerAttackController : AttackController
     
     public override void UpdateSubscribers() {
         // update UI's to display changes to equipped weapon or ammo amound
-        foreach (IWeaponManagerSubscriber sub in subscribers) {
+        _max_slot = null; // TODO --- this should be called elsewhere
+        _min_slot = null; // TODO --- this should be called elsewhere
+        foreach (IWeaponManagerSubscriber sub in subscribers)
+        {
             sub.UpdateWeapon(current_slot, current_weapon);
         }
     }
 
     private void TrySwitchWeapons() {
         // Polls for player inputs, and switches weapons if necessary
-        if (! switch_weapons_blocked) {
-            int? weapon_slot_input = InputSystem.current.WeaponSlotInput();
+        if (!switch_weapons_blocked)
+        {
+            int? weapon_slot_input = InputSystem.current.SetWeaponSlotInput();
             if (weapon_slot_input != null) {
-                SwitchWeaponBySlot((int) weapon_slot_input);
+                SwitchWeaponBySlot((int)weapon_slot_input);
+            }  else if (InputSystem.current.NextWeaponInput()) {
+                SwitchToNextWeapon();
+            } else if (InputSystem.current.PreviousWeaponInput()) {
+                SwitchToPreviousWeapon();
             }
         }
     }
+
+    public bool SwitchToNextWeapon()
+    {
+        int _next_slot;
+        if (_current_slot >= max_slot) {
+            // _next_slot = 0;
+            return false;
+        } else {
+            _next_slot = _current_slot + 1;
+        }
+        return SwitchWeaponBySlot(_next_slot);
+    }
     
-    public bool SwitchWeaponBySlot(int slot, bool force=false) {
-        if (force || (weapon_slots_enabled[slot] && weapon_slots[slot] != null)) {
-            if (_current_slot != slot) {
+    public bool SwitchToPreviousWeapon() {
+        int _next_slot;
+        if (_current_slot <= min_slot) {
+            // _next_slot = max_slot;
+            return false;
+        } else {
+            _next_slot = _current_slot - 1;
+        }
+        return SwitchWeaponBySlot(_next_slot); 
+    }
+
+    public bool SwitchWeaponBySlot(int slot, bool force = false) {
+        // switches the current weapon slot to the given value, equipping whatever weapon is loaded in that slot
+        if (force || (weapon_slots_enabled[slot] && weapon_slots[slot] != null))
+        {
+            if (_current_slot != slot)
+            {
                 AimOnSwitch();
+                Debug.Log($"SwitchWeaponBySlot{_current_slot} --> {slot}");
             }
             _current_slot = slot;
             current_weapon = weapon_slots[slot];
             UpdateSubscribers();
             return true;
         }
-        Debug.LogWarning($"tried to set weapon to invalid slot '{slot}'.\nEnabled: {weapon_slots_enabled[slot]}, {weapon_slots[slot]}");
+        Debug.Log($"tried to set weapon to invalid slot '{slot}'.\nEnabled: {weapon_slots_enabled[slot]}, {weapon_slots[slot]}");
         return false;
     }
 
@@ -92,10 +172,14 @@ public class PlayerAttackController : AttackController
     /////////////////// DEBUG CODE /////////////////////////////
     
     public string debug_rifle_equipped, debug_handgun_equipped, debug_pickup_equipped;
-    protected override void UpdateDebugFields() {
+    public int debug_min_slot, debug_max_slot;
+    protected override void UpdateDebugFields()
+    {
         base.UpdateDebugFields();
         debug_rifle_equipped = $"{weapon_slots[0]}";
         debug_handgun_equipped = $"{weapon_slots[1]}";
         debug_pickup_equipped = $"{weapon_slots[2]}";
+        debug_min_slot = min_slot;
+        debug_max_slot = max_slot;
     }
 }

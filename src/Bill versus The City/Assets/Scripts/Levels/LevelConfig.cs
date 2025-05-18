@@ -103,7 +103,7 @@ public class LevelConfig : MonoBehaviour
         foreach (string scene_name in additive_scene_loads) {
             bool scene_loaded = ScenesUtil.LoadSceneAdditively(scene_name);
             if (!scene_loaded) {
-                Debug.LogWarning($"Skipped loading scene '{scene_name}' because it was already loaded!");
+                Debug.Log($"Skipped loading scene '{scene_name}' because it was already loaded!");
             }
         }
     }

@@ -22,6 +22,7 @@ public class InputSystemDebugger : MonoBehaviour
     public int? weapon_slot_input; 
     public bool next_weapon_input;
     public bool previous_weapon_input;
+    public float debug_mouse_wheel_axis; 
 
     void Start() {
         UpdateDebugFields();
@@ -46,8 +47,9 @@ public class InputSystemDebugger : MonoBehaviour
         test_input = InputSystem.current.DebugInput();
         menu_cancel_input = InputSystem.current.MenuCancelInput();
         pause_menu_input = InputSystem.current.PauseMenuInput();
-        weapon_slot_input = InputSystem.current.WeaponSlotInput();
+        weapon_slot_input = InputSystem.current.SetWeaponSlotInput();
         next_weapon_input = InputSystem.current.NextWeaponInput();
         previous_weapon_input = InputSystem.current.PreviousWeaponInput();
+        debug_mouse_wheel_axis = InputSystem.current.GetScroll();
     }
 }

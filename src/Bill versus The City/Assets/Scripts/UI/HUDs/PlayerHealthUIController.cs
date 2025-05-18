@@ -34,7 +34,7 @@ public class PlayerHealthUIController : MonoBehaviour, ICharStatusSubscriber, IP
             _status.Unsubscribe(this);
         }
         if (player == null) {
-            Debug.LogWarning("new player is null!");
+            Debug.Log("new player is null!");
             return;
         }
         _status = player.status;

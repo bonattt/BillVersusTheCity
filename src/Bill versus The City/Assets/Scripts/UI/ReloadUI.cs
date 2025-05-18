@@ -23,7 +23,7 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
     
     public void NewPlayerObject(PlayerCombat player) {
         if (player == null) {
-            Debug.LogWarning("new player is null!");
+            Debug.Log("new player is null!");
             return;
         }
         manager = player.reloading;    

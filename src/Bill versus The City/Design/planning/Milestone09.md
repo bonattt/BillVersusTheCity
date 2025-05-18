@@ -8,12 +8,13 @@ Finished on 2025-0????
 
 PLANNED FEATURES
 
+[~] Add some alternate controls
+    [+] e to advance dialogues
+    [+] scroll to switch weapon slots
+        [ ] Update tutorial
 [ ] Hearing System
     [ ] Refactor bullet and gunshot effect to use hearing system
 [ ] Melee enemy
-[ ] Add some alternate controls
-    [ ] e to advance dialogues
-    [ ] scroll to switch weapon slots
 
 PLANNED BUGFIXES
 [ ] FIX: Enemies not alerted by bullets ---> fix via hearing system
@@ -26,4 +27,5 @@ UNPLANNED FEATURES
 [ ] 
 
 UNPLANNED BUGFIXES
-[ ] 
+[ ] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
+    - unknown steps to reproduce. I was trying to get scroll-wheel weapon switching to work at the time.

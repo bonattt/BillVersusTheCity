@@ -12,6 +12,7 @@ public class InputSystem : ISettingsObserver
     public const string SPRINT_INPUT = "Sprint";
     public const KeyCode PAUSE_MENU_INPUT = KeyCode.Escape;
     public const KeyCode MENU_NEXT = KeyCode.Mouse0;
+    public const KeyCode MENU_NEXT_ALT = KeyCode.E;
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
     public const KeyCode INTERACT = KeyCode.E;
     public const KeyCode RELOAD = KeyCode.R;
@@ -22,7 +23,6 @@ public class InputSystem : ISettingsObserver
     public const KeyCode DEBUG2_KEY = KeyCode.Mouse3;
     public const KeyCode NEXT_WEAPON_MODE = KeyCode.X;
     public static readonly Vector3 NULL_POINT = new Vector3(float.NaN, float.NaN, float.NaN);
-
 
     private float movement_x_flushed_at = 0f;
     private float movement_y_flushed_at = 0f;
@@ -259,10 +259,10 @@ public class InputSystem : ISettingsObserver
     public bool MenuNextInput() {
         // input for advancing dialouge
 
-        return Input.GetKeyDown(MENU_NEXT);
+        return Input.GetKeyDown(MENU_NEXT) || Input.GetKeyDown(MENU_NEXT_ALT);
     }
 
-    public int? WeaponSlotInput() {
+    public int? SetWeaponSlotInput() {
         // returns a nullable int, containing the weapon slot input for this frame.
         // if no weapon-slot keys are pressed, return null.
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) {
@@ -357,11 +357,11 @@ public class InputSystem : ISettingsObserver
     }
 
     public bool NextWeaponInput() {
-        return GetScroll() > 0;
+        return GetScroll() > 0f;
     }
 
     public bool PreviousWeaponInput() {
-        return GetScroll() < 0;
+        return GetScroll() < 0f;
     }
 
     public bool NextWeaponModeInput() {
@@ -456,7 +456,7 @@ public class InputSystem : ISettingsObserver
             case InputType.previous_weapon:
                 return PreviousWeaponInput();
             case InputType.select_weapon:
-                return WeaponSlotInput() != null; // if a number key is pressed, int? will be not null
+                return SetWeaponSlotInput() != null; // if a number key is pressed, int? will be not null
             case InputType.move_up:
                 return MoveUpInputHold();
             case InputType.move_left:
