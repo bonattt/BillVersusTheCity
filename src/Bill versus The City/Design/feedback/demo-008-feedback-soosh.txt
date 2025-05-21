@@ -1,0 +1,14 @@
+Soosh was having errors trying to name save files
+"rename just doesn't work"
+
+"still doesn't like evil velocity"
+
+can aim while in non-combat mode
+
+only one gun range works, and that was confusing
+
+change "exit game" in pause menu to "return to main menu"
+
+level 1 still says "defeat all enemies to leave" no matter what the 
+
+level 2 still too hard
