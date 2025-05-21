@@ -122,6 +122,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         get { return _aiming; }
         set {
             _aiming = value;
+            Debug.LogWarning($"aiming: {_aiming}"); // TODO --- remove debug
             if (_aiming) {
                 attack_controller.StartAim();
             } else {
@@ -159,6 +160,13 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public bool is_hit_stunned { get { return hit_stun_until > Time.time; }}
+    
+    public bool combat_enabled {
+        get {
+            if (LevelConfig.inst == null) { return false; }
+            return LevelConfig.inst.combat_enabled;
+        }
+    }
 
     // ////////// debug fields /////////
     // public ActionCode debug_action_input = ActionCode.none;
@@ -192,14 +200,18 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // }
     // /////////////////////////////////
 
-    public virtual void Start() {
+    public virtual void Start()
+    {
         char_status = GetComponent<CharacterStatus>();
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();
         ammo_container = GetComponent<AmmoContainer>();
-        if (animatior_controller_ref != null) {
+        if (animatior_controller_ref != null)
+        {
             _animator_facade = animatior_controller_ref.GetComponent<IAnimationFacade>();
-        } else {
+        }
+        else
+        {
             _animator_facade = null;
             Debug.LogWarning($"{gameObject.name} initialized animator facade to null!");
         }
@@ -419,7 +431,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public bool CanAttack() {
-        return !is_hit_stunned && !reloading && !is_sprinting && !AttackPauseLocked() && LevelConfig.inst.combat_enabled;
+        return !is_hit_stunned && !reloading && !is_sprinting && !AttackPauseLocked() && combat_enabled;
     }
 
     protected void UpdatePauseAttackLock() {

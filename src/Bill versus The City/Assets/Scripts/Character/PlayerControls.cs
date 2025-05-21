@@ -48,7 +48,7 @@ public class PlayerControls : MonoBehaviour {
         if (sprint_input) {
             player_movement.aiming = false;
         } else {
-            player_movement.aiming = aim_input;
+            player_movement.aiming = aim_input && player_movement.combat_enabled;
             if (player_movement.reloading && player_movement.aiming) {
                 player_movement.CancelReload();
             }
@@ -57,12 +57,13 @@ public class PlayerControls : MonoBehaviour {
             player_movement.CancelReload();
         }
 
-        if (!sprint_input && aim_input) {
+        if (!sprint_input && aim_input && player_movement.combat_enabled) {
             player_movement.aiming = true;
         } else if (!aim_input || sprint_input) {
             player_movement.aiming = false;
         } else {
             // ????
+            // TODO --- why did I comment "????" here?
         }
 
         if (!sprint_input && AttackInput()) {
