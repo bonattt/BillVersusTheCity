@@ -362,6 +362,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RefillAmmo
       objectReference: {fileID: 0}
+    - target: {fileID: 1198070613409643838, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1347547492192594481, guid: c66e6c2b7e7ddcf40be50535151788cd, type: 3}
       propertyPath: interaction_range
       value: 6

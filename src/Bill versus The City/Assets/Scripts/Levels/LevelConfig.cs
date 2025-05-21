@@ -63,6 +63,10 @@ public class LevelConfig : MonoBehaviour
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
     public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
     public LevelVictoryType victory_type = LevelVictoryType.leave_by_truck;
+    [Tooltip("Override the objective shown to the player. Override objectives can be incremented by events to show new objectives later in the leve.")]
+    public List<string> override_objective_display;
+    [SerializeField]
+    private int objective_display_index = 0;
 
     public ScriptableObject init_starting_rifle, init_starting_handgun, init_starting_pickup;
     private IWeapon starting_rifle, starting_handgun, starting_pickup;
@@ -136,12 +140,48 @@ public class LevelConfig : MonoBehaviour
         CleanupLevel();
     }
 
-    private ISFXSounds LoadLevelMusic() {
-        if (level_music_name == null || level_music_name.Equals("")) {
+    public string GetOverrideObjectiveDisplay()
+    {
+        // returns the current override for the objective display.
+        // returns null if the objective display isn't overridden.
+        if (override_objective_display == null || override_objective_display.Count == 0) {
+            return null; // no objective override
+        }
+        try {
+            return override_objective_display[objective_display_index];
+        } catch (IndexOutOfRangeException) {
+            string objectives_msg = "";
+            Debug.LogError($"invalid objective override index {objective_display_index}. objectives: {objectives_msg}");
+            return null;
+        }
+    }
+
+    public void IncrimentObjectiveDisplay()
+    {
+        // incriments the index for `override_objective_display` by 1, and sanitizes the value.
+        // if the value was or would be invalid, log a warning and set it to a valid value.
+        if (objective_display_index < 0)
+        {
+            Debug.LogWarning($"objective_display_index {objective_display_index} is invalid");
+            objective_display_index = 0;
+        }
+        objective_display_index += 1;
+
+        if (objective_display_index >= override_objective_display.Count) {
+            Debug.LogWarning($"objective override display index overflow, reset to max value {objective_display_index}");
+            objective_display_index = override_objective_display.Count - 1;
+        }
+    }
+
+    private ISFXSounds LoadLevelMusic()
+    {
+        if (level_music_name == null || level_music_name.Equals(""))
+        {
             Debug.Log($"no level music set: '{level_music_name}'");
             return null;
         }
-        if (test_mode) {
+        if (test_mode)
+        {
             Debug.LogWarning($"skipping level music because of test mode");
             return null;
         }
@@ -431,20 +471,28 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
+    public bool has_objective_display_override => override_objective_display != null && override_objective_display.Count > 0;
+
     private void CheckSequentialLevelConditions() {
         if (!level_started) { return; /* don't check if level isn't started yet */ }
-        for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++) {
+        for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++)
+        {
             ILevelCondition current_condition = sequential_level_conditions[i];
-            if (current_condition.was_triggered) { 
-                continue; 
+            if (current_condition.was_triggered)  {
+                continue;
             } // skip already triggered conditions
             else if (!current_condition.ConditionMet()) {
                 // current condition is NOT met, so we stop iterating. 
                 break;
-            } else {
+            }
+            else {
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
                 sequential_conditions_index = i + 1;
+                if (has_objective_display_override) {
+                    // if the level has objective overrides, completing an objective should incriment the displayed objective(s)
+                    IncrimentObjectiveDisplay();
+                }
             }
         }
     }

@@ -56,7 +56,11 @@ public class CombatHUDManager : MonoBehaviour
             // NOTE: prevents loading order issues
             objective_label = ui_doc.rootVisualElement.Q<Label>("ObjectiveLabel");
         }
-        objective_label.text = GetVictoryDisplayString(_victory_type);
+        if (level_config.has_objective_display_override) {
+            objective_label.text = level_config.GetOverrideObjectiveDisplay();
+        } else {
+            objective_label.text = GetVictoryDisplayString(_victory_type);
+        }
     }
     
     public static string GetVictoryDisplayString(LevelVictoryConditions condition_type) {
