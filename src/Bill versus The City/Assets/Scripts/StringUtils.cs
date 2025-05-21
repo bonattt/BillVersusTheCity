@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class StringUtils {
     public static readonly string[] FORBIDDEN_SAVE_CHARACTERS = new string[]{
-        "<", ">", "/", "\\", "\n", "\t", "\r", ":", "*", "?", "\"", "|", "."
+        "<", ">", "/", "\\", "\n", "\t", "\r", ":", "*", "?", "\"", "|", ".", 
+        "~", "!", "@", "#", "$", "%", "^", "&", "(", ")", "[", "]", "{", "}"
     };
 
     public static string StripSaveName(string base_str) => StripCharacters(base_str, FORBIDDEN_SAVE_CHARACTERS);
