@@ -65,8 +65,8 @@ public class PauseMenuController : MonoBehaviour
 
     public void ExitGameClick(ClickEvent _) {
         YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
-        popup.header_text = "Exit Game";
-        popup.content_text = "Are you sure you want to quit?";
+        popup.header_text = "Return to Title";
+        popup.content_text = "Are you sure you want to return to the title screen? \nProgress cannot be saved mid-level.";
         popup.UpdateLabels();
         popup.confirm_button.RegisterCallback<ClickEvent>(ExitGameConfirmClick);
     }
