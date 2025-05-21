@@ -349,6 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   font_size: 20
+  interaction: {fileID: 1437333251418134552}
 --- !u!1001 &6468420592005379959
 PrefabInstance:
   m_ObjectHideFlags: 0
