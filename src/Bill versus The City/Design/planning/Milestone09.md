@@ -36,5 +36,5 @@ SOOSH FEEDBAC
 [ ] change "exit game" in pause menu to "return to main menu"
 [ ] FIX: level 1 still says "defeat all enemies to leave" no matter what the 
 - soosh still doesn't like "evil velocity"
-- only one gun range works, and that was confusing
+[+] only one gun range works, and that was confusing
 - level 2 still too hard
