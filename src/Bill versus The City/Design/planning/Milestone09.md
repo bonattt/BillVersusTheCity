@@ -29,3 +29,12 @@ UNPLANNED FEATURES
 UNPLANNED BUGFIXES
 [ ] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
     - unknown steps to reproduce. I was trying to get scroll-wheel weapon switching to work at the time.
+
+SOOSH FEEDBAC
+[+] Soosh was having errors trying to name save files
+[ ] FIX: can aim while in non-combat mode
+[ ] change "exit game" in pause menu to "return to main menu"
+[ ] FIX: level 1 still says "defeat all enemies to leave" no matter what the 
+- soosh still doesn't like "evil velocity"
+- only one gun range works, and that was confusing
+- level 2 still too hard

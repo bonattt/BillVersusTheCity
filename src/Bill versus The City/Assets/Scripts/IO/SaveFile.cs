@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class SaveFile {
 
-    public string save_name { get; protected set; }
+    private string _save_name;
+    public string save_name {
+        get => _save_name;
+        protected set
+        {
+            _save_name = StringUtils.StripSaveName(value);
+        }
+    }
     public const string SAVE_FILE_DIR = ".save_files";
 
     public bool IsGameStarted() {
@@ -31,7 +38,7 @@ public class SaveFile {
             return _profile_name;
         }
         set {
-            _profile_name = value;
+            _profile_name = StringUtils.StripSaveName(value);
         }
     }
 
@@ -170,7 +177,7 @@ public class SaveFile {
         // TODO ---
         DuckDict data = JsonParser.ReadAsDuckDict(json_str);
         DuckDict settings_data = data.GetObject("settings");
-        GameSettings.inst.LoadFromJson(data);
+        GameSettings.inst.LoadFromJson(settings_data);
         
         LoadProfileFromDuckDict(data);
     } 
@@ -190,7 +197,7 @@ public class SaveFile {
         DuckDict profile_data = data.GetObject("profile");
 
         if (!profile_data.ContainsKey("profile_name")) return;
-        profile_name = profile_data.GetString("profile_name");
+        profile_name = StringUtils.StripSaveName(profile_data.GetString("profile_name"));
     }
 
     public DuckDict AsDuckDict() {
