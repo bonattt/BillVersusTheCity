@@ -6,9 +6,11 @@ public static class AttackResolver {
     public const string PLACEHOLDER_ATTACK_PREFAB = "MuzzelFlashEffect";
     public const string PLACEHOLDER_ATTACK_HIT_PREFAB = "BloodSplatterEffect";
     public const string PLACEHOLDER_ATTACK_MISS_PREFAB = "MuzzelFlashEffectGray";
+    public const string PLACEHOLDER_MELEE_EFFECTS_PREFAB = "MeleeAttackEffect";
     public const string PLACEHOLDER_DAMAGE_SOUND_EFFECT = "damage_chiptone";
     public const string EMPTY_GUNSHOT_SOUND_PATH = "empty_gunshot";
     public const string DEFAULT_GUNSHOT = "gunshot_default";
+    public const string DEFAULT_MELEE_SOUND = "melee_default";
 
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB),
@@ -27,9 +29,14 @@ public static class AttackResolver {
         new GunshotSoundEffect(),
         new AlertEnemiesLineOfSightEffect()
     };
-    
 
-    private static IAttackShootEffect[] DEBUG_SHOOT_EFFECTS = new IAttackShootEffect[]{};
+    private static IAttackShootEffect[] DEBUG_SHOOT_EFFECTS = new IAttackShootEffect[] { };
+
+    private static IAttackShootEffect[] MELEE_EFFECTS = new IAttackShootEffect[]{
+        new SpawnPrefabEffect(PLACEHOLDER_MELEE_EFFECTS_PREFAB),
+        new MeleeAttackSoundEffect(),
+    };
+    private static IAttackShootEffect[] DEBUG_MELEE_EFFECTS = new IAttackShootEffect[] { };
 
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB),
@@ -78,6 +85,13 @@ public static class AttackResolver {
             return SHOOT_EFFECTS;
         }
         return ConcatinateArrays(SHOOT_EFFECTS, DEBUG_SHOOT_EFFECTS);
+    }
+
+    private static IAttackShootEffect[] GetMeleeEffects() {
+        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
+            return MELEE_EFFECTS;
+        }
+        return ConcatinateArrays(MELEE_EFFECTS, DEBUG_MELEE_EFFECTS);
     }
 
     private static IAttackMissEffect[] GetMissEffects() {
@@ -184,11 +198,20 @@ public static class AttackResolver {
         }
     }
 
-    public static void AttackStart(IAttack attack, Vector3 location) {
+    public static void AttackStart(IAttack attack, Vector3 location, bool is_melee_attack=false) {
         // Displays attack effects for firing a weapon
-
-        foreach (IAttackShootEffect effect in GetShootEffects()) {
-            effect.DisplayEffect(location, attack);
+        if (is_melee_attack)
+        {
+            foreach (IAttackShootEffect effect in GetMeleeEffects())
+            {
+                effect.DisplayEffect(location, attack);
+            }
+        }
+        else {
+            foreach (IAttackShootEffect effect in GetShootEffects())
+            {
+                effect.DisplayEffect(location, attack);
+            }
         }
     }
 }

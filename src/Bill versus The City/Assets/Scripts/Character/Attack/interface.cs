@@ -8,12 +8,12 @@ public interface IAttackHitEffect {
 
 public interface IAttackShootEffect {
     // visual effect a gun is fired
-    public void DisplayEffect(Vector3 miss_point, IAttack attack);
+    public void DisplayEffect(Vector3 shoot_point, IAttack attack);
 }
 
 public interface IAttackMissEffect {
     // visual effect when an attack hits a wall
-    public void DisplayEffect(Vector3 shoot_point, IAttack attack);
+    public void DisplayEffect(Vector3 miss_point, IAttack attack);
 }
 
 public interface IWeaponEffect {

@@ -83,10 +83,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
             if (aiming) {
                 float aim_multiplier;
-                if (current_weapon == null) {
+                if (current_firearm == null) {
                     aim_multiplier = 0.75f;
                 } else {
-                    aim_multiplier = current_weapon.aim_move_speed;
+                    aim_multiplier = current_firearm.aim_move_speed;
                 }
                 move_speed *= aim_multiplier;
             }
@@ -133,14 +133,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public float reload_time {
         get {
-            if (current_weapon == null) {
+            if (current_firearm == null) {
                 return 0f;
             }
-            return current_weapon.reload_time;
+            return current_firearm.reload_time;
         }
     }
 
-    public virtual IFirearm current_weapon {
+    public virtual IFirearm current_firearm {
         get {
             return attack_controller.current_weapon;
         }
@@ -246,7 +246,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.right_direction = this.transform.right;
         _animator_facade.move_velocity = GetVelocity();
         _animator_facade.action = AnimationActionType.idle;
-        _animator_facade.weapon_class = current_weapon != null ? current_weapon.weapon_class : WeaponClass.empty;
+        _animator_facade.weapon_class = current_firearm != null ? current_firearm.weapon_class : WeaponClass.empty;
         _animator_facade.aim_percent = attack_controller.aim_percent;
         _animator_facade.shot_at = last_attack_time;
         _animator_facade.crouch_percent = 0f;
@@ -274,7 +274,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // initiate a reload
         reloading = true;
         start_reload_at = Time.time;
-        UpdateReloadStarted(current_weapon);
+        UpdateReloadStarted(current_firearm);
     }
 
     public bool IsReloadFinished() {
@@ -288,14 +288,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // end reload before it's finished
         reloading = false;
         current_action = ActionCode.none;
-        UpdateReloadCancelled(current_weapon);
+        UpdateReloadCancelled(current_firearm);
     }
     
     private void FinishReload() {
         // complete a reload successfully.
         reloading = false;
         current_action = ActionCode.none;
-        IFirearm wpn = current_weapon;
+        IFirearm wpn = current_firearm;
 
         if (ShouldReloadWithContainer(wpn)) {
             _ReloadFromContainer(wpn);
@@ -304,7 +304,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             _ReloadGeneric(wpn);
         }
         attack_controller.UpdateSubscribers();
-        UpdateReloadFinished(current_weapon);
+        UpdateReloadFinished(current_firearm);
 
         // for weapons that reload single rounds, keep reloading
         if(keep_reloading && wpn.current_ammo < wpn.ammo_capacity) {
@@ -378,7 +378,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public bool CanReload() {
         // returns if the character can reload with the current_weapon.
-        IFirearm current = current_weapon;
+        IFirearm current = current_firearm;
         if (current == null) { 
             // Debug.LogWarning("cannot reload, current weapon is null!");
             return false; 

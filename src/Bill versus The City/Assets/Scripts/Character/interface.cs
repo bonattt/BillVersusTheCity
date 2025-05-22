@@ -34,7 +34,7 @@ public interface IAttack
 {
     // TODO
     public IAttackTarget attacker { get; }
-    public IFirearm weapon { get; }
+    public IWeapon weapon { get; }
     public float damage_falloff { get; }
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
@@ -45,24 +45,40 @@ public interface IAttack
 
 }
 
-// public class MeleeAttack : IAttack
-// {
-//     // public IAttackTarget attacker { get; set; }
-//     // public IFirearm weapon { get; set; }
-//     // public float attack_damage_min { get; set; }
-//     // public float attack_damage_max { get; set; }
-//     // public float armor_effectiveness { get; set; }
-//     // public bool ignore_armor { get; set; }
-//     // public float final_health_damage { get; set; }
-//     // public float final_armor_damage { get; set; }
-//     // public float damage_falloff { get; set; }
-// }
+public class MeleeAttack : IAttack {
+    public IAttackTarget attacker { get; set; }
+    public IWeapon weapon
+    {
+        get => melee_weapon;
+        set {
+            melee_weapon = (IMeleeWeapon)value;
+        }
+    }
+    public IMeleeWeapon melee_weapon { get; set; }
+    public float attack_damage_min { get => melee_weapon.weapon_damage_min; }
+    public float attack_damage_max { get => melee_weapon.weapon_damage_max; }
+    public float armor_effectiveness { get => melee_weapon.armor_effectiveness; }
+    public bool ignore_armor { get; set; }
+    public float final_health_damage { get; set; }
+    public float final_armor_damage { get; set; }
+    public float damage_falloff { get => 0; }
+
+    private HashSet<IAttackTarget> _hit_targets = new HashSet<IAttackTarget>();
+    public HashSet<IAttackTarget> hit_targets { get => _hit_targets; }
+
+}
 
 public class FirearmAttack : IAttack
 {
 
     public IAttackTarget attacker { get; set; }
-    public IFirearm weapon { get; set; }
+    public IWeapon weapon {
+        get => firearm;
+        set {
+            firearm = (IFirearm)value;
+        }
+    }
+    public IFirearm firearm { get; set; }
     public float attack_damage_min { get; set; }
     public float attack_damage_max { get; set; }
     public float armor_effectiveness { get; set; }
@@ -122,57 +138,79 @@ public interface IWeapon : IItem
     public IWeapon CopyWeapon();
 }
 
-public interface IFirearm : IWeapon {
-        // equipment
-        public WeaponSlot weapon_slot { get; }
-        public WeaponClass weapon_class { get; }
-        // ammo
-        public AmmoType ammo_type { get; }
-        public int ammo_capacity { get; }
-        public int reload_amount { get; }
-        public float reload_time { get; }
-        public int current_ammo { get; set; }
-        public int ammo_drop_size { get; }
+public interface IAttackController
+{
+    public float aim_percent { get; }
+    public IWeapon current_weapon { get; set; }
+    public IMeleeWeapon current_melee { get; set; }
+    public IFirearm current_gun { get; set; }
+    public void StartAttack();
+    public void StartAim();
+    public void StopAim();
+}
 
-        // rate of fire
-        public FiringMode firing_mode { get; }
-        public bool auto_fire { get; }
-        public float semi_auto_fire_rate { get; }
-        public float full_auto_fire_rate { get; }
-        public int n_shots { get; }
+public interface IMeleeWeapon : IWeapon
+{
+    public float attack_reach { get; }
+    public float attack_windup { get; } // after an attack is triggered, it takes `attack_windup` seconds for the attack to actually deal any damage
+    public float attack_duration { get; } // once the attack windup finishes, it will deal damage once to anything within range during `attack_duration` seconds
+    public float attack_recovery { get; } // once `attack_duration` finishes, the attack animation will continue for `attack_recovery` seconds before 
+    public float attack_cooldown { get; } // time that must pass after a attack completes it's recovery time before another attack can be made
+    public float total_attack_time { get => attack_windup + attack_duration + attack_recovery + attack_cooldown; }
+}
 
-        // accuracy
-        public float aimed_inaccuracy { get; }
-        public float initial_inaccuracy { get; }
-        public float time_to_aim { get; }
-        public float recoil_inaccuracy { get; }
-        public float recoil_max { get; }
-        public float recoil_recovery { get; }
-        public float recoil_shake { get; }
+public interface IFirearm : IWeapon
+{
+    // equipment
+    public WeaponSlot weapon_slot { get; }
+    public WeaponClass weapon_class { get; }
+    // ammo
+    public AmmoType ammo_type { get; }
+    public int ammo_capacity { get; }
+    public int reload_amount { get; }
+    public float reload_time { get; }
+    public int current_ammo { get; set; }
+    public int ammo_drop_size { get; }
 
-        // damage
-        public float bullet_speed { get; }
-        // public float weapon_damage_min { get; } // moved to IWeapon from IFirearm
-        // public float weapon_damage_max { get; } // moved to IWeapon from IFirearm
-        // public float armor_effectiveness { get; } // moved to IWeapon from IFirearm
-        public float damage_falloff_rate { get; }
+    // rate of fire
+    public FiringMode firing_mode { get; }
+    public bool auto_fire { get; }
+    public float semi_auto_fire_rate { get; }
+    public float full_auto_fire_rate { get; }
+    public int n_shots { get; }
 
-        // aiming
-        public float aim_zoom { get; }
-        public float aim_move_speed { get; }
-        public float max_zoom_range { get; }
+    // accuracy
+    public float aimed_inaccuracy { get; }
+    public float initial_inaccuracy { get; }
+    public float time_to_aim { get; }
+    public float recoil_inaccuracy { get; }
+    public float recoil_max { get; }
+    public float recoil_recovery { get; }
+    public float recoil_shake { get; }
 
-        // effects
-        // public string attack_sound { get; } // moved to IWeapon from IFirearm
-        public string empty_gunshot_sound { get; }
-        public string reload_start_sound { get; }
-        public string reload_complete_sound { get; }
+    // damage
+    public float bullet_speed { get; }
+    // public float weapon_damage_min { get; } // moved to IWeapon from IFirearm
+    // public float weapon_damage_max { get; } // moved to IWeapon from IFirearm
+    // public float armor_effectiveness { get; } // moved to IWeapon from IFirearm
+    public float damage_falloff_rate { get; }
 
-        public bool HasWeaponSettings();
-        public void NextWeaponSetting();
-        public void PreviousWeaponSetting();
-        public IFirearm CopyFirearm();
-    }
+    // aiming
+    public float aim_zoom { get; }
+    public float aim_move_speed { get; }
+    public float max_zoom_range { get; }
+
+    // effects
+    // public string attack_sound { get; } // moved to IWeapon from IFirearm
+    public string empty_gunshot_sound { get; }
+    public string reload_start_sound { get; }
+    public string reload_complete_sound { get; }
+
+    public bool HasWeaponSettings();
+    public void NextWeaponSetting();
+    public void PreviousWeaponSetting();
+    public IFirearm CopyFirearm();
+}
 
 public interface IPurchase {
     public int purchase_cost { get; }

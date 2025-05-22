@@ -11,7 +11,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     public bool start_weapon_loaded = true;
 
-    public Transform shoot_point; // bullets start here
+    public Transform attack_start_point; // bullets start here
 
     public GameObject bullet_prefab;
 
@@ -211,7 +211,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
         current_recoil += current_weapon.recoil_inaccuracy;
         current_weapon.current_ammo -= 1;
         if (bullet != null) {
-            AttackResolver.AttackStart(bullet, shoot_point.position); // Only create a shot effects once for a shotgun
+            AttackResolver.AttackStart(bullet, attack_start_point.position); // Only create a shot effects once for a shotgun
         }
         else {
             Debug.LogWarning("bullet is null!");
@@ -226,12 +226,12 @@ public class AttackController : MonoBehaviour, IWeaponManager
         // takes a loop counter, and returns the start point for a bullet. If loop counter is 0, the start point is always the same, 
         // but if loop counter is not 0, a random offset is applied.
         if (i == 0) {
-            return shoot_point.position;
+            return attack_start_point.position;
         }
         // radom variance to make shotguns feel better
         float variance = 0.25f;
         Vector3 offset = new Vector3(Random.Range(0, variance), 0, Random.Range(0, variance));
-        return shoot_point.position + offset;
+        return attack_start_point.position + offset;
     }
 
     private Vector3 GetAttackVector(Vector3 attack_direction, int i) {

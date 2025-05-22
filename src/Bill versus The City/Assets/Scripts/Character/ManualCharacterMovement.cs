@@ -35,11 +35,11 @@ public class ManualCharacterMovement : CharCtrl
                 return reload_move_multiplier * walk_speed; 
             }
             else if (aiming) {
-                if (current_weapon == null) {
+                if (current_firearm == null) {
                     Debug.LogWarning("aim without weapon!");
                     return walk_speed;
                 }
-                return current_weapon.aim_move_speed * walk_speed;
+                return current_firearm.aim_move_speed * walk_speed;
             }
             return walk_speed;
         }

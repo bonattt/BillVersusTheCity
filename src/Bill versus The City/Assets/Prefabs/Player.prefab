@@ -404,7 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialize_weapon: {fileID: 0}
   start_weapon_loaded: 1
-  shoot_point: {fileID: 2506234290457545205}
+  attack_start_point: {fileID: 2506234290457545205}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
   _current_recoil: 0
@@ -415,6 +415,8 @@ MonoBehaviour:
   debug_rifle_equipped: 
   debug_handgun_equipped: 
   debug_pickup_equipped: 
+  debug_min_slot: 0
+  debug_max_slot: 0
 --- !u!114 &2012941016556226390
 MonoBehaviour:
   m_ObjectHideFlags: 0

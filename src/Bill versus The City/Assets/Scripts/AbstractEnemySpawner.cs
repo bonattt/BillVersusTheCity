@@ -81,7 +81,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         enemy_ctrl.SetPosition(GetSpawnPoint().GetSpawnPosition());
         IFirearm weapon = GetWeapon();
         if (weapon != null) {
-            enemy_ctrl.current_weapon = weapon;
+            enemy_ctrl.current_firearm = weapon;
         }
         
         IArmor armor = GetArmor();
