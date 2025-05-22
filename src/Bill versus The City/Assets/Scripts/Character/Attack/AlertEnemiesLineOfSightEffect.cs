@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class AlertEnemiesLineOfSightEffect : IAttackHitEffect, 
-        IAttackShootEffect, IAttackMissEffect, IWeaponEffect {
+        IAttackShootEffect, IAttackMissEffect, IFirearmEffect {
     
     public Vector3 offset = new Vector3(0f, 0f, 0f);
 
@@ -13,7 +13,7 @@ public class AlertEnemiesLineOfSightEffect : IAttackHitEffect,
         AlertNearbyEnemies(hit_location);
     }
 
-    public void DisplayWeaponEffect(Vector3 point, IFirearm weapon) {
+    public void DisplayFirearmEffect(Vector3 point, IFirearm weapon) {
         AlertNearbyEnemies(point);
     }
 

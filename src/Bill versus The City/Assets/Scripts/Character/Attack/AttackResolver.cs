@@ -36,10 +36,10 @@ public static class AttackResolver {
         new AlertEnemiesLineOfSightEffect()
     };
     private static IAttackMissEffect[] DEBUG_MISS_EFFECTS = new IAttackMissEffect[]{};
-    private static IWeaponEffect[] EMPTY_SHOOT_EFFECT = new IWeaponEffect[]{
+    private static IFirearmEffect[] EMPTY_SHOOT_EFFECT = new IFirearmEffect[]{
         new EmptyGunshotSoundEffect()
     };
-    private static IWeaponEffect[] DEBUG_EMPTY_SHOOT_EFFECT = new IWeaponEffect[]{};
+    private static IFirearmEffect[] DEBUG_EMPTY_SHOOT_EFFECT = new IFirearmEffect[]{};
 
     public static void ResolveAttackHit(IAttack attack, 
             IAttackTarget target, Vector3 hit_location) {
@@ -87,7 +87,7 @@ public static class AttackResolver {
         return ConcatinateArrays(MISS_EFFECTS, DEBUG_MISS_EFFECTS);
     }
 
-    private static IWeaponEffect[] GetEmptyShotEffects() {
+    private static IFirearmEffect[] GetEmptyShotEffects() {
         if (!GameSettings.inst.debug_settings.show_damage_numbers) {
             return EMPTY_SHOOT_EFFECT;
         }
@@ -179,8 +179,8 @@ public static class AttackResolver {
     }
 
     public static void AttackEmpty(IFirearm weapon, Vector3 location) {
-        foreach (IWeaponEffect effect in GetEmptyShotEffects()) {
-            effect.DisplayWeaponEffect(location, weapon);
+        foreach (IFirearmEffect effect in GetEmptyShotEffects()) {
+            effect.DisplayFirearmEffect(location, weapon);
         }
     }
 

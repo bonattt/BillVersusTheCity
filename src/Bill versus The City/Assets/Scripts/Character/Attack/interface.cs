@@ -18,5 +18,10 @@ public interface IAttackMissEffect {
 
 public interface IWeaponEffect {
     // visual effect which doesn't require an attack
-    public void DisplayWeaponEffect(Vector3 point, IFirearm weapon);
+    public void DisplayWeaponEffect(Vector3 point, IWeapon weapon);
+}
+
+public interface IFirearmEffect {
+    // visual effect which doesn't require an attack
+    public void DisplayFirearmEffect(Vector3 point, IFirearm weapon);
 }
