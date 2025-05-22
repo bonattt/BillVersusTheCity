@@ -33,7 +33,7 @@ public static class AttackResolver {
     private static IAttackShootEffect[] DEBUG_SHOOT_EFFECTS = new IAttackShootEffect[] { };
 
     private static IAttackShootEffect[] MELEE_EFFECTS = new IAttackShootEffect[]{
-        new SpawnPrefabEffect(PLACEHOLDER_MELEE_EFFECTS_PREFAB),
+        // new SpawnPrefabEffect(PLACEHOLDER_MELEE_EFFECTS_PREFAB), // TODO --- implement rotation in effects, so this can be an effect again
         new MeleeAttackSoundEffect(),
     };
     private static IAttackShootEffect[] DEBUG_MELEE_EFFECTS = new IAttackShootEffect[] { };

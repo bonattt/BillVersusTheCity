@@ -144,9 +144,12 @@ public interface IAttackController
     public IWeapon current_weapon { get; set; }
     public IMeleeWeapon current_melee { get; set; }
     public IFirearm current_gun { get; set; }
-    public void StartAttack();
+    public Transform attack_start_point { get; }
+    public bool switch_weapons_blocked { get; set; }
+    public void StartAttack(Vector3 attack_direction);
     public void StartAim();
     public void StopAim();
+    public bool CanAttack();
 }
 
 public interface IMeleeWeapon : IWeapon
@@ -157,6 +160,7 @@ public interface IMeleeWeapon : IWeapon
     public float attack_recovery { get; } // once `attack_duration` finishes, the attack animation will continue for `attack_recovery` seconds before 
     public float attack_cooldown { get; } // time that must pass after a attack completes it's recovery time before another attack can be made
     public float total_attack_time { get => attack_windup + attack_duration + attack_recovery + attack_cooldown; }
+    public IMeleeWeapon CopyMeleeWeapon();
 }
 
 public interface IFirearm : IWeapon
@@ -236,13 +240,14 @@ public interface IWeaponManager
     // implements Observable for updating UI when the player switches
     // weapons, or updates ammo
     public int? current_slot { get; }
-    public IFirearm current_weapon { get; }
+    public IFirearm current_gun { get; }
     public float current_inaccuracy { get; }
     public bool is_aiming { get; }
     public void StartAim();
     public void StopAim();
     public void Subscribe(IWeaponManagerSubscriber sub);
     public void Unsubscribe(IWeaponManagerSubscriber sub);
+    public void UpdateSubscribers();
 }
 
 public interface IWeaponManagerSubscriber

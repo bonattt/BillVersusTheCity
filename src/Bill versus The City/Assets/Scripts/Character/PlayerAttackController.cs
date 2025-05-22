@@ -7,8 +7,6 @@ public class PlayerAttackController : AttackController
     public IFirearm[] weapon_slots = new IFirearm[10];
     public bool[] weapon_slots_enabled = new bool[]{true, true, true, false, false, false, false, false, false, false};
 
-    public bool switch_weapons_blocked = false;
-
     public int _current_slot = 0;
     
     public override int? current_slot
@@ -89,7 +87,7 @@ public class PlayerAttackController : AttackController
         _min_slot = null; // TODO --- this should be called elsewhere
         foreach (IWeaponManagerSubscriber sub in subscribers)
         {
-            sub.UpdateWeapon(current_slot, current_weapon);
+            sub.UpdateWeapon(current_slot, current_gun);
         }
     }
 
@@ -141,7 +139,7 @@ public class PlayerAttackController : AttackController
                 Debug.Log($"SwitchWeaponBySlot{_current_slot} --> {slot}");
             }
             _current_slot = slot;
-            current_weapon = weapon_slots[slot];
+            current_gun = weapon_slots[slot];
             UpdateSubscribers();
             return true;
         }
@@ -161,7 +159,7 @@ public class PlayerAttackController : AttackController
         IFirearm previous_weapon = weapon_slots[slot];
         weapon_slots[slot] = new_weapon;
         if (slot == current_slot) {
-            current_weapon = new_weapon;
+            current_gun = new_weapon;
         }
         // only update subscribers if the ne~w weapon is actually new
         if (previous_weapon != new_weapon) {

@@ -44,8 +44,8 @@ public class MeleeWeapon : ScriptableObject, IMeleeWeapon
     public float _attack_cooldown;
     public float attack_cooldown { get => _attack_cooldown; }
 
-    public IWeapon CopyWeapon()
-    {
+    public IWeapon CopyWeapon() => CopyMeleeWeapon();
+    public IMeleeWeapon CopyMeleeWeapon() {
         return Instantiate(this);
     }
 }

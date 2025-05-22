@@ -54,7 +54,7 @@ public class DropItemPickups : MonoBehaviour, ICharStatusSubscriber {
         if (!drop_ammo) {
             return;
         }
-        if (ammo_pickup_prefab == null || attack_controller.current_weapon == null) {
+        if (ammo_pickup_prefab == null || attack_controller.current_gun == null) {
             Debug.LogWarning("no weapon to drop ammo from!");
             return;
         }
@@ -62,8 +62,8 @@ public class DropItemPickups : MonoBehaviour, ICharStatusSubscriber {
         GameObject obj = Instantiate(ammo_pickup_prefab);
         obj.transform.position = transform.position + new Vector3(0f, 0f, 0.25f);
         AmmoPickupInteraction pickup = obj.GetComponent<AmmoPickupInteraction>();
-        pickup.ammo_type = attack_controller.current_weapon.ammo_type;
-        pickup.ammo_amount = attack_controller.current_weapon.ammo_drop_size;
+        pickup.ammo_type = attack_controller.current_gun.ammo_type;
+        pickup.ammo_amount = attack_controller.current_gun.ammo_drop_size;
     }
 
     protected void SpawnWeaponPickup() {
@@ -71,7 +71,7 @@ public class DropItemPickups : MonoBehaviour, ICharStatusSubscriber {
         if (!drop_weapon) {
             return;
         }
-        if (weapon_pickup_prefab == null || attack_controller.current_weapon == null) {
+        if (weapon_pickup_prefab == null || attack_controller.current_gun == null) {
             Debug.LogWarning("no weapon to drop as pickup!");
             return;
         }
@@ -79,7 +79,7 @@ public class DropItemPickups : MonoBehaviour, ICharStatusSubscriber {
         GameObject obj = Instantiate(weapon_pickup_prefab);
         obj.transform.position = transform.position + new Vector3(0f, 0f, -0.25f);;
         WeaponPickupInteraction pickup = obj.GetComponent<WeaponPickupInteraction>();
-        pickup.pickup_weapon = attack_controller.current_weapon;
+        pickup.pickup_weapon = attack_controller.current_gun;
     }
 
     protected void SpawnDollarsPickup() {

@@ -15,11 +15,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint};
 
     protected CharacterController controller;
-    private AttackController _attack_controller;
-    protected AttackController attack_controller {
+    private IAttackController _attack_controller;
+    public IAttackController attack_controller {
         get {
             if (_attack_controller == null) {
-                _attack_controller = GetComponent<AttackController>();
+                _attack_controller = GetComponent<IAttackController>();
             }
             return _attack_controller;
         }
@@ -122,7 +122,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         get { return _aiming; }
         set {
             _aiming = value;
-            Debug.LogWarning($"aiming: {_aiming}"); // TODO --- remove debug
             if (_aiming) {
                 attack_controller.StartAim();
             } else {
@@ -142,10 +141,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public virtual IFirearm current_firearm {
         get {
-            return attack_controller.current_weapon;
+            return attack_controller.current_gun;
         }
         set {
-            attack_controller.current_weapon = value;
+            attack_controller.current_gun = value;
         }
         
     }
@@ -303,7 +302,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         else {
             _ReloadGeneric(wpn);
         }
-        attack_controller.UpdateSubscribers();
+        
+        try {
+            ((IWeaponManager)attack_controller).UpdateSubscribers();
+        }
+        catch (InvalidCastException)
+        {
+            // do nothing
+        }
         UpdateReloadFinished(current_firearm);
 
         // for weapons that reload single rounds, keep reloading
@@ -463,7 +469,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     protected virtual void PerformAttack() {
         last_attack_time = Time.time;
-        attack_controller.FireAttack(GetShootVector());
+        attack_controller.StartAttack(GetShootVector());
     }
     
     // public abstract Vector3 MoveDirection();

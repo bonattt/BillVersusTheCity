@@ -266,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialize_weapon: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   start_weapon_loaded: 1
-  attack_start_point: {fileID: 4280276152886177003}
+  _attack_start_point: {fileID: 4280276152886177003}
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
   _current_recoil: 0

@@ -74,7 +74,7 @@ public class LegacyCameraFollow : MonoBehaviour
                 Debug.LogWarning("no attack controller!");
                 return null;
             }
-            return attack_controller.current_weapon;
+            return attack_controller.current_gun;
         }
     }
 

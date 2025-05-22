@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MeleeAttackController : MonoBehaviour
+public class MeleeAttackController : MonoBehaviour, IAttackController
 {
-    public MeleeWeapon current_weapon;
+    public IWeapon current_weapon { get => current_melee; set { current_melee = (IMeleeWeapon)value; }}
+    public IFirearm current_gun {
+        get => null;
+        set { throw new NotImplementedException(); }
+    }
+    public MeleeWeapon _init_weapon;
+    public IMeleeWeapon current_melee { get; set; }
+    public bool switch_weapons_blocked { get; set; }
 
     public float total_attack_time { get => ((IMeleeWeapon)current_weapon).total_attack_time; }
     public IAttackTarget attacker = null;
 
     public MeleeAttack current_attack;
-
-    public float inaccuracy_modifier = 0f;
 
     public Transform _attack_start_point;
     public Transform attack_start_point { get => _attack_start_point; }
@@ -28,12 +34,26 @@ public class MeleeAttackController : MonoBehaviour
     }
 
     // tracks when the last shot was fired, for handling rate-of-fire
-    private float _last_attack_at = 0f;
+    private float _last_attack_at = -10f;
     private Vector3 attack_direction; 
     
     public virtual int? current_slot
     {
         get { return null; }
+    }
+
+    public void StartAim() { /* do nothing */ }
+    public void StopAim() { /* do nothing */ }
+    public float aim_percent { get => 0f; }
+    
+    public bool CanAttack()
+    {
+        return current_melee != null && attack_stage == MeleeAttackStage.none && is_active;
+    }
+
+    void Start()
+    {
+        current_melee = _init_weapon.CopyMeleeWeapon();
     }
 
     protected virtual void Update()
@@ -52,7 +72,7 @@ public class MeleeAttackController : MonoBehaviour
     private void UpdateAttackInProgress()
     {
         MeleeAttackStage next_stage = GetNextState();
-        if (attack_stage != next_stage) { Debug.LogWarning($"attack state {attack_stage} --> {next_stage}"); } // TODO --- remove debug
+        // if (attack_stage != next_stage) { Debug.LogWarning($"attack state {attack_stage} --> {next_stage}"); } // TODO --- remove debug
 
         if (attack_stage == MeleeAttackStage.attack || next_stage == MeleeAttackStage.attack) {
             ResolveAttack();
@@ -66,10 +86,10 @@ public class MeleeAttackController : MonoBehaviour
     }
 
     private MeleeAttackStage GetNextState() {
-        float windup_until = _last_attack_at + current_weapon.attack_windup;
-        float attack_until = windup_until + current_weapon.attack_duration;
-        float recovery_until = attack_until + current_weapon.attack_recovery;
-        float cooldown_until = recovery_until + current_weapon.attack_cooldown;
+        float windup_until = _last_attack_at + current_melee.attack_windup;
+        float attack_until = windup_until + current_melee.attack_duration;
+        float recovery_until = attack_until + current_melee.attack_recovery;
+        float cooldown_until = recovery_until + current_melee.attack_cooldown;
         if (Time.time < _last_attack_at) {
             return MeleeAttackStage.none; // no attack started
         } if (Time.time > _last_attack_at && Time.time < windup_until) {
@@ -80,17 +100,17 @@ public class MeleeAttackController : MonoBehaviour
             return MeleeAttackStage.recovery;
         } else if (Time.time > recovery_until && Time.time < cooldown_until) {
             return MeleeAttackStage.cooldown;
-        } else if (Time.time > recovery_until && Time.time < cooldown_until) {
+        } else if (Time.time > cooldown_until) {
             return MeleeAttackStage.none;
         }
-        Debug.LogError($"attack timing state");
+        // Debug.LogError($"Unexpected attack timing state. time: {Time.time}, _last_attack_at: {_last_attack_at}");
         return MeleeAttackStage.none;
     }
 
     private void ResolveAttack()
     {
         RaycastHit hit;
-        if (Physics.Raycast(attack_start_point.position, attack_direction, out hit, current_weapon.attack_reach))
+        if (Physics.Raycast(attack_start_point.position, attack_direction, out hit, current_melee.attack_reach))
         {
             IAttackTarget hit_target = hit.collider.gameObject.GetComponent<IAttackTarget>();
             if (hit_target != null && !current_attack.hit_targets.Contains(hit_target))
@@ -102,7 +122,7 @@ public class MeleeAttackController : MonoBehaviour
         }
     }
 
-    public void FireAttack(Vector3 attack_direction)
+    public void StartAttack(Vector3 attack_direction)
     {
         // fires an attack with the current weapon
         if (
@@ -110,20 +130,27 @@ public class MeleeAttackController : MonoBehaviour
             && (!InputSystem.IsNullPoint(attack_direction))
         )
         {
-            _FireAttack(attack_direction);
+            _StartAttack(attack_direction);
         }
     }
 
-    private void _FireAttack(Vector3 attack_direction)
+    private void _StartAttack(Vector3 attack_direction)
     {
         current_attack = new MeleeAttack();
-        current_attack.melee_weapon = current_weapon;
+        current_attack.melee_weapon = current_melee;
         current_attack.ignore_armor = false;
 
         _last_attack_at = Time.time;
         this.attack_direction = attack_direction;
-        AttackResolver.AttackStart(current_attack, attack_start_point.position);
-        // TODO --- trigger attack effects
+        AttackResolver.AttackStart(current_attack, attack_start_point.position, is_melee_attack: true);
+
+        // TODO --- refactor, make this an effect
+        GameObject prefab = (GameObject)Resources.Load(AttackResolver.PLACEHOLDER_MELEE_EFFECTS_PREFAB);
+        GameObject effect = Instantiate(prefab);
+        effect.transform.position = attack_start_point.position;
+        effect.transform.rotation = transform.rotation;
+        Debug.LogWarning("TODO --- melee attack hard codes visual effect!! should be an effect");
+        // TODO ---
     }
 }
 

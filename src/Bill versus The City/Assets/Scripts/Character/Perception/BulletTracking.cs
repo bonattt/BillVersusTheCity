@@ -32,6 +32,7 @@ public class BulletTracking : MonoBehaviour {
     }
 
     public void TrackNewBullet(IBullet bullet) {
+        if (bullet == null) { Debug.LogError("added null bullet"); } // TODO --- remove debug
         tracked_bullets.Add(bullet);
     }
     public void UnTrackBullet(IBullet bullet) {

@@ -169,7 +169,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         } else if (CancelReloadInput()) {
             controller.CancelReload();
         }
-        else if (AttackInput() && controller.current_firearm.current_ammo > 0) {
+        else if (AttackInput() && controller.attack_controller.CanAttack()) {
             controller.TryToAttack();
         }
         controller.MoveCharacter(GetMoveTarget(), GetLookDirection(), sprint:false, crouch:false);
@@ -276,7 +276,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     protected void TryToStartReload() {
         if (needs_reload) { return; }
-        needs_reload = controller.current_firearm.current_ammo == 0;
+        if (controller.current_firearm != null) {
+            // can only reload if using a firearm
+            needs_reload = controller.current_firearm.current_ammo == 0;
+        }
     }
 
     protected ISubBehavior GetSubBehavior() {

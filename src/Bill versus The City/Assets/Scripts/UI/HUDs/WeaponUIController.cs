@@ -38,7 +38,7 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
         }
         target_manager = player.GetComponent<IWeaponManager>();
         target_manager.Subscribe(this);
-        SetLabels(target_manager.current_slot, target_manager.current_weapon);
+        SetLabels(target_manager.current_slot, target_manager.current_gun);
     }
 
     private void SetLabels(int? current_slot, IFirearm weapon) {

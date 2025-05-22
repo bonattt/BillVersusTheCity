@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,12 +70,16 @@ public class ManualCharacterMovement : CharCtrl
 
     protected override void PostUpdate() {
         if (InputSystem.current.NextWeaponModeInput()) {
-            attack_controller.current_weapon.NextWeaponSetting();
-            if (attack_controller.current_weapon.HasWeaponSettings()) {
+            attack_controller.current_gun.NextWeaponSetting();
+            if (attack_controller.current_gun.HasWeaponSettings()) {
                 ISFXSounds sound = SFXLibrary.LoadSound("weapon_mode_switch");
                 SFXSystem.inst.PlaySound(sound, transform.position);
             }
-            attack_controller.UpdateSubscribers();
+            try {
+                ((IWeaponManager)attack_controller).UpdateSubscribers();
+            } catch (InvalidCastException) {
+                Debug.LogWarning($"cannot cast attack controller '{attack_controller}' to update subscribers");
+            }
         }
     }
 

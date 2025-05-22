@@ -64,7 +64,7 @@ public class GunshotSoundEffect : SoundEffect
 public class MeleeAttackSoundEffect : SoundEffect
 {
 
-    public MeleeAttackSoundEffect() : base(AttackResolver.DEFAULT_GUNSHOT) { /* do nothing */ }
+    public MeleeAttackSoundEffect() : base(AttackResolver.DEFAULT_MELEE_SOUND) { /* do nothing */ }
 
     protected override string GetAttackSoundPath(IWeapon weapon)
     {
