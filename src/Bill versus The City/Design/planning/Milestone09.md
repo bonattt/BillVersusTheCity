@@ -14,7 +14,14 @@ PLANNED FEATURES
         
 [ ] Hearing System
     [ ] Refactor bullet and gunshot effect to use hearing system
-[ ] Melee enemy
+[+] Melee enemy
+    [+] Melee refactors
+    [~] Melee attack works
+        [+] Attacks hit and deal damage
+        [ ] FIX: attacks hit multiple times, but should only hit once
+    [~] Melee attack effects
+        [+] Basic
+        [ ] Refactor to not hardcode this
 
 PLANNED BUGFIXES
 [ ] FIX: Enemies not alerted by bullets ---> fix via hearing system
