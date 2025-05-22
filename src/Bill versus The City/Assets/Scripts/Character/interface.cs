@@ -30,7 +30,8 @@ public interface ICharStatusSubscriber {
 }
 
 
-public interface IAttack {
+public interface IAttack
+{
     // TODO
     public IAttackTarget attacker { get; }
     public IFirearm weapon { get; }
@@ -44,8 +45,22 @@ public interface IAttack {
 
 }
 
-public class GenericAttack : IAttack {
-    
+// public class MeleeAttack : IAttack
+// {
+//     // public IAttackTarget attacker { get; set; }
+//     // public IFirearm weapon { get; set; }
+//     // public float attack_damage_min { get; set; }
+//     // public float attack_damage_max { get; set; }
+//     // public float armor_effectiveness { get; set; }
+//     // public bool ignore_armor { get; set; }
+//     // public float final_health_damage { get; set; }
+//     // public float final_armor_damage { get; set; }
+//     // public float damage_falloff { get; set; }
+// }
+
+public class FirearmAttack : IAttack
+{
+
     public IAttackTarget attacker { get; set; }
     public IFirearm weapon { get; set; }
     public float attack_damage_min { get; set; }
@@ -103,7 +118,8 @@ public interface IWeapon : IItem
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
     public float armor_effectiveness { get; }
-    public string attack_sound { get; } 
+    public string attack_sound { get; }
+    public IWeapon CopyWeapon();
 }
 
 public interface IFirearm : IWeapon {
@@ -155,7 +171,7 @@ public interface IFirearm : IWeapon {
         public bool HasWeaponSettings();
         public void NextWeaponSetting();
         public void PreviousWeaponSetting();
-        public IFirearm CopyWeapon();
+        public IFirearm CopyFirearm();
     }
 
 public interface IPurchase {

@@ -168,8 +168,10 @@ public class DetailedWeapon : ScriptableObject, IFirearm
             current_setting = _weapon_settings.Length - 1;
         }
     }
-    
-    public IFirearm CopyWeapon() {
+
+    public IWeapon CopyWeapon() => CopyFirearm();
+    public IFirearm CopyFirearm()
+    {
         return Instantiate(this);
     }
 }

@@ -114,7 +114,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
         IWeaponUI selected_rifle = GetSelectedElementFrom(left_content);
         IWeaponUI selected_handgun = GetSelectedElementFrom(right_content);
         if (selected_rifle != null) {
-            IFirearm new_weapon = selected_rifle.weapon.CopyWeapon();
+            IFirearm new_weapon = selected_rifle.weapon.CopyFirearm();
             new_weapon.current_ammo = new_weapon.ammo_capacity;
             PlayerCharacter.inst.inventory.rifle = new_weapon; // NOTE: use property to update subscibers AFTER setting the ammo
         } else {
@@ -122,7 +122,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
         }
 
         if (selected_handgun != null) {
-            IFirearm new_weapon = selected_handgun.weapon.CopyWeapon();
+            IFirearm new_weapon = selected_handgun.weapon.CopyFirearm();
             new_weapon.current_ammo = new_weapon.ammo_capacity;
             PlayerCharacter.inst.inventory.handgun = new_weapon; // NOTE: use property to update subscibers AFTER setting the ammo
         } else {

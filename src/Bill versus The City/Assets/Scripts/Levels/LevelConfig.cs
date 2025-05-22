@@ -552,7 +552,7 @@ public class LevelConfig : MonoBehaviour
         if (scriptable_object == null) { return null; }
         IFirearm weapon;
         try {
-            weapon = ((IFirearm) scriptable_object).CopyWeapon();
+            weapon = ((IFirearm) scriptable_object).CopyFirearm();
         } catch (InvalidCastException) {
             Debug.LogError($"ScriptableObject {scriptable_object} not castable to a valid IWeapon.");
             return null;
