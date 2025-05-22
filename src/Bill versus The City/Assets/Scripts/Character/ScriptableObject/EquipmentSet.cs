@@ -14,21 +14,21 @@ public class EquipmentSet : ScriptableObject
     // scriptable object list so items can be assigned in the inspector
     private List<ScriptableObject> _rifles, _handguns;
 
-    public List<IWeapon> rifles {
+    public List<IFirearm> rifles {
         get {
-            List<IWeapon> return_value = new List<IWeapon>();
+            List<IFirearm> return_value = new List<IFirearm>();
             for (int i = 0; i < _rifles.Count; i++) {
-                return_value.Add((IWeapon) _rifles[i]);
+                return_value.Add((IFirearm) _rifles[i]);
             }
             return return_value;
         }
     }
     
-    public List<IWeapon> handguns {
+    public List<IFirearm> handguns {
         get {
-            List<IWeapon> return_value = new List<IWeapon>();
+            List<IFirearm> return_value = new List<IFirearm>();
             for (int i = 0; i < _handguns.Count; i++) {
-                return_value.Add((IWeapon) _handguns[i]);
+                return_value.Add((IFirearm) _handguns[i]);
             }
             return return_value;
         }

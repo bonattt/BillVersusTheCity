@@ -15,7 +15,7 @@ public class SoundEffect : IAttackHitEffect,
         PlaySound(hit_location, attack.weapon);
     }
 
-    public void DisplayWeaponEffect(Vector3 point, IWeapon weapon) {
+    public void DisplayWeaponEffect(Vector3 point, IFirearm weapon) {
         PlaySound(point, weapon);
     }
 
@@ -23,13 +23,13 @@ public class SoundEffect : IAttackHitEffect,
         PlaySound(hit_location, attack.weapon);
     }
 
-    protected virtual string GetAttackSoundPath(IWeapon attack) {
+    protected virtual string GetAttackSoundPath(IFirearm attack) {
         // gets the NON default sound from the attack. 
         // Returns null if the attack doesn't have appropriate sounds
         return null;
     }
 
-    protected virtual ISFXSounds GetSound(IWeapon weapon) {
+    protected virtual ISFXSounds GetSound(IFirearm weapon) {
         string sound_path = GetAttackSoundPath(weapon);
         // ScriptableObjects make it hard to set a variable to null
         if (sound_path == null || sound_path == "") { 
@@ -40,7 +40,7 @@ public class SoundEffect : IAttackHitEffect,
         }
     }
 
-    public void PlaySound(Vector3 point, IWeapon weapon) {
+    public void PlaySound(Vector3 point, IFirearm weapon) {
         SFXSystem.inst.PlaySound(GetSound(weapon), point);
     }
 }
@@ -49,8 +49,8 @@ public class GunshotSoundEffect : SoundEffect {
 
     public GunshotSoundEffect() : base (AttackResolver.DEFAULT_GUNSHOT) { /* do nothing */ }
 
-    protected override string GetAttackSoundPath(IWeapon weapon) {
-        return weapon.gunshot_sound;
+    protected override string GetAttackSoundPath(IFirearm weapon) {
+        return weapon.attack_sound;
     }
 }
 
@@ -59,7 +59,7 @@ public class ReloadStartSoundEffect : SoundEffect {
 
     public ReloadStartSoundEffect() : base (ReloadSounds.RELOAD_START_SOUND_PATH) { /* do nothing */ }
 
-    protected override string GetAttackSoundPath(IWeapon weapon) {
+    protected override string GetAttackSoundPath(IFirearm weapon) {
         return weapon.reload_start_sound;
     }
 }
@@ -68,7 +68,7 @@ public class ReloadCompleteSoundEffect : SoundEffect {
 
     public ReloadCompleteSoundEffect() : base (ReloadSounds.RELOAD_COMPLETE_SOUND_PATH) { /* do nothing */ }
 
-    protected override string GetAttackSoundPath(IWeapon weapon) {
+    protected override string GetAttackSoundPath(IFirearm weapon) {
         return weapon.reload_complete_sound;
     }
 }
@@ -77,7 +77,7 @@ public class EmptyGunshotSoundEffect : SoundEffect {
 
     public EmptyGunshotSoundEffect() : base (AttackResolver.EMPTY_GUNSHOT_SOUND_PATH) { /* do nothing */ }
 
-    protected override string GetAttackSoundPath(IWeapon weapon) {
+    protected override string GetAttackSoundPath(IFirearm weapon) {
         return weapon.empty_gunshot_sound;
     }
 }

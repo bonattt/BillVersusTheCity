@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAttackController : AttackController
 {
-    public IWeapon[] weapon_slots = new IWeapon[10];
+    public IFirearm[] weapon_slots = new IFirearm[10];
     public bool[] weapon_slots_enabled = new bool[]{true, true, true, false, false, false, false, false, false, false};
 
     public bool switch_weapons_blocked = false;
@@ -157,8 +157,8 @@ public class PlayerAttackController : AttackController
         UpdateSubscribers();
     }
 
-    public void AssignWeaponSlot(int slot, IWeapon new_weapon) {
-        IWeapon previous_weapon = weapon_slots[slot];
+    public void AssignWeaponSlot(int slot, IFirearm new_weapon) {
+        IFirearm previous_weapon = weapon_slots[slot];
         weapon_slots[slot] = new_weapon;
         if (slot == current_slot) {
             current_weapon = new_weapon;

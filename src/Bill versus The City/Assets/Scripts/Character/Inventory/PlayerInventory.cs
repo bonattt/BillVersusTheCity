@@ -27,8 +27,8 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
     }
 
-    private IWeapon _handgun; // weapon slot for a handgun
-    public IWeapon handgun {
+    private IFirearm _handgun; // weapon slot for a handgun
+    public IFirearm handgun {
         get { return _handgun; }
         set {
             _handgun = value;
@@ -40,8 +40,8 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
     }
 
-    private IWeapon _rifle; // weapon slot for a larger gun
-    public IWeapon rifle {
+    private IFirearm _rifle; // weapon slot for a larger gun
+    public IFirearm rifle {
         get { return _rifle; }
         set {
             _rifle = value;
@@ -52,8 +52,8 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
     }
 
-    private IWeapon _pickup; // weapon slot for picking up dropped, potentially illegal, weapons
-    public IWeapon pickup {
+    private IFirearm _pickup; // weapon slot for picking up dropped, potentially illegal, weapons
+    public IFirearm pickup {
         get { return _pickup; }
         set {
             _pickup = value;
@@ -66,7 +66,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     private PlayerCombat combat;
 
     // private List<IWeapon> _availible_rifles, _availible_handguns;
-    public List<IWeapon> availible_rifles {
+    public List<IFirearm> availible_rifles {
         get {
             // if (_availible_rifles == null) {
             //     // initialize with starting weapons
@@ -75,8 +75,8 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             //         _availible_rifles.Add(weapon.CopyWeapon());
             //     }
             // }
-            List<IWeapon> _availible_rifles = new List<IWeapon>();
-            foreach (IWeapon weapon in availible_weapons) {
+            List<IFirearm> _availible_rifles = new List<IFirearm>();
+            foreach (IFirearm weapon in availible_weapons) {
                 if (weapon.weapon_slot == WeaponSlot.longgun) {
                     _availible_rifles.Add(weapon);
                 }
@@ -84,10 +84,10 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             return _availible_rifles;
         }
     }
-    public List<IWeapon> availible_handguns {
+    public List<IFirearm> availible_handguns {
         get {
-            List<IWeapon> _availible_handguns = new List<IWeapon>();
-            foreach (IWeapon weapon in availible_weapons) {
+            List<IFirearm> _availible_handguns = new List<IFirearm>();
+            foreach (IFirearm weapon in availible_weapons) {
                 if (weapon.weapon_slot == WeaponSlot.handgun) {
                     _availible_handguns.Add(weapon);
                 }
@@ -117,7 +117,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     public void StartNewGame() {
         dollars = STARTING_DOLLARS;
-        owned_weapons = new List<IWeapon>();
+        owned_weapons = new List<IFirearm>();
         foreach (string weapon_id in WeaponSaveLoadConfig.inst.GetStartingWeaponIds()) {
             owned_weapons.Add(WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id));
         }
@@ -125,14 +125,14 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     public void ResetLevel() {
         // resets the inventory at the start of a level.
-        weapons_purchased_in_level = new List<IWeapon>();
+        weapons_purchased_in_level = new List<IFirearm>();
         dollars_change_in_level = 0;
     }
 
     public void ApplyChangesFromLevel() {
         // permanently stores changes made during the level
         dollars += dollars_change_in_level;
-        foreach (IWeapon weapon_purchased in weapons_purchased_in_level) {
+        foreach (IFirearm weapon_purchased in weapons_purchased_in_level) {
             owned_weapons.Add(weapon_purchased);
         }
         ResetLevel();
@@ -154,7 +154,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         inventory_progress_data.SetInt("dollars", dollars);
 
         List<string> weapon_ids = new List<string>();
-        foreach (IWeapon weapon in owned_weapons) {
+        foreach (IFirearm weapon in owned_weapons) {
             weapon_ids.Add(weapon.item_id);
         }
         inventory_progress_data.SetStringList("weapon_unlocks", weapon_ids);
@@ -177,9 +177,9 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
                 weapon_unlocks.Add(starting_id);
             }
         }
-        owned_weapons = new List<IWeapon>();
+        owned_weapons = new List<IFirearm>();
         foreach (string weapon_id in weapon_unlocks) {
-            IWeapon weapon = WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id);
+            IFirearm weapon = WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id);
             if (weapon == null) {
                 Debug.LogError($"weapon_id '{weapon_id}' not defined!");
                 continue;
@@ -220,25 +220,25 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     //     }
     // }
     private bool starting_weapons_queued;
-    private IWeapon starting_rifle;
-    private IWeapon starting_handgun;
-    private IWeapon starting_pickup;
+    private IFirearm starting_rifle;
+    private IFirearm starting_handgun;
+    private IFirearm starting_pickup;
 
-    public List<IWeapon> weapons_purchased_in_level = new List<IWeapon>();
-    public void AddWeapon(IWeapon new_weapon) => weapons_purchased_in_level.Add(new_weapon);
-    protected List<IWeapon> owned_weapons = new List<IWeapon>();
-    public IEnumerable<IWeapon> availible_weapons {
+    public List<IFirearm> weapons_purchased_in_level = new List<IFirearm>();
+    public void AddWeapon(IFirearm new_weapon) => weapons_purchased_in_level.Add(new_weapon);
+    protected List<IFirearm> owned_weapons = new List<IFirearm>();
+    public IEnumerable<IFirearm> availible_weapons {
         get {
-            foreach (IWeapon w in owned_weapons) {
+            foreach (IFirearm w in owned_weapons) {
                 yield return w;
             }
-            foreach (IWeapon w in weapons_purchased_in_level) {
+            foreach (IFirearm w in weapons_purchased_in_level) {
                 yield return w;
             }
         }
     }
 
-    public void EquipStartingWeapons(IWeapon starting_rifle, IWeapon starting_handgun, IWeapon starting_pickup) {
+    public void EquipStartingWeapons(IFirearm starting_rifle, IFirearm starting_handgun, IFirearm starting_pickup) {
         // if there is a current player, equips starting weapons to that player. otherwise, sets those weapons once the player is initialized
         if (combat == null) {
             this.starting_weapons_queued = true;

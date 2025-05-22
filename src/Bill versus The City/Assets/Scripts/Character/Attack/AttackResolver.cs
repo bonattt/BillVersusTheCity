@@ -178,7 +178,7 @@ public static class AttackResolver {
         }
     }
 
-    public static void AttackEmpty(IWeapon weapon, Vector3 location) {
+    public static void AttackEmpty(IFirearm weapon, Vector3 location) {
         foreach (IWeaponEffect effect in GetEmptyShotEffects()) {
             effect.DisplayWeaponEffect(location, weapon);
         }

@@ -53,7 +53,7 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
         UpdateToolbelt(null);
     }
     
-    public void UpdateWeapon(int? slot, IWeapon weapon) {
+    public void UpdateWeapon(int? slot, IFirearm weapon) {
         // called when changes are made to the observed IWeaponManager
         UpdateToolbelt(slot);
     }
@@ -63,7 +63,7 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
             WeaponIcon child = (WeaponIcon) element_list[i];  // Get child by index
             child.AddToClassList("weapon_slot_container");
             if (attack_ctrl.weapon_slots_enabled[i]) {
-                IWeapon weapon = attack_ctrl.weapon_slots[i];
+                IFirearm weapon = attack_ctrl.weapon_slots[i];
                 child.weapon = weapon;
                 if (i == slot) {
                     child.SelectSlot();
@@ -78,7 +78,7 @@ public class WeaponToolbeltController : MonoBehaviour, IWeaponManagerSubscriber,
         }
     }
 
-    private static VisualElement GetWeaponIcon(IWeapon weapon) {
+    private static VisualElement GetWeaponIcon(IFirearm weapon) {
         VisualElement element = new VisualElement();
         element.AddToClassList("weapon_slot");
         element.style.backgroundImage = new StyleBackground(weapon.item_icon);

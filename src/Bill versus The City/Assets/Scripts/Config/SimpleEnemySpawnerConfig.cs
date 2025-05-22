@@ -16,9 +16,9 @@ public class SimpleEnemySpawnerConfig : ScriptableObject, IEnemySpawnConfig
     public GameObject GetPrefab() {
         return enemy_prefab; // null tells the spawner to use default setting
     }
-    public IWeapon GetWeapon() {
+    public IFirearm GetWeapon() {
         if (Random.Range(0f, 1f) < rare_weapon_chance) {
-            IWeapon weapon = GetRandomWeapon();
+            IFirearm weapon = GetRandomWeapon();
             return weapon;
         }
         return null; // null tells the spawner to use default setting
@@ -30,7 +30,7 @@ public class SimpleEnemySpawnerConfig : ScriptableObject, IEnemySpawnConfig
         return null;  // null tells the spawner to use default setting
     }
 
-    public IWeapon GetRandomWeapon() {
+    public IFirearm GetRandomWeapon() {
         int i = (int) Random.Range(0, rare_weapons.Count);
         return rare_weapons[i];
     }

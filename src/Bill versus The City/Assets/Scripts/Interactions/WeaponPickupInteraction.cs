@@ -7,12 +7,12 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect
 {
     public InteractableUI ui;
     public ScriptableObject unity_weapon;
-    public IWeapon pickup_weapon;
+    public IFirearm pickup_weapon;
     public bool full_ammo = false; // if true, the weapon will have it's ammo set to full
 
     void Start() {
         if (pickup_weapon == null && unity_weapon != null) {
-            pickup_weapon = (IWeapon) Instantiate(unity_weapon);
+            pickup_weapon = (IFirearm) Instantiate(unity_weapon);
             if (full_ammo) {
                 pickup_weapon.current_ammo = pickup_weapon.ammo_capacity;
             }
@@ -43,7 +43,7 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect
         }
         MenuManager.PlayMenuSound("menu_click");
         // pickup_weapon.current_ammo = pickup_weapon.ammo_capacity;
-        IWeapon dropped_weapon = PlayerCharacter.inst.inventory.pickup;
+        IFirearm dropped_weapon = PlayerCharacter.inst.inventory.pickup;
         PlayerCharacter.inst.inventory.pickup = pickup_weapon;
         pickup_weapon = dropped_weapon;
         

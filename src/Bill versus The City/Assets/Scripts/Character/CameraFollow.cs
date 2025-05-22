@@ -68,7 +68,7 @@ public class LegacyCameraFollow : MonoBehaviour
         return attack_controller.aim_percent * current_weapon.aim_zoom;
     }
 
-    private IWeapon current_weapon {
+    private IFirearm current_weapon {
         get {
             if (attack_controller == null) {
                 Debug.LogWarning("no attack controller!");

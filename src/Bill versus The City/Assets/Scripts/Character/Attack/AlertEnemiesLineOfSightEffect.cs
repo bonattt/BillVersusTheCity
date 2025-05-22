@@ -13,7 +13,7 @@ public class AlertEnemiesLineOfSightEffect : IAttackHitEffect,
         AlertNearbyEnemies(hit_location);
     }
 
-    public void DisplayWeaponEffect(Vector3 point, IWeapon weapon) {
+    public void DisplayWeaponEffect(Vector3 point, IFirearm weapon) {
         AlertNearbyEnemies(point);
     }
 

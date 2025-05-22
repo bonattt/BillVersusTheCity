@@ -69,7 +69,7 @@ public class LevelConfig : MonoBehaviour
     private int objective_display_index = 0;
 
     public ScriptableObject init_starting_rifle, init_starting_handgun, init_starting_pickup;
-    private IWeapon starting_rifle, starting_handgun, starting_pickup;
+    private IFirearm starting_rifle, starting_handgun, starting_pickup;
 
     public string dialogue_file_start_level, dialogue_file_objectives_complete, dialogue_file_level_failed, dialogue_file_level_finished;
 
@@ -546,13 +546,13 @@ public class LevelConfig : MonoBehaviour
         PlayerCharacter.inst.inventory.EquipStartingWeapons(starting_rifle, starting_handgun, starting_pickup);
     }
 
-    private IWeapon InstantiateStartingWeapon(ScriptableObject scriptable_object) {
+    private IFirearm InstantiateStartingWeapon(ScriptableObject scriptable_object) {
         /* Instantiates an IWeapon from a generic scriptable object, which implements that interface */
 
         if (scriptable_object == null) { return null; }
-        IWeapon weapon;
+        IFirearm weapon;
         try {
-            weapon = ((IWeapon) scriptable_object).CopyWeapon();
+            weapon = ((IFirearm) scriptable_object).CopyWeapon();
         } catch (InvalidCastException) {
             Debug.LogError($"ScriptableObject {scriptable_object} not castable to a valid IWeapon.");
             return null;

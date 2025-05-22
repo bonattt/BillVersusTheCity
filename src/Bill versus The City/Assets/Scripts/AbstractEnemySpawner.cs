@@ -8,7 +8,7 @@ public interface IEnemySpawnConfig {
     public GameObject GetPrefab() {
         return null; // null tells the spawner to use default setting
     }
-    public IWeapon GetWeapon() {
+    public IFirearm GetWeapon() {
         return null; // null tells the spawner to use default setting
     }
     public IArmor GetArmor() {
@@ -79,7 +79,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         
         NavMeshAgentMovement enemy_ctrl = enemy.GetComponent<NavMeshAgentMovement>();
         enemy_ctrl.SetPosition(GetSpawnPoint().GetSpawnPosition());
-        IWeapon weapon = GetWeapon();
+        IFirearm weapon = GetWeapon();
         if (weapon != null) {
             enemy_ctrl.current_weapon = weapon;
         }
@@ -142,7 +142,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         return this.transform.position;
     }
 
-    public IWeapon GetWeapon() {
+    public IFirearm GetWeapon() {
         return spawner_config != null ? spawner_config.GetWeapon() : null;
     }
 

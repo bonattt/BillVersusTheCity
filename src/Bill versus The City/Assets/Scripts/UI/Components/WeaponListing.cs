@@ -18,7 +18,7 @@ public class WeaponListing : VisualElement, IWeaponUI {
         get { return _weapon_icon; }
     }
 
-    public IWeapon weapon {
+    public IFirearm weapon {
         get {
             return _weapon_icon.weapon;
         }
@@ -40,7 +40,7 @@ public class WeaponListing : VisualElement, IWeaponUI {
     
 
     public WeaponListing() : this(null) { /* overloaded constructor: do nothing here */ }
-    public WeaponListing(IWeapon weapon) : base() {
+    public WeaponListing(IFirearm weapon) : base() {
         this.AddToClassList("weapon_select_list_item");
         
         _weapon_icon = new WeaponIcon(weapon);
@@ -101,7 +101,7 @@ public class WeaponListing : VisualElement, IWeaponUI {
 public interface IWeaponUI {
     public bool is_selected { get; }
     
-    public IWeapon weapon { get; set; }
+    public IFirearm weapon { get; set; }
     public void SelectSlot();
     public void DeselectSlot();
     public void DisableSlot();

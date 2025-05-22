@@ -64,9 +64,9 @@ public class WeaponSaveLoadConfig : ScriptableObject {
         }
     }
 
-    protected bool IsStartingWeapon(IWeapon weapon) => IsStartingWeapon(weapon.item_id);
+    protected bool IsStartingWeapon(IFirearm weapon) => IsStartingWeapon(weapon.item_id);
 
-    public void ValidateWeaponConfig(string weapon_id, IWeapon weapon) {
+    public void ValidateWeaponConfig(string weapon_id, IFirearm weapon) {
         // does some validation of weapon and ID, and logs warnings/errors for any problems
         if (weapon_id == null) { Debug.LogWarning($"weapon_id is null! weapon: {weapon}"); return; }
         if (weapon == null) { Debug.LogWarning($"weapon is null! weapon_id: {weapon_id}"); return; }
@@ -80,8 +80,8 @@ public class WeaponSaveLoadConfig : ScriptableObject {
         return weapon_index_dict[weapon_id];
     }
 
-    public IWeapon GetWeaponByID(string weapon_id) {
-        IWeapon weapon = weapons[GetWeaponIndexByID(weapon_id)];
+    public IFirearm GetWeaponByID(string weapon_id) {
+        IFirearm weapon = weapons[GetWeaponIndexByID(weapon_id)];
         ValidateWeaponConfig(weapon_id, weapon);
         return weapon;
     }

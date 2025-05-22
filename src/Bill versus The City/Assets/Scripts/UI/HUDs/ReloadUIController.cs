@@ -46,13 +46,13 @@ public class ReloadUIController : MonoBehaviour, IReloadSubscriber {
         }
     }
     
-    public void StartReload(IReloadManager manager, IWeapon weapon) {
+    public void StartReload(IReloadManager manager, IFirearm weapon) {
         UpdateDialVisibility(manager);
     }
-    public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
+    public void ReloadFinished(IReloadManager manager, IFirearm weapon) {
         UpdateDialVisibility(manager);
     }
-    public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
+    public void ReloadCancelled(IReloadManager manager, IFirearm weapon) {
         UpdateDialVisibility(manager);
     }
 }

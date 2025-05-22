@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName ="New Detailed Weapon", menuName ="Data/DetailedWeapon")]
-public class DetailedWeapon : ScriptableObject, IWeapon
+public class DetailedWeapon : ScriptableObject, IFirearm
 {
     public string _name;
     public string _item_id;
@@ -130,7 +130,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
         get { return bullet_effect.damage_falloff_rate; }
     }
 
-    public string gunshot_sound {
+    public string attack_sound {
         get { return _gunshot_sound; }
     }
     
@@ -169,7 +169,7 @@ public class DetailedWeapon : ScriptableObject, IWeapon
         }
     }
     
-    public IWeapon CopyWeapon() {
+    public IFirearm CopyWeapon() {
         return Instantiate(this);
     }
 }

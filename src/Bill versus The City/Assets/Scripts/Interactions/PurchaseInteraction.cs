@@ -49,7 +49,7 @@ public class PurchaseInteraction : MonoBehaviour, IInteractionEffect, IPurchase 
     }
     
     public void ApplyPurchase(PlayerInventory inv) {
-        inv.AddWeapon(((IWeapon) purchased_item).CopyWeapon());
+        inv.AddWeapon(((IFirearm) purchased_item).CopyWeapon());
     }
 
 }

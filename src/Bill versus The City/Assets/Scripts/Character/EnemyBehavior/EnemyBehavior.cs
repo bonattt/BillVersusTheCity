@@ -245,10 +245,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         GetComponent<IReloadManager>().Subscribe(this);
     }
     
-    public void StartReload(IReloadManager manager, IWeapon weapon) {
+    public void StartReload(IReloadManager manager, IFirearm weapon) {
         // do nothing
     }
-    public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
+    public void ReloadFinished(IReloadManager manager, IFirearm weapon) {
         // if reload is finished, clear `needs_reload` if the weapon is fully loaded, otherwise do not clear it.
         if (perception.seeing_target) {
             needs_reload = weapon.current_ammo == 0;
@@ -256,7 +256,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             needs_reload = weapon.current_ammo < weapon.ammo_capacity;
         }
     }
-    public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
+    public void ReloadCancelled(IReloadManager manager, IFirearm weapon) {
         // if reload is canceled, but the weapon has no ammo still, leave `needs_reload` as true, otherwise clear it.
         needs_reload = weapon.current_ammo == 0;
     }

@@ -33,7 +33,7 @@ public interface ICharStatusSubscriber {
 public interface IAttack {
     // TODO
     public IAttackTarget attacker { get; }
-    public IWeapon weapon { get; }
+    public IFirearm weapon { get; }
     public float damage_falloff { get; }
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
@@ -47,7 +47,7 @@ public interface IAttack {
 public class GenericAttack : IAttack {
     
     public IAttackTarget attacker { get; set; }
-    public IWeapon weapon { get; set; }
+    public IFirearm weapon { get; set; }
     public float attack_damage_min { get; set; }
     public float attack_damage_max { get; set; }
     public float armor_effectiveness { get; set; }
@@ -98,57 +98,65 @@ public interface IItem {
 }
 
 
-public interface IWeapon : IItem {
-    // equipment
-    public WeaponSlot weapon_slot { get; }
-    public WeaponClass weapon_class { get; }
-    // ammo
-    public AmmoType ammo_type { get; }
-    public int ammo_capacity { get; }
-    public int reload_amount { get; }
-    public float reload_time { get; }
-    public int current_ammo { get; set; }
-    public int ammo_drop_size { get; }
-
-    // rate of fire
-    public FiringMode firing_mode { get; }
-    public bool auto_fire { get; }
-    public float semi_auto_fire_rate { get; }
-    public float full_auto_fire_rate { get; }
-    public int n_shots { get; }
-
-    // accuracy
-    public float aimed_inaccuracy { get; }
-    public float initial_inaccuracy { get; }
-    public float time_to_aim { get; }
-    public float recoil_inaccuracy { get; }
-    public float recoil_max { get; }
-    public float recoil_recovery { get; }
-    public float recoil_shake { get; }
-
-    // damage
-    public float bullet_speed { get; }
+public interface IWeapon : IItem
+{
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
     public float armor_effectiveness { get; }
-    public float damage_falloff_rate { get; }
-
-    // aiming
-    public float aim_zoom { get; }
-    public float aim_move_speed { get; }
-    public float max_zoom_range { get; }
-    
-    // effects
-    public string gunshot_sound { get; }
-    public string empty_gunshot_sound { get; }
-    public string reload_start_sound { get; }
-    public string reload_complete_sound { get; }
-
-    public bool HasWeaponSettings();
-    public void NextWeaponSetting();
-    public void PreviousWeaponSetting();
-    public IWeapon CopyWeapon();
+    public string attack_sound { get; } 
 }
+
+public interface IFirearm : IWeapon {
+        // equipment
+        public WeaponSlot weapon_slot { get; }
+        public WeaponClass weapon_class { get; }
+        // ammo
+        public AmmoType ammo_type { get; }
+        public int ammo_capacity { get; }
+        public int reload_amount { get; }
+        public float reload_time { get; }
+        public int current_ammo { get; set; }
+        public int ammo_drop_size { get; }
+
+        // rate of fire
+        public FiringMode firing_mode { get; }
+        public bool auto_fire { get; }
+        public float semi_auto_fire_rate { get; }
+        public float full_auto_fire_rate { get; }
+        public int n_shots { get; }
+
+        // accuracy
+        public float aimed_inaccuracy { get; }
+        public float initial_inaccuracy { get; }
+        public float time_to_aim { get; }
+        public float recoil_inaccuracy { get; }
+        public float recoil_max { get; }
+        public float recoil_recovery { get; }
+        public float recoil_shake { get; }
+
+        // damage
+        public float bullet_speed { get; }
+        // public float weapon_damage_min { get; } // moved to IWeapon from IFirearm
+        // public float weapon_damage_max { get; } // moved to IWeapon from IFirearm
+        // public float armor_effectiveness { get; } // moved to IWeapon from IFirearm
+        public float damage_falloff_rate { get; }
+
+        // aiming
+        public float aim_zoom { get; }
+        public float aim_move_speed { get; }
+        public float max_zoom_range { get; }
+
+        // effects
+        // public string attack_sound { get; } // moved to IWeapon from IFirearm
+        public string empty_gunshot_sound { get; }
+        public string reload_start_sound { get; }
+        public string reload_complete_sound { get; }
+
+        public bool HasWeaponSettings();
+        public void NextWeaponSetting();
+        public void PreviousWeaponSetting();
+        public IFirearm CopyWeapon();
+    }
 
 public interface IPurchase {
     public int purchase_cost { get; }
@@ -169,11 +177,12 @@ public enum AmmoType {
     shotgun  // buckshot shotgun shells
 }
 
-public interface IWeaponManager {
+public interface IWeaponManager
+{
     // implements Observable for updating UI when the player switches
     // weapons, or updates ammo
     public int? current_slot { get; }
-    public IWeapon current_weapon { get; }
+    public IFirearm current_weapon { get; }
     public float current_inaccuracy { get; }
     public bool is_aiming { get; }
     public void StartAim();
@@ -182,8 +191,9 @@ public interface IWeaponManager {
     public void Unsubscribe(IWeaponManagerSubscriber sub);
 }
 
-public interface IWeaponManagerSubscriber {
-    public void UpdateWeapon(int? slot, IWeapon weapon);
+public interface IWeaponManagerSubscriber
+{
+    public void UpdateWeapon(int? slot, IFirearm weapon);
 }
 
 public interface IReloadManager {
@@ -191,9 +201,9 @@ public interface IReloadManager {
     public float reload_time { get; }
     public float reload_progress { get; }
     public bool is_active { get; set; }
-    public void UpdateReloadStarted(IWeapon weapon);
-    public void UpdateReloadFinished(IWeapon weapon);
-    public void UpdateReloadCancelled(IWeapon weapon);
+    public void UpdateReloadStarted(IFirearm weapon);
+    public void UpdateReloadFinished(IFirearm weapon);
+    public void UpdateReloadCancelled(IFirearm weapon);
     public void Subscribe(IReloadSubscriber sub);
     public void Unsubscribe(IReloadSubscriber sub);
 }
@@ -208,7 +218,7 @@ public interface IGenericObservable {
 }
 
 public interface IReloadSubscriber {
-    public void StartReload(IReloadManager manager, IWeapon weapon);
-    public void ReloadFinished(IReloadManager manager, IWeapon weapon);
-    public void ReloadCancelled(IReloadManager manager, IWeapon weapon);
+    public void StartReload(IReloadManager manager, IFirearm weapon);
+    public void ReloadFinished(IReloadManager manager, IFirearm weapon);
+    public void ReloadCancelled(IReloadManager manager, IFirearm weapon);
 }

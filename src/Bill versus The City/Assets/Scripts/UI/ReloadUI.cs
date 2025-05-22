@@ -54,17 +54,17 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
         progress_bar.fillAmount = manager.reload_progress;
     }
     
-    public void StartReload(IReloadManager manager, IWeapon weapon) {
+    public void StartReload(IReloadManager manager, IFirearm weapon) {
         reloading = true;
         text.text = "reloading";
         UpdateProgress();
     }
 
-    public void ReloadFinished(IReloadManager manager, IWeapon weapon) {
+    public void ReloadFinished(IReloadManager manager, IFirearm weapon) {
         ClearUI();
     }
 
-    public void ReloadCancelled(IReloadManager manager, IWeapon weapon) {
+    public void ReloadCancelled(IReloadManager manager, IFirearm weapon) {
         ClearUI();
     }
 

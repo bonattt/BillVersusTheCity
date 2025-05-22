@@ -140,7 +140,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    public virtual IWeapon current_weapon {
+    public virtual IFirearm current_weapon {
         get {
             return attack_controller.current_weapon;
         }
@@ -295,7 +295,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // complete a reload successfully.
         reloading = false;
         current_action = ActionCode.none;
-        IWeapon wpn = current_weapon;
+        IFirearm wpn = current_weapon;
 
         if (ShouldReloadWithContainer(wpn)) {
             _ReloadFromContainer(wpn);
@@ -378,14 +378,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public bool CanReload() {
         // returns if the character can reload with the current_weapon.
-        IWeapon current = current_weapon;
+        IFirearm current = current_weapon;
         if (current == null) { 
             // Debug.LogWarning("cannot reload, current weapon is null!");
             return false; 
         }
         return CanReload(current);
     }
-    public bool CanReload(IWeapon weapon) {
+    public bool CanReload(IFirearm weapon) {
         // cannot reload full weapon
         if (weapon.ammo_capacity == weapon.current_ammo) { return false; }
         return CanReload(weapon.ammo_type);
@@ -396,7 +396,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return !ShouldReloadWithContainer(type) || ammo_container.GetCount(type) > 0;
     }
 
-    public bool ShouldReloadWithContainer(IWeapon weapon) {
+    public bool ShouldReloadWithContainer(IFirearm weapon) {
         // returns True if the character should reload from a container,
         // or False if the character should reload with infinite ammo
         return ShouldReloadWithContainer(weapon.ammo_type);
@@ -406,7 +406,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return (ammo_container != null) && ammo_container.HasAmmoType(type);
     }
 
-    private void _ReloadFromContainer(IWeapon weapon) {
+    private void _ReloadFromContainer(IFirearm weapon) {
         // reloads a weapon, limitted by the reserves in an AmmoContainer
 
         int availible_ammo = ammo_container.GetCount(weapon.ammo_type);
@@ -422,7 +422,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         ammo_container.UseAmmo(weapon.ammo_type, reloaded_amount);
     }
 
-    private void _ReloadGeneric(IWeapon weapon) {
+    private void _ReloadGeneric(IFirearm weapon) {
         // reloads with an infinite reserve of ammo
         weapon.current_ammo += weapon.reload_amount;
         if (weapon.current_ammo > weapon.ammo_capacity) {
@@ -587,17 +587,17 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     private List<IReloadSubscriber> _reload_subscribers = new List<IReloadSubscriber>();
-    public void UpdateReloadStarted(IWeapon weapon) {
+    public void UpdateReloadStarted(IFirearm weapon) {
         foreach (IReloadSubscriber sub in _reload_subscribers) {
             sub.StartReload(this, weapon);
         }
     }
-    public void UpdateReloadFinished(IWeapon weapon) {
+    public void UpdateReloadFinished(IFirearm weapon) {
         foreach (IReloadSubscriber sub in _reload_subscribers) {
             sub.ReloadFinished(this, weapon);
         }
     }
-    public void UpdateReloadCancelled(IWeapon weapon) {
+    public void UpdateReloadCancelled(IFirearm weapon) {
         foreach (IReloadSubscriber sub in _reload_subscribers) {
             sub.ReloadCancelled(this, weapon);
         }

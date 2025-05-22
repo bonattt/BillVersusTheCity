@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackController : MonoBehaviour, IWeaponManager
 {
     public ScriptableObject initialize_weapon;
-    public IWeapon current_weapon { get; set; }
+    public IFirearm current_weapon { get; set; }
     public IAttackTarget attacker = null;
 
     public bool start_weapon_loaded = true;
@@ -118,7 +118,7 @@ public class AttackController : MonoBehaviour, IWeaponManager
 
     protected virtual void Start() {
         if (initialize_weapon != null && current_weapon == null) {
-            current_weapon = (IWeapon) Instantiate(initialize_weapon);
+            current_weapon = (IFirearm) Instantiate(initialize_weapon);
         }
         if (start_weapon_loaded && current_weapon != null) {
             current_weapon.current_ammo = current_weapon.ammo_capacity;

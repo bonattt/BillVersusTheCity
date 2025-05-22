@@ -11,7 +11,7 @@ public class PlayerControls : MonoBehaviour {
     public bool resume_aim_after_reload = false;
     public bool resume_sprint_after_reload = false;
 
-    protected IWeapon current_weapon { get { return player_movement.current_weapon; }}
+    protected IFirearm current_weapon { get { return player_movement.current_weapon; }}
 
     void Update() {
         if (!player_movement.is_active) { return; /* do nothing while character inactive */ }

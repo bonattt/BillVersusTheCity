@@ -11,8 +11,8 @@ public class WeaponIcon : VisualElement, IWeaponUI {
     public const string ENABLED_STYLE_CLASS = "weapon_slot_container_enabled";
     public const string SELECTED_STYLE_CLASS = "weapon_slot_container_selected";
 
-    private IWeapon _weapon;
-    public IWeapon weapon {
+    private IFirearm _weapon;
+    public IFirearm weapon {
         get {
             return _weapon;
         }
@@ -38,7 +38,7 @@ public class WeaponIcon : VisualElement, IWeaponUI {
         
     }
 
-    public WeaponIcon(IWeapon weapon) : base() {
+    public WeaponIcon(IFirearm weapon) : base() {
         this.weapon = weapon;
         this.AddToClassList(BASE_STYLE_CLASS);
     }

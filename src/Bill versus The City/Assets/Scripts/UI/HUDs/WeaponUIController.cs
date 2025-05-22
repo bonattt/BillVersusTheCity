@@ -41,12 +41,12 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
         SetLabels(target_manager.current_slot, target_manager.current_weapon);
     }
 
-    private void SetLabels(int? current_slot, IWeapon weapon) {
+    private void SetLabels(int? current_slot, IFirearm weapon) {
         SetAmmoLabel(weapon);
         SetWeaponLabel(weapon);
     }
 
-    private void SetAmmoLabel(IWeapon weapon) {
+    private void SetAmmoLabel(IFirearm weapon) {
         if (ammo_label == null) {
             return;
         }
@@ -57,7 +57,7 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
         }
     }
 
-    private void SetWeaponLabel(IWeapon weapon) { 
+    private void SetWeaponLabel(IFirearm weapon) { 
         if (weapon_label == null) {
             return;
         }
@@ -73,7 +73,7 @@ public class WeaponUIController : MonoBehaviour, IWeaponManagerSubscriber, IPlay
         }
     }
     
-    public void UpdateWeapon(int? slot, IWeapon weapon) {
+    public void UpdateWeapon(int? slot, IFirearm weapon) {
         SetLabels(slot, weapon);
     }
 }
