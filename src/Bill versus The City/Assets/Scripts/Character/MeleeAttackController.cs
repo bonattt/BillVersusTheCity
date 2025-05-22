@@ -35,6 +35,7 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
 
     // tracks when the last shot was fired, for handling rate-of-fire
     private float _last_attack_at = -10f;
+    [SerializeField]
     private Vector3 attack_direction; 
     
     public virtual int? current_slot
@@ -78,11 +79,10 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
             ResolveAttack();
         }
         attack_stage = next_stage;
-        if (attack_stage == MeleeAttackStage.none)
-        {
-            current_attack = null;
-            attack_direction = Vector3.zero;
-        }
+        // if (attack_stage == MeleeAttackStage.none)
+        // {
+        //     current_attack = null;
+        // }
     }
 
     private MeleeAttackStage GetNextState() {
@@ -109,39 +109,44 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
 
     private void ResolveAttack()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(attack_start_point.position, attack_direction, out hit, current_melee.attack_reach))
-        {
+        Debug.LogWarning("ResolveAttack!"); // TODO --- remove debug
+        RaycastHit[] melee_hits = Physics.RaycastAll(attack_start_point.position, attack_direction, current_melee.attack_reach);
+        Debug.LogWarning($"melee raycast through {melee_hits.Length} objects."); // TODO --- remove debug
+        Debug.DrawRay(attack_start_point.position, attack_direction.normalized * current_melee.attack_reach, Color.green);
+        foreach (RaycastHit hit in melee_hits) {
+            Debug.LogWarning($"Melee attack hits {hit.collider.gameObject.name}"); // TODO --- remove debug
             IAttackTarget hit_target = hit.collider.gameObject.GetComponent<IAttackTarget>();
             if (hit_target != null && !current_attack.hit_targets.Contains(hit_target))
             {
                 AttackResolver.ResolveAttackHit(current_attack, hit_target, hit.point);
                 current_attack.hit_targets.Add(hit_target);
-                Debug.LogWarning($"melee attack hit {hit_target}"); // TODO --- remove debug
+                Debug.LogWarning($"melee ACTUALLY attack hit {hit_target}"); // TODO --- remove debug
             }
         }
     }
 
-    public void StartAttack(Vector3 attack_direction)
+    public void StartAttack(Vector3 new_attack_direction)
     {
         // fires an attack with the current weapon
         if (
             (_last_attack_at + total_attack_time <= Time.time)
-            && (!InputSystem.IsNullPoint(attack_direction))
+            && (!InputSystem.IsNullPoint(new_attack_direction))
         )
         {
-            _StartAttack(attack_direction);
+            _StartAttack(new_attack_direction);
         }
     }
 
-    private void _StartAttack(Vector3 attack_direction)
+    private void _StartAttack(Vector3 new_attack_direction)
     {
         current_attack = new MeleeAttack();
         current_attack.melee_weapon = current_melee;
         current_attack.ignore_armor = false;
+        current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
 
         _last_attack_at = Time.time;
-        this.attack_direction = attack_direction;
+        this.attack_direction = new_attack_direction;
+        Debug.LogWarning($"start attack in direction {new_attack_direction}");// TODO --- remove debug
         AttackResolver.AttackStart(current_attack, attack_start_point.position, is_melee_attack: true);
 
         // TODO --- refactor, make this an effect
