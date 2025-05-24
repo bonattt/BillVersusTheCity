@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 8741898434085393183}
   - component: {fileID: 1130132745889624254}
   - component: {fileID: 4280093944734587331}
+  - component: {fileID: 5377501773160408648}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -410,7 +411,6 @@ MonoBehaviour:
   _current_recoil: 0
   debug_ammo_count: 0
   weapon_slots_enabled: 01010101010100000000
-  switch_weapons_blocked: 0
   _current_slot: 0
   debug_rifle_equipped: 
   debug_handgun_equipped: 
@@ -509,6 +509,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target_character: {fileID: 6586359110877128584}
   only_death_sounds: 1
+--- !u!114 &5377501773160408648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ccb74009c1e58429acbda53fa6010a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  base_range: 2
+  base_alert_rate: 0.1
+  interval_seconds: 0.33
+  distance_threshold_seconds: 0.1
+  speed_factor: 5
 --- !u!1 &3411905732680101244
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +822,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a4d35ab48ab3f4c45a4ece524654b5e7, type: 2}
+    - target: {fileID: 7253767703810587300, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
+      propertyPath: _hurt_duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7253767703810587300, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
+      propertyPath: _shot_duration
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
