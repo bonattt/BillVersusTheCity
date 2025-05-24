@@ -22,11 +22,20 @@ public class WaypointSystem : MonoBehaviour {
         }
     }
 
-    public List<Transform> GetWaypointsWithout(ICollection<Transform> excluded) {
+    public void ResetWaypoints(bool log_warning=false)
+    {
+        if (log_warning) { Debug.LogWarning("Waypoints reset!"); }
+        _waypoints = null;
+    }
+
+    public List<Transform> GetWaypointsWithout(ICollection<Transform> excluded)
+    {
         // returns a copy of the list of waypoints, with all the elements of `excluded` removed.
         List<Transform> result = new List<Transform>();
-        foreach(Transform t in waypoints) {
-            if (!excluded.Contains(t)) {
+        foreach (Transform t in waypoints)
+        {
+            if (!excluded.Contains(t))
+            {
                 result.Add(t);
             }
         }

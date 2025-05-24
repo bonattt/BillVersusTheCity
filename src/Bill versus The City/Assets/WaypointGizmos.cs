@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class WaypointGizmos : MonoBehaviour
 {
+    public bool reset_waypoints = false;
     public bool draw_gizmos = true;
     public Color gizmo_color = Color.cyan;
     public float gizmo_size = 0.75f;
@@ -19,13 +21,25 @@ public class WaypointGizmos : MonoBehaviour
     }
 
     private void DrawAllGizmos() {
-        if (waypoints == null) { 
+        if (reset_waypoints) {
+            reset_waypoints = false;
+            waypoints.ResetWaypoints(log_warning:true);
+        }
+        if (waypoints == null)
+        {
             Debug.LogWarning("waypoint system not set, cannot draw gizmos!");
             return;
         }
-        foreach (Transform t in waypoints.waypoints) {
-            DrawWaypointGizmo(t);
+        try
+        {
+            foreach (Transform t in waypoints.waypoints)
+            {
+                DrawWaypointGizmo(t);
+            }
         }
+
+        catch (MissingReferenceException) { waypoints.ResetWaypoints(log_warning:true); }
+        catch (NullReferenceException) { waypoints.ResetWaypoints(log_warning:true); }
     }
 
     public void DrawWaypointGizmo(Transform waypoint) {

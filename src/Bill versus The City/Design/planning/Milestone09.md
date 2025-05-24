@@ -16,7 +16,8 @@ PLANNED FEATURES
     [+] Refactor bullet and gunshot effect to use hearing system
     [~] Polish Hearing System
         [+] Increase sound range, and the impact of walls.
-        [ ] Alerted Enemies should make a sound, alerting other guys at their location
+        [?] Alerted Enemies should make a sound, alerting other guys at their location
+        [ ] Sounds should effect enemies off the camera less
 
 [+] Melee enemy
     [+] Melee refactors
@@ -36,7 +37,8 @@ PLANNED BUGFIXES
 [ ] FIX: "Move with WASD" tutorial doesn't clear
 
 UNPLANNED FEATURES
-[ ] 
+[ ] Police Countdown level conditions
+[ ] Level Config should support events that introduce new enemies 
 
 UNPLANNED BUGFIXES
 [ ] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
