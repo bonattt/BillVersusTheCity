@@ -12,8 +12,12 @@ PLANNED FEATURES
     [+] e to advance dialogues
     [+] scroll to switch weapon slots
         
-[ ] Hearing System
-    [ ] Refactor bullet and gunshot effect to use hearing system
+[+] Hearing System
+    [+] Refactor bullet and gunshot effect to use hearing system
+    [~] Polish Hearing System
+        [+] Increase sound range, and the impact of walls.
+        [ ] Alerted Enemies should make a sound, alerting other guys at their location
+
 [+] Melee enemy
     [+] Melee refactors
     [+] Melee attack works
@@ -29,6 +33,7 @@ PLANNED BUGFIXES
     [ ] Add alerting effect to threat-detection (bullets passing by)
 
 [ ] FIX: Revisit default settings code. Difficulty should default to "normal" not to "custom"
+[ ] FIX: "Move with WASD" tutorial doesn't clear
 
 UNPLANNED FEATURES
 [ ] 

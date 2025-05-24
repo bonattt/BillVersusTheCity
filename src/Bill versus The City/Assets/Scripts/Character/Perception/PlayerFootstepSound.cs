@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerFootstepSound : MonoBehaviour
 {
     [Tooltip("How far away will footsteps be audible.")]
-    public float base_range = 1f;
+    public float base_range = 5f;
     [Tooltip("how much will footsteps heard by enemies alert them.")]
     public float base_alert_rate = 0.1f;
     public float interval_seconds = 0.33f;
@@ -56,11 +56,10 @@ public class PlayerFootstepSound : MonoBehaviour
         if (distance_traveled < distance_threshold)
         {
             Debug.Log("no sound while not moving");
-            Debug.LogWarning("no sound while not moving"); // TODO --- remove debug
             return;
         }
         float range = base_range + distance_traveled;
-        float alarm_level = base_alert_rate * distance_traveled;
+        float alarm_level = base_alert_rate * distance_traveled * interval_seconds;
         GameSound new_sound = new GameSound(GetSampledPosition(), range, alarm_level);
         EnemyHearingManager.inst.NewSound(new_sound);
     }

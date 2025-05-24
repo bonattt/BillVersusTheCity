@@ -3,7 +3,7 @@ using UnityEngine;
 public class HearableGunshot : IAttackHitEffect, 
         IAttackShootEffect, IAttackMissEffect, IFirearmEffect {
 
-    public float range = 10f;
+    public float range = 15f;
     public float alarm_level = 2f;
 
     public HearableGunshot() { /* do nothing */ }

@@ -42,7 +42,7 @@ public static class AttackResolver {
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB),
         new AlertEnemiesLineOfSightEffect(),
-        new HearableGunshot(),
+        new HearableGunshot(10f, 1f),
     };
     private static IAttackMissEffect[] DEBUG_MISS_EFFECTS = new IAttackMissEffect[]{};
     private static IFirearmEffect[] EMPTY_SHOOT_EFFECT = new IFirearmEffect[]{
