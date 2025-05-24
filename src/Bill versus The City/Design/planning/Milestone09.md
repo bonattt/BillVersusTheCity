@@ -18,7 +18,7 @@ PLANNED FEATURES
     [+] Melee refactors
     [~] Melee attack works
         [+] Attacks hit and deal damage
-        [ ] FIX: attacks hit multiple times, but should only hit once
+        [+] FIX: attacks hit multiple times, but should only hit once
     [~] Melee attack effects
         [+] Basic
         [ ] Refactor to not hardcode this
@@ -36,6 +36,9 @@ UNPLANNED FEATURES
 UNPLANNED BUGFIXES
 [ ] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
     - unknown steps to reproduce. I was trying to get scroll-wheel weapon switching to work at the time.
+[ ] Somehow melee enemy triggered EnemyBehavior.ReloadCancelled, got a null pointer on weapon, (because it takes a firearm), and then froze
+        indefinitely. I'm not sure how that was a result, or how it happened in the first place
+    - unknown steps to reproduce
 
 SOOSH FEEDBAC
 [+] Soosh was having errors trying to name save files

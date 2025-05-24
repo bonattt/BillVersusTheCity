@@ -229,7 +229,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         current_recoil += current_gun.recoil_inaccuracy;
         current_gun.current_ammo -= 1;
         if (bullet != null) {
-            AttackResolver.AttackStart(bullet, attack_start_point.position); // Only create a shot effects once for a shotgun
+            AttackResolver.AttackStart(bullet, attack_direction, attack_start_point.position, is_melee_attack:false); // Only create a shot effects once for a shotgun
         }
         else {
             Debug.LogWarning("bullet is null!");

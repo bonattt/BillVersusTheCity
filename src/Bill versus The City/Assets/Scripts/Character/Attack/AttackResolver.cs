@@ -32,11 +32,11 @@ public static class AttackResolver {
 
     private static IAttackShootEffect[] DEBUG_SHOOT_EFFECTS = new IAttackShootEffect[] { };
 
-    private static IAttackShootEffect[] MELEE_EFFECTS = new IAttackShootEffect[]{
-        // new SpawnPrefabEffect(PLACEHOLDER_MELEE_EFFECTS_PREFAB), // TODO --- implement rotation in effects, so this can be an effect again
+    private static IMeleeAttackEffect[] MELEE_EFFECTS = new IMeleeAttackEffect[]{
+        new SpawnPrefabEffect(PLACEHOLDER_MELEE_EFFECTS_PREFAB), // TODO --- implement rotation in effects, so this can be an effect again
         new MeleeAttackSoundEffect(),
     };
-    private static IAttackShootEffect[] DEBUG_MELEE_EFFECTS = new IAttackShootEffect[] { };
+    private static IMeleeAttackEffect[] DEBUG_MELEE_EFFECTS = new IMeleeAttackEffect[] { };
 
     private static IAttackMissEffect[] MISS_EFFECTS = new IAttackMissEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_MISS_PREFAB),
@@ -87,7 +87,7 @@ public static class AttackResolver {
         return ConcatinateArrays(SHOOT_EFFECTS, DEBUG_SHOOT_EFFECTS);
     }
 
-    private static IAttackShootEffect[] GetMeleeEffects() {
+    private static IMeleeAttackEffect[] GetMeleeEffects() {
         if (!GameSettings.inst.debug_settings.show_damage_numbers) {
             return MELEE_EFFECTS;
         }
@@ -198,16 +198,18 @@ public static class AttackResolver {
         }
     }
 
-    public static void AttackStart(IAttack attack, Vector3 location, bool is_melee_attack=false) {
+    public static void AttackStart(IAttack attack, Vector3 attack_direction, Vector3 location, bool is_melee_attack = false)
+    {
         // Displays attack effects for firing a weapon
         if (is_melee_attack)
         {
-            foreach (IAttackShootEffect effect in GetMeleeEffects())
+            foreach (IMeleeAttackEffect effect in GetMeleeEffects())
             {
-                effect.DisplayEffect(location, attack);
+                effect.DisplayMeleeEffect(location, attack_direction, attack);
             }
         }
-        else {
+        else
+        {
             foreach (IAttackShootEffect effect in GetShootEffects())
             {
                 effect.DisplayEffect(location, attack);

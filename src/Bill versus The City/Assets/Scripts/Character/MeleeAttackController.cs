@@ -58,6 +58,7 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
     void Start()
     {
         attacker = GetComponent<IAttackTarget>();
+        if (attacker == null) Debug.LogError("attacker is null!!"); // TODO --- remove debug
         current_melee = _init_weapon.CopyMeleeWeapon();
     }
 
@@ -166,15 +167,15 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
         _last_attack_at = Time.time;
         this.attack_direction = new_attack_direction;
         Debug.LogWarning($"start attack in direction {new_attack_direction}");// TODO --- remove debug
-        AttackResolver.AttackStart(current_attack, attack_start_point.position, is_melee_attack: true);
+        AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
 
-        // TODO --- refactor, make this an effect
-        GameObject prefab = (GameObject)Resources.Load(AttackResolver.PLACEHOLDER_MELEE_EFFECTS_PREFAB);
-        GameObject effect = Instantiate(prefab);
-        effect.transform.position = attack_start_point.position;
-        effect.transform.rotation = transform.rotation;
-        Debug.LogWarning("TODO --- melee attack hard codes visual effect!! should be an effect");
-        // TODO ---
+        // // TODO --- refactor, make this an effect
+        // GameObject prefab = (GameObject)Resources.Load(AttackResolver.PLACEHOLDER_MELEE_EFFECTS_PREFAB);
+        // GameObject effect = Instantiate(prefab);
+        // effect.transform.position = attack_start_point.position;
+        // effect.transform.rotation = transform.rotation;
+        // Debug.LogWarning("TODO --- melee attack hard codes visual effect!! should be an effect");
+        // // TODO ---
     }
 
     ////////// DEBUG //////////

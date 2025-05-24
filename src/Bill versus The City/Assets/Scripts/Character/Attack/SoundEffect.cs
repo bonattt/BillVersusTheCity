@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-public class SoundEffect : IAttackHitEffect, 
-        IAttackShootEffect, IAttackMissEffect, IWeaponEffect, IFirearmEffect {
+public class SoundEffect : IAttackHitEffect, IAttackShootEffect, 
+        IAttackMissEffect, IWeaponEffect, IFirearmEffect, IMeleeAttackEffect {
     
     // private string sound_path;
     protected ISFXSounds default_sound;
@@ -11,22 +11,11 @@ public class SoundEffect : IAttackHitEffect,
     public SoundEffect(string sound_path) {
         this.default_sound = SFXLibrary.LoadSound(sound_path);
     }
-    public void DisplayDamageEffect(GameObject hit_target,
-            Vector3 hit_location, IAttack attack) {
-        PlaySound(hit_location, attack.weapon);
-    }
-
-    public void DisplayWeaponEffect(Vector3 point, IWeapon weapon) {
-        PlaySound(point, weapon);
-    }
-
-    public void DisplayFirearmEffect(Vector3 point, IFirearm weapon) {
-        PlaySound(point, weapon);
-    }
-
-    public void DisplayEffect(Vector3 hit_location, IAttack attack) {
-        PlaySound(hit_location, attack.weapon);
-    }
+    public void DisplayDamageEffect(GameObject hit_target, Vector3 hit_location, IAttack attack) => PlaySound(hit_location, attack.weapon);
+    public void DisplayWeaponEffect(Vector3 point, IWeapon weapon) => PlaySound(point, weapon);
+    public void DisplayMeleeEffect(Vector3 position, Vector3 attack_direction, IAttack attack) => PlaySound(position, attack.weapon);
+    public void DisplayFirearmEffect(Vector3 point, IFirearm weapon) => PlaySound(point, weapon);
+    public void DisplayEffect(Vector3 hit_location, IAttack attack) => PlaySound(hit_location, attack.weapon);
 
     protected virtual string GetAttackSoundPath(IWeapon attack) {
         // gets the NON default sound from the attack. 

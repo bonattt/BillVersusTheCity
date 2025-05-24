@@ -83,9 +83,11 @@ public class ManualCharacterMovement : CharCtrl
         }
     }
 
-    public override void DelayedOnDeath(ICharacterStatus status) {
+    public override void DelayedOnDeath(ICharacterStatus status)
+    {
         base.DelayedOnDeath(status);
         LevelConfig.inst.FailLevel();
+        // TODO --- this should live somewhere player related 
     }
     
     protected override void HandleAnimation() {

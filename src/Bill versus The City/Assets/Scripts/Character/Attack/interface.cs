@@ -1,12 +1,20 @@
 using UnityEngine;
 
-public interface IAttackHitEffect {
+public interface IAttackHitEffect
+{
     // visual effect when a gun hits a character
     public void DisplayDamageEffect(GameObject hit, Vector3 hit_location, IAttack attack);
 }
 
 
-public interface IAttackShootEffect {
+public interface IMeleeAttackEffect
+{
+    public void DisplayMeleeEffect(Vector3 position, Vector3 direction, IAttack attack);
+}
+
+
+public interface IAttackShootEffect
+{
     // visual effect a gun is fired
     public void DisplayEffect(Vector3 shoot_point, IAttack attack);
 }

@@ -226,7 +226,7 @@ public class MenuManager : MonoBehaviour
         popup.header_text = "Defeat!";
         popup.content_text = "You have been killed";
         popup.confirm_text = "Restart Level";
-        popup.reject_text = "Quit";
+        popup.reject_text = "Exit to Title";
         popup.allow_escape = false;
         
         popup.confirm_button.clicked += ScenesUtil.RestartLevel;
