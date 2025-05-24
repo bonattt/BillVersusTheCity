@@ -19,7 +19,7 @@ MonoBehaviour:
   _weapon_damage_max: 50
   _armor_effectiveness: 2
   _attack_sound: 
-  _attack_reach: 2
+  _attack_reach: 2.25
   _attack_windup: 0.05
   _attack_duration: 0.1
   _attack_recovery: 0.05

@@ -1,5 +1,6 @@
 
 
-public interface IPercetionSound {
-    // interface for a sound in game-space which can be heard by enemies.
+public interface IHearingObserver
+{
+    public void UpdateSound(ISound sound);
 }

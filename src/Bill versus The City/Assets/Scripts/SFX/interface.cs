@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public interface ISingleSound {
+public interface ISingleSFXSound {
     public string sound_name { get; set; }
     public AudioClip clip { get; set; }
     public float volume { get; set; }
@@ -12,10 +12,10 @@ public interface ISingleSound {
 
 
 public interface ISFXSounds {
-    public List<ISingleSound> GetSounds();
+    public List<ISingleSFXSound> GetSounds();
 
-    public ISingleSound GetRandomSound() {
-        List<ISingleSound> sounds = GetSounds();
+    public ISingleSFXSound GetRandomSound() {
+        List<ISingleSFXSound> sounds = GetSounds();
         if (sounds.Count <= 0) {
             return null;
         }

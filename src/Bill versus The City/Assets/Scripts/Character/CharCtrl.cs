@@ -283,11 +283,16 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return reload_progress >= 1f;
     }
 
-    public void CancelReload() {
+    public void CancelReload()
+    {
         // end reload before it's finished
-        reloading = false;
-        current_action = ActionCode.none;
-        UpdateReloadCancelled(current_firearm);
+        if (reloading)
+        {
+            reloading = false;
+            current_action = ActionCode.none;
+            UpdateReloadCancelled(current_firearm);
+        }
+        else { Debug.LogWarning("CancelReload called while not reloading!"); }// TODO --- remove debug
     }
     
     private void FinishReload() {

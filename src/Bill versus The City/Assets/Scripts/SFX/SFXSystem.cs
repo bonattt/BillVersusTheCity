@@ -6,7 +6,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
 { 
     public AudioSource sfx_object_prefab;
     private AudioSource music_player;
-    private ISingleSound current_music;
+    private ISingleSFXSound current_music;
     private static SFXSystem _inst = null;
     public static SFXSystem inst {
         get {
@@ -27,7 +27,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         PlayMusic(sounds, PlayerCharacter.inst.player_transform);
     }
     
-    public void PlayMusic(ISingleSound sound) {
+    public void PlayMusic(ISingleSFXSound sound) {
         // overloads _PlayMusic
         PlayMusic(sound, PlayerCharacter.inst.player_transform);
     }
@@ -40,7 +40,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
         PlayMusic(sound.GetRandomSound(), target);
     }
-    public void PlayMusic(ISingleSound sound, Transform target) {
+    public void PlayMusic(ISingleSFXSound sound, Transform target) {
         // overloads _PlayMusic
         if (sound == null) {
             Debug.LogWarning("empty music argument");
@@ -49,7 +49,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         _PlayMusic(sound, target);
     }
 
-    private void _PlayMusic(ISingleSound sound, Transform target) {
+    private void _PlayMusic(ISingleSFXSound sound, Transform target) {
         // Plays a single music track at a time, replacing the previous music track if one was playing
         CleanUpMusicPlayer();
         Vector3 start_pos;
@@ -88,7 +88,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         return PlaySound(sound.GetRandomSound(), target);
     }
 
-    public AudioSource PlaySound(ISingleSound sound, Vector3 target) {
+    public AudioSource PlaySound(ISingleSFXSound sound, Vector3 target) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
@@ -129,7 +129,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         PlaySound(sound_set.GetRandomSound(), target);
     }
 
-    public static float GetVolume(ISingleSound sound) {
+    public static float GetVolume(ISingleSFXSound sound) {
         // gets the volume level (0-1 percent) by applying the master volume, category volume, and clip volume
         AudioSettings settings = GameSettings.inst.audio_settings;
         return sound.volume * settings.GetVolume(sound.default_category);

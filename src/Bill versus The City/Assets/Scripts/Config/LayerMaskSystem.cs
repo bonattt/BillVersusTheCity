@@ -14,5 +14,10 @@ public class LayerMaskSystem : MonoBehaviour {
         }
     }
 
-    public LayerMask has_cover_raycast; // LayerMask used when performing a raycast to determin if a position has cover or not
+    [Tooltip("LayerMask used when performing a raycast to determin if a position has cover or not")]
+    public LayerMask has_cover_raycast;
+
+
+    [Tooltip("LayerMask used when testing if a sound is audible")]
+    public LayerMask blocks_sounds;
 }

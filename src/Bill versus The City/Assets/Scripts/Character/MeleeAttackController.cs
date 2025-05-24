@@ -58,7 +58,7 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
     void Start()
     {
         attacker = GetComponent<IAttackTarget>();
-        if (attacker == null) Debug.LogError("attacker is null!!"); // TODO --- remove debug
+        if (attacker == null) Debug.LogError("attacker is null!!");
         current_melee = _init_weapon.CopyMeleeWeapon();
     }
 
@@ -79,8 +79,6 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
     private void UpdateAttackInProgress()
     {
         MeleeAttackStage next_stage = GetNextState();
-        // if (attack_stage != next_stage) { Debug.LogWarning($"attack state {attack_stage} --> {next_stage}"); } // TODO --- remove debug
-
         if (attack_stage == MeleeAttackStage.attack || next_stage == MeleeAttackStage.attack)
         {
             ResolveAttack();
@@ -127,19 +125,15 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
 
     private void ResolveAttack()
     {
-        Debug.LogWarning("ResolveAttack!"); // TODO --- remove debug
         RaycastHit[] melee_hits = Physics.RaycastAll(attack_start_point.position, attack_direction, current_melee.attack_reach);
-        Debug.LogWarning($"melee raycast through {melee_hits.Length} objects."); // TODO --- remove debug
         Debug.DrawRay(attack_start_point.position, attack_direction.normalized * current_melee.attack_reach, Color.green);
         foreach (RaycastHit hit in melee_hits)
         {
-            Debug.LogWarning($"Melee attack hits {hit.collider.gameObject.name}"); // TODO --- remove debug
             IAttackTarget hit_target = hit.collider.gameObject.GetComponent<IAttackTarget>();
             if (hit_target != null && !current_attack.hit_targets.Contains(hit_target))
             {
                 current_attack.hit_targets.Add(hit_target);
                 AttackResolver.ResolveAttackHit(current_attack, hit_target, hit.point);
-                Debug.LogWarning($"melee ACTUALLY attack hit {hit_target}"); // TODO --- remove debug
             }
         }
     }
@@ -166,7 +160,6 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
 
         _last_attack_at = Time.time;
         this.attack_direction = new_attack_direction;
-        Debug.LogWarning($"start attack in direction {new_attack_direction}");// TODO --- remove debug
         AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
 
         // // TODO --- refactor, make this an effect

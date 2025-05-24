@@ -8,14 +8,14 @@ public class SoundSet : ScriptableObject, ISFXSounds
     public string sound_name = "new sound set";
     public List<AdjustedSound> sounds;
 
-    public List<ISingleSound> GetSounds() {
-        List<ISingleSound> output = new List<ISingleSound>();
+    public List<ISingleSFXSound> GetSounds() {
+        List<ISingleSFXSound> output = new List<ISingleSFXSound>();
         foreach (AdjustedSound s in sounds) {
-            output.Add((ISingleSound) s);
+            output.Add((ISingleSFXSound) s);
         }
         return output;
     }
-    public ISingleSound GetSound() {
+    public ISingleSFXSound GetSound() {
         return ((ISFXSounds) this).GetRandomSound();
     }
 }

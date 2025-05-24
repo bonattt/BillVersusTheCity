@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageSounds : MonoBehaviour, ICharStatusSubscriber
+public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
 {
     public const string DAMAGE_SOUND_PATH = "damage_chiptone";
     public const string DAMAGE_PLAYER_SOUND_PATH = "damage_grunt_player";

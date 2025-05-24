@@ -22,7 +22,6 @@ using UnityEngine;
     public static EnemiesManager inst { get; protected set; }
     void Awake() {
         Initialize();
-        
     }
 
     private void Initialize() {

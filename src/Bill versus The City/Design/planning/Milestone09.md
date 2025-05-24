@@ -16,12 +16,12 @@ PLANNED FEATURES
     [ ] Refactor bullet and gunshot effect to use hearing system
 [+] Melee enemy
     [+] Melee refactors
-    [~] Melee attack works
+    [+] Melee attack works
         [+] Attacks hit and deal damage
         [+] FIX: attacks hit multiple times, but should only hit once
-    [~] Melee attack effects
+    [+] Melee attack effects
         [+] Basic
-        [ ] Refactor to not hardcode this
+        [+] Refactor to not hardcode this
 
 PLANNED BUGFIXES
 [ ] FIX: Enemies not alerted by bullets ---> fix via hearing system
@@ -39,6 +39,8 @@ UNPLANNED BUGFIXES
 [ ] Somehow melee enemy triggered EnemyBehavior.ReloadCancelled, got a null pointer on weapon, (because it takes a firearm), and then froze
         indefinitely. I'm not sure how that was a result, or how it happened in the first place
     - unknown steps to reproduce
+[ ] Damage numbers displaying a large gray number and small red number when a small amount of armor is removed and the overflow health damage   
+    kills the player. (Should be large red number and small gray number)
 
 SOOSH FEEDBAC
 [+] Soosh was having errors trying to name save files

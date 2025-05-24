@@ -14,6 +14,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public Transform raycast_start;
 
     public int max_vision_nodes = 1; // max number of visible nodes that will add to how quickly the player is noticed
+    [Tooltip("multiplier that effects how quickly an enemy will detect the player.")]
     public float notice_player_rate = 2f;
     public float forget_player_rate = 0.25f;
     public bool disable_spot = false;
@@ -66,6 +67,8 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         }
     }
 
+    public bool is_alert { get => state == PerceptionState.alert | state == PerceptionState.seeing; }
+
     [SerializeField]
     public float _percent_noticed; // ticks up as the enemy sees the player. at 1f, player is spotted
     public float percent_noticed { 
@@ -80,7 +83,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
                 _percent_noticed = 1.1f;
             }
 
-            if (state == PerceptionState.alert | state == PerceptionState.seeing) {
+            if (is_alert) { // state == PerceptionState.alert | state == PerceptionState.seeing;
                 if (_percent_noticed <= 0) {
                     LosePlayer();
                 }
@@ -137,11 +140,11 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         }
     }
 
-    public void AlertFrom(Vector3 alert_from) {
-        // alert the enemy, but give a waypoint other than the player's current position
-        Alert();
-        last_seen_at = alert_from;
-    }
+    // public void AlertFrom(Vector3 alert_from) {
+    //     // alert the enemy, but give a waypoint other than the player's current position
+    //     Alert();
+    //     last_seen_at = alert_from;
+    // }
 
     public void LosePlayer() {
         // the enemy no longer knows where the player is, if it ever did.
@@ -338,6 +341,25 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         Vector3 towards_player = target.position - transform.position;
         towards_player = new Vector3(towards_player.x, 0f, towards_player.z).normalized;
         return  transform.position + (towards_player * on_screen_test_offset);
+    }
+
+    public void HearSound(HearingHit hit)
+    {
+        if (hit.enemy != this) { Debug.LogWarning($"Enemy {gameObject.name} heard HearingHit not for itself, intended for {hit.enemy.gameObject.name}!"); }
+        float alert_level = hit.sound.alarm_level * notice_player_rate;
+        if (hit.sound.adjust_alarm_based_on_distance)
+        {
+            alert_level = alert_level / Mathf.Sqrt(hit.effective_range);
+        }
+        bool already_alert = is_alert;
+        percent_noticed += alert_level;
+        if (!seeing_target)
+        {
+            // if the enemy is alerted by this sound, they shouldn't know where the player is
+            _last_seen_at = hit.sound.origin;
+            // LosePlayer(); 
+        }
+
     }
 
     // void OnDrawGizmos()

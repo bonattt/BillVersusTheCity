@@ -11,8 +11,8 @@ public class SimpleSoundSet : ScriptableObject, ISFXSounds
     public float volume = 1f;
     public SoundCategory default_category = SoundCategory.sound_effect;
 
-    public List<ISingleSound> GetSounds() {
-        List<ISingleSound> output_sounds = new List<ISingleSound>();
+    public List<ISingleSFXSound> GetSounds() {
+        List<ISingleSFXSound> output_sounds = new List<ISingleSFXSound>();
         for(int i = 0; i < sounds.Count; i++) {
             AudioClip clip  = sounds[i];
             GenericSound new_sound = new GenericSound();
