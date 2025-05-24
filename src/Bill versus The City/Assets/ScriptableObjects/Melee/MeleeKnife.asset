@@ -15,9 +15,9 @@ MonoBehaviour:
   _item_id: knife
   _item_name: knife
   _item_icon: {fileID: 0}
-  _weapon_damage_min: 10
-  _weapon_damage_max: 20
-  _armor_effectiveness: 1
+  _weapon_damage_min: 40
+  _weapon_damage_max: 50
+  _armor_effectiveness: 2
   _attack_sound: 
   _attack_reach: 2
   _attack_windup: 0.05

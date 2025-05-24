@@ -230,7 +230,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _init_weapon: {fileID: 11400000, guid: 599d883a560a1a245b44ae4f54c9156d, type: 2}
   _attack_start_point: {fileID: 4280276152886177003}
+  attack_direction: {x: 0, y: 0, z: 0}
   attack_stage: 0
+  debug__current_attack: 
 --- !u!114 &7771750986634287957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3396656997431563555}
   default_behavior: 4
-  optimal_attack_range: 1.2
+  optimal_attack_range: 1.5
   use_initial_movement_target: 1
   initial_movement_target: {x: NaN, y: NaN, z: NaN}
   always_use_cover_to_reload: 0
