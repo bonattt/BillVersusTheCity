@@ -1,0 +1,4 @@
+
+- favorite/least-favorite aspect of the game
+- favorite/least-favorite level
+- favorite/least-favorite weapon
