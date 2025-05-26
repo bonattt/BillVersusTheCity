@@ -99,6 +99,8 @@ GameObject:
   - component: {fileID: 7349087969400524599}
   - component: {fileID: 5133534592285428890}
   - component: {fileID: 6825292087101829779}
+  - component: {fileID: 4081373986250458422}
+  - component: {fileID: 35139295614310149}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -409,6 +411,36 @@ MonoBehaviour:
   ammo_pickup_prefab: {fileID: 112494599611690591, guid: f0d851401056f0743a202ab06969c0c7, type: 3}
   dollars_pickup_prefab: {fileID: 112494599611690591, guid: 7656ac22ec9459e4aa6ba24deec6a0be, type: 3}
   weapon_pickup_prefab: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
+--- !u!114 &4081373986250458422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505927797627387282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e3370678d0a4949896af2248ecf222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start_states: 
+  target_states: 0200000003000000
+  sound_name: 
+--- !u!114 &35139295614310149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505927797627387282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e3370678d0a4949896af2248ecf222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start_states: 0200000003000000
+  target_states: 
+  sound_name: enemy_lose_sight_sounds
 --- !u!1 &2741102800901688509
 GameObject:
   m_ObjectHideFlags: 0

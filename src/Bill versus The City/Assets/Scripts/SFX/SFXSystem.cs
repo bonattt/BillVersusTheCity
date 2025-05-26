@@ -126,7 +126,6 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
 
     public void PlayRandomClip(ISFXSounds sound_set, Vector3 target) {
         PlaySound(sound_set.GetRandomSound(), target);
-        PlaySound(sound_set.GetRandomSound(), target);
     }
 
     public static float GetVolume(ISingleSFXSound sound) {

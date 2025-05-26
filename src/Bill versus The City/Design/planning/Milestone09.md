@@ -17,7 +17,8 @@ PLANNED FEATURES
     [~] Polish Hearing System
         [+] Increase sound range, and the impact of walls.
         [?] Alerted Enemies should make a sound, alerting other guys at their location
-        [ ] Sounds should effect enemies off the camera less
+        [X] Sounds should effect enemies off the camera less
+        [ ] Play a sound when an enemy notices you, or hears you
 
 [+] Melee enemy
     [+] Melee refactors

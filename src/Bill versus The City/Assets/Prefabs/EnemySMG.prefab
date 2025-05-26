@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 4800467849444700410}
   - component: {fileID: 592878855747990438}
   - component: {fileID: 2349708486043890146}
+  - component: {fileID: 7774911204088198372}
+  - component: {fileID: 356954472827873936}
   m_Layer: 7
   m_Name: EnemySMG
   m_TagString: Enemy
@@ -440,6 +442,36 @@ MonoBehaviour:
   ammo_pickup_prefab: {fileID: 112494599611690591, guid: f0d851401056f0743a202ab06969c0c7, type: 3}
   dollars_pickup_prefab: {fileID: 112494599611690591, guid: 7656ac22ec9459e4aa6ba24deec6a0be, type: 3}
   weapon_pickup_prefab: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
+--- !u!114 &7774911204088198372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636100687923735762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e3370678d0a4949896af2248ecf222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start_states: 
+  target_states: 0200000003000000
+  sound_name: 
+--- !u!114 &356954472827873936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636100687923735762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e3370678d0a4949896af2248ecf222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start_states: 0200000003000000
+  target_states: 
+  sound_name: enemy_lose_sight_sounds
 --- !u!1001 &8722773208095184635
 PrefabInstance:
   m_ObjectHideFlags: 0

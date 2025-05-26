@@ -24,7 +24,13 @@
     --> create player owned weapons, which can be purchased for money at the gun store.
     --> add pickups in levels for cash
     --> Semi-auto shotgun
-    
+
+[ ] Milestone 9: (hearing system and melee enemies)
+[ ] Milestone 10: Advanced Level config
+    - Cutscene/character choreography
+    - additional stages in a level (eg. defeat some enemies, triggering more to spawn)
+
+
 [ ] Milestone ???: More Levels
 [ ] Milestone ???: More Dialogue
 
