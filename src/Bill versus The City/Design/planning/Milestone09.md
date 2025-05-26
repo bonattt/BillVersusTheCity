@@ -30,16 +30,16 @@ PLANNED FEATURES
         [+] Refactor to not hardcode this
 
 PLANNED BUGFIXES
-[ ] FIX: Enemies not alerted by bullets ---> fix via hearing system
-    [ ] alerts go out, but they don't seem to work on enemies near the edge of the screen
-    [ ] Add alerting effect to threat-detection (bullets passing by)
+[+] FIX: Enemies not alerted by bullets ---> fix via hearing system
+    ~~[ ] alerts go out, but they don't seem to work on enemies near the edge of the screen~~
+    ~~[ ] Add alerting effect to threat-detection (bullets passing by)~~
 
 [ ] FIX: Revisit default settings code. Difficulty should default to "normal" not to "custom"
 [ ] FIX: "Move with WASD" tutorial doesn't clear
 
 UNPLANNED FEATURES
-[ ] Police Countdown level conditions
-[ ] Level Config should support events that introduce new enemies 
+[X] Police Countdown level conditions --> next milestone
+[X] Level Config should support events that introduce new enemies --> next milestone
 
 UNPLANNED BUGFIXES
 [ ] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
