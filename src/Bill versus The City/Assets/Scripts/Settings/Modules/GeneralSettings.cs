@@ -18,12 +18,12 @@ public class GeneralSettings : AbstractSettingsModule {
     public override List<string> all_fields { get { return new List<string>(){ "skip_all_tutorials" }; }}
     public HashSet<string> skipped_tutorials = new HashSet<string>();
 
-    public override string AsJson() {
+    public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
         data.SetBool("skip_all_tutorials", skip_all_tutorials);
         data.SetStringList("skipped_tutorials", skipped_tutorials.ToList());
-        return data.Jsonify();
+        return data;
     }
 
     public override void LoadFromJson(DuckDict data) {
@@ -32,13 +32,20 @@ public class GeneralSettings : AbstractSettingsModule {
         skipped_tutorials = UnpackHashSet(data, "skipped_tutorials");
         this.AllFieldsUpdates();
     }
+    public override void SetToNewGameDefault()
+    {
+        skip_all_tutorials = false;
+        skipped_tutorials = new HashSet<string>();
+    }
 
-    private bool UnpackBool(DuckDict data, string field_name) {
+    private bool UnpackBool(DuckDict data, string field_name)
+    {
         bool? v = data.GetBool(field_name);
-        if (v == null) {
+        if (v == null)
+        {
             v = false;
         }
-        return (bool) v;
+        return (bool)v;
     }
 
     private HashSet<string> UnpackHashSet(DuckDict data, string field_name) {

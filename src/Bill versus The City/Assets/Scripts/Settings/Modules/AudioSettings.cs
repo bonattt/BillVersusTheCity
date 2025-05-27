@@ -41,16 +41,17 @@ public class AudioSettings : AbstractSettingsModule {
         volume_settings[category] = _volume;
         UpdateSubscribers($"{category}");
     }
-    
-    public override string AsJson() {
+
+    public override DuckDict AsDuckDict()
+    {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
         data.SetFloat("master_volume", master_volume);
-        foreach (SoundCategory category in volume_settings.Keys) {
+        foreach (SoundCategory category in volume_settings.Keys)
+        {
             data.SetFloat(CategoryToString(category), volume_settings[category]);
         }
-
-        return data.Jsonify();
+        return data;
     }
 
     private List<string> _all_fields = null;

@@ -23,12 +23,7 @@ public class DifficultySettings : AbstractSettingsModule {
     };
     
     public DifficultySettings() {
-        InitializeDefaults(); 
-    }
-    private void InitializeDefaults() {
-        // Initialize from empty dict sets all fields to default
-        difficulty_level = DifficultyLevel.custom;
-        SetFromTemplate(new Dictionary<string, float>());
+        SetToNewGameDefault();
     }
 
     private void SetFromTemplate(Dictionary<string, float> template) {
@@ -58,6 +53,7 @@ public class DifficultySettings : AbstractSettingsModule {
 
     public void SetMultiplier(string key, float value) {
         multipliers[key] = value;
+        Debug.LogWarning($"SetMultiplier({key}, {value})"); // TODO --- remove debug
         difficulty_level = DifficultyLevel.custom;
         UpdateSubscribers(key);
     }
@@ -102,15 +98,21 @@ public class DifficultySettings : AbstractSettingsModule {
         }
     }
     
-    public override string AsJson() {
+    public override void SetToNewGameDefault()
+    {
+        SetDifficultyLevel(DifficultyLevel.medium);
+    }
+
+    public override DuckDict AsDuckDict()
+    {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
         data.SetString(DIFFICULTY_LEVEL, DifficultyAsString(difficulty_level));
-        foreach(string field in multipliers.Keys) {
+        foreach (string field in multipliers.Keys)
+        {
             data.SetFloat(field, multipliers[field]);
         }
-
-        return data.Jsonify();
+        return data;
     }
     
     public override void LoadFromJson(DuckDict data) {
@@ -148,12 +150,9 @@ public class DifficultySettings : AbstractSettingsModule {
                 return DifficultyLevel.custom;
         }
     }
-
 }
 
-
 public static class DifficultyTemplates {
-
     public static readonly Dictionary<string, float> EASY_TEMPLATE = new Dictionary<string, float>(){
         {DifficultySettings.PLAYER_ARMOR, 2f},
         {DifficultySettings.PLAYER_HEALTH, 2f},

@@ -61,7 +61,7 @@ public class DebugSettings : AbstractSettingsModule {
 
 
     public override List<string> all_fields { get { return new List<string>(){ "show_fps", "debug_mode" }; }}
-    public override string AsJson() {
+    public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
         data.SetBool("show_fps", show_fps);
@@ -70,7 +70,7 @@ public class DebugSettings : AbstractSettingsModule {
         data.SetBool("player_invincibility", player_invincibility);
         data.SetBool("player_invisible", player_invisible);
         data.SetBool("allow_debug_actions", allow_debug_actions);
-        return data.Jsonify();
+        return data;
     }
     public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string

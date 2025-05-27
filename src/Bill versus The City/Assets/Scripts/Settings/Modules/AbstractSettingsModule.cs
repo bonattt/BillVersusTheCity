@@ -8,11 +8,17 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     public void Subscribe(ISettingsObserver sub) => subscribers.Add(sub);
     public void Unsubscribe(ISettingsObserver sub) => subscribers.Remove(sub);
 
-    public abstract string AsJson(); // returns json data for the settings in this module
+    public abstract DuckDict AsDuckDict(); // returns json data for the settings in this module
+    public virtual string AsJson() {
+        return AsDuckDict().Jsonify();
+    }
     public abstract void LoadFromJson(DuckDict data_module);  // sets the settings module from a JSON string
+    public virtual void SetToNewGameDefault() { /* do nothing by default */}
 
-    public void UpdateSubscribers(string field) {
-        foreach(ISettingsObserver sub in subscribers) {
+    public void UpdateSubscribers(string field)
+    {
+        foreach (ISettingsObserver sub in subscribers)
+        {
             sub.SettingsUpdated(this, field);
         }
     }

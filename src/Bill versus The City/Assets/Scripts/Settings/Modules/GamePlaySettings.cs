@@ -23,12 +23,11 @@ public class GamePlaySettings : AbstractSettingsModule {
 
     public override List<string> all_fields { get { return new List<string>(){"mouse_sensitivity"}; }}
 
-    public override string AsJson() {
+    public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
         data.SetFloat(MOUSE_SENSITIVITY, mouse_sensitivity);
-
-        return data.Jsonify();
+        return data;
     }
     public override void LoadFromJson(DuckDict data) {
         // sets the settings module from a JSON string

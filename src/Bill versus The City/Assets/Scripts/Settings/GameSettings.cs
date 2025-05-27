@@ -15,6 +15,17 @@ public class GameSettings {
         }
     }
 
+    public void SetToNewGameDefault()
+    {
+        // sets settings to new game defaults. Some settings modules are effected by this, others or not, 
+        //   but that responsibility is handed off to the modules.
+        general_settings.SetToNewGameDefault();
+        difficulty_settings.SetToNewGameDefault();
+        game_play_settings.SetToNewGameDefault();
+        audio_settings.SetToNewGameDefault();
+        debug_settings.SetToNewGameDefault();
+    }
+
     // public const string AUDIO_SETTINGS = "audio";
     // public const string GRAPHICS_SETTINGS = "graphics";
     // public const string GAMEPLAY_SETTINGS = "gameplay";
@@ -64,8 +75,25 @@ public class GameSettings {
             _difficulty_settings = value; 
         }
     }
+    
+    // public Dictionary<string, AbstractSettingsModule> all_modules
+    // {
+    //     get
+    //     {
+    //         return new Dictionary<string, AbstractSettingsModule>()
+    //         {
+    //             {"general", general_settings},
+    //             {"gameplay", game_play_settings},
+    //             {"difficulty", difficulty_settings},
+    //             {"debug", debug_settings},
+    //             {"audio", audio_settings},
+    //             // {"graphics", "TODO"}
+    //         };
+    //     }        
+    // }
 
-    private GameSettings() {
+    private GameSettings()
+    {
         // if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }
         // inst = this;
     }
@@ -77,18 +105,25 @@ public class GameSettings {
             new_module.Subscribe(sub);
         }
     }
-    
-    public string AsJson() {
+
+    public DuckDict AsDuckDict()
+    {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
-        
+
         data.SetObject("general", JsonParser.ReadAsDuckDict(general_settings.AsJson()));
         data.SetObject("difficulty", JsonParser.ReadAsDuckDict(difficulty_settings.AsJson()));
         data.SetObject("gameplay", JsonParser.ReadAsDuckDict(game_play_settings.AsJson()));
         data.SetObject("audio", JsonParser.ReadAsDuckDict(audio_settings.AsJson()));
         data.SetObject("graphics", new DuckDict());
         data.SetObject("debug", JsonParser.ReadAsDuckDict(debug_settings.AsJson()));
-
+        return data;
+    }
+    
+    public string AsJson()
+    {
+        // returns json data for the settings in this module
+        DuckDict data = AsDuckDict();
         return data.Jsonify();
     }
     public void LoadFromJson(string json_str) {
@@ -107,21 +142,4 @@ public class GameSettings {
         debug_settings.LoadFromJson(data.GetObject("debug"));
         // videos_settings.LoadFromJson(data); // TODO --- implement graphics settings
     }
-
-    // public string GetSettingsJson(DuckDict data, string field_name) {
-    //     DuckDict child_data = data.GetObject(field_name);
-    //     if (child_data == null) {
-    //         return "{}";
-    //     }
-    //     return child_data.Jsonify();
-    // }
-
-    // private Dictionary<string, ISettingsModule> settings_modules = new Dictionary<string, ISettingsModule>();
-
-    // public ISettingsModule GetModule(string key) => settings_modules[key];
-    
-    // public void SetModule(string key, ISettingsModule module) => settings_modules[key] = module;
-    
-
-
 }

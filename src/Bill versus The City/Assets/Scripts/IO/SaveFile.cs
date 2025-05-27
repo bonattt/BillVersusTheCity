@@ -104,7 +104,7 @@ public class SaveFile {
     }
 
     private void WriteSettingsData(DuckDict data) {
-        data.SetObject("settings", JsonParser.ReadAsDuckDict(GameSettings.inst.AsJson()));
+        data.SetObject("settings", GameSettings.inst.AsDuckDict());
     }
 
     private void WriteProfileData(DuckDict data) {
@@ -206,7 +206,7 @@ public class SaveFile {
             string file_text = File.ReadAllText(this.filepath);
             data = JsonParser.ReadAsDuckDict(file_text);
         } catch (IOException e) {
-            Debug.LogWarning($"save file '{save_name}' not found at '{filepath}' ({e}).");
+            Debug.Log($"save file '{save_name}' not found at '{filepath}' ({e}).");
             data = new DuckDict();
             // DuckDict error_data = new DuckDict();
             // error_data.SetString("error", $"{e.GetType()}");

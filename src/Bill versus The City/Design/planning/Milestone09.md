@@ -18,7 +18,7 @@ PLANNED FEATURES
         [+] Increase sound range, and the impact of walls.
         [?] Alerted Enemies should make a sound, alerting other guys at their location
         [X] Sounds should effect enemies off the camera less
-        [ ] Play a sound when an enemy notices you, or hears you
+        [+] Play a sound when an enemy notices you
 
 [+] Melee enemy
     [+] Melee refactors
@@ -34,7 +34,9 @@ PLANNED BUGFIXES
     ~~[ ] alerts go out, but they don't seem to work on enemies near the edge of the screen~~
     ~~[ ] Add alerting effect to threat-detection (bullets passing by)~~
 
-[ ] FIX: Revisit default settings code. Difficulty should default to "normal" not to "custom"
+[+] FIX: Revisit default settings code. Difficulty should default to "normal" not to "custom"
+    [+] Fixed defaults
+    [+] I fixed defaults, but switching profiles needs to reload settings from the new save file
 [ ] FIX: "Move with WASD" tutorial doesn't clear
 
 UNPLANNED FEATURES

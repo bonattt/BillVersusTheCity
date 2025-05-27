@@ -6,7 +6,23 @@ using UnityEngine;
 public class SaveProfile {
     // public const string SAVE_SLOT_1 = "save_1";
     public const string PROFILE_FILE = ".save_files\\profile";
-    public SaveFile save_file { get; private set; }
+    private SaveFile _save_file = null;
+    public SaveFile save_file
+    {
+        get => _save_file;
+        private set
+        {
+            _save_file = value;
+            if (_save_file == null)
+            {
+                GameSettings.inst.SetToNewGameDefault();
+            }
+            else
+            {
+                LoadSettingsData();
+            }
+        }
+    }
     private static SaveProfile _inst;
     public static SaveProfile inst {
         get {
@@ -91,15 +107,30 @@ public class SaveProfile {
         }
     }
 
-    public string LoadSaveData() {
+    public void LoadSettingsData()
+    {
+        // updates GameSettings with new save file data
+        DuckDict settings_data = save_file.AsDuckDict().GetObject("settings");
+        if (settings_data == null || settings_data.Count == 0)
+        {
+            Debug.LogWarning($"no settings data: {settings_data}, loading new game defaults"); // TODO --- remove debug (demote log level)
+            GameSettings.inst.SetToNewGameDefault();
+        } else {
+            GameSettings.inst.LoadFromJson(settings_data);
+        }
+    }
+
+    public string LoadSaveData()
+    {
         // loads save data, and returns the current scene name
         if (save_file == null) { return null; }
-        GameSettings.inst.LoadFromJson(save_file.AsDuckDict().GetObject("settings"));
+        LoadSettingsData();
 
         DuckDict progress_data = save_file.AsDuckDict().GetObject("progress");
         PlayerCharacter.inst.LoadProgress(progress_data);
         string scene_name = null;
-        if (progress_data != null && progress_data.ContainsKey("level")) {
+        if (progress_data != null && progress_data.ContainsKey("level"))
+        {
             scene_name = progress_data.GetObject("level").GetString("current_scene");
         }
         else { Debug.LogWarning("no progress data!"); }
