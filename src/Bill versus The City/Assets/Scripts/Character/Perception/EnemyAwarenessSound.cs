@@ -58,6 +58,7 @@ public class EnemyAwarenessSound : MonoBehaviour, IPerceptionSubscriber
 
     public void UpdatePerceptionState(PerceptionState previous_state, PerceptionState new_state)
     {
+        if (previous_state == PerceptionState.dead || new_state == PerceptionState.dead) { return; } // do nothing for dead enemies
         // if start state is null or empty, it should accept all previous start states (except states in `target_states`)
         bool from_start_state = StateMeetsConditions(start_states, previous_state);
         bool to_end_state = StateMeetsConditions(target_states, new_state) && !target_states.Contains(previous_state);

@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start_states: 0200000003000000
-  target_states: 
+  target_states: 0100000000000000
   sound_name: enemy_lose_sight_sounds
 --- !u!1 &2741102800901688509
 GameObject:

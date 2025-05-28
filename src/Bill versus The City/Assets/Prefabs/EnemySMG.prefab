@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start_states: 0200000003000000
-  target_states: 
+  target_states: 0000000001000000
   sound_name: enemy_lose_sight_sounds
 --- !u!1001 &8722773208095184635
 PrefabInstance:
