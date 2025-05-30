@@ -14,6 +14,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
     public UIDocument ui_doc;
     private VisualElement root, left_content, right_content;
     private Button continue_button, cancel_button;
+    private Label error_message_label;
 
     public List<ScriptableObject> rifle_selection, handgun_selection;
 
@@ -26,10 +27,12 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
         UpdateContents(); // populate the contents of the visual elements with weapon UI elements 
         SelectEquipped(PlayerCharacter.inst.inventory.rifle, left_content);
         SelectEquipped(PlayerCharacter.inst.inventory.handgun, right_content);
+        ClearErrorMessage();
     }
 
     public void SetupUI() {
         root = ui_doc.rootVisualElement;
+        error_message_label = root.Q<Label>("ErrorMessage");
         left_content = root.Q<VisualElement>("LeftContent").Q<VisualElement>("Buttons");
         right_content = root.Q<VisualElement>("RightContent").Q<VisualElement>("Buttons");
 
@@ -49,10 +52,23 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
     public void ContinueButtonClicked() {
         try {
             ApplySelection();
+            ClearErrorMessage();
             MenuManager.inst.CloseMenu();
         } catch (WeaponNotSelectedException) {
             Debug.LogError("TODO --- handle WeaponNotSelectedException error!"); // note: this should be unreachable
+            MenuManager.PlayMenuErrorClick();
+            DisplayErrorMessage("Must select a primary and secondary weapon!");
         }
+    }
+
+    public void ClearErrorMessage() {
+        // TODO --- implement
+        error_message_label.text = "";
+    }
+
+    public void DisplayErrorMessage(string text) {
+        // TODO --- implement
+        error_message_label.text = text;
     }
 
     public void UpdateContents() {

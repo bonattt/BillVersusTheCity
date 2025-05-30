@@ -26,6 +26,11 @@ public class TutorialHUD : MonoBehaviour, IGameEventEffect {
     void Start() {
         tutorial_label = ui_document.rootVisualElement.Q<Label>();
         tutorial_label.text = tutorial_text;
+        
+
+        ui_document.rootVisualElement.experimental.animation.Start(25f, 200f, 300, (b, val) => {
+            b.style.height = val;
+        }); //.Ease(Easing.OutBounce);
 
         if (open_on_start) {
             OpenTutorialHUD();

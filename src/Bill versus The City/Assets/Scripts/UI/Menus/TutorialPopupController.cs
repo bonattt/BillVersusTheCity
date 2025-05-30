@@ -29,6 +29,7 @@ public class TutorialPopupController : AbstractCloseEventMenu
 
         skip_this_tutorial = root.Q<Toggle>("DontShowAgain");
         skip_all_tutorials = root.Q<Toggle>("SkipAllTutorials");
+
         UpdateUI();
     }
 
