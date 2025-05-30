@@ -1515,7 +1515,7 @@ MonoBehaviour:
   tutorial_text: move with [WASD]
   max_tutorial_duration: 20
   open_on_start: 1
-  complete_tutorial_inputs: 0a0000000b0000000c0000000d000000
+  complete_tutorial_inputs: 0e0000000d0000000c0000000b000000
   require_all_inputs: 1
 --- !u!114 &824713230
 MonoBehaviour:

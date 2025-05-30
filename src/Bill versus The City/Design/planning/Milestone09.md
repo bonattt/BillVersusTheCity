@@ -37,7 +37,8 @@ PLANNED BUGFIXES
 [+] FIX: Revisit default settings code. Difficulty should default to "normal" not to "custom"
     [+] Fixed defaults
     [+] I fixed defaults, but switching profiles needs to reload settings from the new save file
-[ ] FIX: "Move with WASD" tutorial doesn't clear
+[+] FIX: "Move with WASD" tutorial doesn't clear
+    - this works. It 
 
 UNPLANNED FEATURES
 [X] Police Countdown level conditions --> next milestone
