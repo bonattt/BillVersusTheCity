@@ -255,19 +255,19 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
     //////// DEBUG FIELDS ////////
     //////////////////////////////
     
-    public Vector3 debug_velocity, debug_forward, debug_left;
-    public bool debug_is_killed, debug_is_hurt, debug_is_shooting, debug_crouch_dive;
-    public float debug_crouch_percent, debug_aim_percent;
+    public Vector3 debug__velocity, debug__forward, debug__left;
+    public bool debug__is_killed, debug__is_hurt, debug__is_shooting, debug__crouch_dive;
+    public float debug__crouch_percent, debug__aim_percent;
 
     public void UpdateDebugFields() {
-        debug_velocity = move_velocity;
-        debug_forward = forward_direction;
-        debug_left = right_direction;
-        debug_is_killed = is_killed;
-        debug_is_hurt = is_hurt;
-        debug_is_shooting = is_shooting;
-        debug_crouch_percent = crouch_percent;
-        debug_aim_percent = aim_percent;
-        debug_crouch_dive = crouch_dive;
+        debug__velocity = move_velocity;
+        debug__forward = forward_direction;
+        debug__left = right_direction;
+        debug__is_killed = is_killed;
+        debug__is_hurt = is_hurt;
+        debug__is_shooting = is_shooting;
+        debug__crouch_percent = crouch_percent;
+        debug__aim_percent = aim_percent;
+        debug__crouch_dive = crouch_dive;
     }
 }

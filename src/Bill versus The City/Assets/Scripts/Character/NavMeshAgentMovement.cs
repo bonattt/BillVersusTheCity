@@ -43,14 +43,13 @@ using UnityEngine.AI;
     }
     
     public Vector3 debug__look_direction;
-    public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint=false, bool crouch=false) {
+    public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false) {
         // TODO --- crouch not implemented 
-        Debug.LogWarning($"enemy '{gameObject.name}' sprinting: {sprint}"); // TODO --- remove debug
         SetCharacterLookDirection(look_direction);
         // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
         debug__look_direction = look_direction;
-        
-        if(crouch) { Debug.LogWarning("enemy crouch not implemented!"); }
+
+        if (crouch) { Debug.LogWarning("enemy crouch not implemented!"); }
         _is_sprinting = sprint;
         if (sprint) {
             nav_mesh_agent.speed = walk_speed * sprint_multiplier;
@@ -63,6 +62,7 @@ using UnityEngine.AI;
         } else if (move_target != nav_mesh_agent.destination) {
             nav_mesh_agent.SetDestination(move_target);
         }
+        HandleAnimation();
     }
 
     public Vector3 MoveDirection() {
