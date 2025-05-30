@@ -44,8 +44,9 @@ UNPLANNED FEATURES
 [X] Level Config should support events that introduce new enemies --> next milestone
 
 UNPLANNED BUGFIXES
-[ ] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
+[+] Somehow I got stuck in both an aim and crouch state together, and couldn't get out. I cleared crouch somehow, not sure how, but not aim.
     - unknown steps to reproduce. I was trying to get scroll-wheel weapon switching to work at the time.
+    - cannot reproduce
 [?] Somehow melee enemy triggered EnemyBehavior.ReloadCancelled, got a null pointer on weapon, (because it takes a firearm), and then froze
         indefinitely. I'm not sure how that was a result, or how it happened in the first place
     - unknown steps to reproduce
@@ -54,7 +55,8 @@ UNPLANNED BUGFIXES
     kills the player. (Should be large red number and small gray number)
 [+] on Tutorial 1, the enemy is saying "huh" at weird times
 [+] FIX: enemies say "huh" when killed
-[ ] Last minute: make melee enemies sprint at you
+[+] Last minute: make melee enemies sprint at you
+[+] FIX: SMG cannot be loaded from save file, if the player unlocked it
 
 SOOSH FEEDBAC
 [+] Soosh was having errors trying to name save files

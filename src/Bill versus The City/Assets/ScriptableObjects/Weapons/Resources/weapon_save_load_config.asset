@@ -20,4 +20,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4301d7619dc0aa34280d31a6e2e1de8f, type: 2}
   - {fileID: 11400000, guid: 10016d1cc1afcc740b83364c980fdcb1, type: 2}
   - {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
+  - {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
   starting_weapons: 01010100000000

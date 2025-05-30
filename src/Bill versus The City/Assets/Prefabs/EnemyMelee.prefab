@@ -198,8 +198,8 @@ MonoBehaviour:
   current_action: 0
   reload_rate: 0.7
   reload_move_multiplier: 0.33
-  walk_speed: 4
-  sprint_multiplier: 1.75
+  walk_speed: 6
+  sprint_multiplier: 2
   crouched_speed: 0.25
   crouch_rate: 4
   uncrouch_rate: 4
@@ -217,7 +217,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   use_full_auto: 0
   nav_mesh_agent: {fileID: 2365366885385776978}
-  debug_look_direction: {x: 0, y: 0, z: 0}
+  debug__look_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &-6265441280578509666
 MonoBehaviour:
   m_ObjectHideFlags: 0
