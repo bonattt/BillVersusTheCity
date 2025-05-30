@@ -51,7 +51,7 @@ UNPLANNED BUGFIXES
         indefinitely. I'm not sure how that was a result, or how it happened in the first place
     - unknown steps to reproduce
     - I think I resolved this but did not document it. I think this call was made when the enemy was killed.
-[ ] Damage numbers displaying a large gray number and small red number when a small amount of armor is removed and the overflow health damage   
+[+] Damage numbers displaying a large gray number and small red number when a small amount of armor is removed and the overflow health damage   
     kills the player. (Should be large red number and small gray number)
 [+] on Tutorial 1, the enemy is saying "huh" at weird times
 [+] FIX: enemies say "huh" when killed

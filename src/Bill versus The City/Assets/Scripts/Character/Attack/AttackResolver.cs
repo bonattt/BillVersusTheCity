@@ -163,14 +163,18 @@ public static class AttackResolver {
         (float total_attack_damage, float health_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
         float overflow_damage;
         float armor_before = status.armor.armor_durability; // TODO --- remove debug code
+        float final_armor_damage, final_health_damage; // actual damage dealt, returned for displaying effects
         if (armor_damage > status.armor.armor_durability) {
             overflow_damage = armor_damage - status.armor.armor_durability;
+            final_armor_damage = armor_damage - overflow_damage;
             status.armor.armor_durability = 0;
             ResolveArmorBreak(attack, status, hit_location);
         } else {
             overflow_damage = 0;
             status.armor.armor_durability -= armor_damage;
+            final_armor_damage = armor_damage;
         }
+        final_health_damage = health_damage + overflow_damage;
         status.health -= health_damage + overflow_damage;
         if(total_attack_damage < (health_damage + overflow_damage)) {
             Debug.LogWarning($"Overflow damage more than base: {total_attack_damage} => {health_damage} + {overflow_damage}");
@@ -178,7 +182,7 @@ public static class AttackResolver {
         if (armor_before >= status.armor.armor_durability) {
             // Debug.LogWarning($"negative damage ({armor_damage})! {armor_before} --> {status.armor.armor_durability}"); // TODO --- uncomment warning!
         }    
-        return (health_damage, armor_damage);
+        return (final_health_damage, final_armor_damage);
     }
 
     public static void ResolveArmorBreak(IAttack attack, 
