@@ -47,7 +47,6 @@ public class UIFloater : MonoBehaviour
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(
             root_visual_element.panel, TransformToFollow.position, main_camera
         );
-
         root_visual_element.transform.position = new Vector2(
             newPosition.x - root_visual_element.layout.width / 2,
             newPosition.y - root_visual_element.layout.height / 2

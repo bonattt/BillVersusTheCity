@@ -8,6 +8,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public NavMeshAgentMovement controller;
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
 
+    [Tooltip("If true, the enemy will sprint when trying to get closer to the player, otherwise, they will shoot while closing distance.")]
+    public bool sprint_to_chase = false;
+    [Tooltip("if within this range, the enemy will switch to attack more aggressively.")]
     public float optimal_attack_range = 6f;
     public float max_attack_range {
         get {
@@ -112,12 +115,12 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
-    private void InitializeBehaviorsDict() {
+    private void InitializeBehaviorsDict()
+    {
         // initializes the `behaviors` dictionary with values
         behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
             // agressive behaviors
             {BehaviorMode.engaged, new StandAndShootBehavior()},
-            {BehaviorMode.persuing, new ChasePlayerBehavior()},
             {BehaviorMode.retreating, new FleeToCoverBehavior(fights_when_cornered: true)},
             {BehaviorMode.searching, new SearchingBehavior(use_initial_movement_target, initial_movement_target)},
             // passive behaviors
@@ -128,6 +131,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             {BehaviorMode.routed, new FleeToCoverBehavior(fights_when_cornered: false)},
             {BehaviorMode.dead, new DeadBehavior()},
         };
+        if (sprint_to_chase)
+        {
+            behaviors[BehaviorMode.persuing] = new ChasePlayerSprintBehavior();
+        }
+        else
+        {
+            behaviors[BehaviorMode.persuing] = new ChasePlayerBehavior();
+        }
     }
 
     public void Kill() {
@@ -172,7 +183,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         else if (AttackInput() && controller.attack_controller.CanAttack()) {
             controller.TryToAttack();
         }
-        controller.MoveCharacter(GetMoveTarget(), GetLookDirection(), sprint:false, crouch:false);
+        controller.MoveCharacter(GetMoveTarget(), GetLookDirection(), sprint:ctrl_sprint, crouch:false);
     }
 
     private Vector3 GetMoveTarget() {

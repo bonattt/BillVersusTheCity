@@ -249,6 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3396656997431563555}
   default_behavior: 4
+  sprint_to_chase: 1
   optimal_attack_range: 1.5
   use_initial_movement_target: 1
   initial_movement_target: {x: NaN, y: NaN, z: NaN}
