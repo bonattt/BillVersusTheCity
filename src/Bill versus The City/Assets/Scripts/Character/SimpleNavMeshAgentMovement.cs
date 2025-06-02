@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
  public class SimpleNavMeshAgentMovement : CharCtrl
 {
-
     protected bool _is_sprinting = false; // set in MoveCharacter
     public override bool is_sprinting
     {
@@ -17,12 +16,16 @@ using UnityEngine.AI;
 
     public NavMeshAgent nav_mesh_agent;
 
+    [Tooltip("if true, movement is temporarily overriden by choreography")]
+    public bool choreography_movement = false;
+
     public override void SetPosition(Vector3 new_position) {
         nav_mesh_agent.Warp(new_position);
     }
     
     public Vector3 debug__look_direction;
     public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false) {
+        Debug.LogWarning($"{gameObject.name}.MoveCharacter({move_target})"); // TODO --- remove debug
         // TODO --- crouch not implemented 
         SetCharacterLookDirection(look_direction);
         // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
@@ -42,17 +45,6 @@ using UnityEngine.AI;
             nav_mesh_agent.SetDestination(move_target);
         }
         HandleAnimation();
-    }
-    
-    public bool HasReachedDestination() {
-        if (!nav_mesh_agent.pathPending) {
-            if (nav_mesh_agent.remainingDistance <= nav_mesh_agent.stoppingDistance) {
-                if (!nav_mesh_agent.hasPath || nav_mesh_agent.velocity.sqrMagnitude == 0f) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public Vector3 MoveDirection() {

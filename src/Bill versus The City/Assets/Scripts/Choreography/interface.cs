@@ -8,11 +8,28 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
 
     [SerializeField]
     private Transform _destination;
-    public Transform destination { get => destination; }
-    public bool active { get; private set; }
-    public bool complete { get; private set; }
+    public Transform destination { get => _destination; }
+
+    [SerializeField]
+    private bool _active = false;
+    public bool active {
+        get => _active;
+        private set { _active = value; }
+    }
+    
+    [SerializeField]
+    private bool _complete = false;
+    public bool complete {
+        get => _complete;
+        private set { _complete = value; }
+    }
     public virtual void Activate() { active = true; }
     public virtual void Complete() { complete = true; }
+
+    void Start() {
+        active = false;
+        complete = false;
+    }
 }
 
 

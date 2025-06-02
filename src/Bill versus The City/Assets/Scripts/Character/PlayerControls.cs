@@ -11,10 +11,13 @@ public class PlayerControls : MonoBehaviour {
     public bool resume_aim_after_reload = false;
     public bool resume_sprint_after_reload = false;
 
-    protected IFirearm current_weapon { get { return player_movement.current_firearm; }}
+    [Tooltip("Set to true to lock the player's controls without pausing the game. (Used for Choreography)")]
+    public bool controls_locked = false;
+
+    protected IFirearm current_weapon { get { return player_movement.current_firearm; } }
 
     void Update() {
-        if (!player_movement.is_active) { return; /* do nothing while character inactive */ }
+        if (controls_locked || !player_movement.is_active) { return; /* do nothing while character inactive */ }
         sprint_input = SprintInput();
         aim_input = AimInput();
         cancel_aim_input = CancelAimInput();

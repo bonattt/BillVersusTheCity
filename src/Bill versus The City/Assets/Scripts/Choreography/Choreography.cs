@@ -10,9 +10,31 @@ public class Choreography : MonoBehaviour, IChoreography {
     [SerializeField]
     private int choreography_index = 0;
 
-    public bool active { get; private set; }
-    public bool complete { get; private set; }
-    public void Activate() { active = true; }
+    public PlayerControls player_controls;
+
+    public bool play_on_start = false;
+
+    [SerializeField]
+    private bool _active = false;
+    public bool active {
+        get => _active;
+        private set { _active = value; }
+    }
+    
+    [SerializeField]
+    private bool _complete = false;
+    public bool complete {
+        get => _complete;
+        private set { _complete = value; }
+    }
+    public void Activate() {
+        active = true;
+        player_controls.controls_locked = true;
+    }
+    public void Complete() {
+        complete = true;
+        player_controls.controls_locked = false;
+    }
 
     void Start() {
         active = false;
@@ -21,14 +43,23 @@ public class Choreography : MonoBehaviour, IChoreography {
 
 
     void Update() {
+        if (play_on_start) {
+            Activate();
+            play_on_start = false;
+            return;
+        }
         if (!active || complete) { return; }
 
         AbstractChoreographyStep step = choreography_steps[choreography_index];
         if (!step.active) { step.Activate(); }
 
         if (step.complete) {
-            Debug.LogWarning("next choreography step"); // TODO --- remove debug
-            choreography_index += 1;
+            if (OnFinalStep()) {
+                Complete();
+            } else {
+                Debug.LogWarning("next choreography step"); // TODO --- remove debug
+                choreography_index += 1;
+            }
         }
     }
 

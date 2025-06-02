@@ -3,13 +3,17 @@
 using UnityEngine;
 
 public class NavMeshChoreographyStep : AbstractChoreographyStep {
-    public NavMeshAgentMovement character_controller;
-
+    public SimpleNavMeshAgentMovement character_controller;
+    private const float arrival_threashold = 0.1f;
+    public float debug__distance_to_destination;
 
     void Update() {
         if (!active || complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
 
-        if (character_controller.HasReachedDestination()) {
+        float distance_to_dest = FlatDistance(character_controller.transform.position, destination.position);
+        debug__distance_to_destination = distance_to_dest;
+        if (distance_to_dest <= arrival_threashold) {
+            Debug.LogWarning("Has reached destination, complete!!"); // TODO --- remove debug
             Complete();
             return;
         }
@@ -23,6 +27,7 @@ public class NavMeshChoreographyStep : AbstractChoreographyStep {
 
     private void UpdateNavMeshMovement() {
         Vector3 move_direction = destination.position - character_controller.transform.position;
+        character_controller.choreography_movement = true;
         character_controller.MoveCharacter(destination.position, move_direction, sprint: false, crouch: false);
     }
 

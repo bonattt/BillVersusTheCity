@@ -5,11 +5,14 @@ using UnityEngine;
 public class ManualChoreographyStep : AbstractChoreographyStep {
     public ManualCharacterMovement character_controller;
 
-    public float arrival_threashold = 0.05f;
+    private const float arrival_threashold = 0.4f;
+
+    public float debug__distance_to_destination = -1f;
 
     void Update() {
         if (!active || complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
 
+        debug__distance_to_destination = FlatDistance(character_controller.transform.position, destination.position);
         if (FlatDistance(character_controller.transform.position, destination.position) < arrival_threashold) {
             Complete();
             return;

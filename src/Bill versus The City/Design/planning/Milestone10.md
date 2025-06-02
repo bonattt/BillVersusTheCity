@@ -24,7 +24,7 @@ PLANNED BUGFIXES
 [ ] 
 
 UNPLANNED FEATURES
- -
+[ ] Add check if player already owns to purchasable guns
 
 UNPLANNED BUGFIXES
  - 
