@@ -49,7 +49,12 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
         }
 
         DialogueController ctrl = MenuManager.inst.OpenDialoge(file_path);
-        IGameEventEffect callback = dialogue_callback.GetComponent<IGameEventEffect>();
+        IGameEventEffect callback;
+        if (dialogue_callback != null) {
+            callback = dialogue_callback.GetComponent<IGameEventEffect>();
+        } else {
+            callback = null;
+        }
         if (callback != null) {
             ctrl.AddDialogueCallback(callback);
         }

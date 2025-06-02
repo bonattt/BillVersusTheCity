@@ -57,7 +57,6 @@ public class Choreography : MonoBehaviour, IChoreography {
             if (OnFinalStep()) {
                 Complete();
             } else {
-                Debug.LogWarning("next choreography step"); // TODO --- remove debug
                 choreography_index += 1;
             }
         }

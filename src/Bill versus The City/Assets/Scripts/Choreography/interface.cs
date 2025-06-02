@@ -7,10 +7,6 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
     // interface for a single step of choreography
 
     [SerializeField]
-    private Transform _destination;
-    public Transform destination { get => _destination; }
-
-    [SerializeField]
     private bool _active = false;
     public bool active {
         get => _active;

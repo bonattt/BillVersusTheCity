@@ -5,6 +5,10 @@ using UnityEngine;
 public class ManualChoreographyStep : AbstractChoreographyStep {
     public ManualCharacterMovement character_controller;
 
+    [SerializeField]
+    private Transform _destination;
+    public Transform destination { get => _destination; }
+
     private const float arrival_threashold = 0.4f;
 
     public float debug__distance_to_destination = -1f;

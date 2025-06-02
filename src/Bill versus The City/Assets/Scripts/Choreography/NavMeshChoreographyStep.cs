@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class NavMeshChoreographyStep : AbstractChoreographyStep {
     public SimpleNavMeshAgentMovement character_controller;
+
+    [SerializeField]
+    private Transform _destination;
+    public Transform destination { get => _destination; }
     private const float arrival_threashold = 0.1f;
     public float debug__distance_to_destination;
 
@@ -13,7 +17,6 @@ public class NavMeshChoreographyStep : AbstractChoreographyStep {
         float distance_to_dest = FlatDistance(character_controller.transform.position, destination.position);
         debug__distance_to_destination = distance_to_dest;
         if (distance_to_dest <= arrival_threashold) {
-            Debug.LogWarning("Has reached destination, complete!!"); // TODO --- remove debug
             Complete();
             return;
         }

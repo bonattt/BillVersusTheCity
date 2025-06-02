@@ -34,7 +34,6 @@ Transform:
   m_Children:
   - {fileID: 1406225730276891801}
   - {fileID: 6418202182002640321}
-  - {fileID: 1682368642457629861}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &4027750390275126528
@@ -666,78 +665,4 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1031028589790486591, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
   m_PrefabInstance: {fileID: 6295183366117156350}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6550856101851539629
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7231611474296727704}
-    m_Modifications:
-    - target: {fileID: 2788073036257827572, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_Name
-      value: DialogueInteraction
-      objectReference: {fileID: 0}
-    - target: {fileID: 4998390857074393151, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: dialogue_files.Array.data[0]
-      value: Hub01\\test_dialogue
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618263408388500796, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7857640645324215563, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: name_header
-      value: Speak to Tom
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
---- !u!4 &1682368642457629861 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-  m_PrefabInstance: {fileID: 6550856101851539629}
   m_PrefabAsset: {fileID: 0}
