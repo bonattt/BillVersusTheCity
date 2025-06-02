@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7231611474296727704}
+  - component: {fileID: 4027750390275126528}
+  - component: {fileID: 3466306800112800121}
+  - component: {fileID: 2839091165939531404}
   m_Layer: 0
   m_Name: NPC-civilian
   m_TagString: Untagged
@@ -24,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2942751571209755427}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -15.07864, y: 0.39999998, z: -4.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -33,6 +36,84 @@ Transform:
   - {fileID: 6418202182002640321}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &4027750390275126528
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942751571209755427}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3466306800112800121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942751571209755427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b2ee74a4260b7498cea2324908a7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aim_target: {fileID: 0}
+  crouch_target: {fileID: 0}
+  rotation_degrees_per_second: 400
+  rotation_speed: 0.85
+  current_action: 0
+  reload_rate: 1
+  reload_move_multiplier: 0.33
+  walk_speed: 4
+  sprint_multiplier: 1.75
+  crouched_speed: 0.25
+  crouch_rate: 4
+  uncrouch_rate: 4
+  crouch_height: 0.5
+  uncrouched_height: 1.1
+  keep_reloading: 1
+  start_reload_at: 0
+  animatior_controller_ref: {fileID: 0}
+  crouch_dive_duration: 1
+  crouch_dive_remaining: 0
+  _crouch_percent: 0
+  nav_mesh_agent: {fileID: 0}
+  debug__look_direction: {x: 0, y: 0, z: 0}
+--- !u!114 &2839091165939531404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942751571209755427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8433efe4cf285824e9dc3e1c1af8a959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  death_effect_delay_seconds: 1
+  death_cleanup_delay_seconds: 15
+  _health: 0
+  _max_health: 100
+  armor_init: {fileID: 0}
+  _debug_has_armor: 0
+  _debug_max_armor: -1
+  _debug_armor: -1
+  _debug_armor_protection: -1
+  _debug_is_player: 0
 --- !u!1 &3015107161771491047
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +283,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: a69644b0d0873a74ba58b408fce9c20e, type: 2}
     - target: {fileID: 7253767703810587300, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

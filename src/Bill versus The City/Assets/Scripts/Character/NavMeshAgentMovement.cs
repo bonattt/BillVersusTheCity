@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
- public class NavMeshAgentMovement : CharCtrl
+ public class NavMeshAgentMovement : SimpleNavMeshAgentMovement
 {
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
@@ -16,17 +16,6 @@ using UnityEngine.AI;
     private EnemyPerception perception;
     private EnemyBehavior behavior;
 
-    private bool _is_sprinting = false; // set in MoveCharacter
-    public override bool is_sprinting
-    {
-        get
-        {
-            return _is_sprinting;
-        }
-    }
-
-    public NavMeshAgent nav_mesh_agent;
-
     public override void Start() {
         base.Start();
         perception = GetComponent<EnemyPerception>();
@@ -38,65 +27,53 @@ using UnityEngine.AI;
         UpdateReload();
     }
 
-    public override void SetPosition(Vector3 new_position) {
-        nav_mesh_agent.Warp(new_position);
-    }
-    
-    public Vector3 debug__look_direction;
-    public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false) {
-        // TODO --- crouch not implemented 
-        SetCharacterLookDirection(look_direction);
-        // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
-        debug__look_direction = look_direction;
+    // public Vector3 debug__look_direction;
+    // public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false) {
+    //     // TODO --- crouch not implemented 
+    //     SetCharacterLookDirection(look_direction);
+    //     // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
+    //     debug__look_direction = look_direction;
 
-        if (crouch) { Debug.LogWarning("enemy crouch not implemented!"); }
-        _is_sprinting = sprint;
-        if (sprint) {
-            nav_mesh_agent.speed = walk_speed * sprint_multiplier;
-        } else {
-            nav_mesh_agent.speed = walk_speed;
-        }
+    //     if (crouch) { Debug.LogWarning("enemy crouch not implemented!"); }
+    //     _is_sprinting = sprint;
+    //     if (sprint) {
+    //         nav_mesh_agent.speed = walk_speed * sprint_multiplier;
+    //     } else {
+    //         nav_mesh_agent.speed = walk_speed;
+    //     }
 
-        if (is_hit_stunned) {
-            nav_mesh_agent.SetDestination(transform.position);
-        } else if (move_target != nav_mesh_agent.destination) {
-            nav_mesh_agent.SetDestination(move_target);
-        }
-        HandleAnimation();
-    }
+    //     if (is_hit_stunned) {
+    //         nav_mesh_agent.SetDestination(transform.position);
+    //     } else if (move_target != nav_mesh_agent.destination) {
+    //         nav_mesh_agent.SetDestination(move_target);
+    //     }
+    //     HandleAnimation();
+    // }
 
-    public Vector3 MoveDirection() {
-        return (nav_mesh_agent.nextPosition - transform.position).normalized;
-    }
-    
-    public override Vector3 GetVelocity() {
-        return MoveDirection() * movement_speed;
-    }
+    // public Vector3 GetMoveDestination() {
+    //     switch (behavior.ctrl_move_mode) {
+    //         case MovementTarget.stationary:
+    //             return transform.position;
 
-    public Vector3 GetMoveDestination() {
-        switch (behavior.ctrl_move_mode) {
-            case MovementTarget.stationary:
-                return transform.position;
+    //         case MovementTarget.target:
+    //             if (behavior.ctrl_target != null) {
+    //                 return behavior.ctrl_target.transform.position;
+    //             }
+    //             break;
 
-            case MovementTarget.target:
-                if (behavior.ctrl_target != null) {
-                    return behavior.ctrl_target.transform.position;
-                }
-                break;
+    //         case MovementTarget.waypoint:
+    //             if (behavior.ctrl_waypoint != null) {
+    //                 return behavior.ctrl_waypoint;
+    //             }
+    //             break;
 
-            case MovementTarget.waypoint:
-                if (behavior.ctrl_waypoint != null) {
-                    return behavior.ctrl_waypoint;
-                }
-                break;
-
-            default:
-                Debug.LogWarning($"movement for {behavior.ctrl_move_mode} is not implemented!");
-                break;
-        }
-        Debug.LogWarning("Don't move (not implemented correctly!)");
-        return new Vector3(0f, 0f, 0f); // don't move
-    }
+    //         default:
+    //             Debug.LogWarning($"movement for {behavior.ctrl_move_mode} is not implemented!");
+    //             break;
+    //     }
+    //     Debug.LogWarning("Don't move (not implemented correctly!)");
+    //     return new Vector3(0f, 0f, 0f); // don't move
+    // }
 
     public override Vector3 GetShootVector() {
         return ShootTarget() - attack_controller.attack_start_point.position; //  DirectionFromLookTarget(ShootTarget());
@@ -106,7 +83,7 @@ using UnityEngine.AI;
         return behavior.ctrl_target.GetAimTarget().position;
     }
     
-    public Vector3 GetLookTarget() {
+    public override Vector3 GetLookTarget() {
         switch (behavior.ctrl_aim_mode) {
             case AimingTarget.stationary:
                 return new Vector3(0f, 0f, 0f);
@@ -143,9 +120,6 @@ using UnityEngine.AI;
         nav_mesh_agent.enabled = false;
     }
 
-    private void DisableCollision() {
-        GetComponent<CapsuleCollider>().enabled = false;
-    }
     public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
         // SpawnAmmoPickup();
@@ -165,11 +139,4 @@ public enum MovementTarget {
     target,
     waypoint, 
     random
-}
-
-public enum AimingTarget {
-    stationary,
-    target,
-    waypoint,
-    movement_direction  // TODO --- not implemented
 }

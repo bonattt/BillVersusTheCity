@@ -12,7 +12,7 @@ public enum CharacterActionKey {
 public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager, ICharacterMovement
 {
     // list of codes which don't correspond to actual actions, and should be reset to ActionCode.none
-    public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode>{ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint};
+    public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode> { ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint };
 
     protected CharacterController controller;
     private IAttackController _attack_controller;
