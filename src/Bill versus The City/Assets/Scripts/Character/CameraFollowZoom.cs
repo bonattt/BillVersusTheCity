@@ -29,7 +29,7 @@ public class CameraFollowZoom : MonoBehaviour
 
     public float un_zoomed_height = 15f;
     public float zoomed_height = 25f;
-    public float slerp = 0.7f;
+    public float slerp = 0.85f;
     [Tooltip("percentage between the mouse and player the camera is positioned. 1 follows just the mouse, 0 follows just the player")]
     public float follow_mouse_percent = 0.5f;
     public float max_vision_range = 6f;
@@ -75,12 +75,16 @@ public class CameraFollowZoom : MonoBehaviour
             Vector3 direction = (horizontal_position - target.position).normalized;
             horizontal_position = target.position + (direction * max_vision_range);
         }
-        
-        transform.position = AdjustCameraHeight(horizontal_position);
+        UpdateCameraPosition(horizontal_position);
     }
 
     private void UpdatePositionPlayer() {
-        transform.position = AdjustCameraHeight(target.position);
+        UpdateCameraPosition(target.position);
+    }
+
+    public void UpdateCameraPosition(Vector3 new_position) {
+        new_position = AdjustCameraHeight(new_position);
+        transform.position = Vector3.Slerp(transform.position, new_position, slerp);
     }
 
     private Vector3 AdjustCameraHeight(Vector3 horizontal_position) {

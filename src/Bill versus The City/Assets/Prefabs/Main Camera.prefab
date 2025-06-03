@@ -105,9 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b46aded8bd28c149b01fa04adbebbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera_follow_override: 0
+  override_camera_follow: 0
   un_zoomed_height: 20
   zoomed_height: 30
-  slerp: 0.7
+  slerp: 0.85
   follow_mouse_percent: 0.25
   max_vision_range: 6
   target: {fileID: 0}
