@@ -8,7 +8,11 @@ public class SequentialChoreographyStep : AbstractChoreographyStep {
 
     [Tooltip("the index in `choreography_steps` the choreography is currently handling. (published in inspector for debuging purposes)")]
     [SerializeField]
-    private int choreography_index = 0;
+    private int _choreography_index = 0;
+    public int choreography_index {
+        get => _choreography_index;
+        private set { _choreography_index = value; }
+    }
 
     void Update() {
         if (!active || complete) { return; }

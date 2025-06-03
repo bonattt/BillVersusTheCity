@@ -30,15 +30,20 @@ public class Choreography : MonoBehaviour, IChoreography {
     public void Activate() {
         active = true;
         player_controls.controls_locked = true;
+        sequential_choreography.Activate();
     }
     public void Complete() {
         complete = true;
         player_controls.controls_locked = false;
     }
 
+    private SequentialChoreographyStep sequential_choreography;
+
     void Start() {
         active = false;
         complete = false;
+        sequential_choreography = gameObject.AddComponent<SequentialChoreographyStep>();
+        sequential_choreography.choreography_steps = choreography_steps; 
     }
 
 
@@ -49,24 +54,20 @@ public class Choreography : MonoBehaviour, IChoreography {
             return;
         }
         if (!active || complete) { return; }
+        choreography_index = sequential_choreography.choreography_index;
+        // AbstractChoreographyStep step = choreography_steps[choreography_index];
+        // if (!step.active) { step.Activate(); }
 
-        AbstractChoreographyStep step = choreography_steps[choreography_index];
-        if (!step.active) { step.Activate(); }
-
-        if (step.complete) {
-            if (OnFinalStep()) {
-                Complete();
-            } else {
-                choreography_index += 1;
-            }
+        if (sequential_choreography.complete) {
+            Complete();
         }
     }
 
-    public bool HasNextStep() {
-        return choreography_index < choreography_steps.Count - 1;
-    }
+    // public bool HasNextStep() {
+    //     return choreography_index < choreography_steps.Count - 1;
+    // }
 
-    public bool OnFinalStep() {
-        return choreography_index == choreography_steps.Count - 1;
-    }
+    // public bool OnFinalStep() {
+    //     return choreography_index == choreography_steps.Count - 1;
+    // }
 }
