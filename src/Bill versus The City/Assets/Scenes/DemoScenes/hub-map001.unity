@@ -1033,6 +1033,14 @@ PrefabInstance:
       propertyPath: attack_controller
       value: 
       objectReference: {fileID: 338529282}
+    - target: {fileID: 6552781015089437835, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
+      propertyPath: camera_follow_override
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552781015089437835, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
+      propertyPath: override_camera_follow
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

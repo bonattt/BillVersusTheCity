@@ -13,6 +13,20 @@ using UnityEngine;
 
 public class CameraFollowZoom : MonoBehaviour
 {
+    public const CameraFollowMode DEFAULT_FOLLOW_MODE = CameraFollowMode.player_and_mouse;
+    [Tooltip("setting that overrides the normal camera follow mode, iff `override_camera_follow` is set to true")]
+    public CameraFollowMode camera_follow_override;
+    public bool override_camera_follow;
+
+    public CameraFollowMode camera_follow_mode {
+        get {
+            if (override_camera_follow) {
+                return camera_follow_override;
+            }
+            return DEFAULT_FOLLOW_MODE;
+        }
+    }
+
     public float un_zoomed_height = 15f;
     public float zoomed_height = 25f;
     public float slerp = 0.7f;
@@ -33,8 +47,27 @@ public class CameraFollowZoom : MonoBehaviour
     }
 
     private void UpdatePosition() {
-        // follow_mouse_percent
         if (MenuManager.inst.paused) { return; } // freeze camera while paused
+        switch (camera_follow_mode) {
+            case CameraFollowMode.player_and_mouse:
+                UpdatePositionMouseAndPlayer();
+                break;
+            case CameraFollowMode.target:
+                UpdatePositionPlayer();
+                break;
+
+            case CameraFollowMode.stationary | CameraFollowMode.choreography:
+                // do nothing
+                break;
+
+            default:
+                Debug.LogError($"unhandled CameraFollowMode: {camera_follow_mode}, override? {camera_follow_override}");
+                break;
+        } 
+    }
+
+    private void UpdatePositionMouseAndPlayer() {
+        // follow_mouse_percent
         Vector3 horizontal_position = (target.position * (1 - follow_mouse_percent)) + (mouse_position * follow_mouse_percent);
         horizontal_position = new Vector3(horizontal_position.x, target.position.y, horizontal_position.z);
         if (Vector3.Distance(horizontal_position, target.position) > max_vision_range)  {
@@ -43,8 +76,16 @@ public class CameraFollowZoom : MonoBehaviour
             horizontal_position = target.position + (direction * max_vision_range);
         }
         
-        Vector3 actual_position = new Vector3(horizontal_position.x, desired_camera_height, horizontal_position.z);
-        transform.position = actual_position;
+        transform.position = AdjustCameraHeight(horizontal_position);
+    }
+
+    private void UpdatePositionPlayer() {
+        transform.position = AdjustCameraHeight(target.position);
+    }
+
+    private Vector3 AdjustCameraHeight(Vector3 horizontal_position) {
+        // returns the given vector with it's height set to `desired_camera_height`
+        return new Vector3(horizontal_position.x, desired_camera_height, horizontal_position.z);
     }
 
     public static float FlatDistance(Vector3 first, Vector3 second) {
@@ -116,4 +157,12 @@ public class CameraFollowZoom : MonoBehaviour
     private void SetDebug() {
         debug_last_mouse_pos = last_mouse_position;
     }
+}
+
+
+public enum CameraFollowMode {
+    player_and_mouse,
+    target,
+    stationary,
+    choreography, // camera will be moved by choreography
 }

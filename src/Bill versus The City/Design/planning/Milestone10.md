@@ -16,6 +16,8 @@ PLANNED FEATURES
         - this combined with previous subtask will allow a nav-mesh character to walk to a destination while a manual 
             character takes several steps to walk a path simultaneously.
     [ ] FIX: manual character is running, instead of walking
+    [ ] REFACTOR: remove copypasta between Choreography and SequentialChoreographyStep. Choreography should just be implemented to dynamically use 
+        it's own SequentialChoreographyStep, instead of re-implementing functionality.
 
     [ ] Choreography can flow into a dialogue
     [ ] Dialogue can flow into a Choreography
@@ -38,6 +40,8 @@ PLANNED BUGFIXES
 
 UNPLANNED FEATURES
 [ ] Add check if player already owns to purchasable guns
+[ ] Add damage numbers on the shooting range
+[ ] Add additional distances on the shooting range
 
 UNPLANNED BUGFIXES
  - 
