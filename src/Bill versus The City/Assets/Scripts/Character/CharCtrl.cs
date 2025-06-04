@@ -358,8 +358,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
     
     private bool _crouch_last_frame = false;
-    public virtual void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false) {
+    public virtual void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false, bool walk=false) {
         is_sprinting = sprint && CanSprint();
+        Debug.LogWarning($"{gameObject.name}.CharCtrl.MoveCharacter(sprint={sprint})");
         if (crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero) {
             // if crouch diving, continue in that direction for the duration of the crouch dive
             move_direction = crouch_dive_direction;

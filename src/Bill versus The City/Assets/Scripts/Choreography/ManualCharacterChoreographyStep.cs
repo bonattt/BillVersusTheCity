@@ -23,7 +23,7 @@ public class ManualCharacterChoreographyStep : AbstractChoreographyStep {
         }
 
         Vector3 move_direction = destination.position - character_controller.transform.position;
-        character_controller.MoveCharacter(move_direction, look_direction: move_direction, sprint: false, crouch: false);
+        character_controller.MoveCharacter(move_direction, look_direction: move_direction, sprint: false, crouch: false, walk: true);
     }
 
     void OnDrawGizmosSelected() {

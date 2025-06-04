@@ -57,10 +57,14 @@ public class ManualCharacterMovement : CharCtrl
 
     [SerializeField]
     private Vector3 _last_move;
-    public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false) {
+    public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false, bool walk=false) {
         base.MoveCharacter(move_direction, look_direction, sprint, crouch);
         
         _last_move = move_direction * movement_speed;
+        if (walk) {
+            _last_move *= 0.5f;
+            Debug.LogWarning($"{gameObject.name} WALK!"); // TODO --- remove debug
+        }
         controller.SimpleMove(_last_move);
     }
 

@@ -24,10 +24,11 @@ using UnityEngine.AI;
     }
     
     public Vector3 debug__look_direction;
-    public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false) {
+    public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk=false) {
         // TODO --- crouch not implemented 
         SetCharacterLookDirection(look_direction);
         // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
+        if (walk) { Debug.LogError("NavMeshAgent walk=true not implemented!"); } // TODO --- remove debug
         debug__look_direction = look_direction;
 
         if (crouch) { Debug.LogWarning("enemy crouch not implemented!"); }
