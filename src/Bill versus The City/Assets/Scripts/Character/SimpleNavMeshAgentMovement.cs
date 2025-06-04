@@ -25,7 +25,6 @@ using UnityEngine.AI;
     
     public Vector3 debug__look_direction;
     public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false) {
-        Debug.LogWarning($"{gameObject.name}.MoveCharacter({move_target})"); // TODO --- remove debug
         // TODO --- crouch not implemented 
         SetCharacterLookDirection(look_direction);
         // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);

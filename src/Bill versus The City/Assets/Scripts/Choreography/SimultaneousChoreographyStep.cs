@@ -9,10 +9,10 @@ public class SimultaneousChoreographyStep : AbstractChoreographyStep {
 
     public int debug__completed = -1;
 
-    public override void Activate() {
-        base.Activate();
+    public override void Activate(IChoreography choreography_) {
+        base.Activate(choreography_);
         foreach (AbstractChoreographyStep step in choreography_steps) {
-            step.Activate();
+            step.Activate(choreography_);
         }
     }
 

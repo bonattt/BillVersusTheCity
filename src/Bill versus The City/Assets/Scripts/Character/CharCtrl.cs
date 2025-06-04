@@ -201,6 +201,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public virtual void Start()
     {
+        last_attack_time = float.NegativeInfinity;
         char_status = GetComponent<CharacterStatus>();
         char_status.Subscribe(this);
         controller = GetComponent<CharacterController>();

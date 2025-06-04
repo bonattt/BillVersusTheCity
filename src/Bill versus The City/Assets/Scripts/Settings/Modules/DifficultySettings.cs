@@ -53,7 +53,6 @@ public class DifficultySettings : AbstractSettingsModule {
 
     public void SetMultiplier(string key, float value) {
         multipliers[key] = value;
-        Debug.LogWarning($"SetMultiplier({key}, {value})"); // TODO --- remove debug
         difficulty_level = DifficultyLevel.custom;
         UpdateSubscribers(key);
     }

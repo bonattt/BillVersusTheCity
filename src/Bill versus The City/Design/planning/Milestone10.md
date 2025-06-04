@@ -10,7 +10,9 @@ PLANNED FEATURES
         
 [~] Cutscene/character choreography
     [+] Choreography can move characters around
-    [ ] Choreography can control the camera
+    [+] Choreography can control the camera
+        [+] Choreography overrides the camera
+        [+] Steps can change camera override
     [+] Choreography steps can execute simultaenously
     [+] Choreography steps can compose multiple sequential steps
         - this combined with previous subtask will allow a nav-mesh character to walk to a destination while a manual 

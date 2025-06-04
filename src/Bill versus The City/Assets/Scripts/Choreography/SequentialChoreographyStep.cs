@@ -18,7 +18,7 @@ public class SequentialChoreographyStep : AbstractChoreographyStep {
         if (!active || complete) { return; }
 
         AbstractChoreographyStep step = choreography_steps[choreography_index];
-        if (!step.active) { step.Activate(); }
+        if (!step.active) { step.Activate(this.choreography); }
 
         if (step.complete) {
             if (OnFinalStep()) {

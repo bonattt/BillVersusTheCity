@@ -19,10 +19,14 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
         get => _complete;
         private set { _complete = value; }
     }
-    public virtual void Activate() { active = true; }
+    protected IChoreography choreography;
+    public virtual void Activate(IChoreography choreography) {
+        active = true;
+        this.choreography = choreography;
+    }
     public virtual void Complete() { complete = true; }
 
-    void Start() {
+    protected virtual void Start() {
         active = false;
         complete = false;
     }
@@ -31,4 +35,6 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
 
 public interface IChoreography {
     // full set of choreography steps
+    public Transform camera_follow_target { get; set; }
+    public ChoreographyCameraMode camera_mode { get; set; }
 }
