@@ -46,7 +46,15 @@ public class LevelConfig : MonoBehaviour
     public static LevelConfig inst { get; private set; }
     public string next_level;
     public Interaction level_exit;
-    public bool combat_enabled = true;
+    // public bool combat_enabled = true;
+    public bool _combat_enabled = true;
+    public bool combat_enabled {
+        get => _combat_enabled;
+        set {
+            Debug.LogWarning($"combat enabled set: {_combat_enabled}"); // TODO --- remove debug
+            _combat_enabled = value;
+        }
+    }
 
     private int sequential_conditions_index = 0;
     public string level_music_name;

@@ -21,9 +21,9 @@ PLANNED FEATURES
     [+] REFACTOR: remove copypasta between Choreography and SequentialChoreographyStep. Choreography should just be implemented to dynamically use 
         it's own SequentialChoreographyStep, instead of re-implementing functionality.
 
-    [ ] Choreography can flow into a dialogue
-    [ ] Dialogue can flow into a Choreography
-    [ ] Choreography works with live enemies, not just dummy NPCs
+    [+] Choreography can flow into a dialogue
+    [+] Dialogue can flow into a Choreography
+    [+] Choreography works with live enemies, not just dummy NPCs
 
 [ ] additional stages in a level (eg. defeat some enemies, triggering more to spawn)
     [ ] an arbitrary number of objectives and event triggers on completion should be easy to configure in a LevelConfig
@@ -46,4 +46,4 @@ UNPLANNED FEATURES
 [ ] Add additional distances on the shooting range
 
 UNPLANNED BUGFIXES
- - 
+[ ] Level 1 allows the player to leave immediately, without clearing enemies first

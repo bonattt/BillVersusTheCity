@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Choreography : MonoBehaviour, IChoreography {
 
+    public static Choreography inst { get; private set; }
+
     [SerializeField]
     [Tooltip("set the camera mode for this choreography.")]
     private ChoreographyCameraMode _camera_mode = ChoreographyCameraMode.default_camera;
@@ -68,6 +70,7 @@ public class Choreography : MonoBehaviour, IChoreography {
     }
     private bool cached_combat_enabled;
     public void Activate() {
+        inst = this;
         active = true;
         player_controls.controls_locked = true;
         sequential_choreography.Activate(this);
@@ -76,11 +79,14 @@ public class Choreography : MonoBehaviour, IChoreography {
         SetCameraMode();
     }
     public void Complete() {
+        inst = null;
         complete = true;
         player_controls.controls_locked = false;
         level.combat_enabled = cached_combat_enabled;
         UnsetCameraMode();
     }
+    public void ActivateEffect() => Activate();
+    public void Interact(GameObject actor) => Activate();
 
     private SequentialChoreographyStep sequential_choreography;
 

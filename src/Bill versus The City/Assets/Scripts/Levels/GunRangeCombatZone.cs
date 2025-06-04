@@ -10,15 +10,16 @@ public class GunRangeCombatZone : MonoBehaviour {
     public float y_rot_min, y_rot_max;
     public bool debug_facing_direction, debug_in_zone;
 
-    void Update() {
-        if (TargetInZone() && TargetFacingDirection()) {
-            level_config.combat_enabled = true;
-        } else {
-            level_config.combat_enabled = false;
-        }
-        debug_in_zone = TargetInZone();
-        debug_facing_direction = TargetFacingDirection();
-    }
+    // TODO --- remove debug: uncomment below
+    // void Update() {
+    //     if (TargetInZone() && TargetFacingDirection()) {
+    //         level_config.combat_enabled = true;
+    //     } else {
+    //         level_config.combat_enabled = false;
+    //     }
+    //     debug_in_zone = TargetInZone();
+    //     debug_facing_direction = TargetFacingDirection();
+    // }
 
     public bool TargetFacingDirection() {
         float rotation = target.rotation.eulerAngles.y;

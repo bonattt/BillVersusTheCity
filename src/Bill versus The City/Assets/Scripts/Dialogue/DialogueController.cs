@@ -13,6 +13,8 @@ public class DialogueController : AbstractCloseEventMenu {
 
     private DialogueFile dialogue_file;
 
+    public bool dialogue_completed { get; private set; }
+
     public UIDocument ui_doc;
     private VisualElement root, left_portraits, right_portraits, speaker_left_element;
     private Label dialogue_text, speaker_label;
@@ -53,6 +55,7 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     public void StartDialogue(string file_path) {
+        dialogue_completed = false;
         character_portraits = new Dictionary<string, VisualElement>();
         dialogue_file = new DialogueFile(file_path);
         dialogue_file.ParseFile();
@@ -298,7 +301,9 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     public void DialogueFinished() {
-        foreach(IGameEventEffect e in dialogue_callbacks) {
+        dialogue_completed = true;
+        Debug.LogWarning("DialogueFinished!"); // TODO --- remove debug
+        foreach (IGameEventEffect e in dialogue_callbacks) {
             e.ActivateEffect();
         }
 
