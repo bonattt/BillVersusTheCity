@@ -18,6 +18,12 @@ public class CameraFollowZoom : MonoBehaviour
     public CameraFollowMode camera_follow_override;
     public bool override_camera_follow;
 
+    private Vector2 _camera_offset;
+    public Vector3 camera_offset {
+        get => _camera_offset;
+        set { _camera_offset = value; }
+    }
+
     public CameraFollowMode camera_follow_mode {
         get {
             if (override_camera_follow) {
@@ -84,6 +90,7 @@ public class CameraFollowZoom : MonoBehaviour
 
     public void UpdateCameraPosition(Vector3 new_position) {
         new_position = AdjustCameraHeight(new_position);
+        new_position += camera_offset;
         transform.position = Vector3.Slerp(transform.position, new_position, slerp);
     }
 

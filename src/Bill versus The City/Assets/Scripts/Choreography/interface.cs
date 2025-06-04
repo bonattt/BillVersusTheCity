@@ -36,5 +36,6 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
 public interface IChoreography {
     // full set of choreography steps
     public Transform camera_follow_target { get; set; }
+    public Vector3 camera_offset { get; set; }
     public ChoreographyCameraMode camera_mode { get; set; }
 }

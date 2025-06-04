@@ -32,6 +32,17 @@ public class Choreography : MonoBehaviour, IChoreography {
         }
     }
 
+    private Vector2 _cached_camera_offset = new Vector2(0, 0); // cached value from camera before choreography starts, so it can be restored
+    private Vector2 _camera_offset = new Vector2(0, 0);
+    // current offset to use on the camera during choreography, IFF the camera is set to FOLLOW TARGET mode
+    public Vector3 camera_offset {
+        get => _camera_offset;
+        set {
+            _camera_offset = value;
+            SetCameraMode();
+        }   
+    }
+
     private Transform cached_camera_follow_target = null; // used to store the original camera follow target so it can be restored after being overriden
 
     public PlayerControls player_controls;
@@ -78,6 +89,7 @@ public class Choreography : MonoBehaviour, IChoreography {
         complete = false;
         sequential_choreography = gameObject.AddComponent<SequentialChoreographyStep>();
         sequential_choreography.choreography_steps = choreography_steps;
+        _cached_camera_offset = camera_script.camera_offset;
         if (camera_script != null) {
             SetCameraMode();
         }
@@ -113,6 +125,7 @@ public class Choreography : MonoBehaviour, IChoreography {
             case ChoreographyCameraMode.follow_player:
                 camera_script.override_camera_follow = true;
                 camera_script.camera_follow_override = CameraFollowMode.target;
+                camera_script.camera_offset = camera_offset;
                 break;
 
             case ChoreographyCameraMode.follow_target:
@@ -120,15 +133,18 @@ public class Choreography : MonoBehaviour, IChoreography {
                 camera_script.camera_follow_override = CameraFollowMode.target;
                 cached_camera_follow_target = camera_script.target;
                 camera_script.target = camera_follow_target;
+                camera_script.camera_offset = camera_offset;
                 break;
 
             case ChoreographyCameraMode.manual:
                 camera_script.override_camera_follow = true;
                 camera_script.camera_follow_override = CameraFollowMode.choreography;
+                camera_script.camera_offset = camera_offset;
                 break;
         }
     }
     protected void UnsetCameraMode() {
+        camera_script.camera_offset = _cached_camera_offset;
         if (camera_script != null && cached_camera_follow_target != null) {
             camera_script.target = cached_camera_follow_target;
             cached_camera_follow_target = null;
