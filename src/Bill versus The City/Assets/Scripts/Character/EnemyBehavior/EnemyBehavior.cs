@@ -167,6 +167,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     void Update()
     {
+        if (!LevelConfig.inst.combat_enabled) { return; } // don't initiate actions while combat is disabled
         SetBehaviorMode();
         
         SetDefaultBehaviorPatterns();

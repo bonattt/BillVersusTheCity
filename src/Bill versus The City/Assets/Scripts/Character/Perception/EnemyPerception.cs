@@ -181,6 +181,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     }
 
     void Update() {
+        if (!LevelConfig.inst.combat_enabled) { return; } // do nothing when combat is not enabled
         UpdateLineOfSight(); // sets lazy values for line of sight
         UpdateNoticePlayer();
         UpdatePlayerPosition();

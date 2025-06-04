@@ -35,6 +35,7 @@ public class Choreography : MonoBehaviour, IChoreography {
     private Transform cached_camera_follow_target = null; // used to store the original camera follow target so it can be restored after being overriden
 
     public PlayerControls player_controls;
+    public LevelConfig level;
 
     public bool play_on_start = false;
 
@@ -54,15 +55,19 @@ public class Choreography : MonoBehaviour, IChoreography {
         get => _complete;
         private set { _complete = value; }
     }
+    private bool cached_combat_enabled;
     public void Activate() {
         active = true;
         player_controls.controls_locked = true;
         sequential_choreography.Activate(this);
+        cached_combat_enabled = level.combat_enabled;
+        level.combat_enabled = false;
         SetCameraMode();
     }
     public void Complete() {
         complete = true;
         player_controls.controls_locked = false;
+        level.combat_enabled = cached_combat_enabled;
         UnsetCameraMode();
     }
 
