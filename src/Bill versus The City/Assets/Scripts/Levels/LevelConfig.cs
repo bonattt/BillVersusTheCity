@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 
 public enum LevelVictoryType {
-    leave_by_truck,
+    leave_by_exit,
     instant
 }
 
@@ -14,7 +14,7 @@ public enum LevelVictoryType {
 public enum LevelVictoryConditions {
     none,
     clear_enemies,
-    escape_to_truck, 
+    escape_to_exit, 
     survive_countdown, 
     hub_level,
 }
@@ -70,7 +70,7 @@ public class LevelConfig : MonoBehaviour
     public LevelWeaponSelect level_weapons = LevelWeaponSelect.weapon_select;
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
     public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
-    public LevelVictoryType victory_type = LevelVictoryType.leave_by_truck;
+    public LevelVictoryType victory_type = LevelVictoryType.leave_by_exit;
     [Tooltip("Override the objective shown to the player. Override objectives can be incremented by events to show new objectives later in the leve.")]
     public List<string> override_objective_display;
     [SerializeField]
@@ -286,7 +286,7 @@ public class LevelConfig : MonoBehaviour
 
     protected void Validate() {
         // Logs warnings for some invalid configuration states
-        if (victory_type == LevelVictoryType.leave_by_truck && victory_conditions_preset == LevelVictoryConditions.escape_to_truck) {
+        if (victory_type == LevelVictoryType.leave_by_exit && victory_conditions_preset == LevelVictoryConditions.escape_to_exit) {
             Debug.LogWarning("Objective cannot be escape by truck if victory type is also to escape by truck"); 
         }
 
@@ -345,7 +345,7 @@ public class LevelConfig : MonoBehaviour
                 InstantiateVictoryConditionInstant(prefab_clear_enemies_condition);
                 return;
                 
-            case LevelVictoryConditions.escape_to_truck:
+            case LevelVictoryConditions.escape_to_exit:
                 // no conditions are required, just activate the truck exit
                 ActivateLevelExit();
                 return; 
@@ -436,7 +436,7 @@ public class LevelConfig : MonoBehaviour
                     ctrl.AddDialogueCallback(new SimpleActionEvent(CompleteLevel));
                 }
                 return;
-            case LevelVictoryType.leave_by_truck:
+            case LevelVictoryType.leave_by_exit:
                 ActivateLevelExit();
                 return;
 

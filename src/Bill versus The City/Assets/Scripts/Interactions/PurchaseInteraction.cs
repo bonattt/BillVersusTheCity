@@ -13,6 +13,9 @@ public class PurchaseInteraction : MonoBehaviour, IInteractionEffect, IPurchase 
     public int _purchase_cost = 10;
     public int purchase_cost { get => _purchase_cost; }
 
+    [Tooltip("If true, this interaction will check the player's inventory and delete itself if the player already owns this firearm.")]
+    public bool destroy_if_already_owned = true;
+
     void Start() {
         UpdateUIText();
     }

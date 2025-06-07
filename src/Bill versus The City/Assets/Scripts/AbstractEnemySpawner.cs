@@ -39,7 +39,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
     public string base_enemy_name = "Enemy";
     private int spawns_count = 0;
     
-    void Start()
+    protected virtual void Start()
     {
         InitializeSpawner();
     }
@@ -72,18 +72,18 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         InitializeSpawnPoints();
     }
 
-    public void SpawnEnemy() {
+    public GameObject SpawnEnemy() {
         GameObject prefab = GetPrefab();
         GameObject enemy = Instantiate(prefab);
         enemy.name = GetNextEnemyName();
-        
+
         NavMeshAgentMovement enemy_ctrl = enemy.GetComponent<NavMeshAgentMovement>();
         enemy_ctrl.SetPosition(GetSpawnPoint().GetSpawnPosition());
         IFirearm weapon = GetWeapon();
         if (weapon != null) {
             enemy_ctrl.current_firearm = weapon;
         }
-        
+
         IArmor armor = GetArmor();
         if (armor != null) {
             enemy_ctrl.GetStatus().ApplyNewArmor(armor);
@@ -92,6 +92,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         ConfigureEnemyBehavior(enemy_ctrl.GetComponent<EnemyBehavior>());
         // TODO --- apply behaviors // --- I think this is handled?
         LogSpawn(enemy_ctrl);
+        return enemy;
     }
 
     public bool log_spawns = false;

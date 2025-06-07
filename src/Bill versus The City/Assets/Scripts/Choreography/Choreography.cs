@@ -69,6 +69,7 @@ public class Choreography : MonoBehaviour, IChoreography {
         private set { _complete = value; }
     }
     private bool cached_combat_enabled;
+    public bool debug__cached_combat_enabled;
     public void Activate() {
         inst = this;
         active = true;
@@ -77,6 +78,8 @@ public class Choreography : MonoBehaviour, IChoreography {
         cached_combat_enabled = level.combat_enabled;
         level.combat_enabled = false;
         SetCameraMode();
+
+        debug__cached_combat_enabled = cached_combat_enabled;
     }
     public void Complete() {
         inst = null;

@@ -71,7 +71,7 @@ public class CombatHUDManager : MonoBehaviour
                 }
                 return $"Defeat all enemies {GetEnemyCountString()}";
                 
-            case LevelVictoryConditions.escape_to_truck:
+            case LevelVictoryConditions.escape_to_exit:
                 return "Escape to your truck!";
 
             case LevelVictoryConditions.survive_countdown:

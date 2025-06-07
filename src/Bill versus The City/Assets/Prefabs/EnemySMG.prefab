@@ -242,13 +242,14 @@ MonoBehaviour:
   crouch_dive_duration: 1
   crouch_dive_remaining: 0
   _crouch_percent: 0
+  nav_mesh_agent: {fileID: 1203654417675078061}
+  choreography_movement: 0
+  debug__look_direction: {x: 0, y: 0, z: 0}
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
   use_full_auto: 1
-  nav_mesh_agent: {fileID: 1203654417675078061}
-  debug_look_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &6089512900058898252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 437746924962861259}
   default_behavior: 4
+  sprint_to_chase: 0
   optimal_attack_range: 10
   use_initial_movement_target: 1
   initial_movement_target: {x: NaN, y: NaN, z: NaN}
