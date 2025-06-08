@@ -38,8 +38,7 @@ public enum LevelWeaponSelect {
 //     after_dialogue,
 // }
 
-public class LevelConfig : MonoBehaviour
-{
+public class LevelConfig : MonoBehaviour {
     private uint level_number = 0;
     private static uint level_counter = 1;
 
@@ -56,11 +55,12 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
+    [SerializeField] // TODO --- remove debug
     private int sequential_conditions_index = 0;
     public string level_music_name;
     private ISFXSounds level_music;
 
-    public bool weapon_select_on_start { 
+    public bool weapon_select_on_start {
         get {
             // NOTE: planning to add additional options here that change the availible selection of weapons between all, or just weapons unlocked by the player
             return level_weapons == LevelWeaponSelect.weapon_select;
@@ -69,7 +69,7 @@ public class LevelConfig : MonoBehaviour
     public List<string> additive_scene_loads;
     public LevelWeaponSelect level_weapons = LevelWeaponSelect.weapon_select;
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
-    public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none; 
+    public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none;
     public LevelVictoryType victory_type = LevelVictoryType.leave_by_exit;
     [Tooltip("Override the objective shown to the player. Override objectives can be incremented by events to show new objectives later in the leve.")]
     public List<string> override_objective_display;
@@ -119,9 +119,8 @@ public class LevelConfig : MonoBehaviour
             }
         }
     }
-    
-    void Start()
-    {
+
+    void Start() {
         LoadAdditiveScenes();
         PlayerCharacter.inst.inventory.dollars_change_in_level = 0;
         level_number = level_counter++;
@@ -139,17 +138,25 @@ public class LevelConfig : MonoBehaviour
         CheckSequentialLevelConditions();
         bool level_failed = CheckFailLevelConditions();
 
-        if(level_failed) {
+        if (level_failed) {
             FailLevel();
         }
+
+        // if (victory_conditions_preset == LevelVictoryConditions.clear_enemies && ) {
+        //     if (sequential_conditions_completed) {
+                
+        //     } else {
+                
+        //     }
+        // }
+        UpdateDebug();
     }
 
     void OnDestroy() {
         CleanupLevel();
     }
 
-    public string GetOverrideObjectiveDisplay()
-    {
+    public string GetOverrideObjectiveDisplay() {
         // returns the current override for the objective display.
         // returns null if the objective display isn't overridden.
         if (override_objective_display == null || override_objective_display.Count == 0) {
@@ -164,12 +171,10 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
-    public void IncrimentObjectiveDisplay()
-    {
+    public void IncrimentObjectiveDisplay() {
         // incriments the index for `override_objective_display` by 1, and sanitizes the value.
         // if the value was or would be invalid, log a warning and set it to a valid value.
-        if (objective_display_index < 0)
-        {
+        if (objective_display_index < 0) {
             Debug.LogWarning($"objective_display_index {objective_display_index} is invalid");
             objective_display_index = 0;
         }
@@ -181,15 +186,12 @@ public class LevelConfig : MonoBehaviour
         }
     }
 
-    private ISFXSounds LoadLevelMusic()
-    {
-        if (level_music_name == null || level_music_name.Equals(""))
-        {
+    private ISFXSounds LoadLevelMusic() {
+        if (level_music_name == null || level_music_name.Equals("")) {
             Debug.Log($"no level music set: '{level_music_name}'");
             return null;
         }
-        if (test_mode)
-        {
+        if (test_mode) {
             Debug.LogWarning($"skipping level music because of test mode");
             return null;
         }
@@ -222,8 +224,7 @@ public class LevelConfig : MonoBehaviour
             } else {
                 menu.AddCloseCallback(new SimpleActionEvent(StartLevel));
             }
-        } 
-        else if (has_level_start_dialogue) {
+        } else if (has_level_start_dialogue) {
             OpenLevelStartDialouge();
         } else {
             // just start the level immediately, no start menus
@@ -246,8 +247,7 @@ public class LevelConfig : MonoBehaviour
         // TODO --- this is not a good solution to two way binding
         if (CombatHUDManager.inst != null) {
             CombatHUDManager.inst.victory_type = victory_conditions;
-        }
-        else { Debug.LogWarning("Cannot set HUD victory conditions"); } // TODO --- remove debug
+        } else { Debug.LogWarning("Cannot set HUD victory conditions"); } // TODO --- remove debug
     }
 
     public void ConfigureLevel() {
@@ -269,7 +269,7 @@ public class LevelConfig : MonoBehaviour
             Debug.LogError("`LevelWeaponSelect.previous` is not implemented!");
         }
     }
-    
+
     public void StartLevel() {
         if (inst != null && inst != this) {
             Destroy(inst);
@@ -287,7 +287,7 @@ public class LevelConfig : MonoBehaviour
     protected void Validate() {
         // Logs warnings for some invalid configuration states
         if (victory_type == LevelVictoryType.leave_by_exit && victory_conditions_preset == LevelVictoryConditions.escape_to_exit) {
-            Debug.LogWarning("Objective cannot be escape by truck if victory type is also to escape by truck"); 
+            Debug.LogWarning("Objective cannot be escape by truck if victory type is also to escape by truck");
         }
 
         if (victory_conditions_preset == LevelVictoryConditions.survive_countdown && failure_conditions_preset == LevelFailuerConditions.countdown) {
@@ -334,27 +334,27 @@ public class LevelConfig : MonoBehaviour
     }
 
     private void ApplyPresetVictoryCondition() {
-        switch(victory_conditions_preset) {
+        switch (victory_conditions_preset) {
             case LevelVictoryConditions.none:
                 return; // do nothing
 
             case LevelVictoryConditions.hub_level:
                 return; // do nothing
-            
+
             case LevelVictoryConditions.clear_enemies:
                 InstantiateVictoryConditionInstant(prefab_clear_enemies_condition);
                 return;
-                
+
             case LevelVictoryConditions.escape_to_exit:
                 // no conditions are required, just activate the truck exit
                 ActivateLevelExit();
-                return; 
+                return;
 
             case LevelVictoryConditions.survive_countdown:
                 ILevelCondition condition = InstantiateVictoryConditionInstant(prefab_countdown_timer_condition);
                 ConfigureCountdownCondition(condition, Color.green, preset_config_countdown_timer_seconds);
                 return;
-                
+
             default:
                 Debug.LogError($"unknown victory condition(s) preset '{victory_conditions_preset}'");
                 return;
@@ -379,7 +379,7 @@ public class LevelConfig : MonoBehaviour
          * Handles error cases for all of the above
          */
         try {
-            CountdownCondition countdown_condition = (CountdownCondition) condition;
+            CountdownCondition countdown_condition = (CountdownCondition)condition;
             // TimerUIController ui_ctrl = countdown_condition.gameObject.GetComponent<TimerUIController>();
             // if (ui_ctrl == null) {
             //     Debug.LogError("Unable to get TimerUIController from countdown prefab!!");
@@ -454,7 +454,7 @@ public class LevelConfig : MonoBehaviour
         // TODO --- add configurations for what "next level" does, besides just loading a new scene
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_finished);
         if (ctrl == null) {
-            NextLevel(); 
+            NextLevel();
         } else {
             ctrl.AddDialogueCallback(new SimpleActionEvent(NextLevel));
         }
@@ -468,9 +468,9 @@ public class LevelConfig : MonoBehaviour
     }
 
     public void FailLevel() {
-        #if UNITY_EDITOR
-            EditorApplication.isPaused = pause_on_level_failure;
-        #endif
+#if UNITY_EDITOR
+        EditorApplication.isPaused = pause_on_level_failure;
+#endif
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_failed);
         if (ctrl == null) {
             MenuManager.inst.PlayerDefeatPopup();
@@ -481,19 +481,25 @@ public class LevelConfig : MonoBehaviour
 
     public bool has_objective_display_override => override_objective_display != null && override_objective_display.Count > 0;
 
+    public bool sequential_conditions_completed {
+        get {
+            return sequential_conditions_index >= sequential_level_conditions.Count;
+        }
+    }
+
     private void CheckSequentialLevelConditions() {
         if (!level_started) { return; /* don't check if level isn't started yet */ }
-        for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++)
-        {
+        for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = sequential_level_conditions[i];
-            if (current_condition.was_triggered)  {
+            // TODO --- implement ILevelCondition.condition_effects_completed
+            if (current_condition.was_triggered) { // TODO --- implement ILevelCondition.condition_effects_completed
+            // TODO --- implement ILevelCondition.condition_effects_completed
                 continue;
             } // skip already triggered conditions
             else if (!current_condition.ConditionMet()) {
                 // current condition is NOT met, so we stop iterating. 
                 break;
-            }
-            else {
+            } else {
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
                 sequential_conditions_index = i + 1;
@@ -504,15 +510,15 @@ public class LevelConfig : MonoBehaviour
             }
         }
     }
-    
+
     private bool CheckFailLevelConditions() {
         /* checks all the level fail conditions, if any is true, returns true and evaluates that conditions triggers.
          */
         if (!level_started) { return false; /* don't check if level isn't started yet */ }
         for (int i = 0; i < non_sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = non_sequential_level_conditions[i];
-            if (current_condition.was_triggered) { 
-                continue; 
+            if (current_condition.was_triggered) {
+                continue;
             } // skip already triggered conditions
             else if (!current_condition.ConditionMet()) {
                 // current condition is NOT met, so we stop iterating. 
@@ -528,14 +534,14 @@ public class LevelConfig : MonoBehaviour
 
     private static List<ILevelCondition> InitConditions(List<MonoBehaviour> init_scripts) {
         List<ILevelCondition> conditions = new List<ILevelCondition>();
-        for(int i = 0; i < init_scripts.Count; i++) {
+        for (int i = 0; i < init_scripts.Count; i++) {
             MonoBehaviour b = init_scripts[i];
             if (b == null) {
                 Debug.LogWarning("empty script slot in LevelConfig init conditions");
                 continue;
             }
             try {
-                ILevelCondition c = (ILevelCondition) b;
+                ILevelCondition c = (ILevelCondition)b;
                 c.was_triggered = false;
                 conditions.Add(c);
             } catch (InvalidCastException) {
@@ -560,13 +566,18 @@ public class LevelConfig : MonoBehaviour
         if (scriptable_object == null) { return null; }
         IFirearm weapon;
         try {
-            weapon = ((IFirearm) scriptable_object).CopyFirearm();
+            weapon = ((IFirearm)scriptable_object).CopyFirearm();
         } catch (InvalidCastException) {
             Debug.LogError($"ScriptableObject {scriptable_object} not castable to a valid IWeapon.");
             return null;
-        }   
+        }
         weapon.current_ammo = weapon.ammo_capacity;
         return weapon;
+    }
+
+    public bool debug__sequential_conditions_completed = false;
+    private void UpdateDebug() {
+        debug__sequential_conditions_completed = sequential_conditions_completed;
     }
 
 

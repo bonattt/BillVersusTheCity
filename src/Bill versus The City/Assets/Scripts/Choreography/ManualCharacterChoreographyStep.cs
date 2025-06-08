@@ -14,7 +14,7 @@ public class ManualCharacterChoreographyStep : AbstractChoreographyStep {
     public float debug__distance_to_destination = -1f;
 
     void Update() {
-        if (!active || complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
+        if (!active || choreography_complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
 
         debug__distance_to_destination = FlatDistance(character_controller.transform.position, destination.position);
         if (FlatDistance(character_controller.transform.position, destination.position) < arrival_threashold) {

@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemiesEvent : MonoBehaviour, IGameEventEffect, IInteractionEffect {
+public class SpawnEnemiesEvent : AbstractInteractionGameEvent {
 
     public List<AbstractEnemySpawner> enemy_spawners;
-    public void Interact(GameObject actor) {
+
+    protected override void Effect() {
         SpawnEnemies();
     }
-
-    public void ActivateEffect() {
-        SpawnEnemies();
-    }
-
     public List<GameObject> SpawnEnemies() {
         List<GameObject> enemies_spawned = new List<GameObject>();
         foreach (AbstractEnemySpawner spawn in enemy_spawners) {

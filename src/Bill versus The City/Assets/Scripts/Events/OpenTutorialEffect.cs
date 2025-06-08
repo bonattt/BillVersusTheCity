@@ -1,23 +1,21 @@
 
 using UnityEngine;
 
-public class OpenTutorialEffect : MonoBehaviour, IGameEventEffect, IInteractionEffect {
+public class OpenTutorialEffect : AbstractInteractionGameEvent {
 
     public string tutorial_name;
     public MonoBehaviour tutorial_callback = null;
     private IGameEventEffect _tutorial_callback = null;
 
-    void Start() {
+    protected override void Start() {
+        base.Start();
         if (tutorial_callback != null) {
             _tutorial_callback = tutorial_callback.GetComponent<IGameEventEffect>();
         }
+        Debug.LogWarning("// TODO --- make event complete when menu is closed!");
     }
 
-    public void Interact(GameObject actor) {
-        ActivateEffect();
-    }
-    
-    public void ActivateEffect() {
+    protected override void Effect() {
         TutorialPopupController popup = TutorialPopupLibrary.inst.OpenTutorial(tutorial_name);
         
         if (_tutorial_callback == null) {

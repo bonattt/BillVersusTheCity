@@ -22,8 +22,11 @@ public class TutorialHUD : MonoBehaviour, IGameEventEffect {
     private bool is_open = false;
 
     private Label tutorial_label;
+    
+    public bool effect_completed { get; protected set; }
 
     void Start() {
+        effect_completed = false;
         tutorial_label = ui_document.rootVisualElement.Q<Label>();
         tutorial_label.text = tutorial_text;
         
@@ -44,9 +47,11 @@ public class TutorialHUD : MonoBehaviour, IGameEventEffect {
 
         if (Time.time >= max_tutorial_duration + openned_at_time) {
             CloseTutorialHUD();
+            effect_completed = true;
         }
         else if (RequiredInputsEntered()) {
             CloseTutorialHUD();
+            effect_completed = true;
         }
     }
 

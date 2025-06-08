@@ -1,13 +1,9 @@
 
 using UnityEngine;
 
-public class AlertEnemies : MonoBehaviour, IGameEventEffect, IInteractionEffect {
+public class AlertEnemies : AbstractInteractionGameEvent {
 
-    public void Interact(GameObject actor) {
-        ActivateEffect();
-    }
-    
-    public void ActivateEffect() {
+    protected override void Effect() {
         EnemiesManager.inst.AlertAll();
     }
 }

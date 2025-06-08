@@ -15,12 +15,12 @@ public class SequentialChoreographyStep : AbstractChoreographyStep {
     }
 
     void Update() {
-        if (!active || complete) { return; }
+        if (!active || choreography_complete) { return; }
 
         AbstractChoreographyStep step = choreography_steps[choreography_index];
         if (!step.active) { step.Activate(this.choreography); }
 
-        if (step.complete) {
+        if (step.choreography_complete) {
             if (OnFinalStep()) {
                 Complete();
             } else {

@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FailLevelEvent : MonoBehaviour, IGameEventEffect, IInteractionEffect
+public class FailLevelEvent : AbstractInteractionGameEvent
 {
-    public void Interact(GameObject actor) {
-        ActivateEffect();
-    }
-    
-    public void ActivateEffect() {
+    protected override void Effect() {
         LevelConfig.inst.FailLevel();
     }
 }

@@ -14,6 +14,7 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
 
     public MonoBehaviour dialogue_callback;
 
+    public bool effect_completed { get => true; } // TODO --- implement
 
     void Start() {
         Reset();
@@ -59,6 +60,7 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
             ctrl.AddDialogueCallback(callback);
         }
         // ctrl.dialogue_finished = dialogue_finished;
+        Debug.LogWarning("// TODO --- make event complete when menu is closed!");
     }
 
     public void Interact(GameObject actor) {

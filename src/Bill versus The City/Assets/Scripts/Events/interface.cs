@@ -5,6 +5,8 @@ using UnityEngine;
 
 public interface IGameEventEffect {
     // TODO ---
+
+    public bool effect_completed { get; }
     public void ActivateEffect();
     // public GameObject GetNextEventPrefab() { return null; }
 }

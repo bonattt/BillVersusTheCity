@@ -26,7 +26,8 @@ public class CountdownCondition : AbstractLevelCondition, ITimer {
     // public List<MonoBehaviour> init_effects;
     // public List<IGameEventEffect> effects { get; private set; }
 
-    protected override void ExtendStart() {
+    protected override void Start() {
+        base.Start();
         _countdown = start_time_seconds;
     }
 

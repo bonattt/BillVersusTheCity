@@ -9,6 +9,18 @@ public class CompoundEffect : MonoBehaviour, IGameEventEffect {
     public List<GameObject> effects;
     private List<IGameEventEffect> _effects;
 
+    [Tooltip("published to editor for debugging")]
+    [SerializeField]
+    private bool _effect_completed = false;
+    public bool effect_completed {
+        get {
+            foreach (IGameEventEffect e in _effects) {
+                if (!e.effect_completed) return false;
+            }
+            return true;
+        }
+    }
+
     void Start() {
         InitializeEffects();
     }

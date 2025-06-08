@@ -17,7 +17,7 @@ public class SimultaneousChoreographyStep : AbstractChoreographyStep {
     }
 
     void Update() {
-        if (!active || complete) { return; }
+        if (!active || choreography_complete) { return; }
 
         if (AllStepsComplete()) {
             Complete();
@@ -27,7 +27,7 @@ public class SimultaneousChoreographyStep : AbstractChoreographyStep {
     public bool AllStepsComplete() {
         debug__completed = 0;
         foreach (AbstractChoreographyStep step in choreography_steps) {
-            if (!step.complete) { return false; }
+            if (!step.choreography_complete) { return false; }
             debug__completed += 1;
         }
         return true;

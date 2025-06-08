@@ -11,6 +11,8 @@ public abstract class AbstractLevelCondition : MonoBehaviour, ILevelCondition {
     public bool is_active { get; set; }
     public bool was_triggered { get; set; }
 
+    public virtual bool condition_effects_completed { get => was_triggered; } // by default, condition is complete once it is triggered
+
     public List<MonoBehaviour> init_effects;
     private List<IGameEventEffect> _effects = new List<IGameEventEffect>();
     public List<IGameEventEffect> effects { 
@@ -21,14 +23,20 @@ public abstract class AbstractLevelCondition : MonoBehaviour, ILevelCondition {
     // private List<IGameEventEffect> pre_loaded_effects = new List<IGameEventEffect>();
     public void AddEffect(IGameEventEffect new_effect) => effects.Add(new_effect);
 
-    void Start() {
+    protected virtual void Start() {
         List<IGameEventEffect> events_from_init = GameEventEffectUtil.LoadEventsFromMonoBehaviour(init_effects);
         _effects = _effects.Concat(events_from_init).ToList();
-        ExtendStart();
     }
 
-    protected virtual void ExtendStart() {
-        // do nothing, allow sub-classes to extend start
+    public void TriggerEffects() {
+        if (effects == null) {
+            Debug.LogWarning($"effects null in ILevelCondition {this.GetType()}: {this}");
+            return;
+        }
+        for (int i = 0; i < effects.Count; i++) {
+            effects[i].ActivateEffect();
+        }
+        was_triggered = true;
     }
 
     public abstract bool ConditionMet();

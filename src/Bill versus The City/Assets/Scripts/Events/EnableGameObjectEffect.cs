@@ -3,16 +3,11 @@
 
 using UnityEngine;
 
-public class EnableGameObjectEffect : MonoBehaviour, IGameEventEffect, IInteractionEffect {
+public class EnableGameObjectEffect : AbstractInteractionGameEvent {
     
     public GameObject target; 
     public bool set_game_object_enabled = true;
-
-    public void Interact(GameObject actor) {
-        ActivateEffect();
-    }
-    
-    public void ActivateEffect() {
+    protected override void Effect() {
         target.SetActive(set_game_object_enabled);
     }
 }

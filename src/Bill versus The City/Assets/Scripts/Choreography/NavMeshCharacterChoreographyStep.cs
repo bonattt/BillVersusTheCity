@@ -12,7 +12,7 @@ public class NavMeshCharacterChoreographyStep : AbstractChoreographyStep {
     public float debug__distance_to_destination;
 
     void Update() {
-        if (!active || complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
+        if (!active || choreography_complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
 
         float distance_to_dest = FlatDistance(character_controller.transform.position, destination.position);
         debug__distance_to_destination = distance_to_dest;

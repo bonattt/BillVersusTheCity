@@ -6,6 +6,7 @@ using UnityEngine;
 public interface ILevelCondition {
     public bool is_active { get; set; }
     public bool was_triggered { get; set; }
+    public bool condition_effects_completed { get; } // flag, if true, effects from "TriggerEffects" have finished evaluation, and the next conditions may be evaluated
     public bool ConditionMet();
     public void TriggerEffects() {
         if (effects == null) { 

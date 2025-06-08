@@ -12,23 +12,23 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
         get => _active;
         private set { _active = value; }
     }
-    
+
     [SerializeField]
-    private bool _complete = false;
-    public bool complete {
-        get => _complete;
-        private set { _complete = value; }
+    private bool _choreography_complete = false;
+    public bool choreography_complete {
+        get => _choreography_complete;
+        private set { _choreography_complete = value; }
     }
     protected IChoreography choreography;
     public virtual void Activate(IChoreography choreography) {
         active = true;
         this.choreography = choreography;
     }
-    public virtual void Complete() { complete = true; }
+    public virtual void Complete() { choreography_complete = true; }
 
     protected virtual void Start() {
         active = false;
-        complete = false;
+        choreography_complete = false;
     }
 }
 

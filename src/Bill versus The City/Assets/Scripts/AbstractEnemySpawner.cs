@@ -72,7 +72,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         InitializeSpawnPoints();
     }
 
-    public GameObject SpawnEnemy() {
+    public virtual GameObject SpawnEnemy() {
         GameObject prefab = GetPrefab();
         GameObject enemy = Instantiate(prefab);
         enemy.name = GetNextEnemyName();

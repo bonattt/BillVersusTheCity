@@ -61,6 +61,7 @@ public class Choreography : MonoBehaviour, IChoreography {
 
     [SerializeField]
     private bool _complete = false;
+    public bool effect_completed { get => _complete; }
     
     public List<AbstractChoreographyStep> choreography_steps;
 
@@ -116,7 +117,7 @@ public class Choreography : MonoBehaviour, IChoreography {
         // AbstractChoreographyStep step = choreography_steps[choreography_index];
         // if (!step.active) { step.Activate(); }
 
-        if (sequential_choreography.complete) {
+        if (sequential_choreography.choreography_complete) {
             Complete();
         }
     }

@@ -25,8 +25,10 @@ public class DialogueChoreographyStep : AbstractChoreographyStep, IGameEventEffe
     //         Complete();
     //     }
     // }
+    public bool effect_completed { get => this.choreography_complete; }
 
     public void ActivateEffect() {
+        // NOTE: the IGameEventEffect for DialougeChoreographyStep is to mark the ChoreographyStep as completed, not to lauch the choreography step
         Complete();
     }
 }

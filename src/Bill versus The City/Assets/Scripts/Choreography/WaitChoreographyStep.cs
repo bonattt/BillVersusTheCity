@@ -11,7 +11,7 @@ public class WaitChoreographyStep : AbstractChoreographyStep {
     }
 
     void Update() {
-        if (!active || complete) { return; }
+        if (!active || choreography_complete) { return; }
         if (wait_start_time + wait_for_seconds <= Time.time) {
             Complete();
         }
