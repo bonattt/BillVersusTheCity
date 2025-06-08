@@ -14,7 +14,9 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
 
     public MonoBehaviour dialogue_callback;
 
-    public bool effect_completed { get => true; } // TODO --- implement
+    public bool effect_completed { get; set; } // TODO --- implement
+
+    private DialogueController ctrl = null;
 
     void Start() {
         Reset();
@@ -49,7 +51,9 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
             file_path = dialogue_files[_index];
         }
 
-        DialogueController ctrl = MenuManager.inst.OpenDialoge(file_path);
+        ctrl = MenuManager.inst.OpenDialoge(file_path);
+        ctrl.AddCloseCallback(new SimpleActionEvent(() => effect_completed = true)); // mark event as complete once dialogue is closed
+
         IGameEventEffect callback;
         if (dialogue_callback != null) {
             callback = dialogue_callback.GetComponent<IGameEventEffect>();
@@ -59,8 +63,6 @@ public class DialogueInteraction : MonoBehaviour, IInteractionEffect, IGameEvent
         if (callback != null) {
             ctrl.AddDialogueCallback(callback);
         }
-        // ctrl.dialogue_finished = dialogue_finished;
-        Debug.LogWarning("// TODO --- make event complete when menu is closed!");
     }
 
     public void Interact(GameObject actor) {

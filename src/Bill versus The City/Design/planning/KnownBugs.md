@@ -22,6 +22,7 @@
 [+] FIX: restarting a countdown level causes the "complete objective" dialogue to show up before the level restarts, and linger under the 
     weapon select menu
 [ ] FIX: reload UI coloring doesn't work
+[ ] if sequential level condition to clear all enemies triggers an enemy spawn before another clear enemies condition, "Escape to your truck will show" until the first LevelCondition's triggers finish evaluating
 
 
 

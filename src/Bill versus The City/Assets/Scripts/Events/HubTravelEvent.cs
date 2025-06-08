@@ -17,6 +17,5 @@ public class HubTravelEvent : AbstractInteractionGameEvent
         char_ctrl.enabled = true;
         Camera.main.transform.position = destination.position + cam_offset;
         InputSystem.current.FlushMovement(); // removes momentum from player's movement
-        Debug.LogWarning("// TODO --- make event complete on menu close");
     }
 }

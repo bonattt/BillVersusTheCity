@@ -57,6 +57,7 @@ public class LevelConfig : MonoBehaviour {
 
     [SerializeField] // TODO --- remove debug
     private int sequential_conditions_index = 0;
+    public int debug__sequential_conditions_count = 0;
     public string level_music_name;
     private ISFXSounds level_music;
 
@@ -491,23 +492,44 @@ public class LevelConfig : MonoBehaviour {
         if (!level_started) { return; /* don't check if level isn't started yet */ }
         for (int i = sequential_conditions_index; i < sequential_level_conditions.Count; i++) {
             ILevelCondition current_condition = sequential_level_conditions[i];
-            // TODO --- implement ILevelCondition.condition_effects_completed
+            
             if (current_condition.was_triggered) { // TODO --- implement ILevelCondition.condition_effects_completed
-            // TODO --- implement ILevelCondition.condition_effects_completed
-                continue;
+                if (current_condition.condition_effects_completed) {
+                    _IncrimentSequentialCondition(i);
+                    continue; // if effects were completed, check next condition
+                } else {
+                    break; // if effects are still being processed, stop evaluation until the condition effects have finished evaluating
+                }
             } // skip already triggered conditions
             else if (!current_condition.ConditionMet()) {
                 // current condition is NOT met, so we stop iterating. 
                 break;
             } else {
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
+                Debug.LogWarning($"condition triggered!: {current_condition}"); // TODO --- remove debug
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
-                sequential_conditions_index = i + 1;
-                if (has_objective_display_override) {
-                    // if the level has objective overrides, completing an objective should incriment the displayed objective(s)
-                    IncrimentObjectiveDisplay();
+                // sequential_conditions_index = i + 1;
+                // if (has_objective_display_override) {
+                //     // if the level has objective overrides, completing an objective should incriment the displayed objective(s)
+                //     IncrimentObjectiveDisplay();
+                // }
+                if (current_condition.condition_effects_completed) {
+                    // if condition effects evaluate instantly, continue checking the next condition
+                    _IncrimentSequentialCondition(i);
+                } else {
+                    // if condition effects take time to evaluate, then stop evaluation immediately
+                    break;
                 }
             }
+        }
+    }
+
+    private void _IncrimentSequentialCondition(int i) {
+        Debug.LogWarning($"Sequential Condition Completed! {sequential_level_conditions[i]}"); // TODO --- remove debug
+        sequential_conditions_index = i + 1;
+        if (has_objective_display_override) {
+            // if the level has objective overrides, completing an objective should incriment the displayed objective(s)
+            IncrimentObjectiveDisplay();
         }
     }
 
@@ -576,8 +598,15 @@ public class LevelConfig : MonoBehaviour {
     }
 
     public bool debug__sequential_conditions_completed = false;
+    public List<string> debug__sequential_conditions;
     private void UpdateDebug() {
         debug__sequential_conditions_completed = sequential_conditions_completed;
+        debug__sequential_conditions_count = sequential_level_conditions.Count;
+
+        debug__sequential_conditions = new List<string>();
+        for (int i = 0; i < sequential_level_conditions.Count; i++) {
+            debug__sequential_conditions.Add($"{sequential_level_conditions[i]}");
+        }
     }
 
 

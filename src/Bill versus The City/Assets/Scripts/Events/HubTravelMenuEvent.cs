@@ -11,5 +11,6 @@ public class HubTravelMenuEvent : AbstractInteractionGameEvent
     protected override void Effect() {
         HubTravelMenuCtrl menu = MenuManager.inst.OpenHubTravelMenu();
         menu.travel_effect = travel_effect;
+        Debug.LogWarning("// TODO --- make event complete on menu close");
     }
 }

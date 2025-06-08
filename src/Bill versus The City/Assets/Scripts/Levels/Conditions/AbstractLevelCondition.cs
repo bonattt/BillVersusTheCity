@@ -11,7 +11,15 @@ public abstract class AbstractLevelCondition : MonoBehaviour, ILevelCondition {
     public bool is_active { get; set; }
     public bool was_triggered { get; set; }
 
-    public virtual bool condition_effects_completed { get => was_triggered; } // by default, condition is complete once it is triggered
+    public virtual bool condition_effects_completed {
+        get {
+            if (!was_triggered) return false;
+            for (int i = 0; i < effects.Count; i++) {
+                if (!effects[i].effect_completed) return false;
+            }
+            return true;
+        } 
+    }
 
     public List<MonoBehaviour> init_effects;
     private List<IGameEventEffect> _effects = new List<IGameEventEffect>();

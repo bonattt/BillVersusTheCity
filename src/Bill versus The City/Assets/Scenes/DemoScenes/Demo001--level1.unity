@@ -1070,6 +1070,53 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1c1f4a161bf1244bb633c3e5e1964b8, type: 3}
+--- !u!1 &483775599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 483775600}
+  - component: {fileID: 483775601}
+  m_Layer: 0
+  m_Name: Dialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &483775600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483775599}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1278330610}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &483775601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483775599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622ea210233f9804fa1ca0ae45c16794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _active: 0
+  _choreography_complete: 0
+  dialogue_file_path: Level01\halfway_objective
 --- !u!1001 &559522496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1384,7 +1431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   choreography_steps:
   - {fileID: 837857918}
   - {fileID: 1067469828}
@@ -1658,7 +1705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   wait_for_seconds: 0.75
 --- !u!4 &801020325
 Transform:
@@ -1808,7 +1855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   destination: {fileID: 1177806681}
   speed: 12
   moved_character: {fileID: 2058052964}
@@ -2523,7 +2570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   camera_mode: 2
   camera_offset: {x: 0, y: 0, z: 0}
   camera_target: {fileID: 2058052964}
@@ -2811,7 +2858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   wait_for_seconds: 0.75
 --- !u!4 &1167654591 stripped
 Transform:
@@ -3121,6 +3168,7 @@ MonoBehaviour:
   _complete: 0
   choreography_steps:
   - {fileID: 1950380913}
+  - {fileID: 483775601}
   - {fileID: 691147820}
   - {fileID: 1159389209}
   - {fileID: 1542168566}
@@ -3140,6 +3188,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1950380911}
+  - {fileID: 483775600}
   - {fileID: 575067796}
   - {fileID: 691147819}
   - {fileID: 1159389208}
@@ -3936,7 +3985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   init_game_event: {fileID: 1283752819}
 --- !u!114 &1542168564
 MonoBehaviour:
@@ -3951,7 +4000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   init_game_event: {fileID: 1058027295}
 --- !u!114 &1542168565
 MonoBehaviour:
@@ -3966,7 +4015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   init_game_event: {fileID: 1540220455}
 --- !u!114 &1542168566
 MonoBehaviour:
@@ -3981,7 +4030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   choreography_steps:
   - {fileID: 1542168565}
   - {fileID: 1542168564}
@@ -5301,7 +5350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   init_game_event: {fileID: 1950380912}
 --- !u!1001 &1956002374
 PrefabInstance:
@@ -6101,6 +6150,9 @@ SceneRoots:
   - {fileID: 2366966}
   - {fileID: 1839614466}
   - {fileID: 202697209}
+  - {fileID: 123454003}
+  - {fileID: 1702457943}
+  - {fileID: 1278330610}
   - {fileID: 1143667165}
   - {fileID: 705507995}
   - {fileID: 1929632379}
@@ -6125,6 +6177,3 @@ SceneRoots:
   - {fileID: 323598727}
   - {fileID: 1444793501}
   - {fileID: 2058052961}
-  - {fileID: 123454003}
-  - {fileID: 1702457943}
-  - {fileID: 1278330610}
