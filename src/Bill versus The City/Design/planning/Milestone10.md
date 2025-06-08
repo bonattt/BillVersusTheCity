@@ -26,8 +26,8 @@ PLANNED FEATURES
 [ ] FIX: Player plays the running animation while being moved by choreography, instead of walking.
     - the animation debugger shows the player is walking, not running, but the character is clearly running
 
-[ ] additional stages in a level (eg. defeat some enemies, triggering more to spawn)
-    [ ] an arbitrary number of objectives and event triggers on completion should be easy to configure in a LevelConfig
+[+] additional stages in a level (eg. defeat some enemies, triggering more to spawn)
+    [+] an arbitrary number of objectives and event triggers on completion should be easy to configure in a LevelConfig
 
 [ ] improve dialoug UI
     [ ] Speaking character should be clear
@@ -45,6 +45,9 @@ UNPLANNED FEATURES
 [ ] Add check if player already owns to purchasable guns
 [ ] Add damage numbers on the shooting range
 [ ] Add additional distances on the shooting range
+[ ] Additional Choreography steps
+    [ ] One-shot sound effects
+    [ ] Continuous sound effects
 
 UNPLANNED BUGFIXES
 [ ] Level 1 allows the player to leave immediately, without clearing enemies first
