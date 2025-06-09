@@ -14,7 +14,14 @@ public class GunRangeTarget : MonoBehaviour, IAttackTarget, ICharacterStatus {
     public ICharacterStatus GetStatus() { return this; } // TODO --- remove this, make ICharacterStatus extend this interface instead. 
     public GameObject GetHitTarget() { return gameObject; }
     public Transform GetAimTarget() { return transform; }
-    public void OnAttackHitRecieved(IAttack attack) { /* do nothing */ }
+    public void OnAttackHitRecieved(IAttack attack) {
+        // if damage numbers are turned off, show them anyways
+        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
+            IAttackHitEffect health_damage_numbers = new SpawnDamageNumberEffect();
+            health_damage_numbers.DisplayDamageEffect(GetHitTarget(), GetHitTarget().transform.position, attack);
+        }
+
+    }
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target) { /* do nothing */ }
     
     ///////////////////////////////////

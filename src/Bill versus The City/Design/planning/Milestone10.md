@@ -44,8 +44,8 @@ PLANNED BUGFIXES
 
 UNPLANNED FEATURES
 [ ] Add check if player already owns to purchasable guns
-[ ] Add damage numbers on the shooting range
-[ ] Add additional distances on the shooting range
+[+] Add damage numbers on the shooting range
+[+] Add additional distances on the shooting range
 
 UNPLANNED BUGFIXES
 [ ] Level 1 allows the player to leave immediately, without clearing enemies first
