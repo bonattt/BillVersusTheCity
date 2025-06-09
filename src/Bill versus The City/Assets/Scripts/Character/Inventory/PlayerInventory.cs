@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 
 public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObservable {
@@ -144,7 +144,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             dollars = STARTING_DOLLARS;
             return;
         }
-        dollars = (int) progress_data.GetInt("dollars");
+        dollars = (int)progress_data.GetInt("dollars");
         LoadWeaponsFromProgress(progress_data);
     }
 
@@ -169,11 +169,11 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         } else {
             Debug.LogWarning($"no weapon unlocks found in save file!!");
             weapon_unlocks = new HashSet<string>();
-        } 
-        
+        }
+
         // if the starting weapons have changed, add any missing starting weapons to owned weapons.
         foreach (string starting_id in WeaponSaveLoadConfig.inst.GetStartingWeaponIds()) {
-            if (! weapon_unlocks.Contains(starting_id)) {
+            if (!weapon_unlocks.Contains(starting_id)) {
                 weapon_unlocks.Add(starting_id);
             }
         }
@@ -199,7 +199,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         // attack_ctrl.AssignWeaponSlot(1, rifle);
         // attack_ctrl.AssignWeaponSlot(2, pickup);
     }
-    
+
     public void NewPlayerObject(PlayerCombat player) {
         combat = player;
         if (starting_weapons_queued) {
@@ -263,6 +263,40 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
         dollars_change_in_level -= purchase.purchase_cost;
         purchase.ApplyPurchase(this);
+    }
+
+    public bool AlreadyOwnsItem(IItem item) {
+        switch (item) {
+            case IFirearm firearm:
+                return AlreadyOwnsFirearm(firearm);
+            case IWeapon weapon:
+                return AlreadyOwnsWeapon(weapon);
+            case IArmor armor:
+                return AlreadyOwnsArmor(armor);
+
+            default:
+                Debug.LogWarning($"{item} is an unhandled type of item!");
+                return false;
+        }
+    }
+
+    public bool AlreadyOwnsFirearm(IFirearm firearm) {
+        return AlreadyOwnsWeapon((IWeapon)firearm);
+    }
+
+    public bool AlreadyOwnsWeapon(IWeapon weapon) {
+        Debug.LogWarning("AlreadyOwnsItem(weapon)!"); // TODO --- remove debug
+        foreach (IFirearm firearm in availible_weapons) {
+            if (firearm.item_id.Equals(weapon.item_id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool AlreadyOwnsArmor(IArmor armor) {
+        Debug.Log("AlreadyOwnsItem(Armor)!"); // TODO --- remove debug
+        Debug.LogWarning("TODO --- implement AlreadyOwnsItem(Armor)!"); // TODO --- remove debug
+        return false; /* TODO --- implement */
     }
 }
 

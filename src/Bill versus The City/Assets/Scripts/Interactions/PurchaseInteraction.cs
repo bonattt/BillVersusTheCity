@@ -18,6 +18,23 @@ public class PurchaseInteraction : MonoBehaviour, IInteractionEffect, IPurchase 
 
     void Start() {
         UpdateUIText();
+        DestroyIfAlreadyOwned();
+    }
+    
+    private void DestroyIfAlreadyOwned() {
+        if (purchased_item == null) {
+            // also destroy if a weapon is not set
+            Debug.LogError($"weapon purchase with null weapon '{gameObject.name}' was removed!");
+            Destroy(gameObject);
+        }
+        try {
+            if (destroy_if_already_owned && PlayerCharacter.inst.inventory.AlreadyOwnsItem((IItem)purchased_item)) {
+                Debug.Log($"weapon purchase '{gameObject.name}' removed because player already owns it!");
+                Destroy(gameObject);
+            }
+        } catch (InvalidCastException) {
+            Debug.LogError($"Item purchase {gameObject.name} configured with uncastable item {purchased_item}!");
+        }
     }
 
     void Update() {

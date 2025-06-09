@@ -129,8 +129,7 @@ public interface IItem {
 }
 
 
-public interface IWeapon : IItem
-{
+public interface IWeapon : IItem {
     public float weapon_damage_min { get; }
     public float weapon_damage_max { get; }
     public float armor_effectiveness { get; }
