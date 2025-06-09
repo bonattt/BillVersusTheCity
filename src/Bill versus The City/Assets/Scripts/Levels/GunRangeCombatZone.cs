@@ -8,16 +8,30 @@ public class GunRangeCombatZone : MonoBehaviour {
     public Transform target;
     public float x_size, z_size;
     public float y_rot_min, y_rot_max;
-    public bool debug_facing_direction, debug_in_zone;
+    public bool facing_correct_direction;
+
+    [Tooltip("is the player detected in the zone this frame. (published for debugging)")]
+    [SerializeField]
+    private bool player_in_zone = false;
+
+    private bool in_effect = false;
+    private bool in_effect_last_frame = false;
 
     void Update() {
-        if (TargetInZone() && TargetFacingDirection()) {
-            level_config.combat_enabled = true;
-        } else {
-            level_config.combat_enabled = false;
+        in_effect_last_frame = in_effect;
+        player_in_zone = TargetInZone();
+        facing_correct_direction = TargetFacingDirection();
+        in_effect = player_in_zone && facing_correct_direction;
+        // only make updates when the player actually enters or leaves a combat enabled state
+        if (in_effect != in_effect_last_frame) {
+            if (in_effect) {
+                level_config.combat_enabled = true;
+            } else {
+                level_config.combat_enabled = false;
+            }
         }
-        debug_in_zone = TargetInZone();
-        debug_facing_direction = TargetFacingDirection();
+
+        facing_correct_direction = TargetFacingDirection();
     }
 
     public bool TargetFacingDirection() {

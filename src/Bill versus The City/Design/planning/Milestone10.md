@@ -36,6 +36,7 @@ PLANNED FEATURES
         was loaded from a main-menu launch of the game.
          - the null pointer is caused because the dialogue's Start, which sets up references to VisualElements populated dynamically, is called  
             AFTER trying to populate those objects. I don't know why this happens out of order for directly loaded scenes only.
+         - this may be a loading order issue, I stopped being able to reproduce it
     ~~[ ] Add "Emotes" to character portraits~~ --> I think this will just be implemented
 
 PLANNED BUGFIXES
@@ -45,9 +46,6 @@ UNPLANNED FEATURES
 [ ] Add check if player already owns to purchasable guns
 [ ] Add damage numbers on the shooting range
 [ ] Add additional distances on the shooting range
-[ ] Additional Choreography steps
-    [ ] One-shot sound effects
-    [ ] Continuous sound effects
 
 UNPLANNED BUGFIXES
 [ ] Level 1 allows the player to leave immediately, without clearing enemies first
