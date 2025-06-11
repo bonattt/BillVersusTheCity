@@ -347,6 +347,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
     public void HearSound(HearingHit hit)
     {
         if (hit.enemy != this) { Debug.LogWarning($"Enemy {gameObject.name} heard HearingHit not for itself, intended for {hit.enemy.gameObject.name}!"); }
+        if (!LevelConfig.inst.combat_enabled) { return; } 
         float alert_level = hit.sound.alarm_level * notice_player_rate;
         if (hit.sound.adjust_alarm_based_on_distance)
         {

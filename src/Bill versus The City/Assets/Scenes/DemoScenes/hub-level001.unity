@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   dialogue_file_path: Hub01\\choreography02
 --- !u!1 &41849927
 GameObject:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   dialogue_file_path: Hub01\\choreography01
 --- !u!1 &59009581
 GameObject:
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   camera_mode: 2
   camera_offset: {x: 0, y: 0, z: 0}
   camera_target: {fileID: 59009584}
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   choreography_steps:
   - {fileID: 322086390}
   - {fileID: 1026751340}
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   character_controller: {fileID: 1844983334}
   _destination: {fileID: 322086389}
   debug__distance_to_destination: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   wait_for_seconds: 0.5
 --- !u!1001 &406027035
 PrefabInstance:
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   character_controller: {fileID: 5342343658664017693}
   _destination: {fileID: 490227423}
   debug__distance_to_destination: -1
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   wait_for_seconds: 0.75
 --- !u!1 &705507993
 GameObject:
@@ -1169,84 +1169,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 647fca6c04c762c499c8c06b7364c67f, type: 3}
---- !u!1001 &770162739
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2100482062}
-    m_Modifications:
-    - target: {fileID: 2788073036257827572, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_Name
-      value: FrontDoorDialogue
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788073036257827572, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4998390857074393151, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: endless_dialogue
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4998390857074393151, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: dialogue_files.Array.data[0]
-      value: Tutorial02/front_door
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 33.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7857640645324215563, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-      propertyPath: name_header
-      value: Front Door
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
---- !u!4 &770162740 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5598442416576060424, guid: e3d95f862e5542f47bc89e4aa54365f3, type: 3}
-  m_PrefabInstance: {fileID: 770162739}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &792629136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7650805280240876991, guid: fe205990dec355540bce9f27b4df9a1d, type: 3}
@@ -1297,7 +1219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   character_controller: {fileID: 5342343658664017693}
   _destination: {fileID: 950347058}
   debug__distance_to_destination: -1
@@ -1490,7 +1412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   choreography_steps:
   - {fileID: 950347059}
   - {fileID: 490227424}
@@ -1598,7 +1520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   destination: {fileID: 1293138033}
   speed: 10
   char_ctrl: {fileID: 59009582}
@@ -1648,7 +1570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   character_controller: {fileID: 5342343658664017693}
   _destination: {fileID: 1312982043}
   debug__distance_to_destination: -1
@@ -2210,7 +2132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   init_game_event: {fileID: 1684792561}
 --- !u!114 &1684792561
 MonoBehaviour:
@@ -2271,7 +2193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   character_controller: {fileID: 310131178}
   _destination: {fileID: 1744427200}
   debug__distance_to_destination: 0
@@ -2320,7 +2242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   character_controller: {fileID: 960257228}
   _destination: {fileID: 1751555671}
   debug__distance_to_destination: 0
@@ -2505,7 +2427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   choreography_steps:
   - {fileID: 1952048102}
   - {fileID: 1751555672}
@@ -2711,7 +2633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   camera_mode: 2
   camera_offset: {x: 0, y: 0, z: -1}
   camera_target: {fileID: 310131181}
@@ -2784,39 +2706,7 @@ MonoBehaviour:
   - {fileID: 1859680486}
   - {fileID: 376774386}
   - {fileID: 37597769}
-  - {fileID: 1684792560}
---- !u!1 &2100482061
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2100482062}
-  m_Layer: 0
-  m_Name: Dialogues
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2100482062
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100482061}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 770162740}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  debug__cached_combat_enabled: 0
 --- !u!1001 &2110327367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2925,7 +2815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _active: 0
-  _complete: 0
+  _choreography_complete: 0
   choreography_steps:
   - {fileID: 59009583}
   - {fileID: 1293138034}
@@ -3302,7 +3192,6 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 756035760}
   - {fileID: 1425793104}
-  - {fileID: 2100482062}
   - {fileID: 8545900030494247798}
   - {fileID: 979641242}
   - {fileID: 5342343658664017690}

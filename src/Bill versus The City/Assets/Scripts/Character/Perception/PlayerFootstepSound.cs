@@ -55,7 +55,7 @@ public class PlayerFootstepSound : MonoBehaviour
         float distance_traveled = Vector3.Distance(GetSampledPosition(), last_position);
         if (distance_traveled < distance_threshold)
         {
-            Debug.Log("no sound while not moving");
+            // no sound while not moving
             return;
         }
         float range = base_range + distance_traveled;
