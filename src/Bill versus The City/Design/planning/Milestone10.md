@@ -30,18 +30,20 @@ PLANNED FEATURES
     [+] an arbitrary number of objectives and event triggers on completion should be easy to configure in a LevelConfig
 
 [ ] improve dialoug UI
-    [~] Refactor:
+    [+] Refactor:
         [+] remove "sides" from UXML
         [+] FIX broken styles: portraits don't display flush with text box
         [+] FIX: portraits stack vertially; portraits should not share a container.
         [+] FIX: portraits should deconflict, and move to unoccupied containers, if only side is specified
     [ ] Speaking character should be clear
-    [ ] names of non-speaking characters should be clear (name should show directly under the character actually speaking)
+        [ ] place speaking character's name under that character 
+    [X] names of non-speaking characters should be clear (name should show directly under the character actually speaking)
     [ ] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene
         was loaded from a main-menu launch of the game.
          - the null pointer is caused because the dialogue's Start, which sets up references to VisualElements populated dynamically, is called  
             AFTER trying to populate those objects. I don't know why this happens out of order for directly loaded scenes only.
          - this may be a loading order issue, I stopped being able to reproduce it
+         - UPDATE: this seems to occur sometimes when loading the level as a next level too...
     ~~[ ] Add "Emotes" to character portraits~~ --> I think this will just be implemented
 
 PLANNED BUGFIXES
