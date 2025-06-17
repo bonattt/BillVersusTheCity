@@ -65,7 +65,7 @@ public class DialogueMoveAction : IDialogueAction {
     public StageDirection facing { get; private set; }
     public string pose { get; private set; }
 
-    private const string USAGE_EXAMPLE = "`enter character right` or `blocking character left facing right` or `enter character left facing right <pose>`";
+    private const string USAGE_EXAMPLE = "`enter character right` or `move character left facing right` or `enter character left facing right <pose>`";
 
     public DialogueMoveAction(string[] args) {
         if (!(args.Length == 3 || args.Length == 5 || args.Length == 6)) {
@@ -187,7 +187,9 @@ public class DialogueBlockingAction : IDialogueAction {
     public StageDirection side { get; private set; }
     public List<string> actors { get; private set; }
 
-    private const string USAGE_EXAMPLE = "blocking left bill gangsta gangsta2";
+
+    private const string USAGE_EXAMPLE = "blocking bill far-left facing left";
+    // private const string USAGE_EXAMPLE = "blocking left bill gangsta gangsta2"; // old format
 
     public DialogueBlockingAction(string[] args) {
         // TODO --- implement this
@@ -204,7 +206,8 @@ public class DialogueBlockingAction : IDialogueAction {
 
     public void ResolveDialogue(DialogueController ctrl) {
         // TODO --- implement this
-        ctrl.SetBlocking(side, actors);
+        throw new NotImplementedException("I'm still figuring out what to do with blocking action");
+        // ctrl.SetBlocking(side, actors);
     }
 
 }

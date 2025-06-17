@@ -15,7 +15,7 @@
 }
 
 .dialogue_portraits_holder {
-    width: 50%;
+    width: 25%;
     height: 100%;
 }
 

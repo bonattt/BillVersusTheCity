@@ -532,7 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  wait_for_seconds: 0.5
+  wait_for_seconds: 0.25
 --- !u!1001 &406027035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -864,7 +864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  wait_for_seconds: 0.75
+  wait_for_seconds: 0.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   destination: {fileID: 1293138033}
-  speed: 10
+  speed: 16
   char_ctrl: {fileID: 59009582}
   debug__distance_to_destination: -1
 --- !u!1 &1312982042
@@ -2103,7 +2103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1684792558
 Transform:
   m_ObjectHideFlags: 0

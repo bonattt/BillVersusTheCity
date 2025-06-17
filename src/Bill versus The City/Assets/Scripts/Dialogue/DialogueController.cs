@@ -3,7 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-
+using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -16,8 +17,9 @@ public class DialogueController : AbstractCloseEventMenu {
     public bool dialogue_completed { get; private set; }
 
     public UIDocument ui_doc;
-    private VisualElement root, left_portraits, right_portraits, speaker_left_element;
+    private VisualElement root, portraits_div, speaker_left_element;
     private Label dialogue_text, speaker_label;
+    private VisualElement[] portrait_containers;
     private Dictionary<string, VisualElement> character_portraits;
 
     // character_name -> (portrait_name, display_name)
@@ -76,17 +78,29 @@ public class DialogueController : AbstractCloseEventMenu {
 
     void Start() {
         root = ui_doc.rootVisualElement;
-        left_portraits = root.Q<VisualElement>("LeftPortraits");
-        right_portraits = root.Q<VisualElement>("RightPortraits");
         dialogue_text = root.Q<Label>("DialogueText");
         // speaker_left_element = root.Q<VisualElement>("Speaker");
         speaker_left_element = root.Q<VisualElement>("SpeakerLeft");
         speaker_label = speaker_left_element.Q<Label>();
-        left_portraits.Clear();
-        right_portraits.Clear();
+        ConfigurePortraits();
 
         NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
+
+    private void ConfigurePortraits() {
+        portraits_div = root.Q<VisualElement>("PortraitDiv");
+        portrait_containers = new VisualElement[4];
+
+        // List<VisualElement> left_containers = new List<VisualElement>(left_portraits.Children());
+        List<VisualElement> containers = portraits_div.Children().ToList();
+        portrait_containers[0] = containers[0];
+        portrait_containers[1] = containers[1];
+        portrait_containers[2] = containers[2];
+        portrait_containers[3] = containers[3];
+        // left_portraits.Clear();
+        // right_portraits.Clear();
+    }
+
 
     public override void MenuNavigation() {
         if (InputSystem.current.MenuNextInput()) {
@@ -96,10 +110,10 @@ public class DialogueController : AbstractCloseEventMenu {
             MenuManager.inst.TryOpenPauseMenu();
         }
     }
-    
+
     public void RemovePortrait(string character_name) {
         // removed the character portrait from the scene
-        if (! character_portraits.ContainsKey(character_name)) {
+        if (!character_portraits.ContainsKey(character_name)) {
             Debug.LogWarning($"cannot remove '{character_name}' from dialogug because it is not present!");
             return;
         }
@@ -112,50 +126,49 @@ public class DialogueController : AbstractCloseEventMenu {
     public void UpdatePose(string character_name, string pose) {
         // updates just the pose on a character already in a scene
 
-        if (! character_portraits.ContainsKey(character_name)) {
+        if (!character_portraits.ContainsKey(character_name)) {
             throw new DialogueActionsException($"cannot update the pose for a character that's not in the dialogue '{character_name}'!");
         }
         VisualElement portrait = character_portraits[character_name];
         Texture2D image = this.GetPortrait(character_name, pose);
-        
+
         _SetPortraitImage(portrait, image);
     }
 
     public void SetBlocking(StageDirection side, List<string> character_names) {
         // validate all characters exist in dialogue
-        List<VisualElement> portraits_to_move = new List<VisualElement>();
-        foreach (string cn in character_names) {
-            if (! character_portraits.ContainsKey(cn)) {
-                throw new DialogueActionsException("cannot set blocking for character not in scene");
-            }
-            else {
-                portraits_to_move.Add(character_portraits[cn]);
-            }
-        }
+        throw new NotImplementedException("Blocking actions are a WIP");
+        // List<VisualElement> portraits_to_move = new List<VisualElement>();
+        // foreach (string cn in character_names) {
+        //     if (!character_portraits.ContainsKey(cn)) {
+        //         throw new DialogueActionsException("cannot set blocking for character not in scene");
+        //     } else {
+        //         portraits_to_move.Add(character_portraits[cn]);
+        //     }
+        // }
 
-        //
+        // //
 
-        foreach (VisualElement p in portraits_to_move) {
-            p.parent.Remove(p);
-        }
-        
-        if (side == StageDirection.left) {
-            for (int i = portraits_to_move.Count - 1; i > -1; i--) {
-                left_portraits.Add(portraits_to_move[i]);
-            }
-        } else if (side == StageDirection.right) {
-            for (int i = 0; i < portraits_to_move.Count; i++) {
-                right_portraits.Add(portraits_to_move[i]);
-            }
-        }
-        else {
-            throw new DialogueActionsException($"side must be either left or right, not {side}");
-        }
+        // foreach (VisualElement p in portraits_to_move) {
+        //     p.parent.Remove(p);
+        // }
+
+        // if (side == StageDirection.left) {
+        //     for (int i = portraits_to_move.Count - 1; i > -1; i--) {
+        //         left_portraits.Add(portraits_to_move[i]);
+        //     }
+        // } else if (side == StageDirection.right) {
+        //     for (int i = 0; i < portraits_to_move.Count; i++) {
+        //         right_portraits.Add(portraits_to_move[i]);
+        //     }
+        // } else {
+        //     throw new DialogueActionsException($"side must be either left or right, not {side}");
+        // }
     }
 
     public Texture2D GetPortrait(string character_name) {
         // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
-        if (! portrait_aliases.ContainsKey(character_name)) {
+        if (!portrait_aliases.ContainsKey(character_name)) {
             return PortraitSystem.GetPortrait(character_name);
         }
         (string portrait_name, string display_name) = portrait_aliases[character_name];
@@ -164,7 +177,7 @@ public class DialogueController : AbstractCloseEventMenu {
 
     public Texture2D GetPortrait(string character_name, string pose) {
         // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
-        if (! portrait_aliases.ContainsKey(character_name)) {
+        if (!portrait_aliases.ContainsKey(character_name)) {
             return PortraitSystem.GetPortrait(character_name, pose);
         }
         (string portrait_name, string display_name) = portrait_aliases[character_name];
@@ -173,10 +186,10 @@ public class DialogueController : AbstractCloseEventMenu {
 
     public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
         Texture2D portrait_image = null;
-        if (! character_portraits.ContainsKey(character_name)) {
+        if (!character_portraits.ContainsKey(character_name)) {
             // if the character is not already in the scene, load their default portrait.
             // Otherwise, leave as null to preserve their previous pose
-            portrait_image = this.GetPortrait(character_name);;
+            portrait_image = this.GetPortrait(character_name); ;
         }
         return _SetPortrait(portrait_image, character_name, side, facing);
     }
@@ -193,8 +206,7 @@ public class DialogueController : AbstractCloseEventMenu {
         if (character_portraits.ContainsKey(character_name)) {
             // TODO --- implement
             portrait = character_portraits[character_name];
-        } 
-        else {
+        } else {
             if (image == null) {
                 throw new DialogueActionsException($"new characters in a scene cannot use a null image! '{character_name} {side} facing {facing}'");
             }
@@ -207,7 +219,7 @@ public class DialogueController : AbstractCloseEventMenu {
             _SetPortraitImage(portrait, image);
         }
         SetPortraitName(portrait, character_name);
-        _SetPortraitSide(portrait, side);
+        SetPortraitPosition(portrait, side);
         _SetPortraitFacing(portrait, facing);
         return portrait;
     }
@@ -234,35 +246,76 @@ public class DialogueController : AbstractCloseEventMenu {
 
     private void _SetPortraitFacing(VisualElement portrait, StageDirection facing) {
         // turns the image in a portrait to face the correct direction
-        
+
         if (facing == StageDirection.left) {
             // display mirror image along the X axis
-            portrait.Q<VisualElement>(PORTRAIT_IMAGE_ELEMENT).style.scale = new Scale(new Vector3(-1, 1, 1)); 
-        }
-        else if (facing == StageDirection.right) {
+            portrait.Q<VisualElement>(PORTRAIT_IMAGE_ELEMENT).style.scale = new Scale(new Vector3(-1, 1, 1));
+        } else if (facing == StageDirection.right) {
             // do nothing
-        } 
-        else {
+        } else {
             Debug.LogWarning($"cannot set rotate character portrait '{portrait.name}' to face to the '{facing}'!");
         }
     }
 
     private const string PORTRAIT_IMAGE_ELEMENT = "portrait";
-    private void _SetPortraitSide(VisualElement portrait, StageDirection side) {
-        // move a portrait to the correct side of the screen\
-        // TODO --- handle moving existing portrait
-        if (portrait.parent != null) {
-            portrait.parent.Remove(portrait);
+    // private void _SetPortraitSide(VisualElement portrait, StageDirection side) {
+    //     // move a portrait to the correct side of the screen\
+    //     // TODO --- handle moving existing portrait
+    //     if (portrait.parent != null) {
+    //         portrait.parent.Remove(portrait);
+    //     }
+    //     if (side == StageDirection.left) {
+    //         left_portraits.Add(portrait);
+    //     } else if (side == StageDirection.right) {
+    //         right_portraits.Add(portrait);
+    //     } else {
+    //         throw new DialogueControllerException($"cannot set character portrait '{portrait.name}' to the '{side}' side of the screen");
+    //     }
+    // }
+
+    private void SetPortraitPosition(VisualElement portrait, StageDirection side) {
+        SetPortraitPosition(portrait, GetPositionFromSide(side));
+    }
+
+    private void SetPortraitPosition(VisualElement portrait, StagePosition position) {
+        // int index = DialogueActionUtil.GetStagePositionIndex(position);
+        if (position == StagePosition.unspecified) {
+            if (portrait.parent == null) {
+                Debug.LogError($"cannot set position of new portrait to {position}");
+            } else {
+                portrait.parent.Remove(portrait);
+                Debug.LogWarning($"removing portrait {portrait} from dialogue because it was moved to position {position}");
+            }
+        } else {
+            int index = DialogueActionUtil.GetStagePositionIndex(position);
+            SetPortraitPosition(portrait, index);
         }
-        if (side == StageDirection.left) {
-            left_portraits.Add(portrait);
+    }
+
+    private void SetPortraitPosition(VisualElement portrait, int index) {
+        VisualElement container = GetPortraitContainer(index);
+        container.Add(portrait);
+    }
+
+    private StagePosition GetPositionFromSide(StageDirection side) {
+        switch (side) {
+            case StageDirection.unspecified:
+                return StagePosition.unspecified;
+            case StageDirection.left:
+                return StagePosition.far_left;
+            case StageDirection.right:
+                return StagePosition.far_right;
+            default:
+                throw new DialogueActionsException($"Unhandled case! side = {side}");
         }
-        else if (side == StageDirection.right) {
-            right_portraits.Add(portrait);
-        } 
-        else {
-            throw new DialogueControllerException($"cannot set character portrait '{portrait.name}' to the '{side}' side of the screen");
-        }
+    }
+
+    // private VisualElement GetPortraitContainer(StagePosition position) {
+    //     int index = DialogueActionUtil.GetStagePositionIndex(position);
+    //     return GetPortraitContainer(index);
+    // }
+    private VisualElement GetPortraitContainer(int index) {
+        return portrait_containers[index];
     }
 
     public static VisualElement GetEmptyPortrait(string name) {
@@ -309,7 +362,7 @@ public class DialogueController : AbstractCloseEventMenu {
 
         // WARNING: the following block of code is depricated
         if (dialogue_finished != null) {
-            IGameEventEffect g_event = (IGameEventEffect) dialogue_finished;
+            IGameEventEffect g_event = (IGameEventEffect)dialogue_finished;
             if (g_event != null) {
                 g_event.ActivateEffect();
             } else {
