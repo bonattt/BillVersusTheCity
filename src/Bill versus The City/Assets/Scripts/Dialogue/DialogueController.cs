@@ -294,6 +294,10 @@ public class DialogueController : AbstractCloseEventMenu {
 
     private void SetPortraitPosition(VisualElement portrait, int index) {
         VisualElement container = GetPortraitContainer(index);
+        if (container.childCount != 0) {
+            Debug.LogWarning($"OVERWRITING PORTRAIT AT INDEX {index}");
+            container.Clear();
+        }
         container.Add(portrait);
     }
 

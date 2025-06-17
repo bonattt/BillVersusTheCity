@@ -17,6 +17,7 @@
 .dialogue_portraits_holder {
     width: 25%;
     height: 100%;
+    justify-content: flex-end;
 }
 
 .dialogue_portrait {
