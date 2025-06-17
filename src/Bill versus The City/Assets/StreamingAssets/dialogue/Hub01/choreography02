@@ -2,10 +2,10 @@ alias tom as gangsta show tom
 alias gangsta1 as gangsta show gangsta 1
 alias gangsta2 as gangsta show gangsta 1
 
-enter bill right facing left angry
-enter tom right facing left angry
-enter gangsta1 left facing left
-enter gangsta2 left facing left
+enter bill far-right facing left angry
+enter tom center-right facing left angry
+enter gangsta1 center-left facing left
+enter gangsta2 far-left facing left
 
 say gangsta1 sheit, man, shouldn't that Bill guy be around here
 say gangsta2 yeah, man, this is his house, where is he?

@@ -184,7 +184,7 @@ public class TestDialogueFile
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
-        Assert.AreEqual(StageDirection.left, result.side);
+        Assert.AreEqual(StagePosition.far_left, result.position);
         Assert.AreEqual(StageDirection.right, result.facing);
         Assert.IsNull(result.pose, "pose should be null");
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
@@ -198,7 +198,7 @@ public class TestDialogueFile
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
-        Assert.AreEqual(StageDirection.right, result.side);
+        Assert.AreEqual(StagePosition.far_right, result.position);
         Assert.AreEqual(StageDirection.left, result.facing);
         Assert.IsNull(result.pose, "pose should be null");
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
@@ -212,7 +212,7 @@ public class TestDialogueFile
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
-        Assert.AreEqual(StageDirection.right, result.side);
+        Assert.AreEqual(StagePosition.far_right, result.position);
         Assert.AreEqual(StageDirection.right, result.facing);
         Assert.IsNull(result.pose, "pose should be null");
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");
@@ -226,7 +226,7 @@ public class TestDialogueFile
         
         Assert.AreEqual("enter", result.cmd);
         Assert.AreEqual("bill", result.actor_name);
-        Assert.AreEqual(StageDirection.right, result.side);
+        Assert.AreEqual(StagePosition.far_right, result.position);
         Assert.AreEqual(StageDirection.right, result.facing);
         Assert.AreEqual("angry", result.pose);
         Assert.IsFalse(result.wait_for_player_input, "wait_for_player_input");

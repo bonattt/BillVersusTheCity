@@ -184,22 +184,22 @@ public class DialogueController : AbstractCloseEventMenu {
         return PortraitSystem.GetPortrait(portrait_name, pose);
     }
 
-    public VisualElement SetPortrait(string character_name, StageDirection side, StageDirection facing) {
+    public VisualElement SetPortrait(string character_name, StagePosition position, StageDirection facing) {
         Texture2D portrait_image = null;
         if (!character_portraits.ContainsKey(character_name)) {
             // if the character is not already in the scene, load their default portrait.
             // Otherwise, leave as null to preserve their previous pose
             portrait_image = this.GetPortrait(character_name); ;
         }
-        return _SetPortrait(portrait_image, character_name, side, facing);
+        return _SetPortrait(portrait_image, character_name, position, facing);
     }
 
-    public VisualElement SetPortrait(string character_name, string pose, StageDirection side, StageDirection facing) {
+    public VisualElement SetPortrait(string character_name, string pose, StagePosition position, StageDirection facing) {
         Texture2D portrait_image = this.GetPortrait(character_name, pose);
-        return _SetPortrait(portrait_image, character_name, side, facing);
+        return _SetPortrait(portrait_image, character_name, position, facing);
     }
 
-    private VisualElement _SetPortrait(Texture2D image, string character_name, StageDirection side, StageDirection facing) {
+    private VisualElement _SetPortrait(Texture2D image, string character_name, StagePosition position, StageDirection facing) {
         // handles setting the portrait for the given character, whether they're in the scene or not
         // TODO --- handle character already in scene
         VisualElement portrait;
@@ -208,7 +208,7 @@ public class DialogueController : AbstractCloseEventMenu {
             portrait = character_portraits[character_name];
         } else {
             if (image == null) {
-                throw new DialogueActionsException($"new characters in a scene cannot use a null image! '{character_name} {side} facing {facing}'");
+                throw new DialogueActionsException($"new characters in a scene cannot use a null image! '{character_name} {position} facing {facing}'");
             }
             // add new character to scene
             portrait = GetEmptyPortrait(character_name);
@@ -219,7 +219,7 @@ public class DialogueController : AbstractCloseEventMenu {
             _SetPortraitImage(portrait, image);
         }
         SetPortraitName(portrait, character_name);
-        SetPortraitPosition(portrait, side);
+        SetPortraitPosition(portrait, position);
         _SetPortraitFacing(portrait, facing);
         return portrait;
     }
@@ -306,12 +306,26 @@ public class DialogueController : AbstractCloseEventMenu {
             case StageDirection.unspecified:
                 return StagePosition.unspecified;
             case StageDirection.left:
+                if (PositionOccupied(StagePosition.far_left)) {
+                    return StagePosition.center_left;
+                }
                 return StagePosition.far_left;
             case StageDirection.right:
+                if (PositionOccupied(StagePosition.far_right)) {
+                    return StagePosition.center_right;
+                }
                 return StagePosition.far_right;
             default:
                 throw new DialogueActionsException($"Unhandled case! side = {side}");
         }
+    }
+
+    public bool PositionOccupied(StagePosition position) {
+        if (position == StagePosition.unspecified) {
+            throw new DialogueActionsException($"unhandled StagePosition {position}");
+        }
+        int index = DialogueActionUtil.GetStagePositionIndex(position);
+        return portrait_containers[index].childCount > 0;
     }
 
     // private VisualElement GetPortraitContainer(StagePosition position) {

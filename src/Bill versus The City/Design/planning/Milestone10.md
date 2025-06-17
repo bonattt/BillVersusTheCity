@@ -34,7 +34,7 @@ PLANNED FEATURES
         [+] remove "sides" from UXML
         [+] FIX broken styles: portraits don't display flush with text box
         [+] FIX: portraits stack vertially; portraits should not share a container.
-        [ ] FIX: portraits should deconflict, and move to unoccupied containers, if only side is specified
+        [+] FIX: portraits should deconflict, and move to unoccupied containers, if only side is specified
     [ ] Speaking character should be clear
     [ ] names of non-speaking characters should be clear (name should show directly under the character actually speaking)
     [ ] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene

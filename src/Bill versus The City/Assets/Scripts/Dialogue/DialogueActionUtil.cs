@@ -52,6 +52,22 @@ public static class DialogueActionUtil {
         }
 
     }
+    public static StageDirection StagePositionOposite(StagePosition pos) {
+        return StageDirectionOposite(StagePositionToSide(pos));
+    }
+
+    public static StageDirection StagePositionToSide(StagePosition pos) {
+        switch (pos) {
+            case StagePosition.far_left: return StageDirection.left;
+            case StagePosition.center_left: return StageDirection.left; 
+            case StagePosition.center_right: return StageDirection.right;
+            case StagePosition.far_right: return StageDirection.right;
+            case StagePosition.unspecified: return StageDirection.unspecified;
+
+            default:
+                throw new DialogueActionsException($"unhandled StagePosition {pos}");
+        }
+    }
 
     public static StageDirection StageDirectionOposite(StageDirection dir) {
         // gets the opposite direction of the passed dirction. Eg. given right, return left

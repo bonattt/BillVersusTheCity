@@ -61,7 +61,8 @@ public class DialogueMoveAction : IDialogueAction {
     
     public string cmd { get; private set; }
     public string actor_name { get; private set; }
-    public StageDirection side { get; private set; }
+    // public StageDirection side { get; private set; }
+    public StagePosition position { get; private set; }
     public StageDirection facing { get; private set; }
     public string pose { get; private set; }
 
@@ -74,9 +75,10 @@ public class DialogueMoveAction : IDialogueAction {
         wait_for_player_input = false;
         cmd = args[0];
         actor_name = args[1];
-        side = DialogueActionUtil.StageDirectionFromString(args[2]);
+        // side = DialogueActionUtil.StageDirectionFromString(args[2]);
+        position = DialogueActionUtil.StagePositionFromString(args[2]);
 
-        if (side == StageDirection.unspecified) {
+        if (position == StagePosition.unspecified) {
             throw new DialogueActionsException($"new characters in a dialogue must be on the left or right");
         }
 
@@ -93,15 +95,15 @@ public class DialogueMoveAction : IDialogueAction {
         }
         // if facing is not given, place the character facing 
         if (facing == StageDirection.unspecified) {
-            facing = DialogueActionUtil.StageDirectionOposite(side);
+            facing = DialogueActionUtil.StagePositionOposite(position);
         }
     }
     public void ResolveDialogue(DialogueController ctrl) {
         // `enter` command sets the portrait direction, but doesn't support posing
         if (pose == null) {
-            ctrl.SetPortrait(actor_name, side, facing);
+            ctrl.SetPortrait(actor_name, position, facing);
         } else {
-            ctrl.SetPortrait(actor_name, pose, side, facing);
+            ctrl.SetPortrait(actor_name, pose, position, facing);
         }
     }
 }

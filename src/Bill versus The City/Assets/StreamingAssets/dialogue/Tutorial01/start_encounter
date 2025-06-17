@@ -1,8 +1,8 @@
 alias robber as gangsta show robber
 alias cashier as bill show cashier
 
-enter robber right facing right angry
-enter cashier right facing left 
+enter cashier far-right facing left 
+enter robber center-right facing right angry
 say robber gimme everything in the cash register!
 say cashier woah woah woah, calm down man I just work here
 say cashier you have to make a purchase, or I can't open the register
