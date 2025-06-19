@@ -22,5 +22,5 @@
 
 .dialogue_portrait {
     bottom: 0;
-    align-self: flex-end;
+    align-self: center;
 }

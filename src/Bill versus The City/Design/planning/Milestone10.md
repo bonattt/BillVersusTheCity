@@ -35,16 +35,20 @@ PLANNED FEATURES
         [+] FIX broken styles: portraits don't display flush with text box
         [+] FIX: portraits stack vertially; portraits should not share a container.
         [+] FIX: portraits should deconflict, and move to unoccupied containers, if only side is specified
-    [ ] Speaking character should be clear
-        [ ] place speaking character's name under that character 
+    [~] Speaking character should be clear
+        [+] place speaking character's name under that character 
+        [+] place speaker label in center if speaker is offscreen
     [X] names of non-speaking characters should be clear (name should show directly under the character actually speaking)
     [ ] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene
         was loaded from a main-menu launch of the game.
          - the null pointer is caused because the dialogue's Start, which sets up references to VisualElements populated dynamically, is called  
             AFTER trying to populate those objects. I don't know why this happens out of order for directly loaded scenes only.
          - this may be a loading order issue, I stopped being able to reproduce it
-         - UPDATE: this seems to occur sometimes when loading the level as a next level too...
+         - UPDATE: this seems to occur sometimes when loading the level as a next level too... or maybe this is a different bug, I don't see a null pointer error when it happens
     ~~[ ] Add "Emotes" to character portraits~~ --> I think this will just be implemented
+    
+    [ ] FIX: Speaker label at center of screen looks offcenter for many resolutions; mainly because character portraits center on the 
+        right in their slot, instead of the center, and don't adjust for resolution
 
 PLANNED BUGFIXES
 [ ] 

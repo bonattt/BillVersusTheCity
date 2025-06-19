@@ -49,7 +49,7 @@ public class DialogueSpeachAction : IDialogueAction {
     }
 
     public void ResolveDialogue(DialogueController dialogue) {
-        dialogue.SetSpeakerName(speaker); // TODO --- implement naration text
+        dialogue.SetSpeakerName(speaker);
         dialogue.SetText(text);
     }
 }

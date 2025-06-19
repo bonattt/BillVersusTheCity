@@ -17,7 +17,7 @@ public class DialogueController : AbstractCloseEventMenu {
     public bool dialogue_completed { get; private set; }
 
     public UIDocument ui_doc;
-    private VisualElement root, portraits_div, speaker_left_element;
+    private VisualElement root, portraits_div, speaker_name_element;
     private Label dialogue_text, speaker_label;
     private VisualElement[] portrait_containers;
     private Dictionary<string, VisualElement> character_portraits;
@@ -80,10 +80,9 @@ public class DialogueController : AbstractCloseEventMenu {
         root = ui_doc.rootVisualElement;
         dialogue_text = root.Q<Label>("DialogueText");
         // speaker_left_element = root.Q<VisualElement>("Speaker");
-        speaker_left_element = root.Q<VisualElement>("SpeakerLeft");
-        speaker_label = speaker_left_element.Q<Label>();
+        speaker_name_element = root.Q<VisualElement>("SpeakerName");
+        speaker_label = speaker_name_element.Q<Label>();
         ConfigurePortraits();
-
         NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
 
@@ -225,12 +224,7 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     private void SetPortraitName(VisualElement portrait, string character_name) {
-        string character_title = character_name;
-        if (portrait_aliases.ContainsKey(character_name)) {
-            (string _, string character_display) = portrait_aliases[character_name];
-            character_title = character_display;
-        }
-        _SetPortraitName(portrait, character_title);
+        _SetPortraitName(portrait, character_name);
     }
 
     private static void _SetPortraitName(VisualElement portrait, string character_name) {
@@ -357,14 +351,58 @@ public class DialogueController : AbstractCloseEventMenu {
 
     public void SetSpeakerName(string speaker_name) {
         if (speaker_name == null || speaker_name.Equals("*") || speaker_name.Equals("")) {
-            speaker_left_element.style.visibility = Visibility.Hidden;
+            speaker_name_element.style.visibility = Visibility.Hidden;
         } else {
-            speaker_left_element.style.visibility = Visibility.Visible;
+            speaker_name_element.style.visibility = Visibility.Visible;
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;  // TODO --- investigate this deeper
+            string speaker_display = speaker_name;
+            if (portrait_aliases.ContainsKey(speaker_name)) {
+                (string _, string _character_display) = portrait_aliases[speaker_name];
+                speaker_display = _character_display;
+            }
+
             // use underscores for spaces in the name of the speaker. Title Case names
-            speaker_label.text = textInfo.ToTitleCase(speaker_name.ToLower().Replace("_", " "));
+            speaker_label.text = textInfo.ToTitleCase(speaker_display.ToLower().Replace("_", " "));
+            _UpdateSpeakerLabelPosition(speaker_name);
         }
         // Debug.LogWarning($"Not Implelented: SetSpeakerName('{speaker_name}')");
+    }
+    private void _UpdateSpeakerLabelPosition(string character_name) {
+        // takes the name of a speaker, and updates the position of the speaker label to be under that character's portrait. If the character 
+        //   is not in the dialogue, the label is moved to the center
+        int index = GetCharacterIndex(character_name);
+        float per_index_percent = 100f / portrait_containers.Length; // percent out of 100, not ratio of 1
+        float start_offset = -(per_index_percent * ((portrait_containers.Length/2) - 0.5f)); // offset to position label in the center of index 0's portrait
+        float percent_from_left;
+        if (index <= -1) {
+            // if the character is not on screen, position label at the center
+            // percent_from_left = zero_offset + (per_index_percent * ((portrait_containers.Length/2) - 0.5f)); // works for even numbers of portraits to put the label between middle 2 portraits // works if centered from left...
+            percent_from_left = 0f; // label position is center justified
+        } else if (index < portrait_containers.Length) {
+            percent_from_left = start_offset + (per_index_percent * index);
+        } else {
+            Debug.LogError($"character index calculated to be greater than number of portraits!");
+            percent_from_left = 0f; // center
+        }
+        speaker_name_element.style.position = Position.Relative;
+        speaker_name_element.style.left = new Length(percent_from_left, LengthUnit.Percent);
+    }
+
+    private int GetCharacterIndex(string character_name) {
+        // returns the index (StagePosition) the given character is currently positioned at.
+        // if the given name is not on-screen, return -1
+
+        if (!character_portraits.ContainsKey(character_name)) {
+            return -1;
+        }
+        VisualElement target_portrait = character_portraits[character_name];
+        for (int i = 0; i < portrait_containers.Length; i++) {
+            if (portrait_containers[i] == target_portrait.parent) {
+                return i;
+            }
+        }
+        Debug.LogError($"Character {character_name} found in dict, but cannot match portrait index!");
+        return -1; 
     }
 
     public void SetText(string new_dialouge) {
@@ -373,7 +411,6 @@ public class DialogueController : AbstractCloseEventMenu {
 
     public void DialogueFinished() {
         dialogue_completed = true;
-        Debug.LogWarning("DialogueFinished!"); // TODO --- remove debug
         foreach (IGameEventEffect e in dialogue_callbacks) {
             e.ActivateEffect();
         }

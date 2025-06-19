@@ -1,6 +1,6 @@
 alias tom as gangsta show tom
-alias gangsta1 as gangsta show gangsta 1
-alias gangsta2 as gangsta show gangsta 1
+alias gangsta1 as gangsta show gangsta_one
+alias gangsta2 as gangsta show gangsta_two
 
 enter bill far-right facing left angry
 enter tom center-right facing left angry
