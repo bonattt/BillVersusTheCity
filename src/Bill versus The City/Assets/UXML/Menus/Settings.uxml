@@ -3,7 +3,7 @@
     <ui:VisualElement name="root" style="flex-grow: 1; align-self: center;">
         <ui:VisualElement name="menu" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(157, 157, 157); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); flex-direction: row; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; align-items: center; justify-content: center; align-self: center;">
             <ui:VisualElement name="tabs_panel" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; width: 200px;">
-                <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="tabs_label" style="font-size: 24px; -unity-text-align: upper-center;" />
+                <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="tabs_label" style="font-size: 2%; -unity-text-align: upper-center;" />
                 <ui:VisualElement name="tabs_list" style="flex-grow: 1;">
                     <ui:Button text="General" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GeneralTab" class="settings_module_tab" />
                     <ui:Button text="Gameplay" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GameplayTab" class="settings_module_tab" />

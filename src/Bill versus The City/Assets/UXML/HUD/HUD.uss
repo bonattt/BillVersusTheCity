@@ -19,6 +19,6 @@
 }
 
 .health_bar_text {
-    font-size: 20px;
+    font-size: 16%;
     -unity-font-style: bold;
 }

@@ -24,7 +24,7 @@
 
 .menu_text {
     color: rgb(0, 0, 0);
-    font-size: 28px;
+    font-size: 22%;
 }
 
 .exit_game_button {
@@ -32,11 +32,11 @@
 
 .main_menu_button {
     min-width: 30%;
-    font-size: 40px;
+    font-size: 175%;
     color: rgb(0, 0, 0);
 }
 
 .menu_header {
     -unity-text-align: upper-center;
-    font-size: 40px;
+    font-size: 35%;
 }
