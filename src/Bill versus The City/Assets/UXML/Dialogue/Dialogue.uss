@@ -10,7 +10,7 @@
 
 .portrait_name_label {
     -unity-text-align: upper-center;
-    font-size: 26%;
+    font-size: 32px;
     bottom: 0;
 }
 

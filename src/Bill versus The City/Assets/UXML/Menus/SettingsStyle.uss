@@ -1,5 +1,5 @@
 .menu_header {
-    font-size: 30%;
+    font-size: 36px;
     -unity-text-align: upper-center;
 }
 
@@ -7,7 +7,7 @@
 }
 
 .settings_control_button {
-    font-size: 30%;
+    font-size: 36px;
     width: 150px;
     height: 100px;
 }
@@ -18,7 +18,7 @@
 }
 
 .settings_item {
-    font-size: 22%;
+    font-size: 28px;
     left: 5px;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .settings_module_tab {
-    font-size: 27%;
+    font-size: 32px;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -47,7 +47,7 @@
 }
 
 .settings_slider_label {
-    font-size: 22%;
+    font-size: 28px;
     -unity-text-align: middle-left;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .settings_slider_value {
-    font-size: 16%;
+    font-size: 20px;
     -unity-text-align: middle-right;
     width: 50px;
     margin-right: 15px;

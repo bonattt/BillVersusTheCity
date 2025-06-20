@@ -3,16 +3,16 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="Panel" style="flex-grow: 1; width: 500px; height: 500px; background-color: rgb(157, 157, 157); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; justify-content: center; align-self: center; align-items: center; max-height: 500px;">
             <ui:VisualElement name="Header" style="flex-grow: 1; max-height: 100px;">
-                <ui:Label tabindex="-1" text="Debug Actions" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 27%;" />
+                <ui:Label tabindex="-1" text="Debug Actions" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 32px;" />
             </ui:VisualElement>
             <ui:VisualElement name="Content" style="flex-grow: 1;">
                 <ui:VisualElement class="DebugAction">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 16%;" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 20px;" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="Footer" style="flex-grow: 1;">
-                <ui:Button text="Close" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="max-width: 300px; font-size: 15%;" />
+                <ui:Button text="Close" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="max-width: 300px; font-size: 20px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

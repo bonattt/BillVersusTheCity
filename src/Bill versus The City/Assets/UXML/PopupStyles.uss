@@ -22,7 +22,7 @@
     margin-right: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
-    font-size: 19%;
+    font-size: 24px;
     -unity-font-style: bold;
 }
 
@@ -31,11 +31,11 @@
     white-space: normal;
     padding-right: 10px;
     padding-left: 10px;
-    font-size: 18%;
+    font-size: 20px;
 }
 
 .dialogue_header {
-    font-size: 35%;
+    font-size: 40px;
     -unity-font-style: bold;
     -unity-text-align: upper-center;
     white-space: normal;
