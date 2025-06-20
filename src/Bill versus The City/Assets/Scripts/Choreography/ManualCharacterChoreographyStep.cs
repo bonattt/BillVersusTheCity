@@ -26,6 +26,13 @@ public class ManualCharacterChoreographyStep : AbstractChoreographyStep {
         character_controller.MoveCharacter(move_direction, look_direction: move_direction, sprint: false, crouch: false, walk: true);
     }
 
+    public override void Complete() {
+        base.Complete();
+        // character animation continues to play until a zero'd move is called, because MoveCharacter is expected to be called on every Update loop
+        Vector3 move_direction = destination.position - character_controller.transform.position;
+        character_controller.MoveCharacter(Vector3.zero, look_direction: move_direction, sprint: false, crouch: false, walk: true);
+    }
+
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(destination.position, 0.4f);

@@ -54,7 +54,7 @@ UNPLANNED BUGFIXES
 [+] Fix Enemies can hear while combat disabled
 [~] FIX: Speaker label at center of screen looks offcenter for many resolutions; mainly because character portraits center on the 
     right in their slot, instead of the center, and don't adjust for resolution
-[ ] FIX: Player plays the running animation while being moved by choreography, instead of walking.
+[+] FIX: Player plays the running animation while being moved by choreography, instead of walking.
     - the animation debugger shows the player is walking, not running, but the character is clearly running
 [ ] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene
     was loaded from a main-menu launch of the game.
