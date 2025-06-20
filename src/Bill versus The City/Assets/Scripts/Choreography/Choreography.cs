@@ -75,9 +75,9 @@ public class Choreography : MonoBehaviour, IChoreography {
         inst = this;
         active = true;
         player_controls.controls_locked = true;
-        sequential_choreography.Activate(this);
         cached_combat_enabled = level.combat_enabled;
         level.combat_enabled = false;
+        sequential_choreography.Activate(this);
         SetCameraMode();
 
         debug__cached_combat_enabled = cached_combat_enabled;

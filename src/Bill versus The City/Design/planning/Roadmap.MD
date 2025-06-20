@@ -26,17 +26,16 @@
     --> Semi-auto shotgun
 
 [+] Milestone 9: (hearing system and melee enemies)
-[ ] Milestone 10: Advanced Level config
+[+] Milestone 10: Advanced Level config
     - Cutscene/character choreography
     - improve dialoug UI
     - additional stages in a level (eg. defeat some enemies, triggering more to spawn)
 
-[ ] Milestone ???: More Dialogue System
+[ ] Milestone 011: Mishmash (More Dialogue System)
     - add "emote" system to generically apply emotes to any character
     - scale portraits to different screen resolutions
-
-[ ] Milestone ???: Adjust UI to be more screen resolution independent
     - replace font size in "px" with font size in "%" for ALL UIs
+    - explosive weapons
 
 [ ] Milestone ???: More Levels
 [ ] Milestone ???: More Dialogue
