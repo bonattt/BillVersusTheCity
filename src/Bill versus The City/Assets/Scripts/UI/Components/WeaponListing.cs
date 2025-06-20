@@ -50,6 +50,7 @@ public class WeaponListing : VisualElement, IWeaponUI {
         _weapon_label = new Label();
         _weapon_label.name = "Label";
         _weapon_label.text = weapon.item_name;
+        _weapon_label.style.fontSize = new Length(30, LengthUnit.Percent);
         
         this.Add(_weapon_icon);
         this.Add(_weapon_label);

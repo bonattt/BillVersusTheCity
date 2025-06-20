@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UXML/Menus/DebugActionsMenu.uss?fileID=7433441132597879392&amp;guid=c9c1b8db0de5dfe49882e90052f951c3&amp;type=3#DebugActionsMenu" />
-    <ui:VisualElement name="root" style="flex-grow: 1;">
+    <Style src="project://database/Assets/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
+    <ui:VisualElement name="root" class="root" style="flex-grow: 1;">
         <ui:VisualElement name="Panel" style="flex-grow: 1; width: 500px; height: 500px; background-color: rgb(157, 157, 157); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; justify-content: center; align-self: center; align-items: center; max-height: 500px;">
             <ui:VisualElement name="Header" style="flex-grow: 1; max-height: 100px;">
                 <ui:Label tabindex="-1" text="Debug Actions" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 27%;" />
