@@ -72,7 +72,9 @@ public static class AttackResolver {
                 target.GetHitTarget(), hit_location, attack);
         }
         target.OnAttackHitRecieved(attack);
-        attack.attacker.OnAttackHitDealt(attack, target);
+        if (attack.attacker != null) {
+            attack.attacker.OnAttackHitDealt(attack, target);
+        }
     }
 
     private static IAttackHitEffect[] GetDamageEffects() {

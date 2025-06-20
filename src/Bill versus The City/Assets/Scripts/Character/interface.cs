@@ -30,8 +30,7 @@ public interface ICharStatusSubscriber {
 }
 
 
-public interface IAttack
-{
+public interface IAttack {
     // TODO
     public IAttackTarget attacker { get; }
     public IWeapon weapon { get; }
@@ -47,8 +46,7 @@ public interface IAttack
 
 public class MeleeAttack : IAttack {
     public IAttackTarget attacker { get; set; }
-    public IWeapon weapon
-    {
+    public IWeapon weapon {
         get => melee_weapon;
         set {
             melee_weapon = (IMeleeWeapon)value;

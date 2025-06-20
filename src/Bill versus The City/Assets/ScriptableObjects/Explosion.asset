@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec37a427a6e1b2049997cce902d2d31d, type: 3}
+  m_Name: Explosion
+  m_EditorClassIdentifier: 
+  explosion_radius: 6
+  explosion_effects:
+  - {fileID: 2772534263611651985, guid: 398af651258f8ef48976783a0179738e, type: 3}
+  _damage_falloff: 1
+  _attack_damage_min: 150
+  _attack_damage_max: 150
+  _armor_effectiveness: 1
+  _ignore_armor: 0
+  _item_id: test_explosion
+  _item_name: test_explosion
+  _item_icon: {fileID: 0}
+  _attack_sound: gunshot_shotgun

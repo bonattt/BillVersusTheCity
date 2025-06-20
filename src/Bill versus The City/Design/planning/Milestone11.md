@@ -8,10 +8,10 @@ Started on 2025-06-20
 Finished on 2025-???
 
 PLANNED FEATURES
-[ ] make UI more resolution agnostic
-    [ ] replace all "px" font sizes with "%" font sizes
-    [ ] replace as much "px" size styles and margins as possible with "%"
-    [ ] add scaling to dialogue portraits 
+[+] make UI more resolution agnostic
+    [+] ~~replace all "px" font sizes with "%" font sizes~~
+    [X] ~~replace as much "px" size styles and margins as possible with "%"~~
+    [+] add scaling to dialogue portraits 
 
 [ ] Explosive Weapons
     [ ] Basic Explosion Damage
