@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using log4net.Core;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public enum LevelVictoryType {
@@ -251,16 +251,32 @@ public class LevelConfig : MonoBehaviour {
         } else { Debug.LogWarning("Cannot set HUD victory conditions"); } // TODO --- remove debug
     }
 
+    public bool ShouldExitBeEnabled() {
+        return false;
+    }
+
+    public bool ShouldExitBeDisabled() {
+        // should the level exit be explicitly disabled at the start of the level.
+        if (level_exit == null) {
+            // if there is no level exit, disabling will be an error, so return false
+            return false;
+        }
+        return victory_type == LevelVictoryType.leave_by_exit && sequential_level_conditions.Count >= 1;
+    }
+
     public void ConfigureLevel() {
         Validate();
         // init condition lists
+        countdown = null; // set countdown to null, before potentially adding a countdown from preset victory conditions, or manual victory condition
         SetHUDVictoryConditions(victory_conditions_preset);
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
         non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();
-        countdown = null; // set countdown to null, before potentially adding a countdown from preset victory conditions
         ApplyPresetVictoryCondition();
         ApplyPresetFailureCondition();
+        if (ShouldExitBeDisabled()) {
+            DeactivateLevelExit();
+        }
         level_started = false;
         inst = this;
 
@@ -404,6 +420,16 @@ public class LevelConfig : MonoBehaviour {
         return MenuManager.inst.OpenDialoge(dialogue_file);
     }
 
+    public void DeactivateLevelExit() {
+        
+        Debug.LogWarning("DeactivateLevelExit!"); // TODO --- remove debug
+        if (level_exit == null) {
+            Debug.LogError("`level_exit` is missing, and cannot be deactivated!!");
+            return;
+        }
+        level_exit.interaction_enabled = false;
+    }
+
     public void ActivateLevelExit() {
         // GameObject truck = GameObject.Find("PlayerTruck");
         // if (truck == null) { 
@@ -416,6 +442,7 @@ public class LevelConfig : MonoBehaviour {
         //     return;
         // }
         // Interaction finish_level = child.gameObject.GetComponent<Interaction>();
+        Debug.LogWarning("ActivateLevelExit!"); // TODO --- remove debug
         if (level_exit == null) {
             Debug.LogError("`level_exit` is missing, and cannot be activated!!");
             return;

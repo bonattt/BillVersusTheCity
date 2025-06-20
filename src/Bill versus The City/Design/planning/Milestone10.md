@@ -50,9 +50,9 @@ UNPLANNED FEATURES
 
 
 UNPLANNED BUGFIXES
-[ ] Level 1 allows the player to leave immediately, without clearing enemies first
-[ ] Fix Enemies can hear while combat disabled
-[ ] FIX: Speaker label at center of screen looks offcenter for many resolutions; mainly because character portraits center on the 
+[+] Level 1 allows the player to leave immediately, without clearing enemies first
+[+] Fix Enemies can hear while combat disabled
+[~] FIX: Speaker label at center of screen looks offcenter for many resolutions; mainly because character portraits center on the 
     right in their slot, instead of the center, and don't adjust for resolution
 [ ] FIX: Player plays the running animation while being moved by choreography, instead of walking.
     - the animation debugger shows the player is walking, not running, but the character is clearly running

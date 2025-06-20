@@ -3087,6 +3087,7 @@ MonoBehaviour:
   - {fileID: 229662831}
   - {fileID: 1481801229}
   - {fileID: 3796762}
+  _effect_completed: 0
 --- !u!4 &1522738784
 Transform:
   m_ObjectHideFlags: 0
@@ -3650,6 +3651,10 @@ PrefabInstance:
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_start_level
       value: Tutorial01/start_level
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: victory_conditions_preset
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_objectives_complete

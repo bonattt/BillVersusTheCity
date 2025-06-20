@@ -12,9 +12,6 @@ say gangsta yo, bring out Dicky or we're gonna shoot up your house, he owes me $
 pose bill angry
 say bill you asked for it
 move bill right facing right
-blocking right bill gangsta gangsta2; break;
-blocking left bill gangsta gangsta2; break;
-blocking right bill gangsta gangsta2; break;
 
 exit gangsta
 exit gangsta2

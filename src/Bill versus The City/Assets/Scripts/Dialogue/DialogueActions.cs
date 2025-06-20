@@ -186,11 +186,10 @@ public class DialogueBlockingAction : IDialogueAction {
     public bool wait_for_player_input { get; set; }
     
     public string cmd { get; private set; }
-    public StageDirection side { get; private set; }
     public List<string> actors { get; private set; }
 
 
-    private const string USAGE_EXAMPLE = "blocking bill far-left facing left";
+    private const string USAGE_EXAMPLE = "blocking bill . gangsta1 gangsta2";
     // private const string USAGE_EXAMPLE = "blocking left bill gangsta gangsta2"; // old format
 
     public DialogueBlockingAction(string[] args) {
@@ -199,17 +198,12 @@ public class DialogueBlockingAction : IDialogueAction {
             throw new DialogueActionsException($"`blocking` requires at least 3 arguments. Usage: `{USAGE_EXAMPLE}`");
         } 
         cmd = args[0];
-        side = DialogueActionUtil.StageDirectionFromString(args[1]);
-        if (side != StageDirection.left && side != StageDirection.right ){
-            throw new DialogueActionsException($"side must be either left or right, not {side}");
-        }
         actors = new List<string>(args.Skip(2));
     }
 
     public void ResolveDialogue(DialogueController ctrl) {
-        // TODO --- implement this
-        throw new NotImplementedException("I'm still figuring out what to do with blocking action");
-        // ctrl.SetBlocking(side, actors);
+        // ctrl.SetBlocking(actors);
+        throw new NotImplementedException("blocking actions were removed.");
     }
 
 }
