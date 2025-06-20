@@ -2,10 +2,10 @@
     <Style src="project://database/Assets/UXML/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
     <ui:VisualElement name="root" style="flex-grow: 1; align-items: center; justify-content: center;">
         <ui:VisualElement name="panel" class="menu_panel" style="flex-grow: 0; border-left-color: rgba(0, 0, 0, 0.39); border-right-color: rgba(0, 0, 0, 0.39); border-top-color: rgba(0, 0, 0, 0.39); border-bottom-color: rgba(0, 0, 0, 0.39); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; font-size: 20%;">
-            <ui:Label tabindex="-1" text="Where to?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="menu_header" style="font-size: 35%;" />
-            <ui:Button text="Next Level" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextLevelButton" style="font-size: 20%;" />
-            <ui:Button text="Travel (gunstore/house)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TravelButton" style="font-size: 20%;" />
-            <ui:Button text="Stay here" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" style="font-size: 20%;" />
+            <ui:Label tabindex="-1" text="Where to?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="menu_header" />
+            <ui:Button text="Next Level" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextLevelButton" />
+            <ui:Button text="Travel (gunstore/house)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TravelButton" />
+            <ui:Button text="Stay here" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CancelButton" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

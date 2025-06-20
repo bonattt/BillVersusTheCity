@@ -1,7 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UXML/HUD/AmmoBeltStyle.uss?fileID=7433441132597879392&amp;guid=e1b4ac47f875826429524622d65b4936&amp;type=3#AmmoBeltStyle" />
-    <Style src="project://database/Assets/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
-    <ui:VisualElement name="root" class="root" style="flex-grow: 1; position: absolute; bottom: 0; right: 0;">
+    <ui:VisualElement name="root" style="flex-grow: 1; position: absolute; bottom: 0; right: 0;">
         <ui:VisualElement name="AmmoBeltContents" style="flex-grow: 1; position: absolute; bottom: 0; right: 0;">
             <ui:Label tabindex="-1" text="9mm: 70/100" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="ammo_type" />
             <ui:Label tabindex="-1" text=".223: 30 / 30" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" class="ammo_type" />

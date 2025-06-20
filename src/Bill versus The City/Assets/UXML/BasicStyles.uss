@@ -1,7 +1,3 @@
-.root {
-    font-size: 200px;
-}
-
 .menu_root {
     justify-content: center;
 }

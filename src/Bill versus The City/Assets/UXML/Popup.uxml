@@ -1,7 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UXML/PopupStyles.uss?fileID=7433441132597879392&amp;guid=f61b3e054cba3af46834e258ffef606b&amp;type=3#PopupStyles" />
-    <Style src="project://database/Assets/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
-    <ui:VisualElement name="root" class="root" style="flex-grow: 1; justify-content: center; align-self: auto; align-items: center;">
+    <Style src="project://database/Assets/UXML/DialogueStyles.uss?fileID=7433441132597879392&amp;guid=f61b3e054cba3af46834e258ffef606b&amp;type=3#DialogueStyles" />
+    <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center; align-self: auto; align-items: center;">
         <ui:VisualElement name="Window" style="flex-grow: 1; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); background-color: rgb(176, 176, 176); max-width: 50%; min-width: 400px; max-height: 35%; min-height: 200px; height: 25%; width: 40%;">
             <ui:VisualElement name="Header" style="flex-grow: 1; width: 100%; height: 25%;">
                 <ui:Label tabindex="-1" text="Dialogue Header" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderLabel" class="dialogue_header" />

@@ -1,6 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/BasicStyles.uss?fileID=7433441132597879392&amp;guid=50e013c45faeee745837ff32217be669&amp;type=3#BasicStyles" />
-    <ui:VisualElement name="Root" class="root" style="flex-grow: 1;">
+    <ui:VisualElement name="Root" style="flex-grow: 1;">
         <ui:VisualElement name="EquippedWeapon" style="flex-grow: 1; min-height: 100px; max-height: 500px; min-width: 200px; max-width: 750px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; font-size: 20%; transform-origin: left bottom; position: absolute; bottom: 50px; left: 0;">
             <ui:Label tabindex="-1" text="Weapon" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CurrentWeaponLabel" style="font-size: 35%;" />
             <ui:Label tabindex="-1" text="Ammo" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AmmoLabel" style="font-size: 35%;" />
