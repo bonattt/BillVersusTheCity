@@ -2513,7 +2513,7 @@ GameObject:
   - component: {fileID: 894920201}
   - component: {fileID: 894920200}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,9 +13,10 @@ PLANNED FEATURES
     [X] ~~replace as much "px" size styles and margins as possible with "%"~~
     [+] add scaling to dialogue portraits 
 
-[ ] Explosive Weapons
-    [ ] Basic Explosion Damage
-    [ ] Mine (explode on trigger)
+[~] Explosive Weapons
+    [+] Basic Explosion Damage
+    [+] Mine (explode on trigger)
+    [ ] Walls block explosions
     [ ] Rocket Launcher (exploding projectile)
     [ ] Grenade (exploding throwable)
         [ ] Thrown item lands near mouse

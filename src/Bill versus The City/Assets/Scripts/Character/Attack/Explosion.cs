@@ -10,9 +10,11 @@ public class Explosion : MonoBehaviour, IGameEventEffect
 
     private bool _effect_completed = false;
     public bool effect_completed { get => _effect_completed; }
+    private HashSet<IAttackTarget> targets_hit;
 
     void Start()
     {
+        Reset();
         if (explode_on_start)
         {
             Explode();
@@ -41,6 +43,11 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         
     }
 
+    public void Reset() {
+        // calling Reset allows the explosion to be set to go off again
+        targets_hit = new HashSet<IAttackTarget>();
+    }
+
     private void SpawnExplosionEffects()
     {
         foreach (GameObject prefab in explosion_attack.explosion_effects)
@@ -51,8 +58,26 @@ public class Explosion : MonoBehaviour, IGameEventEffect
     }
     private void DealExplosionDamage()
     {
+        // foreach (Collider c in hits) {
+        //     IAttackTarget target = c.gameObject.GetComponentInParent<IAttackTarget>();
+        //     if (target != null) {
+        //         if (targets_hit.Contains(target)) {
+        //             continue; // target already hit, skip
+        //         } else {
+        //             targets_hit.Add(target);
+        //             AttackResolver.ResolveAttackHit(explosion_attack, target, target.GetHitTarget().transform.position);
+        //             Debug.LogWarning($"{target} was hit by explosion"); // TODO --- remove debug
+        //         }
+        //     }
+        // }
+        foreach (IAttackTarget target in GetExplosionHits()) {
+            AttackResolver.ResolveAttackHit(explosion_attack, target, target.GetHitTarget().transform.position);
+            Debug.LogWarning($"{target} was hit by explosion"); // TODO --- remove debug
+        }
+    }
+
+    private IEnumerable<IAttackTarget> GetExplosionHits() {
         Collider[] hits = Physics.OverlapSphere(transform.position, explosion_attack.explosion_radius);
-        HashSet<IAttackTarget> targets_hit = new HashSet<IAttackTarget>();
         foreach (Collider c in hits) {
             IAttackTarget target = c.gameObject.GetComponentInParent<IAttackTarget>();
             if (target != null) {
@@ -60,8 +85,7 @@ public class Explosion : MonoBehaviour, IGameEventEffect
                     continue; // target already hit, skip
                 } else {
                     targets_hit.Add(target);
-                    AttackResolver.ResolveAttackHit(explosion_attack, target, target.GetHitTarget().transform.position);
-                    Debug.LogWarning($"{target} was hit by explosion"); // TODO --- remove debug
+                    yield return target;
                 }
             }
         }
