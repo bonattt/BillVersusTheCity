@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec37a427a6e1b2049997cce902d2d31d, type: 3}
   m_Name: Explosion
   m_EditorClassIdentifier: 
-  explosion_radius: 6
+  explosion_radius: 2.5
   explosion_effects:
   - {fileID: 2772534263611651985, guid: 398af651258f8ef48976783a0179738e, type: 3}
   _damage_falloff: 1
