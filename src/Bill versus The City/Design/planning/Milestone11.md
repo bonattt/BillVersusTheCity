@@ -16,8 +16,8 @@ PLANNED FEATURES
 [~] Explosive Weapons
     [+] Basic Explosion Damage
     [+] Mine (explode on trigger)
-    [ ] Walls block explosions
-    [ ] Rocket Launcher (exploding projectile)
+    [+] Walls block explosions
+    [+] Rocket Launcher (exploding projectile)
     [ ] Grenade (exploding throwable)
         [ ] Thrown item lands near mouse
         [ ] Thrown item goes over cover, even when crouched
