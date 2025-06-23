@@ -23,7 +23,15 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     public Transform _attack_start_point; // bullets start here
     public Transform attack_start_point { get => _attack_start_point; } // bullets start here
 
-    public GameObject bullet_prefab;
+    public GameObject _default_bullet_prefab;
+    public GameObject bullet_prefab {
+        get {
+            if (current_gun != null && current_gun.bullet_prefab != null) {
+                return current_gun.bullet_prefab;
+            }
+            return _default_bullet_prefab;
+        }
+    }
 
     public float inaccuracy_modifier = 0f;
     
@@ -212,7 +220,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         _last_shot_at = Time.time;
         Bullet bullet = null;
         for (int i = 0; i < current_gun.n_shots; i++) {
-            GameObject bullet_obj = Instantiate(bullet_prefab) as GameObject;
+            GameObject bullet_obj = Instantiate(bullet_prefab);
 
             bullet_obj.transform.position = GetShootPoint(i);
             Vector3 velocity = GetAttackVector(attack_direction, i);

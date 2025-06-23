@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
+  m_Name: gun_rocket_launcher
+  m_EditorClassIdentifier: 
+  _name: RPG Launcher
+  _item_id: rifle_semiauto
+  _item_icon: {fileID: 21300000, guid: 1d6f159ed1c2b864dbd5ef7186da8192, type: 3}
+  _weapon_slot: 1
+  _weapon_class: 1
+  _weapon_settings:
+  - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
+  bullet_effect: {fileID: 11400000, guid: 26f04c8929bdb1e458e98492cff5775f, type: 2}
+  _ammo_capacity: 1
+  _reload_amount: 1
+  _reload_time: 2
+  _time_to_aim: 1.5
+  _recoil_inaccuracy: 1
+  _recoil_max: 15
+  _recoil_recovery: 30
+  _recoil_shake: 0.1
+  _aim_zoom: 0.95
+  _aim_move_speed: 0.35
+  _max_zoom_range: 7
+  _gunshot_sound: 
+  _empty_gunshot_sound: 
+  _reload_start_sound: 
+  _reload_complete_sound: 
+  overwrite_bullet_prefab: {fileID: 6142857927618689121, guid: bff06f95f783ed547bb644e36c06dd1d, type: 3}

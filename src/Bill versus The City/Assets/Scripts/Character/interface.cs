@@ -103,7 +103,7 @@ public interface IArmor : IItem, IDifficultyAdjusted {
 
 public interface IBullet : IAttack {
     public Transform location { get; }
-    public void ResolveHit(GameObject hit, Vector3 point);
+    public void ResolveCollision(GameObject hit, Vector3 point);
 }
 
 public interface ICharacterMovement {
@@ -203,6 +203,7 @@ public interface IFirearm : IWeapon
 
     // effects
     // public string attack_sound { get; } // moved to IWeapon from IFirearm
+    public GameObject bullet_prefab { get; }
     public string empty_gunshot_sound { get; }
     public string reload_start_sound { get; }
     public string reload_complete_sound { get; }
@@ -229,7 +230,8 @@ public enum AmmoType {
     handgun, // 9mm for handguns or SMGs
     magnum,  // .357 magnum for revolvers
     rifle,   // .223 for AR-15
-    shotgun  // buckshot shotgun shells
+    shotgun,  // buckshot shotgun shells
+    rocket
 }
 
 public interface IWeaponManager

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour, IGameEventEffect
 {
-    public bool explode_on_start = true;
+    public bool explode_on_start = false;
     public bool destroy_on_explode = true;
     private bool _exploded = false;
     public ExplosionAttack explosion_attack;

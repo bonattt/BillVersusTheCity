@@ -357,6 +357,7 @@ MonoBehaviour:
   player_movement: {fileID: 6586359110877128584}
   resume_aim_after_reload: 0
   resume_sprint_after_reload: 0
+  controls_locked: 0
 --- !u!114 &6586359110877128584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,7 +407,7 @@ MonoBehaviour:
   initialize_weapon: {fileID: 0}
   start_weapon_loaded: 1
   _attack_start_point: {fileID: 2506234290457545205}
-  bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
+  _default_bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
   _current_recoil: 0
   debug_ammo_count: 0

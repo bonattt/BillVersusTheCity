@@ -41,8 +41,10 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     // effects
     public string _gunshot_sound, _empty_gunshot_sound, _reload_start_sound, _reload_complete_sound;
 
-    public string item_name { get { return _name; } }
-    public Sprite item_icon { get { return _item_icon; } }
+    public GameObject overwrite_bullet_prefab;
+    public GameObject bullet_prefab { get => overwrite_bullet_prefab; }
+    public string item_name { get => _name; }
+    public Sprite item_icon { get => _item_icon; }
 
     public AmmoType ammo_type { 
         get { return bullet_effect.ammo_type; } 

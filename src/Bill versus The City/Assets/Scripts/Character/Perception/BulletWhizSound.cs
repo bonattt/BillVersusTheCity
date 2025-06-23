@@ -2,9 +2,10 @@
 
 using UnityEngine;
 
-
+[Tooltip("creates a sound enemies can hear for bullet's whizing through a room.")]
 public class BulletWhizSound : MonoBehaviour {
-    // creates a sound for bullet's whizing through a room.
+    // creates a sound enemies can hear for bullet's whizing through a room.
+    // does NOT create a sound effect for the player
     
     [Tooltip("How far away will sound be audible.")]
     public float base_range = 5f;

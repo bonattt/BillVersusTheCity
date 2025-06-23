@@ -211,13 +211,14 @@ MonoBehaviour:
   crouch_dive_duration: 1
   crouch_dive_remaining: 0
   _crouch_percent: 0
+  nav_mesh_agent: {fileID: 2365366885385776978}
+  choreography_movement: 0
+  debug__look_direction: {x: 0, y: 0, z: 0}
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
   use_full_auto: 0
-  nav_mesh_agent: {fileID: 2365366885385776978}
-  debug__look_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &7771750986634287957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +271,7 @@ MonoBehaviour:
   initialize_weapon: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
   start_weapon_loaded: 1
   _attack_start_point: {fileID: 4280276152886177003}
-  bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
+  _default_bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
   _current_recoil: 0
   debug_ammo_count: 0

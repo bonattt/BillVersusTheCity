@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour, IBullet
 
     public float time_to_live = 30f;
     private float start_time;
-    private Rigidbody rb; 
+    protected Rigidbody rb; 
     public float damage_falloff_rate = 0f;
     private Vector3 start_position;
     public float damage_falloff {
@@ -34,10 +34,10 @@ public class Bullet : MonoBehaviour, IBullet
         }
     }
 
-    private static ulong bullet_count = 0;
+    protected static ulong bullet_count = 0;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         start_position = transform.position;
         start_time = Time.time;
@@ -52,43 +52,49 @@ public class Bullet : MonoBehaviour, IBullet
     void Update()
     {
         if (start_time + time_to_live <= Time.time) {
+            Debug.LogWarning($"{gameObject.name} destroyed by time out!!");
             DestroyProjectile();
         }
         Debug.DrawRay(transform.position, rb.velocity, Color.green, Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision hit) {
-        ResolveHit(hit.gameObject, hit.contacts[0].point);
+        ResolveCollision(hit.gameObject, hit.contacts[0].point);
     }
 
     void OnTriggerEnter(Collider hit) {
-        ResolveHit(hit.gameObject, hit.gameObject.transform.position);
+        ResolveCollision(hit.gameObject, hit.gameObject.transform.position);
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit) {
-        ResolveHit(hit.gameObject, hit.point);
+        ResolveCollision(hit.gameObject, hit.point);
     }
 
-    public void ResolveHit(GameObject hit, Vector3 hit_location) {
+    public void ResolveCollision(GameObject hit, Vector3 hit_location) {
         IAttackTarget target = hit.GetComponent<IAttackTarget>();
-        if(target != null && target == this.attacker) {
+        if (target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
             // Debug.LogWarning("bullet ignores collision with the one who shot it!");
+        } else if (target != null) {
+            ResolveAttackHit(hit, hit_location, target);
+        } else {
+            ResolveAttackMiss(hit, hit_location, target);
         }
-        else if (target != null) {
-            AttackResolver.ResolveAttackHit(this, target, hit_location);
-            BulletTracking.inst.TrackHit(this, target, hit_location);
-            DestroyProjectile();
-        } 
-        else {
-            AttackResolver.AttackMiss(this, hit_location);
-            BulletTracking.inst.TrackHit(this, null, hit_location);
-            DestroyProjectile();
-        }
-
     }
 
-    private void DestroyProjectile() {
+    protected virtual void ResolveAttackHit(GameObject hit, Vector3 hit_location, IAttackTarget target) {
+        AttackResolver.ResolveAttackHit(this, target, hit_location);
+        BulletTracking.inst.TrackHit(this, target, hit_location);
+        DestroyProjectile();
+    }
+
+    protected virtual void ResolveAttackMiss(GameObject hit, Vector3 hit_location, IAttackTarget target) {
+        AttackResolver.AttackMiss(this, hit_location);
+        BulletTracking.inst.TrackHit(this, null, hit_location);
+        DestroyProjectile();
+    }
+
+    protected virtual void DestroyProjectile() {
         Destroy(this.gameObject);
     }
 
