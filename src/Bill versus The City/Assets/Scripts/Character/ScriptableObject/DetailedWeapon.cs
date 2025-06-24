@@ -41,8 +41,7 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     // effects
     public string _gunshot_sound, _empty_gunshot_sound, _reload_start_sound, _reload_complete_sound;
 
-    public GameObject overwrite_bullet_prefab;
-    public GameObject bullet_prefab { get => overwrite_bullet_prefab; }
+    public GameObject bullet_prefab { get => bullet_effect.bullet_prefab; }
     public string item_name { get => _name; }
     public Sprite item_icon { get => _item_icon; }
 
@@ -169,6 +168,77 @@ public class DetailedWeapon : ScriptableObject, IFirearm
         if (current_setting < 0) {
             current_setting = _weapon_settings.Length - 1;
         }
+    }
+    
+    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
+    }
+    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        Debug.LogWarning("ATTACK HOLD!!!"); // TODO --- remove debug
+        if (!auto_fire) { return; } // if not automatic, do not shoot for hold fire
+        FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
+    }
+    
+    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        // do nothing
+    }
+
+    private void FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        Bullet bullet = null;
+        for (int i = 0; i < n_shots; i++) {
+            GameObject bullet_obj = Instantiate(bullet_prefab);
+
+            bullet_obj.transform.position = GetShootPoint(attack_start_point, i);
+            Vector3 velocity = GetAttackVector(attack_direction, inaccuracy, i);
+            bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
+
+            bullet = bullet_obj.GetComponent<Bullet>();
+            bullet.weapon = this;
+            bullet.attack_damage_max = weapon_damage_max;
+            bullet.attack_damage_min = weapon_damage_min;
+            bullet.armor_effectiveness = armor_effectiveness;
+            bullet.damage_falloff_rate = damage_falloff_rate;
+            bullet.attacker = attacker;
+        }
+        current_ammo -= 1;
+        if (bullet != null) {
+            AttackResolver.AttackStart(bullet, attack_direction, attack_start_point, is_melee_attack: false); // Only create a shot effects once for a shotgun
+        } else {
+            Debug.LogWarning("bullet is null!");
+        }
+        // #if UNITY_EDITOR
+        //     EditorApplication.isPaused = true;
+        // #endif
+    }
+    
+    private Vector3 GetShootPoint(Vector3 attack_start_point, int i) {
+        // takes a loop counter, and returns the start point for a bullet. If loop counter is 0, the start point is always the same, 
+        // but if loop counter is not 0, a random offset is applied.
+        if (i == 0) {
+            return attack_start_point;
+        }
+        // radom variance to make shotguns feel better
+        float variance = 0.25f;
+        Vector3 offset = new Vector3(UnityEngine.Random.Range(0, variance), 0, UnityEngine.Random.Range(0, variance));
+        return attack_start_point + offset;
+    }
+    
+    private Vector3 GetAttackVector(Vector3 attack_direction, float inaccuracy, int i) {
+        Vector3 base_vector = attack_direction.normalized * bullet_speed;
+
+        float deviation = UnityEngine.Random.Range(-inaccuracy, inaccuracy);
+
+        Vector3 rotation_axis = Vector3.up;
+        Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
+
+        float multiplier;
+        if(i == 0) {
+            multiplier = 1;
+        } else {
+            multiplier = UnityEngine.Random.Range(0.9f, 1.1f);
+        }
+
+        return rotated_direction * multiplier;
     }
 
     public IWeapon CopyWeapon() => CopyFirearm();

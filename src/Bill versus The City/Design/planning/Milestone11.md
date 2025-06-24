@@ -23,6 +23,7 @@ PLANNED FEATURES
         [ ] Thrown item goes over cover, even when crouched
         [ ] Grenade explodes after 5 seconds
         [ ] Cook Grenades
+    [ ] Explosion Sound
 
 [ ] Dialogue "emote" system
     [ ] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait

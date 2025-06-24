@@ -1,6 +1,7 @@
 
 
 
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New Melee Weapon", menuName ="Data/MeleeWeapon")]
@@ -43,6 +44,30 @@ public class MeleeWeapon : ScriptableObject, IMeleeWeapon
 
     public float _attack_cooldown;
     public float attack_cooldown { get => _attack_cooldown; }
+
+    
+    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
+    }
+    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
+    }
+
+    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        // do nothing
+    }
+
+    private MeleeAttack current_attack = null;
+    public void FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+
+        if (current_attack == null) current_attack = new MeleeAttack();
+        // else Debug.LogError("attack made while current attack isn't nulled yet!");
+        current_attack.melee_weapon = this;
+        current_attack.ignore_armor = false;
+        current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
+
+        AttackResolver.AttackStart(current_attack, attack_direction, attack_start_point, is_melee_attack: true);
+    }
 
     public IWeapon CopyWeapon() => CopyMeleeWeapon();
     public IMeleeWeapon CopyMeleeWeapon() {

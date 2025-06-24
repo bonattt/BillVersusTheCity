@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +38,17 @@ public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
     public float weapon_damage_max { get => attack_damage_max; }
     public string _attack_sound;
     public string attack_sound { get => _attack_sound; }
+
+    
+    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        throw new NotImplementedException("AttackClicked is not implemented for explosion attack!");
+    }
+    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        throw new NotImplementedException("AttackHold is not implemented for explosion attack!");
+    }
+    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        // do nothing
+    }
     public IWeapon CopyWeapon() {
         return Instantiate(this);
     }

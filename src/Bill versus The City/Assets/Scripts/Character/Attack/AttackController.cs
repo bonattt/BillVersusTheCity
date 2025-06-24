@@ -212,72 +212,92 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         }
     }
 
+    public void AttackHold(Vector3 attack_direction) {
+        if (
+            (_last_shot_at + shot_cooldown <= Time.time)
+            &&(! InputSystem.IsNullPoint(attack_direction))
+        ) {
+            if (current_gun.current_ammo > 0) {
+                _FireAttack(attack_direction);
+            }
+            else {
+                _EmptyAttack();
+            }
+        }
+    }
+
     private void _EmptyAttack() {
         AttackResolver.AttackEmpty(current_gun, transform.position);
     }
 
-    private void _FireAttack(Vector3 attack_direction) {
+    private void _FireAttack(Vector3 attack_direction, bool hold=false) {
         _last_shot_at = Time.time;
-        Bullet bullet = null;
-        for (int i = 0; i < current_gun.n_shots; i++) {
-            GameObject bullet_obj = Instantiate(bullet_prefab);
+        float inaccuracy = current_inaccuracy + current_recoil;
+        if (hold) {
+            current_gun.AttackHold(attack_direction, attack_start_point.position, inaccuracy, attacker);
+        } else {
+            current_gun.AttackClicked(attack_direction, attack_start_point.position, inaccuracy, attacker);
+        }
+        // Bullet bullet = null;
+        // for (int i = 0; i < current_gun.n_shots; i++) {
+        //     GameObject bullet_obj = Instantiate(bullet_prefab);
 
-            bullet_obj.transform.position = GetShootPoint(i);
-            Vector3 velocity = GetAttackVector(attack_direction, i);
-            bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
+        //     bullet_obj.transform.position = GetShootPoint(i);
+        //     Vector3 velocity = GetAttackVector(attack_direction, i);
+        //     bullet_obj.GetComponent<Rigidbody>().velocity = velocity;
 
-            bullet = bullet_obj.GetComponent<Bullet>();
-            bullet.weapon = current_gun;
-            bullet.attack_damage_max = current_gun.weapon_damage_max;
-            bullet.attack_damage_min = current_gun.weapon_damage_min;
-            bullet.armor_effectiveness = current_gun.armor_effectiveness;
-            bullet.damage_falloff_rate = current_gun.damage_falloff_rate;
-            bullet.attacker = attacker;
-        }
-        current_recoil += current_gun.recoil_inaccuracy;
-        current_gun.current_ammo -= 1;
-        if (bullet != null) {
-            AttackResolver.AttackStart(bullet, attack_direction, attack_start_point.position, is_melee_attack:false); // Only create a shot effects once for a shotgun
-        }
-        else {
-            Debug.LogWarning("bullet is null!");
-        }
+        //     bullet = bullet_obj.GetComponent<Bullet>();
+        //     bullet.weapon = current_gun;
+        //     bullet.attack_damage_max = current_gun.weapon_damage_max;
+        //     bullet.attack_damage_min = current_gun.weapon_damage_min;
+        //     bullet.armor_effectiveness = current_gun.armor_effectiveness;
+        //     bullet.damage_falloff_rate = current_gun.damage_falloff_rate;
+        //     bullet.attacker = attacker;
+        // }
+        // current_recoil += current_gun.recoil_inaccuracy;
+        // current_gun.current_ammo -= 1;
+        // if (bullet != null) {
+        //     AttackResolver.AttackStart(bullet, attack_direction, attack_start_point.position, is_melee_attack:false); // Only create a shot effects once for a shotgun
+        // }
+        // else {
+        //     Debug.LogWarning("bullet is null!");
+        // }
         UpdateSubscribers();
         // #if UNITY_EDITOR
         //     EditorApplication.isPaused = true;
         // #endif
     }
 
-    private Vector3 GetShootPoint(int i) {
-        // takes a loop counter, and returns the start point for a bullet. If loop counter is 0, the start point is always the same, 
-        // but if loop counter is not 0, a random offset is applied.
-        if (i == 0) {
-            return attack_start_point.position;
-        }
-        // radom variance to make shotguns feel better
-        float variance = 0.25f;
-        Vector3 offset = new Vector3(UnityEngine.Random.Range(0, variance), 0, UnityEngine.Random.Range(0, variance));
-        return attack_start_point.position + offset;
-    }
+    // private Vector3 GetShootPoint(int i) {
+    //     // takes a loop counter, and returns the start point for a bullet. If loop counter is 0, the start point is always the same, 
+    //     // but if loop counter is not 0, a random offset is applied.
+    //     if (i == 0) {
+    //         return attack_start_point.position;
+    //     }
+    //     // radom variance to make shotguns feel better
+    //     float variance = 0.25f;
+    //     Vector3 offset = new Vector3(UnityEngine.Random.Range(0, variance), 0, UnityEngine.Random.Range(0, variance));
+    //     return attack_start_point.position + offset;
+    // }
 
-    private Vector3 GetAttackVector(Vector3 attack_direction, int i) {
-        Vector3 base_vector = attack_direction.normalized * bullet_speed;
+    // private Vector3 GetAttackVector(Vector3 attack_direction, int i) {
+    //     Vector3 base_vector = attack_direction.normalized * bullet_speed;
 
-        float inaccuracy = current_inaccuracy + current_recoil;
-        float deviation = UnityEngine.Random.Range(-inaccuracy, inaccuracy);
+    //     float inaccuracy = current_inaccuracy + current_recoil;
+    //     float deviation = UnityEngine.Random.Range(-inaccuracy, inaccuracy);
 
-        Vector3 rotation_axis = Vector3.up;
-        Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
+    //     Vector3 rotation_axis = Vector3.up;
+    //     Vector3 rotated_direction = Quaternion.AngleAxis(deviation, rotation_axis) * base_vector;
 
-        float multiplier;
-        if(i == 0) {
-            multiplier = 1;
-        } else {
-            multiplier = UnityEngine.Random.Range(0.9f, 1.1f);
-        }
+    //     float multiplier;
+    //     if(i == 0) {
+    //         multiplier = 1;
+    //     } else {
+    //         multiplier = UnityEngine.Random.Range(0.9f, 1.1f);
+    //     }
 
-        return rotated_direction * multiplier;
-    }
+    //     return rotated_direction * multiplier;
+    // }
 
 
     /// DEBUG CODE

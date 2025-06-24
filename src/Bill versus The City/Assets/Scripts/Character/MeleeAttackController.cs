@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MeleeAttackController : MonoBehaviour, IAttackController
-{
+public class MeleeAttackController : MonoBehaviour, IAttackController {
     public IWeapon current_weapon { get => current_melee; set { current_melee = (IMeleeWeapon)value; } }
-    public IFirearm current_gun
-    {
+    public IFirearm current_gun {
         get => null;
         set { throw new NotImplementedException(); }
     }
@@ -26,11 +24,9 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
 
     // set the script to be inactive while game is paused
     private bool _is_active = true;
-    public bool is_active
-    {
+    public bool is_active {
         get { return _is_active; }
-        set
-        {
+        set {
             // avoids shooting because you clicked on the last frame of dialouge
             _is_active = value;
         }
@@ -41,8 +37,7 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
     [SerializeField]
     private Vector3 attack_direction;
 
-    public virtual int? current_slot
-    {
+    public virtual int? current_slot {
         get { return null; }
     }
 
@@ -50,25 +45,21 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
     public void StopAim() { /* do nothing */ }
     public float aim_percent { get => 0f; }
 
-    public bool CanAttack()
-    {
+    public bool CanAttack() {
         return current_melee != null && attack_stage == MeleeAttackStage.none && is_active;
     }
 
-    void Start()
-    {
+    void Start() {
         attacker = GetComponent<IAttackTarget>();
         if (attacker == null) Debug.LogError("attacker is null!!");
         current_melee = _init_weapon.CopyMeleeWeapon();
     }
 
-    protected virtual void Update()
-    {
+    protected virtual void Update() {
         if (!is_active) { return; } // do nothing while controller disabled
 
         attacker = GetComponent<CharCtrl>();
-        if (attacker == null)
-        {
+        if (attacker == null) {
             Debug.LogWarning("attacker is null!");
         }
         UpdateAttackInProgress();
@@ -76,11 +67,9 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
     }
 
     public MeleeAttackStage attack_stage = MeleeAttackStage.none;
-    private void UpdateAttackInProgress()
-    {
+    private void UpdateAttackInProgress() {
         MeleeAttackStage next_stage = GetNextState();
-        if (attack_stage == MeleeAttackStage.attack || next_stage == MeleeAttackStage.attack)
-        {
+        if (attack_stage == MeleeAttackStage.attack || next_stage == MeleeAttackStage.attack) {
             ResolveAttack();
         }
         attack_stage = next_stage;
@@ -89,78 +78,77 @@ public class MeleeAttackController : MonoBehaviour, IAttackController
         }
     }
 
-    private MeleeAttackStage GetNextState()
-    {
+    private MeleeAttackStage GetNextState() {
         float windup_until = _last_attack_at + current_melee.attack_windup;
         float attack_until = windup_until + current_melee.attack_duration;
         float recovery_until = attack_until + current_melee.attack_recovery;
         float cooldown_until = recovery_until + current_melee.attack_cooldown;
-        if (Time.time < _last_attack_at)
-        {
+        if (Time.time < _last_attack_at) {
             return MeleeAttackStage.none; // no attack started
         }
-        if (Time.time > _last_attack_at && Time.time < windup_until)
-        {
+        if (Time.time > _last_attack_at && Time.time < windup_until) {
             return MeleeAttackStage.windup;
-        }
-        else if (Time.time > windup_until && Time.time < attack_until)
-        {
+        } else if (Time.time > windup_until && Time.time < attack_until) {
             return MeleeAttackStage.attack;
-        }
-        else if (Time.time > attack_until && Time.time < recovery_until)
-        {
+        } else if (Time.time > attack_until && Time.time < recovery_until) {
             return MeleeAttackStage.recovery;
-        }
-        else if (Time.time > recovery_until && Time.time < cooldown_until)
-        {
+        } else if (Time.time > recovery_until && Time.time < cooldown_until) {
             return MeleeAttackStage.cooldown;
-        }
-        else if (Time.time > cooldown_until)
-        {
+        } else if (Time.time > cooldown_until) {
             return MeleeAttackStage.none;
         }
         // Debug.LogError($"Unexpected attack timing state. time: {Time.time}, _last_attack_at: {_last_attack_at}");
         return MeleeAttackStage.none;
     }
 
-    private void ResolveAttack()
-    {
+    private void ResolveAttack() {
         RaycastHit[] melee_hits = Physics.RaycastAll(attack_start_point.position, attack_direction, current_melee.attack_reach);
         Debug.DrawRay(attack_start_point.position, attack_direction.normalized * current_melee.attack_reach, Color.green);
-        foreach (RaycastHit hit in melee_hits)
-        {
+        foreach (RaycastHit hit in melee_hits) {
             IAttackTarget hit_target = hit.collider.gameObject.GetComponent<IAttackTarget>();
-            if (hit_target != null && !current_attack.hit_targets.Contains(hit_target))
-            {
+            if (hit_target != null && !current_attack.hit_targets.Contains(hit_target)) {
                 current_attack.hit_targets.Add(hit_target);
                 AttackResolver.ResolveAttackHit(current_attack, hit_target, hit.point);
             }
         }
     }
 
-    public void StartAttack(Vector3 new_attack_direction)
-    {
+    public void AttackHold(Vector3 attack_direction) {
+        StartAttack(attack_direction);
+    }
+
+    public void StartAttack(Vector3 new_attack_direction) {
         // fires an attack with the current weapon
         if (
             (_last_attack_at + total_attack_time < Time.time)
             && (!InputSystem.IsNullPoint(new_attack_direction))
-        )
-        {
+        ) {
             _StartAttack(new_attack_direction);
         }
     }
 
-    private void _StartAttack(Vector3 new_attack_direction)
+    private void _StartAttack(Vector3 new_attack_direction, bool hold = false)
     {
-        if (current_attack == null) current_attack = new MeleeAttack();
-        else Debug.LogError("attack made while current attack isn't nulled yet!");
-        current_attack.melee_weapon = current_melee;
-        current_attack.ignore_armor = false;
-        current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
+        float inaccuracy = 0f;
+        if (
+            (_last_attack_at + total_attack_time<Time.time)
+            && (!InputSystem.IsNullPoint(new_attack_direction))
+        ) {
+            if (hold) {
+                current_melee.AttackClicked(new_attack_direction, attack_start_point.position, inaccuracy, attacker);
+            } else {
+                current_melee.AttackHold(new_attack_direction, attack_start_point.position, inaccuracy, attacker);
+            }
+        }
+        // if (current_attack == null) current_attack = new MeleeAttack();
+        // else Debug.LogError("attack made while current attack isn't nulled yet!");
+        // current_attack.melee_weapon = current_melee;
+        // current_attack.ignore_armor = false;
+        // current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
 
         _last_attack_at = Time.time;
-        this.attack_direction = new_attack_direction;
-        AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
+        // this.attack_direction = new_attack_direction;
+        // AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
 
         // // TODO --- refactor, make this an effect
         // GameObject prefab = (GameObject)Resources.Load(AttackResolver.PLACEHOLDER_MELEE_EFFECTS_PREFAB);

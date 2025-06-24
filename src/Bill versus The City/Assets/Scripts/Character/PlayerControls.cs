@@ -73,7 +73,8 @@ public class PlayerControls : MonoBehaviour {
             if (player_movement.reloading) {
                 player_movement.CancelReload();
             } else {
-                player_movement.TryToAttack();
+                bool attack_made = player_movement.TryToAttack();
+                Debug.LogWarning($"attack made? {attack_made}"); // TODO --- remove debug
             }
         } else if (sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
             player_movement.StartReload();
@@ -92,7 +93,9 @@ public class PlayerControls : MonoBehaviour {
         }
 
         Vector3 move_dir = MoveDirection();
-        player_movement.MoveCharacter(move_dir, LookAtMouseVector(), sprint:sprint_input, crouch:CrouchInput());
+        player_movement.MoveCharacter(move_dir, LookAtMouseVector(), sprint: sprint_input, crouch: CrouchInput());
+
+        UpdateDebug();
     }
 
     public void StartReload(bool sprint_input, bool aim_input) {
@@ -106,33 +109,33 @@ public class PlayerControls : MonoBehaviour {
         resume_sprint_after_reload = false;
         player_movement.CancelReload();
     }
-    
+
     public bool AttackInput() {
         if (current_weapon == null) { return false; }
         if (current_weapon.auto_fire) {
             return InputSystem.current.AttackHoldInput();
-        } 
+        }
         return InputSystem.current.AttackClickInput();
     }
-    
+
     public bool ReloadInput() {
         if (player_movement.reloading) {
             return false;
         }
         return InputSystem.current.ReloadInput();
     }
-    
+
     public bool SprintInput() {
         return InputSystem.current.SprintInput();
     }
 
     public bool CancelReloadInput() {
-        if (! player_movement.reloading) {
+        if (!player_movement.reloading) {
             return false;
         }
         return InputSystem.current.ReloadInput() || InputSystem.current.AttackClickInput();
     }
-    
+
     public bool AimInput() {
         return InputSystem.current.AimHoldInput();
     }
@@ -169,5 +172,22 @@ public class PlayerControls : MonoBehaviour {
         float move_y = InputSystem.current.MoveYInput();
         Vector3 move = new Vector3(move_x, 0, move_y);
         return move.normalized;
+    }
+
+
+    //////////////////// DEBUG //////////////////// 
+
+    public bool debug__attack_input;
+    private float debug__attack_at = -1f;
+    void UpdateDebug() {
+        float show_attack_input_for = 0.1f;
+        if (AttackInput()) {
+            debug__attack_at = Time.time;
+            debug__attack_input = true;
+        } else if (debug__attack_at + show_attack_input_for >= Time.time) {
+            debug__attack_input = true;
+        } else {
+            debug__attack_input = false;
+        }
     }
 }

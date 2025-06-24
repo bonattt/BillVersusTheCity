@@ -132,6 +132,10 @@ public interface IWeapon : IItem {
     public float weapon_damage_max { get; }
     public float armor_effectiveness { get; }
     public string attack_sound { get; }
+
+    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker);
+    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker);
+    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker);
     public IWeapon CopyWeapon();
 }
 
@@ -144,6 +148,7 @@ public interface IAttackController
     public Transform attack_start_point { get; }
     public bool switch_weapons_blocked { get; set; }
     public void StartAttack(Vector3 attack_direction);
+    public void AttackHold(Vector3 attack_direction);
     public void StartAim();
     public void StopAim();
     public bool CanAttack();
