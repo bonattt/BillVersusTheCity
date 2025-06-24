@@ -112,11 +112,13 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
             }
         }
     }
+    public void AttackReleased(Vector3 attack_direction) {
+        // do nothing
+    }
 
     public void AttackHold(Vector3 attack_direction) {
         StartAttack(attack_direction);
     }
-
     public void StartAttack(Vector3 new_attack_direction) {
         // fires an attack with the current weapon
         if (

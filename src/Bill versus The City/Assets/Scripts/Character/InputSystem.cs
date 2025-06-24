@@ -173,6 +173,9 @@ public class InputSystem : ISettingsObserver
         // StaticLogger.Warning("AttackClickInput has a placeholder implementation");
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
+    public bool AttackReleasedInput() {
+        return Input.GetKeyUp(KeyCode.Mouse0);
+    }
     
     public bool AttackHoldInput() {
         return Input.GetAxis(ATTACK_INPUT) != 0;
@@ -449,6 +452,8 @@ public class InputSystem : ISettingsObserver
         switch (input_type) {
             case InputType.fire_weapon:
                 return AttackHoldInput();
+            case InputType.fire_weapon_released:
+                return AttackReleasedInput();
             case InputType.aim_weapon:
                 return AimHoldInput();
             case InputType.next_weapon:
@@ -489,6 +494,7 @@ public class InputSystem : ISettingsObserver
 public enum InputType {
     // enum for different kinds of player inputs, which may be mapped to any number of different actual inputs
     fire_weapon,
+    fire_weapon_released,
     aim_weapon,
     interact,
     reload,

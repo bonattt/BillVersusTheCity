@@ -23,3 +23,4 @@ MonoBehaviour:
   weapon_damage_max: 45
   armor_effectiveness: 0.75
   damage_falloff_rate: 0
+  bullet_prefab: {fileID: 6142857927618689121, guid: bff06f95f783ed547bb644e36c06dd1d, type: 3}

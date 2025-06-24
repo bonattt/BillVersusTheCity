@@ -458,6 +458,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return _attack_paused_locked_for > 0f;
     }
 
+    public void AttackReleased() {
+        attack_controller.AttackReleased(GetShootVector());
+    }
+
     public bool TryToAttack(bool hold = false) {
         if (CanAttack(hold)) {
             // if (current_action == ActionCode.cancel_reload) {
@@ -476,9 +480,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         last_attack_time = Time.time;
         Debug.LogWarning($"hold? {hold}"); // TODO --- remove debug
         if (hold) {
-            attack_controller.StartAttack(GetShootVector());
-        } else {
             attack_controller.AttackHold(GetShootVector());
+        } else {
+            attack_controller.StartAttack(GetShootVector());
         }
     }
 

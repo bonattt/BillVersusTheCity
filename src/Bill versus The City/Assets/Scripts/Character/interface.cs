@@ -149,6 +149,7 @@ public interface IAttackController
     public bool switch_weapons_blocked { get; set; }
     public void StartAttack(Vector3 attack_direction);
     public void AttackHold(Vector3 attack_direction);
+    public void AttackReleased(Vector3 attack_direction);
     public void StartAim();
     public void StopAim();
     public bool CanAttack();
@@ -236,7 +237,8 @@ public enum AmmoType {
     magnum,  // .357 magnum for revolvers
     rifle,   // .223 for AR-15
     shotgun,  // buckshot shotgun shells
-    rocket
+    rocket,
+    grenade,
 }
 
 public interface IWeaponManager

@@ -20,7 +20,6 @@ public class Rocket : Bullet {
     // }
 
     protected override void DestroyProjectile() {
-        Debug.LogError("pause!"); // TODO --- remove debug
         base.DestroyProjectile();
         explosion.Explode();
     }

@@ -69,12 +69,16 @@ public class PlayerControls : MonoBehaviour {
             // TODO --- why did I comment "????" here?
         }
 
+        if (InputSystem.current.AttackReleasedInput()) {
+            player_movement.AttackReleased();
+        }
         if (!sprint_input && AttackInput()) {
             if (player_movement.reloading) {
                 player_movement.CancelReload();
             } else {
-                bool attack_made = player_movement.TryToAttack();
-                Debug.LogWarning($"attack made? {attack_made}"); // TODO --- remove debug
+                bool hold = !InputSystem.current.AttackClickInput() && InputSystem.current.AttackHoldInput();
+                bool attack_made = player_movement.TryToAttack(hold);
+                Debug.LogWarning($"attack made? {attack_made}, hold? {hold} = (!{InputSystem.current.AttackClickInput()} && {InputSystem.current.AttackHoldInput()})"); // TODO --- remove debug
             }
         } else if (sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
             player_movement.StartReload();

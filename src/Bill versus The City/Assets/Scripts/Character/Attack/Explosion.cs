@@ -38,11 +38,8 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         SpawnExplosionEffects();
         DealExplosionDamage();
         if (destroy_on_explode) {
-            Debug.LogWarning("destroy on explode!"); // TODO --- remove debug
             Destroy(gameObject);
         } 
-        ///
-        else { Debug.LogWarning("DON'T destroy"); }// TODO --- remove debug
         
     }
 

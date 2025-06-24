@@ -616,7 +616,7 @@ public class LevelConfig : MonoBehaviour {
         try {
             weapon = ((IFirearm)scriptable_object).CopyFirearm();
         } catch (InvalidCastException) {
-            Debug.LogError($"ScriptableObject {scriptable_object} not castable to a valid IWeapon.");
+            Debug.LogError($"ScriptableObject {scriptable_object} not castable to a valid IFirearm.");
             return null;
         }
         weapon.current_ammo = weapon.ammo_capacity;

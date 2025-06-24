@@ -32,11 +32,23 @@ public class InputSystemDebugger : MonoBehaviour
         UpdateDebugFields();
     }
 
+    private float show_attack_input_for = 0.05f;
+    private float debug__attack_at = -1f;
     private void UpdateDebugFields() {
+
+        if (InputSystem.current.AttackClickInput()) {
+            debug__attack_at = Time.time;
+            attack_click_input = true;
+        } else if (debug__attack_at + show_attack_input_for >= Time.time) {
+            attack_click_input = true;
+        } else {
+            attack_click_input = false;
+        }
+        // attack_click_input = InputSystem.current.AttackClickInput();
+        attack_hold_input = InputSystem.current.AttackHoldInput();
+
         mouse_screen_position = InputSystem.current.MouseScreenPosition();
         mouse_world_position = InputSystem.current.MouseWorldPosition();
-        attack_click_input = InputSystem.current.AttackClickInput();
-        attack_hold_input = InputSystem.current.AttackHoldInput();
         aim_attack_input = InputSystem.current.AimHoldInput();
         sprint_input = InputSystem.current.SprintInput();
         dash_input = InputSystem.current.DashInput();

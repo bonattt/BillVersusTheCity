@@ -21,9 +21,11 @@ PLANNED FEATURES
     [ ] Grenade (exploding throwable)
         [ ] Thrown item lands near mouse
         [ ] Thrown item goes over cover, even when crouched
-        [ ] Grenade explodes after 5 seconds
+        [+] Grenade explodes after 5 seconds
         [ ] Cook Grenades
-    [ ] Explosion Sound
+    [ ] Explosion Sound Effect
+    [ ] Explosion Game Effect
+    [ ] FIX: broke melee attack
 
 [ ] Dialogue "emote" system
     [ ] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait

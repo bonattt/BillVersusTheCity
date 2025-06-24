@@ -175,9 +175,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         if (_aim_this_frame) {
             recoil_decay *= 2;
         }
-        current_recoil -= (recoil_decay * Time.deltaTime);
-
-
+        current_recoil -= recoil_decay * Time.deltaTime;
     }
 
     protected void AimOnSwitch() {
@@ -195,6 +193,10 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     }
     public void StopAim() {
         start_aim_at = null;
+    }
+    public void AttackReleased(Vector3 attack_direction) {
+        float inaccuracy = current_inaccuracy + current_recoil;
+        current_gun.AttackReleased(attack_direction, attack_start_point.position, inaccuracy, attacker);
     }
 
     public void StartAttack(Vector3 attack_direction) {
@@ -215,12 +217,11 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     public void AttackHold(Vector3 attack_direction) {
         if (
             (_last_shot_at + shot_cooldown <= Time.time)
-            &&(! InputSystem.IsNullPoint(attack_direction))
+            && (!InputSystem.IsNullPoint(attack_direction))
         ) {
             if (current_gun.current_ammo > 0) {
-                _FireAttack(attack_direction);
-            }
-            else {
+                _FireAttack(attack_direction, hold: true);
+            } else {
                 _EmptyAttack();
             }
         }
@@ -232,6 +233,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
 
     private void _FireAttack(Vector3 attack_direction, bool hold=false) {
         _last_shot_at = Time.time;
+        
         float inaccuracy = current_inaccuracy + current_recoil;
         if (hold) {
             current_gun.AttackHold(attack_direction, attack_start_point.position, inaccuracy, attacker);
