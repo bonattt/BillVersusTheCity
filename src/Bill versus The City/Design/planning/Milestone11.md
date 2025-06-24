@@ -20,12 +20,16 @@ PLANNED FEATURES
     [+] Rocket Launcher (exploding projectile)
     [ ] Grenade (exploding throwable)
         [ ] Thrown item lands near mouse
+            [ ] Fix grenade colliders to be symetrical
+            [ ] Add physics material, and drag, so grenades don't roll very far
+            [ ] add aiming
         [ ] Thrown item goes over cover, even when crouched
         [+] Grenade explodes after 5 seconds
-        [ ] Cook Grenades
+        [+] Cook Grenades
     [ ] Explosion Sound Effect
     [ ] Explosion Game Effect
     [ ] FIX: broke melee attack
+    [ ] Add setting for grenade fuse duration
 
 [ ] Dialogue "emote" system
     [ ] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait
