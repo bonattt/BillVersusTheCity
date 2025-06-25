@@ -17,14 +17,6 @@ public class DialogueChoreographyStep : AbstractChoreographyStep, IGameEventEffe
         // opened_dialogue = null;
     }
 
-    // void Update() {
-    //     if (!active) { return; }// TODO --- remove debug
-    //     if (opened_dialogue == null) { Debug.LogWarning("dialogue is null!"); } // TODO --- remove debug
-    //     else { Debug.LogWarning($"dialogue_finished: {opened_dialogue.dialogue_completed}"); } // TODO --- remove debug
-    //     if (opened_dialogue != null && opened_dialogue.dialogue_completed) {
-    //         Complete();
-    //     }
-    // }
     public bool effect_completed { get => this.choreography_complete; }
 
     public void ActivateEffect() {

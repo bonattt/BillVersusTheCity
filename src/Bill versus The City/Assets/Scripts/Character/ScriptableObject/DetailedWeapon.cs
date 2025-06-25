@@ -171,18 +171,15 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     }
     
     public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
-        Debug.LogWarning("ATTACK CLICKED!!!"); // TODO --- remove debug
         FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
     }
     public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
-        Debug.LogWarning("ATTACK HOLD!!!"); // TODO --- remove debug
         if (!auto_fire) { return; } // if not automatic, do not shoot for hold fire
         FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
     }
 
     public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         // do nothing
-        Debug.LogWarning("AttackReleased!!"); // TODO --- remove debug
     }
 
     private void FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {

@@ -78,7 +78,7 @@ public class PlayerControls : MonoBehaviour {
             } else {
                 bool hold = !InputSystem.current.AttackClickInput() && InputSystem.current.AttackHoldInput();
                 bool attack_made = player_movement.TryToAttack(hold);
-                Debug.LogWarning($"attack made? {attack_made}, hold? {hold} = (!{InputSystem.current.AttackClickInput()} && {InputSystem.current.AttackHoldInput()})"); // TODO --- remove debug
+                // Debug.LogWarning($"attack made? {attack_made}, hold? {hold} = (!{InputSystem.current.AttackClickInput()} && {InputSystem.current.AttackHoldInput()})"); // TODO --- remove debug
             }
         } else if (sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
             player_movement.StartReload();

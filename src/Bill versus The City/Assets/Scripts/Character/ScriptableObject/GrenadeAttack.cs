@@ -91,20 +91,89 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     }
 
     private void ThrowGrenade(Vector3 attack_direction, Vector3 attack_start_point) {
-        Debug.LogWarning("ThrowGrenade!!!"); // TODO --- remove debug
         grenade.transform.parent = null;
         grenade.transform.position = attack_start_point;
+
+        GrenadeFuseUI fuse_ui = grenade.GetComponentInChildren<GrenadeFuseUI>();
+        fuse_ui.SetVisibility(false);
 
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
         if (rb == null) {
             rb = grenade.AddComponent<Rigidbody>();
         }
         rb.useGravity = true;
-        float throw_force = 25f; // TODO --- make this dynamic
-        rb.AddForce(attack_direction.normalized * throw_force, ForceMode.VelocityChange);
+        // Vector3 mouse_pos = attack_start_point + (attack_direction.normalized * 3);
+        Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
+        if (float.IsNaN(mouse_pos.x)) {
+            Debug.LogError("mouse position is NaN!");
+        }
+        Vector3 throw_velocity = CalculateThrowVelocity(attack_start_point, mouse_pos);
+        // float MAX_THROW_FORCE = 15f;
+        // if (throw_velocity.magnitude > MAX_THROW_FORCE) {
+        //     throw_velocity = throw_velocity.normalized * MAX_THROW_FORCE;
+        // }
+        rb.AddForce(throw_velocity, ForceMode.VelocityChange);
         grenade = null;
 
     }
+
+    // public float GetThrowForce(Vector3 throw_from, Vector3 target_position) {
+    //     target_position = new Vector3(target_position.x, 0, target_position.z);
+
+    //     Vector3 direction = (target_position - throw_from).normalized;
+    //     Debug.DrawRay(throw_from, direction * 10, Color.yellow, 10f, depthTest: true);
+    // }
+
+    public Vector3 CalculateThrowVelocity(Vector3 start, Vector3 target) {
+        Vector3 horizontal = new Vector3(target.x - start.x, 0, target.z - start.z);
+        float distance = horizontal.magnitude;
+        float height = start.y - target.y; // since target is at y = 0
+
+        float throw_angle_degrees = 30f;
+        float angle_rad = throw_angle_degrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(angle_rad);
+        float sin = Mathf.Sin(angle_rad);
+
+        // Calculate initial speed using kinematic equation
+        float gravity = Physics.gravity.y;
+        float numerator = Mathf.Abs(gravity * distance * distance);
+        float denominator = 2f * (distance * Mathf.Tan(angle_rad) + height) * cos * cos;
+
+        if (denominator <= 0) return Vector3.zero; // No valid solution
+
+        float speed = Mathf.Sqrt(numerator / denominator);
+        // Debug.LogWarning($"CALCULATE THROW VELOCITY speed: {Mathf.Sqrt(numerator / denominator)} = sqrt({numerator} / {denominator})"); // TODO --- remove debug
+
+        // Decompose velocity into vector form
+        Vector3 dir = horizontal.normalized;
+        Vector3 velocity = dir * speed * cos;
+        velocity.y = speed * sin;
+        // Debug.LogWarning($"CALCULATE THROW VELOCITY dir: {dir} velocity {velocity}, velocity.y = {speed * sin} (speed * sin = {speed} * {sin})"); // TODO --- remove debug
+        return velocity;
+    }
+    
+    // public float GetTraverseDegreesToTarget(Vector3 target_position) {
+    //     // returns the traverse degrees required to point the cannon in the direction of the given target
+    //     target_position = new Vector3(target_position.x, 0, target_position.z);
+    //     Vector3 position = new Vector3(cannon_base.position.x, 0, cannon_base.position.z);
+    //     Vector3 direction = (target_position - position).normalized;
+    //     Debug.DrawRay(cannon_base.position, direction * 10, Color.yellow, 10f, depthTest: true);
+    //     float angle = Vector3.Angle(neutral_forward, direction);
+
+    //     float dot = Vector3.Dot(direction, neutral_right);
+    //     int sign;
+    //     if (dot >= 0) {
+    //         sign = 1;
+    //     } else {
+    //         sign = -1;
+    //     }
+
+
+    //     if (angle > 180) {
+    //         angle -= 360;
+    //     }
+    //     return angle * sign;
+    // }
 
     private GameObject SpawnNewGrenade(Vector3 attack_start_point, IAttackTarget attacker) {
         grenade = Instantiate(grenade_prefab);

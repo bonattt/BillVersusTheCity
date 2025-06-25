@@ -19,11 +19,11 @@ PLANNED FEATURES
     [+] Walls block explosions
     [+] Rocket Launcher (exploding projectile)
     [ ] Grenade (exploding throwable)
-        [ ] Thrown item lands near mouse
-            [ ] Fix grenade colliders to be symetrical
-            [ ] Add physics material, and drag, so grenades don't roll very far
-            [ ] add aiming
-        [ ] Thrown item goes over cover, even when crouched
+        [+] Thrown item lands near mouse
+            [~] Fix grenade colliders to be symetrical
+            [~] Add physics material, and drag, so grenades don't roll very far
+            [+] add aiming
+        [+] Thrown item goes over cover, even when crouched
         [+] Grenade explodes after 5 seconds
         [+] Cook Grenades
     [ ] Explosion Sound Effect

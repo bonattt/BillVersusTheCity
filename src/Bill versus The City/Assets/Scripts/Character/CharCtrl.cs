@@ -478,7 +478,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected virtual void PerformAttack(bool hold = false) {
         attack_this_frame = true;
         last_attack_time = Time.time;
-        Debug.LogWarning($"hold? {hold}"); // TODO --- remove debug
         if (hold) {
             attack_controller.AttackHold(GetShootVector());
         } else {
