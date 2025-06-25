@@ -26,6 +26,9 @@ PLANNED FEATURES
         [+] Thrown item goes over cover, even when crouched
         [+] Grenade explodes after 5 seconds
         [+] Cook Grenades
+        [ ] Grenade ammo is used up
+        [ ] Grenades work as weapon pickups
+        [ ] Grenade pickups stack ammo onto already held grenades
     [ ] Explosion Sound Effect
     [ ] Explosion Game Effect
     [ ] FIX: broke melee attack
