@@ -22,6 +22,7 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     public string attack_sound { get => _attack_sound; }
     public GameObject grenade_prefab;
     private GameObject grenade;
+    public bool is_consumable { get => true; }
 
 
     /////////////////// implements IFirearm ///////////////////

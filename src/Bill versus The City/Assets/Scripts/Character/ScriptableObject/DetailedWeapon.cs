@@ -24,7 +24,8 @@ public class DetailedWeapon : ScriptableObject, IFirearm
 
     public int _ammo_capacity = 30;
     public int _reload_amount = 30;
-    public float _reload_time ;
+    public float _reload_time;
+    public bool is_consumable { get => false; }
 
     // accuracy
     public float _time_to_aim = 1f;

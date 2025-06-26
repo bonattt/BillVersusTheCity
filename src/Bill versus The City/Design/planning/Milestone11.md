@@ -28,11 +28,12 @@ PLANNED FEATURES
         [+] Cook Grenades
         [+] Grenade ammo is used up
         [+] Grenades work as weapon pickups
-        [ ] Grenade pickups stack ammo onto already held grenades
-    [ ] Explosion Sound Effect
-    [ ] Explosion Game Effect
+        [+] Grenade pickups stack ammo onto already held grenades
+    [+] Explosion Sound Effect
+    [+] Explosion Game Effect
     [ ] FIX: broke melee attack
     [ ] FIX: grenades fly over walls
+    [ ] FIX: grenades bounce off ammo/weapon pickups
     [ ] Add setting for grenade fuse duration
 
 [ ] Dialogue "emote" system

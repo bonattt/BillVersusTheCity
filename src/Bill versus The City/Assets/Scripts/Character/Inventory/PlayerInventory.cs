@@ -63,6 +63,11 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             }
         }
     }
+
+    public void UpdateWeapon() {
+        // called to manually trigger UI updateds from weapon changes
+        combat.attacks.UpdateSubscribers();
+    }
     private PlayerCombat combat;
 
     // private List<IWeapon> _availible_rifles, _availible_handguns;

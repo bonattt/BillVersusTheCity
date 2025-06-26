@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Explosion", menuName = "Data/Explosion")]
 public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
 
+    public float explosion_volume = 10f;
     public float explosion_radius;
     public List<GameObject> explosion_effects;
 

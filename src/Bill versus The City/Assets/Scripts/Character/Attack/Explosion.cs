@@ -37,10 +37,24 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         _exploded = true;
         SpawnExplosionEffects();
         DealExplosionDamage();
+        MakeGameSound();
+        MakeSoundEffect();
         if (destroy_on_explode) {
             Destroy(gameObject);
         } 
         
+    }
+
+    public void MakeGameSound() {
+        // triggers game sound that enemies can hear
+        float volume = explosion_attack.explosion_volume * 2;
+        GameSound new_sound = new GameSound(transform.position, range:volume, alarm_level:volume);
+        EnemyHearingManager.inst.NewSound(new_sound);
+    }
+
+    public void MakeSoundEffect() {
+        ISFXSounds explosion_sfx = SFXLibrary.LoadSound(explosion_attack.attack_sound);
+        SFXSystem.inst.PlaySound(explosion_sfx, transform.position);
     }
 
     public void Reset() {

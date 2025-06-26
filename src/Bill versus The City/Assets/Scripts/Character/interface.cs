@@ -182,6 +182,9 @@ public interface IFirearm : IWeapon
     public float reload_time { get; }
     public int current_ammo { get; set; }
     public int ammo_drop_size { get; }
+    public bool is_consumable { get; } // if true, the weapon is the same as it's ammo.
+                                       // (eg. is_consumable = true, a grenade or throwing knife, the weapon IS the ammo for the gun.)
+                                       // (eg. is_consumable = false, a rifle needs a separate item (bullets) to shoot)
 
     // rate of fire
     public FiringMode firing_mode { get; }
