@@ -32,6 +32,7 @@ PLANNED FEATURES
     [ ] Explosion Sound Effect
     [ ] Explosion Game Effect
     [ ] FIX: broke melee attack
+    [ ] FIX: grenades fly over walls
     [ ] Add setting for grenade fuse duration
 
 [ ] Dialogue "emote" system
