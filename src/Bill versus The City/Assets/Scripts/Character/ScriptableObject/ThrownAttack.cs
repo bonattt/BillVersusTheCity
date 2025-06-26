@@ -95,6 +95,10 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     }
 
     private void ThrowGrenade(Vector3 attack_direction, Vector3 attack_start_point) {
+        if (grenade == null) {
+            Debug.LogError("ThrowGrenade called without a primed grenade!");
+            return;
+        }
         grenade.transform.parent = null;
         grenade.transform.position = attack_start_point;
 

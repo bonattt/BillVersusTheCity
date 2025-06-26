@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour, IBullet
     
     public Transform location { get { return transform; } }
     public IAttackTarget attacker { get; set; }
+    public bool is_threat { get => PlayerCharacter.IsPlayer(attacker);  } // TODO --- check if attacker is player
     public IWeapon weapon {
         get => firearm;
         set {

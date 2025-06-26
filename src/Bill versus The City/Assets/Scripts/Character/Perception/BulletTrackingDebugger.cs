@@ -12,10 +12,10 @@ public class BulletTrackingDebugger : MonoBehaviour {
         player_bullets = new List<string>();
         bullets_tracked = new List<string>();
         bullet_hits = new List<string>();
-        foreach (IBullet b in BulletTracking.inst.AllBullets()) {
+        foreach (ITrackedProjectile b in BulletTracking.inst.AllBullets()) {
             bullets_tracked.Add(DisplayBullet(b));
         }
-        foreach (IBullet b in BulletTracking.inst.PlayerBullets()) {
+        foreach (ITrackedProjectile b in BulletTracking.inst.PlayerBullets()) {
             player_bullets.Add(DisplayBullet(b));
         }
         foreach (Vector3 hit in BulletTracking.inst.AllHitLocations()) {
@@ -24,8 +24,8 @@ public class BulletTrackingDebugger : MonoBehaviour {
     }
 
 
-    public static string DisplayBullet(IBullet b) {
-        return $"{b.attacker.GetHitTarget().name}'s bullet at {b.location.position}";
+    public static string DisplayBullet(ITrackedProjectile b) {
+        return $"{((MonoBehaviour) b).gameObject.name} at {b.location.position}, is_threat: {b.is_threat}";
     }
 
 }

@@ -44,8 +44,9 @@ public class EnemyThreatTracking : MonoBehaviour
 
     protected void UpdateBulletsNear() {
         bullets_near = 0;
-        foreach (IBullet bullet_near in BulletTracking.inst.NearbyPlayerBullets(transform.position, distance_threshold)) {
-            if (bullet_near.attacker == attacker) {
+        foreach (ITrackedProjectile bullet_near in BulletTracking.inst.NearbyPlayerBullets(transform.position, distance_threshold)) {
+            if (!bullet_near.is_threat) {
+                Debug.LogWarning($"{((MonoBehaviour) bullet_near).gameObject.name} is not a threat!"); // TODO --- remove debug
                 continue;
             }
             bullets_near += 1;

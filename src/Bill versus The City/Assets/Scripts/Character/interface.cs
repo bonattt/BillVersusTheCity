@@ -101,8 +101,12 @@ public interface IArmor : IItem, IDifficultyAdjusted {
     public IArmor CopyArmor();
 }
 
-public interface IBullet : IAttack {
+public interface ITrackedProjectile {
+    public bool is_threat { get; } // if true, enemies will be supressed by this bullet
     public Transform location { get; }
+}
+
+public interface IBullet : IAttack, ITrackedProjectile {
     public void ResolveCollision(GameObject hit, Vector3 point);
 }
 

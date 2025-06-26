@@ -47,6 +47,27 @@ public class PlayerCharacter : ISaveProgress {
         }
     }
 
+    public static bool IsPlayer(IAttackTarget target) {
+        if (target == null) { return false; }
+        if (inst.combat == null) {
+            Debug.LogWarning("IsPlayer when no PlayerCombat is set!");
+            return false;
+        }
+        switch (target) {
+            case ManualCharacterMovement movement:
+                Debug.LogWarning($"ManualCharacterMovement is_player: {inst.combat.movement == movement}"); // TODO --- remove debug
+                return inst.combat.movement == movement;
+
+            case CharacterStatus status:
+                Debug.LogWarning($"CharacterStatus is_player: {inst.combat.status == status}"); // TODO --- remove debug
+                return inst.combat.status == status;
+
+            default:
+                Debug.LogWarning($"not a player class, cannot be player"); // TODO --- remove debug
+                return false;
+        }
+    }
+
     private PlayerCombat combat = null;
     private PlayerInventory _inventory; // = new PlayerInventory();
     public PlayerInventory inventory { get { return _inventory; }}

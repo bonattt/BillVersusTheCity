@@ -18,7 +18,7 @@ PLANNED FEATURES
     [+] Mine (explode on trigger)
     [+] Walls block explosions
     [+] Rocket Launcher (exploding projectile)
-    [ ] Grenade (exploding throwable)
+    [~] Grenade (exploding throwable)
         [+] Thrown item lands near mouse
             [~] Fix grenade colliders to be symetrical
             [~] Add physics material, and drag, so grenades don't roll very far
@@ -26,8 +26,8 @@ PLANNED FEATURES
         [+] Thrown item goes over cover, even when crouched
         [+] Grenade explodes after 5 seconds
         [+] Cook Grenades
-        [ ] Grenade ammo is used up
-        [ ] Grenades work as weapon pickups
+        [+] Grenade ammo is used up
+        [+] Grenades work as weapon pickups
         [ ] Grenade pickups stack ammo onto already held grenades
     [ ] Explosion Sound Effect
     [ ] Explosion Game Effect
@@ -50,6 +50,9 @@ PLANNED BUGFIXES
         - I'm unable to reproduce this anymore to make further progress on fixing it
 
 UNPLANNED FEATURES
+[ ] Grenade relates suppression changes
+    [ ] Enemy becoming suppressed should alert the enemy
+    [ ] Enemies that are suppressed should avoid grenades
 
 UNPLANNED BUGFIXES
 [+] Level 1 allows the player to leave immediately, without clearing enemies first

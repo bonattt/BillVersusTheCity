@@ -13,7 +13,7 @@ public class BulletTracking : MonoBehaviour {
 
     [Tooltip("track bullet hits for this many seconds before discarding them")]
     public float track_hits_for_seconds = 5f;
-    private HashSet<IBullet> tracked_bullets = new HashSet<IBullet>();
+    private HashSet<ITrackedProjectile> tracked_bullets = new HashSet<ITrackedProjectile>();
     // stored hits, implicitly (not explicitly) sorted by time of hit. Most recent hits are stored at the end, oldest hits are stored at the beginning
     private LinkedList<TrackedHit> tracked_hits = new LinkedList<TrackedHit>(); 
 
@@ -31,32 +31,33 @@ public class BulletTracking : MonoBehaviour {
         }
     }
 
-    public void TrackNewBullet(IBullet bullet) {
+    public void TrackNewBullet(ITrackedProjectile bullet) {
         if (bullet == null) { Debug.LogError("added null bullet"); } // TODO --- remove debug
         tracked_bullets.Add(bullet);
     }
-    public void UnTrackBullet(IBullet bullet) {
+    public void UnTrackBullet(ITrackedProjectile bullet) {
         tracked_bullets.Remove(bullet);
     }
 
-    public void TrackHit(IBullet bullet, IAttackTarget hit_target, Vector3 hit_location) {
-        tracked_hits.AddLast(new TrackedHit(bullet.attacker, Time.time, hit_target, hit_location));
+    public void TrackHit(ITrackedProjectile bullet, IAttackTarget hit_target, Vector3 hit_location) {
+        tracked_hits.AddLast(new TrackedHit(bullet.is_threat, Time.time, hit_target, hit_location));
     }
 
     private static string HitOrMissString(IAttackTarget hit_target) {
         return hit_target == null ? "miss" : "hit";
     }
 
-    public IEnumerable<IBullet> PlayerBullets() {
-        foreach (IBullet b in tracked_bullets) {
-            if (b.attacker.is_player) {
+    public IEnumerable<ITrackedProjectile> PlayerBullets() {
+        foreach (ITrackedProjectile b in tracked_bullets) {
+            if (b.is_threat) {
                 yield return b;
             }
+            else { Debug.LogWarning($"bullet {b} is not a threat. ({((MonoBehaviour) b).gameObject.name})"); } // TODO --- remove debug
         }
     }
     
-    public IEnumerable<IBullet> AllBullets() {
-        foreach (IBullet b in tracked_bullets) {
+    public IEnumerable<ITrackedProjectile> AllBullets() {
+        foreach (ITrackedProjectile b in tracked_bullets) {
             yield return b;
         }
     }
@@ -69,8 +70,8 @@ public class BulletTracking : MonoBehaviour {
 
     
 
-    public IEnumerable<IBullet> NearbyBullets(Vector3 position, float distance_threshold=1f) {
-        foreach(IBullet bullet in AllBullets()) {
+    public IEnumerable<ITrackedProjectile> NearbyBullets(Vector3 position, float distance_threshold=1f) {
+        foreach(ITrackedProjectile bullet in AllBullets()) {
             float distance = FlatDistance(position, bullet.location.position);
             if (distance <= distance_threshold) {
                 yield return bullet;
@@ -79,8 +80,8 @@ public class BulletTracking : MonoBehaviour {
     }
     
 
-    public IEnumerable<IBullet> NearbyPlayerBullets(Vector3 position, float distance_threshold=1f) {
-        foreach(IBullet bullet in PlayerBullets()) {
+    public IEnumerable<ITrackedProjectile> NearbyPlayerBullets(Vector3 position, float distance_threshold=1f) {
+        foreach(ITrackedProjectile bullet in PlayerBullets()) {
             float distance = FlatDistance(position, bullet.location.position);
             if (distance <= distance_threshold) {
                 yield return bullet;
@@ -97,13 +98,13 @@ public class BulletTracking : MonoBehaviour {
 }
 
 public struct TrackedHit {
-    public IAttackTarget attacker;
+    public bool is_threat;
     public float time;
     public IAttackTarget hit;
     public Vector3 hit_location;
 
-    public TrackedHit(IAttackTarget attacker, float time, IAttackTarget hit, Vector3 hit_location) {
-        this.attacker = attacker;
+    public TrackedHit(bool is_threat, float time, IAttackTarget hit, Vector3 hit_location) {
+        this.is_threat = is_threat;
         this.time = time;
         this.hit = hit;
         this.hit_location = hit_location;
@@ -112,6 +113,6 @@ public struct TrackedHit {
 
 
 // public struct TrackedBullet {
-//     public IBullet bullet;
+//     public ITrackedProjectile bullet;
 //     public IAttackTarget shooter
 // }
