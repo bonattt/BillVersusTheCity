@@ -33,7 +33,7 @@ PLANNED FEATURES
     [+] Explosion Game Effect
     [ ] FIX: broke melee attack
     [ ] FIX: grenades fly over walls
-    [ ] FIX: grenades bounce off ammo/weapon pickups
+    [+] FIX: grenades bounce off ammo/weapon pickups
     [ ] Add setting for grenade fuse duration
 
 [ ] Dialogue "emote" system
