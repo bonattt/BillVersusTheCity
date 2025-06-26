@@ -197,6 +197,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     public void AttackReleased(Vector3 attack_direction) {
         float inaccuracy = current_inaccuracy + current_recoil;
         current_gun.AttackReleased(attack_direction, attack_start_point.position, inaccuracy, attacker);
+        UpdateSubscribers();
     }
 
     public void StartAttack(Vector3 attack_direction) {

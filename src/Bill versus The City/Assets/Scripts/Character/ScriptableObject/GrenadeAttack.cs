@@ -87,6 +87,10 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     }
 
     public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        if (current_ammo < 1) {
+            Debug.LogError("grenade attack without ammo!");
+            return;
+        }
         ThrowGrenade(attack_direction, attack_start_point);
     }
 
@@ -114,7 +118,7 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         // }
         rb.AddForce(throw_velocity, ForceMode.VelocityChange);
         grenade = null;
-
+        current_ammo -= 1;
     }
 
     // public float GetThrowForce(Vector3 throw_from, Vector3 target_position) {
