@@ -275,6 +275,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public void StartReload() {
         // initiate a reload
+        if (current_firearm.reload_amount <= 0) {
+            // weapon cannot be reloaded
+            MenuManager.PlayMenuCancelClick(); // TODO --- placeholder
+            return;
+        }
         reloading = true;
         start_reload_at = Time.time;
         UpdateReloadStarted(current_firearm);
