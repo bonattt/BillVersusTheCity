@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -5,9 +6,9 @@ using UnityEngine;
 
 
 public class DebugSettings : AbstractSettingsModule {
-    
+
     private bool _show_fps = true;
-    public bool show_fps { 
+    public bool show_fps {
         get { return _show_fps; }
         set {
             _show_fps = value;
@@ -51,7 +52,7 @@ public class DebugSettings : AbstractSettingsModule {
     }
 
     private bool _allow_debug_actions = true;
-    public bool allow_debug_actions { 
+    public bool allow_debug_actions {
         get { return _allow_debug_actions; }
         set {
             _allow_debug_actions = value;
@@ -59,8 +60,17 @@ public class DebugSettings : AbstractSettingsModule {
         }
     }
 
+    private ShowGrenadeFuse _show_grenade_fuse = ShowGrenadeFuse.while_held;
+    public ShowGrenadeFuse show_grenade_fuse {
+        get => _show_grenade_fuse;
+        set {
+            _show_grenade_fuse = value;
+            UpdateSubscribers("show_grenade_fuse");
+        }
+    }
 
-    public override List<string> all_fields { get { return new List<string>(){ "show_fps", "debug_mode" }; }}
+
+    public override List<string> all_fields { get { return new List<string>() { "show_fps", "debug_mode" }; } }
     public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module
         DuckDict data = new DuckDict();
@@ -70,6 +80,7 @@ public class DebugSettings : AbstractSettingsModule {
         data.SetBool("player_invincibility", player_invincibility);
         data.SetBool("player_invisible", player_invisible);
         data.SetBool("allow_debug_actions", allow_debug_actions);
+        data.SetString("show_grenade_fuse", ShowGrenadeStringFromEnum(show_grenade_fuse));
         return data;
     }
     public override void LoadFromJson(DuckDict data) {
@@ -81,6 +92,7 @@ public class DebugSettings : AbstractSettingsModule {
         player_invincibility = UnpackBool(data, "player_invincibility");
         player_invisible = UnpackBool(data, "player_invisible");
         allow_debug_actions = UnpackBool(data, "allow_debug_actions");
+        show_grenade_fuse = UnpackGrenadeEnum(data, "show_grenade_fuse");
         this.AllFieldsUpdates();
     }
 
@@ -89,6 +101,49 @@ public class DebugSettings : AbstractSettingsModule {
         if (v == null) {
             v = false;
         }
-        return (bool) v;
+        return (bool)v;
     }
+
+    public const ShowGrenadeFuse show_grenade_default = ShowGrenadeFuse.default_value;
+    private ShowGrenadeFuse UnpackGrenadeEnum(DuckDict data, string field_name) {
+        string v = data.GetString(field_name);
+        if (v == null) {
+            Debug.LogError($"json missing ShowGrenadeFuse value at {field_name}");
+            return ShowGrenadeFuse.default_value;
+        }
+        return ShowGrenadeEnumFromString(v);
+    }
+
+    public static ShowGrenadeFuse ShowGrenadeEnumFromString(string enum_string) {
+        switch (enum_string) {
+            case "default_value":
+                return ShowGrenadeFuse.default_value;
+            case "never":
+                return ShowGrenadeFuse.never;
+            case "while_held":
+                return ShowGrenadeFuse.while_held;
+            case "after_throw":
+                return ShowGrenadeFuse.after_throw;
+            case "always":
+                return ShowGrenadeFuse.always;
+            case null:
+                Debug.LogError($"null string for ShowGrenadeFuse enum!");
+                return ShowGrenadeFuse.default_value;
+            default:
+                Debug.LogError($"unhandled ShowGrenadeFuse enum string '{enum_string}'");
+                return ShowGrenadeFuse.default_value;
+        }
+    }
+
+    public static string ShowGrenadeStringFromEnum(ShowGrenadeFuse enum_val) {
+        return $"{enum_val}";
+    }
+}
+
+public enum ShowGrenadeFuse {
+    default_value,
+    never,
+    while_held,
+    after_throw,
+    always,
 }

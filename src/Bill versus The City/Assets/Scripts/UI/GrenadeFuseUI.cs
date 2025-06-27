@@ -28,5 +28,19 @@ public class GrenadeFuseUI : MonoBehaviour {
     private void UpdateProgressDial() {
         progress_dial.progress = 100 * fuse.fuse_progress;
     }
+    
+    public static ShowGrenadeFuse show_grenade_fuse {
+        get => GameSettings.inst.debug_settings.show_grenade_fuse;
+    }
+
+    public static bool ShowFuseUIWhenThrown() {
+        return show_grenade_fuse == ShowGrenadeFuse.always || show_grenade_fuse == ShowGrenadeFuse.after_throw;
+    }
+
+    public static bool ShowFuseUIWhenHeld() {
+        return show_grenade_fuse == ShowGrenadeFuse.always
+                || show_grenade_fuse == ShowGrenadeFuse.while_held
+                || show_grenade_fuse == ShowGrenadeFuse.default_value;
+    }
 
 }

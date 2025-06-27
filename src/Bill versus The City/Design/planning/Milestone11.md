@@ -31,10 +31,10 @@ PLANNED FEATURES
         [+] Grenade pickups stack ammo onto already held grenades
     [+] Explosion Sound Effect
     [+] Explosion Game Effect
-    [ ] FIX: broke melee attack
+    [ ] FIX: broken melee attack
     [ ] FIX: grenades fly over walls
     [+] FIX: grenades bounce off ammo/weapon pickups
-    [ ] Add setting for grenade fuse duration
+    [ ] Add setting for grenade fuse duration UI
 
 [ ] Dialogue "emote" system
     [ ] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait
