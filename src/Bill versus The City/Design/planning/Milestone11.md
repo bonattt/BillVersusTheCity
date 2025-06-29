@@ -35,7 +35,7 @@ PLANNED FEATURES
     [ ] FIX: grenades fly over walls
     [+] FIX: grenades bounce off ammo/weapon pickups
     [+] Add setting for grenade fuse duration UI
-    [ ] FIX: weird player movement when crossing a grenade
+    [+] FIX: weird player movement when crossing a grenade
 
 [ ] Dialogue "emote" system
     [ ] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait

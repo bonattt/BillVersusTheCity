@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8816146853372471068}
   - component: {fileID: 222067629913530333}
   - component: {fileID: 2215213099628210952}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 1792478357698125227}
   - component: {fileID: 4772093921777340334}
   - component: {fileID: 8927206299955905862}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: FuseProgressUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1316195945680552742, guid: a333055198427024699ffa88dca06592, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1993334751294948533, guid: a333055198427024699ffa88dca06592, type: 3}
       propertyPath: m_Enabled
@@ -264,11 +264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5225503315691430521, guid: a333055198427024699ffa88dca06592, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7078325647843488401, guid: a333055198427024699ffa88dca06592, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8041145010929022856, guid: a333055198427024699ffa88dca06592, type: 3}
       propertyPath: m_Enabled
