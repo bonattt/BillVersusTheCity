@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d056b98fb6210884fbc24fc72b0eb8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration_seconds: 0.1
-  speed: 5
+  duration_seconds: 0.15
+  speed: 7.5
   debug_move: {x: 0, y: 0, z: 0}
 --- !u!1 &4415043156874101887
 GameObject:

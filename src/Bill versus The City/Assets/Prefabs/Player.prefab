@@ -271,6 +271,8 @@ GameObject:
   - component: {fileID: 1130132745889624254}
   - component: {fileID: 4280093944734587331}
   - component: {fileID: 5377501773160408648}
+  - component: {fileID: 6796095662716225421}
+  - component: {fileID: 4732258951660531801}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -358,6 +360,7 @@ MonoBehaviour:
   resume_aim_after_reload: 0
   resume_sprint_after_reload: 0
   controls_locked: 0
+  debug__attack_input: 0
 --- !u!114 &6586359110877128584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +393,7 @@ MonoBehaviour:
   crouch_dive_duration: 0.5
   crouch_dive_remaining: 0
   _crouch_percent: 0
+  debug__can_attack: 0
   vision_target: {fileID: 7902831743066966521}
   _last_move: {x: 0, y: 0, z: 0}
 --- !u!114 &4665821343985391478
@@ -527,6 +531,35 @@ MonoBehaviour:
   interval_seconds: 0.33
   distance_threshold_seconds: 0.1
   speed_factor: 5
+--- !u!114 &6796095662716225421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b48ee125813614ba77ec975f711549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comment: NavMeshAgent is to prevent enemies from pushing the player around.
+--- !u!208 &4732258951660531801
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783782960125533881}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.15, y: 1, z: 0.15}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3411905732680101244
 GameObject:
   m_ObjectHideFlags: 0

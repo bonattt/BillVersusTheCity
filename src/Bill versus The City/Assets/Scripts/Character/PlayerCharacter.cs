@@ -55,15 +55,14 @@ public class PlayerCharacter : ISaveProgress {
         }
         switch (target) {
             case ManualCharacterMovement movement:
-                Debug.LogWarning($"ManualCharacterMovement is_player: {inst.combat.movement == movement}"); // TODO --- remove debug
+                // Debug.LogWarning($"ManualCharacterMovement is_player: {inst.combat.movement == movement}"); // TODO --- remove debug
                 return inst.combat.movement == movement;
 
             case CharacterStatus status:
-                Debug.LogWarning($"CharacterStatus is_player: {inst.combat.status == status}"); // TODO --- remove debug
+                // Debug.LogWarning($"CharacterStatus is_player: {inst.combat.status == status}"); // TODO --- remove debug
                 return inst.combat.status == status;
 
             default:
-                Debug.LogWarning($"not a player class, cannot be player"); // TODO --- remove debug
                 return false;
         }
     }

@@ -105,7 +105,6 @@ public class ThrownAttack : ScriptableObject, IFirearm {
 
         GrenadeFuseUI fuse_ui = grenade.GetComponentInChildren<GrenadeFuseUI>();
         fuse_ui.SetVisibility(GrenadeFuseUI.ShowFuseUIWhenThrown());
-        Debug.LogWarning($"show UI when thrown: {GrenadeFuseUI.ShowFuseUIWhenThrown()}, {GameSettings.inst.debug_settings.show_grenade_fuse}"); // TODO --- remove debug 
 
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
         if (rb == null) {
@@ -197,7 +196,6 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         }
         GrenadeFuseUI fuse_ui = grenade.GetComponentInChildren<GrenadeFuseUI>();
         fuse_ui.SetVisibility(GrenadeFuseUI.ShowFuseUIWhenHeld());
-        Debug.LogWarning($"show UI when held: {GrenadeFuseUI.ShowFuseUIWhenHeld()}, {GameSettings.inst.debug_settings.show_grenade_fuse}"); // TODO --- remove debug 
 
         return grenade;
     }

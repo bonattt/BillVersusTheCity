@@ -52,7 +52,6 @@ public class BulletTracking : MonoBehaviour {
             if (b.is_threat) {
                 yield return b;
             }
-            else { Debug.LogWarning($"bullet {b} is not a threat. ({((MonoBehaviour) b).gameObject.name})"); } // TODO --- remove debug
         }
     }
     

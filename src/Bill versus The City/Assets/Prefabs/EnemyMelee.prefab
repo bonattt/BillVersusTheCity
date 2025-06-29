@@ -211,13 +211,15 @@ MonoBehaviour:
   crouch_dive_duration: 1
   crouch_dive_remaining: 0
   _crouch_percent: 0
+  debug__can_attack: 0
+  nav_mesh_agent: {fileID: 2365366885385776978}
+  choreography_movement: 0
+  debug__look_direction: {x: 0, y: 0, z: 0}
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
   use_full_auto: 0
-  nav_mesh_agent: {fileID: 2365366885385776978}
-  debug__look_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &-6265441280578509666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +467,7 @@ Transform:
   m_GameObject: {fileID: 2741102800901688509}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0.65}
+  m_LocalPosition: {x: 0, y: 1.634, z: 0.323}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

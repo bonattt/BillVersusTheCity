@@ -11,7 +11,14 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
         set { throw new NotImplementedException(); }
     }
     public MeleeWeapon _init_weapon;
-    public IMeleeWeapon current_melee { get; set; }
+    public IMeleeWeapon _current_melee;
+    public IMeleeWeapon current_melee { 
+        get => _current_melee;
+        set {
+            Debug.LogWarning($"set current_melee: '{_current_melee}' => '{value}'"); // TODO --- remove debug
+            _current_melee = value;
+        }
+    }
     public bool switch_weapons_blocked { get; set; }
 
     public float total_attack_time { get => ((IMeleeWeapon)current_weapon).total_attack_time; }
@@ -102,6 +109,8 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
     }
 
     private void ResolveAttack() {
+        // checks if an active attack is hitting anything, and deals damage to anything hit by the attack
+        Debug.LogWarning("ResolveAttack!!"); // TODO --- remove debug
         RaycastHit[] melee_hits = Physics.RaycastAll(attack_start_point.position, attack_direction, current_melee.attack_reach);
         Debug.DrawRay(attack_start_point.position, attack_direction.normalized * current_melee.attack_reach, Color.green);
         foreach (RaycastHit hit in melee_hits) {
@@ -142,15 +151,15 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
                 current_melee.AttackHold(new_attack_direction, attack_start_point.position, inaccuracy, attacker);
             }
         }
-        // if (current_attack == null) current_attack = new MeleeAttack();
-        // else Debug.LogError("attack made while current attack isn't nulled yet!");
-        // current_attack.melee_weapon = current_melee;
-        // current_attack.ignore_armor = false;
-        // current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
+        if (current_attack == null) current_attack = new MeleeAttack();
+        else Debug.LogError("attack made while current attack isn't nulled yet!");
+        current_attack.melee_weapon = current_melee;
+        current_attack.ignore_armor = false;
+        current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
 
         _last_attack_at = Time.time;
-        // this.attack_direction = new_attack_direction;
-        // AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
+        this.attack_direction = new_attack_direction;
+        AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
 
         // // TODO --- refactor, make this an effect
         // GameObject prefab = (GameObject)Resources.Load(AttackResolver.PLACEHOLDER_MELEE_EFFECTS_PREFAB);

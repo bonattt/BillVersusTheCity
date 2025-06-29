@@ -10,7 +10,6 @@ public class GrenadeBullet : MonoBehaviour, ITrackedProjectile
 
     // Start is called before the first frame update
     void Start() {
-        Debug.LogWarning($"tracking self as bullet {gameObject.name}"); // TODO --- remove debug    
         BulletTracking.inst.TrackNewBullet(this);
     }
 

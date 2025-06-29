@@ -421,7 +421,6 @@ public class LevelConfig : MonoBehaviour {
 
     public void DeactivateLevelExit() {
         
-        Debug.LogWarning("DeactivateLevelExit!"); // TODO --- remove debug
         if (level_exit == null) {
             Debug.LogError("`level_exit` is missing, and cannot be deactivated!!");
             return;

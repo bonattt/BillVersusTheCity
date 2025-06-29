@@ -59,14 +59,14 @@ public class MeleeWeapon : ScriptableObject, IMeleeWeapon
 
     private MeleeAttack current_attack = null;
     public void FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        // Debug.LogError($"MeleeWeapon.FireAttack");
+        // if (current_attack == null) current_attack = new MeleeAttack();
+        // // else Debug.LogError("attack made while current attack isn't nulled yet!");
+        // current_attack.melee_weapon = this;
+        // current_attack.ignore_armor = false;
+        // current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
 
-        if (current_attack == null) current_attack = new MeleeAttack();
-        // else Debug.LogError("attack made while current attack isn't nulled yet!");
-        current_attack.melee_weapon = this;
-        current_attack.ignore_armor = false;
-        current_attack.hit_targets.Add(attacker); // prevent from hitting self with melee attack
-
-        AttackResolver.AttackStart(current_attack, attack_direction, attack_start_point, is_melee_attack: true);
+        // AttackResolver.AttackStart(current_attack, attack_direction, attack_start_point, is_melee_attack: true);
     }
 
     public IWeapon CopyWeapon() => CopyMeleeWeapon();

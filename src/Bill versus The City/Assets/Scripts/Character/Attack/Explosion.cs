@@ -64,7 +64,6 @@ public class Explosion : MonoBehaviour, IGameEventEffect
 
     private void SpawnExplosionEffects()
     {
-        Debug.LogWarning("TODO --- spawn explosion sound");
         foreach (GameObject prefab in explosion_attack.explosion_effects) {
             GameObject effect = Instantiate(prefab);
             effect.transform.position = transform.position;
