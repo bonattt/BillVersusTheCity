@@ -9,11 +9,21 @@ public class GrenadeFuseUI : MonoBehaviour {
     private RadialProgress progress_dial;
     public bool visible_on_start = true;
     void Start() {
-        progress_dial = ui_doc.rootVisualElement.Q<RadialProgress>();
+        InitializeUI();
         SetVisibility(visible_on_start);
     }
 
+    private void InitializeUI() {
+        // initialize field references to UIDocument
+        progress_dial = ui_doc.rootVisualElement.Q<RadialProgress>();
+    }
+
     public void SetVisibility(bool visibility) {
+        if (progress_dial == null) {
+            Debug.Log("Start not called yet, setting visibility to `visibility_on_start`");
+            visible_on_start = visibility;
+            return;
+        }
         if (visibility) {
             progress_dial.style.visibility = Visibility.Visible;
         } else {
