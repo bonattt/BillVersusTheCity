@@ -275,11 +275,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public void StartReload() {
         // initiate a reload
-        if (current_firearm.reload_amount <= 0) {
-            // weapon cannot be reloaded
+        if (!CanReload()) {
+            Debug.LogWarning("Cannot start reload!"); // TODO --- remove debug
             MenuManager.PlayMenuCancelClick(); // TODO --- placeholder
             return;
         }
+        else { Debug.LogWarning("starting reload!"); } // TODO --- remove debug }
         reloading = true;
         start_reload_at = Time.time;
         UpdateReloadStarted(current_firearm);
@@ -323,7 +324,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // for weapons that reload single rounds, keep reloading
         if (keep_reloading && wpn.current_ammo < wpn.ammo_capacity) {
             // if you have infinite ammo, OR if there is at least 1 bullet left, keep reloading
-            if (CanReload(wpn.ammo_type)) {
+            if (CanReload(wpn)) {
                 StartReload();
             }
         }
@@ -401,11 +402,17 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
     public bool CanReload(IFirearm weapon) {
         // cannot reload full weapon
-        if (weapon.ammo_capacity == weapon.current_ammo) { return false; }
-        return CanReload(weapon.ammo_type);
+        if (
+                weapon.ammo_capacity == weapon.current_ammo 
+                || weapon.reload_amount <= 0 
+                || weapon.ammo_capacity == weapon.current_ammo
+        ) { 
+            return false; 
+        }
+        return HasAmmoToReload(weapon.ammo_type);
     }
 
-    public bool CanReload(AmmoType type) {
+    public bool HasAmmoToReload(AmmoType type) {
         // returns if the character is actually able to reload with the given ammo type
         return !ShouldReloadWithContainer(type) || ammo_container.GetCount(type) > 0;
     }

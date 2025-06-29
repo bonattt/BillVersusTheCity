@@ -80,15 +80,15 @@ public class PlayerControls : MonoBehaviour {
                 bool attack_made = player_movement.TryToAttack(hold);
                 // Debug.LogWarning($"attack made? {attack_made}, hold? {hold} = (!{InputSystem.current.AttackClickInput()} && {InputSystem.current.AttackHoldInput()})"); // TODO --- remove debug
             }
-        } else if (sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
+        } else if (sprint_input && !player_movement.reloading && ReloadInput()) { // && player_movement.CanReload()) {
             player_movement.StartReload();
             resume_aim_after_reload = false;
             resume_sprint_after_reload = true;
-        } else if (aim_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
+        } else if (aim_input && !player_movement.reloading && ReloadInput()) { // && player_movement.CanReload()) {
             player_movement.StartReload();
             resume_aim_after_reload = true;
             resume_sprint_after_reload = false;
-        } else if (!sprint_input && !player_movement.reloading && player_movement.CanReload() && ReloadInput()) {
+        } else if (!sprint_input && !player_movement.reloading && ReloadInput()) { // && player_movement.CanReload()) {
             player_movement.StartReload();
             resume_aim_after_reload = false;
             resume_sprint_after_reload = false;

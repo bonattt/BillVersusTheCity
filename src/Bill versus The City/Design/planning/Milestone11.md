@@ -13,7 +13,7 @@ PLANNED FEATURES
     [X] ~~replace as much "px" size styles and margins as possible with "%"~~
     [+] add scaling to dialogue portraits 
 
-[~] Explosive Weapons
+[+] Explosive Weapons
     [+] Basic Explosion Damage
     [+] Mine (explode on trigger)
     [+] Walls block explosions
@@ -31,8 +31,9 @@ PLANNED FEATURES
         [+] Grenade pickups stack ammo onto already held grenades
     [+] Explosion Sound Effect
     [+] Explosion Game Effect
-    [ ] FIX: broken melee attack
-    [ ] FIX: grenades fly over walls
+    [+] FIX: broken melee attack
+    [X] FIX: grenades fly over walls
+        ---> do later: fix requires extensive refactors
     [+] FIX: grenades bounce off ammo/weapon pickups
     [+] Add setting for grenade fuse duration UI
     [+] FIX: weird player movement when crossing a grenade
@@ -56,12 +57,7 @@ UNPLANNED FEATURES
 [ ] Grenade relates suppression changes
     [ ] Enemy becoming suppressed should alert the enemy
     [ ] Enemies that are suppressed should avoid grenades
-[ ] Add error sound when reloading without ammo to reload
+[+] Add error sound when reloading without ammo to reload
 
 UNPLANNED BUGFIXES
-[+] Level 1 allows the player to leave immediately, without clearing enemies first
-[+] Fix Enemies can hear while combat disabled
-[~] FIX: Speaker label at center of screen looks offcenter for many resolutions; mainly because character portraits center on the 
-    right in their slot, instead of the center, and don't adjust for resolution
-[+] FIX: Player plays the running animation while being moved by choreography, instead of walking.
-    - the animation debugger shows the player is walking, not running, but the character is clearly running
+...

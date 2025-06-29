@@ -57,7 +57,7 @@ public class MeleeWeapon : ScriptableObject, IMeleeWeapon
         // do nothing
     }
 
-    private MeleeAttack current_attack = null;
+    // private MeleeAttack current_attack = null;
     public void FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         // Debug.LogError($"MeleeWeapon.FireAttack");
         // if (current_attack == null) current_attack = new MeleeAttack();
