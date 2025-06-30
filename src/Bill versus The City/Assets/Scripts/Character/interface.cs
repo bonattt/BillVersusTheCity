@@ -103,6 +103,7 @@ public interface IArmor : IItem, IDifficultyAdjusted {
 
 public interface ITrackedProjectile {
     public bool is_threat { get; } // if true, enemies will be supressed by this bullet
+    public float threat_level { get; }
     public Transform location { get; }
 }
 

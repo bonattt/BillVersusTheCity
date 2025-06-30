@@ -127,7 +127,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             {BehaviorMode.passive, new StationaryBehavior()},
             {BehaviorMode.wondering, new WonderingBehavior(this)},
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
-            {BehaviorMode.suppressed, new FleeToCoverBehavior(fights_when_cornered: true)},
+            // {BehaviorMode.suppressed, new FleeToCoverBehavior(fights_when_cornered: true)},
+            {BehaviorMode.suppressed, new FleeFromThreatsBehavior(fights_when_cornered: true)},
             {BehaviorMode.routed, new FleeToCoverBehavior(fights_when_cornered: false)},
             {BehaviorMode.dead, new DeadBehavior()},
         };

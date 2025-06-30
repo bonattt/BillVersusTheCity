@@ -26,12 +26,10 @@ public static class NavMeshUtils {
             Vector3 randomDirection = Random.insideUnitSphere * radius;
             randomDirection += origin;
             // TODO --- fix this bad ChatGPT code
-            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas))
-            {
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas)) {
                 // Check if the agent can reach the point
                 NavMeshPath path = new NavMeshPath();
-                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
-                {
+                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete) {
                     return hit.position;
                 }
             }
@@ -41,7 +39,7 @@ public static class NavMeshUtils {
         return Vector3.zero;
     }
 
-    
+
     // public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from) {
     //     int n_rays = 15;
     //     return GetRetreatWithCover(start, cover_from, n_rays);
@@ -75,7 +73,7 @@ public static class NavMeshUtils {
     //     // method only factors distance.
     //     float avoidance_score = Mathf.Sqrt(2 * Vector3.Distance(destination, cover_from)); // score for how far the point to be avoided is from the destination
     //     float travel_score = Vector3.Distance(destination, cover_from); // score for how far the destination is from the start
-        
+
     //     // high avoidance score is good, b/c we want to avoid, but high travel_score is bad b/c it means we have to travel a long way to reach safety
     //     return avoidance_score - travel_score;  
     // }
@@ -104,7 +102,7 @@ public static class NavMeshUtils {
     //     return valid_positions;
     // }
 
-    public static bool RaycastTowardPlayer(EnemyBehavior enemy, ManualCharacterMovement player, out RaycastHit hit, bool debug_ray=false) {
+    public static bool RaycastTowardPlayer(EnemyBehavior enemy, ManualCharacterMovement player, out RaycastHit hit, bool debug_ray = false) {
         Vector3 start_pos = new Vector3(enemy.transform.position.x, 0.85f, enemy.transform.position.z);
         Vector3 end_pos = new Vector3(player.transform.position.x, .85f, player.transform.position.z);
         Vector3 towards_player = end_pos - start_pos;
@@ -156,5 +154,23 @@ public static class NavMeshUtils {
             vectors.Add(rotation * base_vector);
         }
         return vectors;
+    }
+
+    
+    public static Vector3 DestinationAwayFromPosition(EnemyBehavior parent, Vector3 position_to_evade) {
+        Vector3 toward_pos = (position_to_evade - parent.transform.position).normalized;
+        Debug.DrawRay(parent.transform.position, toward_pos, Color.red);
+
+        Vector3 raycast_start = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);
+        Vector3 raycast_target = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);
+        Vector3 direction = (raycast_target - raycast_start);
+        float magnitude = direction.magnitude;
+        RaycastHit hit;
+        if (Physics.Raycast(raycast_start, direction.normalized, out hit, magnitude)) {
+            Vector3 destination = hit.point - (direction.normalized / 2);
+            return new Vector3(destination.x, 0, destination.z);
+        } else {
+            return parent.transform.position + (-toward_pos * 3);
+        }
     }
 }

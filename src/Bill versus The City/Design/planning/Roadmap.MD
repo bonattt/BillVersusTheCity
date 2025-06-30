@@ -31,8 +31,8 @@
     - improve dialoug UI
     - additional stages in a level (eg. defeat some enemies, triggering more to spawn)
 
-[ ] Milestone 011: Mishmash (More Dialogue System)
-    - add "emote" system to generically apply emotes to any character
+[ ] Milestone 11: Mishmash (More Dialogue System)
+    ~~- add "emote" system to generically apply emotes to any character~~
     - scale portraits to different screen resolutions
     - replace font size in "px" with font size in "%" for ALL UIs
     - explosive weapons

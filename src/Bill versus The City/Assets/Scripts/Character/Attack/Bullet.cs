@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IBullet
 {
-    
+    public float _threat_level = 2; 
+    public float threat_level { get => _threat_level; } 
     public Transform location { get { return transform; } }
     public IAttackTarget attacker { get; set; }
     public bool is_threat { get => PlayerCharacter.IsPlayer(attacker);  } // TODO --- check if attacker is player

@@ -38,9 +38,10 @@ PLANNED FEATURES
     [+] Add setting for grenade fuse duration UI
     [+] FIX: weird player movement when crossing a grenade
 
-[ ] Dialogue "emote" system
-    [ ] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait
-[ ] debug/difficulty options to unlock weapons
+POSTPONED FEATURES 
+[X] Dialogue "emote" system
+    [X] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait
+[X] debug/difficulty options to unlock weapons
 
 PLANNED BUGFIXES
 [ ] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene
@@ -60,4 +61,4 @@ UNPLANNED FEATURES
 [+] Add error sound when reloading without ammo to reload
 
 UNPLANNED BUGFIXES
-...
+[ ] FIX: melee enemy attack when out of range, if suppressed

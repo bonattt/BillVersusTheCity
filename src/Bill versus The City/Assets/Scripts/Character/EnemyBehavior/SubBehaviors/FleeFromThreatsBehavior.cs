@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FleeToCoverBehavior : ISubBehavior  {
+public class FleeFromThreatsBehavior : ISubBehavior  {
 
     public float shooting_rate { get { return 1f; }}
 
@@ -14,17 +16,19 @@ public class FleeToCoverBehavior : ISubBehavior  {
     
     public bool fights_when_cornered = false;
     public bool reload = false;
-    public FleeToCoverBehavior(bool fights_when_cornered, bool reload=false) {
+    public FleeFromThreatsBehavior(bool fights_when_cornered, bool reload=false) {
         this.fights_when_cornered = fights_when_cornered;
         this.reload = reload;
     }
+    private EnemyThreatTracking threat_tracking = null;
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
-        // parent.ctrl_waypoint = new Vector3(0, 0, 0);
+        // initialize threat_tracking, if it's not already initialized
+        if (threat_tracking == null) { threat_tracking = parent.GetComponent<EnemyThreatTracking>(); }
 
         // recalculate destination
         if (last_calculation_at + recalculation_period <= Time.time) {
-            parent.ctrl_waypoint = RecalculatePath(parent, player);
+            parent.ctrl_waypoint = RecalculateDestination(parent, player);
         }
 
         parent.ctrl_target = player;
@@ -42,34 +46,56 @@ public class FleeToCoverBehavior : ISubBehavior  {
         Debug.DrawLine(parent.controller.transform.position, parent.ctrl_waypoint, color);
     }
 
-    private void UpdateIsCornered(EnemyBehavior parent, ManualCharacterMovement player) {
-        if (!is_cornered) {
-            is_cornered = WillBecomeCornered(parent, player);
+    // private void UpdateIsCornered(EnemyBehavior parent, ManualCharacterMovement player) {
+    //     if (!is_cornered) {
+    //         is_cornered = WillBecomeCornered(parent, player);
+    //     }
+    //     is_cornered = WillStayCornered(parent, player);
+    // }
+
+    private Vector3 RecalculateDestination(EnemyBehavior parent, ManualCharacterMovement player) {
+        last_calculation_at = Time.time;
+        // UpdatePlayerRaycast(parent, player);
+        // UpdateIsCornered(parent, player);
+        // if (!has_los_to_player) {
+        //     // player has no LoS, wherever you are is good
+        //     return parent.controller.transform.position;
+        // }
+
+        // Vector3 start_pos = parent.controller.transform.position;
+        // if (is_cornered) {
+        List<ITrackedProjectile> threats = BulletTracking.inst.PlayerBullets().ToList();
+        if (threats.Count == 0) {
+            return NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
+        } else {
+            Vector3 threat_centroid = GetThreatCentroid(parent.transform.position, threats);
+            return NavMeshUtils.DestinationAwayFromPosition(parent, threat_centroid);
         }
-        is_cornered = WillStayCornered(parent, player);
+
+            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.red);
+        // } 
+        // else {
+        //     Vector3 cover_from = player.transform.position;
+        //     Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);
+        //     return dest.position;
+        //     // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);
+        // }
     }
 
-    private Vector3 RecalculatePath(EnemyBehavior parent, ManualCharacterMovement player) {
-        last_calculation_at = Time.time;
-        UpdatePlayerRaycast(parent, player);
-        UpdateIsCornered(parent, player);
-        if (!has_los_to_player) {
-            // player has no LoS, wherever you are is good
-            return parent.controller.transform.position;
+    public static Vector3 GetThreatCentroid(Vector3 position, IEnumerable<ITrackedProjectile> threats) {
+        float total_weight = 0f;
+        float sum_x = 0f;
+        float sum_y = 0f;
+        float sum_z = 0f;
+        foreach (ITrackedProjectile p in threats) {
+            float weight = Vector3.Distance(position, p.location.position) * p.threat_level;
+            total_weight += weight;
+            sum_x += p.location.position.x * weight;
+            sum_y += p.location.position.y * weight;
+            sum_z += p.location.position.z * weight;
         }
-
-        Vector3 start_pos = parent.controller.transform.position;
-        if (is_cornered) {
-            Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
-            return destination;
-            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.red);
-        } 
-        else {
-            Vector3 cover_from = player.transform.position;
-            Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);
-            return dest.position;
-            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);
-        }
+        Vector3 final_position = new Vector3(sum_x, 0f, sum_z) / total_weight;
+        return final_position;
     }
 
     private bool has_los_to_player = false; // cached 

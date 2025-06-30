@@ -48,6 +48,7 @@ public class BulletTracking : MonoBehaviour {
     }
 
     public IEnumerable<ITrackedProjectile> PlayerBullets() {
+        // TODO --- refactor: rename this
         foreach (ITrackedProjectile b in tracked_bullets) {
             if (b.is_threat) {
                 yield return b;
