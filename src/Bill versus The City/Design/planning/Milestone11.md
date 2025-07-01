@@ -55,10 +55,14 @@ PLANNED BUGFIXES
         - I'm unable to reproduce this anymore to make further progress on fixing it
 
 UNPLANNED FEATURES
-[ ] Grenade relates suppression changes
-    [ ] Enemy becoming suppressed should alert the enemy
+[+] Grenade relates suppression changes
+    [+] Enemy becoming suppressed should alert the enemy
     [+] Enemies that are suppressed should avoid grenades
 [+] Add error sound when reloading without ammo to reload
+[+] Level with cover and grenades
+    [+] Level layout
+    [ ] Add Tutorials
+[ ] FIX: Scroll with only one slot should ALWAYS select the only equipped slot, no matter which empty slot is carried.
 
 UNPLANNED BUGFIXES
 [ ] FIX: melee enemy attack when out of range, if suppressed

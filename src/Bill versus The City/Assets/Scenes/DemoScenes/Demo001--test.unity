@@ -5793,6 +5793,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySMG
       objectReference: {fileID: 0}
+    - target: {fileID: 7636100687923735762, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8241027428916574625, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.447514

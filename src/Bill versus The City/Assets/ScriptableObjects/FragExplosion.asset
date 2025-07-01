@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec37a427a6e1b2049997cce902d2d31d, type: 3}
-  m_Name: FragGrenade
+  m_Name: FragExplosion
   m_EditorClassIdentifier: 
+  explosion_volume: 10
   explosion_radius: 5
   explosion_effects:
   - {fileID: 2772534263611651985, guid: 398af651258f8ef48976783a0179738e, type: 3}
@@ -20,7 +21,7 @@ MonoBehaviour:
   _attack_damage_max: 125
   _armor_effectiveness: 1
   _ignore_armor: 0
-  _item_id: frag_grenade
-  _item_name: frag grenade
+  _item_id: frag_explosion
+  _item_name: frag explosion
   _item_icon: {fileID: 0}
   _attack_sound: gunshot_shotgun

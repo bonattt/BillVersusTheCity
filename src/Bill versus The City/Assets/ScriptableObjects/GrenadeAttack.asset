@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23145e648f0fc06488fe5ae88ad5cb31, type: 3}
   m_Name: GrenadeAttack
   m_EditorClassIdentifier: 
-  _item_id: frag_grenade_attack
-  _item_name: grenade attack
+  _item_id: frag_grenade
+  _item_name: frag grenade
   _item_icon: {fileID: 21300000, guid: 152418c5600bd0b4e9891304f26a53a3, type: 3}
   _attack_sound: melee_default
   grenade_prefab: {fileID: 2701627596137562284, guid: 4936975ca7e85d146b6a6e3a3064414f, type: 3}
+  _ammo_capacity: 5
+  _ammo_drop_size: 2
