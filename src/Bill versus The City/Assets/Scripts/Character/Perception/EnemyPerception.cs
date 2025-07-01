@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
+public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressionObserver
 {
     /** 
       * Script controlling if an Enemy can see the player
@@ -124,6 +124,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
         visible_nodes_this_frame = 0;
         GetComponent<ICharacterStatus>().Subscribe(this);
+        GetComponent<ISuppressionManager>().Subscribe(this);
         visiblity_camera = Camera.main; // cache Camera.main to avoid repeated slow lookups by tag
     }
 
@@ -152,6 +153,10 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber
         state = PerceptionState.searching;
         SwarmIntelligence.inst.SeePlayer(last_seen_at, Time.time);
     }
+
+
+    public void UpdateRecoveredFromSuppression() { /* do nothing */ }
+    public void UpdateBecomeSuppressed() => Alert();
 
     public void StatusUpdated(ICharacterStatus status) {
         // instantly notice the player if you take damage

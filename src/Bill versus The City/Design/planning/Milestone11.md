@@ -57,7 +57,7 @@ PLANNED BUGFIXES
 UNPLANNED FEATURES
 [ ] Grenade relates suppression changes
     [ ] Enemy becoming suppressed should alert the enemy
-    [ ] Enemies that are suppressed should avoid grenades
+    [+] Enemies that are suppressed should avoid grenades
 [+] Add error sound when reloading without ammo to reload
 
 UNPLANNED BUGFIXES

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyThreatTracking : MonoBehaviour
-{
+public class EnemyThreatTracking : MonoBehaviour, ISuppressionManager {
     [SerializeField]
     [Tooltip("displays how suppressed the character is this frame. Suppression rises when bullets are near the character, and goes down when no bullets are nearby.")]
     private float suppression = 0f;
@@ -19,7 +18,7 @@ public class EnemyThreatTracking : MonoBehaviour
 
     [SerializeField]
     private bool _is_suppressed = false;
-    public bool is_suppressed { get { return _is_suppressed || always_suppressed; }}
+    public bool is_suppressed { get { return _is_suppressed || always_suppressed; } }
 
     [SerializeField]
     [Tooltip("tracks the number of bullets near this character on the current frame before updating supression")]
@@ -29,15 +28,13 @@ public class EnemyThreatTracking : MonoBehaviour
     public bool draw_debug_lines = true;
 
     // // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         attacker = GetComponent<IAttackTarget>();
         if (attacker == null) { Debug.LogError($"{gameObject.name}.EnemyThreatTracking.attacker is null!!"); }
     }
 
     // Update is called once per frame
-    void Update()
-    {   
+    void Update() {
         UpdateBulletsNear();
         UpdateSuppression();
     }
@@ -46,7 +43,7 @@ public class EnemyThreatTracking : MonoBehaviour
         bullets_near = 0;
         foreach (ITrackedProjectile bullet_near in BulletTracking.inst.NearbyPlayerBullets(transform.position, distance_threshold)) {
             if (!bullet_near.is_threat) {
-                Debug.LogWarning($"{((MonoBehaviour) bullet_near).gameObject.name} is not a threat!"); // TODO --- remove debug
+                Debug.LogWarning($"{((MonoBehaviour)bullet_near).gameObject.name} is not a threat!"); // TODO --- remove debug
                 continue;
             }
             bullets_near += 1;
@@ -57,8 +54,7 @@ public class EnemyThreatTracking : MonoBehaviour
     protected void UpdateSuppression() {
         if (bullets_near == 0) {
             ReduceSuppresion();
-        }
-        else {
+        } else {
             IncreaseSuppression();
         }
     }
@@ -81,16 +77,35 @@ public class EnemyThreatTracking : MonoBehaviour
         }
     }
 
+    private List<ISuppressionObserver> subscribers = new List<ISuppressionObserver>();
+    public void Subscribe(ISuppressionObserver sub) => subscribers.Add(sub);
+    public void Unsubscribe(ISuppressionObserver sub) => subscribers.Remove(sub);
+
     public void UpdateRecoveredFromSuppression() {
         // TODO --- not sure if I will have a subscriber
         _is_suppressed = false;
+        foreach (ISuppressionObserver sub in subscribers) {
+            sub.UpdateRecoveredFromSuppression();
+        }
     }
 
     public void UpdateBecomeSuppressed() {
         // TODO --- not sure if I will have a subscriber
         _is_suppressed = true;
+        foreach (ISuppressionObserver sub in subscribers) {
+            sub.UpdateBecomeSuppressed();
+        }
     }
 
+}
+
+public interface ISuppressionManager { 
+    public void Subscribe(ISuppressionObserver sub);
+    public void Unsubscribe(ISuppressionObserver sub);
+}
+public interface ISuppressionObserver {
+    public void UpdateRecoveredFromSuppression();
+    public void UpdateBecomeSuppressed();
 }
 
 
