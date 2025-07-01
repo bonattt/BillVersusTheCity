@@ -15,6 +15,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
     public bool fights_when_cornered = false;
     public bool reload = false;
     public FleeToCoverBehavior(bool fights_when_cornered, bool reload=false) {
+        Debug.LogWarning("FleeToCoverBehavior is OBSOLETE, use FleeFromThreatsBehavior"); // TODO --- remove this code
         this.fights_when_cornered = fights_when_cornered;
         this.reload = reload;
     }
@@ -94,25 +95,6 @@ public class FleeToCoverBehavior : ISubBehavior  {
         float dot = Vector3.Dot(toward_player, travel_direction);
         return dot >= towards_player_threshold;
     }
-
-
-    // private static Vector3 DestinationAwayFromPlayer(EnemyBehavior parent, ManualCharacterMovement player) {
-    //     Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
-    //     Debug.DrawRay(parent.transform.position, toward_player, Color.red);
-
-    //     Vector3 raycast_start = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);
-    //     Vector3 raycast_target = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);
-    //     Vector3 direction = (raycast_target - raycast_start);
-    //     float magnitude = direction.magnitude;
-    //     RaycastHit hit;
-    //     if (Physics.Raycast(raycast_start, direction.normalized, out hit, magnitude)) {
-    //         Vector3 destination = hit.point - (direction.normalized / 2);
-    //         return new Vector3(destination.x, 0, destination.z);
-    //     } else {
-    //         return parent.transform.position + (-toward_player * 3);
-    //     }
-    // }
-
 
     public string GetDebugMessage(EnemyBehavior parent) {
         ManualCharacterMovement player = PlayerCharacter.inst.player_transform.gameObject.GetComponent<ManualCharacterMovement>();

@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943a8e978fc6d314c85a2ba0a7566a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _threat_level: 200
   time_to_live: 10
   damage_falloff_rate: 0
 --- !u!114 &8760277702230759559

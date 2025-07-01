@@ -156,7 +156,7 @@ public static class NavMeshUtils {
         return vectors;
     }
 
-    
+
     public static Vector3 DestinationAwayFromPosition(EnemyBehavior parent, Vector3 position_to_evade) {
         Vector3 toward_pos = (position_to_evade - parent.transform.position).normalized;
         Debug.DrawRay(parent.transform.position, toward_pos, Color.red);
@@ -173,4 +173,5 @@ public static class NavMeshUtils {
             return parent.transform.position + (-toward_pos * 3);
         }
     }
+    
 }

@@ -7696,7 +7696,7 @@ PrefabInstance:
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_starting_rifle
       value: 
-      objectReference: {fileID: 11400000, guid: fd35ff658466b414288a90c98efbe22f, type: 2}
+      objectReference: {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_starting_pickup
       value: 
