@@ -65,4 +65,6 @@ UNPLANNED FEATURES
 [ ] FIX: Scroll with only one slot should ALWAYS select the only equipped slot, no matter which empty slot is carried.
 
 UNPLANNED BUGFIXES
-[ ] FIX: melee enemy attack when out of range, if suppressed
+[~] FIX: melee enemy attack when out of range, if suppressed
+    --> this is less noticable with current behaviors
+[+] FIX: level weapon select "none" preserves previous inventory

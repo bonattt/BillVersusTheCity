@@ -278,9 +278,14 @@ public class LevelConfig : MonoBehaviour {
         }
         level_started = false;
         inst = this;
+        ConfigureLevelWeapons();
+    }
 
+    public void ConfigureLevelWeapons() {
         if (level_weapons == LevelWeaponSelect.level_weapons) {
             EquipLevelWeapons();
+        } else if (level_weapons == LevelWeaponSelect.none) {
+            UnEquipWeapons();
         } else if (level_weapons == LevelWeaponSelect.previous) {
             Debug.LogError("`LevelWeaponSelect.previous` is not implemented!");
         }
@@ -605,6 +610,10 @@ public class LevelConfig : MonoBehaviour {
         starting_pickup = InstantiateStartingWeapon(init_starting_pickup);
 
         PlayerCharacter.inst.inventory.EquipStartingWeapons(starting_rifle, starting_handgun, starting_pickup);
+    }
+
+    private void UnEquipWeapons() {
+        PlayerCharacter.inst.inventory.EquipStartingWeapons(null, null, null);
     }
 
     private IFirearm InstantiateStartingWeapon(ScriptableObject scriptable_object) {
