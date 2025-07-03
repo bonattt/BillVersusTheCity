@@ -121,7 +121,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
             // agressive behaviors
             {BehaviorMode.engaged, new StandAndShootBehavior()},
-            {BehaviorMode.retreating, new FleeToCoverBehavior(fights_when_cornered: true)},
+            // {BehaviorMode.retreating, new FleeToCoverBehavior(fights_when_cornered: true)},
+            {BehaviorMode.retreating, new FleeFromThreatsBehavior(fights_when_cornered: true)},
             {BehaviorMode.searching, new SearchingBehavior(use_initial_movement_target, initial_movement_target)},
             // passive behaviors
             {BehaviorMode.passive, new StationaryBehavior()},
@@ -129,7 +130,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             {BehaviorMode.patrol, GetComponent<PatrolBehavior>()},
             // {BehaviorMode.suppressed, new FleeToCoverBehavior(fights_when_cornered: true)},
             {BehaviorMode.suppressed, new FleeFromThreatsBehavior(fights_when_cornered: true)},
-            {BehaviorMode.routed, new FleeToCoverBehavior(fights_when_cornered: false)},
+            // {BehaviorMode.routed, new FleeToCoverBehavior(fights_when_cornered: false)},
+            {BehaviorMode.routed, new FleeFromThreatsBehavior(fights_when_cornered: false)},
             {BehaviorMode.dead, new DeadBehavior()},
         };
         if (sprint_to_chase)
