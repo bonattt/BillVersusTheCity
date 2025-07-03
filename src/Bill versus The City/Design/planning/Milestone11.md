@@ -45,7 +45,7 @@ POSTPONED FEATURES
 [X] debug/difficulty options to unlock weapons
 
 PLANNED BUGFIXES
-[ ] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene
+[+] FIX: when running directly in a scene, opening dialogues fails due to a null pointer. The issue doesn't occur if the scene
     was loaded from a main-menu launch of the game.
         - the null pointer is caused because the dialogue's Start, which sets up references to VisualElements populated dynamically, is called  
         AFTER trying to populate those objects. I don't know why this happens out of order for directly loaded scenes only.
@@ -54,6 +54,7 @@ PLANNED BUGFIXES
         - UPDATE: when the choreography is loaded in a next level, it IS triggering on level start, then the first step, (a dialogue step) is not being set as "active", while the choreography itself shows as active. No dialogue is opened, and the whole thing stalls.
         - UPDATE: my best guess at present is, something is going wrong with the sequential choreography step Choreography dynamically creates to handle it's steps, eg. Activate() is called before this variable is dyanamically created, causing a null reference, which blocks the choreoghy from getting actually started and it just freezes the game pre-choreography. This can't be quite what's happening, or I would have seen a null pointer in the logs, so I'm still kinda confused.
         - I'm unable to reproduce this anymore to make further progress on fixing it
+    this was caused because START was called on a Choreography step AFTER the parent called Activate, which was resetting "active" to false, before the step could do anything, causing the choreography to become stalled.
 
 UNPLANNED FEATURES
 [+] Grenade relates suppression changes

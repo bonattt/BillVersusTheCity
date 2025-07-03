@@ -10,7 +10,10 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
     private bool _active = false;
     public bool active {
         get => _active;
-        private set { _active = value; }
+        private set {
+            Debug.LogWarning($"{gameObject.name}.active set to {value}"); // TODO --- remove debug
+            _active = value;
+        }
     }
 
     [SerializeField]
@@ -27,8 +30,7 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
     public virtual void Complete() { choreography_complete = true; }
 
     protected virtual void Start() {
-        active = false;
-        choreography_complete = false;
+        // do nothing. Setting active and complete in start risks overwriting these values set from another Start method that runs first
     }
 }
 

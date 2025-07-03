@@ -63,7 +63,6 @@ public class ManualCharacterMovement : CharCtrl
         _last_move = move_direction * movement_speed;
         if (walk) {
             _last_move *= 0.5f;
-            Debug.LogWarning($"{gameObject.name} WALK!"); // TODO --- remove debug
         }
         controller.SimpleMove(_last_move);
     }

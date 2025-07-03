@@ -118,6 +118,7 @@ public class LevelConfig : MonoBehaviour {
     }
 
     void Start() {
+        Debug.Log($"============= Load level '{ScenesUtil.GetCurrentSceneName()}' ============="); 
         LoadAdditiveScenes();
         PlayerCharacter.inst.inventory.dollars_change_in_level = 0;
         level_number = level_counter++;
