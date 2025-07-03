@@ -37,6 +37,7 @@ PLANNED FEATURES
     [+] FIX: grenades bounce off ammo/weapon pickups
     [+] Add setting for grenade fuse duration UI
     [+] FIX: weird player movement when crossing a grenade
+    [ ] FIX: grenade pickups should not say "swap to [grenades]" when you are already carrying the same type of grenade
 
 POSTPONED FEATURES 
 [X] Dialogue "emote" system

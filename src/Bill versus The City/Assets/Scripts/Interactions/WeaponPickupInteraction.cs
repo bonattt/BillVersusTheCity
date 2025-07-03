@@ -41,10 +41,20 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
             return;
         }
         string verb = "Pickup";
+        string item_name = $"{pickup_weapon.item_name}";
         if (PlayerCharacter.inst.inventory.pickup != null) {
-            verb = "Swap to";
+            if (IsCarriedConsumable()) {
+                if (PlayerCharacter.inst.inventory.pickup.ammo_capacity == PlayerCharacter.inst.inventory.pickup.current_ammo) {
+                    verb = "No room for";
+                } else {
+                    verb = "Refill";
+                }
+                item_name = $"{item_name}s";
+            } else {
+                verb = "Swap to";
+            }
         }
-        ui.SetNewText($"{verb} {pickup_weapon.item_name}");
+        ui.SetNewText($"{verb} {item_name}");
     }
 
     public void Interact(GameObject actor) {
@@ -69,7 +79,6 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
                 }
             }
             PlayerCharacter.inst.inventory.UpdateWeapon(); // manually update UI because of ammo change
-            Debug.LogWarning("// TODO --- update weapon ammo display!"); // TODO --- update weapon ammo display!
         } else {
             // pickup_weapon.current_ammo = pickup_weapon.ammo_capacity;
             IFirearm dropped_weapon = PlayerCharacter.inst.inventory.pickup;
