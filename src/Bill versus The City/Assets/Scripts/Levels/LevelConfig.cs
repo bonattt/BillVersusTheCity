@@ -185,7 +185,7 @@ public class LevelConfig : MonoBehaviour {
 
     private ISFXSounds LoadLevelMusic() {
         if (level_music_name == null || level_music_name.Equals("")) {
-            Debug.Log($"no level music set: '{level_music_name}'");
+            Debug.Log($"no level music set: '{level_music_name}' level {ScenesUtil.GetCurrentSceneName()}");
             return null;
         }
         if (test_mode) {

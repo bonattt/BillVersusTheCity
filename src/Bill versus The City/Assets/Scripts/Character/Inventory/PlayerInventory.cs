@@ -290,7 +290,6 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     }
 
     public bool AlreadyOwnsWeapon(IWeapon weapon) {
-        Debug.LogWarning("AlreadyOwnsItem(weapon)!"); // TODO --- remove debug
         foreach (IFirearm firearm in availible_weapons) {
             if (firearm.item_id.Equals(weapon.item_id)) {
                 return true;
@@ -299,7 +298,6 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         return false;
     }
     public bool AlreadyOwnsArmor(IArmor armor) {
-        Debug.Log("AlreadyOwnsItem(Armor)!"); // TODO --- remove debug
         Debug.LogWarning("TODO --- implement AlreadyOwnsItem(Armor)!"); // TODO --- remove debug
         return false; /* TODO --- implement */
     }
