@@ -25,7 +25,7 @@ public class PlayerAttackController : AttackController
             int _min = weapon_slots.Length - 1;
             for (int i = _min; i >= 0; i--)
             {
-                if (weapon_slots[i] != null && weapon_slots_enabled[i])
+                if (weapon_slots_enabled[i])
                 {
                     _min = i;
                 }
@@ -46,7 +46,7 @@ public class PlayerAttackController : AttackController
             int _max = 0;
             for (int i = 0; i < weapon_slots.Length; i++)
             {
-                if (weapon_slots[i] != null && weapon_slots_enabled[i])
+                if (weapon_slots_enabled[i])
                 {
                     _max = i;
                 }
@@ -56,8 +56,11 @@ public class PlayerAttackController : AttackController
         }
     }
 
-    private void UpdateAimSensitivity()
-    {
+    public bool SlotHasWeapon(int i) {
+        return weapon_slots[i] != null && weapon_slots_enabled[i];
+    }
+
+    private void UpdateAimSensitivity() {
         InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
 
@@ -106,25 +109,20 @@ public class PlayerAttackController : AttackController
         }
     }
 
-    public bool SwitchToNextWeapon()
-    {
-        int _next_slot;
-        if (_current_slot >= max_slot) {
-            // _next_slot = 0;
-            return false;
-        } else {
-            _next_slot = _current_slot + 1;
+    public bool SwitchToNextWeapon() {
+        int _next_slot = _current_slot;
+        while (_next_slot < max_slot) {
+            _next_slot += 1;
+            if (SlotHasWeapon(_next_slot)) { return SwitchWeaponBySlot(_next_slot); }
         }
-        return SwitchWeaponBySlot(_next_slot);
+        return false;
     }
     
     public bool SwitchToPreviousWeapon() {
-        int _next_slot;
-        if (_current_slot <= min_slot) {
-            // _next_slot = max_slot;
-            return false;
-        } else {
-            _next_slot = _current_slot - 1;
+        int _next_slot = _current_slot;
+        while (_next_slot > min_slot) {
+            _next_slot -= 1;
+            if (SlotHasWeapon(_next_slot)) { return SwitchWeaponBySlot(_next_slot); }
         }
         return SwitchWeaponBySlot(_next_slot); 
     }

@@ -61,8 +61,8 @@ UNPLANNED FEATURES
 [+] Add error sound when reloading without ammo to reload
 [+] Level with cover and grenades
     [+] Level layout
-    [ ] Add Tutorials
-[ ] FIX: Scroll with only one slot should ALWAYS select the only equipped slot, no matter which empty slot is carried.
+    [X] Add Tutorials
+[+] FIX: Scroll with only one slot should ALWAYS select the only equipped slot, no matter which empty slot is carried.
 
 UNPLANNED BUGFIXES
 [~] FIX: melee enemy attack when out of range, if suppressed

@@ -415,7 +415,7 @@ MonoBehaviour:
   inaccuracy_modifier: 0
   _current_recoil: 0
   debug_ammo_count: 0
-  weapon_slots_enabled: 01010101010100000000
+  weapon_slots_enabled: 01010100000000000000
   _current_slot: 0
   debug_rifle_equipped: 
   debug_handgun_equipped: 

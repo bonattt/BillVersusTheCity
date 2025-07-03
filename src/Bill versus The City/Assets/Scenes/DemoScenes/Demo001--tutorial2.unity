@@ -2423,7 +2423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1376931691}
   m_Layer: 0
-  m_Name: Level
+  m_Name: LevelMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2564,6 +2564,14 @@ PrefabInstance:
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: level_weapons
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: init_starting_rifle
+      value: 
+      objectReference: {fileID: 11400000, guid: a3ccd283039b36a43bb5016561c32786, type: 2}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: init_starting_handgun
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_start_level
