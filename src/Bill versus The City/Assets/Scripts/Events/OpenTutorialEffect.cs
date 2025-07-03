@@ -14,20 +14,25 @@ public class OpenTutorialEffect : AbstractInteractionGameEvent {
         }
         Debug.LogWarning("// TODO --- make event complete when menu is closed!");
     }
+    public override void ActivateEffect() {
+        // NOTE: implements calling Effect without setting `effect_completed`, 
+        //       because the effect is only complete once the tutorial is closed.
+        effect_completed = false;
+        Effect();
+    }
 
     protected override void Effect() {
         TutorialPopupController popup = TutorialPopupLibrary.inst.OpenTutorial(tutorial_name);
-        
-        if (_tutorial_callback == null) {
-            // no callback, so do nothing
-            Debug.LogWarning("no tutorial callback!"); // TODO --- remove debug
-        }
-        else if (popup == null) {
+        if (popup == null) {
             // perform callback immediately, tutorial is skipped!
-            _tutorial_callback.ActivateEffect();
+            if (_tutorial_callback != null) { _tutorial_callback.ActivateEffect(); }
+            effect_completed = true;
         } else {
+            Debug.LogWarning("Tutorial popup is NOT null!"); // TODO --- remove debug
             // add callback to trigger when tutorial closed
-            popup.AddCloseCallback(_tutorial_callback);
+            if (_tutorial_callback != null) { popup.AddCloseCallback(_tutorial_callback); }
+            popup.AddCloseCallback(new SimpleActionEvent(() => effect_completed = true));
+            popup.AddCloseCallback(new SimpleActionEvent(() => Debug.LogWarning("Tutorial popup Close Callback!"))); // TODO --- remove debug
         }
     }
 }

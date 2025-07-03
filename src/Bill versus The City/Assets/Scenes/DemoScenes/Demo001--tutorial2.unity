@@ -3000,12 +3000,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 90436643173117265, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
-      propertyPath: set_ammo
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 90436643173117265, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
       propertyPath: full_ammo
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 90436643173117265, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
       propertyPath: unity_weapon

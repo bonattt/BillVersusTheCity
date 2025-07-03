@@ -37,7 +37,7 @@ PLANNED FEATURES
     [+] FIX: grenades bounce off ammo/weapon pickups
     [+] Add setting for grenade fuse duration UI
     [+] FIX: weird player movement when crossing a grenade
-    [ ] FIX: grenade pickups should not say "swap to [grenades]" when you are already carrying the same type of grenade
+    [+] FIX: grenade pickups should not say "swap to [grenades]" when you are already carrying the same type of grenade
 
 POSTPONED FEATURES 
 [X] Dialogue "emote" system
@@ -69,3 +69,5 @@ UNPLANNED BUGFIXES
 [~] FIX: melee enemy attack when out of range, if suppressed
     --> this is less noticable with current behaviors
 [+] FIX: level weapon select "none" preserves previous inventory
+[+] FIX: Tutorial 1; Swap order of alert and tutorial
+[+] FIX: reverse direction for Scrolling through weapons

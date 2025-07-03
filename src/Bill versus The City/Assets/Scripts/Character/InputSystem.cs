@@ -360,11 +360,11 @@ public class InputSystem : ISettingsObserver
     }
 
     public bool NextWeaponInput() {
-        return GetScroll() > 0f;
+        return GetScroll() < 0f;
     }
 
     public bool PreviousWeaponInput() {
-        return GetScroll() < 0f;
+        return GetScroll() > 0f;
     }
 
     public bool NextWeaponModeInput() {

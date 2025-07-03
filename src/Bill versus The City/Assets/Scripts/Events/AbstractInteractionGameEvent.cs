@@ -12,11 +12,11 @@ public abstract class AbstractInteractionGameEvent : MonoBehaviour, IGameEventEf
         effect_completed = false;
     }
 
-    public void Interact(GameObject actor) {
+    public virtual void Interact(GameObject actor) {
         Effect();
     }
 
-    public void ActivateEffect() {
+    public virtual void ActivateEffect() {
         Effect();
         effect_completed = true;
     }

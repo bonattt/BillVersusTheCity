@@ -19,6 +19,13 @@ public class GameEventChoreographyStep : AbstractChoreographyStep {
     public override void Activate(IChoreography choreography) {
         base.Activate(choreography);
         game_event.ActivateEffect();
-        Complete();
+        if (game_event.effect_completed) {
+            Complete();
+        }
+    }
+    void Update() {
+        if (!choreography_complete && game_event.effect_completed) {
+            Complete();
+        }
     }
 }
