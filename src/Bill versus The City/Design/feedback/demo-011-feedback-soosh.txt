@@ -1,0 +1,9 @@
+
+
+- menun has no back button
+- pickup UI blocks vision of the player
+- picking up a gun with nothing equipped should auto switch to the new weapon
+- cooking grenade looks like "charging the throw"
+- throwing too close to the fence bounces off and kills the player
+- enemies will kill each other 
+- grenade explosion size is very unintuitive

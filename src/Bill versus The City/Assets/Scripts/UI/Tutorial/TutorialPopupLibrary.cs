@@ -7,6 +7,7 @@ public class TutorialPopupLibrary : MonoBehaviour
     public const string TUTORIAL_MOVEMENT = "movement";
     public const string TUTORIAL_SHOOTING = "shooting";
     public const string TUTORIAL_COVER = "cover";
+    public const string TUTORIAL_GRENADES = "grenades";
     // public const string TUTORIAL_ = "";
 
     private Dictionary<string, TutorialConfig> configs = new Dictionary<string, TutorialConfig>();
@@ -33,6 +34,7 @@ public class TutorialPopupLibrary : MonoBehaviour
         configs[TUTORIAL_MOVEMENT] = new TutorialConfig(TUTORIAL_MOVEMENT, "move using [WASD]. Move the aim and camera with the mouse. Sprint by holding [Shift]");
         configs[TUTORIAL_SHOOTING] = new TutorialConfig(TUTORIAL_SHOOTING, "Use [mouse wheel] or numb-key 2 to equip your handgun. \nFire with [LMB]. \nHolding [RMB] will improve accuracy, but slows movement!");
         configs[TUTORIAL_COVER] = new TutorialConfig(TUTORIAL_COVER, "Holding [Space] or [L. Ctrl] close to cover will protect from enemies on the other side of the cover. Crouching while sprinting [Shift] in a direction will perform a dive, covering a short distance and takeing cover immediately."); 
+        configs[TUTORIAL_GRENADES] = new TutorialConfig(TUTORIAL_GRENADES, "Use [LMB] to throw a grenade to the mouse position, which can be thrown over cover even when crouchted. Holding [LMB] allows you to cook a grenade, then release [LMB] to throw."); 
     }
 
     public bool ShouldSkipTutorial(string tutorial_name) {

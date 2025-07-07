@@ -6,7 +6,7 @@
                 <ui:Label tabindex="-1" text="Tutorial" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HeaderLabel" style="font-size: 50px; -unity-text-align: upper-center;" />
             </ui:VisualElement>
             <ui:VisualElement name="ImagePane" style="flex-grow: 1; height: 40%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-bottom-width: 1px; border-top-width: 1px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-                <ui:VisualElement name="Image" style="flex-grow: 1; background-color: rgb(255, 255, 255);">
+                <ui:VisualElement name="ExamplePane" style="flex-grow: 1; background-color: rgb(255, 255, 255); background-image: url(&quot;project://database/Assets/UXML/Tutorial/TutorialRenderTex.renderTexture?fileID=8400000&amp;guid=1b1ae90e0a66f25449d24adf3f4334a0&amp;type=2#TutorialRenderTex&quot;);">
                     <ui:Label tabindex="-1" text="[placeholder for image]" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center; -unity-text-align: middle-center; font-size: 32px;" />
                 </ui:VisualElement>
             </ui:VisualElement>

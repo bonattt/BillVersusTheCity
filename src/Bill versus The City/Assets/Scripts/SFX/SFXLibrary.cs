@@ -10,7 +10,6 @@ public static class SFXLibrary
         return Resources.Load<AudioClip>(path);
     }
 
-
     public static ISFXSounds LoadSound(string path) {
         ISFXSounds sound = (ISFXSounds) Resources.Load<ScriptableObject>(path);
         if (sound != null) {

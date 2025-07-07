@@ -4,6 +4,7 @@ using System.Globalization;
 
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 
 
 
@@ -15,6 +16,7 @@ public class TutorialPopupController : AbstractCloseEventMenu
     private Button okay_button;
 
     private Toggle skip_this_tutorial, skip_all_tutorials;
+    public VisualElement example_pane; // use to display video or images for the tutorial
 
     private bool initialized = false;
 
@@ -30,7 +32,27 @@ public class TutorialPopupController : AbstractCloseEventMenu
         skip_this_tutorial = root.Q<Toggle>("DontShowAgain");
         skip_all_tutorials = root.Q<Toggle>("SkipAllTutorials");
 
+        example_pane = root.Q<VisualElement>("ExamplePane");
         UpdateUI();
+    }
+
+    private VideoPlayer video_player;
+    public RenderTexture render_texture;
+    public void AddTutorialVideo(string tutorial_name_) {
+        VideoClip clip = VideoLibrary.GetTutorialVideo(tutorial_name_);
+        AddTutorialVideo(clip);
+    }
+    public void AddTutorialVideo(VideoClip video_clip) {
+        Debug.LogWarning("Video encoding issues are a known problem, I timeboxed this problem and moved on, at least for now."); // TODO --- come back to this
+        if (video_player != null) { Debug.LogError("AddTutorialVideo called more than once!!"); }
+        example_pane.Clear();
+        video_player = gameObject.AddComponent<VideoPlayer>();
+
+        video_player.clip = video_clip;
+        video_player.audioOutputMode = VideoAudioOutputMode.None;
+        video_player.targetTexture = render_texture;
+        video_player.renderMode = VideoRenderMode.RenderTexture;
+        video_player.isLooping = true;
     }
 
     public void ApplyConfig(TutorialConfig config) {
@@ -43,6 +65,10 @@ public class TutorialPopupController : AbstractCloseEventMenu
         if (!initialized) { return; }  // don't update if UI Document not parsed yet.
         header_label.text = header_text;
         tutorial_label.text = tutorial_text;
+        if (VideoLibrary.HasTutorialVideo(tutorial_name)) {
+            AddTutorialVideo(tutorial_name);
+        }
+        else { Debug.LogWarning($"{tutorial_name} has no tutorial video!"); } // TODO --- remove debug
     }
 
 

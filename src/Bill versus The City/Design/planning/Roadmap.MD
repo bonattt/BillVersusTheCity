@@ -37,6 +37,9 @@
     - replace font size in "px" with font size in "%" for ALL UIs
     - explosive weapons
 
+[ ] Milestone 12: Emote system
+    - add emote system
+
 [ ] Milestone ???: More Levels
 [ ] Milestone ???: More Dialogue
 
@@ -44,8 +47,6 @@
     - find some simple ways to make the game look better
 [ ] Milestone ???: Art assets
 [ ] Milestone ???: Better tutorials
-
-
 
 
 =============================

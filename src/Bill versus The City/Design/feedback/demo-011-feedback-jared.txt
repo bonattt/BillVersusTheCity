@@ -1,0 +1,8 @@
+- what positions are in cover and aren't is confusing
+- stubornly refuses to try using grenades
+- front door interaction exists in the new tutorial level
+- want to auto equip shotgun-pickup when you pick it up
+
+- enjoyed getting enemies to kill each other
+- can't shoot if holding sprint, but not actually sprinting
+- the stealth feels good

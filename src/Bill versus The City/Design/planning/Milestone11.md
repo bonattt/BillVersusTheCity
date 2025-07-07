@@ -5,7 +5,7 @@
 
 Planned on 2025-06-20
 Started on 2025-06-20
-Finished on 2025-???
+Finished on 2025-07-03
 
 PLANNED FEATURES
 [+] make UI more resolution agnostic
