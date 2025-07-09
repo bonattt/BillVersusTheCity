@@ -15,7 +15,6 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
     public IMeleeWeapon current_melee { 
         get => _current_melee;
         set {
-            Debug.LogWarning($"set current_melee: '{_current_melee}' => '{value}'"); // TODO --- remove debug
             _current_melee = value;
         }
     }

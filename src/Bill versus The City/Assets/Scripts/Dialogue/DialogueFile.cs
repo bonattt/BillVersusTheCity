@@ -108,6 +108,9 @@ public class DialogueFile {
 
             case "alias":
                 return new DialougeAliasAction(split_result);
+
+            case "emote":
+                return new DialogueEmoteAction(split_result);
                 
             default:
                 Debug.LogError($"Unknown dialogue action '{cmd}'");

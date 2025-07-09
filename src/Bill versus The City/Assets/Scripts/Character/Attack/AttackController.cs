@@ -195,6 +195,10 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         start_aim_at = null;
     }
     public void AttackReleased(Vector3 attack_direction) {
+        if (current_gun == null) {
+            Debug.LogWarning("AttackReleased on null gun");
+            return;
+        }
         float inaccuracy = current_inaccuracy + current_recoil;
         current_gun.AttackReleased(attack_direction, attack_start_point.position, inaccuracy, attacker);
         UpdateSubscribers();

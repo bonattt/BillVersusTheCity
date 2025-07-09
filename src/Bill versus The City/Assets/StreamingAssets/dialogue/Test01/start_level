@@ -1,3 +1,7 @@
 
 enter bill left
 say bill test start level
+
+emote bill anger; break;
+emote bill none; break;
+emote bill sweat; break;

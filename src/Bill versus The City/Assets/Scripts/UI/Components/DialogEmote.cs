@@ -4,18 +4,18 @@ using UnityEngine.UIElements;
 
 
 public class DialogueEmote : VisualElement {
-
+    public new class UxmlFactory : UxmlFactory<DialogueEmote, UxmlTraits> { }
     private const string EMOTE_TEXTURE_RESOURCE = "emote-bubble";
     public const float WIDTH = 188f;
     public const float HEIGHT = 188f;
     public const float CONTENT_WIDTH = 100f;
     public const float CONTENT_HEIGHT = 100f;
     public const float SPEACH_BUBBLE_TAIL_HEIGHT = 25f;
-    public const DialogueEmoteImage DEFAULT_EMOTE = DialogueEmoteImage.anger;
+    public const DialogueEmoteType DEFAULT_EMOTE = DialogueEmoteType.anger;
     private const string EMOTE_IMAGE_RESOURCE = "DialogueEmotes";
     private Sprite _emote_icon;
 
-    public DialogueEmoteImage emote { get; private set; }
+    public DialogueEmoteType emote { get; private set; }
     public Sprite emote_icon {
         get => _emote_icon;
         set {
@@ -26,7 +26,8 @@ public class DialogueEmote : VisualElement {
 
     private VisualElement image_child;
 
-    public DialogueEmote() {
+    public DialogueEmote() : this(DEFAULT_EMOTE) { /* do nothing */ }
+    public DialogueEmote(DialogueEmoteType emote_type) {
         /* do nothing */
         style.backgroundImage = new StyleBackground(Resources.Load<Sprite>(EMOTE_TEXTURE_RESOURCE));
         style.width = WIDTH;
@@ -41,31 +42,71 @@ public class DialogueEmote : VisualElement {
         image_child.style.bottom = SPEACH_BUBBLE_TAIL_HEIGHT / 2;
         image_child.style.width = CONTENT_WIDTH;
         image_child.style.height = CONTENT_HEIGHT;
-        SetEmoteImage(DEFAULT_EMOTE);
+        SetEmoteImage(emote_type);
     }
 
-    public static Sprite SpriteFromEnume(DialogueEmoteImage emote_enum) {
+    public static Sprite SpriteFromEnume(DialogueEmoteType emote_enum) {
         string path = Path.Combine(EMOTE_IMAGE_RESOURCE, $"{emote_enum}");
         Sprite sprite = Resources.Load<Sprite>(path);
         return sprite;
+    }
+
+    public static string EmoteToString(DialogueEmoteType emote) {
+        return $"{emote}";
+    }
+
+    public static DialogueEmoteType StringToEmote(string emote_name) {
+        switch (emote_name) {
+            case "":
+                return DialogueEmoteType.none;
+            case "none":
+                return DialogueEmoteType.none;
+            case "clear":
+                return DialogueEmoteType.none;
+
+            case "alarm":
+                return DialogueEmoteType.alarm;
+            case "anger":
+                return DialogueEmoteType.anger;
+            case "confusion":
+                return DialogueEmoteType.confusion;
+            case "love":
+                return DialogueEmoteType.love;
+            case "stress":
+                return DialogueEmoteType.stress;
+            case "sweat":
+                return DialogueEmoteType.sweat;
+            default:
+                throw new DialogueActionsException($"string '{emote_name}' cannot be converted to DialogueEmoteType!");
+        }
     }
 
     public void ClearEmoteImage() {
         image_child.style.backgroundImage = null;
     }
 
-    public void SetEmoteImage(DialogueEmoteImage emote) {
+    public void SetEmoteImage(DialogueEmoteType emote) {
         this.emote = emote;
-        SetEmoteImage(SpriteFromEnume(emote));
+        if (emote == DialogueEmoteType.none) {
+            // DiaglogueEmote implements this as no image, however, classes above this should remove the emote alltogether for this setting
+            Debug.LogWarning("emote set to DialogueEmoteImage.none, emote should be removed!");
+            ClearEmoteImage();
+        } else {
+            SetEmoteImage(SpriteFromEnume(emote));
+        }
     }
     private void SetEmoteImage(Sprite emote) {
         image_child.style.backgroundImage = new StyleBackground(emote);
     }
-
-    public new class UxmlFactory : UxmlFactory<DialogueEmote, UxmlTraits> { }
 }
 
-public enum DialogueEmoteImage {
+// public class DialogueEmoteError : DialogueActionsException {
+//     public DialogueEmoteError(string msg) : base(msg) {}
+// }
+
+
+public enum DialogueEmoteType {
+    none,
     alarm,
     anger,
     confusion,

@@ -59,10 +59,8 @@ public class FleeFromThreatsBehavior : ISubBehavior {
         Vector3 closest = BulletTracking.GetClosestProjectile(parent.transform.position, threats: threats);
         float distance_to_closest = Vector3.Distance(closest, parent.transform.position);
         if (distance_to_closest <= take_cover_threshold) {
-            Debug.LogWarning("use AVOID THREAT"); // TODO --- remove debug
             parent.ctrl_waypoint = GetDestinationAvoidThreat(parent, player);
         } else {
-            Debug.LogWarning("use TAKE COVER"); // TODO --- remove debug
             parent.ctrl_waypoint = GetDestinationTakeCover(parent, player);
         }
     }

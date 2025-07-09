@@ -184,7 +184,7 @@ public class DialougeAliasAction : IDialogueAction {
 public class DialogueBlockingAction : IDialogueAction {
     // class representing changes to blocking during dialogue (character portrait changes
     public bool wait_for_player_input { get; set; }
-    
+
     public string cmd { get; private set; }
     public List<string> actors { get; private set; }
 
@@ -196,7 +196,7 @@ public class DialogueBlockingAction : IDialogueAction {
         // TODO --- implement this
         if (args.Length < 3) {
             throw new DialogueActionsException($"`blocking` requires at least 3 arguments. Usage: `{USAGE_EXAMPLE}`");
-        } 
+        }
         cmd = args[0];
         actors = new List<string>(args.Skip(2));
     }
@@ -206,6 +206,35 @@ public class DialogueBlockingAction : IDialogueAction {
         throw new NotImplementedException("blocking actions were removed.");
     }
 
+}
+
+
+public class DialogueEmoteAction : IDialogueAction {
+
+    public bool wait_for_player_input { get => false; }
+    
+    
+    public string cmd { get; private set; }
+    public string actor_name { get; private set; }
+    public string pose_name { get; private set; }
+
+    public DialogueEmoteType emote { get; private set; }
+
+    public const string USAGE_EXAMPLE = "emote bill angry; emote bill none;";
+
+    public DialogueEmoteAction(string[] args) {
+        if (args.Length != 3) {
+            throw new DialogueActionsException($"invalid Emote action. USAGE: {USAGE_EXAMPLE}");
+        }
+        cmd = args[0];
+        actor_name = args[1];
+        pose_name = args[2];
+        emote = DialogueEmote.StringToEmote(pose_name);
+    }
+
+    public void ResolveDialogue(DialogueController ctrl) {
+        ctrl.UpdateEmote(actor_name, emote);
+    }
 }
 
 

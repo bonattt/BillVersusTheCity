@@ -55,7 +55,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
             ClearErrorMessage();
             MenuManager.inst.CloseMenu();
         } catch (WeaponNotSelectedException) {
-            Debug.LogError("TODO --- handle WeaponNotSelectedException error!"); // note: this should be unreachable
+            Debug.LogError("TODO --- handle WeaponNotSelectedException error!"); // note: this should be unreachable // NOTE: this is supposed to be unreachable, b/c the first weapons in the UI should be selected by default (which is NOT the case at present)
             MenuManager.PlayMenuErrorClick();
             DisplayErrorMessage("Must select a primary and secondary weapon!");
         }
