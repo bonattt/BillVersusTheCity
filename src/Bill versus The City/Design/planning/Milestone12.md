@@ -9,7 +9,7 @@ Finished on 2025-0???
 
 
 [ ] Update tutorial
-    [ ] Add Tutorials in grenade tutorial
+    [+] Add Tutorials in grenade tutorial
     [ ] remove redundant tutorials from Tutorial 3
     [ ] ???
 

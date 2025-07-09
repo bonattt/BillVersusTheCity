@@ -48,6 +48,28 @@ public class RadialProgress : VisualElement
             UpdateLabel();
         }
     }
+
+    // This default constructor is RadialProgress's only constructor.
+    public RadialProgress()
+    {
+        // Create a Label, add a USS class name, and add it to this visual tree.
+        _label = new Label();
+        _label.AddToClassList(ussLabelClassName);
+        StyleLabelToCenter();
+        Add(_label);
+        UpdateLabel();
+
+        // Add the USS class name for the overall control.
+        AddToClassList(ussClassName);
+
+        // Register a callback after custom style resolution.
+        RegisterCallback<CustomStyleResolvedEvent>(evt => CustomStylesResolved(evt));
+
+        // Register a callback to generate the visual content of the control.
+        generateVisualContent += GenerateVisualContent;
+
+        progress = 0.0f;
+    }
     private void UpdateLabel() {
         if (progress_label_type == RadialProgressText.percent) {
             _label.text = Mathf.Clamp(Mathf.Round(_progress), 0, 100) + "%";
@@ -70,28 +92,6 @@ public class RadialProgress : VisualElement
         this.style.flexDirection = FlexDirection.Column;
         this.style.justifyContent = Justify.Center;
         this.style.alignItems = Align.Center; 
-    }
-
-    // This default constructor is RadialProgress's only constructor.
-    public RadialProgress()
-    {
-        // Create a Label, add a USS class name, and add it to this visual tree.
-        _label = new Label();
-        _label.AddToClassList(ussLabelClassName);
-        StyleLabelToCenter();
-        Add(_label);
-        UpdateLabel();
-
-        // Add the USS class name for the overall control.
-        AddToClassList(ussClassName);
-
-        // Register a callback after custom style resolution.
-        RegisterCallback<CustomStyleResolvedEvent>(evt => CustomStylesResolved(evt));
-
-        // Register a callback to generate the visual content of the control.
-        generateVisualContent += GenerateVisualContent;
-
-        progress = 0.0f;
     }
 
     static void CustomStylesResolved(CustomStyleResolvedEvent evt)

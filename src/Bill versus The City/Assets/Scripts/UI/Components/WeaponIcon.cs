@@ -60,4 +60,5 @@ public class WeaponIcon : VisualElement, IWeaponUI {
         RemoveFromClassList(ENABLED_STYLE_CLASS);
         RemoveFromClassList(SELECTED_STYLE_CLASS);
     }
+    public new class UxmlFactory : UxmlFactory<WeaponIcon, UxmlTraits> { }
 }

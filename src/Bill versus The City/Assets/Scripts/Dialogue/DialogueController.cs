@@ -185,7 +185,7 @@ public class DialogueController : AbstractCloseEventMenu {
         if (!character_portraits.ContainsKey(character_name)) {
             // if the character is not already in the scene, load their default portrait.
             // Otherwise, leave as null to preserve their previous pose
-            portrait_image = this.GetPortrait(character_name); ;
+            portrait_image = this.GetPortrait(character_name);
         }
         return _SetPortrait(portrait_image, character_name, position, facing);
     }
@@ -290,6 +290,10 @@ public class DialogueController : AbstractCloseEventMenu {
             container.Clear();
         }
         container.Add(portrait);
+    }
+
+    private void SetEmote(VisualElement portrait) {
+        
     }
 
     private StagePosition GetPositionFromSide(StageDirection side) {
