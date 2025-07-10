@@ -4,14 +4,21 @@ alias cashier as bill show cashier
 enter cashier far-right facing left 
 enter robber center-right facing right angry
 say robber gimme everything in the cash register!
+emote cashier sweat
 say cashier woah woah woah, calm down man I just work here
 say cashier you have to make a purchase, or I can't open the register
+emote robber anger
 say robber I'll fucking blow your head off man! Gimme the money!!!
 say cashier okay! okay! hold on one second!!
+emote robber none
+emote cashier none
 
 enter bill left facing right
+emote bill alarm
 say bill woah, what's going on here?
+emote bill none
 say bill I'm glad we've got constitutional carry here.
 
+emote robber alarm
 move robber right facing left
 say robber hey, who's there

@@ -51,7 +51,6 @@ public class DialoguePortrait : VisualElement {
     //     SetEmote(DialogueEmoteType.anger);
     // }
     public DialoguePortrait(string character_name) {
-        Debug.LogWarning("FIRST!!!"); // TODO --- remove debug
         this.name = character_name;
         AddToClassList("dialogue_portrait");
 
@@ -86,7 +85,9 @@ public class DialoguePortrait : VisualElement {
         emote_element = new DialogueEmote(emote_enum);
         Add(emote_element);
 
-        emote_element.style.position = Position.Relative;
+        emote_element.style.position = Position.Absolute;
+        emote_element.style.top = 0f;
+        emote_element.style.right = 0f;
     }
 }
 

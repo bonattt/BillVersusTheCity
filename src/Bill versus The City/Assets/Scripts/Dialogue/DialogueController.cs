@@ -174,7 +174,6 @@ public class DialogueController : AbstractCloseEventMenu {
         // TODO --- handle character already in scene
         DialoguePortrait portrait;
         if (character_portraits.ContainsKey(character_name)) {
-            // TODO --- implement
             portrait = character_portraits[character_name];
         } else {
             if (image == null) {
@@ -186,19 +185,14 @@ public class DialogueController : AbstractCloseEventMenu {
         }
         // pass image as null to preserve the previous image
         if (image != null) {
-            // _SetPortraitImage(portrait, image);
             portrait.SetPortraitImage(image);
         }
-        else { Debug.LogError($"protrait {portrait.name}.image is null!!"); } // TODO --- remove debug
 
         // SetPortraitName(portrait, character_name); // handled by constructor
         SetPortraitPosition(portrait, position);
-        // _SetPortraitFacing(portrait, facing);
         if (facing == StageDirection.unspecified) {
-            Debug.LogWarning($"overrwriting unset stage facing direction {facing} => {GetUnspecifiedDefault(position)} (using position `{position}`)");// TODO --- remove debug
             facing = GetUnspecifiedDefault(position);
         }
-        else { Debug.LogWarning($"using given facing, which isn't unspecified `{facing}`"); } // TODO --- remove debug
         portrait.facing = facing;
         return portrait;
     }

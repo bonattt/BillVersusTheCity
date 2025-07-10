@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class DialogueEmote : VisualElement {
     public new class UxmlFactory : UxmlFactory<DialogueEmote, UxmlTraits> { }
     private const string EMOTE_TEXTURE_RESOURCE = "emote-bubble";
-    public const float WIDTH = 188f;
-    public const float HEIGHT = 188f;
+    public const float WIDTH = 125f;
+    public const float HEIGHT = 125f;
     public const float CONTENT_WIDTH = 100f;
     public const float CONTENT_HEIGHT = 100f;
     public const float SPEACH_BUBBLE_TAIL_HEIGHT = 25f;
