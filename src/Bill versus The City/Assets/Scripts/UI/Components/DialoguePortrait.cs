@@ -8,7 +8,6 @@ public class DialoguePortrait : VisualElement {
     public Texture2D portrait { get; protected set; }
     private const string PORTRAIT_IMAGE_ELEMENT = "portrait";
     private VisualElement image_element;
-    private Label name_label;
 
     public DialogueEmoteType emote_enum { get; private set; }
     private DialogueEmote emote_element;
@@ -36,28 +35,9 @@ public class DialoguePortrait : VisualElement {
         }
     }
 
-    public string name_label_text {
-        get => name_label.text;
-        set { name_label.text = value; }
-    }
-
-    // public new class UxmlFactory : UxmlFactory<DialoguePortrait, UxmlTraits> { }
-    // public DialoguePortrait() : this("bill") {
-    //     // NOTE: this constructor is mainly for testing
-    //     Debug.LogWarning("SECOND!!!"); // TODO --- remove debug
-    //     Debug.LogWarning("no args DialoguePortrait is mainly for testing, and doesn't support name aliasing!");
-    //     Texture2D new_portrait = PortraitSystem.GetPortrait(this.name);
-    //     SetPortraitImage(new_portrait);
-    //     SetEmote(DialogueEmoteType.anger);
-    // }
     public DialoguePortrait(string character_name) {
         this.name = character_name;
         AddToClassList("dialogue_portrait");
-
-        name_label = new Label();
-        name_label.text = "new character";
-        name_label.AddToClassList("portrait_name_label");
-        Add(name_label);
 
         image_element = new VisualElement();
         image_element.name = PORTRAIT_IMAGE_ELEMENT;
@@ -86,8 +66,8 @@ public class DialoguePortrait : VisualElement {
         Add(emote_element);
 
         emote_element.style.position = Position.Absolute;
-        emote_element.style.top = 0f;
-        emote_element.style.right = 0f;
+        emote_element.style.top = -75f;
+        emote_element.style.right = -25f;
     }
 }
 

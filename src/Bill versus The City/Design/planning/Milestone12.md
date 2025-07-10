@@ -16,7 +16,7 @@ Finished on 2025-0???
 PLANNED FEATURES
 [+] Dialogue "emote" system
     [+] add an emote command, separate from the "pose" system; adds an emote bubble to any portrait
-    [ ] FIX: remove old character labels
+    [+] FIX: remove old character labels
     [ ] Add animations to emotes
 
 [ ] debug/difficulty options to unlock weapons
