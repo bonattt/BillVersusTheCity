@@ -24,6 +24,7 @@ PLANNED FEATURES
 
 PLANNED BUGFIXES
 [ ] FIX: Level 3 (countdown level) has a second countdown UI without numbers, hidden behind the healthbars
+    (also, dev room has this too)
 
 UNPLANNED FEATURES
 

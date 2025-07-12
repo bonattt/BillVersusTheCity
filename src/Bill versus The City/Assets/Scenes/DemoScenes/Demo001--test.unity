@@ -3685,6 +3685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1158669702}
   - component: {fileID: 1158669701}
+  - component: {fileID: 1158669703}
   m_Layer: 0
   m_Name: TestUI
   m_TagString: Untagged
@@ -3723,6 +3724,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158669703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158669700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c1ca2aa22b98a8468533dcce048ea5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui_doc: {fileID: 1158669701}
+  element_name: JiggleTest
+  duration_seconds: 10
+  jiggle_magnitude_min_x: 10
+  jiggle_magnitude_max_x: 12
+  jiggle_magnitude_min_y: 10
+  jiggle_magnitude_max_y: 12
+  jiggle_lerp: 0.75
+  play_on_start: 1
+  debug__playing: 0
+  debug__time_left: 0
 --- !u!4 &1175954203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5559139230147920310, guid: fce6b647986e828478433481d64ff5e0, type: 3}
