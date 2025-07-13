@@ -5,9 +5,21 @@ using UnityEngine.UIElements;
 
 public class DialoguePortrait : VisualElement {
 
+#if UNITY_EDITOR
+    // only supported in unity editor, the factory requires a no-args constructor, which should not be used in actual game code. 
+    // It's only here as a convenience so I can drop this into the UI Editot
+    public new class UxmlFactory : UxmlFactory<DialoguePortrait, UxmlTraits> { }
+# endif
+
+    public const float IMAGE_WIDTH = 300f;
+    public const float IMAGE_HEIGHT = 400f;
+
     public Texture2D portrait { get; protected set; }
     private const string PORTRAIT_IMAGE_ELEMENT = "portrait";
     private VisualElement image_element;
+
+    public float actual_percent_from_left;
+    public float actual_position_left;
 
     public DialogueEmoteType emote_enum { get; private set; }
     private DialogueEmote emote_element;
@@ -34,13 +46,21 @@ public class DialoguePortrait : VisualElement {
             _facing = value;
         }
     }
-
+#if UNITY_EDITOR
+    public DialoguePortrait() : this("bill") {
+        // used for testing, game code should not use this constructor
+    }
+# endif
+    
     public DialoguePortrait(string character_name) {
         this.name = character_name;
         AddToClassList("dialogue_portrait");
 
         image_element = new VisualElement();
         image_element.name = PORTRAIT_IMAGE_ELEMENT;
+        image_element.style.width = IMAGE_WIDTH;
+        image_element.style.height = IMAGE_HEIGHT;
+
         image_element.AddToClassList("dialogue_portrait_image");
         Add(image_element);
     }

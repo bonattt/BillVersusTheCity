@@ -16,8 +16,12 @@ public class DialogueController : AbstractCloseEventMenu {
     public UIDocument ui_doc;
     private VisualElement root, portraits_div, speaker_name_element;
     private Label dialogue_text, speaker_label;
-    private VisualElement[] portrait_containers;
+    // private VisualElement[] portrait_containers;
+    private DialoguePortrait[] portraits; // Contains the VisualElements of portraits at their exact positions
+    private VisualElement portraits_container;
     private Dictionary<string, DialoguePortrait> character_portraits;
+
+    public const int MAX_PORTRAITS = 4;
 
     // character_name -> (portrait_name, display_name)
     private static readonly Dictionary<string, (string, string)> DEFAULT_PORTRAIT_ALIASES = new Dictionary<string, (string, string)>();
@@ -74,7 +78,11 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     void Start() {
+        Debug.LogWarning("DialogueController.Start()"); // TODO --- remove debug
         root = ui_doc.rootVisualElement;
+        portraits_container = root.Q<VisualElement>("PortraitDiv");
+        portraits_container.Clear();
+        Debug.LogWarning($"DialogueController.Start(): portraits_container: {portraits_container}"); // TODO --- remove debug
         dialogue_text = root.Q<Label>("DialogueText");
         // speaker_left_element = root.Q<VisualElement>("Speaker");
         speaker_name_element = root.Q<VisualElement>("SpeakerName");
@@ -82,21 +90,28 @@ public class DialogueController : AbstractCloseEventMenu {
         ConfigurePortraits();
         NextDialogueStep();  // assumeds `StartDialogue(file_path)` was called before first frame with dialouge open 
     }
+    void Update() {
+        for (int i = 0; i < MAX_PORTRAITS; i++) {
+            if (portraits[i] != null) {
+                // UpdatePortraitPosition(portraits[i], i, new_portrait: false);
+            }
+        }
+    }
 
     private void ConfigurePortraits() {
         portraits_div = root.Q<VisualElement>("PortraitDiv");
-        portrait_containers = new VisualElement[4];
+        portraits = new DialoguePortrait[MAX_PORTRAITS];
+        // portrait_containers = new VisualElement[4];
 
-        // List<VisualElement> left_containers = new List<VisualElement>(left_portraits.Children());
-        List<VisualElement> containers = portraits_div.Children().ToList();
-        portrait_containers[0] = containers[0];
-        portrait_containers[1] = containers[1];
-        portrait_containers[2] = containers[2];
-        portrait_containers[3] = containers[3];
-        // left_portraits.Clear();
-        // right_portraits.Clear();
+        // // List<VisualElement> left_containers = new List<VisualElement>(left_portraits.Children());
+        // List<VisualElement> containers = portraits_div.Children().ToList();
+        // portrait_containers[0] = containers[0];
+        // portrait_containers[1] = containers[1];
+        // portrait_containers[2] = containers[2];
+        // portrait_containers[3] = containers[3];
+        // // left_portraits.Clear();
+        // // right_portraits.Clear();
     }
-
 
     public override void MenuNavigation() {
         if (InputSystem.current.MenuNextInput()) {
@@ -126,7 +141,7 @@ public class DialogueController : AbstractCloseEventMenu {
             throw new DialogueActionsException($"cannot update the pose for a character that's not in the dialogue '{character_name}'!");
         }
         DialoguePortrait portrait = character_portraits[character_name];
-        Texture2D image = this.GetPortrait(character_name, pose);
+        Texture2D image = this.GetPortraitImage(character_name, pose);
 
         portrait.SetPortraitImage(image);
     }
@@ -136,7 +151,7 @@ public class DialogueController : AbstractCloseEventMenu {
         throw new NotImplementedException("Blocking actions are a WIP");
     }
 
-    public Texture2D GetPortrait(string character_name) {
+    public Texture2D GetPortraitImage(string character_name) {
         // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
         if (!portrait_aliases.ContainsKey(character_name)) {
             return PortraitSystem.GetPortrait(character_name);
@@ -145,7 +160,7 @@ public class DialogueController : AbstractCloseEventMenu {
         return PortraitSystem.GetPortrait(portrait_name);
     }
 
-    public Texture2D GetPortrait(string character_name, string pose) {
+    public Texture2D GetPortraitImage(string character_name, string pose) {
         // returns a portrait from PortraitSystem, using character aliases to look up the portrait name if there is an alias
         if (!portrait_aliases.ContainsKey(character_name)) {
             return PortraitSystem.GetPortrait(character_name, pose);
@@ -159,13 +174,13 @@ public class DialogueController : AbstractCloseEventMenu {
         if (!character_portraits.ContainsKey(character_name)) {
             // if the character is not already in the scene, load their default portrait.
             // Otherwise, leave as null to preserve their previous pose
-            portrait_image = this.GetPortrait(character_name);
+            portrait_image = this.GetPortraitImage(character_name);
         }
         return _SetPortrait(portrait_image, character_name, position, facing);
     }
 
     public VisualElement SetPortrait(string character_name, string pose, StagePosition position, StageDirection facing) {
-        Texture2D portrait_image = this.GetPortrait(character_name, pose);
+        Texture2D portrait_image = this.GetPortraitImage(character_name, pose);
         return _SetPortrait(portrait_image, character_name, position, facing);
     }
 
@@ -181,7 +196,10 @@ public class DialogueController : AbstractCloseEventMenu {
             }
             // add new character to scene
             portrait = new DialoguePortrait(character_name);
+            portraits_container.Add(portrait);
             character_portraits[character_name] = portrait;
+            int index = DialogueActionUtil.GetStagePositionIndex(position);
+            UpdatePortraitPosition(portrait, index, new_portrait: true);
         }
         // pass image as null to preserve the previous image
         if (image != null) {
@@ -277,13 +295,34 @@ public class DialogueController : AbstractCloseEventMenu {
         }
     }
 
-    private void SetPortraitPosition(DialoguePortrait portrait, int index) {
-        VisualElement container = GetPortraitContainer(index);
-        if (container.childCount != 0) {
-            Debug.LogWarning($"OVERWRITING PORTRAIT AT INDEX {index}");
-            container.Clear();
+    public int? GetPortraitPosition(DialoguePortrait target) {
+        // returns the current index of the given portrait. If the portrait isn't in the dialogue yet, return null.
+        for (int i = 0; i < MAX_PORTRAITS; i++) {
+            if (portraits[i] == target) {
+                return i;
+            }
         }
-        container.Add(portrait);
+        return null;
+    }
+
+    private void SetPortraitPosition(DialoguePortrait new_portrait, int index) {
+        // VisualElement container = GetPortraitContainer(index);
+        // if (container.childCount != 0) {
+        //     Debug.LogWarning($"OVERWRITING PORTRAIT AT INDEX {index}");
+        //     container.Clear();
+        // }
+        int? current_index = GetPortraitPosition(new_portrait);
+        if (current_index != null) {
+            portraits[current_index.Value] = null;
+        } else {
+            portraits_container.Add(new_portrait);
+        }
+
+        if (portraits[index] != null) {
+            Debug.LogWarning($"OVERWRITING PORTRAIT AT {index}: {portraits[index]}");
+            portraits_container.Remove(portraits[index]);
+        }
+        portraits[index] = new_portrait;
     }
 
     private StagePosition GetPositionFromSide(StageDirection side) {
@@ -310,16 +349,16 @@ public class DialogueController : AbstractCloseEventMenu {
             throw new DialogueActionsException($"unhandled StagePosition {position}");
         }
         int index = DialogueActionUtil.GetStagePositionIndex(position);
-        return portrait_containers[index].childCount > 0;
+        return portraits[index] != null;
     }
 
     // private VisualElement GetPortraitContainer(StagePosition position) {
     //     int index = DialogueActionUtil.GetStagePositionIndex(position);
     //     return GetPortraitContainer(index);
     // }
-    private VisualElement GetPortraitContainer(int index) {
-        return portrait_containers[index];
-    }
+    // private VisualElement GetPortraitContainer(int index) {
+    //     return portrait_containers[index];
+    // }
 
     // public static VisualElement GetEmptyPortrait(string name) {
     //     // gets a portrait, with no image set
@@ -358,42 +397,85 @@ public class DialogueController : AbstractCloseEventMenu {
         }
         // Debug.LogWarning($"Not Implelented: SetSpeakerName('{speaker_name}')");
     }
+
+    private float PORTRAIT_BOTTOM_PERCENT = 0f;
+    private const float PORTRAIT_REPOSITION_LERP = 0.5f;
+
+    private void UpdatePortraitPosition(DialoguePortrait target, int index, bool new_portrait = false) {
+        new_portrait = true; // TODO --- remove debug
+        // float percent_from_left = GetPercentFromLeft(index);
+        // percent_from_left = 0f; // TODO --- remove debug
+        float position_px = (index + 1) * UIUtils.SCREEN_WIDTH / (MAX_PORTRAITS + 1);
+        float offset = DialoguePortrait.IMAGE_WIDTH / 2;
+        float new_position = position_px - offset;
+        float percent_from_left = 100 * new_position / portraits_container.resolvedStyle.width; // make a percent 
+        Debug.LogWarning($"portrait {target.name} div width: {portraits_container.resolvedStyle.width}px, portrait width: { target.resolvedStyle.width}");
+        Debug.LogWarning($"portrait {target.name} new_position: {new_position}px, offset: {offset}");
+        if (new_portrait) {
+            target.style.position = Position.Absolute;
+            target.style.bottom = new Length(PORTRAIT_BOTTOM_PERCENT, LengthUnit.Percent);
+            target.actual_percent_from_left = percent_from_left;
+            target.actual_position_left = new_position;
+            target.style.left = new_position;
+            target.style.alignSelf = Align.Center;
+        } else {
+            target.style.position = Position.Absolute;
+            float lerped_percent_left = Mathf.Lerp(target.actual_percent_from_left, percent_from_left, PORTRAIT_REPOSITION_LERP);
+            target.actual_percent_from_left = lerped_percent_left;
+            target.style.left = new Length(lerped_percent_left, LengthUnit.Percent);
+        }
+    }
+
     private void _UpdateSpeakerLabelPosition(string character_name) {
         // takes the name of a speaker, and updates the position of the speaker label to be under that character's portrait. If the character 
         //   is not in the dialogue, the label is moved to the center
         int index = GetCharacterIndex(character_name);
-        float per_index_percent = 100f / portrait_containers.Length; // percent out of 100, not ratio of 1
-        float start_offset = -(per_index_percent * ((portrait_containers.Length/2) - 0.5f)); // offset to position label in the center of index 0's portrait
+        float percent_from_left = GetPercentFromLeft(index);
+        speaker_name_element.style.position = Position.Relative;
+        speaker_name_element.style.left = new Length(percent_from_left, LengthUnit.Percent);
+    }
+
+    public float GetPercentFromLeft(int index) {
+        // takes an index, and returns a percent value to position portraits on the X axis (for portraits or name labels)
+        float per_index_percent = 100f / MAX_PORTRAITS; // percent out of 100, not ratio of 1
+        float start_offset = -(per_index_percent * ((MAX_PORTRAITS / 2) - 0.5f)); // offset to position label in the center of index 0's portrait
         float percent_from_left;
         if (index <= -1) {
             // if the character is not on screen, position label at the center
             // percent_from_left = zero_offset + (per_index_percent * ((portrait_containers.Length/2) - 0.5f)); // works for even numbers of portraits to put the label between middle 2 portraits // works if centered from left...
             percent_from_left = 0f; // label position is center justified
-        } else if (index < portrait_containers.Length) {
+        } else if (index < MAX_PORTRAITS) {
             percent_from_left = start_offset + (per_index_percent * index);
         } else {
             Debug.LogError($"character index calculated to be greater than number of portraits!");
             percent_from_left = 0f; // center
         }
-        speaker_name_element.style.position = Position.Relative;
-        speaker_name_element.style.left = new Length(percent_from_left, LengthUnit.Percent);
+        return percent_from_left;
     }
 
     private int GetCharacterIndex(string character_name) {
         // returns the index (StagePosition) the given character is currently positioned at.
         // if the given name is not on-screen, return -1
 
-        if (!character_portraits.ContainsKey(character_name)) {
-            return -1;
-        }
-        VisualElement target_portrait = character_portraits[character_name];
-        for (int i = 0; i < portrait_containers.Length; i++) {
-            if (portrait_containers[i] == target_portrait.parent) {
+        // if (!character_portraits.ContainsKey(character_name)) {
+        //     return -1;
+        // }
+        // VisualElement target_portrait = character_portraits[character_name];
+        // for (int i = 0; i < portrait_containers.Length; i++) {
+        //     if (portrait_containers[i] == target_portrait.parent) {
+        //         return i;
+        //     }
+        // }
+        // Debug.LogError($"Character {character_name} found in dict, but cannot match portrait index!");
+        // return -1;
+
+        DialoguePortrait target_portrait = character_portraits[character_name];
+        for (int i = 0; i < MAX_PORTRAITS; i++) {
+            if (portraits[i] == target_portrait) {
                 return i;
             }
         }
-        Debug.LogError($"Character {character_name} found in dict, but cannot match portrait index!");
-        return -1; 
+        return -1; // TODO --- make this a nullable int
     }
 
     public void SetText(string new_dialouge) {
