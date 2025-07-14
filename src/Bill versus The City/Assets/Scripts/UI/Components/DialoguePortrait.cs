@@ -18,7 +18,6 @@ public class DialoguePortrait : VisualElement {
     private const string PORTRAIT_IMAGE_ELEMENT = "portrait";
     private VisualElement image_element;
 
-    public float actual_percent_from_left;
     public float actual_position_left;
 
     public DialogueEmoteType emote_enum { get; private set; }

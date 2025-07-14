@@ -93,7 +93,7 @@ public class DialogueController : AbstractCloseEventMenu {
     void Update() {
         for (int i = 0; i < MAX_PORTRAITS; i++) {
             if (portraits[i] != null) {
-                // UpdatePortraitPosition(portraits[i], i, new_portrait: false);
+                UpdatePortraitPosition(portraits[i], i, new_portrait: false);
             }
         }
     }
@@ -402,27 +402,26 @@ public class DialogueController : AbstractCloseEventMenu {
     private const float PORTRAIT_REPOSITION_LERP = 0.5f;
 
     private void UpdatePortraitPosition(DialoguePortrait target, int index, bool new_portrait = false) {
-        new_portrait = true; // TODO --- remove debug
+        // new_portrait = true; // TODO --- remove debug
         // float percent_from_left = GetPercentFromLeft(index);
         // percent_from_left = 0f; // TODO --- remove debug
         float position_px = (index + 1) * UIUtils.SCREEN_WIDTH / (MAX_PORTRAITS + 1);
         float offset = DialoguePortrait.IMAGE_WIDTH / 2;
         float new_position = position_px - offset;
-        float percent_from_left = 100 * new_position / portraits_container.resolvedStyle.width; // make a percent 
-        Debug.LogWarning($"portrait {target.name} div width: {portraits_container.resolvedStyle.width}px, portrait width: { target.resolvedStyle.width}");
-        Debug.LogWarning($"portrait {target.name} new_position: {new_position}px, offset: {offset}");
+        // float percent_from_left = 100 * new_position / portraits_container.resolvedStyle.width; // make a percent 
+        Debug.LogWarning($"portrait {target.name} div width: {portraits_container.resolvedStyle.width}px, portrait width: { target.resolvedStyle.width}"); // TODO --- remove debug
+        Debug.LogWarning($"portrait {target.name} new_position: {new_position}px, offset: {offset}"); // TODO --- remove debug
         if (new_portrait) {
             target.style.position = Position.Absolute;
             target.style.bottom = new Length(PORTRAIT_BOTTOM_PERCENT, LengthUnit.Percent);
-            target.actual_percent_from_left = percent_from_left;
             target.actual_position_left = new_position;
             target.style.left = new_position;
             target.style.alignSelf = Align.Center;
         } else {
             target.style.position = Position.Absolute;
-            float lerped_percent_left = Mathf.Lerp(target.actual_percent_from_left, percent_from_left, PORTRAIT_REPOSITION_LERP);
-            target.actual_percent_from_left = lerped_percent_left;
-            target.style.left = new Length(lerped_percent_left, LengthUnit.Percent);
+            float lerped_position = Mathf.Lerp(target.actual_position_left, new_position, PORTRAIT_REPOSITION_LERP);
+            target.actual_position_left = lerped_position;
+            target.style.left = lerped_position;
         }
     }
 
@@ -430,12 +429,12 @@ public class DialogueController : AbstractCloseEventMenu {
         // takes the name of a speaker, and updates the position of the speaker label to be under that character's portrait. If the character 
         //   is not in the dialogue, the label is moved to the center
         int index = GetCharacterIndex(character_name);
-        float percent_from_left = GetPercentFromLeft(index);
+        float percent_from_left = _GetPercentFromLeft(index);
         speaker_name_element.style.position = Position.Relative;
         speaker_name_element.style.left = new Length(percent_from_left, LengthUnit.Percent);
     }
 
-    public float GetPercentFromLeft(int index) {
+    private float _GetPercentFromLeft(int index) {
         // takes an index, and returns a percent value to position portraits on the X axis (for portraits or name labels)
         float per_index_percent = 100f / MAX_PORTRAITS; // percent out of 100, not ratio of 1
         float start_offset = -(per_index_percent * ((MAX_PORTRAITS / 2) - 0.5f)); // offset to position label in the center of index 0's portrait
@@ -468,8 +467,12 @@ public class DialogueController : AbstractCloseEventMenu {
         // }
         // Debug.LogError($"Character {character_name} found in dict, but cannot match portrait index!");
         // return -1;
-
-        DialoguePortrait target_portrait = character_portraits[character_name];
+        DialoguePortrait target_portrait;
+        try {
+            target_portrait = character_portraits[character_name];
+        } catch (KeyNotFoundException) {
+            return -1;
+        }
         for (int i = 0; i < MAX_PORTRAITS; i++) {
             if (portraits[i] == target_portrait) {
                 return i;

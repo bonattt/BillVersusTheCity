@@ -1,6 +1,12 @@
 
 enter bill left
 say bill test start level
+move bill left facing left; break;
+move bill left facing right; break;
+move bill far_left facing left; break;
+move bill center_left facing left; break;
+move bill center_right facing left; break;
+move bill right facing left; break;
 
 emote bill anger; break;
 emote bill none; break;
