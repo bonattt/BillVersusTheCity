@@ -1,12 +1,13 @@
 alias robber as gangsta show robber
 alias cashier as bill show cashier
 
-enter cashier far-right facing left 
-enter robber center-right facing right angry
+enter cashier far-right facing left
+enter robber center-left facing right angry
 say robber gimme everything in the cash register!
 emote cashier sweat
 say cashier woah woah woah, calm down man I just work here
 say cashier you have to make a purchase, or I can't open the register
+move robber center-right facing right
 emote robber anger
 say robber I'll fucking blow your head off man! Gimme the money!!!
 say cashier okay! okay! hold on one second!!
