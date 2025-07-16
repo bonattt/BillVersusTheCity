@@ -19,7 +19,7 @@ PLANNED FEATURES
     [+] FIX: remove old character labels
     [~] Add animations to emotes
 
-[ ] debug/difficulty options to unlock weapons
+[+] debug/difficulty options to unlock weapons
 
 
 PLANNED BUGFIXES
@@ -27,9 +27,9 @@ PLANNED BUGFIXES
     (also, dev room has this too)
 
 UNPLANNED FEATURES
-[~] add UI support for custom difficulty
+[+] add UI support for custom difficulty
     [+] implement UI
-    [ ] fix sliders to look like audio-settings sliders
+    [+] fix sliders to look like audio-settings sliders
 [ ] add more custom difficulty settings
     [ ] enemy reload speed
     [ ] enemy moves speed

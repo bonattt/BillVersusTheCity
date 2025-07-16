@@ -76,7 +76,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     public List<IFirearm> AvailibleRifles() {
         bool allow_all_slots = GameSettings.inst.debug_settings.unrestrict_weapon_slots;
         List<IFirearm> _availible_rifles = new List<IFirearm>();
-        foreach (IFirearm weapon in availible_weapons) {
+        foreach (IFirearm weapon in AvailibleWeapons()) {
             if (allow_all_slots || weapon.weapon_slot == WeaponSlot.longgun) {
                 _availible_rifles.Add(weapon);
             }
@@ -86,7 +86,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     public List<IFirearm> AvailibleHandguns() {
         bool allow_all_slots = GameSettings.inst.debug_settings.unrestrict_weapon_slots;
         List<IFirearm> _availible_handguns = new List<IFirearm>();
-        foreach (IFirearm weapon in availible_weapons) {
+        foreach (IFirearm weapon in AvailibleWeapons()) {
             if (allow_all_slots || weapon.weapon_slot == WeaponSlot.handgun) {
                 _availible_handguns.Add(weapon);
             }
@@ -238,21 +238,18 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     public List<IFirearm> weapons_purchased_in_level = new List<IFirearm>();
     public void AddWeapon(IFirearm new_weapon) => weapons_purchased_in_level.Add(new_weapon);
     protected List<IFirearm> owned_weapons = new List<IFirearm>();
-    public IEnumerable<IFirearm> availible_weapons {
-        get {
-
-            if (GameSettings.inst.debug_settings.unlock_all_weapons) {
-                // debug setting for all weapons unlocked
-                foreach (IFirearm w in WeaponSaveLoadConfig.inst.weapons) {
-                    yield return w;
-                }
-            } else {
-                foreach (IFirearm w in owned_weapons) {
-                    yield return w;
-                }
-                foreach (IFirearm w in weapons_purchased_in_level) {
-                    yield return w;
-                }
+    public IEnumerable<IFirearm> AvailibleWeapons() {
+        if (GameSettings.inst.debug_settings.unlock_all_weapons) {
+            // debug setting for all weapons unlocked
+            foreach (IFirearm w in WeaponSaveLoadConfig.inst.weapons) {
+                yield return w;
+            }
+        } else {
+            foreach (IFirearm w in owned_weapons) {
+                yield return w;
+            }
+            foreach (IFirearm w in weapons_purchased_in_level) {
+                yield return w;
             }
         }
     }
@@ -304,7 +301,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     }
 
     public bool AlreadyOwnsWeapon(IWeapon weapon) {
-        foreach (IFirearm firearm in availible_weapons) {
+        foreach (IFirearm firearm in AvailibleWeapons()) {
             if (firearm.item_id.Equals(weapon.item_id)) {
                 return true;
             }
