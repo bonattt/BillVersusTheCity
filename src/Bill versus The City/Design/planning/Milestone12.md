@@ -30,9 +30,11 @@ UNPLANNED FEATURES
 [+] add UI support for custom difficulty
     [+] implement UI
     [+] fix sliders to look like audio-settings sliders
-[ ] add more custom difficulty settings
-    [ ] enemy reload speed
-    [ ] enemy moves speed
+[+] add more custom difficulty settings
+    [+] enemy reload speed
+    [+] enemy run speed
+
+[ ] Add fuse "hiss" sound to cooking grenades
 
 
 UNPLANNED BUGFIXES
