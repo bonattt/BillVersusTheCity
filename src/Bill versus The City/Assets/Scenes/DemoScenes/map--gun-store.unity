@@ -3220,6 +3220,10 @@ PrefabInstance:
       propertyPath: unity_weapon
       value: 
       objectReference: {fileID: 11400000, guid: 701d334744078674eb32a03a73419fbe, type: 2}
+    - target: {fileID: 90436643173117265, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
+      propertyPath: overwrite_verb
+      value: Rent
+      objectReference: {fileID: 0}
     - target: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
       propertyPath: m_Name
       value: WeaponPickup

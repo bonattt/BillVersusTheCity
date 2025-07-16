@@ -7,6 +7,8 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
     public InteractableUI ui;
     public ScriptableObject unity_weapon;
     public IFirearm pickup_weapon;
+    public string overwrite_verb = "";
+    public string default_verb = "Pickup";
     public bool full_ammo = false; // if true, the weapon will have it's ammo set to full
 
     [Tooltip("set the pickup item's ammo to this value. If less than 0, do not change the weapon's ammo count. if FULL AMMO is set, also ignore this setting")]
@@ -53,6 +55,9 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
             } else {
                 verb = "Swap to";
             }
+        }
+        if (overwrite_verb != null && !overwrite_verb.Equals("")) {
+            verb = overwrite_verb;
         }
         ui.SetNewText($"{verb} {item_name}");
     }
