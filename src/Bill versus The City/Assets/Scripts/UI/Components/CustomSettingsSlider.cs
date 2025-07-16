@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CustomSettingsSlider : VisualElement {
+    // A class that incorporates a slider, field-name label, and value label in a single container, with some styles to make them look consistent.
 
     private Label value_display, field_name_display;
     private Slider slider;
