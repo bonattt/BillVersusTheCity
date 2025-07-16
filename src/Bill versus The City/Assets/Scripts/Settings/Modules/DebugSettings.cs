@@ -69,6 +69,24 @@ public class DebugSettings : AbstractSettingsModule {
         }
     }
 
+    private bool _unlock_all_weapons = false;
+    public bool unlock_all_weapons {
+        get => _unlock_all_weapons;
+        set {
+            _unlock_all_weapons = value;
+            UpdateSubscribers("unlock_all_weapons");
+        }
+    }
+
+    private bool _unrestrict_weapon_slots = false;
+    public bool unrestrict_weapon_slots {
+        get => _unrestrict_weapon_slots;
+        set {
+            _unrestrict_weapon_slots = value;
+            UpdateSubscribers("weapon_slots_unrestricted");
+        }
+    }
+
 
     public override List<string> all_fields { get { return new List<string>() { "show_fps", "debug_mode" }; } }
     public override DuckDict AsDuckDict() {
@@ -80,6 +98,8 @@ public class DebugSettings : AbstractSettingsModule {
         data.SetBool("player_invincibility", player_invincibility);
         data.SetBool("player_invisible", player_invisible);
         data.SetBool("allow_debug_actions", allow_debug_actions);
+        data.SetBool("unlock_all_weapons", unlock_all_weapons);
+        data.SetBool("unrestrict_weapon_slots", unrestrict_weapon_slots);
         data.SetString("show_grenade_fuse", ShowGrenadeStringFromEnum(show_grenade_fuse));
         return data;
     }
@@ -92,6 +112,8 @@ public class DebugSettings : AbstractSettingsModule {
         player_invincibility = UnpackBool(data, "player_invincibility");
         player_invisible = UnpackBool(data, "player_invisible");
         allow_debug_actions = UnpackBool(data, "allow_debug_actions");
+        unlock_all_weapons = UnpackBool(data, "unlock_all_weapons");
+        unrestrict_weapon_slots = UnpackBool(data, "unrestrict_weapon_slots");
         show_grenade_fuse = UnpackGrenadeEnum(data, "show_grenade_fuse");
         this.AllFieldsUpdates();
     }

@@ -71,47 +71,26 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     private PlayerCombat combat;
 
     // private List<IWeapon> _availible_rifles, _availible_handguns;
-    public List<IFirearm> availible_rifles {
-        get {
-            // if (_availible_rifles == null) {
-            //     // initialize with starting weapons
-            //     _availible_rifles = new List<IWeapon>();
-            //     foreach (IWeapon weapon in GetStartingEquipment().rifles) {
-            //         _availible_rifles.Add(weapon.CopyWeapon());
-            //     }
-            // }
-            List<IFirearm> _availible_rifles = new List<IFirearm>();
-            foreach (IFirearm weapon in availible_weapons) {
-                if (weapon.weapon_slot == WeaponSlot.longgun) {
-                    _availible_rifles.Add(weapon);
-                }
+    public List<IFirearm> AvailibleRifles() {
+        bool allow_all_slots = GameSettings.inst.debug_settings.unrestrict_weapon_slots;
+        List<IFirearm> _availible_rifles = new List<IFirearm>();
+        foreach (IFirearm weapon in availible_weapons) {
+            if (allow_all_slots || weapon.weapon_slot == WeaponSlot.longgun) {
+                _availible_rifles.Add(weapon);
             }
-            return _availible_rifles;
         }
+        return _availible_rifles;
     }
-    public List<IFirearm> availible_handguns {
-        get {
-            List<IFirearm> _availible_handguns = new List<IFirearm>();
-            foreach (IFirearm weapon in availible_weapons) {
-                if (weapon.weapon_slot == WeaponSlot.handgun) {
-                    _availible_handguns.Add(weapon);
-                }
+    public List<IFirearm> AvailibleHandguns() {
+        bool allow_all_slots = GameSettings.inst.debug_settings.unrestrict_weapon_slots;
+        List<IFirearm> _availible_handguns = new List<IFirearm>();
+        foreach (IFirearm weapon in availible_weapons) {
+            if (allow_all_slots || weapon.weapon_slot == WeaponSlot.handgun) {
+                _availible_handguns.Add(weapon);
             }
-            // if (_availible_handguns == null) {
-            //     // initialize with starting weapons
-            //     _availible_handguns = new List<IWeapon>();
-            //     foreach (IWeapon weapon in GetStartingEquipment().handguns) {
-            //         _availible_handguns.Add(weapon.CopyWeapon());
-            //     }
-            // }
-            return _availible_handguns;
         }
+        return _availible_handguns;
     }
-
-    // public static EquipmentSet GetStartingEquipment() {
-    //     // gets a config for the players initial availible equipment
-    //     return Resources.Load<EquipmentSet>("StartingEquipment");
-    // }
 
     public PlayerInventory() {
         combat = null; // subscribing to the PlayerCharacter here creates infinite recursion

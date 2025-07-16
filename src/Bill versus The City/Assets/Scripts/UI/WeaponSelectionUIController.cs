@@ -72,8 +72,8 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
     }
 
     public void UpdateContents() {
-        PopulateContents(left_content, PlayerCharacter.inst.inventory.availible_rifles);
-        PopulateContents(right_content, PlayerCharacter.inst.inventory.availible_handguns);
+        PopulateContents(left_content, PlayerCharacter.inst.inventory.AvailibleRifles());
+        PopulateContents(right_content, PlayerCharacter.inst.inventory.AvailibleHandguns());
     }
 
     public override void MenuNavigation() {

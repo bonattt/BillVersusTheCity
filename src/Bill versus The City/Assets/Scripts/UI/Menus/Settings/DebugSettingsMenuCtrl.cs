@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
     private Toggle show_fps_toggle, show_damage_toggle, debug_mode_toggle, player_invincibility_toggle,
-            player_invisible_toggle, allow_debug_actions_toggle;
+            player_invisible_toggle, allow_debug_actions_toggle, unlock_all_weapons_toggle, unrestrict_weapon_slots_toggle;
     private DropdownField show_grenade_fuse_dropdown;
 
     public DebugSettingsMenuCtrl() {
@@ -40,6 +40,12 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
         VisualElement allow_debug_actions_div = AddToggle("Allow Debug Actions");
         allow_debug_actions_toggle = allow_debug_actions_div.Q<Toggle>();
+
+        VisualElement unlock_all_weapons_div = AddToggle("Unlock All Weapons");
+        unlock_all_weapons_toggle = unlock_all_weapons_div.Q<Toggle>();
+
+        VisualElement unrestrict_weapon_slots_toggle_div = AddToggle("Un-restrict weapon slots");
+        unrestrict_weapon_slots_toggle = unrestrict_weapon_slots_toggle_div.Q<Toggle>();
 
         show_grenade_fuse_dropdown = MenuUtils.SetupEnumDropdown(typeof(ShowGrenadeFuse));
         show_grenade_fuse_dropdown.AddToClassList(SETTINGS_ITEM_CLASS);
@@ -84,6 +90,8 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         settings.player_invincibility = player_invincibility_toggle.value;
         settings.player_invisible = player_invisible_toggle.value;
         settings.allow_debug_actions = allow_debug_actions_toggle.value;
+        settings.unlock_all_weapons = unlock_all_weapons_toggle.value;
+        settings.unrestrict_weapon_slots = unrestrict_weapon_slots_toggle.value;
         settings.show_grenade_fuse = DebugSettings.ShowGrenadeEnumFromString(show_grenade_fuse_dropdown.value);
     }
 
@@ -98,6 +106,8 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         player_invincibility_toggle.value = settings.player_invincibility;
         player_invisible_toggle.value = settings.player_invisible;
         allow_debug_actions_toggle.value = settings.allow_debug_actions;
+        unlock_all_weapons_toggle.value = settings.unlock_all_weapons;
+        unrestrict_weapon_slots_toggle.value = settings.unrestrict_weapon_slots;
         show_grenade_fuse_dropdown.value = DebugSettings.ShowGrenadeStringFromEnum(settings.show_grenade_fuse);
         UpdateUI();
     }
