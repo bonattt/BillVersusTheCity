@@ -25,8 +25,19 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
     void Start() {
         SetupUI();
         UpdateContents(); // populate the contents of the visual elements with weapon UI elements 
-        SelectEquipped(PlayerCharacter.inst.inventory.rifle, left_content);
-        SelectEquipped(PlayerCharacter.inst.inventory.handgun, right_content);
+
+        PlayerInventory inv = PlayerCharacter.inst.inventory;
+        IFirearm _rifle = inv.rifle != null ? inv.rifle : inv.last_rifle_equipped;
+        bool rifle_selected = SelectPreviouslyEquipped(_rifle, left_content);
+        if (!rifle_selected) {
+            SelectFirstSlot(left_content);
+        }
+        IFirearm _handgun = inv.handgun != null ? inv.handgun : inv.last_handgun_equipped;
+        bool handgun_selected = SelectPreviouslyEquipped(_handgun, right_content);
+        if (!handgun_selected) {
+            Debug.LogWarning("Select First Handgun!");
+            SelectFirstSlot(right_content);
+        }
         ClearErrorMessage();
     }
 
@@ -82,10 +93,27 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
         }
     }
 
-    private void SelectEquipped(IFirearm equipped, VisualElement parent) {
+    private bool SelectPreviouslyEquipped(IFirearm equipped, VisualElement parent) {
+        // generic method to pre-select weapons that were previously equipped
+        bool slot_selected = false;
         foreach (IWeaponUI child in GetWeaponUIs(parent)) {
-            if (equipped != null && child.weapon.item_name.Equals(equipped.item_name)) {
+            if (equipped != null && child.weapon.item_id.Equals(equipped.item_id)) {
                 child.SelectSlot();
+                slot_selected = true;
+            } else {
+                child.DeselectSlot();
+            }
+        }
+        return slot_selected;
+    }
+
+    private void SelectFirstSlot(VisualElement parent) {
+        // takes a div containing weapon UIs, and selects the first slot and deselects the others.
+        bool first_slot = true;
+        foreach (IWeaponUI child in GetWeaponUIs(parent)) {
+            if (first_slot) {
+                child.SelectSlot();
+                first_slot = false;
             } else {
                 child.DeselectSlot();
             }

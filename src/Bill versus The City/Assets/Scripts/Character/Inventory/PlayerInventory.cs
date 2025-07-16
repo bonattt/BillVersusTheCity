@@ -27,6 +27,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
     }
 
+    public IFirearm last_handgun_equipped { get; private set; }
     private IFirearm _handgun; // weapon slot for a handgun
     public IFirearm handgun {
         get { return _handgun; }
@@ -40,6 +41,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
     }
 
+    public IFirearm last_rifle_equipped { get; private set; }
     private IFirearm _rifle; // weapon slot for a larger gun
     public IFirearm rifle {
         get { return _rifle; }
@@ -101,6 +103,8 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     public void StartNewGame() {
         dollars = STARTING_DOLLARS;
+        last_rifle_equipped = null;
+        last_handgun_equipped = null;
         owned_weapons = new List<IFirearm>();
         foreach (string weapon_id in WeaponSaveLoadConfig.inst.GetStartingWeaponIds()) {
             owned_weapons.Add(WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id));
@@ -118,6 +122,12 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         dollars += dollars_change_in_level;
         foreach (IFirearm weapon_purchased in weapons_purchased_in_level) {
             owned_weapons.Add(weapon_purchased);
+        }
+        if (_rifle != null) {
+            last_rifle_equipped = _rifle;
+        }
+        if (_handgun != null) {
+            last_handgun_equipped = _handgun;
         }
         ResetLevel();
     }
@@ -142,8 +152,13 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             weapon_ids.Add(weapon.item_id);
         }
         inventory_progress_data.SetStringList("weapon_unlocks", weapon_ids);
+        inventory_progress_data.SetString(LAST_LONGGUN_EQUIPPED, last_rifle_equipped != null ? last_rifle_equipped.item_id : "");
+        inventory_progress_data.SetString(LAST_HANDGUN_EQUIPPED, last_handgun_equipped != null ? last_handgun_equipped.item_id : "");
         return inventory_progress_data;
     }
+
+    public const string LAST_LONGGUN_EQUIPPED = "last_longgun_equipped";
+    public const string LAST_HANDGUN_EQUIPPED = "last_handgun_equipped";
 
     private void LoadWeaponsFromProgress(DuckDict progress_data) {
         HashSet<string> weapon_unlocks;
@@ -169,6 +184,18 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
                 continue;
             }
             owned_weapons.Add(weapon);
+        }
+        string _last_rifle = progress_data.GetString(LAST_LONGGUN_EQUIPPED);
+        string _last_handgun = progress_data.GetString(LAST_HANDGUN_EQUIPPED);
+        if (_last_rifle == null || _last_rifle.Equals("")) {
+            last_rifle_equipped = null;
+        } else {
+            last_rifle_equipped = WeaponSaveLoadConfig.inst.GetWeaponByID(_last_rifle);
+        }
+        if (_last_handgun == null || _last_handgun.Equals("")) {
+            last_handgun_equipped = null;
+        } else {
+            last_handgun_equipped = WeaponSaveLoadConfig.inst.GetWeaponByID(_last_handgun);
         }
     }
 
