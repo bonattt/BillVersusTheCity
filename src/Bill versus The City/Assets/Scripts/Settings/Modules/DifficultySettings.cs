@@ -14,7 +14,7 @@ public class DifficultySettings : AbstractSettingsModule {
     public const string ENEMY_HEALTH = "enemy_health";
     public const string ENEMY_REACTION_TIME = "enemy_reaction_time";
 
-    public readonly List<string> FIELDS = new List<string>(){
+    public static readonly List<string> FIELDS = new List<string>(){
         PLAYER_ARMOR,
         PLAYER_HEALTH,
         ENEMY_ARMOR,
@@ -64,6 +64,21 @@ public class DifficultySettings : AbstractSettingsModule {
         {DifficultyLevel.hard, "Hard"}
     };
 
+    public static readonly Dictionary<string, float> min_multipliers = new Dictionary<string, float>() {
+        {PLAYER_ARMOR, 0.25f},
+        {PLAYER_HEALTH, 0.25f},
+        {ENEMY_ARMOR, 0.25f},
+        {ENEMY_HEALTH, 0.25f},
+        {ENEMY_REACTION_TIME, 0.25f},
+    };
+    public static readonly Dictionary<string, float> max_multipliers = new Dictionary<string, float>() {
+        {PLAYER_ARMOR, 3f},
+        {PLAYER_HEALTH, 3f},
+        {ENEMY_ARMOR, 3f},
+        {ENEMY_HEALTH, 3f},
+        {ENEMY_REACTION_TIME, 3f},
+    };
+
     private static Dictionary<string, DifficultyLevel> REVERSE_DISPLAY_VALUES = null;
 
     public static string DifficultyLevelDisplay(DifficultyLevel level) {
@@ -96,9 +111,16 @@ public class DifficultySettings : AbstractSettingsModule {
             return fields; 
         }
     }
+
+    public float GetMin(string field_name) {
+        return min_multipliers[field_name];
+    }
+
+    public float GetMax(string field_name) {
+        return max_multipliers[field_name];
+    }
     
-    public override void SetToNewGameDefault()
-    {
+    public override void SetToNewGameDefault() {
         SetDifficultyLevel(DifficultyLevel.medium);
     }
 
@@ -178,17 +200,20 @@ public static class DifficultyTemplates {
     };
 
     public static Dictionary<string, float> GetTemplate(DifficultyLevel level) {
-        switch(level) {
+        switch (level) {
             case DifficultyLevel.easy:
                 return EASY_TEMPLATE;
             case DifficultyLevel.medium:
                 return MEDIUM_TEMPLATE;
             case DifficultyLevel.hard:
                 return HARD_TEMPLATE;
+            case DifficultyLevel.custom:
+                break; // do nothing, hit default return, but don't log a warning.
             default:
                 Debug.LogWarning($"using un-expected DifficultyLevel '{level}'");
-                return new Dictionary<string, float>(); // empty template uses default values
+                break;
         }
+        return new Dictionary<string, float>(); // empty template uses default values
     }
 }
 
