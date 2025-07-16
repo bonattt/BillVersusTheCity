@@ -10,7 +10,7 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
     private DropdownField difficulty_select;
 
     private List<VisualElement> custom_difficulty_controls = new List<VisualElement>();
-    private Dictionary<string, Slider> multiplier_sliders = new Dictionary<string, Slider>();
+    private Dictionary<string, CustomSettingsSlider> multiplier_sliders = new Dictionary<string, CustomSettingsSlider>();
 
     public DifficultySettingsMenuCtrl() {
         // do nothing
@@ -31,12 +31,12 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
         settings_pannel.Add(difficulty_select);
 
         foreach (string field_name in DifficultySettings.FIELDS) {
-            Slider new_slider = GetMultiplierSlider(field_name);
+            CustomSettingsSlider new_slider = GetMultiplierSlider(field_name);
             custom_difficulty_controls.Add(new_slider);
             settings_pannel.Add(new_slider);
         }
-
         LoadSettings();
+
         UpdateCustomControls(GameSettings.inst.difficulty_settings.difficulty_level);
         difficulty_select.RegisterValueChangedCallback((event_) => DifficultySettingUpdated(DifficultySettings.LevelFromDisplay(event_.newValue)));
     }
@@ -61,9 +61,10 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
         }
     }
 
-    private Slider GetMultiplierSlider(string field_name) {
+    private CustomSettingsSlider GetMultiplierSlider(string field_name) {
         DifficultySettings settings = GameSettings.inst.difficulty_settings;
-        Slider new_slider = new Slider(field_name, settings.GetMin(field_name), settings.GetMax(field_name));
+        string display_name = StringUtils.ToTitleCase(field_name.Replace("_", " "));
+        CustomSettingsSlider new_slider = SettingsMenuUtil.CreatePercentSlider(display_name, settings.GetMin(field_name), settings.GetMax(field_name));
         new_slider.value = settings.GetMultiplier(field_name);
         new_slider.AddToClassList(SETTINGS_ITEM_CLASS);
         multiplier_sliders[field_name] = new_slider;
@@ -129,13 +130,8 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
         UpdateUI();
     }
 
-    public override void UpdateUI() {
-        base.UpdateUI();
-    }
-
     public void UpdateMultipliersFromSettings() {
         DifficultySettings settings = GameSettings.inst.difficulty_settings;
-        Debug.LogWarning($"UpdateMultipliersFromSettings(settings: {settings.difficulty_level}, ui: {GetSelectedLevel()})"); // TODO --- remove debug
         foreach (string field_name in DifficultySettings.FIELDS) {
             multiplier_sliders[field_name].value = settings.GetMultiplier(field_name);
         }

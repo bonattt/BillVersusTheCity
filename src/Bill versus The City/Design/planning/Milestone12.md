@@ -27,6 +27,13 @@ PLANNED BUGFIXES
     (also, dev room has this too)
 
 UNPLANNED FEATURES
+[~] add UI support for custom difficulty
+    [+] implement UI
+    [ ] fix sliders to look like audio-settings sliders
+[ ] add more custom difficulty settings
+    [ ] enemy reload speed
+    [ ] enemy moves speed
+
 
 UNPLANNED BUGFIXES
 [ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"

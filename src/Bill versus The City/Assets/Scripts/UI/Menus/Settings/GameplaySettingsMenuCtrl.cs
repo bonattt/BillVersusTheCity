@@ -29,13 +29,11 @@ public class GameplaySettingsMenuCtrl : AbstractSettingsModuleMenu {
         LoadSettings();
     }
 
-    
-
     private VisualElement AddMouseSensitivitySlider() {
-        VisualElement slider_element = SettingsMenuUtil.CreateSlider("Mouse Sensitivity", 0.25f, 3f);
+        VisualElement slider_element = SettingsMenuUtil.CreatePercentSlider("Mouse Sensitivity", min:0.25f, max:3f);
         settings_pannel.Add(slider_element);
 
-        (mouse_sensitivity_slider, mouse_sensitivity_label) = SettingsMenuUtil.UnpacKSlider(slider_element);
+        (mouse_sensitivity_slider, mouse_sensitivity_label) = SettingsMenuUtil.UnpackSlider(slider_element);
         return slider_element;
     }
 
@@ -82,7 +80,7 @@ public class GameplaySettingsMenuCtrl : AbstractSettingsModuleMenu {
     public override void UpdateUI()
     {
         base.UpdateUI();
-        SettingsMenuUtil.UpdateSliderValueDisplay(mouse_sensitivity_slider, mouse_sensitivity_label);
+        // SettingsMenuUtil.UpdateSliderValueDisplay(mouse_sensitivity_slider, mouse_sensitivity_label);
     }
 
     public override bool HasUnsavedChanges()

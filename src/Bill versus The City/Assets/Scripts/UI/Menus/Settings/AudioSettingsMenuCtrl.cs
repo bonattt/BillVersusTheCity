@@ -47,9 +47,10 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
     }
 
     private (Slider, Label) AddVolumeSlider(string slider_label) {
-        VisualElement slider_element = SettingsMenuUtil.CreatePercentSlider(slider_label);
+        CustomSettingsSlider slider_element = SettingsMenuUtil.CreatePercentSlider(slider_label);
         settings_pannel.Add(slider_element);
-        return SettingsMenuUtil.UnpacKSlider(slider_element);  // (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
+        slider_element.UpdateValueLabel();
+        return SettingsMenuUtil.UnpackSlider(slider_element);  // (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
     }
 
     public void SaveSettings() {
@@ -83,11 +84,11 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
     }
 
     public void UpdateUI() {
-        // updates the UI
-        SettingsMenuUtil.UpdateSliderValueDisplay(master_volume, master_volume_label);
-        foreach (SoundCategory key in volume_sliders.Keys) {
-            SettingsMenuUtil.UpdateSliderValueDisplay(volume_sliders[key], volume_slider_labels[key]);
-        }
+        // // updates the UI
+        // SettingsMenuUtil.UpdateSliderValueDisplay(master_volume, master_volume_label);
+        // foreach (SoundCategory key in volume_sliders.Keys) {
+        //     SettingsMenuUtil.UpdateSliderValueDisplay(volume_sliders[key], volume_slider_labels[key]);
+        // }
     }
 
     public static string DisplayValue(SoundCategory category) {

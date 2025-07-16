@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public static class SettingsMenuUtil {
 
-    public const string SLIDER_CLASS = "settings_slider"; // top level class for all sliders
+    public const string SLIDER_PARENT_CLASS = "settings_slider"; // top level class for all sliders
     public const string SLIDER_CONTAINER_INNER_CLASS = "settings_slider_container_inner";  // for the Element containing the slider and it's value display
     public const string PERCENT_SLIDER_CLASS = "settings_percent_slider"; // top level class for percent sliders
     public const string SLIDER_LABEL_CLASS = "settings_slider_label";  // for Label displaying the field for the slider
@@ -48,52 +48,24 @@ public static class SettingsMenuUtil {
         label.text = $"{Mathf.Round(slider.value * 100)}";
     }
 
-    public static VisualElement CreateSlider(string text, float min_value, float max_value) {
-        // creates a slider for controlling percent fields (0-1f)
-        VisualElement parent = new VisualElement();
-        parent.name = text;
-        parent.AddToClassList(SLIDER_CLASS);
-        
-        Label label = new Label();
-        label.name = "SliderLabel";
-        label.text = text;
-        label.AddToClassList(SLIDER_LABEL_CLASS);
-        parent.Add(label);
+    // public static VisualElement CreateSlider(string text, float min_value, float max_value) {
+    //     // creates a slider for controlling percent fields (0-1f)
+    //     return new CustomSettingsSlider(text, min_value, max_value);
+    // }
 
-        VisualElement slider_container = new VisualElement();
-        slider_container.AddToClassList(SLIDER_CONTAINER_INNER_CLASS);
-        parent.Add(slider_container);
-
-        Label slider_value = new Label();
-        slider_value.name = SLIDER_VALUE_LABEL;
-        slider_value.text = "9001";
-        slider_value.AddToClassList(SLIDER_VALUE_CLASS);
-        slider_container.Add(slider_value);
-        
-        Slider slider = new Slider();
-        slider.name = "Slider";
-        slider.label = "";
-        slider.lowValue = min_value;
-        slider.highValue = max_value;
-        // // these should be dynamically set, but for testing purposes, the coinflip makes it easier to quickly see where the sliders are 
-        // slider.value = Mathf.Round(UnityEngine.Random.Range(0.1f, 0.9f));
-        slider.direction = SliderDirection.Horizontal;
-        slider.AddToClassList(SLIDER_TRACKER_CLASS);
-        slider_container.Add(slider);
-
-        ApplySettingsItemClasses(parent);
-        return parent;
-    }
-
-    public static (Slider, Label) UnpacKSlider(VisualElement slider_element) {
+    public static (Slider, Label) UnpackSlider(VisualElement slider_element) {
         // unpacks the Slider and Label components packaged by the parent slider VisualElement
         return (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
     }
 
-    public static VisualElement CreatePercentSlider(string text) {
+    public static CustomSettingsSlider CreatePercentSlider(string text, float min=0f, float max=1f) {
         // creates a slider for controlling percent fields (0-1f)
-        VisualElement slider = CreateSlider(text, 0f, 1f);
+        CustomSettingsSlider slider = new CustomSettingsSlider(text, min, max);
         slider.AddToClassList(PERCENT_SLIDER_CLASS);
+        slider.display_multiplier = 100;
+        slider.diplay_rounding_places = 0;
+        slider.diplay_display_prefix = "";
+        slider.diplay_display_postfix = "%";
         return slider;
     }
 
