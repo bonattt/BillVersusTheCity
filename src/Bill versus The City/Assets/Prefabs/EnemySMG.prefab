@@ -242,6 +242,7 @@ MonoBehaviour:
   crouch_dive_duration: 1
   crouch_dive_remaining: 0
   _crouch_percent: 0
+  debug__can_attack: 0
   nav_mesh_agent: {fileID: 1203654417675078061}
   choreography_movement: 0
   debug__look_direction: {x: 0, y: 0, z: 0}

@@ -199,7 +199,7 @@ MonoBehaviour:
   reload_rate: 0.7
   reload_move_multiplier: 0.33
   walk_speed: 6
-  sprint_multiplier: 2
+  _sprint_multiplier: 1.75
   crouched_speed: 0.25
   crouch_rate: 4
   uncrouch_rate: 4

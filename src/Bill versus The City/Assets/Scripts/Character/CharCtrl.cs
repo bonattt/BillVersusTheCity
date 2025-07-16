@@ -9,7 +9,7 @@ public enum CharacterActionKey {
     sprint,
 }
 
-public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager, ICharacterMovement {
+public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager, ICharacterMovement, ISettingsObserver {
     // list of codes which don't correspond to actual actions, and should be reset to ActionCode.none
     public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode> { ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint };
 
@@ -37,7 +37,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float reload_rate = 1f; // multiplies how fast weapons are reloaded; 1f is the weapons unmodified reload time, 0.5 takes twice as long, and 2f takes half as long
     public float reload_move_multiplier = 0.33f;
     public float walk_speed = 4.0f;
-    public float sprint_multiplier = 1.75f;
+    [SerializeField]
+    private float _sprint_multiplier = 1.75f;
+    public float sprint_multiplier {
+        get {
+            float difficulty_multiplier;
+            if (is_player) {
+                difficulty_multiplier = 1f; // player move speed not adjustable as difficulty setting
+            } else {
+                difficulty_multiplier = GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.ENEMY_RUN_SPEED);
+            }
+            return _sprint_multiplier * difficulty_multiplier;
+        }
+    }
     public float crouched_speed = 0.25f;
     public float crouch_rate = 4f;
     public float uncrouch_rate = 4f;
@@ -154,8 +166,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float reload_progress {
         get {
             if (!reloading) { return 0f; }
-            float progress_seconds = (Time.time - start_reload_at) * reload_rate;
+            float progress_seconds = (Time.time - start_reload_at) * reload_rate * _reload_speed_from_difficulty;
             return progress_seconds / reload_time;
+        }
+    }
+
+    private float _reload_speed_from_difficulty {
+        get {
+            DifficultySettings settings = GameSettings.inst.difficulty_settings;
+            if (is_player) {
+                return settings.GetMultiplier(DifficultySettings.PLAYER_RELOAD_SPEED);
+            } else {
+                return settings.GetMultiplier(DifficultySettings.ENEMY_RELOAD_SPEED);
+            }
         }
     }
 
@@ -635,6 +658,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
     public void Subscribe(IReloadSubscriber sub) => _reload_subscribers.Add(sub);
     public void Unsubscribe(IReloadSubscriber sub) => _reload_subscribers.Remove(sub);
+
+
+    public void SettingsUpdated(ISettingsModule updated, string field) {
+        switch (updated) {
+            case DifficultySettings settings:
+                Debug.LogWarning("TODO --- update difficulty"); // TODO --- remove debug
+                break;
+
+            default:
+                Debug.LogWarning($"unexpected settings module update event from '{updated}', on field '{field}'!");
+                break;
+        }
+    }
 
     //////////////////// DEBUG 
 
