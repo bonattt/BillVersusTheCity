@@ -240,11 +240,19 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     protected List<IFirearm> owned_weapons = new List<IFirearm>();
     public IEnumerable<IFirearm> availible_weapons {
         get {
-            foreach (IFirearm w in owned_weapons) {
-                yield return w;
-            }
-            foreach (IFirearm w in weapons_purchased_in_level) {
-                yield return w;
+
+            if (GameSettings.inst.debug_settings.unlock_all_weapons) {
+                // debug setting for all weapons unlocked
+                foreach (IFirearm w in WeaponSaveLoadConfig.inst.weapons) {
+                    yield return w;
+                }
+            } else {
+                foreach (IFirearm w in owned_weapons) {
+                    yield return w;
+                }
+                foreach (IFirearm w in weapons_purchased_in_level) {
+                    yield return w;
+                }
             }
         }
     }
