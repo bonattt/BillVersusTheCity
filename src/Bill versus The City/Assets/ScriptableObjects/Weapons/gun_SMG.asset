@@ -32,7 +32,7 @@ MonoBehaviour:
   _aim_zoom: 0.75
   _aim_move_speed: 0.7
   _max_zoom_range: 4
-  _gunshot_sound: 
+  _gunshot_sound: gunshot_quite
   _empty_gunshot_sound: 
   _reload_start_sound: 
   _reload_complete_sound: 

@@ -110,7 +110,6 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
     }
 
     private AudioSource CreatePlayer(AudioClip audio_clip, Vector3 target, float volume) {
-        // based on tutoral at `https://www.youtube.com/watch?v=DU7cgVsU2rM`
         AudioSource audio_source = Instantiate(sfx_object_prefab, target, Quaternion.identity);
         audio_source.clip = audio_clip;
         audio_source.volume = volume;
