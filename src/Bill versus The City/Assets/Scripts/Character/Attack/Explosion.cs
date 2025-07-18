@@ -35,9 +35,9 @@ public class Explosion : MonoBehaviour, IGameEventEffect
     {
         if (_exploded) { return; } // only explode once
         _exploded = true;
-        SpawnExplosionEffects();
         DealExplosionDamage();
         MakeGameSound();
+        SpawnExplosionEffects();
         MakeSoundEffect();
         if (destroy_on_explode) {
             Destroy(gameObject);
@@ -67,6 +67,11 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         foreach (GameObject prefab in explosion_attack.explosion_effects) {
             GameObject effect = Instantiate(prefab);
             effect.transform.position = transform.position;
+
+            IExplosionEffect effect_script = effect.GetComponent<IExplosionEffect>();
+            if (effect_script != null) {
+                effect_script.ConfigureFromExplosion(this);
+            }
         }
     }
     private void DealExplosionDamage()

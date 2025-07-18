@@ -22,6 +22,14 @@ PLANNED FEATURES
 [+] debug/difficulty options to unlock weapons
 
 
+PLAYTEST FEEDBACK
+[ ] FIX: throwing too close to fence bounces back and hits player
+[ ] FIX: menu has no back button
+[ ] Increase grenade explosion size
+[ ] FIX: Pickup item UIs block too much vision
+[ ] FIX: auto-equip new weapon if current slot is empty
+
+
 PLANNED BUGFIXES
 [ ] FIX: Level 3 (countdown level) has a second countdown UI without numbers, hidden behind the healthbars
     (also, dev room has this too)
@@ -34,7 +42,7 @@ UNPLANNED FEATURES
     [+] enemy reload speed
     [+] enemy run speed
 
-[ ] Add fuse "hiss" sound to cooking grenades
+[+] Add fuse "hiss" sound to cooking grenades
     - use this sound https://freesound.org/people/maximumplay3r/sounds/713344/
 
 

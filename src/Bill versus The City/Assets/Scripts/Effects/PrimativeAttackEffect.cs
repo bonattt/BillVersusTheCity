@@ -4,8 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrimativeAttackEffect : MonoBehaviour
-{
+public class PrimativeAttackEffect : MonoBehaviour, IExplosionEffect {
     public float start_scale = 0.001f;
     public float max_scale = 0.1f;
     public float scale_rate = 1;
@@ -22,5 +21,13 @@ public class PrimativeAttackEffect : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+    }
+
+    public void ConfigureFromExplosion(Explosion explosion) {
+        Debug.LogWarning($"increase scale_rate ({explosion.explosion_attack.explosion_radius} / {max_scale}) => {explosion.explosion_attack.explosion_radius / max_scale}"); // TODO --- remove debug
+        scale_rate = scale_rate * (explosion.explosion_attack.explosion_radius / max_scale);
+        Debug.LogWarning($"scale_rate: {scale_rate}"); // TODO --- remove debug
+        // scale_rate = scale_rate * scale_rate; // 
+        max_scale = explosion.explosion_attack.explosion_radius * 2f; // scale is a diameter, so x2
     }
 }
