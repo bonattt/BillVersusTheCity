@@ -49,8 +49,7 @@ public class GrenadeFuseUI : MonoBehaviour {
 
     public static bool ShowFuseUIWhenHeld() {
         return show_grenade_fuse == ShowGrenadeFuse.always
-                || show_grenade_fuse == ShowGrenadeFuse.while_held
-                || show_grenade_fuse == ShowGrenadeFuse.default_value;
+                || show_grenade_fuse == ShowGrenadeFuse.while_held;
     }
 
 }

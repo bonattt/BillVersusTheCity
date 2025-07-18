@@ -60,10 +60,13 @@ public class DebugSettings : AbstractSettingsModule {
         }
     }
 
-    private ShowGrenadeFuse _show_grenade_fuse = ShowGrenadeFuse.while_held;
+    private ShowGrenadeFuse _show_grenade_fuse = ShowGrenadeFuse.default_value;
+    private const ShowGrenadeFuse DEFAULT_GRENADE_FUSE = ShowGrenadeFuse.never; 
     public ShowGrenadeFuse show_grenade_fuse {
-        get => _show_grenade_fuse;
-        set {
+        get {
+            if (_show_grenade_fuse == ShowGrenadeFuse.default_value) { return DEFAULT_GRENADE_FUSE; }
+            return _show_grenade_fuse;
+        } set {
             _show_grenade_fuse = value;
             UpdateSubscribers("show_grenade_fuse");
         }

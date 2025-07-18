@@ -35,6 +35,7 @@ UNPLANNED FEATURES
     [+] enemy run speed
 
 [ ] Add fuse "hiss" sound to cooking grenades
+    - use this sound https://freesound.org/people/maximumplay3r/sounds/713344/
 
 
 UNPLANNED BUGFIXES
