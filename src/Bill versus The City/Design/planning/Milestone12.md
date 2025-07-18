@@ -25,9 +25,9 @@ PLANNED FEATURES
 PLAYTEST FEEDBACK
 [ ] FIX: throwing too close to fence bounces back and hits player
 [ ] FIX: menu has no back button
-[ ] Increase grenade explosion size
+[~] Increase grenade explosion size
 [ ] FIX: Pickup item UIs block too much vision
-[ ] FIX: auto-equip new weapon if current slot is empty
+[+] FIX: auto-equip new weapon if current slot is empty
 
 
 PLANNED BUGFIXES

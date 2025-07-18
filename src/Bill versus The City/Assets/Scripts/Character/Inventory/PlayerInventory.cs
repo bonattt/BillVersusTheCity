@@ -27,20 +27,6 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         }
     }
 
-    public IFirearm last_handgun_equipped { get; private set; }
-    private IFirearm _handgun; // weapon slot for a handgun
-    public IFirearm handgun {
-        get { return _handgun; }
-        set {
-            _handgun = value;
-            combat.attacks.AssignWeaponSlot(1, _handgun);
-            if (combat.attacks.current_slot == 1) {
-                combat.attacks.SwitchWeaponBySlot(1);
-                combat.attacks.UpdateSubscribers();
-            }
-        }
-    }
-
     public IFirearm last_rifle_equipped { get; private set; }
     private IFirearm _rifle; // weapon slot for a larger gun
     public IFirearm rifle {
@@ -49,7 +35,24 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             _rifle = value;
             combat.attacks.AssignWeaponSlot(0, _rifle);
             if (combat.attacks.current_slot == 0) {
-                combat.attacks.SwitchWeaponBySlot(0);
+                SwitchWeaponBySlot(0);
+            } else if (combat.attacks.current_gun == null) {
+                SwitchWeaponBySlot(0);
+            }
+        }
+    }
+
+    public IFirearm last_handgun_equipped { get; private set; }
+    private IFirearm _handgun; // weapon slot for a handgun
+    public IFirearm handgun {
+        get { return _handgun; }
+        set {
+            _handgun = value;
+            combat.attacks.AssignWeaponSlot(1, _handgun);
+            if (combat.attacks.current_slot == 1) {
+                SwitchWeaponBySlot(1);
+            } else if (combat.attacks.current_gun == null) {
+                SwitchWeaponBySlot(1);
             }
         }
     }
@@ -61,9 +64,16 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             _pickup = value;
             combat.attacks.AssignWeaponSlot(2, _pickup);
             if (combat.attacks.current_slot == 2) {
-                combat.attacks.SwitchWeaponBySlot(2);
+                SwitchWeaponBySlot(2);
+            } else if (combat.attacks.current_gun == null) {
+                SwitchWeaponBySlot(2);
             }
         }
+    }
+
+    private void SwitchWeaponBySlot(int i) {
+        combat.attacks.SwitchWeaponBySlot(i);
+        combat.attacks.UpdateSubscribers();
     }
 
     public void UpdateWeapon() {
