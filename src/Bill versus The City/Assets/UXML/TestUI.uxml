@@ -1,3 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center; width: 400px; height: 400%;" />
+    <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center; width: 400px; height: 400px;">
+        <ui:VisualElement name="JiggleTarget" style="flex-grow: 0; width: 100px; height: 100px; background-color: rgba(130, 130, 130, 0.56); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; align-self: center;" />
+    </ui:VisualElement>
 </ui:UXML>

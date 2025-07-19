@@ -3685,6 +3685,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1158669702}
   - component: {fileID: 1158669701}
+  - component: {fileID: 1158669703}
+  - component: {fileID: 1158669704}
   m_Layer: 0
   m_Name: TestUI
   m_TagString: Untagged
@@ -3723,6 +3725,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158669703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158669700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e5d81f0020db744a996fed7a0ab8889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jiggle_intensity: 20
+  jiggle_speed: 30
+  jiggle_duration_seconds: 1
+  jiggle_x: 1
+  jiggle_y: 1
+  time_mode: 0
+--- !u!114 &1158669704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158669700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb40166ac3792eb4b8ff80ad3bf03b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui_doc: {fileID: 1158669701}
+  element_name: JiggleTarget
 --- !u!4 &1175954203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5559139230147920310, guid: fce6b647986e828478433481d64ff5e0, type: 3}
