@@ -23,11 +23,12 @@ PLANNED FEATURES
 
 
 PLAYTEST FEEDBACK
-[ ] FIX: throwing too close to fence bounces back and hits player
+[+] FIX: throwing too close to fence bounces back and hits player
 [ ] FIX: menu has no back button
 [~] Increase grenade explosion size
-[ ] FIX: Pickup item UIs block too much vision
+[+] FIX: Pickup item UIs block too much vision
 [+] FIX: auto-equip new weapon if current slot is empty
+[ ] FIX: crouch dive controls improvements
 
 
 PLANNED BUGFIXES
@@ -44,8 +45,15 @@ UNPLANNED FEATURES
 
 [+] Add fuse "hiss" sound to cooking grenades
     - use this sound https://freesound.org/people/maximumplay3r/sounds/713344/
+[ ] Add a "Get money" debug action
+[ ] Add "default" settings values
+    [ ] Refactor settings to share more code around Dictionary<string,type> implementations,
+    [ ] expand scope of templating to apply to all settings
+    [ ] use templates to implement "default" values
 
 
 UNPLANNED BUGFIXES
 [ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
 [ ] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
+[ ] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
+[ ] FIX: Truck's "Finish Level" interaction header text is not centered!

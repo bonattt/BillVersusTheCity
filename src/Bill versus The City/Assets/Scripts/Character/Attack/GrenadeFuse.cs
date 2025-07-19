@@ -44,6 +44,7 @@ public class GrenadeFuse : MonoBehaviour {
         sound_playing.spatialBlend = 1f;
         sound_playing.minDistance = 1f;
         sound_playing.maxDistance = explosion.explosion_attack.explosion_radius * 25f;
+        sound_playing.loop = true;
         Debug.LogWarning($"fuse sound radius {sound_playing.maxDistance}");
     }
 

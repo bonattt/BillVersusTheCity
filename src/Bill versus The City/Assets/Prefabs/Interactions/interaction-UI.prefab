@@ -64,8 +64,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   name_header: name
-  hover_opacity: 0.8
-  default_opacity: 0.4
+  hide_until_enabled: 0
+  hover_opacity: 0.4
+  default_opacity: 0.2
 --- !u!114 &6958376482463443040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,4 +79,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0bd6e40d159fc43a1d404437134dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0}
   TransformToFollow: {fileID: 2318786422914600680}
