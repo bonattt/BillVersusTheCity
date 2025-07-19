@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Thrown Weapon", menuName = "Data/ThrownAttack")]
 public class ThrownAttack : ScriptableObject, IFirearm {
 
+    public AttackStartPosition attack_start_position { get => AttackStartPosition.thrown; }
     /////////////////// implements IItem ///////////////////
     public string _item_id;
     public string item_id { get => _item_id; }

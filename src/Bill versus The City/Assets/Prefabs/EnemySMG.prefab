@@ -78,6 +78,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: -50, y: -50}
   TransformToFollow: {fileID: 8241027428916574625}
+--- !u!1 &2990439640719381718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4407993598705714311}
+  m_Layer: 7
+  m_Name: throw_from
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4407993598705714311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990439640719381718}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8241027428916574625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3733396367829252955
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +185,7 @@ Transform:
   m_Children:
   - {fileID: 8593843417366476484}
   - {fileID: 7494676117244481231}
+  - {fileID: 4407993598705714311}
   - {fileID: 2891701816792940742}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -230,7 +262,7 @@ MonoBehaviour:
   reload_rate: 0.3
   reload_move_multiplier: 0.33
   walk_speed: 3
-  sprint_multiplier: 1.75
+  _sprint_multiplier: 1.75
   crouched_speed: 0.25
   crouch_rate: 4
   uncrouch_rate: 4
@@ -302,7 +334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialize_weapon: {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
   start_weapon_loaded: 1
-  _attack_start_point: {fileID: 7494676117244481231}
+  _shoot_from: {fileID: 7494676117244481231}
+  _throw_from: {fileID: 4407993598705714311}
   _default_bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
   _current_recoil: 0

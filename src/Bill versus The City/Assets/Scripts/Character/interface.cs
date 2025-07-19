@@ -150,7 +150,7 @@ public interface IAttackController
     public IWeapon current_weapon { get; set; }
     public IMeleeWeapon current_melee { get; set; }
     public IFirearm current_gun { get; set; }
-    public Transform attack_start_point { get; }
+    public Transform shoot_from { get; }
     public bool switch_weapons_blocked { get; set; }
     public void StartAttack(Vector3 attack_direction);
     public void AttackHold(Vector3 attack_direction);
@@ -173,6 +173,7 @@ public interface IMeleeWeapon : IWeapon
 
 public interface IFirearm : IWeapon
 {
+    public AttackStartPosition attack_start_position { get; }
     // equipment
     public WeaponSlot weapon_slot { get; }
     public WeaponClass weapon_class { get; }

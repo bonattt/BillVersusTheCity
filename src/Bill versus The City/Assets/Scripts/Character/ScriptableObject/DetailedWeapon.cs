@@ -6,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Detailed Weapon", menuName ="Data/DetailedWeapon")]
 public class DetailedWeapon : ScriptableObject, IFirearm
 {
+    
+    public AttackStartPosition attack_start_position { get => AttackStartPosition.bullet; }
     public string _name;
     public string _item_id;
     public string item_id { get => _item_id; }

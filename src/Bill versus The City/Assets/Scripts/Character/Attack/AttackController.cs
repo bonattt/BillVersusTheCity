@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
-{
+public enum AttackStartPosition {
+    bullet,
+    thrown,
+}
+
+public class AttackController : MonoBehaviour, IWeaponManager, IAttackController {
     public ScriptableObject initialize_weapon;
 
-    public IWeapon current_weapon { get => current_gun; set { current_gun = (IFirearm)value; }}
+    public IWeapon current_weapon { get => current_gun; set { current_gun = (IFirearm)value; } }
     public IFirearm current_gun { get; set; }
     public IMeleeWeapon current_melee {
         get { throw new NotImplementedException(); }
@@ -20,8 +24,22 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
 
     public bool start_weapon_loaded = true;
 
-    public Transform _attack_start_point; // bullets start here
-    public Transform attack_start_point { get => _attack_start_point; } // bullets start here
+    [Tooltip("normal attacks will start at this position.")]
+    public Transform _shoot_from; // bullets start here
+    public Transform shoot_from { get => _shoot_from; } // bullets start here
+
+    [Tooltip("attacks fired in arcs, which should clear cover even when crouching, are fired from here.")]
+    public Transform _throw_from;
+    public Transform throw_from { get => _throw_from; }
+
+    public Transform attack_start_position {
+        get {
+            if (current_gun != null && current_gun.attack_start_position == AttackStartPosition.thrown) {
+                return throw_from;
+            }
+            return shoot_from;
+        }
+    }
 
     public GameObject _default_bullet_prefab;
     public GameObject bullet_prefab {
@@ -34,7 +52,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     }
 
     public float inaccuracy_modifier = 0f;
-    
+
     // set the script to be inactive while game is paused
     private bool _is_active = true;
     public bool is_active {
@@ -48,7 +66,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     // how fast bullets move when fired
     public float bullet_speed {
         get {
-            if(current_gun == null) {
+            if (current_gun == null) {
                 Debug.LogWarning("no weapon selected!");
                 return 35f;
             }
@@ -68,10 +86,10 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
             return current_gun.semi_auto_fire_rate;
         }
     }
-    
+
     // tracks when the last shot was fired, for handling rate-of-fire
     private float _last_shot_at = 0f;
-    
+
     //////// IMPLEMENT `IWeaponManagerSubscriber`
     protected List<IWeaponManagerSubscriber> subscribers = new List<IWeaponManagerSubscriber>();
     public void Subscribe(IWeaponManagerSubscriber sub) => subscribers.Add(sub);
@@ -83,24 +101,22 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     }
 
 
-    public bool CanAttack()
-    {
+    public bool CanAttack() {
         return current_gun != null && current_gun.current_ammo > 0 && is_active;
     }
 
-    public virtual int? current_slot
-    {
+    public virtual int? current_slot {
         get { return null; }
     }
 
     private float? start_aim_at = null;
-    public bool is_aiming { get { return start_aim_at != null; }}
+    public bool is_aiming { get { return start_aim_at != null; } }
 
     public float aim_percent {
         get {
             if (start_aim_at == null) { return 0f; }
-            
-            float aimed_for = Time.time - ((float) start_aim_at);
+
+            float aimed_for = Time.time - ((float)start_aim_at);
 
             float time_to_aim;
             if (current_gun == null) {
@@ -114,37 +130,35 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         }
     }
 
-    public float _current_recoil = 0f; 
+    public float _current_recoil = 0f;
     public float current_recoil {
         get { return _current_recoil; }
-        set { 
+        set {
             if (value <= 0) {
                 _current_recoil = 0;
-            }
-            else if (value >= current_gun.recoil_max) {
+            } else if (value >= current_gun.recoil_max) {
                 _current_recoil = current_gun.recoil_max;
-            }
-            else {
+            } else {
                 _current_recoil = value;
             }
         }
     }
 
-    public float current_inaccuracy { 
+    public float current_inaccuracy {
         get {
             if (current_gun == null) { return -1f; }
             if (start_aim_at == null) {
                 return current_gun.initial_inaccuracy;
             }
             return (current_gun.aimed_inaccuracy * aim_percent) + (current_gun.initial_inaccuracy * (1 - aim_percent));
-        } 
+        }
     }
     private bool _aim_this_frame = false;
 
     protected virtual void Start() {
         switch_weapons_blocked = false;
         if (initialize_weapon != null && current_gun == null) {
-            current_gun = (IFirearm) Instantiate(initialize_weapon);
+            current_gun = (IFirearm)Instantiate(initialize_weapon);
         }
         if (start_weapon_loaded && current_gun != null) {
             current_gun.current_ammo = current_gun.ammo_capacity;
@@ -155,8 +169,8 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     }
 
     protected virtual void Update() {
-        if (! is_active) { return; } // do nothing while controller disabled
-        
+        if (!is_active) { return; } // do nothing while controller disabled
+
         attacker = GetComponent<CharCtrl>();
         if (attacker == null) {
             Debug.LogWarning("attacker is null!");
@@ -184,7 +198,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         StopAim();
         StartAim();
     }
-    
+
     public void StartAim() {
         _aim_this_frame = true;
         if (start_aim_at == null) {
@@ -200,7 +214,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
             return;
         }
         float inaccuracy = current_inaccuracy + current_recoil;
-        current_gun.AttackReleased(attack_direction, attack_start_point.position, inaccuracy, attacker);
+        current_gun.AttackReleased(attack_direction, attack_start_position.position, inaccuracy, attacker);
         UpdateSubscribers();
     }
 
@@ -208,12 +222,11 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         // fires an attack with the current weapon
         if (
             (_last_shot_at + shot_cooldown <= Time.time)
-            &&(! InputSystem.IsNullPoint(attack_direction))
+            && (!InputSystem.IsNullPoint(attack_direction))
         ) {
             if (current_gun.current_ammo > 0) {
                 _FireAttack(attack_direction);
-            }
-            else {
+            } else {
                 _EmptyAttack();
             }
         }
@@ -236,14 +249,14 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         AttackResolver.AttackEmpty(current_gun, transform.position);
     }
 
-    private void _FireAttack(Vector3 attack_direction, bool hold=false) {
+    private void _FireAttack(Vector3 attack_direction, bool hold = false) {
         _last_shot_at = Time.time;
-        
+
         float inaccuracy = current_inaccuracy + current_recoil;
         if (hold) {
-            current_gun.AttackHold(attack_direction, attack_start_point.position, inaccuracy, attacker);
+            current_gun.AttackHold(attack_direction, attack_start_position.position, inaccuracy, attacker);
         } else {
-            current_gun.AttackClicked(attack_direction, attack_start_point.position, inaccuracy, attacker);
+            current_gun.AttackClicked(attack_direction, attack_start_position.position, inaccuracy, attacker);
         }
         // Bullet bullet = null;
         // for (int i = 0; i < current_gun.n_shots; i++) {
@@ -311,6 +324,6 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     public int debug_ammo_count = 0;
 
     protected virtual void UpdateDebugFields() {
-        debug_ammo_count = (current_gun == null)? -1 : current_gun.current_ammo;
+        debug_ammo_count = (current_gun == null) ? -1 : current_gun.current_ammo;
     }
 }

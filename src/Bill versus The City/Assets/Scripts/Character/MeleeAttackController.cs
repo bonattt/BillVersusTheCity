@@ -26,7 +26,7 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
     public MeleeAttack current_attack;
 
     public Transform _attack_start_point;
-    public Transform attack_start_point { get => _attack_start_point; }
+    public Transform shoot_from { get => _attack_start_point; }
 
     // set the script to be inactive while game is paused
     private bool _is_active = true;
@@ -110,8 +110,8 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
     private void ResolveAttack() {
         // checks if an active attack is hitting anything, and deals damage to anything hit by the attack
         Debug.LogWarning("ResolveAttack!!"); // TODO --- remove debug
-        RaycastHit[] melee_hits = Physics.RaycastAll(attack_start_point.position, attack_direction, current_melee.attack_reach);
-        Debug.DrawRay(attack_start_point.position, attack_direction.normalized * current_melee.attack_reach, Color.green);
+        RaycastHit[] melee_hits = Physics.RaycastAll(shoot_from.position, attack_direction, current_melee.attack_reach);
+        Debug.DrawRay(shoot_from.position, attack_direction.normalized * current_melee.attack_reach, Color.green);
         foreach (RaycastHit hit in melee_hits) {
             IAttackTarget hit_target = hit.collider.gameObject.GetComponent<IAttackTarget>();
             if (hit_target != null && !current_attack.hit_targets.Contains(hit_target)) {
@@ -145,9 +145,9 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
             && (!InputSystem.IsNullPoint(new_attack_direction))
         ) {
             if (hold) {
-                current_melee.AttackClicked(new_attack_direction, attack_start_point.position, inaccuracy, attacker);
+                current_melee.AttackClicked(new_attack_direction, shoot_from.position, inaccuracy, attacker);
             } else {
-                current_melee.AttackHold(new_attack_direction, attack_start_point.position, inaccuracy, attacker);
+                current_melee.AttackHold(new_attack_direction, shoot_from.position, inaccuracy, attacker);
             }
         }
         if (current_attack == null) current_attack = new MeleeAttack();
@@ -158,7 +158,7 @@ public class MeleeAttackController : MonoBehaviour, IAttackController {
 
         _last_attack_at = Time.time;
         this.attack_direction = new_attack_direction;
-        AttackResolver.AttackStart(current_attack, this.attack_direction, attack_start_point.position, is_melee_attack: true);
+        AttackResolver.AttackStart(current_attack, this.attack_direction, shoot_from.position, is_melee_attack: true);
 
         // // TODO --- refactor, make this an effect
         // GameObject prefab = (GameObject)Resources.Load(AttackResolver.PLACEHOLDER_MELEE_EFFECTS_PREFAB);
