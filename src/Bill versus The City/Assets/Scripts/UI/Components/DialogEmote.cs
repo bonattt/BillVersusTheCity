@@ -98,6 +98,27 @@ public class DialogueEmote : VisualElement {
     private void SetEmoteImage(Sprite emote) {
         image_child.style.backgroundImage = new StyleBackground(emote);
     }
+
+    private const float DEFAULT_JIGGLE_SPEED = 10f;
+    private const float DEFAULT_JIGGLE_INTENSITY = 50f;
+    public ElementJiggle JiggleFor(float seconds, bool destroy = true) {
+        return JiggleFor(seconds, DEFAULT_JIGGLE_SPEED, DEFAULT_JIGGLE_INTENSITY, destroy);
+    }
+    public ElementJiggle JiggleFor(float seconds, float jiggle_speed, float jiggle_intensity, bool destroy) {
+        GameObject obj = new GameObject();
+        ElementJiggle jiggle = obj.AddComponent<ElementJiggle>();
+        jiggle.SetTarget(this);
+        jiggle.jiggle_duration_seconds = seconds;
+        jiggle.jiggle_x = false;
+        jiggle.jiggle_y = true;
+        jiggle.jiggle_speed = jiggle_speed;
+        jiggle.jiggle_intensity = jiggle_intensity;
+        jiggle.StartJiggle();
+        if (destroy) {
+            GameObject.Destroy(obj, seconds);
+        }
+        return jiggle;
+    }
 }
 
 // public class DialogueEmoteError : DialogueActionsException {

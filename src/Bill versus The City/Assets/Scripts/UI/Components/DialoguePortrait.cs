@@ -78,7 +78,7 @@ public class DialoguePortrait : VisualElement {
         }
     }
 
-    public void SetEmote(DialogueEmoteType emote_enum) {
+    public void SetEmote(DialogueEmoteType emote_enum, float jiggle_duration=0.20f) {
         ClearEmote();
         this.emote_enum = emote_enum;
         emote_element = new DialogueEmote(emote_enum);
@@ -87,6 +87,7 @@ public class DialoguePortrait : VisualElement {
         emote_element.style.position = Position.Absolute;
         emote_element.style.top = -75f;
         emote_element.style.right = -25f;
+        emote_element.JiggleFor(jiggle_duration);
     }
 }
 

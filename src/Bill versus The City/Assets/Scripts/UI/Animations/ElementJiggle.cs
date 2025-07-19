@@ -116,6 +116,10 @@ public class ElementJiggle : MonoBehaviour {
     public ElementJiggleDebugger _debug;
     
     void UpdateDebug() {
+        if (_debug == null) {
+            Debug.Log("`debug` not set for displaying debug data");
+            return;
+        }
         _debug.is_jiggling = is_jiggling;
         _debug.time = GetTime();
         _debug.start_time = jiggle_start_time;
