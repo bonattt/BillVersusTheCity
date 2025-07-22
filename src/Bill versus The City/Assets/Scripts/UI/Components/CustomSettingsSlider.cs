@@ -58,7 +58,6 @@ public class CustomSettingsSlider : VisualElement {
         slider.lowValue = min_value;
         slider.highValue = max_value;
         // // these should be dynamically set, but for testing purposes, the coinflip makes it easier to quickly see where the sliders are 
-        // slider.value = Mathf.Round(UnityEngine.Random.Range(0.1f, 0.9f));
         slider.direction = SliderDirection.Horizontal;
         slider.AddToClassList(SettingsMenuUtil.SLIDER_TRACKER_CLASS);
         slider_container.Add(slider);
@@ -70,7 +69,6 @@ public class CustomSettingsSlider : VisualElement {
 
     public void UpdateValueLabel() {
         // updates the label that displays the value
-        Debug.LogWarning($"UpdateValueLabel({field_name_display.text} => {slider.value})"); // TODO --- remove debug
         value_display.text = GetAdjustDisplayValue(slider.value);
     }
 
@@ -78,7 +76,6 @@ public class CustomSettingsSlider : VisualElement {
         float output_value = base_value * display_multiplier;
         float places_multiplier = Mathf.Pow(10, diplay_rounding_places);
         output_value = Mathf.Round(output_value * places_multiplier) / places_multiplier;
-        Debug.LogWarning($"GetAdjustDisplayValue(base: {base_value}, output: {output_value}, postfix: {diplay_display_postfix})"); // TODO --- remove debug
         return $"{diplay_display_prefix}{output_value}{diplay_display_postfix}";
     }
 

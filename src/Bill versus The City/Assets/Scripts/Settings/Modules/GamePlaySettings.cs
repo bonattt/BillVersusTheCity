@@ -40,7 +40,7 @@ public class GamePlaySettings : AbstractSettingsModule {
             mouse_sensitivity = (float) ms;
         }
 
-        this.AllFieldsUpdates();
+        this.AllFieldsUpdated();
     }
     
 }

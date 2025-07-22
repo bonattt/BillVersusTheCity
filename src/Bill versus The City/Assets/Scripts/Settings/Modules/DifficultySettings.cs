@@ -5,7 +5,6 @@ using UnityEngine;
 
 
 public class DifficultySettings : AbstractSettingsModule {
-    private Dictionary<string, float> multipliers;
     public DifficultyLevel difficulty_level { get; private set; }
     public const string DIFFICULTY_LEVEL = "difficulty_level";
     public const string PLAYER_ARMOR = "player_armor";
@@ -33,12 +32,12 @@ public class DifficultySettings : AbstractSettingsModule {
     }
 
     private void SetFromTemplate(Dictionary<string, float> template) {
-        multipliers = new Dictionary<string, float>();
+        float_fields = new Dictionary<string, float>();
         foreach (string key in FIELDS) {
             if (template.ContainsKey(key)) {
                 SetMultiplier(key, template[key]);
             } else {
-                if (multipliers.Count > 0) {
+                if (float_fields.Count > 0) {
                     // don't log missing keys if the dictionary is completely empty, that means we're just setting default values.
                     Debug.Log($"Difficulty template missing key '{key}'");
                 }
@@ -50,15 +49,15 @@ public class DifficultySettings : AbstractSettingsModule {
     public void SetDifficultyLevel(DifficultyLevel level) {
         SetFromTemplate(DifficultyTemplates.GetTemplate(level));
         difficulty_level = level;
-        AllFieldsUpdates();
+        AllFieldsUpdated();
     }
 
     public float GetMultiplier(string key) {
-        return multipliers[key];
+        return float_fields[key];
     }
 
     public void SetMultiplier(string key, float value) {
-        multipliers[key] = value;
+        float_fields[key] = value;
         difficulty_level = DifficultyLevel.custom;
         UpdateSubscribers(key);
     }
@@ -139,12 +138,9 @@ public class DifficultySettings : AbstractSettingsModule {
     public override DuckDict AsDuckDict()
     {
         // returns json data for the settings in this module
-        DuckDict data = new DuckDict();
+        DuckDict data = base.AsDuckDict();
+        Debug.LogWarning($"Saving PlayerHealth as '{float_fields[PLAYER_HEALTH]}'"); // TODO --- remove debug
         data.SetString(DIFFICULTY_LEVEL, DifficultyAsString(difficulty_level));
-        foreach (string field in multipliers.Keys)
-        {
-            data.SetFloat(field, multipliers[field]);
-        }
         return data;
     }
     
@@ -154,13 +150,14 @@ public class DifficultySettings : AbstractSettingsModule {
         foreach(string field in FIELDS) {
             float? value = data.GetFloat(field);
             if (value == null) {
-                multipliers[field] = 1f;
+                float_fields[field] = 1f;
             } else {
-                multipliers[field] = (float) value;
+                float_fields[field] = (float) value;
             }
         }
         difficulty_level = DifficultyFromString(data.GetString(DIFFICULTY_LEVEL));
-        this.AllFieldsUpdates();
+        // base.LoadFromJson(data);
+        this.AllFieldsUpdated();
     }
 
     public static string DifficultyAsString(DifficultyLevel level) {

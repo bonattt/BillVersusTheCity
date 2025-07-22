@@ -118,7 +118,7 @@ public class DebugSettings : AbstractSettingsModule {
         unlock_all_weapons = UnpackBool(data, "unlock_all_weapons");
         unrestrict_weapon_slots = UnpackBool(data, "unrestrict_weapon_slots");
         show_grenade_fuse = UnpackGrenadeEnum(data, "show_grenade_fuse");
-        this.AllFieldsUpdates();
+        this.AllFieldsUpdated();
     }
 
     private bool UnpackBool(DuckDict data, string field_name) {

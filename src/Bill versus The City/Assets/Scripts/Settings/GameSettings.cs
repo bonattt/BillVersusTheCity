@@ -101,7 +101,7 @@ public class GameSettings {
 
     private void ReplaceModule(ISettingsModule old_module, ISettingsModule new_module) {
         // add `old_module`s subscribers to `new_module` so the old module can be replaced seemlessly
-        foreach (ISettingsObserver sub in old_module.GetSubscribers()) {
+        foreach (ISettingsObserver sub in old_module.SubscriberIterator()) {
             new_module.Subscribe(sub);
         }
     }

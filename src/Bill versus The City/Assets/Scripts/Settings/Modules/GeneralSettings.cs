@@ -30,7 +30,7 @@ public class GeneralSettings : AbstractSettingsModule {
         // sets the settings module from a JSON string
         skip_all_tutorials = UnpackBool(data, "skip_all_tutorials");
         skipped_tutorials = UnpackHashSet(data, "skipped_tutorials");
-        this.AllFieldsUpdates();
+        this.AllFieldsUpdated();
     }
     public override void SetToNewGameDefault()
     {

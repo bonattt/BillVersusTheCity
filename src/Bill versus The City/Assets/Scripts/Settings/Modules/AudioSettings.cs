@@ -88,7 +88,7 @@ public class AudioSettings : AbstractSettingsModule {
             }
             volume_settings[CategoryFromString(key)] = val;
             
-            this.AllFieldsUpdates();
+            this.AllFieldsUpdated();
         }
     }
 

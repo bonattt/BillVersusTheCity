@@ -5,7 +5,7 @@ public interface ISettingsModule {
     public void Unsubscribe(ISettingsObserver sub);
     public string AsJson(); // returns json data for the settings in this module
     public void LoadFromJson(DuckDict data);  // sets the settings module from a JSON string
-    public List<ISettingsObserver> GetSubscribers();  // get all subscribers. Used to transfer subscribers if a settings module is replaced
+    public IEnumerable<ISettingsObserver> SubscriberIterator();  // get all subscribers. Used to transfer subscribers if a settings module is replaced
 }
 
 
