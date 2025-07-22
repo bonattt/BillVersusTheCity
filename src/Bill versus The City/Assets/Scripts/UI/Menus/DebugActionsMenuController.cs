@@ -12,12 +12,11 @@ public class DebugActionsMenuController : MonoBehaviour {
     public const string FAIL_LEVEL  = "Fail Level";
     public const string COMPLETE_OBJECTIVE  = "Complete Objective";
     public const string KILL_ENEMIES = "Kill Enemies";
+    public const string GET_DOLLARS_100 = "Get $100";
+    public const string GET_DOLLARS_1000 = "Get $1000";
     public const string KILL_PLAYER = "Kill Player (NOT IMPLEMENTED)";
     public const string RESET_HEALTH = "Reset Health (NOT IMPLEMENTED)";
     public const string RESET_GAME  = "Reset Game (NOT IMPLEMENTED)";
-    private string[] debug_actions = new string[]{
-        SKIP_LEVEL, FAIL_LEVEL, COMPLETE_OBJECTIVE, KILL_ENEMIES, KILL_PLAYER, RESET_HEALTH, RESET_GAME,
-    };
 
     private Dictionary<string, Action> GetCallbacks() {
         // can't set callbacks in a dict on the class, because I need to reference methods of this class
@@ -26,9 +25,19 @@ public class DebugActionsMenuController : MonoBehaviour {
             {KILL_ENEMIES, KillEnemiesClicked},
             {KILL_PLAYER, KillPlayerClicked},
             {RESET_HEALTH, ResetHealthClicked},
+            {GET_DOLLARS_100, CurriedGetDollars(100)},
+            {GET_DOLLARS_1000, CurriedGetDollars(1000)},
             {RESET_GAME, ResetGameClicked},
             {FAIL_LEVEL, FailLevelClicked},
             {COMPLETE_OBJECTIVE, CompleteObjectiveClicked},
+        };
+    }
+
+    private Action CurriedGetDollars(int dollars_amount) {
+        Debug.LogWarning($"Get {dollars_amount} action!");
+        return () => {
+            // todo
+            PlayerCharacter.inst.inventory.dollars_change_in_level += dollars_amount;
         };
     }
 
@@ -38,7 +47,7 @@ public class DebugActionsMenuController : MonoBehaviour {
         content_div.Clear();
 
         Dictionary<string, Action> callbacks = GetCallbacks();
-        foreach (string action_name in debug_actions) {
+        foreach (string action_name in callbacks.Keys) {
             content_div.Add(GetNewAction("", action_name, callbacks[action_name]));
         }
 
@@ -47,6 +56,7 @@ public class DebugActionsMenuController : MonoBehaviour {
     }
 
     private VisualElement GetNewAction(string label_text, string button_text, Action callback) {
+        Debug.LogWarning($"GetNewAction({button_text})"); // TODO --- remove debug
         VisualElement action_div = new VisualElement();
         action_div.AddToClassList("DebugAction");
 
