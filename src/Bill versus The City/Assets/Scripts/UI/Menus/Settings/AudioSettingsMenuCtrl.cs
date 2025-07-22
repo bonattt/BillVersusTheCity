@@ -71,6 +71,11 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         }
         UpdateUI();
     }
+
+    public virtual IEnumerable<string> UnsavedFields() {
+        Debug.LogWarning("TODO --- implement `AudioSettingsMenuCtrl.UnsavedFields()`"); // TODO --- implement this
+        return new List<string>();
+    }
     
     public bool HasUnsavedChanges() {
         AudioSettings settings = GameSettings.inst.audio_settings;

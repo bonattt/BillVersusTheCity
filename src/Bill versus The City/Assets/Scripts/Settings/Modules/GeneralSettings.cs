@@ -6,46 +6,38 @@ using UnityEngine;
 
 public class GeneralSettings : AbstractSettingsModule {
     
-    private bool _placeholder = false;
+    private const string SKIP_ALL_TUTORIALS = "skip_all_tutorials";
     public bool skip_all_tutorials {
-        get { return _placeholder; }
+        get => GetBool(SKIP_ALL_TUTORIALS);
         set {
-            _placeholder = value;
-            DebugMode.inst.debug_enabled = _placeholder;
+            SetBool(SKIP_ALL_TUTORIALS, value);
         }
     }
 
-    public override List<string> all_fields { get { return new List<string>(){ "skip_all_tutorials" }; }}
+    public override List<string> bool_field_names { get { return new List<string>() { "skip_all_tutorials" }; } }
+
+    private static readonly List<string> OTHER_FIELDS = new List<string>() {
+        "skipped_tutorials",
+    };
+    public override List<string> other_field_names { get => OTHER_FIELDS; }
     public HashSet<string> skipped_tutorials = new HashSet<string>();
 
     public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module
-        DuckDict data = new DuckDict();
-        data.SetBool("skip_all_tutorials", skip_all_tutorials);
+        DuckDict data = base.AsDuckDict();
         data.SetStringList("skipped_tutorials", skipped_tutorials.ToList());
         return data;
     }
 
-    public override void LoadFromJson(DuckDict data) {
+    public override void LoadFromJson(DuckDict data, bool update_subscribers = true) {
         // sets the settings module from a JSON string
-        skip_all_tutorials = UnpackBool(data, "skip_all_tutorials");
         skipped_tutorials = UnpackHashSet(data, "skipped_tutorials");
-        this.AllFieldsUpdated();
+        base.LoadFromJson(data, update_subscribers);
     }
     public override void SetToNewGameDefault()
     {
         skip_all_tutorials = false;
         skipped_tutorials = new HashSet<string>();
-    }
-
-    private bool UnpackBool(DuckDict data, string field_name)
-    {
-        bool? v = data.GetBool(field_name);
-        if (v == null)
-        {
-            v = false;
-        }
-        return (bool)v;
     }
 
     private HashSet<string> UnpackHashSet(DuckDict data, string field_name) {

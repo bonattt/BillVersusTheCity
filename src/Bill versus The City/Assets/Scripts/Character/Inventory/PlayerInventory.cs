@@ -84,7 +84,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     // private List<IWeapon> _availible_rifles, _availible_handguns;
     public List<IFirearm> AvailibleRifles() {
-        bool allow_all_slots = GameSettings.inst.debug_settings.unrestrict_weapon_slots;
+        bool allow_all_slots = GameSettings.inst.debug_settings.GetBool("unrestrict_weapon_slots");
         List<IFirearm> _availible_rifles = new List<IFirearm>();
         foreach (IFirearm weapon in AvailibleWeapons()) {
             if (allow_all_slots || weapon.weapon_slot == WeaponSlot.longgun) {
@@ -94,7 +94,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         return _availible_rifles;
     }
     public List<IFirearm> AvailibleHandguns() {
-        bool allow_all_slots = GameSettings.inst.debug_settings.unrestrict_weapon_slots;
+        bool allow_all_slots = GameSettings.inst.debug_settings.GetBool("unrestrict_weapon_slots");
         List<IFirearm> _availible_handguns = new List<IFirearm>();
         foreach (IFirearm weapon in AvailibleWeapons()) {
             if (allow_all_slots || weapon.weapon_slot == WeaponSlot.handgun) {
@@ -249,7 +249,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     public void AddWeapon(IFirearm new_weapon) => weapons_purchased_in_level.Add(new_weapon);
     protected List<IFirearm> owned_weapons = new List<IFirearm>();
     public IEnumerable<IFirearm> AvailibleWeapons() {
-        if (GameSettings.inst.debug_settings.unlock_all_weapons) {
+        if (GameSettings.inst.debug_settings.GetBool("unlock_all_weapons")) {
             // debug setting for all weapons unlocked
             foreach (IFirearm w in WeaponSaveLoadConfig.inst.weapons) {
                 yield return w;

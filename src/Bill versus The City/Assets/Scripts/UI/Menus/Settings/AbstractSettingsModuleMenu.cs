@@ -32,6 +32,10 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
 
     public abstract void LoadSettings();
 
+    public virtual IEnumerable<string> UnsavedFields() {
+        Debug.LogWarning($"TODO --- implement UnsavedFields for {GetType()}"); // TODO --- make this method abstract
+        return new List<string>();
+    } 
     public abstract bool HasUnsavedChanges();
 
     public virtual void UpdateUI() {

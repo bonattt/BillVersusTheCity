@@ -16,7 +16,7 @@ public class GunRangeTarget : MonoBehaviour, IAttackTarget, ICharacterStatus {
     public Transform GetAimTarget() { return transform; }
     public void OnAttackHitRecieved(IAttack attack) {
         // if damage numbers are turned off, show them anyways
-        if (!GameSettings.inst.debug_settings.show_damage_numbers) {
+        if (!GameSettings.inst.debug_settings.GetBool("show_damage_numbers")) {
             IAttackHitEffect health_damage_numbers = new SpawnDamageNumberEffect();
             health_damage_numbers.DisplayDamageEffect(GetHitTarget(), GetHitTarget().transform.position, attack);
         }

@@ -96,14 +96,23 @@ public class SettingsMenuController : AbstractCloseEventMenu
             if (open_settings_controller == null || !open_settings_controller.HasUnsavedChanges()) {
                 MenuManager.inst.CloseMenu();
             } else {
+                LogUnsavedFields(open_settings_controller.UnsavedFields());
                 OpenConfirmExitDialogue();
             }
 
         }
     }
 
+    private void LogUnsavedFields(IEnumerable<string> unsaved_fields) {
+        string fields_str = "";
+        foreach (string f in unsaved_fields) {
+            fields_str += $"{f}, ";
+        }
+        Debug.LogWarning($"unsaved fields: {fields_str}");
+    }
+
     // public Action GetClickEvent(string tab_name) {
-        
+
     // }
 
     // public void TabClicked

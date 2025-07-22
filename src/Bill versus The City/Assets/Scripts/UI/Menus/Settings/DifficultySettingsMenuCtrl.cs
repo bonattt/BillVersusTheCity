@@ -111,8 +111,10 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
     public override void SaveSettings() {
         // Saves the menu's changes to settings    
         DifficultySettings settings = GameSettings.inst.difficulty_settings;
-        settings.SetDifficultyLevel(GetSelectedLevel());
-        if (settings.difficulty_level == DifficultyLevel.custom) {
+        DifficultyLevel level = GetSelectedLevel();
+        bool use_template = level != DifficultyLevel.custom;
+        settings.SetDifficultyLevel(GetSelectedLevel(), apply_template: use_template);
+        if (!use_template) {
             ApplyMultipliersToSettings();
         }
     }
@@ -143,6 +145,25 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
             settings.SetMultiplier(field_name, multiplier_sliders[field_name].value);
         }
     }
+    public override IEnumerable<string> UnsavedFields() {
+        DifficultySettings settings = GameSettings.inst.difficulty_settings;
+        HashSet<string> fields = new HashSet<string>();
+        if (GetSelectedLevel() != settings.difficulty_level) {
+            fields.Add("difficulty_level");
+        }
+        foreach (string field_name in DifficultySettings.FIELDS) {
+            if (FieldHasUnsavedChanges(field_name)) {
+                Debug.LogWarning($"{field_name}: {multiplier_sliders[field_name].value} != {settings.GetMultiplier(field_name)}"); // TODO --- remove debug
+                fields.Add(field_name);
+            }
+        }
+        return fields;
+    }
+
+    private bool FieldHasUnsavedChanges(string field_name) {
+        DifficultySettings settings = GameSettings.inst.difficulty_settings;
+        return multiplier_sliders[field_name].value != settings.GetMultiplier(field_name);
+    }
 
     public override bool HasUnsavedChanges() {
         DifficultySettings settings = GameSettings.inst.difficulty_settings;
@@ -150,7 +171,7 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
             return true;
         }
         foreach (string field_name in DifficultySettings.FIELDS) {
-            if (multiplier_sliders[field_name].value != settings.GetMultiplier(field_name)) {
+            if (FieldHasUnsavedChanges(field_name)) {
                 return true;
             }
         }

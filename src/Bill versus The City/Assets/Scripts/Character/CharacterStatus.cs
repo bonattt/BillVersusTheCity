@@ -47,7 +47,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
 
     private bool is_invulnerable { 
         // returns true if damage should be ignored due to debug settings
-        get { return this.is_player && GameSettings.inst.debug_settings.player_invincibility; }
+        get { return this.is_player && GameSettings.inst.debug_settings.GetBool("player_invincibility"); }
     }
 
     public float _max_health = 100;

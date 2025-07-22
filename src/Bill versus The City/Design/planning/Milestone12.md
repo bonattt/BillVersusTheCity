@@ -48,6 +48,7 @@ UNPLANNED FEATURES
 [+] Add a "Get money" debug action
 [ ] Add "default" settings values
     [ ] Refactor settings to share more code around Dictionary<string,type> implementations,
+        [ ] FIX: non-custom difficulty triggeres "unsaved changes" popup
     [ ] expand scope of templating to apply to all settings
     [ ] use templates to implement "default" values
 

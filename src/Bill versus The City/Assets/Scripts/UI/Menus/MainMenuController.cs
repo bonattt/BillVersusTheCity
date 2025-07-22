@@ -157,7 +157,6 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void OpenMainMenu() {
-        Debug.LogWarning($"MenuManager.inst: {MenuManager.inst}, is_null?: {MenuManager.inst == null}"); // TODO --- remove debug
         MenuManager.inst.disable_pause_menu = true;
     }
 }

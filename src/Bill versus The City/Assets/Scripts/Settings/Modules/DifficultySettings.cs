@@ -16,6 +16,9 @@ public class DifficultySettings : AbstractSettingsModule {
     public const string ENEMY_RUN_SPEED = "enemy_run_speed";
     public const string ENEMY_RELOAD_SPEED = "enemy_reload_speed";
 
+
+    public override List<string> float_field_names { get => FIELDS; }
+    public override List<string> other_field_names { get => new List<string>() {DIFFICULTY_LEVEL}; }
     public static readonly List<string> FIELDS = new List<string>(){
         PLAYER_ARMOR,
         PLAYER_HEALTH,
@@ -46,18 +49,17 @@ public class DifficultySettings : AbstractSettingsModule {
         }
     }
 
-    public void SetDifficultyLevel(DifficultyLevel level) {
-        SetFromTemplate(DifficultyTemplates.GetTemplate(level));
+    public void SetDifficultyLevel(DifficultyLevel level, bool apply_template=true) {
+        if (apply_template) {
+            SetFromTemplate(DifficultyTemplates.GetTemplate(level));
+        }
         difficulty_level = level;
         AllFieldsUpdated();
     }
 
-    public float GetMultiplier(string key) {
-        return float_fields[key];
-    }
-
+    public float GetMultiplier(string key) => GetFloat(key);
     public void SetMultiplier(string key, float value) {
-        float_fields[key] = value;
+        SetFloat(key, value);
         difficulty_level = DifficultyLevel.custom;
         UpdateSubscribers(key);
     }
@@ -115,13 +117,6 @@ public class DifficultySettings : AbstractSettingsModule {
         return REVERSE_DISPLAY_VALUES[display_value];
     }
 
-    public override List<string> all_fields {
-        get { 
-            List<string> fields = new List<string>(FIELDS);
-            fields.Add(DIFFICULTY_LEVEL);
-            return fields; 
-        }
-    }
 
     public float GetMin(string field_name) {
         return min_multipliers[field_name];
@@ -139,25 +134,24 @@ public class DifficultySettings : AbstractSettingsModule {
     {
         // returns json data for the settings in this module
         DuckDict data = base.AsDuckDict();
-        Debug.LogWarning($"Saving PlayerHealth as '{float_fields[PLAYER_HEALTH]}'"); // TODO --- remove debug
         data.SetString(DIFFICULTY_LEVEL, DifficultyAsString(difficulty_level));
         return data;
     }
     
-    public override void LoadFromJson(DuckDict data) {
+    public override void LoadFromJson(DuckDict module_save_data, bool update_subscribers=true) {
         // sets the settings module from a JSON string
-        // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
-        foreach(string field in FIELDS) {
-            float? value = data.GetFloat(field);
-            if (value == null) {
-                float_fields[field] = 1f;
-            } else {
-                float_fields[field] = (float) value;
-            }
-        }
-        difficulty_level = DifficultyFromString(data.GetString(DIFFICULTY_LEVEL));
-        // base.LoadFromJson(data);
-        this.AllFieldsUpdated();
+
+        // // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
+        // foreach(string field in FIELDS) {
+        //     float? value = module_save_data.GetFloat(field);
+        //     if (value == null) {
+        //         SetFloat(field, 1f);
+        //     } else {
+        //         SetFloat(field, (float) value);
+        //     }
+        // }
+        difficulty_level = DifficultyFromString(module_save_data.GetString(DIFFICULTY_LEVEL));
+        base.LoadFromJson(module_save_data, update_subscribers); // NOTE --- this is actively overwriting with bad data somehow
     }
 
     public static string DifficultyAsString(DifficultyLevel level) {

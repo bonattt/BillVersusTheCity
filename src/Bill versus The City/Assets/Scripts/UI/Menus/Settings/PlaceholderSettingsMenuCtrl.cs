@@ -28,6 +28,10 @@ public class PlaceholderSettingsMenuCtrl : ISettingModuleMenu {
         // do nothing: placeholder class
     }
 
+    public IEnumerable<string> UnsavedFields() {
+        return new List<string>();
+    }
+
     public bool HasUnsavedChanges() {
         return false;
     }

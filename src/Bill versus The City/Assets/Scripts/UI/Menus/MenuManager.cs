@@ -123,7 +123,7 @@ public class MenuManager : MonoBehaviour
         else if (InputSystem.current.PauseMenuInput()) {
             OpenSubMenuPrefab(pause_menu_prefab);
         }
-        else if (GameSettings.inst.debug_settings.allow_debug_actions && InputSystem.current.DebugInput()) {
+        else if (GameSettings.inst.debug_settings.GetBool("allow_debug_actions") && InputSystem.current.DebugInput()) {
             OpenSubMenuPrefab(debug_action_menu_prefab);
         }
     }
