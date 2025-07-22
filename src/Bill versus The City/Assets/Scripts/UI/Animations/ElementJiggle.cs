@@ -37,25 +37,9 @@ public class ElementJiggle : MonoBehaviour {
         base_position = target.resolvedStyle.translate;
     }
 
-    // void OnEnable() {
-    //     Debug.LogWarning("OnEnable"); // TODO --- remove debug
-    //     StartJiggle();
-    // }
 
     public void StartJiggle() {
         jiggle_start_time = GetTime();
-        // if (ui_doc == null) {
-        //     Debug.LogError("UI Document not assigned.");
-        //     return;
-        // }
-
-        // target = ui_doc.rootVisualElement.Q(target_name);
-        // if (target == null) {
-        //     Debug.LogError($"VisualElement '{target_name}' not found.");
-        //     return;
-        // }
-
-        // Save original position
     }
 
     public float GetTime() {
@@ -101,7 +85,6 @@ public class ElementJiggle : MonoBehaviour {
     }
 
     void OnDisable() {
-        Debug.LogWarning("OnDisable"); // TODO --- remove debug
         StopJiggle();
     }
 
@@ -110,7 +93,6 @@ public class ElementJiggle : MonoBehaviour {
         if (target != null)
             target.style.translate = new StyleTranslate(new Translate(0, 0, 0));
     }
-
 
     //////////////////////////////////////////////// DEBUG STUFF ////////////////////////////////////
     public ElementJiggleDebugger _debug;

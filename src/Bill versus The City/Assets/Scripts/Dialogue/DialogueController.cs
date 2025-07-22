@@ -78,13 +78,10 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     void Start() {
-        Debug.LogWarning("DialogueController.Start()"); // TODO --- remove debug
         root = ui_doc.rootVisualElement;
         portraits_container = root.Q<VisualElement>("PortraitDiv");
         portraits_container.Clear();
-        Debug.LogWarning($"DialogueController.Start(): portraits_container: {portraits_container}"); // TODO --- remove debug
         dialogue_text = root.Q<Label>("DialogueText");
-        // speaker_left_element = root.Q<VisualElement>("Speaker");
         speaker_name_element = root.Q<VisualElement>("SpeakerName");
         speaker_label = speaker_name_element.Q<Label>();
         ConfigurePortraits();
@@ -402,15 +399,9 @@ public class DialogueController : AbstractCloseEventMenu {
     private const float PORTRAIT_REPOSITION_LERP = 0.5f;
 
     private void UpdatePortraitPosition(DialoguePortrait target, int index, bool new_portrait = false) {
-        // new_portrait = true; // TODO --- remove debug
-        // float percent_from_left = GetPercentFromLeft(index);
-        // percent_from_left = 0f; // TODO --- remove debug
         float position_px = (index + 1) * UIUtils.SCREEN_WIDTH / (MAX_PORTRAITS + 1);
         float offset = DialoguePortrait.IMAGE_WIDTH / 2;
         float new_position = position_px - offset;
-        // float percent_from_left = 100 * new_position / portraits_container.resolvedStyle.width; // make a percent 
-        Debug.LogWarning($"portrait {target.name} div width: {portraits_container.resolvedStyle.width}px, portrait width: { target.resolvedStyle.width}"); // TODO --- remove debug
-        Debug.LogWarning($"portrait {target.name} new_position: {new_position}px, offset: {offset}"); // TODO --- remove debug
         if (new_portrait) {
             target.style.position = Position.Absolute;
             target.style.bottom = new Length(PORTRAIT_BOTTOM_PERCENT, LengthUnit.Percent);
@@ -453,20 +444,6 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     private int GetCharacterIndex(string character_name) {
-        // returns the index (StagePosition) the given character is currently positioned at.
-        // if the given name is not on-screen, return -1
-
-        // if (!character_portraits.ContainsKey(character_name)) {
-        //     return -1;
-        // }
-        // VisualElement target_portrait = character_portraits[character_name];
-        // for (int i = 0; i < portrait_containers.Length; i++) {
-        //     if (portrait_containers[i] == target_portrait.parent) {
-        //         return i;
-        //     }
-        // }
-        // Debug.LogError($"Character {character_name} found in dict, but cannot match portrait index!");
-        // return -1;
         DialoguePortrait target_portrait;
         try {
             target_portrait = character_portraits[character_name];
