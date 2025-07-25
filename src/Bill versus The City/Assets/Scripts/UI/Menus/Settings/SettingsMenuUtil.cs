@@ -41,8 +41,8 @@ public static class SettingsMenuUtil {
     //     return root;
     // }
 
-    public static readonly string[] SETTINGS_ITEM_CLASSES = new string[]{"settings_item"};
-    
+    public static readonly string[] SETTINGS_ITEM_CLASSES = new string[] { "settings_item" };
+
     public static void UpdateSliderValueDisplay(Slider slider, Label label) {
         // updates the value display of a percent slider to show a percent 0-100
         label.text = $"{Mathf.Round(slider.value * 100)}";
@@ -58,7 +58,7 @@ public static class SettingsMenuUtil {
         return (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
     }
 
-    public static CustomSettingsSlider CreatePercentSlider(string text, float min=0f, float max=1f) {
+    public static CustomSettingsSlider CreatePercentSlider(string text, float min = 0f, float max = 1f) {
         // creates a slider for controlling percent fields (0-1f)
         CustomSettingsSlider slider = new CustomSettingsSlider(text, min, max);
         slider.AddToClassList(PERCENT_SLIDER_CLASS);
@@ -72,13 +72,13 @@ public static class SettingsMenuUtil {
     public static void LogChildren(VisualElement element) {
         string msg = $"'{element}' has {element.Children().Count()} children:";
         foreach (VisualElement child in element.Children()) {
-            msg += $"\n\t{child}"; 
+            msg += $"\n\t{child}";
         }
         Debug.Log(msg);
     }
 
     public static void ApplySettingsItemClasses(VisualElement element) {
-        foreach(string style_class in SETTINGS_ITEM_CLASSES) {
+        foreach (string style_class in SETTINGS_ITEM_CLASSES) {
             element.AddToClassList(style_class);
         }
     }
@@ -97,22 +97,22 @@ public static class SettingsMenuUtil {
         controls.name = "Controls";
         controls.AddToClassList("settings_control_buttons_pannel");
 
-        Button save_button = new Button();
-        save_button.text = "Apply";
-        save_button.AddToClassList("settings_control_button");
-        save_button.RegisterCallback<ClickEvent>(MenuManager.PlayMenuClick);
-        save_button.clicked += menu.SaveSettings;
-        controls.Add(save_button);
-
-        Button load_button = new Button();
-        load_button.text = "Revert";
-        load_button.AddToClassList("settings_control_button");
-        load_button.RegisterCallback<ClickEvent>(MenuManager.PlayMenuCancelClick);
-        load_button.clicked += menu.LoadSettings;
-        controls.Add(load_button);
+        CreateSettingsControlButton("Apply\nSettings", menu.SaveSettings, controls);
+        CreateSettingsControlButton("Revert\nChanges", menu.LoadSettings, controls);
+        CreateSettingsControlButton("Restore\nDefaults", menu.RestoreToDefaultsClicked, controls);
+        CreateSettingsControlButton("Close\nMenu", MenuManager.inst.CloseMenu, controls);
 
         return controls;
+    }
 
+    private static Button CreateSettingsControlButton(string button_text, Action Callback, VisualElement parent) {
+        Button new_button = new Button();
+        new_button.text = button_text;
+        new_button.AddToClassList("settings_control_button");
+        new_button.clicked += Callback;
+        new_button.RegisterCallback<ClickEvent>(MenuManager.PlayMenuClick);
+        parent.Add(new_button);
+        return new_button;
     }
 
 }

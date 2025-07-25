@@ -31,7 +31,7 @@ public class DifficultySettings : AbstractSettingsModule {
     };
     
     public DifficultySettings() {
-        SetToNewGameDefault();
+        RestoreToDefaults();
     }
 
     private void SetFromTemplate(Dictionary<string, float> template) {
@@ -71,29 +71,40 @@ public class DifficultySettings : AbstractSettingsModule {
         {DifficultyLevel.hard, "Hard"}
     };
 
-    public static readonly Dictionary<string, float> min_multipliers = new Dictionary<string, float>() {
-        {PLAYER_ARMOR, 0.25f},
-        {PLAYER_HEALTH, 0.25f},
-        {PLAYER_RELOAD_SPEED, 0.25f},
-        {ENEMY_ARMOR, 0.25f},
-        {ENEMY_HEALTH, 0.25f},
-        {ENEMY_REACTION_TIME, 0.25f},
-        {ENEMY_RUN_SPEED, 0.75f}, 
-        {ENEMY_RELOAD_SPEED, 0.25f},
-    };
-    public static readonly Dictionary<string, float> max_multipliers = new Dictionary<string, float>() {
-        {PLAYER_ARMOR, 3f},
-        {PLAYER_HEALTH, 3f},
-        {PLAYER_RELOAD_SPEED, 3f},
-        {ENEMY_ARMOR, 3f},
-        {ENEMY_HEALTH, 3f},
-        {ENEMY_REACTION_TIME, 3f},
-        {ENEMY_RUN_SPEED, 1.7f},
-        {ENEMY_RELOAD_SPEED, 3f},
-    };
-
+    protected override void InitializeMinMaxAndDefaults() {
+        float_fields_max = new Dictionary<string, float>() {
+            {PLAYER_ARMOR, 3f},
+            {PLAYER_HEALTH, 3f},
+            {PLAYER_RELOAD_SPEED, 3f},
+            {ENEMY_ARMOR, 3f},
+            {ENEMY_HEALTH, 3f},
+            {ENEMY_REACTION_TIME, 3f},
+            {ENEMY_RUN_SPEED, 1.7f},
+            {ENEMY_RELOAD_SPEED, 3f},
+        };
+        float_fields_min = new Dictionary<string, float>() {
+            {PLAYER_ARMOR, 0.25f},
+            {PLAYER_HEALTH, 0.25f},
+            {PLAYER_RELOAD_SPEED, 0.25f},
+            {ENEMY_ARMOR, 0.25f},
+            {ENEMY_HEALTH, 0.25f},
+            {ENEMY_REACTION_TIME, 0.25f},
+            {ENEMY_RUN_SPEED, 0.75f},
+            {ENEMY_RELOAD_SPEED, 0.25f},
+        };
+        float_fields_default = new Dictionary<string, float>() {
+            {PLAYER_ARMOR, 1f},
+            {PLAYER_HEALTH, 1f},
+            {PLAYER_RELOAD_SPEED, 1f},
+            {ENEMY_ARMOR, 1f},
+            {ENEMY_HEALTH, 1f},
+            {ENEMY_REACTION_TIME, 1f},
+            {ENEMY_RUN_SPEED, 1f},
+            {ENEMY_RELOAD_SPEED, 1f},
+        };
+    }
+    
     private static Dictionary<string, DifficultyLevel> REVERSE_DISPLAY_VALUES = null;
-
     public static string DifficultyLevelDisplay(DifficultyLevel level) {
         if (DISPLAY_VALUES.ContainsKey(level)) {
             return DISPLAY_VALUES[level];
@@ -117,17 +128,13 @@ public class DifficultySettings : AbstractSettingsModule {
         return REVERSE_DISPLAY_VALUES[display_value];
     }
 
-
-    public float GetMin(string field_name) {
-        return min_multipliers[field_name];
-    }
-
-    public float GetMax(string field_name) {
-        return max_multipliers[field_name];
-    }
-    
-    public override void SetToNewGameDefault() {
-        SetDifficultyLevel(DifficultyLevel.medium);
+    public override void RestoreToDefaults() {
+        if (difficulty_level == DifficultyLevel.custom) {
+            base.RestoreToDefaults();
+            difficulty_level = DifficultyLevel.custom;
+        } else {
+            SetDifficultyLevel(difficulty_level, apply_template: true);
+        }
     }
 
     public override DuckDict AsDuckDict()

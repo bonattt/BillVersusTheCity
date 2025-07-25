@@ -19,11 +19,11 @@ public class GameSettings {
     {
         // sets settings to new game defaults. Some settings modules are effected by this, others or not, 
         //   but that responsibility is handed off to the modules.
-        general_settings.SetToNewGameDefault();
-        difficulty_settings.SetToNewGameDefault();
-        game_play_settings.SetToNewGameDefault();
-        audio_settings.SetToNewGameDefault();
-        debug_settings.SetToNewGameDefault();
+        general_settings.RestoreToDefaults();
+        difficulty_settings.RestoreToDefaults();
+        game_play_settings.RestoreToDefaults();
+        audio_settings.RestoreToDefaults();
+        debug_settings.RestoreToDefaults();
     }
 
     // public const string AUDIO_SETTINGS = "audio";

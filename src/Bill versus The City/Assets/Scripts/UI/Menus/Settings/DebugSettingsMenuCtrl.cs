@@ -16,7 +16,6 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         // do nothing
     }
 
-    // return the SettingsModule this controller targets
     public override ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
 
     // takes the root element of the sub-menu, and configures the menu's controller
@@ -145,12 +144,9 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         DebugSettings settings = GameSettings.inst.debug_settings;
         foreach (string field_name in field_settings_toggles.Keys) {
             if (FieldHasUnsavedChanges(field_name)) {
-                Toggle t = field_settings_toggles[field_name];
-                Debug.LogWarning($"field '{field_name}' does not match (settings={settings.GetBool(field_name)}, toggle {t.value})"); // TODO --- remove debug
                 return true;
             }
         }
-        Debug.LogWarning($"{show_grenade_fuse_dropdown.value} != {DebugSettings.ShowGrenadeStringFromEnum(settings.show_grenade_fuse)} ==> {show_grenade_fuse_dropdown.value != DebugSettings.ShowGrenadeStringFromEnum(settings.show_grenade_fuse)}"); // TODO --- remove debug
         return !show_grenade_fuse_dropdown.value.Equals(DebugSettings.ShowGrenadeStringFromEnum(settings.show_grenade_fuse));
     }
 

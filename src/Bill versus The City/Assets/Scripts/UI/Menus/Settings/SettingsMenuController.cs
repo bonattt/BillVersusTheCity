@@ -202,13 +202,13 @@ public class SettingsMenuController : AbstractCloseEventMenu
         sub_menu_root = uxml.CloneTree();
         sub_menu_panel.Add(sub_menu_root);
         open_settings_controller = GetTabController(tab_name);
-        AddSaveLoadButtons();
+        AddControlButtons();
 
         open_settings_controller.Initialize(sub_menu_root);
 
     }
 
-    private VisualElement AddSaveLoadButtons() {
+    private VisualElement AddControlButtons() {
         VisualElement controls = sub_menu_root.Q<VisualElement>("Controls");
         controls = SettingsMenuUtil.CreateSettingsControlButtons(open_settings_controller, controls);
         // if (!sub_menu_root.Children().Contains(controls)) {

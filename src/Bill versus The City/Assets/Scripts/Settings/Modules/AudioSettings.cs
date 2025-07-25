@@ -68,6 +68,10 @@ public class AudioSettings : AbstractSettingsModule {
             return _volume_fields;
         }
     }
+    
+    protected override void InitializeMinMaxAndDefaults() {
+        Debug.LogWarning("// TODO --- implement AudioSettings.SetMinMaxAndDefault()"); // TODO --- implement SetMinMaxAndDefault()
+    }
 
     // public override void LoadFromJson(DuckDict data, bool update_subscribers = true) {
     //     // sets the settings module from a JSON string
@@ -95,7 +99,7 @@ public class AudioSettings : AbstractSettingsModule {
     // }
 
     private static SoundCategory CategoryFromString(string category) {
-        switch(category) {
+        switch (category) {
             case "sound_effect":
                 return SoundCategory.sound_effect;
             case "music":

@@ -28,6 +28,22 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
         settings_pannel.Clear();
     }
 
+    public void RestoreToDefaultsClicked() {
+        YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
+        popup.header_text = "Reset to Defaults?";
+        popup.content_text = "any changes you've made to this settings page will be lost";
+        popup.UpdateLabels();
+        popup.confirm_button.clicked += RestoreToDefaults;
+        // popup.confirm_button.clicked += settings_module.RestoreToDefaults;
+    }
+
+    private void RestoreToDefaults() {
+        // called when a restore to defaults is confirmed
+        settings_module.RestoreToDefaults();
+        LoadSettings(); // update the UI with whatever is in the settings module after restoring to default
+        SaveSettings(); // apply the new change
+    }
+
     public abstract void SaveSettings();
 
     public abstract void LoadSettings();

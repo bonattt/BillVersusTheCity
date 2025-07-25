@@ -14,7 +14,11 @@ public class PlaceholderSettingsMenuCtrl : ISettingModuleMenu {
 
     // return the SettingsModule this controller targets
     public ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
-    
+
+    public void RestoreToDefaultsClicked() {
+        // do nothing
+    }
+
     // takes the root element of the sub-menu, and configures the menu's controller
     public void Initialize(VisualElement root) {
         // do nothing: placeholder class

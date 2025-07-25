@@ -21,6 +21,10 @@ public class GeneralSettings : AbstractSettingsModule {
     };
     public override List<string> other_field_names { get => OTHER_FIELDS; }
     public HashSet<string> skipped_tutorials = new HashSet<string>();
+    
+    protected override void InitializeMinMaxAndDefaults() {
+        Debug.LogWarning("// TODO --- implement GeneralSettings.SetMinMaxAndDefault()"); // TODO --- implement SetMinMaxAndDefault()
+    }
 
     public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module
@@ -34,8 +38,8 @@ public class GeneralSettings : AbstractSettingsModule {
         skipped_tutorials = UnpackHashSet(data, "skipped_tutorials");
         base.LoadFromJson(data, update_subscribers);
     }
-    public override void SetToNewGameDefault()
-    {
+    
+    public override void RestoreToDefaults() {
         skip_all_tutorials = false;
         skipped_tutorials = new HashSet<string>();
     }

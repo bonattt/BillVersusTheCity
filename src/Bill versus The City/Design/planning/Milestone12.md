@@ -47,10 +47,11 @@ UNPLANNED FEATURES
     - use this sound https://freesound.org/people/maximumplay3r/sounds/713344/
 [+] Add a "Get money" debug action
 [ ] Add "default" settings values
-    [ ] Refactor settings to share more code around Dictionary<string,type> implementations,
-        [ ] FIX: non-custom difficulty triggeres "unsaved changes" popup
+    [+] Refactor settings to share more code around Dictionary<string,type> implementations,
+        [+] FIX: non-custom difficulty triggeres "unsaved changes" popup
+    [ ] Implement abstract min/max settings
+    [ ] Implement abstract default settings
     [ ] expand scope of templating to apply to all settings
-    [ ] use templates to implement "default" values
 
 
 UNPLANNED BUGFIXES

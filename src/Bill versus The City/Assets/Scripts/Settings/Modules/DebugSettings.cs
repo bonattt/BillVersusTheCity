@@ -105,6 +105,10 @@ public class DebugSettings : AbstractSettingsModule {
 
     private static readonly List<string> OTHER_FIELDS = new List<string>() { "show_grenade_fuse" };
     public override List<string> other_field_names { get => OTHER_FIELDS; }
+    
+    protected override void InitializeMinMaxAndDefaults() {
+        Debug.LogWarning("// TODO --- implement DebugSettings.SetMinMaxAndDefault()"); // TODO --- implement SetMinMaxAndDefault()
+    }
 
     public override DuckDict AsDuckDict() {
         // returns json data for the settings in this module

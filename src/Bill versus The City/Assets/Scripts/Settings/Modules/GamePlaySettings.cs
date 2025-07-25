@@ -23,6 +23,10 @@ public class GamePlaySettings : AbstractSettingsModule {
     private static readonly List<string> FLOAT_FIELDS = new List<string>(){ MOUSE_SENSITIVITY };
     public override List<string> float_field_names { get => FLOAT_FIELDS; }
 
+    
+    protected override void InitializeMinMaxAndDefaults() {
+        Debug.LogWarning("// TODO --- implement GamePlaySettings.SetMinMaxAndDefault()"); // TODO --- implement SetMinMaxAndDefault()
+    }
     // public override DuckDict AsDuckDict() {
     //     // returns json data for the settings in this module
     //     DuckDict data = new DuckDict();

@@ -106,6 +106,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         // destroy when sound finishes  
         float clip_length = audio_source.clip.length;
         Destroy(audio_source.gameObject, clip_length);
+        Debug.LogWarning($"play clip '{audio_clip.name}' Destroy after {clip_length} secnods"); // TODO --- remove debug
         return audio_source;
     }
 

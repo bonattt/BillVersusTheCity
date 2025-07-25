@@ -21,6 +21,9 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
     public AudioSettingsMenuCtrl() {
         // do nothing
     }
+    public void RestoreToDefaultsClicked() {
+        Debug.LogError("AudioSettingsMenuCtrl should extend AbstractSettingsMenuCtrl, instead of implementing from scratch!"); // TODO --- remove debug
+    }
 
     // return the SettingsModule this controller targets
     public ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }

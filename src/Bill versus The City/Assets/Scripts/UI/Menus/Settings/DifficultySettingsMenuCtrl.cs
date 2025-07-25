@@ -64,7 +64,7 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
     private CustomSettingsSlider GetMultiplierSlider(string field_name) {
         DifficultySettings settings = GameSettings.inst.difficulty_settings;
         string display_name = StringUtils.ToTitleCase(field_name.Replace("_", " "));
-        CustomSettingsSlider new_slider = SettingsMenuUtil.CreatePercentSlider(display_name, settings.GetMin(field_name), settings.GetMax(field_name));
+        CustomSettingsSlider new_slider = SettingsMenuUtil.CreatePercentSlider(display_name, settings.GetMinFloat(field_name), settings.GetMaxFloat(field_name));
         new_slider.value = settings.GetMultiplier(field_name);
         new_slider.AddToClassList(SETTINGS_ITEM_CLASS);
         multiplier_sliders[field_name] = new_slider;

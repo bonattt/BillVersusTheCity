@@ -21,9 +21,68 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     public void Unsubscribe(ISettingsObserver sub) => subscribers.Remove(sub);
 
     protected Dictionary<string, float> float_fields = new Dictionary<string, float>();
-    protected Dictionary<string, int> int_fields = new Dictionary<string, int>();
-    protected Dictionary<string, bool> bool_fields = new Dictionary<string, bool>();
+    protected Dictionary<string, float> float_fields_max = new Dictionary<string, float>();
+    protected Dictionary<string, float> float_fields_min = new Dictionary<string, float>();
+    protected Dictionary<string, float> float_fields_default = new Dictionary<string, float>();
 
+    protected Dictionary<string, int> int_fields = new Dictionary<string, int>();
+    protected Dictionary<string, int> int_fields_max = new Dictionary<string, int>();
+    protected Dictionary<string, int> int_fields_min = new Dictionary<string, int>();
+    protected Dictionary<string, int> int_fields_default = new Dictionary<string, int>();
+
+    protected Dictionary<string, bool> bool_fields = new Dictionary<string, bool>();
+    protected Dictionary<string, bool> bool_fields_default = new Dictionary<string, bool>();
+
+    public AbstractSettingsModule() {
+        InitializeMinMaxAndDefaults();
+    }
+
+    public float GetFloat(string field) {
+        if (!float_fields.ContainsKey(field)) {
+            Debug.LogWarning($"Setting field '{field}' from default value '{float_fields_default[field]}'!");
+            float_fields[field] = float_fields_default[field];
+        }
+        return float_fields[field];
+    }
+    public float GetMaxFloat(string field) {
+        return float_fields_max[field];
+    }
+    public float GetMinFloat(string field) {
+        return float_fields_min[field];
+    }
+    public void SetFloat(string field, float value) {
+        float_fields[field] = Mathf.Clamp(value, float_fields_min[field], float_fields_max[field]);
+    }
+
+    public int GetInt(string field) {
+        if (!int_fields.ContainsKey(field)) {
+            Debug.LogWarning($"Setting field '{field}' from default value '{int_fields_default[field]}'!");
+            int_fields[field] = int_fields_default[field];
+        }
+        return int_fields[field];
+    }
+    public int GetMaxInt(string field) {
+        return int_fields_max[field];
+    }
+    public int GetMinInt(string field) {
+        return int_fields_min[field];
+    }
+    public void SetInt(string field, int value) {
+        int_fields[field] =  Mathf.Clamp(value, int_fields_min[field], int_fields_max[field]);
+    }
+
+    public bool GetBool(string field) {
+        if (!bool_fields.ContainsKey(field)) {
+            Debug.LogWarning($"Setting field '{field}' from default value '{bool_fields_default[field]}'!");
+            bool_fields[field] = bool_fields_default[field];
+        }
+        return bool_fields[field];
+    }
+    public void SetBool(string field, bool value) {
+        bool_fields[field] = value;
+    }
+
+    protected abstract void InitializeMinMaxAndDefaults();
     public virtual DuckDict AsDuckDict() {
         // returns json data for the settings in this module
         DuckDict dict = new DuckDict();
@@ -65,32 +124,59 @@ public abstract class AbstractSettingsModule : ISettingsModule {
         }
     }
 
-    public float GetFloat(string field) {
-        return float_fields[field];
-    }
-    public int GetInt(string field) {
-        return int_fields[field];
-    }
-    public bool GetBool(string field) {
-        return bool_fields[field];
-    }
+    // public float GetFloat(string field) {
+    //     return float_fields[field];
+    // }
+    // public int GetInt(string field) {
+    //     return int_fields[field];
+    // }
+    // public bool GetBool(string field) {
+    //     return bool_fields[field];
+    // }
 
-    public void SetFloat(string field, float value) {
-        float_fields[field] = value;
-    }
-    public void SetInt(string field, int value) {
-        int_fields[field] = value;
-    }
-    public void SetBool(string field, bool value) {
-        bool_fields[field] = value;
-    }
+    // public void SetFloat(string field, float value) {
+    //     float_fields[field] = value;
+    // }
+    // public void SetInt(string field, int value) {
+    //     int_fields[field] = value;
+    // }
+    // public void SetBool(string field, bool value) {
+    //     bool_fields[field] = value;
+    // }
 
 
-    protected virtual float DefaultFloatValue(string field_name) => 1f;
-    protected virtual int DefaultIntValue(string field_name) => 0;
-    protected virtual bool DefaultBoolValue(string field_name) => false;
+    protected virtual float GetDefaultFloat(string field_name) => 1f;
+    protected virtual int GetDefaultInt(string field_name) => 0;
+    protected virtual bool GetDefaultBool(string field_name) => false;
 
-    public virtual void SetToNewGameDefault() { /* do nothing by default */}
+    public virtual void RestoreToDefaults() {
+        foreach (string key in float_field_names) {
+            if (float_fields_default.ContainsKey(key)) {
+                float_fields[key] = float_fields_default[key];
+            } else {
+                float_fields[key] = GetDefaultFloat(key);
+                Debug.LogWarning($"no default for '{key}', using default float value '{float_fields[key]}'");
+            }
+        }
+
+        foreach (string key in int_field_names) {
+            if (int_fields_default.ContainsKey(key)) {
+                int_fields[key] = int_fields_default[key];
+            } else {
+                int_fields[key] = GetDefaultInt(key);
+                Debug.LogWarning($"no default for '{key}', using default float value '{int_fields[key]}'");
+            }
+        }
+
+        foreach (string key in bool_field_names) {
+            if (bool_fields_default.ContainsKey(key)) {
+                bool_fields[key] = bool_fields_default[key];
+            } else {
+                bool_fields[key] = GetDefaultBool(key);
+                Debug.LogWarning($"no default for '{key}', using default float value '{bool_fields[key]}'");
+            }
+        }
+    }
 
     public void UpdateSubscribers(string field) {
         foreach (ISettingsObserver sub in subscribers) {

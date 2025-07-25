@@ -17,6 +17,7 @@ public interface ISettingModuleMenu {
 
     // sets the UI's elements to match what is stored in settings (reverting any changes)
     public void LoadSettings();
+    public void RestoreToDefaultsClicked();
 
     public IEnumerable<string> UnsavedFields();
     public bool HasUnsavedChanges();
