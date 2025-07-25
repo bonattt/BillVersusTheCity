@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AudioSettings : AbstractSettingsModule {
     
-    private const string MASTER_VOLUME = "master_volume";
+    public const string MASTER_VOLUME = "master_volume";
     public float master_volume {
         get { return GetFloat(MASTER_VOLUME); }
         set {
@@ -19,6 +19,13 @@ public class AudioSettings : AbstractSettingsModule {
         return GetVolumeSetting(category) * master_volume;
     }
 
+    public float GetVolumeSetting(string category) {
+        if (MASTER_VOLUME.Equals(category)) {
+            return master_volume;
+        }
+        return GetVolumeSetting(CategoryFromString(category));
+
+    }
     public float GetVolumeSetting(SoundCategory category) {
         string field_name = CategoryToString(category);
         if (!float_fields.ContainsKey(field_name)) {
@@ -28,8 +35,12 @@ public class AudioSettings : AbstractSettingsModule {
         return GetFloat(field_name);
     }
 
+    public void SetVolumeSetting(string category, float volume) {
+        // should work on master_volume without special handling
+        SetFloat(category, volume);
+    }
     public void SetVolumeSetting(SoundCategory category, float volume) {
-        SetFloat(CategoryToString(category), volume);
+        SetVolumeSetting(CategoryToString(category), volume);
     }
 
 
@@ -62,7 +73,7 @@ public class AudioSettings : AbstractSettingsModule {
     //     base.RestoreToDefaults();
     // }
 
-    private static SoundCategory CategoryFromString(string category) {
+    public static SoundCategory CategoryFromString(string category) {
         switch (category) {
             case "sound_effect":
                 return SoundCategory.sound_effect;
@@ -77,7 +88,7 @@ public class AudioSettings : AbstractSettingsModule {
         }
     }
 
-    private static string CategoryToString(SoundCategory category) {
+    public static string CategoryToString(SoundCategory category) {
         return $"{category}";
     }
 }

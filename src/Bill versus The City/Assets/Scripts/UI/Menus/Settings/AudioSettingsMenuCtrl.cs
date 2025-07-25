@@ -5,31 +5,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AudioSettingsMenuCtrl : ISettingModuleMenu {
+public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
-    private VisualElement root, settings_pannel, buttons_pannel; 
+    // private VisualElement root, settings_pannel, buttons_pannel; 
     private Slider master_volume;
-    private Label master_volume_label, header_label;
-    private Dictionary<SoundCategory, Slider> volume_sliders = new Dictionary<SoundCategory, Slider>();
-    private Dictionary<SoundCategory, Label> volume_slider_labels = new Dictionary<SoundCategory, Label>();
+    private Label master_volume_label; //, header_label;
+    private Dictionary<string, Slider> volume_sliders = new Dictionary<string, Slider>();
+    private Dictionary<string, Label> volume_slider_labels = new Dictionary<string, Label>();
 
-    public readonly SoundCategory[] sound_category_ordering = new SoundCategory[]{
-        SoundCategory.sound_effect,
-        SoundCategory.music,
-        SoundCategory.menu,
+    public readonly string[] sound_category_ordering = new string[]{
+        AudioSettings.MASTER_VOLUME,
+        AudioSettings.CategoryToString(SoundCategory.sound_effect),
+        AudioSettings.CategoryToString(SoundCategory.music),
+        AudioSettings.CategoryToString(SoundCategory.menu),
     };
-    public AudioSettingsMenuCtrl() {
-        // do nothing
-    }
-    public void RestoreToDefaultsClicked() {
-        Debug.LogError("AudioSettingsMenuCtrl should extend AbstractSettingsMenuCtrl, instead of implementing from scratch!"); // TODO --- remove debug
-    }
+    // public AudioSettingsMenuCtrl() {
+    //     // do nothing
+    // }
+    // public void RestoreToDefaultsClicked() {
+    //     Debug.LogError("AudioSettingsMenuCtrl should extend AbstractSettingsMenuCtrl, instead of implementing from scratch!"); // TODO --- remove debug
+    // }
 
     // return the SettingsModule this controller targets
-    public ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
+    public override ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
     
     // takes the root element of the sub-menu, and configures the menu's controller
-    public void Initialize(VisualElement root) {
+    public override void Initialize(VisualElement root) {
         this.root = root;
         settings_pannel = root.Q<VisualElement>("List");
         buttons_pannel = root.Q<VisualElement>("Controlls");
@@ -37,9 +38,9 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         header_label.text = "Audio Settings";
 
         settings_pannel.Clear();
-        (master_volume, master_volume_label) = AddVolumeSlider("Master Volume");
+        // (master_volume, master_volume_label) = AddVolumeSlider("Master Volume");
         for (int i = 0; i < sound_category_ordering.Length; i++) {
-            SoundCategory category = sound_category_ordering[i];
+            string category = sound_category_ordering[i];
             (Slider new_slider, Label slider_label) = AddVolumeSlider(DisplayValue(category));
             if (new_slider == null) { Debug.LogWarning("Slider null!"); }
             volume_sliders[category] = new_slider;
@@ -56,66 +57,72 @@ public class AudioSettingsMenuCtrl : ISettingModuleMenu {
         return SettingsMenuUtil.UnpackSlider(slider_element);  // (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
     }
 
-    public void SaveSettings() {
+    public override void SaveSettings() {
         // Saves the menu's changes to settings    
         AudioSettings settings = GameSettings.inst.audio_settings;
-        settings.master_volume = master_volume.value;
-        foreach (SoundCategory category in sound_category_ordering) {
+        // settings.master_volume = master_volume.value;
+        foreach (string category in sound_category_ordering) {
             settings.SetVolumeSetting(category, volume_sliders[category].value);
         }
     }
 
-    public void LoadSettings() {
+    public override void LoadSettings() {
         // sets the UI's elements to match what is stored in settings (reverting any changes)
         AudioSettings settings = GameSettings.inst.audio_settings;
-        master_volume.value = settings.master_volume;
-        foreach (SoundCategory category in sound_category_ordering) {
-             volume_sliders[category].value = settings.GetVolumeSetting(category);
+        // master_volume.value = settings.master_volume;
+        foreach (string category in sound_category_ordering) {
+            volume_sliders[category].value = settings.GetVolumeSetting(category);
         }
         UpdateUI();
     }
 
-    public virtual IEnumerable<string> UnsavedFields() {
+    public override IEnumerable<string> UnsavedFields() {
         Debug.LogWarning("TODO --- implement `AudioSettingsMenuCtrl.UnsavedFields()`"); // TODO --- implement this
         return new List<string>();
     }
     
-    public bool HasUnsavedChanges() {
+    public override bool HasUnsavedChanges() {
         AudioSettings settings = GameSettings.inst.audio_settings;
-        foreach (SoundCategory category in sound_category_ordering) {
+        foreach (string f in settings.float_field_names) {
             // if any setting doesn't match, shourt-circuit and return false
-            if (volume_sliders[category].value != settings.GetVolumeSetting(category)) {
+            if (volume_sliders[f].value != settings.GetVolumeSetting(f)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void UpdateUI() {
-        // // updates the UI
-        // SettingsMenuUtil.UpdateSliderValueDisplay(master_volume, master_volume_label);
-        // foreach (SoundCategory key in volume_sliders.Keys) {
-        //     SettingsMenuUtil.UpdateSliderValueDisplay(volume_sliders[key], volume_slider_labels[key]);
-        // }
-    }
+    // public override void UpdateUI() {
+    //     // // updates the UI
+    //     // SettingsMenuUtil.UpdateSliderValueDisplay(master_volume, master_volume_label);
+    //     // foreach (SoundCategory key in volume_sliders.Keys) {
+    //     //     SettingsMenuUtil.UpdateSliderValueDisplay(volume_sliders[key], volume_slider_labels[key]);
+    //     // }
+    // }
 
+    public static string DisplayValue(string category) {
+        if (AudioSettings.MASTER_VOLUME.Equals(category)) {
+            return "Master Volume";
+        }
+        return DisplayValue(AudioSettings.CategoryFromString(category));
+    }
     public static string DisplayValue(SoundCategory category) {
-        switch(category) {
+        switch (category) {
             case SoundCategory.menu:
                 return "Menu";
             case SoundCategory.music:
                 return "Music";
             case SoundCategory.sound_effect:
                 return "Sound Effect";
-            
+
             default:
                 Debug.LogWarning($"unknown sound category {category}!");
                 return $"{category}";
         }
     }
 
-    public void CleanUp() {
-        // disposes of any resources that need to be cleaned when the sub-menu is closed
-        // nothing to do here
-    }
+    // public override void CleanUp() {
+    //     // disposes of any resources that need to be cleaned when the sub-menu is closed
+    //     // nothing to do here
+    // }
 }

@@ -10,7 +10,7 @@ Finished on 2025-0???
 
 [ ] Update tutorial
     [+] Add Tutorials in grenade tutorial
-    [ ] remove redundant tutorials from Tutorial 3
+    [+] remove redundant tutorials from Tutorial 3
     [ ] ???
 
 PLANNED FEATURES
@@ -24,7 +24,7 @@ PLANNED FEATURES
 
 PLAYTEST FEEDBACK
 [+] FIX: throwing too close to fence bounces back and hits player
-[ ] FIX: menu has no back button
+[+] FIX: menu has no back button
 [~] Increase grenade explosion size
 [+] FIX: Pickup item UIs block too much vision
 [+] FIX: auto-equip new weapon if current slot is empty
@@ -51,7 +51,7 @@ UNPLANNED FEATURES
         [+] FIX: non-custom difficulty triggeres "unsaved changes" popup
     [+] Implement abstract min/max settings
     [+] Implement abstract default settings
-    [ ] expand scope of templating to apply to all settings
+    [X] expand scope of templating to apply to all settings
     [ ] Implement graphics settings
 
 
