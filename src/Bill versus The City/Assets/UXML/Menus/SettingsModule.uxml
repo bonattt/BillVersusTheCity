@@ -31,7 +31,7 @@
                 <ui:Button text="Apply\nSettings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ApplyButton" class="settings_control_button" />
                 <ui:Button text="Revert\nChanges" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RevertButton" class="settings_control_button" />
                 <ui:Button text="Restore\nDefaults" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DefaultButton" class="settings_control_button" />
-                <ui:Button text="Close\nMenu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DefaultButton" class="settings_control_button" />
+                <ui:Button text="Close\nMenu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CloseButton" class="settings_control_button" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

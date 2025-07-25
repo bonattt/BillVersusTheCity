@@ -32,7 +32,7 @@ PLAYTEST FEEDBACK
 
 
 PLANNED BUGFIXES
-[ ] FIX: Level 3 (countdown level) has a second countdown UI without numbers, hidden behind the healthbars
+[~] FIX: Level 3 (countdown level) has a second countdown UI without numbers, hidden behind the healthbars
     (also, dev room has this too)
 
 UNPLANNED FEATURES
@@ -46,7 +46,7 @@ UNPLANNED FEATURES
 [+] Add fuse "hiss" sound to cooking grenades
     - use this sound https://freesound.org/people/maximumplay3r/sounds/713344/
 [+] Add a "Get money" debug action
-[ ] Add "default" settings values
+[~] Add "default" settings values
     [+] Refactor settings to share more code around Dictionary<string,type> implementations,
         [+] FIX: non-custom difficulty triggeres "unsaved changes" popup
     [+] Implement abstract min/max settings
