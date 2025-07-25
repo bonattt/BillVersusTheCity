@@ -49,9 +49,10 @@ UNPLANNED FEATURES
 [ ] Add "default" settings values
     [+] Refactor settings to share more code around Dictionary<string,type> implementations,
         [+] FIX: non-custom difficulty triggeres "unsaved changes" popup
-    [ ] Implement abstract min/max settings
-    [ ] Implement abstract default settings
+    [+] Implement abstract min/max settings
+    [+] Implement abstract default settings
     [ ] expand scope of templating to apply to all settings
+    [ ] Implement graphics settings
 
 
 UNPLANNED BUGFIXES
