@@ -106,7 +106,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         // destroy when sound finishes  
         float clip_length = audio_source.clip.length;
         Destroy(audio_source.gameObject, clip_length);
-        Debug.LogWarning($"play clip '{audio_clip.name}' Destroy after {clip_length} secnods"); // TODO --- remove debug
+        // NOTE: audio_sources created while paused will linger because this uses unscaled time. There's not easy fix for this, and it's not REALLY a problem, so I'm letting that issue stick around
         return audio_source;
     }
 
