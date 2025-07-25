@@ -176,6 +176,7 @@ public abstract class AbstractSettingsModule : ISettingsModule {
                 Debug.LogWarning($"no default for '{key}', using default float value '{bool_fields[key]}'");
             }
         }
+        AllFieldsUpdated();
     }
 
     public void UpdateSubscribers(string field) {

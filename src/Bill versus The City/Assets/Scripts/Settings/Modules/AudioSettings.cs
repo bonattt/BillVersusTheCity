@@ -11,12 +11,6 @@ public class AudioSettings : AbstractSettingsModule {
     public float master_volume {
         get { return GetFloat(MASTER_VOLUME); }
         set {
-            // float percent = Mathf.Clamp(value, 0, 1);
-            // if (percent != value) {
-            //     Debug.LogWarning($"clampped invalid master_volume {value} --> {percent}");
-            // }
-            // _master_volume = percent;
-            // UpdateSubscribers("master_volume");
             SetFloat(MASTER_VOLUME, value);
         }
     }
@@ -35,26 +29,9 @@ public class AudioSettings : AbstractSettingsModule {
     }
 
     public void SetVolumeSetting(SoundCategory category, float volume) {
-        // float _volume = Mathf.Clamp(volume, 0, 1);
-        // if (_volume != volume) {
-        //     Debug.LogWarning($"snapped invalid volume setting {volume} -> {_volume} for {category}");
-        // }
-        // volume_settings[category] = _volume;
-        // UpdateSubscribers($"{category}");
         SetFloat(CategoryToString(category), volume);
     }
 
-    // public override DuckDict AsDuckDict()
-    // {
-    //     // returns json data for the settings in this module
-    //     DuckDict data = new DuckDict();
-    //     data.SetFloat("master_volume", master_volume);
-    //     foreach (SoundCategory category in volume_settings.Keys)
-    //     {
-    //         data.SetFloat(CategoryToString(category), volume_settings[category]);
-    //     }
-    //     return data;
-    // }
 
     private List<string> _volume_fields = null;
     public override List<string> float_field_names {
@@ -68,34 +45,21 @@ public class AudioSettings : AbstractSettingsModule {
             return _volume_fields;
         }
     }
-    
+
+    private const float MAX_VOLUME = 1f;
+    private const float MIN_VOLUME = 0f;
     protected override void InitializeMinMaxAndDefaults() {
-        Debug.LogWarning("// TODO --- implement AudioSettings.SetMinMaxAndDefault()"); // TODO --- implement SetMinMaxAndDefault()
+        float_fields_max = new Dictionary<string, float>();
+        float_fields_min = new Dictionary<string, float>();
+        foreach (string f in float_field_names) {
+            float_fields_default[f] = MAX_VOLUME;
+            float_fields_max[f] = MAX_VOLUME;
+            float_fields_min[f] = MIN_VOLUME;
+        }
     }
-
-    // public override void LoadFromJson(DuckDict data, bool update_subscribers = true) {
-    //     // sets the settings module from a JSON string
-    //     // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
-    //     master_volume = (float)data.GetFloat("master_volume");
-
-    //     foreach (SoundCategory category in Enum.GetValues(typeof(SoundCategory))) {
-    //         float val;
-    //         string key = CategoryToString(category);
-    //         if (data.ContainsKey(key)) {
-    //             if (data.GetFloat(key) == null) {
-    //                 val = 1f;
-    //             } else {
-    //                 val = (float)data.GetFloat(key);
-    //             }
-    //         } else {
-    //             val = 1f;
-    //         }
-    //         volume_settings[CategoryFromString(key)] = val;
-
-    //     }
-    //     if (update_subscribers) {
-    //         this.AllFieldsUpdated();
-    //     }
+    
+    // public override void RestoreToDefaults() {
+    //     base.RestoreToDefaults();
     // }
 
     private static SoundCategory CategoryFromString(string category) {

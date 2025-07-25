@@ -39,6 +39,7 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
 
     private void RestoreToDefaults() {
         // called when a restore to defaults is confirmed
+        Debug.LogWarning($"Menu {GetType()}.RestoreToDefaults (module: {settings_module.GetType()})"); // TODO --- remove debug
         settings_module.RestoreToDefaults();
         LoadSettings(); // update the UI with whatever is in the settings module after restoring to default
         SaveSettings(); // apply the new change

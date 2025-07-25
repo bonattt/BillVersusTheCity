@@ -15,7 +15,7 @@ public class SaveProfile {
             _save_file = value;
             if (_save_file == null)
             {
-                GameSettings.inst.SetToNewGameDefault();
+                GameSettings.inst.RestoreToDefaults();
             }
             else
             {
@@ -114,7 +114,7 @@ public class SaveProfile {
         if (settings_data == null || settings_data.Count == 0)
         {
             Debug.LogWarning($"no settings data: {settings_data}, loading new game defaults"); // TODO --- remove debug (demote log level)
-            GameSettings.inst.SetToNewGameDefault();
+            GameSettings.inst.RestoreToDefaults();
         } else {
             GameSettings.inst.LoadFromJson(settings_data);
         }

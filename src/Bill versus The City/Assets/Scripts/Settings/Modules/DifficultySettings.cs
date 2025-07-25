@@ -30,9 +30,9 @@ public class DifficultySettings : AbstractSettingsModule {
         ENEMY_RELOAD_SPEED,
     };
     
-    public DifficultySettings() {
-        RestoreToDefaults();
-    }
+    // public DifficultySettings() {
+    //     RestoreToDefaults();
+    // }
 
     private void SetFromTemplate(Dictionary<string, float> template) {
         float_fields = new Dictionary<string, float>();
@@ -135,6 +135,7 @@ public class DifficultySettings : AbstractSettingsModule {
         } else {
             SetDifficultyLevel(difficulty_level, apply_template: true);
         }
+        base.RestoreToDefaults();
     }
 
     public override DuckDict AsDuckDict()

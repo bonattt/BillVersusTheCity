@@ -13,7 +13,7 @@ public class PlaceholderSettingsMenuCtrl : ISettingModuleMenu {
     }
 
     // return the SettingsModule this controller targets
-    public ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
+    public ISettingsModule settings_module { get { return GameSettings.inst.general_settings; } }
 
     public void RestoreToDefaultsClicked() {
         // do nothing

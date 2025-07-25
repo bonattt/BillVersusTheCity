@@ -101,7 +101,6 @@ public static class SettingsMenuUtil {
         CreateSettingsControlButton("Revert\nChanges", menu.LoadSettings, controls);
         CreateSettingsControlButton("Restore\nDefaults", menu.RestoreToDefaultsClicked, controls);
         CreateSettingsControlButton("Close\nMenu", MenuManager.inst.CloseMenu, controls);
-
         return controls;
     }
 

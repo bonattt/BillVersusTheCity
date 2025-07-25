@@ -16,7 +16,7 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         // do nothing
     }
 
-    public override ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
+    public override ISettingsModule settings_module { get { return GameSettings.inst.debug_settings; } }
 
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {

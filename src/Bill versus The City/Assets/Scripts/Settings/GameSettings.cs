@@ -15,7 +15,7 @@ public class GameSettings {
         }
     }
 
-    public void SetToNewGameDefault()
+    public void RestoreToDefaults()
     {
         // sets settings to new game defaults. Some settings modules are effected by this, others or not, 
         //   but that responsibility is handed off to the modules.

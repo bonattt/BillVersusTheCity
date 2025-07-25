@@ -20,31 +20,18 @@ public class GamePlaySettings : AbstractSettingsModule {
         }
     }
 
-    private static readonly List<string> FLOAT_FIELDS = new List<string>(){ MOUSE_SENSITIVITY };
+    private static readonly List<string> FLOAT_FIELDS = new List<string>() { MOUSE_SENSITIVITY };
     public override List<string> float_field_names { get => FLOAT_FIELDS; }
 
-    
+
     protected override void InitializeMinMaxAndDefaults() {
-        Debug.LogWarning("// TODO --- implement GamePlaySettings.SetMinMaxAndDefault()"); // TODO --- implement SetMinMaxAndDefault()
+        float_fields_default[MOUSE_SENSITIVITY] = 1f;
+        float_fields_min[MOUSE_SENSITIVITY] = 0.1f;
+        float_fields_max[MOUSE_SENSITIVITY] = 5f;
     }
-    // public override DuckDict AsDuckDict() {
-    //     // returns json data for the settings in this module
-    //     DuckDict data = new DuckDict();
-    //     data.SetFloat(MOUSE_SENSITIVITY, mouse_sensitivity);
-    //     return data;
-    // }
-    // public override void LoadFromJson(DuckDict data) {
-    //     // sets the settings module from a JSON string
-    //     // DuckDict data = JsonParser.ReadAsDuckDict(json_str);
-
-    //     float? ms = data.GetFloat(MOUSE_SENSITIVITY);
-    //     if (ms == null) {
-    //         mouse_sensitivity = 1f;
-    //     } else {
-    //         mouse_sensitivity = (float) ms;
-    //     }
-
-    //     this.AllFieldsUpdated();
-    // }
     
+    // public override void RestoreToDefaults() {
+    //     base.RestoreToDefaults();
+    // }
+
 }

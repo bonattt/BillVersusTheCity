@@ -15,7 +15,7 @@ public class GameplaySettingsMenuCtrl : AbstractSettingsModuleMenu {
     }
 
     // return the SettingsModule this controller targets
-    public override ISettingsModule settings_module { get { return GameSettings.inst.difficulty_settings; } }
+    public override ISettingsModule settings_module { get { return GameSettings.inst.game_play_settings; } }
     
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
