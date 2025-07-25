@@ -21,6 +21,7 @@ public class GameSettings {
         //   but that responsibility is handed off to the modules.
         general_settings.RestoreToDefaults();
         difficulty_settings.RestoreToDefaults();
+        graphics_settings.RestoreToDefaults();
         game_play_settings.RestoreToDefaults();
         audio_settings.RestoreToDefaults();
         debug_settings.RestoreToDefaults();
@@ -75,25 +76,17 @@ public class GameSettings {
             _difficulty_settings = value; 
         }
     }
-    
-    // public Dictionary<string, AbstractSettingsModule> all_modules
-    // {
-    //     get
-    //     {
-    //         return new Dictionary<string, AbstractSettingsModule>()
-    //         {
-    //             {"general", general_settings},
-    //             {"gameplay", game_play_settings},
-    //             {"difficulty", difficulty_settings},
-    //             {"debug", debug_settings},
-    //             {"audio", audio_settings},
-    //             // {"graphics", "TODO"}
-    //         };
-    //     }        
-    // }
 
-    private GameSettings()
-    {
+    private GraphicsSettings _graphics_settings = new GraphicsSettings();
+    public GraphicsSettings graphics_settings {
+        get => _graphics_settings;
+        set {
+            ReplaceModule(_graphics_settings, value);
+            _graphics_settings = value;
+        }
+    }
+    
+    private GameSettings() {
         // if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }
         // inst = this;
     }
@@ -115,7 +108,7 @@ public class GameSettings {
         data.SetObject("difficulty", JsonParser.ReadAsDuckDict(difficulty_settings.AsJson()));
         data.SetObject("gameplay", JsonParser.ReadAsDuckDict(game_play_settings.AsJson()));
         data.SetObject("audio", JsonParser.ReadAsDuckDict(audio_settings.AsJson()));
-        data.SetObject("graphics", new DuckDict());
+        data.SetObject("graphics", JsonParser.ReadAsDuckDict(graphics_settings.AsJson()));
         data.SetObject("debug", JsonParser.ReadAsDuckDict(debug_settings.AsJson()));
         return data;
     }
@@ -138,6 +131,7 @@ public class GameSettings {
         general_settings.LoadFromJson(data.GetObject("general"));
         difficulty_settings.LoadFromJson(data.GetObject("difficulty"));
         game_play_settings.LoadFromJson(data.GetObject("gameplay"));
+        graphics_settings.LoadFromJson(data.GetObject("graphics"));
         audio_settings.LoadFromJson(data.GetObject("audio"));
         debug_settings.LoadFromJson(data.GetObject("debug"));
         // videos_settings.LoadFromJson(data); // TODO --- implement graphics settings

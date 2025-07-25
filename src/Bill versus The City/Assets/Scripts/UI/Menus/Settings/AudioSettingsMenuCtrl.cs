@@ -31,13 +31,14 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
     
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
-        this.root = root;
-        settings_pannel = root.Q<VisualElement>("List");
-        buttons_pannel = root.Q<VisualElement>("Controlls");
-        header_label = root.Q<Label>("HeaderText");
-        header_label.text = "Audio Settings";
+        // this.root = root;
+        // settings_pannel = root.Q<VisualElement>("List");
+        // buttons_pannel = root.Q<VisualElement>("Controlls");
+        // header_label = root.Q<Label>("HeaderText");
+        // header_label.text = "Audio Settings";
 
-        settings_pannel.Clear();
+        // settings_pannel.Clear();
+        LoadSettingsUXML(root);
         // (master_volume, master_volume_label) = AddVolumeSlider("Master Volume");
         for (int i = 0; i < sound_category_ordering.Length; i++) {
             string category = sound_category_ordering[i];

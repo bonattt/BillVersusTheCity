@@ -17,7 +17,13 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
     
     public abstract void Initialize(VisualElement root);
 
-    protected virtual void LoadTemplate(VisualElement root) {
+    public abstract void SaveSettings();
+
+    public abstract void LoadSettings();
+
+    public abstract bool HasUnsavedChanges();
+
+    protected virtual void LoadSettingsUXML(VisualElement root) {
         // loads the root visaul element and finds required class field in the Visual Tree
         this.root = root;
         settings_pannel = root.Q<VisualElement>("List");
@@ -27,6 +33,10 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
 
         settings_pannel.Clear();
     }
+    public virtual IEnumerable<string> UnsavedFields() {
+        Debug.LogWarning($"TODO --- implement UnsavedFields for {GetType()}"); // TODO --- make this method abstract
+        return new List<string>();
+    } 
 
     public void RestoreToDefaultsClicked() {
         YesNoPopupController popup = MenuManager.inst.OpenNewPopup();
@@ -44,16 +54,6 @@ public abstract class AbstractSettingsModuleMenu : ISettingModuleMenu {
         LoadSettings(); // update the UI with whatever is in the settings module after restoring to default
         SaveSettings(); // apply the new change
     }
-
-    public abstract void SaveSettings();
-
-    public abstract void LoadSettings();
-
-    public virtual IEnumerable<string> UnsavedFields() {
-        Debug.LogWarning($"TODO --- implement UnsavedFields for {GetType()}"); // TODO --- make this method abstract
-        return new List<string>();
-    } 
-    public abstract bool HasUnsavedChanges();
 
     public virtual void UpdateUI() {
         // updates the UI

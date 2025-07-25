@@ -21,7 +21,7 @@ public class DifficultySettingsMenuCtrl : AbstractSettingsModuleMenu {
 
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
-        this.LoadTemplate(root);
+        this.LoadSettingsUXML(root);
 
         // VisualElement div = new VisualElement();
         // div.style.flexDirection = FlexDirection.Row;

@@ -54,6 +54,7 @@ public class SettingsMenuController : AbstractCloseEventMenu
             case DIFFICULTY_TAB: return new DifficultySettingsMenuCtrl();
             case GENERAL_TAB: return new GeneralSettingsMenuCtrl();
             case GAMEPLAY_TAB: return new GameplaySettingsMenuCtrl();
+            case GRAPHICS_TAB: return new GraphicsSettingsMenu();
             case DEBUG_TAB: return new DebugSettingsMenuCtrl();
             // case GRAPHICS_TAB: // TODO --- implement!
             default:

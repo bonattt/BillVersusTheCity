@@ -18,7 +18,7 @@ public class GeneralSettingsMenuCtrl : AbstractSettingsModuleMenu {
     
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
-        this.LoadTemplate(root);
+        this.LoadSettingsUXML(root);
         header_label.text = "General Settings";
         
         VisualElement skip_tutorials_div = AddToggle("Skip All Tutorials");

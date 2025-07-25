@@ -20,7 +20,7 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
-        this.LoadTemplate(root);
+        this.LoadSettingsUXML(root);
         header_label.text = "Debug Settings";
 
         VisualElement debug_mode_div = AddToggle("show_fps", "Debug Mode");
