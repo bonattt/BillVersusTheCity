@@ -6,6 +6,8 @@ public class EventCollider : MonoBehaviour {
 
     public GameObject event_effect;
     private IGameEventEffect _event_effect;
+    public bool trigger_once = true;
+    private bool has_triggered = false;
 
     void Start() {
         _event_effect = event_effect.GetComponent<IGameEventEffect>();
@@ -29,15 +31,23 @@ public class EventCollider : MonoBehaviour {
     public void TryTriggerEffect(GameObject obj) {
         if (ShouldTriggerEffect(obj)) {
             _event_effect.ActivateEffect();
+            has_triggered = true;
         } else {
             Debug.LogWarning($"event collider did NOT trigger for {obj.name}"); // TODO --- remove debug
         }
     }
 
-    public static bool ShouldTriggerEffect(GameObject obj) {
+    public bool ShouldTriggerEffect(GameObject obj) {
+        if (has_triggered && trigger_once) {
+            return false;
+        }
         CharCtrl ctrl = obj.GetComponentInParent<CharCtrl>();
         if (ctrl == null) { return false; }
         return ctrl.is_player;
+    }
+
+    public void Reset() {
+        has_triggered = false;
     }
 
 }

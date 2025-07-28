@@ -11,7 +11,6 @@ Finished on 2025-0???
 [ ] Update tutorial
     [+] Add Tutorials in grenade tutorial
     [+] remove redundant tutorials from Tutorial 3
-    [ ] ???
 
 PLANNED FEATURES
 [+] Dialogue "emote" system
@@ -52,12 +51,12 @@ UNPLANNED FEATURES
     [+] Implement abstract min/max settings
     [+] Implement abstract default settings
     [X] expand scope of templating to apply to all settings
-    [ ] Implement graphics settings
+    [+] Implement graphics settings
 
 
 UNPLANNED BUGFIXES
 [ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
-[ ] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
+[+] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
 [ ] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
 [ ] FIX: buying a weapon, then restarting the level refunds the money spent. 
@@ -65,3 +64,8 @@ UNPLANNED BUGFIXES
 [ ] FIX: Player healthbar extends too far when Enemy health buffed in difficulty
     - setps to reproduce: set enemy health to 300%, save, and restart the game
     - this is how I thought I produced the error, but I have been unable to reproduce it now
+[ ] Buyable guns don't show up if you have "unlock all guns" checked
+[ ] Audio settings don't apply (immediately)
+    - steps to reporduce
+        - Play in build 011.5, change music or master volume in a level with music
+        - changes seemed to be applied later
