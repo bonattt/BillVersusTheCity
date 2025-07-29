@@ -52,6 +52,7 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     }
     public void SetFloat(string field, float value) {
         float_fields[field] = Mathf.Clamp(value, float_fields_min[field], float_fields_max[field]);
+        UpdateSubscribers(field);
     }
 
     public int GetInt(string field) {
@@ -69,6 +70,7 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     }
     public void SetInt(string field, int value) {
         int_fields[field] =  Mathf.Clamp(value, int_fields_min[field], int_fields_max[field]);
+        UpdateSubscribers(field);
     }
 
     public bool GetBool(string field) {
@@ -80,6 +82,7 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     }
     public void SetBool(string field, bool value) {
         bool_fields[field] = value;
+        UpdateSubscribers(field);
     }
 
     protected abstract void InitializeMinMaxAndDefaults();

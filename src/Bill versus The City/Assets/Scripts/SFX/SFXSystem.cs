@@ -135,6 +135,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
     }
 
     public void SettingsUpdated(ISettingsModule updated, string field) {
+        Debug.LogWarning($"settings updated! `{updated}`"); // TODO --- remove debug
         switch(updated) {
             case AudioSettings audio_settings:
                 Debug.Log("audio settings updated!");
@@ -143,17 +144,22 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             
             default:
                 // do nothing, non-audio settings
+                Debug.LogWarning($"unhandled settings '{updated}' updated!"); // TODO --- remove debug
                 return;
         }
     }
 
     private void UpdateMusicVolume() {
         // updates the volume of the currently playing music track to the current volume settings
-        if (music_player == null) { return; } // no live music to update
+        if (music_player == null) {
+            Debug.LogWarning("no music player to update!"); // TODO --- remove debug
+            return;
+        } // no live music to update
         if (current_music == null) {
             Debug.LogError("Cannot update music volume; music player exists, but current music is not set!");
             return;
         }
+        Debug.LogWarning($"updating volume {music_player.volume} --> {GetVolume(current_music)}"); // TODO --- remove debug
         music_player.volume = GetVolume(current_music);
     }
 }
