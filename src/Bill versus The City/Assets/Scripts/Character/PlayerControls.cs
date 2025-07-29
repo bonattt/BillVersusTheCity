@@ -72,7 +72,7 @@ public class PlayerControls : MonoBehaviour {
         if (InputSystem.current.AttackReleasedInput()) {
             player_movement.AttackReleased();
         }
-        if (!sprint_input && AttackInput()) {
+        if (AttackInput()) {
             if (player_movement.reloading) {
                 player_movement.CancelReload();
             } else {

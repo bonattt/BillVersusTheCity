@@ -27,7 +27,14 @@ PLAYTEST FEEDBACK
 [~] Increase grenade explosion size
 [+] FIX: Pickup item UIs block too much vision
 [+] FIX: auto-equip new weapon if current slot is empty
-[ ] FIX: crouch dive controls improvements
+[+] FIX: crouch dive controls improvements
+    [+] Add a stuck crouched period after the crouch dive
+    [+] Crouch dive from moving, not sprinting
+    [+] FIX: crouch dive in place
+        steps to reproduce: sprint in a direction on my keyboard with input limitations. Hold D, Shift, and Space then Release D.
+        This causes the D input to be removed exactly the frame the space is added, and the character will roll in place, 
+    
+[+] FIX: cannot shoot while holding shift, even if not actually sprinting 
 
 
 PLANNED BUGFIXES
@@ -55,8 +62,8 @@ UNPLANNED FEATURES
 
 
 UNPLANNED BUGFIXES
-[ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
 [+] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
+[ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
 [ ] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
 [ ] FIX: buying a weapon, then restarting the level refunds the money spent. 

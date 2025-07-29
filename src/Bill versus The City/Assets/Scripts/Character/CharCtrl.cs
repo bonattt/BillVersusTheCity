@@ -112,9 +112,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public float crouch_dive_duration = 1f; // how long does a crouch dive last
+    public float crouch_lock_duration = 1f; // how long does a player remain crouched after a crouch dive
     protected Vector3 crouch_dive_direction = new Vector3(0, 0, 0);
-    [SerializeField]
-    protected float crouch_dive_remaining = 0f; // how long is left in the current crouch dive you crouch dive for
+
+    [Tooltip("How many seconds are left in the current crouch dive.")]
+    [SerializeField] protected float crouch_dive_remaining = 0f; // 
+    
+    [Tooltip("How many seconds are left until the player can stand up after a crouch dive.")]
+    [SerializeField] protected float crouch_locked_remaining = 0f; // 
 
     public virtual bool is_sprinting { get; protected set; }
 
@@ -370,10 +375,15 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void UpdateCrouch(bool crouch) {
+        if (crouch_locked_remaining > 0) {
+            crouch = true;
+            crouch_locked_remaining -= Time.deltaTime;
+        }
         if (crouch_dive_remaining > 0) {
             crouch_dive_remaining -= Time.deltaTime;
             crouch_percent = 1f;
         } else if (crouch) {
+            if (crouch_locked_remaining > 0) { crouch_locked_remaining -= Time.deltaTime; }
             crouch_percent += crouch_rate * Time.deltaTime;
         } else {
             crouch_percent -= uncrouch_rate * Time.deltaTime;
@@ -381,18 +391,26 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         float current_height = (crouch_height * crouch_percent) + (uncrouched_height * (1 - crouch_percent));
         crouch_target.position = new Vector3(crouch_target.position.x, current_height, crouch_target.position.z);
     }
-
+    public bool GetStartCrouchDiveThisFrame(bool crouch, Vector3 move_direction) {
+        // returns true if a crouch dive should start, AND isn't already started
+        return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0;
+    }
     private bool _crouch_last_frame = false;
+    protected bool is_crouch_diving {
+        get => crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero;
+    }
     public virtual void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
         bool is_moving = move_direction.magnitude > 0;
         is_sprinting = sprint && CanSprint() && is_moving;
-        if (crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero) {
+        if (crouch_locked_remaining > 0) { crouch = true; }
+        if (is_crouch_diving) {
             // if crouch diving, continue in that direction for the duration of the crouch dive
             move_direction = crouch_dive_direction;
-        } else if (crouch && sprint && !_crouch_last_frame && crouch_dive_remaining <= 0) {
+            crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
+        } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
             // Start crouch dive
             crouch_dive_remaining = crouch_dive_duration;
-            crouch_dive_direction = move_direction;
+            crouch_dive_direction = move_direction.normalized;
             crouch_percent = 1f;
         } else {
             if (crouch) {
