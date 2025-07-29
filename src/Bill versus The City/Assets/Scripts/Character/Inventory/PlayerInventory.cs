@@ -115,9 +115,9 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         dollars = STARTING_DOLLARS;
         last_rifle_equipped = null;
         last_handgun_equipped = null;
-        owned_weapons = new List<IFirearm>();
+        _owned_weapons = new List<IFirearm>();
         foreach (string weapon_id in WeaponSaveLoadConfig.inst.GetStartingWeaponIds()) {
-            owned_weapons.Add(WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id));
+            _owned_weapons.Add(WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id));
         }
     }
 
@@ -131,7 +131,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         // permanently stores changes made during the level
         dollars += dollars_change_in_level;
         foreach (IFirearm weapon_purchased in weapons_purchased_in_level) {
-            owned_weapons.Add(weapon_purchased);
+            _owned_weapons.Add(weapon_purchased);
         }
         if (_rifle != null) {
             last_rifle_equipped = _rifle;
@@ -158,7 +158,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
         inventory_progress_data.SetInt("dollars", dollars);
 
         List<string> weapon_ids = new List<string>();
-        foreach (IFirearm weapon in owned_weapons) {
+        foreach (IFirearm weapon in _owned_weapons) {
             weapon_ids.Add(weapon.item_id);
         }
         inventory_progress_data.SetStringList("weapon_unlocks", weapon_ids);
@@ -186,14 +186,14 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
                 weapon_unlocks.Add(starting_id);
             }
         }
-        owned_weapons = new List<IFirearm>();
+        _owned_weapons = new List<IFirearm>();
         foreach (string weapon_id in weapon_unlocks) {
             IFirearm weapon = WeaponSaveLoadConfig.inst.GetWeaponByID(weapon_id);
             if (weapon == null) {
                 Debug.LogError($"weapon_id '{weapon_id}' not defined!");
                 continue;
             }
-            owned_weapons.Add(weapon);
+            _owned_weapons.Add(weapon);
         }
         string _last_rifle = progress_data.GetString(LAST_LONGGUN_EQUIPPED);
         string _last_handgun = progress_data.GetString(LAST_HANDGUN_EQUIPPED);
@@ -247,7 +247,12 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     public List<IFirearm> weapons_purchased_in_level = new List<IFirearm>();
     public void AddWeapon(IFirearm new_weapon) => weapons_purchased_in_level.Add(new_weapon);
-    protected List<IFirearm> owned_weapons = new List<IFirearm>();
+    protected List<IFirearm> _owned_weapons = new List<IFirearm>();
+    public IEnumerable<IFirearm> OwnedWeapons() {
+        foreach (IFirearm firearm in _owned_weapons) {
+            yield return firearm;
+        }
+    }
     public IEnumerable<IFirearm> AvailibleWeapons() {
         if (GameSettings.inst.debug_settings.GetBool("unlock_all_weapons")) {
             // debug setting for all weapons unlocked
@@ -255,7 +260,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
                 yield return w;
             }
         } else {
-            foreach (IFirearm w in owned_weapons) {
+            foreach (IFirearm w in _owned_weapons) {
                 yield return w;
             }
             foreach (IFirearm w in weapons_purchased_in_level) {
@@ -311,7 +316,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     }
 
     public bool AlreadyOwnsWeapon(IWeapon weapon) {
-        foreach (IFirearm firearm in AvailibleWeapons()) {
+        foreach (IFirearm firearm in OwnedWeapons()) {
             if (firearm.item_id.Equals(weapon.item_id)) {
                 return true;
             }
