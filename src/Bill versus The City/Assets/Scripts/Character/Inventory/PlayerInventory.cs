@@ -123,14 +123,15 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
 
     public void ResetLevel() {
         // resets the inventory at the start of a level.
-        weapons_purchased_in_level = new List<IFirearm>();
+        // NOTE: this method should be idempotent
+        _purchased_weapons = new List<IFirearm>();
         dollars_change_in_level = 0;
     }
 
     public void ApplyChangesFromLevel() {
         // permanently stores changes made during the level
         dollars += dollars_change_in_level;
-        foreach (IFirearm weapon_purchased in weapons_purchased_in_level) {
+        foreach (IFirearm weapon_purchased in _purchased_weapons) {
             _owned_weapons.Add(weapon_purchased);
         }
         if (_rifle != null) {
@@ -245,11 +246,14 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
     private IFirearm starting_handgun;
     private IFirearm starting_pickup;
 
-    public List<IFirearm> weapons_purchased_in_level = new List<IFirearm>();
-    public void AddWeapon(IFirearm new_weapon) => weapons_purchased_in_level.Add(new_weapon);
+    public List<IFirearm> _purchased_weapons = new List<IFirearm>();
+    public void AddWeapon(IFirearm new_weapon) => _purchased_weapons.Add(new_weapon);
     protected List<IFirearm> _owned_weapons = new List<IFirearm>();
     public IEnumerable<IFirearm> OwnedWeapons() {
         foreach (IFirearm firearm in _owned_weapons) {
+            yield return firearm;
+        }
+        foreach (IFirearm firearm in _purchased_weapons) {
             yield return firearm;
         }
     }
@@ -263,7 +267,7 @@ public class PlayerInventory : IPlayerObserver, ISaveProgress { //: IGenericObse
             foreach (IFirearm w in _owned_weapons) {
                 yield return w;
             }
-            foreach (IFirearm w in weapons_purchased_in_level) {
+            foreach (IFirearm w in _purchased_weapons) {
                 yield return w;
             }
         }

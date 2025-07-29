@@ -64,7 +64,7 @@ UNPLANNED FEATURES
 UNPLANNED BUGFIXES
 [+] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
 [+] Buyable guns don't show up if you have "unlock all guns" checked
-[ ] FIX: buying a weapon, then restarting the level refunds the money spent, but keeps the weapon. 
+[+] FIX: buying a weapon, then restarting the level refunds the money spent, but keeps the weapon. 
 [ ] Audio settings don't apply (immediately)
     - steps to reporduce
         - Play in build 011.5, change music or master volume in a level with music

@@ -37,6 +37,9 @@ public static class ScenesUtil {
         if (EnemiesManager.inst != null) {
             EnemiesManager.inst.Reset();
         }
+        if (PlayerCharacter.inst != null && PlayerCharacter.inst.inventory != null) {
+            PlayerCharacter.inst.inventory.ResetLevel();
+        }
     }
 
     public static string GetCurrentSceneName() {
@@ -51,6 +54,7 @@ public static class ScenesUtil {
         // LevelConfig.inst.PostRestart();
         // LevelConfig.inst.level_restarted = true;
         restarting = false;
+
     }
 
     public static void NextLevel(string next_level) {

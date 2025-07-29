@@ -119,8 +119,8 @@ public class LevelConfig : MonoBehaviour {
 
     void Start() {
         Debug.Log($"============= Load level '{ScenesUtil.GetCurrentSceneName()}' ============="); 
+        PlayerCharacter.inst.inventory.ResetLevel();
         LoadAdditiveScenes();
-        PlayerCharacter.inst.inventory.dollars_change_in_level = 0;
         level_number = level_counter++;
         gameObject.name += $" ({level_number})";
         ConfigureLevel();
@@ -432,18 +432,6 @@ public class LevelConfig : MonoBehaviour {
     }
 
     public void ActivateLevelExit() {
-        // GameObject truck = GameObject.Find("PlayerTruck");
-        // if (truck == null) { 
-        //     Debug.LogError("cannot find 'PlayerTruck' in the scene to activate level exit!");
-        //     return;
-        // }
-        // Transform child = truck.transform.Find("FinishLevelInteraction");
-        // if (child == null) {
-        //     Debug.LogError("'PlayerTruck' is missing its finish level interaction!!");
-        //     return;
-        // }
-        // Interaction finish_level = child.gameObject.GetComponent<Interaction>();
-        Debug.LogWarning("ActivateLevelExit!"); // TODO --- remove debug
         if (level_exit == null) {
             Debug.LogError("`level_exit` is missing, and cannot be activated!!");
             return;
@@ -534,13 +522,7 @@ public class LevelConfig : MonoBehaviour {
                 break;
             } else {
                 // current condition was met, trigger it's effects, mark as done, and continue to next condition
-                Debug.LogWarning($"condition triggered!: {current_condition}"); // TODO --- remove debug
                 current_condition.TriggerEffects(); // sets `was_triggered = true`
-                // sequential_conditions_index = i + 1;
-                // if (has_objective_display_override) {
-                //     // if the level has objective overrides, completing an objective should incriment the displayed objective(s)
-                //     IncrimentObjectiveDisplay();
-                // }
                 if (current_condition.condition_effects_completed) {
                     // if condition effects evaluate instantly, continue checking the next condition
                     _IncrimentSequentialCondition(i);
@@ -553,7 +535,6 @@ public class LevelConfig : MonoBehaviour {
     }
 
     private void _IncrimentSequentialCondition(int i) {
-        Debug.LogWarning($"Sequential Condition Completed! {sequential_level_conditions[i]}"); // TODO --- remove debug
         sequential_conditions_index = i + 1;
         if (has_objective_display_override) {
             // if the level has objective overrides, completing an objective should incriment the displayed objective(s)
