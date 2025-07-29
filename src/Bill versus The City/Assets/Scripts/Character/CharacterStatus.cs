@@ -5,21 +5,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserver {
-    
+
     public float death_effect_delay_seconds = 1f;
     public float death_cleanup_delay_seconds = 15f;
-    
+
     // private bool is_player = false;
     private float killed_at = float.NaN;
     private bool delay_triggered = false;
     private bool cleanup_triggered = false;
     public float _health = 0;
-    public float health { 
+    public float health {
         get {
             return _health;
         }
         set {
             if (this.is_invulnerable && value <= _health) {
+                if (_health >= max_health) {
+                    // allows health to be adjusted for difficulty while invulnerability is turned on
+                    _health = max_health;
+                }
                 Debug.LogWarning($"{gameObject.name}: skip damage to player because debug player invulnerability is turned on!");
                 return;
             }
@@ -31,27 +35,25 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
                     killed_at = Time.time;
                     UpdateOnDeath();
                 }
-            }
-            else if (_health > _max_health) {
+            } else if (_health > _max_health) {
                 _health = _max_health;
-            }  
+            }
             if (previous_health < _health) {
                 UpdateOnHeal();
-            }
-            else if (previous_health > _health) {
+            } else if (previous_health > _health) {
                 UpdateOnDamage();
             }
             UpdateStatus();
         }
     }
 
-    private bool is_invulnerable { 
+    public bool is_invulnerable {
         // returns true if damage should be ignored due to debug settings
         get { return this.is_player && GameSettings.inst.debug_settings.GetBool("player_invincibility"); }
     }
 
     public float _max_health = 100;
-    public float max_health { 
+    public float max_health {
         get {
             return _max_health;
         }
@@ -68,7 +70,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     }
     public ArmorPlate armor_init;
     public IArmor _armor;
-    public IArmor armor { 
+    public IArmor armor {
         get { return _armor; }
         protected set { _armor = value; }
     }
@@ -89,7 +91,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     private void SetHealthDifficulty() {
         adjusting_difficulty = true;
         // adjusts health and max_healht based on the games difficulty settings 
-        float previous_multiplier = health_multiplier; 
+        float previous_multiplier = health_multiplier;
         if (is_player) {
             health_multiplier = GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.PLAYER_HEALTH);
         } else {
@@ -102,33 +104,32 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         adjusting_difficulty = true;
     }
 
-    private string health_difficulty_field { 
+    private string health_difficulty_field {
         get {
             if (is_player) { return DifficultySettings.PLAYER_HEALTH; }
             return DifficultySettings.ENEMY_HEALTH;
         }
     }
 
-    private string armor_difficulty_field { 
+    private string armor_difficulty_field {
         get {
             if (is_player) { return DifficultySettings.PLAYER_ARMOR; }
             return DifficultySettings.ENEMY_ARMOR;
         }
     }
-    
+
     public void SettingsUpdated(ISettingsModule updated, string field) {
         DifficultySettings difficulty;
         try {
-            difficulty = (DifficultySettings) updated;
+            difficulty = (DifficultySettings)updated;
         } catch (InvalidCastException) {
             // do nothing, armor only cares about DifficultySettings
             return;
         }
-        
+
         if (field == this.health_difficulty_field) {
             SetHealthDifficulty();
-        }
-        else if (field == this.armor_difficulty_field) {
+        } else if (field == this.armor_difficulty_field) {
             SetArmorDifficulty();
         }
     }
@@ -145,16 +146,16 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
             this.health = max_health;
         }
         this.armor = null;
-        if (armor_init != null) { 
-            ApplyNewArmor((IArmor) armor_init);
+        if (armor_init != null) {
+            ApplyNewArmor((IArmor)armor_init);
         }
         UpdateStatus();
-    }  
+    }
 
     public void ApplyNewArmor(ScriptableObject armor_template) {
         // takes a ScriptableObject, instantiates a new copy of it with full durability
         try {
-            IArmor new_armor = (IArmor) armor_template;
+            IArmor new_armor = (IArmor)armor_template;
             ApplyNewArmor(new_armor);
         } catch (InvalidCastException) {
             Debug.LogError($"invalid init armor: {armor_init}");
@@ -184,7 +185,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     private void SetArmorDifficulty() {
         if (armor == null) { return; }
         adjusting_difficulty = true;
-        
+
         float difficulty = GameSettings.inst.difficulty_settings.GetMultiplier(armor_difficulty_field);
         this.armor.SetDiffcultyMultiplier(difficulty);
         UpdateStatus();
@@ -197,9 +198,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
                 UpdateDelayedOnDeath();
                 delay_triggered = true;
             }
-        }
-
-        else if (!cleanup_triggered) {
+        } else if (!cleanup_triggered) {
             if (Time.time - death_cleanup_delay_seconds > killed_at) {
                 UpdateOnDeathCleanup();
                 cleanup_triggered = true;
@@ -207,46 +206,46 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
         }
         SetDebug();
     }
-    
+
     public void Subscribe(ICharStatusSubscriber sub) => subscribers.Add(sub);
 
     public void Unsubscribe(ICharStatusSubscriber sub) => subscribers.Remove(sub);
 
     public void UpdateStatus() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
+        foreach (ICharStatusSubscriber sub in subscribers) {
             sub.StatusUpdated(this);
         }
     }
 
     public void UpdateOnHeal() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
+        foreach (ICharStatusSubscriber sub in subscribers) {
             sub.OnHeal(this);
         }
     }
     public void UpdateOnDamage() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
+        foreach (ICharStatusSubscriber sub in subscribers) {
             sub.OnDamage(this);
         }
     }
 
     public void UpdateOnDeath() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
+        foreach (ICharStatusSubscriber sub in subscribers) {
             sub.OnDeath(this);
         }
     }
 
     public void UpdateDelayedOnDeath() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
+        foreach (ICharStatusSubscriber sub in subscribers) {
             sub.DelayedOnDeath(this);
         }
     }
 
     public void UpdateOnDeathCleanup() {
-        foreach(ICharStatusSubscriber sub in subscribers) {
+        foreach (ICharStatusSubscriber sub in subscribers) {
             sub.OnDeathCleanup(this);
         }
     }
-    
+
     // public void OnDeath(ICharacterStatus status) { /* do nothing by default */ } // triggers immediately on death
     // public void DelayedOnDeath(ICharacterStatus status) { /* do nothing by default */ } // triggers after a death animation finishes playing
     // public void OnDeathCleanup(ICharacterStatus status) { /* do nothing by default */ } // triggers some time after death to despawn the character
@@ -255,25 +254,30 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
     ///////// DEBUG //////////
     //////////////////////////
 
-    public bool _debug_has_armor = false;
-    public float _debug_max_armor = -1f;
-    public float _debug_armor = -1f;
-    public float _debug_armor_protection = -1f;
-    public bool _debug_is_player = false;
+    public CharacterStatusDebug _debug = new CharacterStatusDebug();
     private void SetDebug() {
         // sets some values for debugging from the inspector
         if (armor == null) {
-            _debug_has_armor = false;
-            _debug_max_armor = 0f;
-            _debug_armor = 0f;
-            _debug_armor_protection = 0f;
+            _debug.has_armor = false;
+            _debug.max_armor = 0f;
+            _debug.armor = 0f;
+            _debug.armor_protection = 0f;
+        } else {
+            _debug.has_armor = true;
+            _debug.max_armor = armor.armor_max_durability;
+            _debug.armor = armor.armor_durability;
+            _debug.armor_protection = armor.armor_protection;
         }
-        else {
-            _debug_has_armor = true;
-            _debug_max_armor = armor.armor_max_durability;
-            _debug_armor = armor.armor_durability;
-            _debug_armor_protection = armor.armor_protection;
-        }
-        _debug_is_player = is_player;
+        _debug.is_player = is_player;
     }
+}
+
+[System.Serializable]
+public class CharacterStatusDebug {
+    public bool has_armor = false;
+    public float max_armor = -1f;
+    public float armor = -1f;
+    public float armor_protection = -1f;
+    public bool is_player = false;
+
 }

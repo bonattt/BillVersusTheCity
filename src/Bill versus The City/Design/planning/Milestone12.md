@@ -70,10 +70,12 @@ UNPLANNED BUGFIXES
         - Play in build 011.5, change music or master volume in a level with music
         - changes seemed to be applied later
         - UPDATE: bug only effects music that is already playing
-[ ] FIX: Player healthbar extends too far when Enemy health buffed in difficulty
+[+] FIX: Player healthbar extends too far when Enemy health buffed in difficulty
     - setps to reproduce: set enemy health to 300%, save, and restart the game
     - this is how I thought I produced the error, but I have been unable to reproduce it now
     - NOTE: error only occurs with DebugSettings.player_invincibility = true, and SOME settings of enemy/player health
+    SOLVED: player invulnerability was preventing the player's health from being "damaged" to adjust for difficulty, so the health was ending
+        up above maximum value
 [ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
     Purchases aren't saved unless you move to next level, so if you buy, restart, quit, it's not saved.

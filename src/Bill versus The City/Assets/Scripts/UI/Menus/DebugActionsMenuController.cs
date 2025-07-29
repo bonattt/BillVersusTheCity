@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DebugActionsMenuController : MonoBehaviour {
+public class DebugActionsMenuController : MonoBehaviour, IPlayerObserver {
 
     public UIDocument ui_doc;
     private VisualElement content_div;
@@ -14,8 +14,10 @@ public class DebugActionsMenuController : MonoBehaviour {
     public const string KILL_ENEMIES = "Kill Enemies";
     public const string GET_DOLLARS_100 = "Get $100";
     public const string GET_DOLLARS_1000 = "Get $1000";
-    public const string KILL_PLAYER = "Kill Player (NOT IMPLEMENTED)";
-    public const string RESET_HEALTH = "Reset Health (NOT IMPLEMENTED)";
+    public const string DAMAGE_1 = "1 damage";
+    public const string DAMAGE_10 = "10 damage";
+    public const string KILL_PLAYER = "Kill Player";
+    public const string RESET_HEALTH = "Reset Health";
     public const string RESET_GAME  = "Reset Game (NOT IMPLEMENTED)";
 
     private Dictionary<string, Action> GetCallbacks() {
@@ -27,6 +29,8 @@ public class DebugActionsMenuController : MonoBehaviour {
             {RESET_HEALTH, ResetHealthClicked},
             {GET_DOLLARS_100, CurriedGetDollars(100)},
             {GET_DOLLARS_1000, CurriedGetDollars(1000)},
+            {DAMAGE_1, CurriedDealDamage(1f)},
+            {DAMAGE_10, CurriedDealDamage(10f)},
             {RESET_GAME, ResetGameClicked},
             {FAIL_LEVEL, FailLevelClicked},
             {COMPLETE_OBJECTIVE, CompleteObjectiveClicked},
@@ -34,10 +38,17 @@ public class DebugActionsMenuController : MonoBehaviour {
     }
 
     private Action CurriedGetDollars(int dollars_amount) {
-        Debug.LogWarning($"Get {dollars_amount} action!");
         return () => {
             // todo
             PlayerCharacter.inst.inventory.dollars_change_in_level += dollars_amount;
+        };
+    }
+
+    private Action CurriedDealDamage(float damage) {
+        return () => {
+            PlayerCombat combat = GetPlayer();
+            combat.status.health -= damage;
+            Close();
         };
     }
 
@@ -56,7 +67,6 @@ public class DebugActionsMenuController : MonoBehaviour {
     }
 
     private VisualElement GetNewAction(string label_text, string button_text, Action callback) {
-        Debug.LogWarning($"GetNewAction({button_text})"); // TODO --- remove debug
         VisualElement action_div = new VisualElement();
         action_div.AddToClassList("DebugAction");
 
@@ -97,18 +107,36 @@ public class DebugActionsMenuController : MonoBehaviour {
     }
 
     public void KillPlayerClicked() {
-        Close();
-        Debug.LogWarning("KillPlayerClicked: NOT IMPLEMENTED!");
+        PlayerCombat combat = GetPlayer();
+        combat.status.health = -1f;
+        if (combat.status.is_invulnerable) {
+            string msg = "cannot kill invulnerable player!!";
+            Debug.Log(msg);
+            Debug.LogWarning(msg);
+            Debug.LogError(msg);
+        } else {
+            Close();
+        }
     }
 
     public void ResetHealthClicked() {
-        Close();
-        Debug.LogWarning("ResetHealthClicked: NOT IMPLEMENTED!");
+        PlayerCombat combat = GetPlayer();
+        combat.status.health = combat.status.max_health;
     }
 
     public void ResetGameClicked() {
         Close();
         Debug.LogWarning("ResetGameClicked: NOT IMPLEMENTED!");
+    }
+
+    private PlayerCombat GetPlayer() {
+        PlayerCombat combat = PlayerCharacter.inst.GetPlayerCombat(this);
+        PlayerCharacter.inst.UnsubscribeFromPlayer(this);
+        return combat;
+    }
+
+    public void NewPlayerObject(PlayerCombat player) {
+        // do nothing. This is only here to allow getting player combat
     }
 
     public void CloseClicked() {
