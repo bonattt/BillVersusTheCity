@@ -22,7 +22,7 @@ public class GraphicsSettingsUpdater : MonoBehaviour, ISettingsObserver {
 
 
     private void UpdateScreenResolution() {
-        Debug.LogWarning($"UpdateScreenResolution to {GameSettings.inst.graphics_settings.screen_resolution}");
+        Debug.Log($"UpdateScreenResolution to {GameSettings.inst.graphics_settings.screen_resolution}");
         (int width, int height) = GameSettings.inst.graphics_settings.screen_dimensions;
         Screen.SetResolution(width, height, FullScreenMode.FullScreenWindow);
     }

@@ -48,11 +48,9 @@ public class TutorialPopupLibrary : MonoBehaviour
             } else {
                 // tutorial_name = tutorial_name; // DO NOTHING
             }
-            Debug.LogWarning($"tutorial name '{tutorial_name}' filepath: '{tutorial_file_path}'"); // TODO --- remove debug
             string tutorial_text = File.ReadAllText(tutorial_file_path);
             configs[tutorial_name] = new TutorialConfig(tutorial_name, tutorial_text);
         }
-        Debug.LogWarning($"TutorialPopupLibrary.InitializeData(): found {configs.Keys.Count} tutorial files; '{string.Join(", ", configs.Keys)}'"); // TODO --- remove debug
     }
 
     public bool ShouldSkipTutorial(string tutorial_name) {

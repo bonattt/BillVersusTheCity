@@ -80,6 +80,6 @@ UNPLANNED BUGFIXES
 [X] FIX: Truck's "Finish Level" interaction header text is not centered!
     --> do this later, the interaction UI needs to be replaced anyways
 [+] Purchases aren't saved unless you move to next level, so if you buy, restart, quit, it's not saved.
-[ ] FIX: null pointer from healthbar
+[+] FIX: null pointer from healthbar
 [ ] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
 [ ] FIX: cover blocks grenades, even if you don't crouch!!

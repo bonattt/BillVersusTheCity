@@ -48,7 +48,7 @@ public class HealthBarController : MonoBehaviour, ICharStatusSubscriber, IPlayer
     {
         health_bar_fill = ui_doc.rootVisualElement.Q<VisualElement>("HealthBarFill");
         armor_bar_fill = ui_doc.rootVisualElement.Q<VisualElement>("ArmorBarFill");
-        target_status.Subscribe(this);
+        // target_status.Subscribe(this); // NOTE: Subscribe call not needed here, it's handled in NewPlayerObject
         UpdateUI();
     }
 
@@ -61,6 +61,7 @@ public class HealthBarController : MonoBehaviour, ICharStatusSubscriber, IPlayer
     }
 
     public void UpdateUI(ICharacterStatus status) {
+        if (status == null) { return; } // status not set, skip frame.
         UpdateHealthbar(health_bar_fill, status.health, status.max_health);
         if (status.armor == null) {
             UpdateHealthbar(armor_bar_fill, 0f, 1f);
