@@ -1,0 +1,1 @@
+Use [mouse wheel] or numb-key 2 to equip your handgun. \nFire with [LMB]. \nHolding [RMB] will improve accuracy, but slows movement!

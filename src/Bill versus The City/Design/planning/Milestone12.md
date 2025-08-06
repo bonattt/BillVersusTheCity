@@ -8,7 +8,7 @@ Started on 2025-07-04
 Finished on 2025-0???
 
 
-[ ] Update tutorial
+[+] Update tutorial
     [+] Add Tutorials in grenade tutorial
     [+] remove redundant tutorials from Tutorial 3
 
@@ -76,8 +76,10 @@ UNPLANNED BUGFIXES
     - NOTE: error only occurs with DebugSettings.player_invincibility = true, and SOME settings of enemy/player health
     SOLVED: player invulnerability was preventing the player's health from being "damaged" to adjust for difficulty, so the health was ending
         up above maximum value
-[ ] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
-[ ] FIX: Truck's "Finish Level" interaction header text is not centered!
-    Purchases aren't saved unless you move to next level, so if you buy, restart, quit, it's not saved.
+[+] FIX: when tutorial header and tutorial name are missmatched, tutorial fails to save as "do not show"
+[X] FIX: Truck's "Finish Level" interaction header text is not centered!
+    --> do this later, the interaction UI needs to be replaced anyways
+[+] Purchases aren't saved unless you move to next level, so if you buy, restart, quit, it's not saved.
 [ ] FIX: null pointer from healthbar
 [ ] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
+[ ] FIX: cover blocks grenades, even if you don't crouch!!

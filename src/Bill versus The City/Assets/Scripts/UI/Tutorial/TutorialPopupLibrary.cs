@@ -1,5 +1,6 @@
-using System.Collections;
+
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class TutorialPopupLibrary : MonoBehaviour
@@ -19,6 +20,12 @@ public class TutorialPopupLibrary : MonoBehaviour
             return _inst;
         }
     }
+    private const string FILE_DIR = "tutorials";
+    public static string directory_path {
+        get {
+            return Path.Join(Application.streamingAssetsPath, FILE_DIR);
+        }
+    }
 
     void Awake() {
         _inst = this;
@@ -31,10 +38,21 @@ public class TutorialPopupLibrary : MonoBehaviour
 
     public void InitializeData() {
         configs = new Dictionary<string, TutorialConfig>();
-        configs[TUTORIAL_MOVEMENT] = new TutorialConfig(TUTORIAL_MOVEMENT, "move using [WASD]. Move the aim and camera with the mouse. Sprint by holding [Shift]");
-        configs[TUTORIAL_SHOOTING] = new TutorialConfig(TUTORIAL_SHOOTING, "Use [mouse wheel] or numb-key 2 to equip your handgun. \nFire with [LMB]. \nHolding [RMB] will improve accuracy, but slows movement!");
-        configs[TUTORIAL_COVER] = new TutorialConfig(TUTORIAL_COVER, "Holding [Space] or [L. Ctrl] close to cover will protect from enemies on the other side of the cover. Crouching while moving will perform a dive, quickly covering a short distance and taking cover immediately, but it will leave you on the ground for a moment after the dive."); 
-        configs[TUTORIAL_GRENADES] = new TutorialConfig(TUTORIAL_GRENADES, "Use [LMB] to throw a grenade to the mouse position, which can be thrown over cover even when crouchted. Holding [LMB] allows you to cook a grenade, then release [LMB] to throw."); 
+        string[] files = Directory.GetFiles(directory_path);
+        foreach (string tutorial_file_path in files) {
+            if (tutorial_file_path.EndsWith(".meta")) { continue; } // skip silly unity meta files
+            string tutorial_name = Path.GetFileName(tutorial_file_path);
+            if (tutorial_file_path.Contains('.')) {
+                int i = tutorial_name.LastIndexOf('.');
+                tutorial_name = tutorial_name.Substring(0, i); // removes file extension, if present
+            } else {
+                // tutorial_name = tutorial_name; // DO NOTHING
+            }
+            Debug.LogWarning($"tutorial name '{tutorial_name}' filepath: '{tutorial_file_path}'"); // TODO --- remove debug
+            string tutorial_text = File.ReadAllText(tutorial_file_path);
+            configs[tutorial_name] = new TutorialConfig(tutorial_name, tutorial_text);
+        }
+        Debug.LogWarning($"TutorialPopupLibrary.InitializeData(): found {configs.Keys.Count} tutorial files; '{string.Join(", ", configs.Keys)}'"); // TODO --- remove debug
     }
 
     public bool ShouldSkipTutorial(string tutorial_name) {
@@ -67,7 +85,7 @@ public class TutorialPopupLibrary : MonoBehaviour
         foreach(string key in configs.Keys) {
             str_keys += $"{key}, ";
         }
-        string missing_str = $"Tutorial missing! name '{tutorial_name}' not in keys: {str_keys}";
+        string missing_str = $"Tutorial missing! name '{tutorial_name}' not in keys: '{str_keys}'";
         Debug.LogError(missing_str);
         return new TutorialConfig(tutorial_name, $"tutorial missing ({tutorial_name})!)", missing_str);
     }
