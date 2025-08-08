@@ -27,6 +27,7 @@ public class InteractableUI : MonoBehaviour
 
     private void Configure() {
         // initializes fields
+        Debug.LogWarning("TODO: replace `GameObject target; target_manager = GetComponent` with just a inspector-setable Interaction target_manager!"); // TODO --- remove debug
         target_manager = target.GetComponent<Interaction>();
 
         ui_doc = GetComponent<UIDocument>();

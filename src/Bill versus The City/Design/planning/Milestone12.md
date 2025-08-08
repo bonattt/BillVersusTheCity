@@ -59,7 +59,10 @@ UNPLANNED FEATURES
     [+] Implement abstract default settings
     [X] expand scope of templating to apply to all settings
     [+] Implement graphics settings
-[ ] Add doors
+[~] Add doors
+    [ ] Door can be opened and closed by player
+    [ ] Door makse sounds when opened and closed
+    [ ] Door can be opened and closed by enemies
 
 UNPLANNED BUGFIXES
 [+] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
