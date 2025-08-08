@@ -60,8 +60,8 @@ UNPLANNED FEATURES
     [X] expand scope of templating to apply to all settings
     [+] Implement graphics settings
 [~] Add doors
-    [ ] Door can be opened and closed by player
-    [ ] Door makse sounds when opened and closed
+    [+] Door can be opened and closed by player
+    [+] Door makse sounds when opened and closed
     [ ] Door can be opened and closed by enemies
 
 UNPLANNED BUGFIXES
