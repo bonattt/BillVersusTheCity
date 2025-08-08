@@ -59,7 +59,7 @@ UNPLANNED FEATURES
     [+] Implement abstract default settings
     [X] expand scope of templating to apply to all settings
     [+] Implement graphics settings
-
+[ ] Add doors
 
 UNPLANNED BUGFIXES
 [+] FIX: when tutorial not marked as "do not show", it continues to re-play on the same level multiple times
@@ -81,5 +81,8 @@ UNPLANNED BUGFIXES
     --> do this later, the interaction UI needs to be replaced anyways
 [+] Purchases aren't saved unless you move to next level, so if you buy, restart, quit, it's not saved.
 [+] FIX: null pointer from healthbar
-[ ] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
-[ ] FIX: cover blocks grenades, even if you don't crouch!!
+[>] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
+    --> do later
+[+] FIX: cover blocks grenade damage, even if you don't crouch!!
+[ ] FIX: Null reference in FleeFromThreatsBehavior
+    `Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);` in FleeFromThreatsBehavior at line 116

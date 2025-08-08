@@ -8,6 +8,8 @@ public class Explosion : MonoBehaviour, IGameEventEffect
     private bool _exploded = false;
     public ExplosionAttack explosion_attack;
     public Transform raycast_from;
+    [Tooltip("set to any non-NaN float to lock the Y-position of `raycast_from` to this value.")]
+    public float raycast_fixed_height = float.NaN;
 
     private bool _effect_completed = false;
     public bool effect_completed { get => _effect_completed; }
@@ -81,16 +83,27 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         }
     }
 
+    public Vector3 GetRaycastStart() {
+        Vector3 v = raycast_from.position;
+        if (!float.IsNaN(raycast_fixed_height)) {
+            v = new Vector3(v.x, raycast_fixed_height, v.z);
+        }
+        return v;
+    }
+
     private IEnumerable<IAttackTarget> GetExplosionHits() {
-        Collider[] hits = Physics.OverlapSphere(raycast_from.position, explosion_attack.explosion_radius);
+        Vector3 raycast_start = GetRaycastStart();
+        Collider[] hits = Physics.OverlapSphere(raycast_start, explosion_attack.explosion_radius);
         foreach (Collider c in hits) {
             IAttackTarget target = c.gameObject.GetComponentInParent<IAttackTarget>();
             if (target != null) {
                 if (targets_hit.Contains(target)) {
                     continue; // target already hit, skip
                 } else if (ExplosionBlocked(target)) {
-                    continue; 
+                    Debug.DrawLine(raycast_start, target.GetAimTarget().position, Color.blue, 1f);
+                    continue;
                 } else {
+                    Debug.DrawLine(raycast_start, target.GetAimTarget().position, Color.red, 1f);
                     targets_hit.Add(target);
                     yield return target;
                 }
@@ -100,16 +113,18 @@ public class Explosion : MonoBehaviour, IGameEventEffect
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(raycast_from.position, explosion_attack.explosion_radius);
+        Gizmos.DrawWireSphere(GetRaycastStart(), explosion_attack.explosion_radius);
     }
 
     public bool ExplosionBlocked(IAttackTarget target) {
         // returns a false if there is a wall protecting the target from the explosion
-        Vector3 target_position = target.GetHitTarget().transform.position;
-        Vector3 to_target = target_position - raycast_from.position;
+        Vector3 raycast_start = GetRaycastStart();
+        Vector3 target_position = target.GetAimTarget().transform.position;
+        Debug.DrawLine(raycast_start, target_position, Color.yellow, 1f);
+        Vector3 to_target = target_position - raycast_start;
         RaycastHit hit;
-        float raycast_length = Vector3.Distance(raycast_from.position, target_position);
-        if (Physics.Raycast(raycast_from.position, to_target, out hit, raycast_length, blocks_explosion)) {
+        float raycast_length = Vector3.Distance(raycast_start, target_position);
+        if (Physics.Raycast(raycast_start, to_target, out hit, raycast_length, blocks_explosion)) {
             // if the raycast hit hit a game object sharing a hierarchy with the target, the target is not blocked.
             return true; // raycast layerMask should not include damageable targets...
         }
