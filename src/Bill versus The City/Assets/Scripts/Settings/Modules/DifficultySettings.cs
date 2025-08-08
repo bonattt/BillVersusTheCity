@@ -57,11 +57,7 @@ public class DifficultySettings : AbstractSettingsModule {
         AllFieldsUpdated();
     }
 
-    // public float GetMultiplier(string key) => GetFloat(key); // TODO --- remove debug(UNCOMMENT!!!)
-    public float GetMultiplier(string key) {// TODO --- remove debug
-        Debug.LogWarning($"GetMultiplier({key}) => '{GetFloat(key)}'"); // TODO --- remove debug
-        return GetFloat(key);// TODO --- remove debug
-    }// TODO --- remove debug
+    public float GetMultiplier(string key) => GetFloat(key);
     public void SetMultiplier(string key, float value) {
         SetFloat(key, value);
         difficulty_level = DifficultyLevel.custom;

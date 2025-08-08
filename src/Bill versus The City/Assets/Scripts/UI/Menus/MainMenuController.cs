@@ -120,7 +120,6 @@ public class MainMenuController : MonoBehaviour
 
     public void ContinueGameClicked() {
         // TODO
-        Debug.LogWarning("Continue not (fully) implemented!");
         CloseMainMenu();
         string scene_name = SaveProfile.inst.LoadSaveData();
         if (scene_name == null)

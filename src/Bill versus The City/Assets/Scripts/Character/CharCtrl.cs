@@ -304,11 +304,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public void StartReload() {
         // initiate a reload
         if (!CanReload()) {
-            Debug.LogWarning("Cannot start reload!"); // TODO --- remove debug
             MenuManager.PlayMenuCancelClick(); // TODO --- placeholder
             return;
         }
-        else { Debug.LogWarning("starting reload!"); } // TODO --- remove debug }
         reloading = true;
         start_reload_at = Time.time;
         UpdateReloadStarted(current_firearm);
@@ -327,7 +325,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             reloading = false;
             current_action = ActionCode.none;
             UpdateReloadCancelled(current_firearm);
-        } else { Debug.LogWarning("CancelReload called while not reloading!"); }// TODO --- remove debug
+        } 
     }
 
     private void FinishReload() {
