@@ -84,6 +84,7 @@ UNPLANNED BUGFIXES
 [>] FIX: when a grenade is present at the start of a level, the fuse sound plays during the dialogue. Once the dialogue finishes, the sound goes away!
     --> do later
 [+] FIX: cover blocks grenade damage, even if you don't crouch!!
-[ ] FIX: Null reference in FleeFromThreatsBehavior
+[+] FIX: Null reference in FleeFromThreatsBehavior
     steps to reproduce: throw a grenade at an enemy
     `Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);` in FleeFromThreatsBehavior at line 116
+    level had no waypoints!
