@@ -20,7 +20,7 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
 
     void Start() {
         InitializeCollider();
-        _SetDoorOpen(is_door_open, play_sound:false);
+        _SetDoorOpen(is_door_open, play_sound: false);
     }
 
     private void InitializeCollider() {
@@ -49,15 +49,15 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
     public void ToggleDoorOpen() {
         _SetDoorOpen(!is_door_open);
     }
-    private void _SetDoorOpen(bool will_be_open, bool play_sound=true) {
+    private void _SetDoorOpen(bool will_be_open, bool play_sound = true) {
         if (will_be_open) {
-            OpenDoor(play_sound:play_sound);
+            OpenDoor(play_sound: play_sound);
         } else {
-            CloseDoor(play_sound:play_sound);
+            CloseDoor(play_sound: play_sound);
         }
     }
 
-    public void OpenDoor(bool play_sound=true) {
+    public void OpenDoor(bool play_sound = true) {
         door_model.SetActive(false);
         is_door_open = true;
         if (play_sound) {
@@ -65,7 +65,7 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
         }
     }
 
-    public void CloseDoor(bool play_sound=true) {
+    public void CloseDoor(bool play_sound = true) {
         door_model.SetActive(true);
         is_door_open = false;
         if (play_sound) {
@@ -81,5 +81,23 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
         }
         ISFXSounds sounds = SFXLibrary.LoadSound(sound_name);
         SFXSystem.inst.PlaySound(sounds, transform.position);
+    }
+
+    void OnDrawGizmos() {
+        if (door_model != null) {
+            BoxCollider collider = door_model.GetComponent<BoxCollider>();
+            Vector3 center = door_model.transform.position + collider.center;
+            Vector3 size = Vector3.Scale(door_model.transform.lossyScale, collider.size);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(center, size);
+            // draw the collider where it would be, whether it's enabled or not
+        } else {
+            // no door model, draw an error cross
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position + new Vector3(-0.5f, 0, 0), transform.position + new Vector3(0.5f, 0, 0));
+            Gizmos.DrawLine(transform.position + new Vector3(0, -0.5f, 0), transform.position + new Vector3(0, 0.5f, 0));
+            Gizmos.DrawLine(transform.position + new Vector3(0, 0, -0.5f), transform.position + new Vector3(0, 0, 0.5f));
+        }
     }
 }
