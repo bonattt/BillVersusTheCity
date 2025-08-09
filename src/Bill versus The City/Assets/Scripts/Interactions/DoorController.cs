@@ -21,6 +21,11 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
     void Start() {
         InitializeCollider();
         _SetDoorOpen(is_door_open, play_sound: false);
+        ObjectTracker.inst.TrackObject(this);
+    }
+
+    void OnDestroy() {
+        ObjectTracker.inst.RemoveObject(this);
     }
 
     private void InitializeCollider() {

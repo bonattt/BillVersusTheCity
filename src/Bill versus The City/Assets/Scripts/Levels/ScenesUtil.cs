@@ -31,6 +31,8 @@ public static class ScenesUtil {
     }
 
     private static void ResetResources() {
+        ObjectTracker.inst.Reset();
+        
         if (LevelConfig.inst != null) {
             LevelConfig.inst.PreSceneChange();
         }

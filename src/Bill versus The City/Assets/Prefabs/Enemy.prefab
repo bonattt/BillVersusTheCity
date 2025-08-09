@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 6825292087101829779}
   - component: {fileID: 4081373986250458422}
   - component: {fileID: 35139295614310149}
+  - component: {fileID: 6060221893249302204}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -210,7 +211,9 @@ MonoBehaviour:
   start_reload_at: 0
   animatior_controller_ref: {fileID: 7047603838670989609}
   crouch_dive_duration: 1
+  crouch_lock_duration: 1
   crouch_dive_remaining: 0
+  crouch_locked_remaining: 0
   _crouch_percent: 0
   debug__can_attack: 0
   nav_mesh_agent: {fileID: 2365366885385776978}
@@ -295,11 +298,12 @@ MonoBehaviour:
   _health: 100
   _max_health: 100
   armor_init: {fileID: 0}
-  _debug_has_armor: 0
-  _debug_max_armor: -1
-  _debug_armor: -1
-  _debug_armor_protection: -1
-  _debug_is_player: 0
+  _debug:
+    has_armor: 0
+    max_armor: -1
+    armor: -1
+    armor_protection: -1
+    is_player: 0
 --- !u!54 &4785987381228191808
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -446,6 +450,19 @@ MonoBehaviour:
   start_states: 0200000003000000
   target_states: 0100000000000000
   sound_name: enemy_lose_sight_sounds
+--- !u!114 &6060221893249302204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505927797627387282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b331cce5069fb54a837a8ebc2b51b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  open_door_range: 2.5
 --- !u!1 &2741102800901688509
 GameObject:
   m_ObjectHideFlags: 0
