@@ -5,7 +5,7 @@
 
 Planned on 2025-07-03
 Started on 2025-07-04
-Finished on 2025-0???
+Finished on 2025-08-
 
 
 [+] Update tutorial
@@ -91,3 +91,5 @@ UNPLANNED BUGFIXES
     steps to reproduce: throw a grenade at an enemy
     `Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);` in FleeFromThreatsBehavior at line 116
     level had no waypoints!
+
+[+] FIX: tutorials not found in build version of game!

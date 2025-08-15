@@ -42,7 +42,7 @@ public class TutorialPopupLibrary : MonoBehaviour
         foreach (string tutorial_file_path in files) {
             if (tutorial_file_path.EndsWith(".meta")) { continue; } // skip silly unity meta files
             string tutorial_name = Path.GetFileName(tutorial_file_path);
-            if (tutorial_file_path.Contains('.')) {
+            if (tutorial_name.Contains('.')) {
                 int i = tutorial_name.LastIndexOf('.');
                 tutorial_name = tutorial_name.Substring(0, i); // removes file extension, if present
             } else {
