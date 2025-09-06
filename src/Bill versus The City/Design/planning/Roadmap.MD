@@ -31,13 +31,13 @@
     - improve dialoug UI
     - additional stages in a level (eg. defeat some enemies, triggering more to spawn)
 
-[ ] Milestone 11: Mishmash (More Dialogue System)
+[+] Milestone 11: Mishmash (More Dialogue System)
     ~~- add "emote" system to generically apply emotes to any character~~
     - scale portraits to different screen resolutions
     - replace font size in "px" with font size in "%" for ALL UIs
     - explosive weapons
 
-[ ] Milestone 12: Emote system
+[+] Milestone 12: Emote system
     - add emote system
 
 [ ] Milestone ???: More Levels
@@ -55,8 +55,8 @@
 
 [ ] Add remove illegal weapons dialogue to level config
 [+] Add damage drop off to weapons 
-[ ] Add armor effectiveness to weapons
-[ ] Reduce boilerplate to adding new fields to settings!
+[ ] Add armor efectifveness to weapons
+[+] Reduce boilerplate to adding new fields to settings!
     [ ] FIX: allow save files to assume defaults for missing fields in save file
     [ ] Allow fields to be added from a type-based config of some sort?
 [ ] Speed-run dialogue mode (hold to click through fast)
