@@ -16,6 +16,7 @@
 
 ## ????
 - a doctor/nurse/paramedic who looks after Bill after engagements
+- bill's Ex wife
 
 ## ????
 - a private investigator who helps turn up information on the conspiracy
