@@ -37,11 +37,11 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
             Debug.LogWarning("cannot find Door-Interaction CapsuleCollider!");
             return;
         }
-        if (transform.rotation.eulerAngles.y != 0) {
+        // if (Mathf.Abs(transform.rotation.eulerAngles.y) != 90) {
+        //     Debug.LogWarning("this implementation only works if doors are always at 90 degree incriments.");
+        // }
+        if (IsDoorRotated()) {
             // if the door is rotated, the collider should be set to X-axis, so the collider is still along the X-axis in global space
-            if (Mathf.Abs(transform.rotation.eulerAngles.y) != 90) {
-                Debug.LogWarning("this implementation only works if doors are always at 90 degree incriments.");
-            }
             Debug.LogWarning($"set collider to Z-axis for {gameObject.name}!"); // TODO --- remove debug
             collider.direction = 2; // Z-axis
         } else {
@@ -49,6 +49,22 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
             Debug.LogWarning($"set collider to X-axis for {gameObject.name}!"); // TODO --- remove debug
             collider.direction = 0; // X-axis
         }
+    }
+
+    private void ValidateRotationAssumption() {
+        // Checks if the door is rotated to a 90-degree incriment, and logs an error if it's not.
+        if ((Mathf.Abs(transform.rotation.eulerAngles.y) % 90) > 0) { 
+            Debug.LogWarning("this implementation only works if doors are always at 90 degree incriments.");
+        }
+    }
+
+    private bool IsDoorRotated() {
+        // hacky implementation to determine if the door has been roatated.
+        // hacky, because it only supports 90* angles of roation.
+        // returns true if the door has a +/-90-degree rotation (north-to-south)
+        // returns false if the door is "not rotated" (0-degree equivalent, east-to-west)
+        ValidateRotationAssumption();
+        return (Mathf.Abs(transform.rotation.eulerAngles.y) % 180) > 0;
     }
 
     public void ToggleDoorOpen() {
@@ -93,6 +109,10 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
             BoxCollider collider = door_model.GetComponent<BoxCollider>();
             Vector3 center = door_model.transform.position + collider.center;
             Vector3 size = Vector3.Scale(door_model.transform.lossyScale, collider.size);
+            if (IsDoorRotated()) {
+                // rotate the gizmo
+                size = new Vector3(size.z, size.y, size.x);
+            }
 
             Gizmos.color = Color.green;
             Gizmos.DrawCube(center, size);
