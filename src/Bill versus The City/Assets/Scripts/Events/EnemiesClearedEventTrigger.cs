@@ -37,7 +37,7 @@ public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
     }
 
     public void UpdateObserver(IGenericObservable observable) {
-        if (! was_triggered && EnemiesManager.inst.remaining_enemies <= 0) {
+        if (! was_triggered && EnemiesManager.inst.remaining_enemy_count <= 0) {
             was_triggered = true;
             Trigger();
         }

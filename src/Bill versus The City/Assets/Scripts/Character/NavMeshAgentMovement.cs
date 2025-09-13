@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
  public class NavMeshAgentMovement : SimpleNavMeshAgentMovement
 {
+    public ManagedEnemyState managed_enemy_state;
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
 

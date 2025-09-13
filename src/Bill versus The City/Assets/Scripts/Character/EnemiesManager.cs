@@ -1,15 +1,15 @@
 using System.Collections;
+// using System.Collections.Generic.SortedList;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 
- public class EnemiesManager : MonoBehaviour, IGenericObservable
-{
+public class EnemiesManager : MonoBehaviour, IGenericObservable {
     private HashSet<NavMeshAgentMovement> enemies = new HashSet<NavMeshAgentMovement>();
     private HashSet<NavMeshAgentMovement> enemies_defeated = new HashSet<NavMeshAgentMovement>();
 
-    public int remaining_enemies {
+    public int remaining_enemy_count {
         get {
             return enemies.Count - enemies_defeated.Count;
         }
@@ -17,11 +17,54 @@ using UnityEngine;
 
     public int total_enemies { get { return enemies.Count; } }
 
+    [Tooltip("layer mask used for alerting nearby enemies in line of sight.")]
     public LayerMask layer_mask;
+
+    [Tooltip("number of seconds to wait before revaluating which enemies are closest to the player.")]
+    public float evaluation_period;
+    private float last_nearest_enemy_at = -1; // time when the nearest enemy was last evaluated
+
+    [Tooltip("max number of enemies that will directly fight the player at once; other enemies will retreat to cover.")]
+    [SerializeField]
+    private int _max_engaged_enemies = 5;
+    public int max_engaged_enemies {
+        get => _max_engaged_enemies; // TODO --- this will be difficulty adjusted
+    }
 
     public static EnemiesManager inst { get; protected set; }
     void Awake() {
         Initialize();
+    }
+
+    void Update() {
+        if (Time.time >= last_nearest_enemy_at + evaluation_period) {
+            EvaluateNearestEnemies();
+        }
+        UpdateDebug();
+    }
+
+    private void EvaluateNearestEnemies() {
+        SortedList<float, NavMeshAgentMovement> sorted_enemies = GetEnemyDistance();
+        int i = 0;
+        // iterate in sorted order
+        foreach (NavMeshAgentMovement enemy in sorted_enemies.Values) {
+            // use loop counter to track how many enemies were already set to engaged.
+            if (i++ < max_engaged_enemies) {
+                enemy.managed_enemy_state = ManagedEnemyState.engaged;
+            } else {
+                enemy.managed_enemy_state = ManagedEnemyState.reserve;
+            }
+        }
+    }
+
+    private SortedList<float, NavMeshAgentMovement> GetEnemyDistance() => GetEnemyDistance(
+            PlayerCharacter.inst.player_transform.position, GetRemainingEnemies());
+    private SortedList<float, NavMeshAgentMovement> GetEnemyDistance(Vector3 position, HashSet<NavMeshAgentMovement> remaining_enemies) {
+        SortedList<float, NavMeshAgentMovement> dist = new SortedList<float, NavMeshAgentMovement>();
+        foreach (NavMeshAgentMovement enemy in remaining_enemies) {
+            dist.Add(Vector3.Distance(position, enemy.transform.position), enemy);
+        }
+        return dist;
     }
 
     private void Initialize() {
@@ -30,7 +73,7 @@ using UnityEngine;
         }
         if (inst != this) {
             Destroy(this);
-        } 
+        }
     }
 
     private HashSet<NavMeshAgentMovement> _enemies_remaining = null;
@@ -49,6 +92,7 @@ using UnityEngine;
 
     public void Reset() {
         // resets the current and total enemies.
+        Debug.LogWarning($"EnemiesManager.Reset()"); // TODO --- remove debug
         enemies.Clear();
         enemies_defeated.Clear();
         Debug.Log($"Clear(): enemies.Count: {enemies.Count}");
@@ -57,6 +101,7 @@ using UnityEngine;
     }
 
     public void AddEnemy(NavMeshAgentMovement enemy) {
+        Debug.LogWarning($"EnemiesManager.AddEnemy({enemy.gameObject.name})"); // TODO --- remove debug
         enemies.Add(enemy);
         UpdateSubscribers();
     }
@@ -69,7 +114,7 @@ using UnityEngine;
 
     public void DebugKillAll() {
         // debug action to kill all enemies
-        foreach(NavMeshAgentMovement e in enemies) {
+        foreach (NavMeshAgentMovement e in enemies) {
             e.GetStatus().health = -999;
         }
     }
@@ -97,7 +142,7 @@ using UnityEngine;
 
     public void AlertEnemiesNear(Vector3 start) {
         // Alerts all nearby enemies to the given point
-        foreach(NavMeshAgentMovement ctrl in GetRemainingEnemies()) {
+        foreach (NavMeshAgentMovement ctrl in GetRemainingEnemies()) {
             TryAlertOneEnemyNear(start, ctrl.GetComponent<EnemyPerception>());
         }
     }
@@ -109,7 +154,7 @@ using UnityEngine;
             return;
         }
         RaycastHit hit;
-        Vector3 end =  perception.raycast_start.position;
+        Vector3 end = perception.raycast_start.position;
         Vector3 direction = end - start;
         Debug.DrawRay(start, direction, Color.red, 1f); // ray appears for 1 second
         if (Physics.Raycast(start, direction, out hit, direction.magnitude, layer_mask)) {
@@ -118,7 +163,7 @@ using UnityEngine;
                 perception.Alert();
             }
         }
-        
+
     }
 
     private HashSet<IGenericObserver> subscribers = new HashSet<IGenericObserver>();
@@ -127,16 +172,13 @@ using UnityEngine;
 
     public void UpdateSubscribers() {
         _enemies_remaining = null;  // reset lazy property
-        foreach(IGenericObserver sub in subscribers) {
+        foreach (IGenericObserver sub in subscribers) {
             sub.UpdateObserver(this);
         }
     }
 
 
     public List<string> debug_enemies, debug_enemeis_defeated, debug_enemies_remaining;
-    void Update() {
-        UpdateDebug();
-    }
 
     private void UpdateDebug() {
         debug_enemies = new List<string>();
@@ -152,4 +194,9 @@ using UnityEngine;
             debug_enemies_remaining.Add($"{e}");
         }
     }
+}
+
+public enum ManagedEnemyState {
+    engaged,
+    reserve,
 }

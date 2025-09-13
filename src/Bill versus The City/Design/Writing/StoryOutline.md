@@ -68,8 +68,8 @@ Act three has 3 ongoing plot threads, which need to intertwine
 - on the phone, the woman mentions she checked on google maps, and the lawn is still not mowed. 
 
 ### Part 2
-- once bill gets off the phone, he immediately gets caught talking to Ol' Tom, and Ol' Tom tells him to call his (Ol' Tom's) lawyer
-- Bill meets Ol' Tom's lawyer. The lawyer says they are technically following the law, since a tiny patch of the lawn was unmowed; 
+- once bill gets off the phone, he immediately gets caught talking to Ol' Dave, and Ol' Dave tells him to call his (Ol' Dave's) lawyer
+- Bill meets Ol' Dave's lawyer. The lawyer says they are technically following the law, since a tiny patch of the lawn was unmowed; 
     however, he thinks they can maybe make a constitutional case over the severity of penalty under the 4th ammendment, against 
     "unreasonable searches and seizures"
     - the lawyer also suggests, contacting the press and making bad PR for them over this, and gives Bill a number
@@ -91,7 +91,7 @@ Act three has 3 ongoing plot threads, which need to intertwine
 
 THE CAST
 Bill: the hero
-Ol' Tom: the mentor
+Ol' Dave: the mentor
 The Lawyer
 The Journalist --> a youtube journalist (like Andy Gno) because the mainstream news is works with the government
 The Cop  ---> was turned down promotion to join the SWAT team because he doesn't play ball

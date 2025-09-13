@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 309189556352468440}
-  full_ammo: 0
   ammo_type: 0
   ammo_amount: 10
 --- !u!54 &2467660966307343145

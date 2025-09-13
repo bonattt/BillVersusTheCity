@@ -8,6 +8,6 @@ using UnityEngine;
 public class ClearEnemiesCondition : AbstractLevelCondition {
     
     public override bool ConditionMet() {
-        return EnemiesManager.inst.remaining_enemies <= remaining_enemies_target;
+        return EnemiesManager.inst.remaining_enemy_count <= remaining_enemies_target;
     }
 }

@@ -66,7 +66,7 @@ public class CombatHUDManager : MonoBehaviour
     public static string GetVictoryDisplayString(LevelVictoryConditions condition_type) {
         switch (condition_type) {
             case LevelVictoryConditions.clear_enemies:
-                if (EnemiesManager.inst.remaining_enemies == 0) {
+                if (EnemiesManager.inst.remaining_enemy_count == 0) {
                     return "Escape to your truck!";
                 }
                 return $"Defeat all enemies {GetEnemyCountString()}";
@@ -90,7 +90,7 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     public static string GetEnemyCountString() {
-        return $"{EnemiesManager.inst.remaining_enemies} / {EnemiesManager.inst.total_enemies}";
+        return $"{EnemiesManager.inst.remaining_enemy_count} / {EnemiesManager.inst.total_enemies}";
     }
 
     private bool _had_countdown = false; // cached `level_config.has_countdown` to only do work when it changes

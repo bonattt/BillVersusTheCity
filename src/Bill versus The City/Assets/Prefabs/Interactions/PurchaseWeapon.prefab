@@ -102,7 +102,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &5638687719406827652
 MonoBehaviour:
@@ -120,6 +120,7 @@ MonoBehaviour:
   destroy_after_purchase: 1
   purchased_item: {fileID: 11400000, guid: ab80d3772d00b234ba4ee7d11e1847ab, type: 2}
   _purchase_cost: 10
+  destroy_if_already_owned: 1
 --- !u!1 &6670325309617316134
 GameObject:
   m_ObjectHideFlags: 0

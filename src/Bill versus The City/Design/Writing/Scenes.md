@@ -9,13 +9,13 @@
     from the city
     - bill calls the city, and doesn't get a reply
     - bill sends an email to the city,
-    - talks to TOM
+    - talks to DAVE
     - Bill goes to work in his truck
 
 [Mission] Bill's house is attacked at night by a random gangster
     - police come, and it's Bill's police friend
 [Hub-world] 
-    - Bill Talks to Tom about the gangster attack
+    - Bill Talks to Dave about the gangster attack
 [Mission] Bill's house is attacked by a larger group of gangsters
 - Bill's cop friend makes sure to get patrols stationed by Bill's house, in case this happens again
 
@@ -29,7 +29,7 @@
 ### Part Two ### 
 The city
 
-[Hub-World] Bill and Tom are meeting with the Lawyer
+[Hub-World] Bill and Dave are meeting with the Lawyer
 
 [Mission] Grocery store attack
     - "with all this legal stuff and gang stuff, I haven't have time to cook"
@@ -39,6 +39,9 @@ The city
 [...] Several missions, bill attacks random gang hideouts
     - introduce police timer mechanic
     - bill overhears something implicating the city government
+
+[Story] Someone in Team Bill recruits his Ex-wife, who is a nurse   
+    or paramedic, to patch bill up after a rough fight.
 
 [Story] Bill talks to the team, and they start digging into the city
     government connection
@@ -51,4 +54,4 @@ The city
 
 [Mission] Bill's house is attacked by the SWAT team, and he needs to hold out long enough for the server contents to upload
     - Bill surrenders, and he's arrested by the SWAT 
-    - SWAT destroys the server, and bill's security camera footage, but everything is filmed by Tom's cameras
+    - SWAT destroys the server, and bill's security camera footage, but everything is filmed by Dave's cameras

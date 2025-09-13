@@ -25,10 +25,10 @@ public class EnemiesCountUI : MonoBehaviour, IGenericObserver
     }
 
     public void UpdateText() {
-        if (EnemiesManager.inst.remaining_enemies <= 0) {
+        if (EnemiesManager.inst.remaining_enemy_count <= 0) {
             text_display.text = "(Return to your Truck!)";
         } else {
-            text_display.text = $"Enemies: {EnemiesManager.inst.remaining_enemies} / {EnemiesManager.inst.total_enemies}";
+            text_display.text = $"Enemies: {EnemiesManager.inst.remaining_enemy_count} / {EnemiesManager.inst.total_enemies}";
         }
     }
 }
