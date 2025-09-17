@@ -219,6 +219,7 @@ MonoBehaviour:
   nav_mesh_agent: {fileID: 2365366885385776978}
   choreography_movement: 0
   debug__look_direction: {x: 0, y: 0, z: 0}
+  managed_enemy_state: 0
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
@@ -237,10 +238,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3396656997431563555}
-  default_behavior: 4
+  default_behavior: 5
   sprint_to_chase: 0
   optimal_attack_range: 5
-  use_initial_movement_target: 1
+  use_initial_movement_target: 0
   initial_movement_target: {x: NaN, y: NaN, z: NaN}
   always_use_cover_to_reload: 0
   never_use_cover_to_reload: 0

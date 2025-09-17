@@ -91,6 +91,8 @@ MonoBehaviour:
   layer_mask:
     serializedVersion: 2
     m_Bits: 199
+  evaluation_period: 0
+  _max_engaged_enemies: 3
   debug_enemies: []
   debug_enemeis_defeated: []
   debug_enemies_remaining: []

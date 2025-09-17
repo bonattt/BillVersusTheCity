@@ -24,11 +24,13 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     public float evaluation_period;
     private float last_nearest_enemy_at = -1; // time when the nearest enemy was last evaluated
 
-    [Tooltip("max number of enemies that will directly fight the player at once; other enemies will retreat to cover.")]
+    [Tooltip("(TODO: reactivate this field) max number of enemies that will directly fight the player at once; other enemies will retreat to cover.")]
     [SerializeField]
     private int _max_engaged_enemies = 5;
+    public const int MAX_ENGAGED_ENEMIES = 3;
     public int max_engaged_enemies {
-        get => _max_engaged_enemies; // TODO --- this will be difficulty adjusted
+        // get => _max_engaged_enemies; // TODO --- this will be difficulty adjusted
+        get => MAX_ENGAGED_ENEMIES; 
     }
 
     public static EnemiesManager inst { get; protected set; }

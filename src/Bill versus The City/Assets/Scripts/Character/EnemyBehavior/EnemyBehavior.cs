@@ -73,7 +73,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public ISubBehavior RandomReloadBehavior() {
         if (always_use_cover_to_reload) { return new ReloadFromCoverBehavior(); }
         if (never_use_cover_to_reload) { return new ReloadFromStandingBehavior(); }
-        int r = Random.Range(0, possible_reload_behaviors.Length + 1); 
+        int r = Random.Range(0, possible_reload_behaviors.Length); 
         return possible_reload_behaviors[r];
     }
 
@@ -104,6 +104,10 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
+    public bool is_reserve {
+        get => controller.managed_enemy_state == ManagedEnemyState.reserve;
+    }
+
 
     private EnemyPerception _perception = null;
     public EnemyPerception perception {
@@ -123,6 +127,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             {BehaviorMode.engaged, new StandAndShootBehavior()},
             // {BehaviorMode.retreating, new FleeToCoverBehavior(fights_when_cornered: true)},
             {BehaviorMode.retreating, new FleeFromThreatsBehavior(fights_when_cornered: true)},
+            {BehaviorMode.reserve, new FleeFromThreatsBehavior(fights_when_cornered: true)},
             {BehaviorMode.searching, new SearchingBehavior(use_initial_movement_target, initial_movement_target)},
             // passive behaviors
             {BehaviorMode.passive, new StationaryBehavior()},
@@ -191,20 +196,29 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private Vector3 GetMoveTarget() {
+        Vector3 result;
         switch (ctrl_move_mode) {
             case MovementTarget.target:
-                return ctrl_target.transform.position;
+                result = ctrl_target.transform.position;
+                break;
 
             case MovementTarget.waypoint:
-                return ctrl_waypoint;
+                result = ctrl_waypoint;
+                break;
 
             case MovementTarget.stationary:
-                return controller.transform.position;
+                result = controller.transform.position;
+                break;
 
             default:
-                Debug.Log($"unknown move mode '{ctrl_move_mode}'");
-                return controller.transform.position;
+                Debug.LogError($"unknown move mode '{ctrl_move_mode}'");
+                result = controller.transform.position;
+                break;
         }
+        if (float.IsNaN(result.x) || float.IsNaN(result.y) || float.IsNaN(result.z)) {
+            Debug.LogError($"{gameObject.name} move_target is NaN {result}, move_mode: {ctrl_move_mode}");
+        }
+        return result;
     }
 
     private Vector3 GetLookDirection() {
@@ -318,15 +332,18 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
 
         // routed is permanent, and the enemy will run away forever
-        else if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) { 
-            return; 
-        }
-        else if (threat_tracking.is_suppressed) {
+        else if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) {
+            return;
+        } else if (threat_tracking.is_suppressed) {
             behavior_mode = BehaviorMode.suppressed;
             return;
         }
         switch(perception.state) {
             case PerceptionState.seeing:
+                if (is_reserve) {
+                    behavior_mode = BehaviorMode.reserve;
+                    break;
+                }
                 float dist = DistanceToTarget();
                 if (controller.seeing_target && dist < optimal_attack_range) {
                     behavior_mode = BehaviorMode.engaged;
@@ -376,6 +393,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 }
 
 public enum BehaviorMode {
+    reserve, // enemy is aware of the player, but is being held in reserve to avoid overwhelming the player
     engaged,  // enemy is aware of the player, and is in optimal combat range
     persuing, // enemy is aware of the player, but is beyond optimal combat range
     retreating,  // enemey is aware of the player, but is too close for optimal combat range
