@@ -17,7 +17,19 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     [Tooltip("multiplier that effects how quickly an enemy will detect the player.")]
     public float notice_player_rate = 2f;
     public float forget_player_rate = 0.25f;
-    public bool disable_spot = false;
+    
+    [SerializeField]
+    [Tooltip("Permanently blinds this enemy.")]
+    private bool _disable_spot = false;
+    public bool disable_spot { get => _disable_spot || alert_by_script || GameSettings.inst.debug_settings.GetBool("player_invisible"); }
+
+    [SerializeField]
+    [Tooltip("Permanently deafens this enemy.")]
+    private bool _disable_hearing = false;
+    public bool disable_hearing { get => _disable_hearing || alert_by_script || GameSettings.inst.debug_settings.GetBool("player_invisible"); }
+
+    [Tooltip("Set this flag to manage the enemy's alertness by triggers, instead of allowing them to notice the player on their own. Will be automatically disabled, once the enemy is alerted by script.")]
+    public bool alert_by_script = false;
     
     [Tooltip("offsets the test point to check if the enemy is on screen toward the player to adjust how much of the enemy must be on screen")]
     public float on_screen_test_offset = -0.5f; 
@@ -130,7 +142,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 
     public void Alert() {
         // alerts the enemy
-        disable_spot = false;
+        alert_by_script = false;
         _percent_noticed += 0.5f;
         last_seen_at = target.position;
         if (visible_nodes_this_frame >= 1) {
@@ -222,7 +234,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         // lazy update line of sight once per frame
         // to guarantee consistency, this must be called when LoS is queries, because the order scripts call `Update` is not known. 
         // must also be called once per frame in `Update`, so ensure `saw_target_last_frame` is called
-        if (disable_spot || GameSettings.inst.debug_settings.GetBool("player_invisible")) {
+        if (!LevelConfig.inst.combat_enabled || disable_spot) {
             // if spot is disabled, do not visually notice the player
             _seeing_target = false;
             _saw_target_last_frame = false;
@@ -352,7 +364,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     public void HearSound(HearingHit hit)
     {
         if (hit.enemy != this) { Debug.LogWarning($"Enemy {gameObject.name} heard HearingHit not for itself, intended for {hit.enemy.gameObject.name}!"); }
-        if (!LevelConfig.inst.combat_enabled) { return; } 
+        if (!LevelConfig.inst.combat_enabled || disable_hearing) { return; } 
         float alert_level = hit.sound.alarm_level * notice_player_rate;
         if (hit.sound.adjust_alarm_based_on_distance)
         {

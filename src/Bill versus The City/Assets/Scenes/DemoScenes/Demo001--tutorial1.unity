@@ -2399,6 +2399,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1229702735197554014, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
+      propertyPath: alert_by_script
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229702735197554014, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
       propertyPath: forget_player_rate
       value: 0.5
       objectReference: {fileID: 0}

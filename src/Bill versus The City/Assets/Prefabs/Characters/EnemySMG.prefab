@@ -229,7 +229,9 @@ MonoBehaviour:
   max_vision_nodes: 1
   notice_player_rate: 2
   forget_player_rate: 0.25
-  disable_spot: 0
+  _disable_spot: 0
+  _disable_hearing: 1
+  alert_by_script: 0
   on_screen_test_offset: -0.5
   offscreen_notice_multiplier: 0.05
   _reaction_time: 0.25
@@ -281,6 +283,7 @@ MonoBehaviour:
   nav_mesh_agent: {fileID: 1203654417675078061}
   choreography_movement: 0
   debug__look_direction: {x: 0, y: 0, z: 0}
+  managed_enemy_state: 0
   shoot_inaccuracy: 2
   obstacleMask:
     serializedVersion: 2
