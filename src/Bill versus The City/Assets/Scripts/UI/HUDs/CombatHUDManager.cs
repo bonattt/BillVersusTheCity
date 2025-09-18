@@ -90,7 +90,7 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     public static string GetEnemyCountString() {
-        return $"{EnemiesManager.inst.remaining_enemy_count} / {EnemiesManager.inst.total_enemies}";
+        return $"{EnemiesManager.inst.remaining_enemy_count} / {EnemiesManager.inst.total_enemy_count}";
     }
 
     private bool _had_countdown = false; // cached `level_config.has_countdown` to only do work when it changes

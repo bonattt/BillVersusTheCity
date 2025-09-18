@@ -6,8 +6,8 @@ using UnityEngine;
 
 
 public class EnemiesManager : MonoBehaviour, IGenericObservable {
-    private HashSet<NavMeshAgentMovement> enemies = new HashSet<NavMeshAgentMovement>();
-    private HashSet<NavMeshAgentMovement> enemies_defeated = new HashSet<NavMeshAgentMovement>();
+    protected HashSet<NavMeshAgentMovement> enemies = new HashSet<NavMeshAgentMovement>();
+    protected HashSet<NavMeshAgentMovement> enemies_defeated = new HashSet<NavMeshAgentMovement>();
 
     public int remaining_enemy_count {
         get {
@@ -15,7 +15,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         }
     }
 
-    public int total_enemies { get { return enemies.Count; } }
+    public int total_enemy_count { get { return enemies.Count; } }
 
     [Tooltip("layer mask used for alerting nearby enemies in line of sight.")]
     public LayerMask layer_mask;
@@ -75,6 +75,12 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         }
         if (inst != this) {
             Destroy(this);
+        }
+    }
+    
+    public IEnumerable<NavMeshAgentMovement> Iterator() {
+        foreach (NavMeshAgentMovement e in enemies_defeated) {
+            yield return e;
         }
     }
 
