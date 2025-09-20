@@ -26,6 +26,7 @@ public class NoiseMaker : MonoBehaviour
         Vector3 direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * Random.Range(0, spawn_radius);
         Vector3 origin = transform.position + direction;
         GameSound new_sound = new GameSound(origin, sound_range, sound_alert_level);
+        new_sound.sound_name = "Test Noisemaker";
         EnemyHearingManager.inst.NewSound(new_sound);
     }
 

@@ -113,7 +113,6 @@ public class FleeFromThreatsBehavior : ISubBehavior {
         } 
         else {
             Vector3 cover_from = player.transform.position;
-            Debug.LogWarning($"WaypointSystem.inst is null? {WaypointSystem.inst == null}"); // TODO --- remove debug
             Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);
             return dest.position;
             // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);

@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -7,6 +6,14 @@ using UnityEngine.AI;
 public static class NavMeshUtils {
 
     private const int DEFAULT_MAX_TRIES = 10;
+    
+    public const string NAV_MESH_DOORWAY_AREA = "Doorway";
+    // NavMeshAreaMask (not LayerMask) for propegation of sounds.
+    // NOTE unlike LayerMask, NavMesh area masks are just an int, and you have to set them up manually. handy dandy Inspector UI is not supported.
+    // public static int nav_mesh_sound_area_mask = NavMesh.AllAreas & ~(1 << NavMesh.GetAreaFromName(NAV_MESH_DOORWAY_AREA));
+    public static int nav_mesh_sound_area_mask {
+        get => LayerMaskSystem.inst.nav_mesh_sound_area_mask;
+    }
 
     public static Vector3 GetRandomPoint(NavMeshAgent agent, float radius) {
         return GetRandomPoint(agent, radius, agent.transform.position, DEFAULT_MAX_TRIES);
@@ -37,6 +44,20 @@ public static class NavMeshUtils {
 
         // If no valid point is found after 10 attempts, return Vector3.zero
         return Vector3.zero;
+    }
+    public static float GetPathLength(NavMeshPath path) {
+        float length = 0f;
+        for (int i = 1; i < path.corners.Length; i++)  {
+            length += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+        }
+        return length;
+    }
+
+    public static void DrawPath(NavMeshPath path, Color color, float duration = 0f) {
+        // draws a navmesh path using Debug.DrawLine
+        for (int i = 1; i < path.corners.Length; i++) {
+            Debug.DrawLine(path.corners[i -1], path.corners[i], color, duration);
+        }
     }
 
 

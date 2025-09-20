@@ -15,6 +15,11 @@ PLANNED FEATURES
         [X] try to fix sound (maybe it not go through walls)
     [ ] Add manual system for alerting groups of enemies when N-number of enemies are remaining/killed from a region-based group.
 
+[ ] DEBUG OPTIONS
+    [ ] Add debug infinite ammo flags
+    [ ] Add open switch weapon menu
+[ ] Refactor: make EnemyManager utilize AbstractEnemyGroup
+
 PLANNED BUGFIXES
 [ ] FIX: existing SoundEffects should subscribe to AudioSettings, and update their volume
     STEPS TO REPRODUCE:

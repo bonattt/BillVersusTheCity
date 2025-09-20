@@ -168,7 +168,7 @@ MonoBehaviour:
   notice_player_rate: 2
   forget_player_rate: 0.25
   _disable_spot: 0
-  _disable_hearing: 1
+  _disable_hearing: 0
   alert_by_script: 0
   on_screen_test_offset: -0.5
   offscreen_notice_multiplier: 0.05

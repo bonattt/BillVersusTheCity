@@ -29,6 +29,7 @@ public class HearableGunshot : IAttackHitEffect,
     public void CreateSound(Vector3 point)
     {
         GameSound new_sound = new GameSound(point, range, alarm_level);
+        new_sound.sound_name = "Gunshot";
         EnemyHearingManager.inst.NewSound(new_sound);
     }
 }

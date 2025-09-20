@@ -51,6 +51,7 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         // triggers game sound that enemies can hear
         float volume = explosion_attack.explosion_volume * 2;
         GameSound new_sound = new GameSound(transform.position, range:volume, alarm_level:volume);
+        new_sound.sound_name = "Explosion";
         EnemyHearingManager.inst.NewSound(new_sound);
     }
 

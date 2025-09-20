@@ -42,11 +42,9 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
         // }
         if (IsDoorRotated()) {
             // if the door is rotated, the collider should be set to X-axis, so the collider is still along the X-axis in global space
-            Debug.LogWarning($"set collider to Z-axis for {gameObject.name}!"); // TODO --- remove debug
             collider.direction = 2; // Z-axis
         } else {
             // if the door isn't rotated, just set the collider to X-axis
-            Debug.LogWarning($"set collider to X-axis for {gameObject.name}!"); // TODO --- remove debug
             collider.direction = 0; // X-axis
         }
     }
@@ -97,7 +95,7 @@ public class DoorController : MonoBehaviour, IInteractionEffect, IGameEventEffec
     protected void PlayDoorSound(string sound_name) {
         if (sound_name == null || sound_name.Equals("")) {
             // do nothing
-            Debug.LogWarning("no sound to play, skipping!"); // TODO --- remove debug
+            Debug.LogWarning("no sound to play, skipping!");
             return;
         }
         ISFXSounds sounds = SFXLibrary.LoadSound(sound_name);

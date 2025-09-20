@@ -46,6 +46,7 @@ public class BulletWhizSound : MonoBehaviour {
         float range = base_range + distance_traveled;
         float alarm_level = base_alert_rate * distance_traveled * interval_seconds;
         GameSound new_sound = new GameSound(GetSampledPosition(), range, alarm_level);
+        new_sound.sound_name = "bullet whiz";
         new_sound.penetrate_walls = false;
         EnemyHearingManager.inst.NewSound(new_sound);
     }
