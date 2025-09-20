@@ -12,7 +12,8 @@ PLANNED FEATURES
 [ ] fix combat
     [+] Fix Sound
         [+] disable sound (for now)
-        [X] try to fix sound (maybe it not go through walls)
+        [+] try to fix sound (maybe it not go through walls)
+        [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
     [ ] Add manual system for alerting groups of enemies when N-number of enemies are remaining/killed from a region-based group.
 
 [ ] DEBUG OPTIONS
