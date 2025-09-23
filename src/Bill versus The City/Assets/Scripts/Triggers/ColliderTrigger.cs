@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class EventCollider : MonoBehaviour {
+public class ColliderTrigger : MonoBehaviour {
 
     public GameObject event_effect;
     private IGameEventEffect _event_effect;

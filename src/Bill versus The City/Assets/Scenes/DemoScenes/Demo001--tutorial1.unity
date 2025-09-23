@@ -2637,7 +2637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1227932957}
   - component: {fileID: 1227932959}
-  - component: {fileID: 1227932958}
+  - component: {fileID: 1227932960}
   m_Layer: 13
   m_Name: AlertEnemy
   m_TagString: Untagged
@@ -2660,18 +2660,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 968409913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1227932958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1227932956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89cfe0360959c6a4d8a5f0533524a2ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1227932959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2686,7 +2674,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  init_game_event: {fileID: 1227932958}
+  init_game_event: {fileID: 0}
+--- !u!114 &1227932960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227932956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8be8dc5ef2ad784195daff08940ab93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1229031653
 GameObject:
   m_ObjectHideFlags: 0

@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2199962130810427545}
-  - component: {fileID: 8986783575956273170}
+  - component: {fileID: 1467467030066455399}
   m_Layer: 0
   m_Name: EnemiesManager
   m_TagString: Untagged
@@ -76,7 +76,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2132203353638809629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8986783575956273170
+--- !u!114 &1467467030066455399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,14 +85,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1783799293194730082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23db625d9c1c0334592e38a196b2020c, type: 3}
+  m_Script: {fileID: 11500000, guid: d9d5a93a75188504ba20ba8ee77f00e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer_mask:
+  blocks_enemy_line_of_sight:
     serializedVersion: 2
-    m_Bits: 199
+    m_Bits: 0
   evaluation_period: 0
-  _max_engaged_enemies: 3
+  _max_engaged_enemies: 4
   debug_enemies: []
   debug_enemeis_defeated: []
   debug_enemies_remaining: []

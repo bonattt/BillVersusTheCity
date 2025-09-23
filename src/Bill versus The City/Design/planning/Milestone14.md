@@ -15,11 +15,7 @@ PLANNED FEATURES
         [+] try to fix sound (maybe it not go through walls)
         [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
     [ ] Add manual system for alerting groups of enemies when N-number of enemies are remaining/killed from a region-based group.
-
-[ ] DEBUG OPTIONS
-    [ ] Add debug infinite ammo flags
-    [ ] Add open switch weapon menu
-[ ] Refactor: make EnemyManager utilize AbstractEnemyGroup
+    [ ] Refactor: make EnemyManager utilize AbstractEnemyGroup
 
 PLANNED BUGFIXES
 [ ] FIX: existing SoundEffects should subscribe to AudioSettings, and update their volume
@@ -37,6 +33,10 @@ PLANNED BUGFIXES
 
 UNPLANNED FEATURES
 
+[ ] DEBUG OPTIONS
+    [ ] Add debug infinite ammo flags
+    [ ] Add open switch weapon menu
+[ ] Implement next_shot_ready sound for pump shotguns
 
 UNPLANNED BUGFIXES
 [ ] I was able to die, then X out of the death dialogue somehow to move around the level as a dead guy (on the grenades tutorial)

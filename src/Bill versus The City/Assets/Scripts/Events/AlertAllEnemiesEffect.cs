@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class AlertEnemies : AbstractInteractionGameEvent {
+public class AlertAllEnemiesEffect : AbstractInteractionGameEvent {
 
     protected override void Effect() {
         EnemiesManager.inst.AlertAll();

@@ -18,7 +18,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     public int total_enemy_count { get { return enemies.Count; } }
 
     [Tooltip("layer mask used for alerting nearby enemies in line of sight.")]
-    public LayerMask layer_mask;
+    public LayerMask blocks_enemy_line_of_sight;
 
     [Tooltip("number of seconds to wait before revaluating which enemies are closest to the player.")]
     public float evaluation_period;
@@ -165,7 +165,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         Vector3 end = perception.raycast_start.position;
         Vector3 direction = end - start;
         Debug.DrawRay(start, direction, Color.red, 1f); // ray appears for 1 second
-        if (Physics.Raycast(start, direction, out hit, direction.magnitude, layer_mask)) {
+        if (Physics.Raycast(start, direction, out hit, direction.magnitude, blocks_enemy_line_of_sight)) {
             bool los_to_target = hit.transform == perception.transform;
             if (los_to_target) {
                 perception.Alert();

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EnemiesClearedEventTrigger : MonoBehaviour, IGenericObserver {
-
+    /// WARNING: EnemiesClearedEventTrigger is depricated, use TriggerFromEnemyGroup on EnemiesManager [Refactor Pending]
     public bool was_triggered = false;
 
     public List<MonoBehaviour> init_game_events;

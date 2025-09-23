@@ -19,6 +19,17 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
     public virtual int remaining_enemy_count { get => all_enemies.Count - enemies_defeated.Count; }
 
     protected abstract void InitializeEnemies(); // populate all_enemies
+
+    public void AlertAll() {
+        foreach (NavMeshAgentMovement enemy in RemainingEnemies()) {
+            EnemyPerception perception = enemy.GetComponent<EnemyPerception>();
+            if (perception == null) {
+                Debug.LogError($"EnemyPerception is null for '{enemy.gameObject.name}'!");
+                continue;
+            }
+            perception.Alert();
+        }
+    }
     public virtual IEnumerable<NavMeshAgentMovement> AllEnemies() {
         foreach (NavMeshAgentMovement e in all_enemies) {
             yield return e;
@@ -56,6 +67,7 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
             Debug.LogWarning($"defeated enemy '{((MonoBehaviour)status).gameObject.name}' already tracked as defeated!");
         }
         enemies_defeated.Add(e);
+        EnemyDefeated();
     }
 
     protected NavMeshAgentMovement GetEnemyFromStatus(ICharacterStatus status) {
@@ -65,6 +77,15 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
             }
         }
         return null;
+    }
+
+    private List<IEnemyGroupSubscriber> subscribers = new List<IEnemyGroupSubscriber>();
+    public void Subscribe(IEnemyGroupSubscriber sub) => subscribers.Add(sub);
+    public void Unsubscribe(IEnemyGroupSubscriber sub) => subscribers.Remove(sub);
+    public void EnemyDefeated() {
+        foreach (IEnemyGroupSubscriber sub in subscribers) {
+            sub.EnemyDefeated(this);
+        }
     }
 
     protected virtual void Start() {

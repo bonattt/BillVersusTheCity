@@ -54,7 +54,6 @@ public class EnemyHearingManager : IGenericObserver {
     public IEnumerable<EnemyPerception> Iterator() { foreach (EnemyPerception p in perception) yield return p; }
 
     protected IEnumerable<HearingHit> GetHearingHits(ISound sound) {
-        Debug.LogWarning($"sound: {sound}"); // TODO --- remove debug
         foreach (EnemyPerception hearing_target in Iterator()) {
             float real_distance = Vector3.Distance(sound.origin, hearing_target.transform.position);
             if (real_distance >= sound.range) { continue; }
@@ -62,11 +61,9 @@ public class EnemyHearingManager : IGenericObserver {
             Vector3 direction = (hearing_target.transform.position - sound.origin).normalized;
 
             if (sound.ignore_walls) {
-                Debug.LogWarning("Sound.ignore_walls"); // TODO --- remove debug
                 // calculate sound ignoring walls
                 yield return new HearingHit(sound, hearing_target, real_distance);
             } else if (sound.penetrate_walls) {
-                Debug.LogWarning("Sound.penetrate_walls"); // TODO --- remove debug
                 // calculate sound penetrating walls (but not ignoring)
                 RaycastHit[] raycast_hits = Physics.RaycastAll(sound.origin, direction, real_distance, LayerMaskSystem.inst.blocks_sounds);
                 float adjusted_distance = real_distance - (sound.wall_effectiveness * raycast_hits.Length);
@@ -75,10 +72,7 @@ public class EnemyHearingManager : IGenericObserver {
                 }
             } else {
                 // calculate sound that cannot penetrate walls
-                Debug.LogWarning("Sound normal"); // TODO --- remove debug
-
                 if (Physics.Raycast(sound.origin, direction, real_distance, LayerMaskSystem.inst.blocks_sounds)) {
-                    Debug.LogWarning("Sound: use navmesh!"); // TODO --- remove debug
                     // NOTE --- I am not checking the hits for matching the target, the blocks_sound LayerMask should prevent hits on the target
                     HearingHit hit = GetHearingHitWithNavMesh(sound, hearing_target);
                     if (hit != null) {
@@ -87,27 +81,13 @@ public class EnemyHearingManager : IGenericObserver {
                         continue; // hit wall, and no NavMeshPath to target found, so there is no HearingHit, just continue
                     }
                 }
-                Debug.LogWarning("Sound no raycast hits!"); // TODO --- remove debug
                 // no raycast hit, or raycast hits target, so there is no wall blocking sound
                 yield return new HearingHit(sound, hearing_target, real_distance);
-
-                // TODO --- remove debug (uncomment above, delete below)
-
-                // Debug.LogWarning("Sound: use navmesh!"); // TODO --- remove debug
-                // // NOTE --- I am not checking the hits for matching the target, the blocks_sound LayerMask should prevent hits on the target
-                // HearingHit hit = GetHearingHitWithNavMesh(sound, hearing_target);
-                // if (hit != null) {
-                //     yield return hit;
-                // } else {
-                //     continue; // hit wall, and no NavMeshPath to target found, so there is no HearingHit, just continue
-                // }
             }
-
         }
     }
 
     protected HearingHit GetHearingHitWithNavMesh(ISound sound, EnemyPerception hearing_target) {
-        Debug.LogWarning("GetHearingHitWithNavMesh"); // TODO --- remove debug
         NavMeshAgent agent = hearing_target.GetComponent<NavMeshAgent>();
         if (agent == null) {
             Debug.LogError($"Cannot find NavMeshAgent component!");
@@ -117,8 +97,6 @@ public class EnemyHearingManager : IGenericObserver {
         NavMeshPath path = new NavMeshPath();
         // agent.CalculatePath(sound.origin, path, NavMeshUtils.nav_mesh_sound_area_mask);
         Vector3 start = hearing_target.transform.position;
-        Debug.LogWarning($"NavMesh.AllAreas: {NavMesh.AllAreas}, 0b{Convert.ToString(NavMesh.AllAreas, 2)}"); // TODO --- remove debug
-        Debug.LogWarning($"NavMeshUtils.nav_mesh_sound_area_mask: {NavMeshUtils.nav_mesh_sound_area_mask}, 0b{Convert.ToString(NavMeshUtils.nav_mesh_sound_area_mask, 2)}"); // TODO --- remove debug
         NavMesh.CalculatePath(start, sound.origin, NavMeshUtils.nav_mesh_sound_area_mask, path);
         NavMeshUtils.DrawPath(path, Color.yellow, duration:2f);
         bool path_found = path.status == NavMeshPathStatus.PathComplete;
