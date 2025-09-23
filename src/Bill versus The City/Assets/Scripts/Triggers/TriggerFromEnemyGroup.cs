@@ -19,7 +19,7 @@ public class TriggerFromEnemyGroup : MonoBehaviour, IEnemyGroupSubscriber {
 
     public void Trigger() {
         has_triggered = true;
-
+        _event.ActivateEffect();
     }
 
     public void EnemyDefeated(IEnemyGroup group) {

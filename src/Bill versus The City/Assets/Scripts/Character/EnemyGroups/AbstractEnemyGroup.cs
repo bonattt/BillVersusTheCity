@@ -42,7 +42,9 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
     }
     public virtual IEnumerable<NavMeshAgentMovement> RemainingEnemies() {
         foreach (NavMeshAgentMovement e in all_enemies) {
-            if (enemies_defeated.Contains(e)) { continue; }
+            if (enemies_defeated.Contains(e)) {
+                continue;
+            }
             yield return e;
         }
     }
