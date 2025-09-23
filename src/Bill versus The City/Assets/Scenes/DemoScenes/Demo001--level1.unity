@@ -2507,17 +2507,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1058027293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 816e9a99fabd5944085813371a03942d, type: 3}
+  m_Script: {fileID: 11500000, guid: f41c848f8b72102449a588cf6454c04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy_prefab: {fileID: 7636100687923735762, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
   spawn_location: {fileID: 0}
   init_spawner_config: {fileID: 0}
-  override_default_behavior: 1
-  default_behavior: 3
-  initial_move_target: {fileID: 1444793501}
+  override_default_behavior: 0
+  default_behavior: 4
+  initial_move_target: {fileID: 0}
   init_spawn_points: []
-  base_enemy_name: EnemyReinforcement
+  base_enemy_name: Enemy
   log_spawns: 0
   spawn_on_start: 0
 --- !u!4 &1064678468 stripped
@@ -3238,17 +3238,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1283752817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 816e9a99fabd5944085813371a03942d, type: 3}
+  m_Script: {fileID: 11500000, guid: f41c848f8b72102449a588cf6454c04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy_prefab: {fileID: 7636100687923735762, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
   spawn_location: {fileID: 0}
   init_spawner_config: {fileID: 0}
-  override_default_behavior: 1
-  default_behavior: 3
-  initial_move_target: {fileID: 1444793501}
+  override_default_behavior: 0
+  default_behavior: 4
+  initial_move_target: {fileID: 0}
   init_spawn_points: []
-  base_enemy_name: EnemyReinforcement
+  base_enemy_name: EnemyReinforecment
   log_spawns: 0
   spawn_on_start: 0
 --- !u!1 &1293012407
@@ -3924,17 +3924,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1540220453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 816e9a99fabd5944085813371a03942d, type: 3}
+  m_Script: {fileID: 11500000, guid: f41c848f8b72102449a588cf6454c04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy_prefab: {fileID: 7636100687923735762, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
   spawn_location: {fileID: 0}
   init_spawner_config: {fileID: 0}
-  override_default_behavior: 1
-  default_behavior: 3
-  initial_move_target: {fileID: 1444793501}
+  override_default_behavior: 0
+  default_behavior: 4
+  initial_move_target: {fileID: 0}
   init_spawn_points: []
-  base_enemy_name: EnemyReinforcement
+  base_enemy_name: Enemy
   log_spawns: 0
   spawn_on_start: 0
 --- !u!1 &1542168561
