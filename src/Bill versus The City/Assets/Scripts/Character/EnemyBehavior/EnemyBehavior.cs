@@ -73,7 +73,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public ISubBehavior RandomReloadBehavior() {
         if (always_use_cover_to_reload) { return new ReloadFromCoverBehavior(); }
         if (never_use_cover_to_reload) { return new ReloadFromStandingBehavior(); }
-        int r = Random.Range(0, possible_reload_behaviors.Length); 
+        int r = UnityEngine.Random.Range(0, possible_reload_behaviors.Length); 
         return possible_reload_behaviors[r];
     }
 
@@ -159,7 +159,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     
     void Start()
     {
-        _shooting_rate_variation = Random.Range(-SHOOTING_RATE_VARIATION/2, SHOOTING_RATE_VARIATION/2);
+        _shooting_rate_variation = UnityEngine.Random.Range(-SHOOTING_RATE_VARIATION/2, SHOOTING_RATE_VARIATION/2);
         InitializeBehaviorsDict();
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
         reload_manager = GetComponent<IReloadManager>();

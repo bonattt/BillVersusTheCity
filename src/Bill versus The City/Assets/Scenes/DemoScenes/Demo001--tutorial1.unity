@@ -2674,7 +2674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  init_game_event: {fileID: 0}
+  init_game_event: {fileID: 1227932960}
 --- !u!114 &1227932960
 MonoBehaviour:
   m_ObjectHideFlags: 0
