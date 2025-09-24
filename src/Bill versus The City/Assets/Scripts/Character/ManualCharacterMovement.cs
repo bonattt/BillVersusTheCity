@@ -19,8 +19,11 @@ public class ManualCharacterMovement : CharCtrl
             return _vision_nodes;
         }
     }
+    
+    // returns the max possible speed a player can move
+    public float max_movement_speed { get => movement_speed * sprint_multiplier; }
 
-    public override bool is_player { get { return true; }}
+    public override bool is_player { get { return true; } }
     public override float movement_speed {
         get {
             if (crouch_dive_remaining > 0f) {

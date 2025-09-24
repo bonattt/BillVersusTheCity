@@ -43,3 +43,4 @@ UNPLANNED BUGFIXES
 [ ] I was able to die, then X out of the death dialogue somehow to move around the level as a dead guy (on the grenades tutorial)
     Steps to reproduce:
      - I couldn't figure out how I did this
+[+] Fix EXTREMELY loud footstep sound when player teleports with stairs.

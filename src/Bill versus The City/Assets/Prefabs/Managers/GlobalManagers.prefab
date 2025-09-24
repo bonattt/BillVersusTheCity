@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f049cc4865bc2964093b0aeddb841c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound_duration: 0
+  sound_duration: 1
   size: 0.75
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   draw_height: 0.1
