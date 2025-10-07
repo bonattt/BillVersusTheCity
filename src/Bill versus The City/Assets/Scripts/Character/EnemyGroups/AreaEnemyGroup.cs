@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AreaEnemyGroup : AbstractEnemyGroup {
     public Vector3 size = new Vector3(2f, 2f, 2f);
+    public Color gizmo_color = Color.green;
     protected override void InitializeEnemies() {
         // looks for every enemy within a collision box
         enemies_defeated = new HashSet<NavMeshAgentMovement>();
@@ -18,7 +19,7 @@ public class AreaEnemyGroup : AbstractEnemyGroup {
     }
 
     void OnDrawGizmos() {
-        Gizmos.color = Color.green;
+        Gizmos.color = gizmo_color;
         Gizmos.DrawWireCube(transform.position, size);
     }
 }
