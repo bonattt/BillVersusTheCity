@@ -11,7 +11,7 @@ public class ManualCharacterMovement : CharCtrl
     public List<Transform> vision_nodes {
         get {
             if (_vision_nodes == null) {
-                _vision_nodes = new List<Transform>{transform};
+                _vision_nodes = new List<Transform> { transform };
                 foreach (Transform child in vision_target) {
                     _vision_nodes.Add(child);
                 }
@@ -47,6 +47,10 @@ public class ManualCharacterMovement : CharCtrl
             }
             return walk_speed;
         }
+    }
+
+    protected override void Start() {
+        base.Start();
     }
 
     void Update()

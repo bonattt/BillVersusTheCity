@@ -23,6 +23,9 @@ public class LayerMaskSystem : MonoBehaviour {
     [Tooltip("LayerMask used when testing if a sound is audible")]
     public LayerMask blocks_sounds;
 
+    [Tooltip("Used to detect where the player can vault over nearby cover.")]
+    public LayerMask vault_over_cover_zones;
+
     // Navmesh area-mask used for sound propegation
     // this field is configured through a NavMeshAgent.AreaMask because that's the only way to get a robust Inspector UI for this, and the documentation to calculate this myself is not very helpful.
     private int? _nav_mesh_sound_area_mask;

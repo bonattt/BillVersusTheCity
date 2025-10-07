@@ -26,6 +26,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected ICharacterStatus char_status;
     public Transform aim_target;
     public Transform crouch_target; // moves up and down when the character crouches
+    public VaultingAreaDetector vaulting_area_detector;
 
     public float last_attack_time { get; set; }
     public bool attack_this_frame { get; private set; }
@@ -228,7 +229,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     // }
     // /////////////////////////////////
 
-    public virtual void Start() {
+    protected virtual void Start() {
         last_attack_time = float.NegativeInfinity;
         char_status = GetComponent<CharacterStatus>();
         char_status.Subscribe(this);
@@ -393,7 +394,22 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // returns true if a crouch dive should start, AND isn't already started
         return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0;
     }
+
+    public bool GetStartVaultThisFrame(bool sprint, Vector3 direction) {
+        if (!sprint || direction == Vector3.zero) { return false; }
+
+        VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
+        if (zone == null) { return false; }
+
+        return zone.IsInJumpPosition(transform.position, direction);
+    }
+
     private bool _crouch_last_frame = false;
+
+    // returns true if the player is leaping over cover/obstacle
+    protected bool is_vaulting {
+        get => false; // TODO --- implement this
+    }
     protected bool is_crouch_diving {
         get => crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero;
     }
@@ -405,11 +421,15 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             // if crouch diving, continue in that direction for the duration of the crouch dive
             move_direction = crouch_dive_direction;
             crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
+        } else if (is_vaulting) {
+            Debug.LogError("TODO: implement start vault over obstacle");
         } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
             // Start crouch dive
             crouch_dive_remaining = crouch_dive_duration;
             crouch_dive_direction = move_direction.normalized;
             crouch_percent = 1f;
+        } else if (GetStartVaultThisFrame(sprint && !crouch, move_direction)) {
+            Debug.LogError("TODO: implement start vault over obstacle");
         } else {
             if (crouch) {
                 // cannot crouch and sprint at the same time, if there is no crouch dive

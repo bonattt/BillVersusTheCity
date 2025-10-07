@@ -14,9 +14,9 @@ PLANNED FEATURES
         [+] disable sound (for now)
         [+] try to fix sound (maybe it not go through walls)
         [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
-    [ ] Add manual system for alerting groups of enemies when N-number of enemies are remaining/killed from a region-based group.
+    [+] Add manual system for alerting groups of enemies when N-number of enemies are remaining/killed from a region-based group.
     [ ] Refactor: make EnemyManager utilize AbstractEnemyGroup
-    [ ] Add Enemy Zone gizmo color variable
+    [+] Add Enemy Zone gizmo color variable
 
 PLANNED BUGFIXES
 [ ] FIX: existing SoundEffects should subscribe to AudioSettings, and update their volume

@@ -24,9 +24,9 @@ public class PrimativeAttackEffect : MonoBehaviour, IExplosionEffect {
     }
 
     public void ConfigureFromExplosion(Explosion explosion) {
-        Debug.LogWarning($"increase scale_rate ({explosion.explosion_attack.explosion_radius} / {max_scale}) => {explosion.explosion_attack.explosion_radius / max_scale}"); // TODO --- remove debug
+        // Debug.LogWarning($"increase scale_rate ({explosion.explosion_attack.explosion_radius} / {max_scale}) => {explosion.explosion_attack.explosion_radius / max_scale}"); // TODO --- remove debug
         scale_rate = scale_rate * (explosion.explosion_attack.explosion_radius / max_scale);
-        Debug.LogWarning($"scale_rate: {scale_rate}"); // TODO --- remove debug
+        // Debug.LogWarning($"scale_rate: {scale_rate}"); // TODO --- remove debug
         // scale_rate = scale_rate * scale_rate; // 
         max_scale = explosion.explosion_attack.explosion_radius * 2f; // scale is a diameter, so x2
     }

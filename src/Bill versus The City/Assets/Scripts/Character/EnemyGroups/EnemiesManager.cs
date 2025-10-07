@@ -100,7 +100,6 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
 
     public void Reset() {
         // resets the current and total enemies.
-        Debug.LogWarning($"EnemiesManager.Reset()"); // TODO --- remove debug
         enemies.Clear();
         enemies_defeated.Clear();
         Debug.Log($"Clear(): enemies.Count: {enemies.Count}");
@@ -109,7 +108,6 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     }
 
     public void AddEnemy(NavMeshAgentMovement enemy) {
-        Debug.LogWarning($"EnemiesManager.AddEnemy({enemy.gameObject.name})"); // TODO --- remove debug
         enemies.Add(enemy);
         UpdateSubscribers();
     }

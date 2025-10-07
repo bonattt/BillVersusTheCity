@@ -300,6 +300,7 @@ Transform:
   - {fileID: 6962180800341575572}
   - {fileID: 7902831743066966521}
   - {fileID: 8800919946435970585}
+  - {fileID: 7438462098498777283}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &7243860271420088886
@@ -392,10 +393,13 @@ MonoBehaviour:
   start_reload_at: 0
   animatior_controller_ref: {fileID: 7783136410653839400}
   crouch_dive_duration: 0.5
+  crouch_lock_duration: 1
   crouch_dive_remaining: 0
+  crouch_locked_remaining: 0
   _crouch_percent: 0
   debug__can_attack: 0
   vision_target: {fileID: 7902831743066966521}
+  vaulting_area_detector: {fileID: 4306679883451602688}
   _last_move: {x: 0, y: 0, z: 0}
 --- !u!114 &4665821343985391478
 MonoBehaviour:
@@ -441,11 +445,12 @@ MonoBehaviour:
   _health: 50
   _max_health: 50
   armor_init: {fileID: 11400000, guid: a1265f372acbaa94c965ee906db4e12f, type: 2}
-  _debug_has_armor: 0
-  _debug_max_armor: -1
-  _debug_armor: -1
-  _debug_armor_protection: -1
-  _debug_is_player: 0
+  _debug:
+    has_armor: 0
+    max_armor: -1
+    armor: -1
+    armor_protection: -1
+    is_player: 0
 --- !u!114 &4205565970539061229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +537,8 @@ MonoBehaviour:
   base_alert_rate: 0.1
   interval_seconds: 0.33
   distance_threshold_seconds: 0.1
+  max_distance_safety_margin: 1.1
+  make_sound_over_movement_threshold: 0
   speed_factor: 5
 --- !u!114 &6796095662716225421
 MonoBehaviour:
@@ -697,6 +704,76 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 5
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &5073208069244728443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7438462098498777283}
+  - component: {fileID: 4306679883451602688}
+  - component: {fileID: 5113494173407181907}
+  m_Layer: 17
+  m_Name: VaultOverDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7438462098498777283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073208069244728443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.687}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3633326187336503762}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4306679883451602688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073208069244728443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38e1fe6a029237a43aa0657ae6700ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cached_area: {fileID: 0}
+  target_collider: {fileID: 5113494173407181907}
+--- !u!136 &5113494173407181907
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073208069244728443}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 131072
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8443810530588016481
 GameObject:
   m_ObjectHideFlags: 0

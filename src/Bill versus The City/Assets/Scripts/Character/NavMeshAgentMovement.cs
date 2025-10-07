@@ -17,7 +17,7 @@ using UnityEngine.AI;
     private EnemyPerception perception;
     private EnemyBehavior behavior;
 
-    public override void Start() {
+    protected override void Start() {
         base.Start();
         perception = GetComponent<EnemyPerception>();
         behavior = GetComponent<EnemyBehavior>();

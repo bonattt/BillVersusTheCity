@@ -105,5 +105,8 @@ MonoBehaviour:
   blocks_sounds:
     serializedVersion: 2
     m_Bits: 1
+  vault_over_cover_zones:
+    serializedVersion: 2
+    m_Bits: 131072
   nav_mesh_agents:
     sound_propegation: {fileID: 8814507368237487670}

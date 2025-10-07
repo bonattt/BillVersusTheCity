@@ -90,19 +90,16 @@ public class DebugActionsMenuController : MonoBehaviour, IPlayerObserver {
 
     public void FailLevelClicked() {
         Close();
-        Debug.LogWarning("FailLevelClicked");
         LevelConfig.inst.FailLevel();
     }
 
     public void CompleteObjectiveClicked() {
         Close();
-        Debug.LogWarning("CompleteObjectiveClicked");
         LevelConfig.inst.LevelObjectivesCleared();
     }
 
     public void KillEnemiesClicked() {
         Close();
-        Debug.LogWarning("KillEnemiesClicked");
         EnemiesManager.inst.DebugKillAll();
     }
 
