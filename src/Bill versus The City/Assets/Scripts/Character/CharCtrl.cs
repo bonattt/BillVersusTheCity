@@ -90,11 +90,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             if (is_sprinting) {
                 move_speed *= sprint_multiplier;
             }
-
             if (reloading) {
                 move_speed *= reload_move_multiplier;
             }
-
             if (aiming) {
                 float aim_multiplier;
                 if (current_firearm == null) {
@@ -108,6 +106,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             if (this.is_hit_stunned) {
                 move_speed *= 0.1f;
             }
+            if (is_vaulting) {
+                move_speed = vault_over_speed;
+            }
             return move_speed;
         }
     }
@@ -115,6 +116,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public float crouch_dive_duration = 1f; // how long does a crouch dive last
     public float crouch_lock_duration = 1f; // how long does a player remain crouched after a crouch dive
     protected Vector3 crouch_dive_direction = new Vector3(0, 0, 0);
+
+    protected Vector3 vault_over_direction = new Vector3(0, 0, 0);
+    protected float vault_over_remaining = 0f; // seconds remaining in the current vault over an obstacle 
 
     [Tooltip("How many seconds are left in the current crouch dive.")]
     [SerializeField] protected float crouch_dive_remaining = 0f; // 
@@ -298,6 +302,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void PostUpdate() {
+        // TODO --- investigate if this can be removed
         // do nothing. Extension hook for subclasses.
     }
 
@@ -381,6 +386,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         if (crouch_dive_remaining > 0) {
             crouch_dive_remaining -= Time.deltaTime;
             crouch_percent = 1f;
+        } else if (vault_over_remaining > 0) {
+            vault_over_remaining -= Time.deltaTime;
+            if (vault_over_remaining <= 0f) {
+                FinishVaultOver();
+            }
         } else if (crouch) {
             if (crouch_locked_remaining > 0) { crouch_locked_remaining -= Time.deltaTime; }
             crouch_percent += crouch_rate * Time.deltaTime;
@@ -395,20 +405,45 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0;
     }
 
+    protected virtual void StartCrouchDive(Vector3 move_direction) {
+        crouch_dive_remaining = crouch_dive_duration;
+        crouch_dive_direction = move_direction.normalized;
+        crouch_percent = 1f;
+    }
+
     public bool GetStartVaultThisFrame(bool sprint, Vector3 direction) {
         if (!sprint || direction == Vector3.zero) { return false; }
 
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         if (zone == null) { return false; }
-
         return zone.IsInJumpPosition(transform.position, direction);
+    }
+
+    private float vault_over_margin = 1.1f; // multiplies the length of a jump to ensure you clear the obstacle
+    protected float vault_over_speed { get => walk_speed / 3f; }
+    protected virtual void StartVaultOver(Vector3 move_direction) {
+        VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
+        float vault_duration = vault_over_margin * zone.jump_length / vault_over_speed;
+        Debug.LogWarning($"StartVaultOver transform before {transform.position}"); // TODO --- remove debug
+        transform.position += new Vector3(0f, zone.jump_height, 0f);
+        Debug.LogWarning($"StartVaultOver transform after {transform.position}"); // TODO --- remove debug
+
+        vault_over_remaining = vault_duration;
+        vault_over_direction = zone.GetVaultDirection(move_direction);
+    }
+
+    protected virtual void FinishVaultOver() {
+        vault_over_remaining = -1f;
+        vault_over_direction = Vector3.zero;
+        
+        transform.position += new Vector3(transform.position.x, 0f, transform.position.z);
     }
 
     private bool _crouch_last_frame = false;
 
     // returns true if the player is leaping over cover/obstacle
     protected bool is_vaulting {
-        get => false; // TODO --- implement this
+        get => vault_over_remaining > 0f && vault_over_direction != Vector3.zero;
     }
     protected bool is_crouch_diving {
         get => crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero;
@@ -422,22 +457,18 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             move_direction = crouch_dive_direction;
             crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
         } else if (is_vaulting) {
-            Debug.LogError("TODO: implement start vault over obstacle");
+            move_direction = vault_over_direction;
         } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
-            // Start crouch dive
-            crouch_dive_remaining = crouch_dive_duration;
-            crouch_dive_direction = move_direction.normalized;
-            crouch_percent = 1f;
+            StartCrouchDive(move_direction);
         } else if (GetStartVaultThisFrame(sprint && !crouch, move_direction)) {
-            Debug.LogError("TODO: implement start vault over obstacle");
+            StartVaultOver(move_direction);
         } else {
             if (crouch) {
                 // cannot crouch and sprint at the same time, if there is no crouch dive
                 is_sprinting = false;
             }
         }
-
-        if (crouch_dive_remaining > 0f || is_sprinting) {
+        if (is_crouch_diving || is_vaulting || is_sprinting) {
             // always face forward during crouch dive or sprint!
             look_direction = move_direction;
         }
@@ -709,10 +740,16 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     //////////////////// DEBUG 
-
-    public bool debug__can_attack; 
-    public void UpdateDebug() {
-        debug__can_attack = CanAttack();
+    [Tooltip("Read-only class data output for debugging with the inspector for the CharCtrl abstract class.")]
+    public CharacterControllerDebugInfo debug = new CharacterControllerDebugInfo();
+    public virtual void UpdateDebug() {
+        debug.can_attack = CanAttack();
+        debug.move_action_remaining = Mathf.Max(crouch_dive_remaining, vault_over_remaining);
+        debug.move_action_dir = vault_over_direction;
+        debug.is_vaulting = is_vaulting;
+        debug.is_crouch_diving = is_crouch_diving;
+        debug.move_speed = movement_speed;
+        debug.vault_over_speed = vault_over_speed;
     }
 }
 
@@ -727,4 +764,13 @@ public enum ActionCode {
     aim,
     cancel_aim
 
+}
+
+[Serializable]
+public class CharacterControllerDebugInfo {
+    [Tooltip("generic message, used for whatever is currently being debugged, or blank if not being used.")]
+    public string message = "";
+    public bool can_attack, is_vaulting, is_crouch_diving;
+    public float move_action_remaining = -1f, move_speed, vault_over_speed;
+    public Vector3 move_direction, move_action_dir;
 }

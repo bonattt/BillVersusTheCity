@@ -325,7 +325,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
@@ -377,6 +377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aim_target: {fileID: 3647756044064526409}
   crouch_target: {fileID: 2506234290457545205}
+  vaulting_area_detector: {fileID: 4306679883451602688}
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
@@ -399,7 +400,6 @@ MonoBehaviour:
   _crouch_percent: 0
   debug__can_attack: 0
   vision_target: {fileID: 7902831743066966521}
-  vaulting_area_detector: {fileID: 4306679883451602688}
   _last_move: {x: 0, y: 0, z: 0}
 --- !u!114 &4665821343985391478
 MonoBehaviour:
@@ -749,8 +749,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e1fe6a029237a43aa0657ae6700ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cached_area: {fileID: 0}
   target_collider: {fileID: 5113494173407181907}
+  debug:
+    cached_areas: []
 --- !u!136 &5113494173407181907
 CapsuleCollider:
   m_ObjectHideFlags: 0

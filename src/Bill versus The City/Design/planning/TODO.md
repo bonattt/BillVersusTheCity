@@ -287,7 +287,7 @@ SOOSH:
         [+] Bugfix
             [+] Cover detection broken
             [+] Finding cover proceedurally is buggy --> replaced with waypoint system.
-            [+] Enemies on a point count themselves as cover <--- you are here 
+            [+] Enemies on a point count themselves as cover
             [+] Enemies are too willing to run past the player to find cover
                 -> replace distance from player in distance score
                 -> use player direction and travel direction instead

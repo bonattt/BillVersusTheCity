@@ -20,7 +20,7 @@ public class ManualCharacterMovement : CharCtrl
         }
     }
     
-    // returns the max possible speed a player can move
+    // returns the max possible speed a player can move; used by FootstepSounds to sanity check movement to avoid loud sounds when teleporting (from stairs etc...)
     public float max_movement_speed { get => movement_speed * sprint_multiplier; }
 
     public override bool is_player { get { return true; } }
@@ -30,15 +30,14 @@ public class ManualCharacterMovement : CharCtrl
                 return sprint_multiplier * walk_speed;
             }
             if (crouch_percent > 0f) {
-                return ((1 - crouch_percent) * walk_speed) + (crouched_speed * crouch_percent); 
-            }
-            else if (is_sprinting) {
+                return ((1 - crouch_percent) * walk_speed) + (crouched_speed * crouch_percent);
+            } else if (is_vaulting) {
+                return vault_over_speed;
+            } else if (is_sprinting) {
                 return sprint_multiplier * walk_speed;
-            }
-            else if (reloading) {
-                return reload_move_multiplier * walk_speed; 
-            }
-            else if (aiming) {
+            }  else if (reloading) {
+                return reload_move_multiplier * walk_speed;
+            } else if (aiming) {
                 if (current_firearm == null) {
                     Debug.LogWarning("aim without weapon!");
                     return walk_speed;
@@ -70,12 +69,15 @@ public class ManualCharacterMovement : CharCtrl
         if (is_crouch_diving) {
             // if crouch diving, continue in that direction for the duration of the crouch dive
             move_direction = crouch_dive_direction;
+        } else if (is_vaulting) {
+            move_direction = vault_over_direction;
         }
         
         _last_move = move_direction * movement_speed;
         if (walk) {
             _last_move *= 0.5f;
         }
+        debug.move_direction = _last_move;
         controller.SimpleMove(_last_move);
     }
 

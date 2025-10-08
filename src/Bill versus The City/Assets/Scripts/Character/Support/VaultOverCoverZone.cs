@@ -5,8 +5,11 @@ using UnityEngine;
 public class VaultOverCoverZone : MonoBehaviour {
     // creates a zone around cover which a player character can jump over
 
-    [Tooltip("this setting configures how far a player needs to jump to get over this obstacle.")]
+    [Tooltip("How far a player needs to jump to get over this obstacle.")]
     public float jump_length = 1f;
+    
+    [Tooltip("How high a player needs to jump to get over this obstacle.")]
+    public float jump_height = 0.75f;
     public Vector3 jump_direction = Vector3.forward;
     // public Vector3 jump_area_position = new Vector3(0f, 0f, 0f);
     // public Vector3 jump_area_size = new Vector3(0.85f, 0.65f, 5f);
@@ -40,6 +43,11 @@ public class VaultOverCoverZone : MonoBehaviour {
         Gizmos.DrawLine(start - perpendicular, end - perpendicular);
         Gizmos.DrawLine(start + perpendicular, end + perpendicular);
 
+        // draw the BoxCollider's gizmo, even if it's not selected
+        Vector3 box_size = Vector3.Scale(target_collider.size, transform.lossyScale) ;
+        Vector3 box_center = transform.position + target_collider.center;
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(box_center, box_size);
     }
 
     public bool IsInJumpPosition(Vector3 player_position, Vector3 move_direction) {
@@ -50,6 +58,17 @@ public class VaultOverCoverZone : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public Vector3 GetVaultDirection(Vector3 move_direction) {
+        // takes a move direction, determines if the move is in the direction of a jump, or the opposite direction, and returns the actual move a player should make.
+        float direction;
+        if (Vector3.Dot(move_direction, jump_direction) > 0) {
+            direction = 1f;
+        } else {
+            direction = -1f;
+        }
+        return direction * jump_direction;
     }
 
     public bool PositionInZone(Vector3 position) {
