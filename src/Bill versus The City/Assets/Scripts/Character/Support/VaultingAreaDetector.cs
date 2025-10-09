@@ -43,14 +43,14 @@ public class VaultingAreaDetector : MonoBehaviour {
         VaultOverCoverZone zone = other.gameObject.GetComponent<VaultOverCoverZone>();
         if (zone != null) {
             cached_areas.Add(zone);
-        } else { Debug.LogWarning("HandleEnter handled a collider without a VaultOverCoverZone!"); } // TODO --- remove debug
+        } 
     }
 
     void HandleExit(Collider other) {
         VaultOverCoverZone zone = other.gameObject.GetComponent<VaultOverCoverZone>();
         if (zone != null && cached_areas.Contains(zone)) {
             cached_areas.Remove(zone);
-        } else { Debug.LogError("HandleExit handled a collider that wasn't tracked!"); } // TODO --- remove debug
+        } 
     }
 
     void Update() {

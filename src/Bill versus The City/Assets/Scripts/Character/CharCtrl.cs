@@ -420,9 +420,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected virtual void StartVaultOver(Vector3 move_direction) {
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         float vault_duration = vault_over_margin * zone.jump_length / vault_over_speed;
-        Debug.LogWarning($"StartVaultOver transform before {transform.position}"); // TODO --- remove debug
         TeleportTo(transform.position + new Vector3(0f, zone.jump_height, 0f));
-        Debug.LogWarning($"StartVaultOver transform after {transform.position}"); // TODO --- remove debug
 
         vault_over_remaining = vault_duration;
         vault_over_direction = zone.GetVaultDirection(move_direction);
