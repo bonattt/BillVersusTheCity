@@ -78,7 +78,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         enemy.name = GetNextEnemyName();
 
         NavMeshAgentMovement enemy_ctrl = enemy.GetComponent<NavMeshAgentMovement>();
-        enemy_ctrl.SetPosition(GetSpawnPoint().GetSpawnPosition());
+        enemy_ctrl.TeleportTo(GetSpawnPoint().GetSpawnPosition());
         IFirearm weapon = GetWeapon();
         if (weapon != null) {
             enemy_ctrl.current_firearm = weapon;

@@ -81,6 +81,13 @@ public class ManualCharacterMovement : CharCtrl
         controller.SimpleMove(_last_move);
     }
 
+    public override void TeleportTo(Vector3 position) {
+        CharacterController char_ctrl = GetComponent<CharacterController>();
+        char_ctrl.enabled = false;
+        transform.position = position;
+        char_ctrl.enabled = true;
+    }
+
     public override Vector3 GetVelocity() {
         return _last_move;
     }

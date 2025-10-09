@@ -92,6 +92,12 @@ public class PlayerCharacter : ISaveProgress {
         inventory.StartNewGame();
     }
 
+    public void TeleportPlayerTo(Vector3 new_position) {
+        Vector3 cam_offset = Camera.main.transform.position - player_transform.position;
+        combat.movement.TeleportTo(new_position);
+        Camera.main.transform.position = new_position + cam_offset;
+    }
+
     public void LoadProgress(DuckDict progress_data) {
         DuckDict inventory_data = null;
         if (progress_data == null) {

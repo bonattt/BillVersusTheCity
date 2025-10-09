@@ -6,14 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class StairsInteraction : MonoBehaviour, IInteractionEffect
 {
+    [Tooltip("Transform containing the position of where to teleport the player to upon interaction.")]
     public Transform move_to;
     
     public void Interact(GameObject actor) {
-        Vector3 cam_offset = Camera.main.transform.position - PlayerCharacter.inst.player_transform.position;
-        CharacterController char_ctrl = PlayerCharacter.inst.character_controller;
-        char_ctrl.enabled = false;
-        PlayerCharacter.inst.player_transform.position = move_to.position;
-        char_ctrl.enabled = true;
-        Camera.main.transform.position = move_to.position + cam_offset;
+        PlayerCharacter.inst.TeleportPlayerTo(move_to.position);
     }
 }

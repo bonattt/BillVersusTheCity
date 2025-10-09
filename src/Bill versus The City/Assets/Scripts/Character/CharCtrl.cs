@@ -297,10 +297,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         transform.rotation = Quaternion.Slerp(transform.rotation, desired_rotation, rotation_speed);
     }
 
-    public virtual void SetPosition(Vector3 new_position) {
-        transform.position = new_position;
-    }
-
     protected virtual void PostUpdate() {
         // TODO --- investigate if this can be removed
         // do nothing. Extension hook for subclasses.
@@ -425,20 +421,21 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         float vault_duration = vault_over_margin * zone.jump_length / vault_over_speed;
         Debug.LogWarning($"StartVaultOver transform before {transform.position}"); // TODO --- remove debug
-        CharacterController char_ctrl = GetComponent<CharacterController>();
-        char_ctrl.enabled = false;
-        transform.position += new Vector3(0f, zone.jump_height, 0f);  // you are here ---> this doesn't actually work
-        char_ctrl.enabled = true;
+        TeleportTo(transform.position + new Vector3(0f, zone.jump_height, 0f));
         Debug.LogWarning($"StartVaultOver transform after {transform.position}"); // TODO --- remove debug
 
         vault_over_remaining = vault_duration;
         vault_over_direction = zone.GetVaultDirection(move_direction);
     }
 
+    public virtual void TeleportTo(Vector3 position) {
+        transform.position = position;
+    }
+
     protected virtual void FinishVaultOver() {
         vault_over_remaining = -1f;
         vault_over_direction = Vector3.zero;
-        
+
         transform.position += new Vector3(transform.position.x, 0f, transform.position.z);
     }
 

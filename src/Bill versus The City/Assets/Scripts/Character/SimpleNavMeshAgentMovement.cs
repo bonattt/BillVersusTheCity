@@ -18,10 +18,6 @@ using UnityEngine.AI;
 
     [Tooltip("if true, movement is temporarily overriden by choreography")]
     public bool choreography_movement = false;
-
-    public override void SetPosition(Vector3 new_position) {
-        nav_mesh_agent.Warp(new_position);
-    }
     
     public Vector3 debug__look_direction;
     public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk=false) {
@@ -45,6 +41,10 @@ using UnityEngine.AI;
             nav_mesh_agent.SetDestination(move_target);
         }
         HandleAnimation();
+    }
+
+    public override void TeleportTo(Vector3 new_position) {
+        nav_mesh_agent.Warp(new_position);
     }
 
     public Vector3 MoveDirection() {
