@@ -39,7 +39,7 @@ public class PlayerInteractor : MonoBehaviour
         }
         if (interaction != null) { interaction.interaction_targeted = true; }
 
-        if (interaction != null && InputSystem.current.InteractInput()) {
+        if (interaction != null && InputSystem.inst.InteractInput()) {
             if (CanInteractWith(interaction)) {
                 interaction.InteractWith(gameObject);
             }

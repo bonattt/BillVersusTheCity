@@ -113,7 +113,7 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         }
         rb.useGravity = true;
         // Vector3 mouse_pos = attack_start_point + (attack_direction.normalized * 3);
-        Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
+        Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
         if (float.IsNaN(mouse_pos.x)) {
             Debug.LogError("mouse position is NaN!");
         }

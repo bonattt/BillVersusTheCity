@@ -76,7 +76,7 @@ public class PauseMenuController : MonoBehaviour
     }
 
     public void MenuNavigation() {
-        if (InputSystem.current.MenuCancelInput()) {
+        if (InputSystem.inst.MenuCancelInput()) {
             MenuManager.inst.CloseMenu();
         }
     }

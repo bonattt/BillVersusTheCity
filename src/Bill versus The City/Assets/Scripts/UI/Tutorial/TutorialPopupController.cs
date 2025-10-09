@@ -74,7 +74,7 @@ public class TutorialPopupController : AbstractCloseEventMenu
 
     public override void MenuNavigation()
     {
-        if (InputSystem.current.MenuCancelInput()) {
+        if (InputSystem.inst.MenuCancelInput()) {
             CloseMenu();
         }
     }

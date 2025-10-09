@@ -5,6 +5,10 @@ using UnityEngine;
 public class VaultOverCoverZone : MonoBehaviour {
     // creates a zone around cover which a player character can jump over
 
+    [Tooltip("For convenience, draw `target_collider` even while it's object is not selected.")]
+    [SerializeField]
+    private bool draw_collider = true;
+
     [Tooltip("How far a player needs to jump to get over this obstacle.")]
     public float jump_length = 1f;
     
@@ -43,11 +47,15 @@ public class VaultOverCoverZone : MonoBehaviour {
         Gizmos.DrawLine(start - perpendicular, end - perpendicular);
         Gizmos.DrawLine(start + perpendicular, end + perpendicular);
 
+        if (!draw_collider) { return; }
         // draw the BoxCollider's gizmo, even if it's not selected
-        Vector3 box_size = Vector3.Scale(target_collider.size, transform.lossyScale) ;
-        Vector3 box_center = transform.position + target_collider.center;
+        Matrix4x4 old_matrix = Gizmos.matrix;
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Vector3 box_size = Vector3.Scale(target_collider.size, transform.lossyScale);
+        Vector3 box_center = target_collider.center; // NOTE: do not add transform.position because we are using `transform.localToWorldMatrix`
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(box_center, box_size);
+        Gizmos.matrix = old_matrix;
     }
 
     public bool IsInJumpPosition(Vector3 player_position, Vector3 move_direction) {

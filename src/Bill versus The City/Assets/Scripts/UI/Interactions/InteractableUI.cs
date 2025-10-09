@@ -102,7 +102,7 @@ public class InteractableUI : MonoBehaviour
         string interaction_input = "";
         if (IsTargeted()) {
             // only show the keystroke to interact with the interaction if it is actually targetted to interact with
-            interaction_input = $"[{InputSystem.current.InputTypeDisplay(InputType.interact)}]";
+            interaction_input = $"[{InputSystem.inst.InputTypeDisplay(InputType.interact)}]";
         }
 
         interaction_label.text = $"{name_header} {interaction_input}";

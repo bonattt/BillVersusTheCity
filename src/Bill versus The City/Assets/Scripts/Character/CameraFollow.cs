@@ -102,7 +102,7 @@ public class LegacyCameraFollow : MonoBehaviour
 
     private Vector3 mouse_position {
         get {
-            Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
+            Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
             if (! InputSystem.IsNullPoint(mouse_pos)) {
                 last_mouse_position = mouse_pos;
             }

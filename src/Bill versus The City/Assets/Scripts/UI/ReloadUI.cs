@@ -46,7 +46,7 @@ public class ReloadUI : MonoBehaviour, IReloadSubscriber, IPlayerObserver
     }
 
     private void UpdatePosition() {
-        Vector3 mouse = InputSystem.current.MouseScreenPosition();
+        Vector3 mouse = InputSystem.inst.MouseScreenPosition();
         reload_ui.position = mouse + mouse_offset;
     }
 

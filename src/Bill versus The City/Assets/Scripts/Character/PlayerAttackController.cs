@@ -61,7 +61,7 @@ public class PlayerAttackController : AttackController
     }
 
     private void UpdateAimSensitivity() {
-        InputSystem.current.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
+        InputSystem.inst.mouse_sensitivity_percent = 1f - (aim_percent * 0.5f);
     }
 
     protected override void Start() {
@@ -98,12 +98,12 @@ public class PlayerAttackController : AttackController
         // Polls for player inputs, and switches weapons if necessary
         if (!switch_weapons_blocked)
         {
-            int? weapon_slot_input = InputSystem.current.SetWeaponSlotInput();
+            int? weapon_slot_input = InputSystem.inst.SetWeaponSlotInput();
             if (weapon_slot_input != null) {
                 SwitchWeaponBySlot((int)weapon_slot_input);
-            }  else if (InputSystem.current.NextWeaponInput()) {
+            }  else if (InputSystem.inst.NextWeaponInput()) {
                 SwitchToNextWeapon();
-            } else if (InputSystem.current.PreviousWeaponInput()) {
+            } else if (InputSystem.inst.PreviousWeaponInput()) {
                 SwitchToPreviousWeapon();
             }
         }

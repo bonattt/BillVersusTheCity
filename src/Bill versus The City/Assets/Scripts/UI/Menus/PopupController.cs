@@ -23,7 +23,7 @@ public class PopupController : AbstractCloseEventMenu
     }
 
     public override void MenuNavigation() {
-        if (allow_escape && InputSystem.current.MenuCancelInput()) {
+        if (allow_escape && InputSystem.inst.MenuCancelInput()) {
             MenuManager.inst.CloseMenu();
         }
     }

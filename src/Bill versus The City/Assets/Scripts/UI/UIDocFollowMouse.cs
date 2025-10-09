@@ -20,7 +20,7 @@ public class UIDocFollowMouse : MonoBehaviour    {
 
     private void UpdatePosition() {
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(
-            visual_element.panel, InputSystem.current.MouseWorldPosition(), _camera
+            visual_element.panel, InputSystem.inst.MouseWorldPosition(), _camera
         ) + offset;
         debug_mouse_position = newPosition - offset;
         visual_element.transform.position = new Vector2(

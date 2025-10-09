@@ -88,7 +88,7 @@ public class WeaponSelectionUIController : AbstractCloseEventMenu
     }
 
     public override void MenuNavigation() {
-        if (allow_cancel && InputSystem.current.MenuCancelInput()) {
+        if (allow_cancel && InputSystem.inst.MenuCancelInput()) {
             CancelButtonClicked();
         }
     }

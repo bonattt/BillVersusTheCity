@@ -66,11 +66,11 @@ public class ManualCharacterMovement : CharCtrl
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false, bool walk=false) {
         base.MoveCharacter(move_direction, look_direction, sprint, crouch);
         
-        if (is_crouch_diving) {
-            // if crouch diving, continue in that direction for the duration of the crouch dive
-            move_direction = crouch_dive_direction;
-        } else if (is_vaulting) {
+         if (is_vaulting) {
             move_direction = vault_over_direction;
+        } else if (is_crouch_diving) {
+           // if crouch diving, continue in that direction for the duration of the crouch dive
+            move_direction = crouch_dive_direction;
         }
         
         _last_move = move_direction * movement_speed;
@@ -93,7 +93,7 @@ public class ManualCharacterMovement : CharCtrl
     }
 
     protected override void PostUpdate() {
-        if (InputSystem.current.NextWeaponModeInput()) {
+        if (InputSystem.inst.NextWeaponModeInput()) {
             attack_controller.current_gun.NextWeaponSetting();
             if (attack_controller.current_gun.HasWeaponSettings()) {
                 ISFXSounds sound = SFXLibrary.LoadSound("weapon_mode_switch");

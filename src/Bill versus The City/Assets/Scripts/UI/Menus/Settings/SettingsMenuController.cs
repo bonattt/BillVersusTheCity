@@ -93,7 +93,7 @@ public class SettingsMenuController : AbstractCloseEventMenu
 
     
     public override void MenuNavigation() {
-        if (InputSystem.current.MenuCancelInput()) {
+        if (InputSystem.inst.MenuCancelInput()) {
             if (open_settings_controller == null || !open_settings_controller.HasUnsavedChanges()) {
                 MenuManager.inst.CloseMenu();
             } else {

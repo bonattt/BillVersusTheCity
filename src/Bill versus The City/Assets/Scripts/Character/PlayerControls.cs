@@ -69,14 +69,14 @@ public class PlayerControls : MonoBehaviour {
             // TODO --- why did I comment "????" here?
         }
 
-        if (InputSystem.current.AttackReleasedInput()) {
+        if (InputSystem.inst.AttackReleasedInput()) {
             player_movement.AttackReleased();
         }
         if (AttackInput()) {
             if (player_movement.reloading) {
                 player_movement.CancelReload();
             } else {
-                bool hold = !InputSystem.current.AttackClickInput() && InputSystem.current.AttackHoldInput();
+                bool hold = !InputSystem.inst.AttackClickInput() && InputSystem.inst.AttackHoldInput();
                 bool attack_made = player_movement.TryToAttack(hold);
                 // Debug.LogWarning($"attack made? {attack_made}, hold? {hold} = (!{InputSystem.current.AttackClickInput()} && {InputSystem.current.AttackHoldInput()})"); // TODO --- remove debug
             }
@@ -117,35 +117,35 @@ public class PlayerControls : MonoBehaviour {
     public bool AttackInput() {
         if (current_weapon == null) { return false; }
         if (current_weapon.auto_fire) {
-            return InputSystem.current.AttackHoldInput();
+            return InputSystem.inst.AttackHoldInput();
         }
-        return InputSystem.current.AttackClickInput();
+        return InputSystem.inst.AttackClickInput();
     }
 
     public bool ReloadInput() {
         if (player_movement.reloading) {
             return false;
         }
-        return InputSystem.current.ReloadInput();
+        return InputSystem.inst.ReloadInput();
     }
 
     public bool SprintInput() {
-        return InputSystem.current.SprintInput();
+        return InputSystem.inst.SprintInput();
     }
 
     public bool CancelReloadInput() {
         if (!player_movement.reloading) {
             return false;
         }
-        return InputSystem.current.ReloadInput() || InputSystem.current.AttackClickInput();
+        return InputSystem.inst.ReloadInput() || InputSystem.inst.AttackClickInput();
     }
 
     public bool AimInput() {
-        return InputSystem.current.AimHoldInput();
+        return InputSystem.inst.AimHoldInput();
     }
 
     public bool CrouchInput() {
-        return InputSystem.current.CrouchInput();
+        return InputSystem.inst.CrouchInput();
     }
 
     public bool CancelAimInput() {
@@ -156,7 +156,7 @@ public class PlayerControls : MonoBehaviour {
     }
 
     public Vector3 GetMousePosition() {
-        Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
+        Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
         Vector3 look_target = new Vector3(mouse_pos.x, transform.position.y, mouse_pos.z);
         return look_target;
     }
@@ -172,8 +172,8 @@ public class PlayerControls : MonoBehaviour {
     }
 
     public Vector3 MoveDirection() {
-        float move_x = InputSystem.current.MoveXInput();
-        float move_y = InputSystem.current.MoveYInput();
+        float move_x = InputSystem.inst.MoveXInput();
+        float move_y = InputSystem.inst.MoveYInput();
         Vector3 move = new Vector3(move_x, 0, move_y);
         return move.normalized;
     }

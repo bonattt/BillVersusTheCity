@@ -18,7 +18,7 @@ public class AimingMouseSensitivity : MonoBehaviour
     }
 
     void Update() {
-        float sensitivity = InputSystem.current.mouse_sensitivity;
+        float sensitivity = InputSystem.inst.mouse_sensitivity;
         debug_sensitivity = sensitivity;
         
         // Get mouse movement delta since the last frame

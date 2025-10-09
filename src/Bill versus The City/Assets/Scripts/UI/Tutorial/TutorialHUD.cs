@@ -61,7 +61,7 @@ public class TutorialHUD : MonoBehaviour, IGameEventEffect {
 
         foreach(InputType input in complete_tutorial_inputs) {
             if (inputs_made.Contains(input)) { continue; } // input already made
-            else if (InputSystem.current.GetGenericInput(input)) {
+            else if (InputSystem.inst.GetGenericInput(input)) {
                 inputs_made.Add(input);
                 if (!require_all_inputs) { 
                     Debug.Log("one required input made, short circuit");

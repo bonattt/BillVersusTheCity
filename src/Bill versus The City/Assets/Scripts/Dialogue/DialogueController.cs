@@ -111,7 +111,7 @@ public class DialogueController : AbstractCloseEventMenu {
     }
 
     public override void MenuNavigation() {
-        if (InputSystem.current.MenuNextInput()) {
+        if (InputSystem.inst.MenuNextInput()) {
             MenuManager.PlayMenuSound("menu_click");
             NextDialogueStep();
         } else {

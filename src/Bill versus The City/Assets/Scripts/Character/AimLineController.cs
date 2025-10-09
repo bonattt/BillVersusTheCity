@@ -86,7 +86,7 @@ public class AimLineController : MonoBehaviour
             return;
         }
 
-        Vector3 mouse_pos = InputSystem.current.MouseWorldPosition();
+        Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
         DrawLineTo(mouse_pos.x, mouse_pos.z);
         lineRenderer.material.color = new_color;
     }

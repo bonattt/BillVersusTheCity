@@ -120,10 +120,10 @@ public class MenuManager : MonoBehaviour
 
     public void TryOpenPauseMenu() {
         if (disable_pause_menu) { return; }
-        else if (InputSystem.current.PauseMenuInput()) {
+        else if (InputSystem.inst.PauseMenuInput()) {
             OpenSubMenuPrefab(pause_menu_prefab);
         }
-        else if (GameSettings.inst.debug_settings.GetBool("allow_debug_actions") && InputSystem.current.DebugInput()) {
+        else if (GameSettings.inst.debug_settings.GetBool("allow_debug_actions") && InputSystem.inst.DebugInput()) {
             OpenSubMenuPrefab(debug_action_menu_prefab);
         }
     }
@@ -167,7 +167,7 @@ public class MenuManager : MonoBehaviour
     }
     
     public void DefaultMenuNavigation() {
-        if (InputSystem.current.MenuCancelInput()) {
+        if (InputSystem.inst.MenuCancelInput()) {
             CloseMenu();
         }
     }

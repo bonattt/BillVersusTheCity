@@ -408,7 +408,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public bool GetStartVaultThisFrame(bool sprint, Vector3 direction) {
-        if (!sprint || direction == Vector3.zero) { return false; }
+        if (!InputSystem.inst.VaultOverInput() || direction == Vector3.zero) { return false; }
 
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         if (zone == null) { return false; }
@@ -456,10 +456,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
         } else if (is_vaulting) {
             move_direction = vault_over_direction;
-        } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
-            StartCrouchDive(move_direction);
         } else if (GetStartVaultThisFrame(sprint && !crouch, move_direction)) {
             StartVaultOver(move_direction);
+        } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
+            StartCrouchDive(move_direction);
         } else {
             if (crouch) {
                 // cannot crouch and sprint at the same time, if there is no crouch dive

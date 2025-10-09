@@ -36,7 +36,7 @@ public class InputSystemDebugger : MonoBehaviour
     private float debug__attack_at = -1f;
     private void UpdateDebugFields() {
 
-        if (InputSystem.current.AttackClickInput()) {
+        if (InputSystem.inst.AttackClickInput()) {
             debug__attack_at = Time.time;
             attack_click_input = true;
         } else if (debug__attack_at + show_attack_input_for >= Time.time) {
@@ -45,23 +45,23 @@ public class InputSystemDebugger : MonoBehaviour
             attack_click_input = false;
         }
         // attack_click_input = InputSystem.current.AttackClickInput();
-        attack_hold_input = InputSystem.current.AttackHoldInput();
+        attack_hold_input = InputSystem.inst.AttackHoldInput();
 
-        mouse_screen_position = InputSystem.current.MouseScreenPosition();
-        mouse_world_position = InputSystem.current.MouseWorldPosition();
-        aim_attack_input = InputSystem.current.AimHoldInput();
-        sprint_input = InputSystem.current.SprintInput();
-        dash_input = InputSystem.current.DashInput();
-        move_x_input = InputSystem.current.MoveXInput();
-        move_y_input = InputSystem.current.MoveYInput();
-        interact_input = InputSystem.current.InteractInput();
-        reload_input = InputSystem.current.ReloadInput();
-        test_input = InputSystem.current.DebugInput();
-        menu_cancel_input = InputSystem.current.MenuCancelInput();
-        pause_menu_input = InputSystem.current.PauseMenuInput();
-        weapon_slot_input = InputSystem.current.SetWeaponSlotInput();
-        next_weapon_input = InputSystem.current.NextWeaponInput();
-        previous_weapon_input = InputSystem.current.PreviousWeaponInput();
-        debug_mouse_wheel_axis = InputSystem.current.GetScroll();
+        mouse_screen_position = InputSystem.inst.MouseScreenPosition();
+        mouse_world_position = InputSystem.inst.MouseWorldPosition();
+        aim_attack_input = InputSystem.inst.AimHoldInput();
+        sprint_input = InputSystem.inst.SprintInput();
+        dash_input = InputSystem.inst.DashInput();
+        move_x_input = InputSystem.inst.MoveXInput();
+        move_y_input = InputSystem.inst.MoveYInput();
+        interact_input = InputSystem.inst.InteractInput();
+        reload_input = InputSystem.inst.ReloadInput();
+        test_input = InputSystem.inst.DebugInput();
+        menu_cancel_input = InputSystem.inst.MenuCancelInput();
+        pause_menu_input = InputSystem.inst.PauseMenuInput();
+        weapon_slot_input = InputSystem.inst.SetWeaponSlotInput();
+        next_weapon_input = InputSystem.inst.NextWeaponInput();
+        previous_weapon_input = InputSystem.inst.PreviousWeaponInput();
+        debug_mouse_wheel_axis = InputSystem.inst.GetScroll();
     }
 }

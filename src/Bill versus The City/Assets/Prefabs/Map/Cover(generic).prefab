@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7457180528894799230}
   - component: {fileID: 1220399450152852228}
   - component: {fileID: 5792948551246848159}
+  - component: {fileID: 1642359432519220711}
   m_Layer: 17
   m_Name: Cover(generic)
   m_TagString: Untagged
@@ -48,11 +49,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 0.665, z: 1}
+  m_Size: {x: 9, y: 0.665, z: 2}
   m_Center: {x: 0, y: 0.325, z: 0}
 --- !u!114 &5792948551246848159
 MonoBehaviour:
@@ -66,10 +67,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b155109f37d416459d06a2bd0d7d12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draw_collider: 0
   jump_length: 1
+  jump_height: 0.75
   jump_direction: {x: 0, y: 0, z: 1}
-  jump_area_position: {x: 0, y: 0.35, z: 0}
-  jump_area_size: {x: 5, y: 0.65, z: 0.85}
+  target_collider: {fileID: 1220399450152852228}
   gizmo_color: {r: 0, g: 0, b: 0.6313726, a: 1}
-  gizmo_vector_color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   angle_threshold: 0.75
+--- !u!54 &1642359432519220711
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886853904686006863}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
