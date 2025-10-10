@@ -122,7 +122,7 @@ public class VaultOverCoverZone : MonoBehaviour {
         } else {
             direction = -1f;
         }
-        return direction * jump_direction;
+        return (direction * jump_direction).normalized;
     }
 
     public bool PositionInZone(Vector3 position) {
@@ -130,7 +130,7 @@ public class VaultOverCoverZone : MonoBehaviour {
     }
 
     public bool ValidJumpAngle(Vector3 move_direction) {
-        return Mathf.Abs(Vector3.Dot(move_direction, jump_direction)) < angle_threshold;
+        return Mathf.Abs(Vector3.Dot(move_direction.normalized, jump_direction.normalized)) < angle_threshold;
     }
 }
 

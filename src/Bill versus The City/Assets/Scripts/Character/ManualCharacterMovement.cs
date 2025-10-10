@@ -63,6 +63,7 @@ public class ManualCharacterMovement : CharCtrl
         PostUpdate();
     }
 
+    private const float GRAVITY = -19.6f;
     [SerializeField]
     private Vector3 _last_move;
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
@@ -80,7 +81,11 @@ public class ManualCharacterMovement : CharCtrl
             _last_move *= 0.5f;
         }
         debug.move_direction = _last_move;
-        controller.SimpleMove(_last_move);
+        // controller.SimpleMove(_last_move);
+        if (!controller.isGrounded) {
+            _last_move += new Vector3(0, GRAVITY, 0);
+        }
+        controller.Move(_last_move * Time.deltaTime);
     }
     
     public override void PlayVaultOverEffects() {

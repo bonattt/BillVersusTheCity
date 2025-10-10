@@ -408,23 +408,26 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         crouch_percent = 1f;
     }
 
-    public bool GetStartVaultThisFrame(Vector3 direction) {
-        if (!InputSystem.inst.VaultOverInput() || direction == Vector3.zero) { return false; }
+    public bool GetStartVaultThisFrame(Vector3 move_direction, Vector3 look_direction) {
+        if (!InputSystem.inst.VaultOverInput() || crouch_percent != 0 || is_vaulting) { return false; }
 
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         if (zone == null) { return false; }
+        Vector3 direction = move_direction != Vector3.zero ? move_direction : look_direction;
         return zone.IsInJumpPosition(transform.position, direction);
     }
 
     private float vault_over_margin = 1.1f; // multiplies the length of a jump to ensure you clear the obstacle
     protected float vault_over_speed { get => walk_speed / 3f; }
-    protected virtual void StartVaultOver(Vector3 move_direction) {
+    protected virtual void StartVaultOver(Vector3 move_direction, Vector3 look_direction) {
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         float vault_duration = vault_over_margin * zone.jump_length / vault_over_speed;
         TeleportTo(transform.position + new Vector3(0f, zone.jump_height, 0f));
 
         vault_over_remaining = vault_duration;
-        vault_over_direction = zone.GetVaultDirection(move_direction);
+        Vector3 direction = move_direction != Vector3.zero ? move_direction : look_direction;
+        vault_over_direction = zone.GetVaultDirection(direction);
+        Debug.DrawRay(transform.position, vault_over_direction, Color.yellow, 1.5f);
         PlayVaultOverEffects();
     }
 
@@ -437,6 +440,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void FinishVaultOver() {
+        Debug.LogWarning("FinishVaultOver");
         vault_over_remaining = -1f;
         vault_over_direction = Vector3.zero;
 
@@ -461,9 +465,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             move_direction = crouch_dive_direction;
             crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
         } else if (is_vaulting) {
-            move_direction = vault_over_direction;
-        } else if (GetStartVaultThisFrame(move_direction)) {
-            StartVaultOver(move_direction);
+            move_direction = vault_over_direction.normalized;
+        } else if (GetStartVaultThisFrame(move_direction, look_direction)) {
+            StartVaultOver(move_direction, look_direction);
         } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
             StartCrouchDive(move_direction);
         } else {

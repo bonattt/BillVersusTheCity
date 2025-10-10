@@ -68,12 +68,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   draw_collider: 0
-  jump_length: 1
-  jump_height: 0.75
-  jump_direction: {x: 0, y: 0, z: 1}
+  jump_length: 1.5
+  jump_height: 3
+  jump_direction_calculation: 1
+  manual_jump_direction: {x: 0, y: 0, z: 0}
   target_collider: {fileID: 1220399450152852228}
   gizmo_color: {r: 0, g: 0, b: 0.6313726, a: 1}
-  angle_threshold: 0.75
+  angle_threshold: 0.25
 --- !u!54 &1642359432519220711
 Rigidbody:
   m_ObjectHideFlags: 0
