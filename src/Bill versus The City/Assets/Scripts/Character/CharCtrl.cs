@@ -406,6 +406,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         crouch_dive_remaining = crouch_dive_duration;
         crouch_dive_direction = move_direction.normalized;
         crouch_percent = 1f;
+        PlayCrouchDiveEffects();
     }
 
     public bool GetStartVaultThisFrame(Vector3 move_direction, Vector3 look_direction) {
@@ -429,6 +430,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         vault_over_direction = zone.GetVaultDirection(direction);
         Debug.DrawRay(transform.position, vault_over_direction, Color.yellow, 1.5f);
         PlayVaultOverEffects();
+    }
+
+    public virtual void PlayCrouchDiveEffects() {
+        // do nothing by default
     }
 
     public virtual void PlayVaultOverEffects() {

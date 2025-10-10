@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class ManualCharacterMovement : CharCtrl
 {
     private const string VAULT_OVER_SOUND = "player_vault_over";
+    private const string CROUCH_DIVE_SOUND = "player_dive_for_cover";
     // returns a list of all the nodes which enemies raycast to see the player
     public Transform vision_target;
     private List<Transform> _vision_nodes = null;
@@ -87,9 +88,15 @@ public class ManualCharacterMovement : CharCtrl
         }
         controller.Move(_last_move * Time.deltaTime);
     }
+
+    public override void PlayCrouchDiveEffects() {
+        base.PlayCrouchDiveEffects();
+        ISFXSounds sound = SFXLibrary.LoadSound(CROUCH_DIVE_SOUND);
+        SFXSystem.inst.PlaySound(sound, transform.position);
+    }
     
     public override void PlayVaultOverEffects() {
-        // do nothing by default
+        base.PlayVaultOverEffects();
         ISFXSounds sound = SFXLibrary.LoadSound(VAULT_OVER_SOUND);
         SFXSystem.inst.PlaySound(sound, transform.position);
     }
