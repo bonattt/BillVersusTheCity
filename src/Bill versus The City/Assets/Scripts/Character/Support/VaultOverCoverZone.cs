@@ -104,9 +104,11 @@ public class VaultOverCoverZone : MonoBehaviour {
         Gizmos.matrix = old_matrix;
     }
 
-    public bool IsInJumpPosition(Vector3 player_position, Vector3 move_direction) {
+    public bool IsInJumpPosition(Vector3 player_position, Vector3 direction) {
         // check if player is moving in the right direction
-        if (ValidJumpAngle(move_direction)) { return false; }
+        if (!ValidJumpAngle(player_position, direction)) {
+            return false; 
+        }
         // check if the player is in the zone
         if (PositionInZone(player_position)) {
             return true;
@@ -129,8 +131,41 @@ public class VaultOverCoverZone : MonoBehaviour {
         return target_collider.bounds.Contains(position);
     }
 
-    public bool ValidJumpAngle(Vector3 move_direction) {
-        return Mathf.Abs(Vector3.Dot(move_direction.normalized, jump_direction.normalized)) < angle_threshold;
+    public bool ValidJumpAngle(Vector3 player_position, Vector3 direction) {
+        return IsFacingTowards(player_position, direction)
+            && Mathf.Abs(Vector3.Dot(direction.normalized, jump_direction.normalized)) > angle_threshold; // checks that the jump is paralell to the jump direction, within a threshold
+    }
+    
+    public bool IsFacingTowards(Vector3 start_position, Vector3 direction) {
+        // Takes a start position and direction, and deterimines if the resulting jump is going over the obstacle,
+        //   or away from the obstacle in the opposite directio
+        if (jump_direction.x != 0 && jump_direction.z != 0) { Debug.LogError($"only 1D jump directions are supported! '{jump_direction}' is invalid!"); }
+
+        float isolated_start, center, isolated_direction;
+        if (jump_direction.x != 0) {
+            isolated_start = start_position.x;
+            center = transform.position.x;
+            isolated_direction = direction.normalized.x;
+        } else if (jump_direction.z != 0) {
+            isolated_start = start_position.z;
+            center = transform.position.z;
+            isolated_direction = direction.normalized.z;
+        } else {
+            Debug.LogError($"jump direction '{jump_direction}' needs either and X or Z component!");
+            return false;
+        }
+        return _IsFacingTowards(isolated_direction, isolated_start, center);
+    }
+    
+    private bool _IsFacingTowards(float isolated_direction, float start_position, float center) {
+        // takes floats representing the relevent component of Vector3's to determine of the player is
+        //  facing the correct direction to actually jump over the obsctacle from their current possition
+        if (isolated_direction == 0) { return false; }
+        if (start_position == center) { return false; } // TODO --- maybe raise an exception
+        float correct_direction = center - start_position;
+
+        float sign_check = correct_direction * isolated_direction; // will be possitve if signs match, negative is signs differ
+        return sign_check > 0; // TODO --- implement
     }
 }
 
