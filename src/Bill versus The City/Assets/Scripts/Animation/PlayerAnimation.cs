@@ -145,6 +145,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
     public float crouch_percent { get; set; }
     public bool crouch_dive { get; set; } // character is performing a crouch dive
     public bool is_reloading { get; set; } // character is reloading
+    public bool is_vaulting { get; set; } // Character is climbing/jumping over an obstacle
 
     public Animator animator;
     
@@ -218,6 +219,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
         animator.SetBool("is_shooting", is_shooting);
         animator.SetBool("crouch_dive", crouch_dive);
         animator.SetBool("is_reloading", is_reloading);
+        animator.SetBool("is_vaulting", is_vaulting);
         if (crouch_dive || (is_sprinting && is_moving)) {
             animator.SetBool("is_sprinting", true);
         } else {
@@ -256,7 +258,7 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
     //////////////////////////////
     
     public Vector3 debug__velocity, debug__forward, debug__left;
-    public bool debug__is_killed, debug__is_hurt, debug__is_shooting, debug__crouch_dive;
+    public bool debug__is_killed, debug__is_hurt, debug__is_shooting, debug__crouch_dive, debug__is_vaulting;
     public float debug__crouch_percent, debug__aim_percent;
 
     public void UpdateDebugFields() {
@@ -269,5 +271,6 @@ public class PlayerAnimation : MonoBehaviour, IAnimationFacade, ICharStatusSubsc
         debug__crouch_percent = crouch_percent;
         debug__aim_percent = aim_percent;
         debug__crouch_dive = crouch_dive;
+        debug__is_vaulting = is_vaulting;
     }
 }

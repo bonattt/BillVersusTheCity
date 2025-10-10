@@ -289,6 +289,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.crouch_dive = false;
         _animator_facade.is_sprinting = this.is_sprinting;
         _animator_facade.is_reloading = this.reloading;
+        _animator_facade.is_vaulting = this.is_vaulting;
 
     }
 

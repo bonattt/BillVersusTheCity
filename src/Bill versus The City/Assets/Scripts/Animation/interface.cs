@@ -18,6 +18,7 @@ public interface IAnimationFacade {
     public bool crouch_dive { get; set; } // character is performing a crouch dive
     public bool is_sprinting { get; set; }
     public bool is_reloading { get; set; }
+    public bool is_vaulting { get; set; } // Character is climbing/jumping over an obstacle
 
 }
 

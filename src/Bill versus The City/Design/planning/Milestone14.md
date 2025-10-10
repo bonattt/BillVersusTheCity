@@ -37,7 +37,8 @@ UNPLANNED FEATURES
     [+] Implement vaulting with sprint
     [+] Improve controls (don't use sprint)
     [+] Add Sound
-    [ ] Add Animation
+    [+] Add Animation
+    [ ] Allow vault while standing still
 [ ] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
 
 [ ] DEBUG OPTIONS
