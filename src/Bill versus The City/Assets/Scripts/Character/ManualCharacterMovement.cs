@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ManualCharacterMovement : CharCtrl
 {
+    private const string VAULT_OVER_SOUND = "player_vault_over";
     // returns a list of all the nodes which enemies raycast to see the player
     public Transform vision_target;
     private List<Transform> _vision_nodes = null;
@@ -63,16 +65,16 @@ public class ManualCharacterMovement : CharCtrl
 
     [SerializeField]
     private Vector3 _last_move;
-    public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint=false, bool crouch=false, bool walk=false) {
+    public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
         base.MoveCharacter(move_direction, look_direction, sprint, crouch);
-        
-         if (is_vaulting) {
+
+        if (is_vaulting) {
             move_direction = vault_over_direction;
         } else if (is_crouch_diving) {
-           // if crouch diving, continue in that direction for the duration of the crouch dive
+            // if crouch diving, continue in that direction for the duration of the crouch dive
             move_direction = crouch_dive_direction;
         }
-        
+
         _last_move = move_direction * movement_speed;
         if (walk) {
             _last_move *= 0.5f;
@@ -80,6 +82,13 @@ public class ManualCharacterMovement : CharCtrl
         debug.move_direction = _last_move;
         controller.SimpleMove(_last_move);
     }
+    
+    public override void PlayVaultOverEffects() {
+        // do nothing by default
+        ISFXSounds sound = SFXLibrary.LoadSound(VAULT_OVER_SOUND);
+        SFXSystem.inst.PlaySound(sound, transform.position);
+    }
+
 
     public override void TeleportTo(Vector3 position) {
         CharacterController char_ctrl = GetComponent<CharacterController>();

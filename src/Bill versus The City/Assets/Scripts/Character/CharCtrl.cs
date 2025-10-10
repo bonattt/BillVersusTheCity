@@ -407,7 +407,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         crouch_percent = 1f;
     }
 
-    public bool GetStartVaultThisFrame(bool sprint, Vector3 direction) {
+    public bool GetStartVaultThisFrame(Vector3 direction) {
         if (!InputSystem.inst.VaultOverInput() || direction == Vector3.zero) { return false; }
 
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
@@ -424,6 +424,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
         vault_over_remaining = vault_duration;
         vault_over_direction = zone.GetVaultDirection(move_direction);
+        PlayVaultOverEffects();
+    }
+
+    public virtual void PlayVaultOverEffects() {
+        // do nothing by default
     }
 
     public virtual void TeleportTo(Vector3 position) {
@@ -456,7 +461,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
         } else if (is_vaulting) {
             move_direction = vault_over_direction;
-        } else if (GetStartVaultThisFrame(sprint && !crouch, move_direction)) {
+        } else if (GetStartVaultThisFrame(move_direction)) {
             StartVaultOver(move_direction);
         } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
             StartCrouchDive(move_direction);

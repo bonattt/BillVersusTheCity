@@ -33,11 +33,12 @@ PLANNED BUGFIXES
 
 
 UNPLANNED FEATURES
-[ ] Add Vaulting over low-cover
+[~] Add Vaulting over low-cover
     [+] Implement vaulting with sprint
-    [ ] Improve controls (don't use sprint)
-    [ ] Add Sound
-[ ] Refactor to have CharCtrl movement actions (eg. sprint, crouch, roll, )
+    [+] Improve controls (don't use sprint)
+    [+] Add Sound
+    [ ] Add Animation
+[ ] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
 
 [ ] DEBUG OPTIONS
     [ ] Add debug infinite ammo flags

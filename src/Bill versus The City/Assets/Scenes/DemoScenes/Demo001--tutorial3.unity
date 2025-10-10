@@ -413,7 +413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57acbdad09ebba40a557ba3e82325c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  event_effect: {fileID: 1649578170}
 --- !u!1001 &612806419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -775,7 +774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57acbdad09ebba40a557ba3e82325c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  event_effect: {fileID: 954754612}
 --- !u!65 &954754616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1278,11 +1276,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!1 &1649578170 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 631344441452716841, guid: a2056a31f4e1d2d4a9608129a9387a4b, type: 3}
-  m_PrefabInstance: {fileID: 1604014186}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1929632379
 PrefabInstance:
   m_ObjectHideFlags: 0
