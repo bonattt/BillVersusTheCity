@@ -11,12 +11,33 @@ public class VaultOverCoverZone : MonoBehaviour {
 
     [Tooltip("How far a player needs to jump to get over this obstacle.")]
     public float jump_length = 1f;
-    
+
     [Tooltip("How high a player needs to jump to get over this obstacle.")]
     public float jump_height = 0.75f;
-    public Vector3 jump_direction = Vector3.forward;
+    
+    // private Vector3 _jump_direction;
+    public Vector3 jump_direction {
+        get {
+            if (jump_direction_calculation == JumpDirectionSetting.automatic) {
+                if (calculated_jump_direction == Vector3.zero) {
+                    SetCalculatedJumpDirection();
+                }
+                return calculated_jump_direction;
+            } else if (jump_direction_calculation == JumpDirectionSetting.manual) {
+                return manual_jump_direction;
+            } else {
+                Debug.LogError($"unhandled jump_direction_calculation setting '{jump_direction_calculation}'");
+                return Vector3.zero;
+            }
+        }
+    }
     // public Vector3 jump_area_position = new Vector3(0f, 0f, 0f);
     // public Vector3 jump_area_size = new Vector3(0.85f, 0.65f, 5f);
+
+    [Tooltip("Set whether jump direction is set manually or automatically calculated based on the collider.")]
+    public JumpDirectionSetting jump_direction_calculation = JumpDirectionSetting.automatic;
+    [Tooltip("if jump direction is set to manual calculation, it can be set here.")]
+    public Vector3 manual_jump_direction;
 
     [Tooltip("Box Collider that defines the area a player will be able to jump from.")]
     [SerializeField]
@@ -28,14 +49,39 @@ public class VaultOverCoverZone : MonoBehaviour {
 
     void Start() {
         if (jump_direction.y != 0) { Debug.LogWarning($"{gameObject.name}.jump_direction {jump_direction} contains a non-zero Y component!"); }
+        SetCalculatedJumpDirection();
+    }
+
+    private Vector3 calculated_jump_direction = Vector3.zero;
+    // private float cached_euler_rotation = float.NaN; // cache the euler rotation so you can recalculate if the rotation changes
+    private void SetCalculatedJumpDirection() {
+        calculated_jump_direction = GetCalculatedJumpDirection();
+        // cached_euler_rotation = transform.rotation.eulerAngles.y;
+    }
+
+    public Vector3 GetCalculatedJumpDirection() {
+        float x_width = target_collider.bounds.size.x;
+        float z_width = target_collider.bounds.size.z;
+
+        Vector3 result;
+        if (x_width > z_width) {
+            result = Vector3.forward;
+        } else {
+            result = Vector3.right;
+        }
+        Vector3 euler_rotation = transform.rotation.eulerAngles;
+        int rotations = (int)(euler_rotation.y / 90);
+        if ((euler_rotation.y / 90) != rotations) {
+            Debug.LogWarning($"VaultOverCoverZone rotation calculation only supports 90* incriments, not '{euler_rotation.y}'");
+        }
+        return result;
     }
 
     void OnDrawGizmos() {
+        calculated_jump_direction = GetCalculatedJumpDirection();
         if (gizmo_color == Color.clear) { return; }
 
         Vector3 center = transform.position;
-        // Gizmos.color = gizmo_color;
-        // Gizmos.DrawWireCube(center, jump_area_size);
 
         Gizmos.color = gizmo_color;
         Vector3 start = center - jump_direction;
@@ -86,4 +132,10 @@ public class VaultOverCoverZone : MonoBehaviour {
     public bool ValidJumpAngle(Vector3 move_direction) {
         return Mathf.Abs(Vector3.Dot(move_direction, jump_direction)) < angle_threshold;
     }
+}
+
+
+public enum JumpDirectionSetting {
+    manual, // jump direction is set via script
+    automatic, // jump direction is calculated from the collider
 }

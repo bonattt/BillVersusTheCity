@@ -23,22 +23,18 @@ public class VaultingAreaDetector : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision c) {
-        Debug.LogWarning($"VaultingAreaDetector.OnCollisionEnter.Called on {c.gameObject.name}"); // TODO --- remove debug
         HandleEnter(c.collider);
     }
 
     void OnCollisionExit(Collision c) {
-        Debug.LogWarning($"VaultingAreaDetector.OnCollisionExit.Called on {c.gameObject.name}"); // TODO --- remove debug
         HandleEnter(c.collider);
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.LogWarning($"VaultingAreaDetector.OnTriggerEnter.Called on {other.gameObject.name}"); // TODO --- remove debug
         HandleEnter(other);
     }
 
     void OnTriggerExit(Collider other) {
-        Debug.LogWarning($"VaultingAreaDetector.OnTriggerExit.Called on {other.gameObject.name}"); // TODO --- remove debug
         HandleExit(other);
     }
 
