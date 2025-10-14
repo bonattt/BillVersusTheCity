@@ -84,8 +84,8 @@ public class VaultOverCoverZone : MonoBehaviour {
         Vector3 center = transform.position;
 
         Gizmos.color = gizmo_color;
-        Vector3 start = center - jump_direction;
-        Vector3 end = center + jump_direction;
+        Vector3 start = center - (jump_direction * (jump_length / 2));
+        Vector3 end = center + (jump_direction * (jump_length / 2));
         Gizmos.DrawLine(start, end);
 
         // Draws additional lines to the side of the original side, assuming the Jump Vector has no Y component (the game is top-down, so this is a safe assumption)

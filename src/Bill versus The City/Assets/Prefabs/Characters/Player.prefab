@@ -398,7 +398,16 @@ MonoBehaviour:
   crouch_dive_remaining: 0
   crouch_locked_remaining: 0
   _crouch_percent: 0
-  debug__can_attack: 0
+  debug:
+    message: 
+    can_attack: 0
+    is_vaulting: 0
+    is_crouch_diving: 0
+    move_action_remaining: -1
+    move_speed: 0
+    vault_over_speed: 0
+    move_direction: {x: 0, y: 0, z: 0}
+    move_action_dir: {x: 0, y: 0, z: 0}
   vision_target: {fileID: 7902831743066966521}
   _last_move: {x: 0, y: 0, z: 0}
 --- !u!114 &4665821343985391478
@@ -552,7 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b48ee125813614ba77ec975f711549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comment: NavMeshAgent is to prevent enemies from pushing the player around.
+  comment: NavMeshObstacle is to prevent enemies from pushing the player around.
 --- !u!208 &4732258951660531801
 NavMeshObstacle:
   m_ObjectHideFlags: 0

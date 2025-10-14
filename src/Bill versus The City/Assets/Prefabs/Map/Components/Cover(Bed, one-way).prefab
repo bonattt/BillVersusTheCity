@@ -116,11 +116,23 @@ PrefabInstance:
       value: Cover(generic)
       objectReference: {fileID: 0}
     - target: {fileID: 5792948551246848159, guid: 16a4fd50f87c56b4bb2b6512d99dcf28, type: 3}
+      propertyPath: jump_length
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792948551246848159, guid: 16a4fd50f87c56b4bb2b6512d99dcf28, type: 3}
       propertyPath: jump_direction.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5792948551246848159, guid: 16a4fd50f87c56b4bb2b6512d99dcf28, type: 3}
       propertyPath: jump_direction.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792948551246848159, guid: 16a4fd50f87c56b4bb2b6512d99dcf28, type: 3}
+      propertyPath: manual_jump_direction.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792948551246848159, guid: 16a4fd50f87c56b4bb2b6512d99dcf28, type: 3}
+      propertyPath: jump_direction_calculation
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7457180528894799230, guid: 16a4fd50f87c56b4bb2b6512d99dcf28, type: 3}

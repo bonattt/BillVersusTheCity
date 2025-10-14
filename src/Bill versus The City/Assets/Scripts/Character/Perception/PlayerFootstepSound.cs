@@ -75,6 +75,7 @@ public class PlayerFootstepSound : MonoBehaviour {
         float range = base_range + distance_traveled;
         float alarm_level = base_alert_rate * distance_traveled * interval_seconds;
         GameSound new_sound = new GameSound(GetSampledPosition(), range, alarm_level);
+        new_sound.alerts_police = false;
         new_sound.sound_name = "footstep";
         EnemyHearingManager.inst.NewSound(new_sound);
     }

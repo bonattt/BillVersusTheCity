@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class SoundEffectDraw : MonoBehaviour, IHearingObserver
+public class SoundEffectDraw : MonoBehaviour, IGlobalSoundsObserver
 {
     [Tooltip("how long is a sound shown, when shown on the map")]
     public float sound_duration = 1f;

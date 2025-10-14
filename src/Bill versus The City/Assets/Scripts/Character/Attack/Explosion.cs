@@ -52,6 +52,7 @@ public class Explosion : MonoBehaviour, IGameEventEffect
         float volume = explosion_attack.explosion_volume * 2;
         GameSound new_sound = new GameSound(transform.position, range:volume, alarm_level:volume);
         new_sound.sound_name = "Explosion";
+        new_sound.alerts_police = true;
         EnemyHearingManager.inst.NewSound(new_sound);
     }
 

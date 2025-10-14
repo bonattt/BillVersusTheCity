@@ -33,15 +33,16 @@ PLANNED BUGFIXES
 
 
 UNPLANNED FEATURES
-[~] Add Vaulting over low-cover
+[+] Add Vaulting over low-cover
     [+] Implement vaulting with sprint
     [+] Improve controls (don't use sprint)
     [+] Add Sound
     [+] Add Animation
-    [~] Allow vault while standing still
+    [+] Allow vault while standing still
         [+] Make vault work while standing still
-        [ ] Prevent vault in wrong direction while standing still
+        [+] Prevent vault in wrong direction while standing still
 [ ] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
+[ ] Add Police Timer
 
 [ ] DEBUG OPTIONS
     [ ] Add debug infinite ammo flags

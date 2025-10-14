@@ -35,11 +35,11 @@ public class EnemyHearingManager : IGenericObserver {
         }
     }
 
-    private List<IHearingObserver> subscribers = new List<IHearingObserver>();
-    public void Subscribe(IHearingObserver sub) => subscribers.Add(sub);
-    public void Unsubscribe(IHearingObserver sub) => subscribers.Remove(sub);
+    private List<IGlobalSoundsObserver> subscribers = new List<IGlobalSoundsObserver>();
+    public void Subscribe(IGlobalSoundsObserver sub) => subscribers.Add(sub);
+    public void Unsubscribe(IGlobalSoundsObserver sub) => subscribers.Remove(sub);
     private void UpdateSubscribers(ISound sound) {
-        foreach (IHearingObserver sub in subscribers) {
+        foreach (IGlobalSoundsObserver sub in subscribers) {
             sub.UpdateSound(sound);
         }
     }
@@ -121,12 +121,14 @@ public interface ISound
     public bool penetrate_walls { get; set; }
     public bool adjust_alarm_based_on_distance { get; set; }
     public float wall_effectiveness { get; set; }
+    public bool alerts_police { get; set; }
     public Vector3 origin { get; set; }
     public GameObject sound_source { get; set; }
 }
 
 public class GameSound : ISound {
     public const float DEFAULT_WALL_COST = 4f; // the effective distance increase for sounds passing through walls
+    public const bool DEFAULT_ALERTS_POLICE = false; // whether the sound will start a police timer,
     public const bool DEFAULT_ADJUST_ALARM_BASED_ON_DISTANCE = true;
     public const bool DEFAULT_IGNORE_WALLS = false;
     public const bool DEFAULT_PENETRATE_WALLS = false;
@@ -140,6 +142,7 @@ public class GameSound : ISound {
     public bool penetrate_walls { get; set; }
     public bool adjust_alarm_based_on_distance { get; set; }
     public float wall_effectiveness { get; set; }
+    public bool alerts_police { get; set; }
     public Vector3 origin { get; set; }
     public GameObject sound_source { get; set; }
 
@@ -153,6 +156,7 @@ public class GameSound : ISound {
         this.range = range;
         this.alarm_level = alarm_level;
         this.wall_effectiveness = DEFAULT_WALL_COST;
+        this.alerts_police = DEFAULT_ALERTS_POLICE;
     }
 
     public override string ToString() {

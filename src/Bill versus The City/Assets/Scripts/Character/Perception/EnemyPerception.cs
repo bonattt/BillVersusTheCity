@@ -409,5 +409,6 @@ public enum PerceptionState {
 }
 
 public interface IPerceptionSubscriber {
+    // this interface is for subscribing to updates from an enemy's perception state. (EG. to display that the enemy has seen the player)
     public void UpdatePerceptionState(PerceptionState previous_state, PerceptionState new_state);
 }
