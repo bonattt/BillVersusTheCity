@@ -344,7 +344,7 @@ public class LevelConfig : MonoBehaviour {
     protected ILevelCondition InstantiateFailureCondition(GameObject prefab) {
         // create conditions from prefab
         ILevelCondition condition = InstantiateConditionFromPrefab(prefab);
-        condition.AddEffect(new SimpleActionEvent(this.FailLevel));
+        condition.AddEffect(new SimpleActionEvent(() => FailLevel()));
 
         // add the condition to the level for evaluation
         non_sequential_level_conditions.Add(condition);
@@ -484,15 +484,21 @@ public class LevelConfig : MonoBehaviour {
         ScenesUtil.NextLevel(next_level);
     }
 
-    public void FailLevel() {
+    public void FailLevel(bool police=false) {
 #if UNITY_EDITOR
         EditorApplication.isPaused = pause_on_level_failure;
 #endif
+        Action defeat_callback;
+        if (police) {
+            defeat_callback = () => MenuManager.inst.PlayerDefeatPopup();
+        } else {
+            defeat_callback = () => MenuManager.inst.PlayerDefeatPopup();
+        }
         DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_failed);
         if (ctrl == null) {
-            MenuManager.inst.PlayerDefeatPopup();
+            defeat_callback();
         } else {
-            ctrl.AddDialogueCallback(new SimpleActionEvent(MenuManager.inst.PlayerDefeatPopup));
+            ctrl.AddDialogueCallback(new SimpleActionEvent(defeat_callback));
         }
     }
 

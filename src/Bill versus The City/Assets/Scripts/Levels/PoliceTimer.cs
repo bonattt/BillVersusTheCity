@@ -9,6 +9,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
     public float seconds = 180;
     private float alerted_at = -1f;
     public bool police_alerted { get; private set; }
+    public bool has_triggered { get; private set; }
 
     public float seconds_remaining {
         get {
@@ -44,6 +45,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
 
     private void Initialize() {
         police_alerted = false;
+        has_triggered = false;
     }
 
     public PoliceTimerDebugger debug;
@@ -53,13 +55,13 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
     }
 
     private void CheckTimer() {
-        if (seconds_remaining < 0f) {
+        if (seconds_remaining < 0f && !has_triggered) {
             TriggerTimer();
         }
     }
 
     private void TriggerTimer() {
-        Debug.LogWarning("TODO --- implement trigger timer");
+        has_triggered = true;
         level_config.FailLevel();
     }
     
@@ -67,12 +69,14 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
         debug.police_alerted = police_alerted;
         debug.alerted_at = alerted_at;
         debug.seconds_remaining = seconds_remaining;
+        debug.has_triggered = has_triggered;
     }
 }
 
 [Serializable]
 public class PoliceTimerDebugger {
     public bool police_alerted = false;
+    public bool has_triggered = false;
     public float alerted_at;
     public float seconds_remaining;
 }

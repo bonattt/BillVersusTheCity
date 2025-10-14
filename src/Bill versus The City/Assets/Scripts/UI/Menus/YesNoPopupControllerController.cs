@@ -14,7 +14,6 @@ public class YesNoPopupController : PopupController
     public override void Configure() {
         // setup object references to UI components.
         base.Configure();
-        
         reject_label = root_visual.Q<Label>("CancelLabel");
         cancel_button = root_visual.Q<Button>("CancelButton");
         cancel_button.RegisterCallback<ClickEvent>(MenuManager.CloseMenuClick);

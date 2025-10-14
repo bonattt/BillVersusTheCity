@@ -219,19 +219,49 @@ public class MenuManager : MonoBehaviour
         return script;
     }
 
-    public void PlayerDefeatPopup() {
+    public YesNoPopupController PlayerDefeatPopup() => _GenericDefeatPolicePopup(
+        header: "Defeat!",
+        content: "You have been killed!",
+        restart_text: "Restart Level",
+        exit_text: "Exit to Title"
+    );
+    // public YesNoPopupController PlayerDefeatPopup() {
+    //     // click event for when the restart level button is clicked
+    //     CloseAllMenus();
+    //     YesNoPopupController popup = OpenNewPopup();
+    //     popup.header_text = "Defeat!";
+    //     popup.content_text = "You have been killed";
+    //     popup.confirm_text = "Restart Level";
+    //     popup.reject_text = "Exit to Title";
+    //     popup.allow_escape = false;
+
+    //     popup.confirm_button.clicked += ScenesUtil.RestartLevel;
+    //     popup.cancel_button.clicked += ScenesUtil.ExitToMainMenu;  // TODO --- move this helper somewhere more appropriate
+    //     popup.UpdateLabels();
+    //     return popup;
+    // }
+
+    public YesNoPopupController DefeatedByPolicePopup() => _GenericDefeatPolicePopup(
+        header: "Defeat!",
+        content: "You have been arrested!",
+        restart_text: "Restart Level",
+        exit_text: "Exit to Title"
+    );
+    
+    private YesNoPopupController _GenericDefeatPolicePopup(string header, string content, string restart_text, string exit_text) {
         // click event for when the restart level button is clicked
         CloseAllMenus();
         YesNoPopupController popup = OpenNewPopup();
-        popup.header_text = "Defeat!";
-        popup.content_text = "You have been killed";
-        popup.confirm_text = "Restart Level";
-        popup.reject_text = "Exit to Title";
+        popup.header_text = header;
+        popup.content_text = content;
+        popup.confirm_text = restart_text;
+        popup.reject_text = exit_text;
         popup.allow_escape = false;
         
         popup.confirm_button.clicked += ScenesUtil.RestartLevel;
         popup.cancel_button.clicked += ScenesUtil.ExitToMainMenu;  // TODO --- move this helper somewhere more appropriate
         popup.UpdateLabels();
+        return popup;
     }
 
     public void WinGamePopup() {
