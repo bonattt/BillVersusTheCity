@@ -90,13 +90,13 @@ public abstract class AbstractSettingsModule : ISettingsModule {
         // returns json data for the settings in this module
         DuckDict dict = new DuckDict();
         foreach (string key in float_field_names) {
-            dict.SetFloat(key, float_fields[key]);
+            dict.SetFloat(key, GetFloat(key));
         }
         foreach (string key in int_field_names) {
-            dict.SetInt(key, int_fields[key]);
+            dict.SetInt(key, GetInt(key));
         }
         foreach (string key in bool_field_names) {
-            dict.SetBool(key, bool_fields[key]);
+            dict.SetBool(key, GetBool(key));
         }
         // NOTE: other_field_names needs custom handling by subclasses, overrwrite this method
         return dict;

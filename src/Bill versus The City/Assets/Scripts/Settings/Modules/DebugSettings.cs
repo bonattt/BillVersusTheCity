@@ -28,6 +28,8 @@ public class DebugSettings : AbstractSettingsModule {
         "allow_debug_actions",
         "unlock_all_weapons",
         "unrestrict_weapon_slots",
+        "no_reload", // ammo does not tick down when shooting
+        "infinte_ammo_supply", // ammo supply not used when reloading
     };
     public override List<string> bool_field_names { get => BOOL_FIELDS; }
 

@@ -8,7 +8,8 @@ using UnityEngine.UIElements;
 public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
 
     private Toggle show_fps_toggle, show_damage_toggle, debug_mode_toggle, player_invincibility_toggle,
-            player_invisible_toggle, allow_debug_actions_toggle, unlock_all_weapons_toggle, unrestrict_weapon_slots_toggle;
+            player_invisible_toggle, allow_debug_actions_toggle, unlock_all_weapons_toggle, unrestrict_weapon_slots_toggle,
+            no_reload_toggle, infinte_ammo_supply_toggle;
     private Dictionary<string, Toggle> field_settings_toggles = new Dictionary<string, Toggle>();
     private DropdownField show_grenade_fuse_dropdown;
 
@@ -47,11 +48,15 @@ public class DebugSettingsMenuCtrl : AbstractSettingsModuleMenu {
         VisualElement unrestrict_weapon_slots_toggle_div = AddToggle("unrestrict_weapon_slots", "Un-restrict weapon slots");
         unrestrict_weapon_slots_toggle = unrestrict_weapon_slots_toggle_div.Q<Toggle>();
 
+        VisualElement no_reload_toggle_div = AddToggle("no_reload", "No Reload Required");
+        no_reload_toggle = no_reload_toggle_div.Q<Toggle>();
+
+        VisualElement infinte_ammo_supply_toggle_div = AddToggle("infinte_ammo_supply", "Infinite Ammo Supply");
+        infinte_ammo_supply_toggle = infinte_ammo_supply_toggle_div.Q<Toggle>();
+
         show_grenade_fuse_dropdown = MenuUtils.SetupEnumDropdown(typeof(ShowGrenadeFuse));
         show_grenade_fuse_dropdown.AddToClassList(SETTINGS_ITEM_CLASS);
         settings_pannel.Add(show_grenade_fuse_dropdown);
-
-
         LoadSettings();
     }
 
