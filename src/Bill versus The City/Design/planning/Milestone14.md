@@ -44,11 +44,15 @@ UNPLANNED FEATURES
 [ ] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
 [+] Add Police Timer
     [+] Timer script
-    [ ] Implement UI for police timer
+    [+] Implement UI for police timer
+        [ ] Clean up implementation of this
+            - either use CombatHUDManager.inst.GetTimer() in PoliceTimer, or remove it and fix LevelConfig to not need to do that either. 
     [ ] Remove old level counter from LevelConfig
 
-[ ] DEBUG OPTIONS
-    [ ] Add debug infinite ammo flags
+[~] DEBUG OPTIONS
+    [+] Add debug infinite ammo flags
+        [+] Add flags
+        [ ] Make flags not apply to enemies
     [ ] Add open switch weapon menu
 [ ] Implement next_shot_ready sound for pump shotguns
 

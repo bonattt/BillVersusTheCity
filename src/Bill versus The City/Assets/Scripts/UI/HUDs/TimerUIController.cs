@@ -11,7 +11,6 @@ public class TimerUIController : MonoBehaviour
     // public MonoBehaviour init_timer;
     private ITimer timer;
 
-    private VisualElement root;
     private Label digital_clock;
     
 
@@ -41,25 +40,29 @@ public class TimerUIController : MonoBehaviour
     }
 
     private void UpdateClock(){
+        Debug.LogWarning($"UpdateClock: {digital_clock}, is_null: {digital_clock == null}");
         if (digital_clock == null) { return; } // no clock configured, do nothing
         digital_clock.text = GetText();
+        Debug.LogWarning($"digital_clock.text: '{digital_clock.text}'");
     }
 
     public void AttachTimer(ITimer new_timer) {
+        Debug.LogWarning($"timer {new_timer} attached!");
         this.timer = new_timer;
         if (this.timer == null) {
             Debug.LogWarning("AttachTimer set to null. use DetachTimer instead!");
             DetachTimer();
             return;
         }
-        root = ui_doc.rootVisualElement;
-        digital_clock = root.Q<Label>("CountdownText");
+        digital_clock = ui_doc.rootVisualElement.Q<Label>("CountdownText");
         digital_clock.style.color = text_color;
+        CombatHUDManager.inst.has_countdown = true;
         UpdateClock();
     }
 
     public void DetachTimer() {
         timer = null;
         digital_clock = null;
+        CombatHUDManager.inst.has_countdown = false;
     }
 }

@@ -21,9 +21,13 @@ public class CombatHUDManager : MonoBehaviour
     public UIDocument ui_doc;
     public TimerUIController timer_ui;
     public LevelConfig level_config;
+    
+    public TimerUIController GetTimerUI() => timer_ui;
 
     private static int _count = 0;
 
+
+    public bool has_countdown = false;
     void Awake() {
         inst = this;
     }
@@ -94,18 +98,16 @@ public class CombatHUDManager : MonoBehaviour
     }
 
     private bool _had_countdown = false; // cached `level_config.has_countdown` to only do work when it changes
-    private bool _countdown_setup = false; // cached `level_config.has_countdown` to only do work when it changes
     public void UpdateCountdownUI() {
-        if (level_config == null) { Debug.LogWarning("level config is null!"); return; } // TODO --- remove debug
-        if (level_config.has_countdown != _had_countdown || !_countdown_setup) {
-            if (level_config.has_countdown) {
+        if (has_countdown != _had_countdown) { 
+            // only update if value has changed
+            if (has_countdown) {
                 ConfigureCountdown();
             } else {
                 HideCountdownHUD();
             }
-            _countdown_setup = true;
         }
-        _had_countdown = level_config.has_countdown;
+        _had_countdown = has_countdown;
     }
 
     public void HideCountdownHUD() {
@@ -116,20 +118,20 @@ public class CombatHUDManager : MonoBehaviour
     public void ConfigureCountdown() {
         VisualElement countdown = ui_doc.rootVisualElement.Q<VisualElement>("CountdownWrapper");
         countdown.style.visibility = Visibility.Visible;
-        timer_ui.text_color = GetCountdownColor(level_config);
-        timer_ui.AttachTimer(level_config.countdown);
+        // timer_ui.text_color = GetCountdownColor(level_config);
+        // timer_ui.AttachTimer(level_config.countdown);
     }
 
-    public static Color GetCountdownColor(LevelConfig level_config) {
-        if (level_config.victory_conditions_preset == LevelVictoryConditions.survive_countdown) {
-            return Color.green;
-        } else if (level_config.failure_conditions_preset == LevelFailuerConditions.countdown) {
-            return Color.red;
-        } else {
-            Debug.LogWarning($"unhandled level config conditions for countdown color. victory: {level_config.victory_conditions_preset}, failure: {level_config.failure_conditions_preset}");
-            return Color.yellow;
-        }
-    }
+    // public static Color GetCountdownColor(LevelConfig level_config) {
+    //     if (level_config.victory_conditions_preset == LevelVictoryConditions.survive_countdown) {
+    //         return Color.green;
+    //     } else if (level_config.failure_conditions_preset == LevelFailuerConditions.countdown) {
+    //         return Color.red;
+    //     } else {
+    //         Debug.LogWarning($"unhandled level config conditions for countdown color. victory: {level_config.victory_conditions_preset}, failure: {level_config.failure_conditions_preset}");
+    //         return Color.yellow;
+    //     }
+    // }
 
     private bool _was_combat_enabled = false; // cached `level_config.combat_enabled` to only do work when it changes
     public void UpdateCombatMode(bool force_update=false) {

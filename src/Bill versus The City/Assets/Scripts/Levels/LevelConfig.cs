@@ -139,14 +139,6 @@ public class LevelConfig : MonoBehaviour {
         if (level_failed) {
             FailLevel();
         }
-
-        // if (victory_conditions_preset == LevelVictoryConditions.clear_enemies && ) {
-        //     if (sequential_conditions_completed) {
-                
-        //     } else {
-                
-        //     }
-        // }
         UpdateDebug();
     }
 
@@ -277,6 +269,10 @@ public class LevelConfig : MonoBehaviour {
         level_started = false;
         inst = this;
         ConfigureLevelWeapons();
+        if (countdown != null) {
+            CombatHUDManager.inst.has_countdown = true;
+            // TODO --- this is not a good way to do this
+        }
     }
 
     public void ConfigureLevelWeapons() {
@@ -407,6 +403,7 @@ public class LevelConfig : MonoBehaviour {
             // ui_ctrl.text_color = color;
             countdown_condition.start_time_seconds = countdown_start;
             countdown = countdown_condition; // ITimer interface, doesn't support setting `start_time_seconds`
+            CombatHUDManager.inst.GetTimerUI().AttachTimer(countdown);
         } catch (InvalidCastException) {
             Debug.LogError($"Casting error trying to setup countdown failure condition");
         }
