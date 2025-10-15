@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
+public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver, ITimer {
 
     public LevelConfig level_config;
     [Tooltip("Once the police are alerted, the player will have this many seconds to complete the level.")]
@@ -10,8 +10,11 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
     private float alerted_at = -1f;
     public bool police_alerted { get; private set; }
     public bool has_triggered { get; private set; }
-
-    public float seconds_remaining {
+    public TimerUIController ui;
+    ////////////////////////////////
+    //////// ITimer fields /////////
+    ////////////////////////////////
+    public float remaining_time {
         get {
             if (!police_alerted) {
                 return seconds;
@@ -19,6 +22,12 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
             return seconds - (Time.time - alerted_at);
         }
     }
+    public bool paused { get => !police_alerted; }
+    public int remaining_minutes { get { return (int) (Mathf.Round(remaining_time) / 60); }}
+
+    public int remaining_seconds_remainder { get { return (int) (Mathf.Round(remaining_time) - (remaining_minutes * 60)); }}
+    public int remaining_seconds_full { get { return (int) Mathf.Round(remaining_time); }}
+    ////////////////////////////////
 
     void Start() {
         Initialize();
@@ -46,6 +55,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
     private void Initialize() {
         police_alerted = false;
         has_triggered = false;
+        ui.AttachTimer(this);
     }
 
     public PoliceTimerDebugger debug;
@@ -55,7 +65,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
     }
 
     private void CheckTimer() {
-        if (seconds_remaining < 0f && !has_triggered) {
+        if (remaining_time < 0f && !has_triggered) {
             TriggerTimer();
         }
     }
@@ -68,7 +78,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver {
     void UpdateDebug() {
         debug.police_alerted = police_alerted;
         debug.alerted_at = alerted_at;
-        debug.seconds_remaining = seconds_remaining;
+        debug.remaining_time = remaining_time;
         debug.has_triggered = has_triggered;
     }
 }
@@ -78,5 +88,5 @@ public class PoliceTimerDebugger {
     public bool police_alerted = false;
     public bool has_triggered = false;
     public float alerted_at;
-    public float seconds_remaining;
+    public float remaining_time;
 }

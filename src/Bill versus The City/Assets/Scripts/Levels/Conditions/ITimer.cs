@@ -4,7 +4,7 @@ public interface ITimer {
     // interface for getting the minutes and seconds from a timer, for UI displaying
     
     public float remaining_time { get; }
-    public bool paused { get; set; }
+    public bool paused { get; }
     public int remaining_minutes { get { return (int) (Mathf.Round(remaining_time) / 60); }}
 
     // returns the seconds left in the current minute

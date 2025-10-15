@@ -42,7 +42,10 @@ UNPLANNED FEATURES
         [+] Make vault work while standing still
         [+] Prevent vault in wrong direction while standing still
 [ ] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
-[ ] Add Police Timer
+[+] Add Police Timer
+    [+] Timer script
+    [ ] Implement UI for police timer
+    [ ] Remove old level counter from LevelConfig
 
 [ ] DEBUG OPTIONS
     [ ] Add debug infinite ammo flags
