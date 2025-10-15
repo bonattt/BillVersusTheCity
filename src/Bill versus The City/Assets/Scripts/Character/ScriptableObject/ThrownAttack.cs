@@ -124,7 +124,10 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         // }
         rb.AddForce(throw_velocity, ForceMode.VelocityChange);
         grenade = null;
-        current_ammo -= 1;
+        if (! GameSettings.inst.debug_settings.GetBool("no_reload")) {
+            // if reload is disabled, guns don't decriment ammo, they just shoot forever
+            current_ammo -= 1;
+        }
     }
 
     // public float GetThrowForce(Vector3 throw_from, Vector3 target_position) {

@@ -100,10 +100,8 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         }
     }
 
-
-    public bool CanAttack() {
-        return current_gun != null && current_gun.current_ammo > 0 && is_active;
-    }
+    public bool HasAmmo() =>  current_gun.current_ammo > 0;
+    public bool CanAttack() => current_gun != null && HasAmmo() && is_active;
 
     public virtual int? current_slot {
         get { return null; }
@@ -224,7 +222,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
             (_last_shot_at + shot_cooldown <= Time.time)
             && (!InputSystem.IsNullPoint(attack_direction))
         ) {
-            if (current_gun.current_ammo > 0) {
+            if (HasAmmo()) {
                 _FireAttack(attack_direction);
             } else {
                 _EmptyAttack();
@@ -237,7 +235,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
             (_last_shot_at + shot_cooldown <= Time.time)
             && (!InputSystem.IsNullPoint(attack_direction))
         ) {
-            if (current_gun.current_ammo > 0) {
+            if (HasAmmo()) {
                 _FireAttack(attack_direction, hold: true);
             } else {
                 _EmptyAttack();

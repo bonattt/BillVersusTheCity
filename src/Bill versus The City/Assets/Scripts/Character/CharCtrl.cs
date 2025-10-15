@@ -527,7 +527,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public bool ShouldReloadWithContainer(AmmoType type) {
-        return (ammo_container != null) && ammo_container.HasAmmoType(type);
+        return (ammo_container != null) && ammo_container.HasAmmoType(type) && !GameSettings.inst.debug_settings.GetBool("infinte_ammo_supply");
     }
 
     private void _ReloadFromContainer(IFirearm weapon) {

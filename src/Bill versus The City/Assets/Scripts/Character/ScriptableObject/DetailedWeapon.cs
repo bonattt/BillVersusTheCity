@@ -202,7 +202,10 @@ public class DetailedWeapon : ScriptableObject, IFirearm
             bullet.damage_falloff_rate = damage_falloff_rate;
             bullet.attacker = attacker;
         }
-        current_ammo -= 1;
+        if (! GameSettings.inst.debug_settings.GetBool("no_reload")) {
+            // if reload is disabled, guns don't decriment ammo, they just shoot forever
+            current_ammo -= 1;
+        }
         if (bullet != null) {
             AttackResolver.AttackStart(bullet, attack_direction, attack_start_point, is_melee_attack: false); // Only create a shot effects once for a shotgun
         } else {
