@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aim_target: {fileID: 0}
   crouch_target: {fileID: 0}
+  vaulting_area_detector: {fileID: 0}
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
@@ -216,7 +217,16 @@ MonoBehaviour:
   crouch_dive_remaining: 0
   crouch_locked_remaining: 0
   _crouch_percent: 0
-  debug__can_attack: 0
+  debug:
+    message: 
+    can_attack: 0
+    is_vaulting: 0
+    is_crouch_diving: 0
+    move_action_remaining: -1
+    move_speed: 0
+    vault_over_speed: 0
+    move_direction: {x: 0, y: 0, z: 0}
+    move_action_dir: {x: 0, y: 0, z: 0}
   nav_mesh_agent: {fileID: 2365366885385776978}
   choreography_movement: 0
   debug__look_direction: {x: 0, y: 0, z: 0}
