@@ -16,8 +16,8 @@ public class InputSystem : ISettingsObserver
     public const KeyCode CANCEL_MENU = KeyCode.Escape;
     public const KeyCode INTERACT = KeyCode.E;
     public const KeyCode RELOAD = KeyCode.R;
-    public const KeyCode DIVE = KeyCode.Space;
-    public const KeyCode VAULT_OVER = KeyCode.Space;
+    public const KeyCode CROUCH_OR_JUMP = KeyCode.Space;
+    public const KeyCode JUMP_OVER = KeyCode.LeftAlt;
     public const KeyCode CROUCH = KeyCode.LeftControl;
     public const KeyCode INVENTORY_MENU = KeyCode.I;
     public const KeyCode DEBUG_KEY = KeyCode.BackQuote;
@@ -122,11 +122,11 @@ public class InputSystem : ISettingsObserver
     }
      
     public bool CrouchInput() {
-        return Input.GetKey(DIVE) || Input.GetKey(CROUCH);
+        return Input.GetKey(CROUCH_OR_JUMP) || Input.GetKey(CROUCH);
     }
 
     public bool VaultOverInput() {
-        return Input.GetKeyDown(VAULT_OVER);
+        return Input.GetKeyDown(JUMP_OVER) || Input.GetKeyDown(CROUCH_OR_JUMP);
     }
 
     public GameObject GetHoveredObject() {
@@ -195,7 +195,7 @@ public class InputSystem : ISettingsObserver
     }
 
     public bool DashInput() {
-        return Input.GetKeyDown(DIVE);
+        return Input.GetKeyDown(CROUCH_OR_JUMP);
     }
 
     public float MoveXInput() {
@@ -430,11 +430,15 @@ public class InputSystem : ISettingsObserver
             case InputType.move_right:
                 Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
                 return "D";
-
+            case InputType.crouch_or_jump:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "Space";
             case InputType.crouch:
                 Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
-                return "space";
-
+                return "Left Ctrl";
+            case InputType.jump:
+                Debug.LogWarning($"input text display for '{input_type}' does not yet support key-bindings!");
+                return "Left Alt";
             case InputType.interact:
                 return $"{INTERACT}";
             case InputType.reload:
@@ -504,7 +508,9 @@ public enum InputType {
     interact,
     reload,
     sprint,
-    crouch,
+    crouch, 
+    crouch_or_jump, // jumps over cover, if it is preset, otherwise, it crouches
+    jump, 
     menu_cancel,  // cancels out of the current menu
     pause_menu,  // opens the pause menu while in normal gameplay
     next_weapon, // scroll up for next weapon

@@ -50,11 +50,11 @@ UNPLANNED FEATURES
             - remove timer color in LevelConfig
     [+] Remove old level counter from LevelConfig
 
-[~] DEBUG OPTIONS
+[+] DEBUG OPTIONS
     [+] Add debug infinite ammo flags
         [+] Add flags
-        [ ] Make flags not apply to enemies
-    [ ] Add open switch weapon menu
+        [+] Make flags not apply to enemies
+    [+] Add open switch weapon menu
 [ ] Implement next_shot_ready sound for pump shotguns
 
 UNPLANNED BUGFIXES

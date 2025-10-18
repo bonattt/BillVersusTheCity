@@ -30,7 +30,7 @@ public class TestInputs : MonoBehaviour
         cancel_menu = Input.GetKey(InputSystem.CANCEL_MENU);
         interact = Input.GetKey(InputSystem.INTERACT);
         reload = Input.GetKey(InputSystem.RELOAD);
-        crouch = Input.GetKey(InputSystem.DIVE);
+        crouch = Input.GetKey(InputSystem.CROUCH_OR_JUMP);
         crouch_secondary = Input.GetKey(InputSystem.CROUCH);
         inventory_menu = Input.GetKey(InputSystem.INVENTORY_MENU);
         debug_key = Input.GetKey(InputSystem.DEBUG_KEY);
