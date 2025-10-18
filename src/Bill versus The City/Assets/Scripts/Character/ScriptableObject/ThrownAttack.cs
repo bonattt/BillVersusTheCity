@@ -81,25 +81,26 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         return Instantiate(this);
     }
 
-    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
-        SpawnNewGrenade(attack_start_point, attacker);
+    public bool AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        return SpawnNewGrenade(attack_start_point, attacker) != null;
     }
-    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    public bool AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         // do nothing
+        return false;
     }
 
-    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    public bool AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         if (current_ammo < 1) {
             Debug.LogError("grenade attack without ammo!");
-            return;
+            return false;
         }
-        ThrowGrenade(attack_direction, attack_start_point);
+        return ThrowGrenade(attack_direction, attack_start_point);
     }
 
-    private void ThrowGrenade(Vector3 attack_direction, Vector3 attack_start_point) {
+    private bool ThrowGrenade(Vector3 attack_direction, Vector3 attack_start_point) {
         if (grenade == null) {
             Debug.LogError("ThrowGrenade called without a primed grenade!");
-            return;
+            return false;
         }
         grenade.transform.parent = null;
         grenade.transform.position = attack_start_point;
@@ -124,10 +125,11 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         // }
         rb.AddForce(throw_velocity, ForceMode.VelocityChange);
         grenade = null;
-        if (! GameSettings.inst.debug_settings.GetBool("no_reload")) {
+        if (!GameSettings.inst.debug_settings.GetBool("no_reload")) {
             // if reload is disabled, guns don't decriment ammo, they just shoot forever
             current_ammo -= 1;
         }
+        return true;
     }
 
     // public float GetThrowForce(Vector3 throw_from, Vector3 target_position) {

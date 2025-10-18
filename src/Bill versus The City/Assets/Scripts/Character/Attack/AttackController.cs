@@ -251,10 +251,16 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         _last_shot_at = Time.time;
 
         float inaccuracy = current_inaccuracy + current_recoil;
+        bool attack_fired;
         if (hold) {
-            current_gun.AttackHold(attack_direction, attack_start_position.position, inaccuracy, attacker);
+            attack_fired = current_gun.AttackHold(attack_direction, attack_start_position.position, inaccuracy, attacker);
         } else {
-            current_gun.AttackClicked(attack_direction, attack_start_position.position, inaccuracy, attacker);
+            attack_fired = current_gun.AttackClicked(attack_direction, attack_start_position.position, inaccuracy, attacker);
+        }
+        // TODO --- implement debug setting for not needing reload 
+        if (attacker.is_player && attack_fired && GameSettings.inst.debug_settings.GetBool("no_reload")) {
+            // if the attacker is the player, and has reload disabled, don't decriment ammo count 
+            current_gun.current_ammo += 1;
         }
         // Bullet bullet = null;
         // for (int i = 0; i < current_gun.n_shots; i++) {

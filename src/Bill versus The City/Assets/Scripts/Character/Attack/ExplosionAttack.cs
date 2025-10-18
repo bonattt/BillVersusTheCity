@@ -41,14 +41,15 @@ public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
     public string attack_sound { get => _attack_sound; }
 
     
-    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    public bool AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         throw new NotImplementedException("AttackClicked is not implemented for explosion attack!");
     }
-    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    public bool AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         throw new NotImplementedException("AttackHold is not implemented for explosion attack!");
     }
-    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    public bool AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         // do nothing
+        return false;
     }
     public IWeapon CopyWeapon() {
         return Instantiate(this);

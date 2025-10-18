@@ -45,10 +45,10 @@ UNPLANNED FEATURES
 [+] Add Police Timer
     [+] Timer script
     [+] Implement UI for police timer
-        [ ] Clean up implementation of this
+        [+] Clean up implementation of this
             - either use CombatHUDManager.inst.GetTimer() in PoliceTimer, or remove it and fix LevelConfig to not need to do that either.
             - remove timer color in LevelConfig
-    [ ] Remove old level counter from LevelConfig
+    [+] Remove old level counter from LevelConfig
 
 [~] DEBUG OPTIONS
     [+] Add debug infinite ammo flags

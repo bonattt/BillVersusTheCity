@@ -173,19 +173,20 @@ public class DetailedWeapon : ScriptableObject, IFirearm
         }
     }
     
-    public void AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
-        FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
+    public bool AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        return FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
     }
-    public void AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
-        if (!auto_fire) { return; } // if not automatic, do not shoot for hold fire
-        FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
+    public bool AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+        if (!auto_fire) { return false; } // if not automatic, do not shoot for hold fire
+        return FireAttack(attack_direction, attack_start_point, inaccuracy, attacker);
     }
 
-    public void AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    public bool AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         // do nothing
+        return false;
     }
 
-    private void FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
+    private bool FireAttack(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
         Bullet bullet = null;
         for (int i = 0; i < n_shots; i++) {
             GameObject bullet_obj = Instantiate(bullet_prefab);
@@ -202,10 +203,7 @@ public class DetailedWeapon : ScriptableObject, IFirearm
             bullet.damage_falloff_rate = damage_falloff_rate;
             bullet.attacker = attacker;
         }
-        if (! GameSettings.inst.debug_settings.GetBool("no_reload")) {
-            // if reload is disabled, guns don't decriment ammo, they just shoot forever
-            current_ammo -= 1;
-        }
+        current_ammo -= 1;
         if (bullet != null) {
             AttackResolver.AttackStart(bullet, attack_direction, attack_start_point, is_melee_attack: false); // Only create a shot effects once for a shotgun
         } else {
@@ -214,6 +212,7 @@ public class DetailedWeapon : ScriptableObject, IFirearm
         // #if UNITY_EDITOR
         //     EditorApplication.isPaused = true;
         // #endif
+        return true;
     }
     
     private Vector3 GetShootPoint(Vector3 attack_start_point, int i) {
