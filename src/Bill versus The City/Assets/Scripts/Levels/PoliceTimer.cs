@@ -10,7 +10,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver, ITimer {
     private float alerted_at = -1f;
     public bool police_alerted { get; private set; }
     public bool has_triggered { get; private set; }
-    public TimerUIController ui;
+    private TimerUIController ui;
     ////////////////////////////////
     //////// ITimer fields /////////
     ////////////////////////////////
@@ -53,6 +53,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver, ITimer {
     }
 
     private void Initialize() {
+        ui = CombatHUDManager.inst.GetTimerUI();
         police_alerted = false;
         has_triggered = false;
         ui.AttachTimer(this);

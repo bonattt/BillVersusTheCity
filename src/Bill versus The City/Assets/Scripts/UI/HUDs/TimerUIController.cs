@@ -40,10 +40,8 @@ public class TimerUIController : MonoBehaviour
     }
 
     private void UpdateClock(){
-        Debug.LogWarning($"UpdateClock: {digital_clock}, is_null: {digital_clock == null}");
         if (digital_clock == null) { return; } // no clock configured, do nothing
         digital_clock.text = GetText();
-        Debug.LogWarning($"digital_clock.text: '{digital_clock.text}'");
     }
 
     public void AttachTimer(ITimer new_timer) {

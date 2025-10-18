@@ -18,11 +18,6 @@ public enum LevelVictoryConditions {
     hub_level,
 }
 
-public enum LevelFailuerConditions {
-    none,
-    countdown,
-}
-
 public enum LevelWeaponSelect {
     none, // start with no weapons equipped
     level_weapons, // gives the player weapons specified by the level config
@@ -53,7 +48,6 @@ public class LevelConfig : MonoBehaviour {
     }
 
     private int sequential_conditions_index = 0;
-    public int debug__sequential_conditions_count = 0;
     public string level_music_name;
     private ISFXSounds level_music;
 
@@ -66,7 +60,6 @@ public class LevelConfig : MonoBehaviour {
     public List<string> additive_scene_loads;
     public LevelWeaponSelect level_weapons = LevelWeaponSelect.weapon_select;
     public LevelVictoryConditions victory_conditions_preset = LevelVictoryConditions.clear_enemies;
-    public LevelFailuerConditions failure_conditions_preset = LevelFailuerConditions.none;
     public LevelVictoryType victory_type = LevelVictoryType.leave_by_exit;
     [Tooltip("Override the objective shown to the player. Override objectives can be incremented by events to show new objectives later in the leve.")]
     public List<string> override_objective_display;
@@ -95,9 +88,8 @@ public class LevelConfig : MonoBehaviour {
             return true;
         }
     }
-    public List<MonoBehaviour> init_extra_sequential_level_conditions, init_extra_non_sequential_level_conditions;
+    public List<MonoBehaviour> init_extra_sequential_level_conditions;
     private List<ILevelCondition> sequential_level_conditions = new List<ILevelCondition>();
-    private List<ILevelCondition> non_sequential_level_conditions = new List<ILevelCondition>();
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
 
     [SerializeField]
@@ -134,11 +126,6 @@ public class LevelConfig : MonoBehaviour {
     void Update() {
         if (!level_started) { return; } // level not started yet
         CheckSequentialLevelConditions();
-        bool level_failed = CheckFailLevelConditions();
-
-        if (level_failed) {
-            FailLevel();
-        }
         UpdateDebug();
     }
 
@@ -225,7 +212,6 @@ public class LevelConfig : MonoBehaviour {
     public void PreSceneChange() {
         // prepare LevelConfig for a level scene change to avoid side effects 
         sequential_level_conditions = new List<ILevelCondition>();
-        non_sequential_level_conditions = new List<ILevelCondition>();
     }
 
     public void OpenLevelStartDialouge() {
@@ -259,10 +245,8 @@ public class LevelConfig : MonoBehaviour {
         countdown = null; // set countdown to null, before potentially adding a countdown from preset victory conditions, or manual victory condition
         SetHUDVictoryConditions(victory_conditions_preset);
         sequential_level_conditions = InitConditions(init_extra_sequential_level_conditions);
-        non_sequential_level_conditions = InitConditions(init_extra_non_sequential_level_conditions);
         level_music = LoadLevelMusic();
         ApplyPresetVictoryCondition();
-        ApplyPresetFailureCondition();
         if (ShouldExitBeDisabled()) {
             DeactivateLevelExit();
         }
@@ -305,7 +289,7 @@ public class LevelConfig : MonoBehaviour {
             Debug.LogWarning("Objective cannot be escape by truck if victory type is also to escape by truck");
         }
 
-        if (victory_conditions_preset == LevelVictoryConditions.survive_countdown && failure_conditions_preset == LevelFailuerConditions.countdown) {
+        if (victory_conditions_preset == LevelVictoryConditions.survive_countdown) {
             Debug.LogWarning("victory and failure conditions are both countdown!!");
         }
 
@@ -336,18 +320,6 @@ public class LevelConfig : MonoBehaviour {
         return condition;
     }
 
-
-    protected ILevelCondition InstantiateFailureCondition(GameObject prefab) {
-        // create conditions from prefab
-        ILevelCondition condition = InstantiateConditionFromPrefab(prefab);
-        condition.AddEffect(new SimpleActionEvent(() => FailLevel()));
-
-        // add the condition to the level for evaluation
-        non_sequential_level_conditions.Add(condition);
-
-        return condition;
-    }
-
     private void ApplyPresetVictoryCondition() {
         switch (victory_conditions_preset) {
             case LevelVictoryConditions.none:
@@ -373,18 +345,6 @@ public class LevelConfig : MonoBehaviour {
             default:
                 Debug.LogError($"unknown victory condition(s) preset '{victory_conditions_preset}'");
                 return;
-        }
-    }
-
-    private void ApplyPresetFailureCondition() {
-        if (failure_conditions_preset == LevelFailuerConditions.none) {
-            return; // do nothing
-        } else if (failure_conditions_preset == LevelFailuerConditions.countdown) {
-            ILevelCondition condition = InstantiateFailureCondition(prefab_countdown_timer_condition);
-            ConfigureCountdownCondition(condition, Color.red, preset_config_countdown_timer_seconds);
-
-        } else {
-            Debug.LogWarning($"unrecognized preset failure condition enum {failure_conditions_preset}");
         }
     }
 
@@ -545,27 +505,6 @@ public class LevelConfig : MonoBehaviour {
         }
     }
 
-    private bool CheckFailLevelConditions() {
-        /* checks all the level fail conditions, if any is true, returns true and evaluates that conditions triggers.
-         */
-        if (!level_started) { return false; /* don't check if level isn't started yet */ }
-        for (int i = 0; i < non_sequential_level_conditions.Count; i++) {
-            ILevelCondition current_condition = non_sequential_level_conditions[i];
-            if (current_condition.was_triggered) {
-                continue;
-            } // skip already triggered conditions
-            else if (!current_condition.ConditionMet()) {
-                // current condition is NOT met, so we stop iterating. 
-                continue;
-            } else {
-                // current condition was met, trigger it's effects, mark as done, and continue to next condition
-                current_condition.TriggerEffects(); // sets `was_triggered = true`
-                return true;
-            }
-        }
-        return false;
-    }
-
     private static List<ILevelCondition> InitConditions(List<MonoBehaviour> init_scripts) {
         List<ILevelCondition> conditions = new List<ILevelCondition>();
         for (int i = 0; i < init_scripts.Count; i++) {
@@ -613,17 +552,20 @@ public class LevelConfig : MonoBehaviour {
         return weapon;
     }
 
-    public bool debug__sequential_conditions_completed = false;
-    public List<string> debug__sequential_conditions;
-    private void UpdateDebug() {
-        debug__sequential_conditions_completed = sequential_conditions_completed;
-        debug__sequential_conditions_count = sequential_level_conditions.Count;
+    public LevelConfigDebugger debug;
 
-        debug__sequential_conditions = new List<string>();
+    private void UpdateDebug() {
+        debug.sequential_conditions_completed = sequential_conditions_completed;
+
+        debug.sequential_conditions = new List<string>();
         for (int i = 0; i < sequential_level_conditions.Count; i++) {
-            debug__sequential_conditions.Add($"{sequential_level_conditions[i]}");
+            debug.sequential_conditions.Add($"{sequential_level_conditions[i]}");
         }
     }
+}
 
-
+[Serializable]
+public class LevelConfigDebugger {
+    public bool sequential_conditions_completed = false;
+    public List<string> sequential_conditions;
 }

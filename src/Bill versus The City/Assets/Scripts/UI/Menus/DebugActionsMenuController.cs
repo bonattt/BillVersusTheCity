@@ -18,7 +18,7 @@ public class DebugActionsMenuController : MonoBehaviour, IPlayerObserver {
     public const string DAMAGE_10 = "10 damage";
     public const string KILL_PLAYER = "Kill Player";
     public const string RESET_HEALTH = "Reset Health";
-    public const string RESET_GAME  = "Reset Game (NOT IMPLEMENTED)";
+    public const string SWITCH_WEAPONS  = "Switch Weapons";
 
     private Dictionary<string, Action> GetCallbacks() {
         // can't set callbacks in a dict on the class, because I need to reference methods of this class
@@ -31,7 +31,7 @@ public class DebugActionsMenuController : MonoBehaviour, IPlayerObserver {
             {GET_DOLLARS_1000, CurriedGetDollars(1000)},
             {DAMAGE_1, CurriedDealDamage(1f)},
             {DAMAGE_10, CurriedDealDamage(10f)},
-            {RESET_GAME, ResetGameClicked},
+            {SWITCH_WEAPONS, SwitchWeaponsClicked},
             {FAIL_LEVEL, FailLevelClicked},
             {COMPLETE_OBJECTIVE, CompleteObjectiveClicked},
         };
@@ -121,9 +121,9 @@ public class DebugActionsMenuController : MonoBehaviour, IPlayerObserver {
         combat.status.health = combat.status.max_health;
     }
 
-    public void ResetGameClicked() {
+    public void SwitchWeaponsClicked() {
         Close();
-        Debug.LogWarning("ResetGameClicked: NOT IMPLEMENTED!");
+        MenuManager.inst.OpenWeaponSelectMenu();
     }
 
     private PlayerCombat GetPlayer() {
