@@ -508,9 +508,9 @@ public enum InputType {
     interact,
     reload,
     sprint,
-    crouch, 
+    crouch,
     crouch_or_jump, // jumps over cover, if it is preset, otherwise, it crouches
-    jump, 
+    jump,
     menu_cancel,  // cancels out of the current menu
     pause_menu,  // opens the pause menu while in normal gameplay
     next_weapon, // scroll up for next weapon

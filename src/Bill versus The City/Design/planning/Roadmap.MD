@@ -43,7 +43,7 @@
 [X] Milestone 13 -- writing and level design
     - blocked by more code
 
-[ ] Milestone 14: fix combat
+[+] Milestone 14: fix combat
     - combat kinda sucks, I want it to feel more dynamic, and not all the enemies in a level mobbing you at once
     - fix or disable hearing
 
