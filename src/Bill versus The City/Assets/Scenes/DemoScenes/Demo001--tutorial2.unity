@@ -1192,7 +1192,6 @@ GameObject:
   m_Component:
   - component: {fileID: 479239445}
   - component: {fileID: 479239448}
-  - component: {fileID: 479239447}
   - component: {fileID: 479239449}
   - component: {fileID: 479239446}
   m_Layer: 13
@@ -1231,18 +1230,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial_name: grenades
   tutorial_callback: {fileID: 0}
---- !u!114 &479239447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479239444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c57acbdad09ebba40a557ba3e82325c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &479239448
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4280,7 +4267,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1842678967}
   - component: {fileID: 1842678969}
-  - component: {fileID: 1842678970}
   - component: {fileID: 1842678971}
   - component: {fileID: 1842678968}
   m_Layer: 13
@@ -4340,18 +4326,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 9.5}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1842678970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842678966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c57acbdad09ebba40a557ba3e82325c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1842678971
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,6 +42,11 @@ public class CrouchHUDController : MonoBehaviour, IPlayerObserver
     
     private void UpdateControlsHUD() {
         if (controls_hud_locked_until > Time.time) { return; } // UI locked, just return
+        if (!player_combat.movement.combat_enabled) {
+            crouch_controls_element.style.visibility = Visibility.Hidden;
+            crouch_controls_label.text = "disabled";
+            return;
+        }
         ActionCode action_code = player_combat.movement.GetCrouchAction();
         if (action_code == previous_action_code) { return; } // no change, just return
 
