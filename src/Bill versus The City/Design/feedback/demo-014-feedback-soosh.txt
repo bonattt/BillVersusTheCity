@@ -1,0 +1,12 @@
+- the main menu has too much stuff
+- broken timer was present in objectives on tutorial 1
+- i wish the volume would change as I slide around
+- tutorial got too wordy
+- crouch and dive being the same button is confusing o:
+- soosh thinks the enemies with SMGs can shoot too long before reloading, and people will die uncrouching
+- need to remove weapon drops for enemies in cover tutorial 
+- soosh got the bug where, on restard, PC is invisible, and can walk through walls... I had this once and can't reproduce it.
+- did not realize there was a police timer
+- time limit seemed tight
+- invisible wall almost got me killed 
+- allways backs out of the house to fight the first wave of guys
