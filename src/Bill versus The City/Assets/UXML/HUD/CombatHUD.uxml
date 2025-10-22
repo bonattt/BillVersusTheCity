@@ -46,5 +46,11 @@
             <ui:Label tabindex="-1" text="Crouching!" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 28px; -unity-text-align: middle-left;" />
         </ui:VisualElement>
         <ui:Label tabindex="-1" text="20 FPS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FPS_display" style="position: absolute; right: 0; top: 0; font-size: 32px;" />
+        <ui:VisualElement name="CrouchOrJumpIndicator" style="flex-grow: 1; position: absolute; bottom: 125px; flex-direction: column; align-self: center;">
+            <ui:Label tabindex="-1" text="test" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ActionLabel" style="-unity-text-align: upper-center; font-size: 40px;" />
+            <ui:VisualElement name="fake-spacebar" style="flex-grow: 1; width: 175px; height: 50px; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;">
+                <ui:Label tabindex="-1" text="Space" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; -unity-font-style: bold; font-size: 20px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -399,6 +399,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
     public bool GetStartCrouchDiveThisFrame(bool crouch, Vector3 move_direction) {
         // returns true if a crouch dive should start, AND isn't already started
+        // move_direction = new Vector3(move_direction.x, 0, move_direction.y); // don't crouch dive from gravity...
+        Debug.LogWarning($"crouch: {crouch} && move_direction: {move_direction}, _crouch_last_frame: {_crouch_last_frame} && crouch_dive_remaining: {crouch_dive_remaining} ==> {crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0}"); // TODO --- remove debug
         return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0;
     }
 
@@ -410,10 +412,24 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     public bool GetStartVaultThisFrame(Vector3 move_direction, Vector3 look_direction) {
-        if (!InputSystem.inst.VaultOverInput() || crouch_percent != 0 || is_vaulting) { return false; }
+        // move_direction = new Vector3(move_direction.x, 0, move_direction.z);
+        // if (! || crouch_percent != 0 || is_vaulting || move_direction == Vector3.zero) { return false; }
 
+        // VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
+        // if (zone == null) { return false; }
+        // Vector3 direction = move_direction != Vector3.zero ? move_direction : look_direction;
+        // return zone.IsInJumpPosition(transform.position, direction);
+        return InputSystem.inst.VaultOverInput() && GetCouldStartVaultThisFrame(move_direction, look_direction);
+    }
+
+    public bool GetCouldStartVaultThisFrame(Vector3 move_direction, Vector3 look_direction) {
+        // returns if a crouch input would trigger a jump, without actually checking for the input
+        move_direction = new Vector3(move_direction.x, 0, move_direction.z);
+        if (crouch_percent != 0 || is_vaulting || move_direction == Vector3.zero) { return false; }
+        
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
         if (zone == null) { return false; }
+        
         Vector3 direction = move_direction != Vector3.zero ? move_direction : look_direction;
         return zone.IsInJumpPosition(transform.position, direction);
     }
@@ -445,14 +461,13 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void FinishVaultOver() {
-        Debug.LogWarning("FinishVaultOver");
         vault_over_remaining = -1f;
         vault_over_direction = Vector3.zero;
 
         transform.position += new Vector3(transform.position.x, 0f, transform.position.z);
     }
 
-    private bool _crouch_last_frame = false;
+    protected bool _crouch_last_frame = false;
 
     // returns true if the player is leaping over cover/obstacle
     protected bool is_vaulting {
@@ -775,9 +790,11 @@ public enum ActionCode {
     reload,
     cancel_reload,
     aim,
-    cancel_aim
-
+    cancel_aim,
+    dive,
+    jump,
 }
+
 
 [Serializable]
 public class CharacterControllerDebugInfo {

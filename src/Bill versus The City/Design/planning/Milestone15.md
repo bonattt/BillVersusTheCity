@@ -37,3 +37,5 @@ UNPLANNED BUGFIXES
 [ ] I was able to die, then X out of the death dialogue somehow to move around the level as a dead guy (on the grenades tutorial)
     Steps to reproduce:
      - carryover from previous sprint; I couldn't figure out how to reproduce this (still can't)
+[ ] BUG: crouch-dive doesn't change cancel aiming
+[ ] BUG: crouch-dive and Jump don't cancel reload

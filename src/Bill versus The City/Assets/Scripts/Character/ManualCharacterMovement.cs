@@ -67,6 +67,8 @@ public class ManualCharacterMovement : CharCtrl
     private const float GRAVITY = -19.6f;
     [SerializeField]
     private Vector3 _last_move;
+    [SerializeField]
+    private Vector2 _last_move_flat;
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
         base.MoveCharacter(move_direction, look_direction, sprint, crouch);
 
@@ -81,12 +83,12 @@ public class ManualCharacterMovement : CharCtrl
         if (walk) {
             _last_move *= 0.5f;
         }
-        debug.move_direction = _last_move;
-        // controller.SimpleMove(_last_move);
         if (!controller.isGrounded) {
             _last_move += new Vector3(0, GRAVITY, 0);
         }
+        _last_move_flat = new Vector2(_last_move.x, _last_move.z);
         controller.Move(_last_move * Time.deltaTime);
+        debug.move_direction = _last_move;
     }
 
     public override void PlayCrouchDiveEffects() {
@@ -94,13 +96,34 @@ public class ManualCharacterMovement : CharCtrl
         ISFXSounds sound = SFXLibrary.LoadSound(CROUCH_DIVE_SOUND);
         SFXSystem.inst.PlaySound(sound, transform.position);
     }
-    
+
     public override void PlayVaultOverEffects() {
         base.PlayVaultOverEffects();
         ISFXSounds sound = SFXLibrary.LoadSound(VAULT_OVER_SOUND);
         SFXSystem.inst.PlaySound(sound, transform.position);
     }
 
+    public ActionCode GetCrouchAction() {
+        ActionCode result = _GetCrouchAction();
+        Debug.LogWarning($"crouch_action: {result}, _last_move: {_last_move}, _last_move_flat: {_last_move_flat}"); // TODO --- remove debug
+        return result;
+    }
+    public ActionCode _GetCrouchAction() {
+        // gets the action for the contextual "crouch or jump" control (the spacebar by default)
+        if (crouch_percent != 0 || _last_move_flat == Vector2.zero) {
+            Debug.LogWarning($"crouch! crouch_percent: {crouch_percent}, _last_move_flat: {_last_move_flat}"); // TODO --- remove debug
+            return ActionCode.crouch;
+        }
+        // TODO --- use look direction instead of last move
+        else if (GetCouldStartVaultThisFrame(move_direction: _last_move, look_direction: _last_move)) {
+            return ActionCode.jump;
+        }
+        else if (GetStartCrouchDiveThisFrame(crouch: true, move_direction: _last_move)) {
+            return ActionCode.dive;
+        }
+        Debug.LogWarning($"crouch2! move_direction: {_last_move}"); // TODO --- remove debug
+        return ActionCode.crouch;
+    } 
 
     public override void TeleportTo(Vector3 position) {
         CharacterController char_ctrl = GetComponent<CharacterController>();
