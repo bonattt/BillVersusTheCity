@@ -400,7 +400,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public bool GetStartCrouchDiveThisFrame(bool crouch, Vector3 move_direction) {
         // returns true if a crouch dive should start, AND isn't already started
         // move_direction = new Vector3(move_direction.x, 0, move_direction.y); // don't crouch dive from gravity...
-        Debug.LogWarning($"crouch: {crouch} && move_direction: {move_direction}, _crouch_last_frame: {_crouch_last_frame} && crouch_dive_remaining: {crouch_dive_remaining} ==> {crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0}"); // TODO --- remove debug
         return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0;
     }
 
@@ -436,9 +435,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     private float vault_over_margin = 1.1f; // multiplies the length of a jump to ensure you clear the obstacle
     protected float vault_over_speed { get => walk_speed / 3f; }
-    protected virtual void StartVaultOver(Vector3 move_direction, Vector3 look_direction) {
+    protected virtual VaultOverCoverZone StartVaultOver(Vector3 move_direction, Vector3 look_direction) {
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
-        float vault_duration = vault_over_margin * zone.jump_length / vault_over_speed;
+        float vault_duration = GetJumpDuration(zone);
         TeleportTo(transform.position + new Vector3(0f, zone.jump_height, 0f));
 
         vault_over_remaining = vault_duration;
@@ -446,7 +445,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         vault_over_direction = zone.GetVaultDirection(direction);
         Debug.DrawRay(transform.position, vault_over_direction, Color.yellow, 1.5f);
         PlayVaultOverEffects();
+        return zone;
     }
+
+    public float GetJumpDuration(VaultOverCoverZone zone) => vault_over_margin * zone.jump_length / vault_over_speed;
 
     public virtual void PlayCrouchDiveEffects() {
         // do nothing by default
@@ -770,7 +772,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //////////////////// DEBUG 
     [Tooltip("Read-only class data output for debugging with the inspector for the CharCtrl abstract class.")]
     public CharacterControllerDebugInfo debug = new CharacterControllerDebugInfo();
-    public virtual void UpdateDebug() {
+    protected virtual void UpdateDebug() {
         debug.can_attack = CanAttack();
         debug.move_action_remaining = Mathf.Max(crouch_dive_remaining, vault_over_remaining);
         debug.move_action_dir = vault_over_direction;

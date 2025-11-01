@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ManualCharacterMovement : CharCtrl
-{
+public class ManualCharacterMovement : CharCtrl {
     private const string VAULT_OVER_SOUND = "player_vault_over";
     private const string CROUCH_DIVE_SOUND = "player_dive_for_cover";
     // returns a list of all the nodes which enemies raycast to see the player
@@ -22,9 +21,9 @@ public class ManualCharacterMovement : CharCtrl
             return _vision_nodes;
         }
     }
-    
+
     // returns the max possible speed a player can move; used by FootstepSounds to sanity check movement to avoid loud sounds when teleporting (from stairs etc...)
-    public float max_movement_speed { get => movement_speed * sprint_multiplier; }
+    public float max_movement_speed { get => walk_speed * sprint_multiplier; }
 
     public override bool is_player { get { return true; } }
     public override float movement_speed {
@@ -38,7 +37,7 @@ public class ManualCharacterMovement : CharCtrl
                 return vault_over_speed;
             } else if (is_sprinting) {
                 return sprint_multiplier * walk_speed;
-            }  else if (reloading) {
+            } else if (reloading) {
                 return reload_move_multiplier * walk_speed;
             } else if (aiming) {
                 if (current_firearm == null) {
@@ -55,9 +54,8 @@ public class ManualCharacterMovement : CharCtrl
         base.Start();
     }
 
-    void Update()
-    {   
-        if (! is_active) { return; } // do nothing while controller disabled
+    void Update() {
+        if (!is_active) { return; } // do nothing while controller disabled
         UpdateReload();
         HandleAnimation();
         UpdatePauseAttackLock();
@@ -69,8 +67,41 @@ public class ManualCharacterMovement : CharCtrl
     private Vector3 _last_move;
     [SerializeField]
     private Vector2 _last_move_flat;
+    private IMoveAction move_action = null;
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
-        base.MoveCharacter(move_direction, look_direction, sprint, crouch);
+        RemoveOldMoveAction();
+        // if (crouch_locked_remaining > 0) { crouch = true; }
+        bool is_moving = move_direction.magnitude > 0;
+        is_sprinting = sprint && CanSprint() && is_moving;
+        UpdateMoveAction(move_direction, look_direction, sprint, crouch);
+        ///////////////////// START copy-pasted base.MoveCharacter /////////////////////
+        // if (is_crouch_diving) {
+        //     // if crouch diving, continue in that direction for the duration of the crouch dive
+        //     move_direction = crouch_dive_direction;
+        //     crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
+        // } else if (is_vaulting) {
+            // move_direction = vault_over_direction.normalized;
+        // }
+          // if (GetStartVaultThisFrame(move_direction, look_direction)) {
+          //     StartVaultOver(move_direction, look_direction);
+          // } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
+          //     StartCrouchDive(move_direction);
+          // } else {
+          //     if (crouch) {
+          //         // cannot crouch and sprint at the same time, if there is no crouch dive
+          //         is_sprinting = false;
+          //     }
+          // }
+
+        // if (is_crouch_diving || is_vaulting || is_sprinting) {
+        //     // always face forward during crouch dive or sprint!
+        //     look_direction = move_direction;
+        // }
+        UpdateCrouch(crouch);
+        SetCharacterLookDirection(look_direction);
+        _crouch_last_frame = crouch;
+
+        ////////////////////// END copy-pasted base.MoveCharacter //////////////////////
 
         if (is_vaulting) {
             move_direction = vault_over_direction;
@@ -91,6 +122,37 @@ public class ManualCharacterMovement : CharCtrl
         debug.move_direction = _last_move;
     }
 
+    private void RemoveOldMoveAction() {
+        if (move_action == null) { return; }
+        move_action.duration -= Time.deltaTime;
+        if (move_action.duration <= 0) {
+            move_action = null;
+        }
+    }
+
+    private void UpdateMoveAction(Vector3 move_direction, Vector3 look_direction, bool sprint, bool crouch) {
+        // adds a move action if there is no move action
+        if (move_action != null) {
+            return; 
+        }
+        if (GetStartVaultThisFrame(move_direction, look_direction)) {
+            VaultOverCoverZone zone = StartVaultOver(move_direction, look_direction);
+            move_action = JumpAction(zone);
+        } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
+            StartCrouchDive(move_direction);
+            move_action = DiveAction(move_direction);
+        } else if (crouch) {
+            // cannot crouch and sprint at the same time, if there is no crouch dive
+            is_sprinting = false;
+            move_action = CrouchAction();
+        } else if (sprint) {
+            is_sprinting = true;
+            move_action = SprintAction();
+        } else {
+            move_action = WalkAction();
+        }
+    }
+
     public override void PlayCrouchDiveEffects() {
         base.PlayCrouchDiveEffects();
         ISFXSounds sound = SFXLibrary.LoadSound(CROUCH_DIVE_SOUND);
@@ -103,27 +165,24 @@ public class ManualCharacterMovement : CharCtrl
         SFXSystem.inst.PlaySound(sound, transform.position);
     }
 
+    // public ActionCode GetCrouchAction() {
+    //     ActionCode result = _GetCrouchAction();
+    //     Debug.LogWarning($"crouch_action: {result}, _last_move: {_last_move}, _last_move_flat: {_last_move_flat}"); // TODO --- remove debug
+    //     return result;
+    // }
     public ActionCode GetCrouchAction() {
-        ActionCode result = _GetCrouchAction();
-        Debug.LogWarning($"crouch_action: {result}, _last_move: {_last_move}, _last_move_flat: {_last_move_flat}"); // TODO --- remove debug
-        return result;
-    }
-    public ActionCode _GetCrouchAction() {
         // gets the action for the contextual "crouch or jump" control (the spacebar by default)
         if (crouch_percent != 0 || _last_move_flat == Vector2.zero) {
-            Debug.LogWarning($"crouch! crouch_percent: {crouch_percent}, _last_move_flat: {_last_move_flat}"); // TODO --- remove debug
             return ActionCode.crouch;
         }
         // TODO --- use look direction instead of last move
         else if (GetCouldStartVaultThisFrame(move_direction: _last_move, look_direction: _last_move)) {
             return ActionCode.jump;
-        }
-        else if (GetStartCrouchDiveThisFrame(crouch: true, move_direction: _last_move)) {
+        } else if (GetStartCrouchDiveThisFrame(crouch: true, move_direction: _last_move)) {
             return ActionCode.dive;
         }
-        Debug.LogWarning($"crouch2! move_direction: {_last_move}"); // TODO --- remove debug
         return ActionCode.crouch;
-    } 
+    }
 
     public override void TeleportTo(Vector3 position) {
         CharacterController char_ctrl = GetComponent<CharacterController>();
@@ -151,17 +210,69 @@ public class ManualCharacterMovement : CharCtrl
         }
     }
 
-    public override void DelayedOnDeath(ICharacterStatus status)
-    {
+    public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
         LevelConfig.inst.FailLevel();
         // TODO --- this should live somewhere player related 
     }
-    
+
     protected override void HandleAnimation() {
         base.HandleAnimation();
         _animator_facade.crouch_percent = crouch_percent;
         _animator_facade.crouch_dive = crouch_dive_remaining > 0f;
     }
+
+
+    private IMoveAction WalkAction() {
+        BasicMoveAction action = new BasicMoveAction(1f, 0f);
+        action.look_direction = MoveActionLookDirection.look_direction;
+        action.name = "walk";
+        return action;
+    }
+
+    private IMoveAction SprintAction() {
+        BasicMoveAction action = new BasicMoveAction(sprint_multiplier, 0f);
+        action.look_direction = MoveActionLookDirection.move_direction;
+        action.name = "sprint";
+        return action;
+    }
+
+    private IMoveAction CrouchAction() {
+        BasicMoveAction action = new BasicMoveAction(crouched_speed, 0f);
+        action.look_direction = MoveActionLookDirection.look_direction;
+        action.name = "crouch";
+        return action;
+    }
+
+    private IMoveAction DiveAction(Vector3 move_direction) {
+        BasicMoveAction action = new BasicMoveAction(sprint_multiplier, crouch_dive_duration);
+        action.look_direction = MoveActionLookDirection.move_direction;
+        action.move_direction = move_direction;
+        action.override_move_direction = true;
+        action.name = "crouch dive";
+        return action;
+    }
+
+    private IMoveAction JumpAction(VaultOverCoverZone zone) {
+        float vault_duration = GetJumpDuration(zone);
+        BasicMoveAction action = new BasicMoveAction(vault_over_speed, vault_duration);
+        action.look_direction = MoveActionLookDirection.move_direction;
+        action.name = "jump";
+        return action;
+    }
+
+    public ManualCharacterMovementDebugger debug_subclass = new ManualCharacterMovementDebugger();
+    protected override void UpdateDebug() {
+        base.UpdateDebug();
+        if (move_action == null) { debug_subclass.move_action = "<null>"; }
+        else { debug_subclass.move_action = move_action.ToString(); }
+    }
     
+}
+
+
+[Serializable]
+public class ManualCharacterMovementDebugger {
+    public string move_action;
+
 }
