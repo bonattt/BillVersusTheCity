@@ -9,7 +9,11 @@ Finished on 2025-??????
 
 PLANNED FEATURES
 
-[ ] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
+[~] REFACTOR: to have CharCtrl movement actions (eg. sprint, crouch, roll, )
+    [+] Initial refactor
+    [ ] add aiming as a move action
+    [ ] Factor crouch_percent and aim_percent into movement speed for actions
+    [ ] extract code from CharCtrl that will never be used by enemies
 [ ] Refactor: make EnemyManager utilize AbstractEnemyGroup
 [ ] Implement next_shot_ready feedback sound for pump shotguns
 [ ] Balance Grenade damage

@@ -84,6 +84,19 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             _is_active = value;
         }
     }
+
+    // while aiming, multiply movement speed by this factor
+    public float aim_move_multiplier {
+        get {
+            
+            if (current_firearm == null) {
+                Debug.LogWarning("Aim speed without a weapon!");
+                return 0.75f;
+            } else {
+                return current_firearm.aim_move_speed;
+            }
+        }
+    }
     public virtual float movement_speed {
         get {
             float move_speed = walk_speed;
@@ -94,13 +107,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
                 move_speed *= reload_move_multiplier;
             }
             if (aiming) {
-                float aim_multiplier;
-                if (current_firearm == null) {
-                    aim_multiplier = 0.75f;
-                } else {
-                    aim_multiplier = current_firearm.aim_move_speed;
-                }
-                move_speed *= aim_multiplier;
+                move_speed *= aim_move_multiplier;
             }
 
             if (this.is_hit_stunned) {

@@ -29,7 +29,7 @@ MonoBehaviour:
   _recoil_recovery: 30
   _recoil_shake: 0.1
   _aim_zoom: 0.75
-  _aim_move_speed: 0.7
+  _aim_move_speed: 0.8
   _max_zoom_range: 2.5
   _gunshot_sound: 
   _empty_gunshot_sound: 

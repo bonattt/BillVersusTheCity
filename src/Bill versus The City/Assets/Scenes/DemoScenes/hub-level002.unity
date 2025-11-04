@@ -1189,7 +1189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: _combat_enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_start_level

@@ -63,10 +63,9 @@ public class ManualCharacterMovement : CharCtrl {
     }
 
     private const float GRAVITY = -19.6f;
-    [SerializeField]
-    private Vector3 _last_move;
-    [SerializeField]
-    private Vector2 _last_move_flat;
+    [SerializeField] private Vector3 _last_move;
+    [SerializeField] private float _last_move_speed;
+    [SerializeField] private Vector2 _last_move_flat;
     private IMoveAction move_action = null;
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
         RemoveOldMoveAction();
@@ -80,28 +79,37 @@ public class ManualCharacterMovement : CharCtrl {
         //     move_direction = crouch_dive_direction;
         //     crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
         // } else if (is_vaulting) {
-            // move_direction = vault_over_direction.normalized;
+        // move_direction = vault_over_direction.normalized;
         // }
-          // if (GetStartVaultThisFrame(move_direction, look_direction)) {
-          //     StartVaultOver(move_direction, look_direction);
-          // } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
-          //     StartCrouchDive(move_direction);
-          // } else {
-          //     if (crouch) {
-          //         // cannot crouch and sprint at the same time, if there is no crouch dive
-          //         is_sprinting = false;
-          //     }
-          // }
+        // if (GetStartVaultThisFrame(move_direction, look_direction)) {
+        //     StartVaultOver(move_direction, look_direction);
+        // } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
+        //     StartCrouchDive(move_direction);
+        // } else {
+        //     if (crouch) {
+        //         // cannot crouch and sprint at the same time, if there is no crouch dive
+        //         is_sprinting = false;
+        //     }
+        // }
 
         // if (is_crouch_diving || is_vaulting || is_sprinting) {
         //     // always face forward during crouch dive or sprint!
         //     look_direction = move_direction;
         // }
         UpdateCrouch(crouch);
-        SetCharacterLookDirection(look_direction);
+        ////////////////////// END copy-pasted base.MoveCharacter //////////////////////
+        if (move_action.override_move_direction) {
+            move_direction = move_action.move_direction;
+        }
+        if (move_action.look_direction == MoveActionLookDirection.look_direction) {
+            SetCharacterLookDirection(look_direction);
+        } else if (move_action.look_direction == MoveActionLookDirection.move_direction) {
+            SetCharacterLookDirection(move_direction);
+        } else {
+            Debug.LogError($"Unhandled move_action.look_direction '{move_action.look_direction}'");
+        }
         _crouch_last_frame = crouch;
 
-        ////////////////////// END copy-pasted base.MoveCharacter //////////////////////
 
         if (is_vaulting) {
             move_direction = vault_over_direction;
@@ -110,7 +118,8 @@ public class ManualCharacterMovement : CharCtrl {
             move_direction = crouch_dive_direction;
         }
 
-        _last_move = move_direction * movement_speed;
+        _last_move = move_direction.normalized * move_action.movement_speed;
+        _last_move_speed = _last_move.magnitude;
         if (walk) {
             _last_move *= 0.5f;
         }
@@ -133,9 +142,13 @@ public class ManualCharacterMovement : CharCtrl {
     private void UpdateMoveAction(Vector3 move_direction, Vector3 look_direction, bool sprint, bool crouch) {
         // adds a move action if there is no move action
         if (move_action != null) {
-            return; 
+            return;
         }
-        if (GetStartVaultThisFrame(move_direction, look_direction)) {
+        if (aiming) {
+            is_sprinting = false;
+            Debug.LogWarning($"aim action!");
+            move_action = AimAction();
+        } else if (GetStartVaultThisFrame(move_direction, look_direction)) {
             VaultOverCoverZone zone = StartVaultOver(move_direction, look_direction);
             move_action = JumpAction(zone);
         } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
@@ -224,28 +237,37 @@ public class ManualCharacterMovement : CharCtrl {
 
 
     private IMoveAction WalkAction() {
-        BasicMoveAction action = new BasicMoveAction(1f, 0f);
+        BasicMoveAction action = new BasicMoveAction(walk_speed, 0f);
         action.look_direction = MoveActionLookDirection.look_direction;
         action.name = "walk";
         return action;
     }
 
     private IMoveAction SprintAction() {
-        BasicMoveAction action = new BasicMoveAction(sprint_multiplier, 0f);
+        BasicMoveAction action = new BasicMoveAction(walk_speed * sprint_multiplier, 0f);
         action.look_direction = MoveActionLookDirection.move_direction;
         action.name = "sprint";
         return action;
     }
 
     private IMoveAction CrouchAction() {
-        BasicMoveAction action = new BasicMoveAction(crouched_speed, 0f);
+        CrouchAction action = new CrouchAction(this, walk_speed, crouched_speed, 0f);
         action.look_direction = MoveActionLookDirection.look_direction;
         action.name = "crouch";
         return action;
     }
 
+
+    private IMoveAction AimAction() {
+        AimAction action = new AimAction(this, walk_speed, walk_speed * aim_move_multiplier, 0f);
+        action.look_direction = MoveActionLookDirection.look_direction;
+        string name = current_firearm == null ? "" : $"({current_firearm.item_id})";
+        action.name = $"aim {name}";
+        return action;
+    }
+
     private IMoveAction DiveAction(Vector3 move_direction) {
-        BasicMoveAction action = new BasicMoveAction(sprint_multiplier, crouch_dive_duration);
+        BasicMoveAction action = new BasicMoveAction(walk_speed * sprint_multiplier, crouch_dive_duration);
         action.look_direction = MoveActionLookDirection.move_direction;
         action.move_direction = move_direction;
         action.override_move_direction = true;
