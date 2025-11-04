@@ -387,7 +387,7 @@ MonoBehaviour:
   _sprint_multiplier: 1.75
   crouched_speed: 1.5
   crouch_rate: 4
-  uncrouch_rate: 4
+  uncrouch_rate: 1
   crouch_height: 0.4
   uncrouched_height: 1.2
   keep_reloading: 1
@@ -410,6 +410,10 @@ MonoBehaviour:
     move_action_dir: {x: 0, y: 0, z: 0}
   vision_target: {fileID: 7902831743066966521}
   _last_move: {x: 0, y: 0, z: 0}
+  _last_move_speed: 0
+  _last_move_flat: {x: 0, y: 0}
+  debug_subclass:
+    move_action: 
 --- !u!114 &4665821343985391478
 MonoBehaviour:
   m_ObjectHideFlags: 0

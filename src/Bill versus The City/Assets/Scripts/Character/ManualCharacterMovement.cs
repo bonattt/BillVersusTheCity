@@ -27,27 +27,28 @@ public class ManualCharacterMovement : CharCtrl {
 
     public override bool is_player { get { return true; } }
     public override float movement_speed {
-        get {
-            if (crouch_dive_remaining > 0f) {
-                return sprint_multiplier * walk_speed;
-            }
-            if (crouch_percent > 0f) {
-                return ((1 - crouch_percent) * walk_speed) + (crouched_speed * crouch_percent);
-            } else if (is_vaulting) {
-                return vault_over_speed;
-            } else if (is_sprinting) {
-                return sprint_multiplier * walk_speed;
-            } else if (reloading) {
-                return reload_move_multiplier * walk_speed;
-            } else if (aiming) {
-                if (current_firearm == null) {
-                    Debug.LogWarning("aim without weapon!");
-                    return walk_speed;
-                }
-                return current_firearm.aim_move_speed * walk_speed;
-            }
-            return walk_speed;
-        }
+        get => move_action.movement_speed;
+        // {
+        //         if (crouch_dive_remaining > 0f) {
+        //         return sprint_multiplier * walk_speed;
+        //     }
+        //     if (crouch_percent > 0f) {
+        //         return ((1 - crouch_percent) * walk_speed) + (crouched_speed * crouch_percent);
+        //     } else if (is_vaulting) {
+        //         return vault_over_speed;
+        //     } else if (is_sprinting) {
+        //         return sprint_multiplier * walk_speed;
+        //     } else if (reloading) {
+        //         return reload_move_multiplier * walk_speed;
+        //     } else if (aiming) {
+        //         if (current_firearm == null) {
+        //             Debug.LogWarning("aim without weapon!");
+        //             return walk_speed;
+        //         }
+        //         return current_firearm.aim_move_speed * walk_speed;
+        //     }
+        //     return walk_speed;
+        // }
     }
 
     protected override void Start() {
@@ -69,35 +70,10 @@ public class ManualCharacterMovement : CharCtrl {
     private IMoveAction move_action = null;
     public override void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
         RemoveOldMoveAction();
-        // if (crouch_locked_remaining > 0) { crouch = true; }
         bool is_moving = move_direction.magnitude > 0;
         is_sprinting = sprint && CanSprint() && is_moving;
         UpdateMoveAction(move_direction, look_direction, sprint, crouch);
-        ///////////////////// START copy-pasted base.MoveCharacter /////////////////////
-        // if (is_crouch_diving) {
-        //     // if crouch diving, continue in that direction for the duration of the crouch dive
-        //     move_direction = crouch_dive_direction;
-        //     crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
-        // } else if (is_vaulting) {
-        // move_direction = vault_over_direction.normalized;
-        // }
-        // if (GetStartVaultThisFrame(move_direction, look_direction)) {
-        //     StartVaultOver(move_direction, look_direction);
-        // } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
-        //     StartCrouchDive(move_direction);
-        // } else {
-        //     if (crouch) {
-        //         // cannot crouch and sprint at the same time, if there is no crouch dive
-        //         is_sprinting = false;
-        //     }
-        // }
-
-        // if (is_crouch_diving || is_vaulting || is_sprinting) {
-        //     // always face forward during crouch dive or sprint!
-        //     look_direction = move_direction;
-        // }
         UpdateCrouch(crouch);
-        ////////////////////// END copy-pasted base.MoveCharacter //////////////////////
         if (move_action.override_move_direction) {
             move_direction = move_action.move_direction;
         }
@@ -154,8 +130,11 @@ public class ManualCharacterMovement : CharCtrl {
         } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
             StartCrouchDive(move_direction);
             move_action = DiveAction(move_direction);
-        } else if (crouch) {
+        } else if (crouch || crouch_percent > 0) {
             // cannot crouch and sprint at the same time, if there is no crouch dive
+            if (crouch_percent == 0) {
+                StartCrouch();
+            }
             is_sprinting = false;
             move_action = CrouchAction();
         } else if (sprint) {
@@ -164,6 +143,15 @@ public class ManualCharacterMovement : CharCtrl {
         } else {
             move_action = WalkAction();
         }
+    }
+
+    protected void StartCrouch() {
+        crouch_percent = 1f; // start fully crouched
+        PlayStartCrouchEffects();
+    }
+    
+    protected void PlayStartCrouchEffects() {
+        // no effects... yet
     }
 
     public override void PlayCrouchDiveEffects() {
