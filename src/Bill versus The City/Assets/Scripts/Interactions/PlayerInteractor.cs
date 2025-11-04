@@ -90,7 +90,15 @@ public class PlayerInteractor : MonoBehaviour
         return Vector3.Distance(new Vector3(a.x, 0f, a.z), new Vector3(b.x, 0f, b.z));
     }
 
+    void OnCollisionEnter(Collision other) {
+        _ColliderEnter(other.collider);
+    }
+
     void OnTriggerEnter(Collider c) {
+        _ColliderEnter(c);
+    }
+
+    private void _ColliderEnter(Collider c) {
         Interaction interaction = GetInteractionFromCollider(c);
         if (interaction != null) {
             interaction.interaction_targeted = false;
@@ -99,7 +107,15 @@ public class PlayerInteractor : MonoBehaviour
         }
     }
 
+    void OnCollisionExit(Collision other) {
+        _ColliderExit(other.collider);
+    }
+
     void OnTriggerExit(Collider c) {
+        _ColliderExit(c);
+    }
+
+    private void _ColliderExit(Collider c) {
         Interaction interaction = GetInteractionFromCollider(c);
         if (interaction != null) {
             interaction.interaction_targeted = false;

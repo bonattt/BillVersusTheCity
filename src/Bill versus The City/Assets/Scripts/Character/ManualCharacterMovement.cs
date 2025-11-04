@@ -27,7 +27,13 @@ public class ManualCharacterMovement : CharCtrl {
 
     public override bool is_player { get { return true; } }
     public override float movement_speed {
-        get => move_action.movement_speed;
+        get {
+            if (move_action == null) {
+                // Debug.LogWarning($"{gameObject.name} move_action is null!!");
+                return walk_speed;
+            }
+            return move_action.movement_speed;
+        }
         // {
         //         if (crouch_dive_remaining > 0f) {
         //         return sprint_multiplier * walk_speed;

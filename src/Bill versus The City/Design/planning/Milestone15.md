@@ -22,6 +22,13 @@ PLANNED FEATURES
     [ ] base damage on grenades should be deadlier
     [ ] maybe add more damage falloff
 
+[~] NEW LEVEL
+    [+] Event Triggers for level conditions
+    [+] Configure 2 waves of enemies
+    [ ] Add dialogue and choreography for enemy waves
+    [ ] combat balance and level design
+    [ ] Add custom objective text for getting groceries
+
 PLANNED BUGFIXES
 [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
 [ ] FIX: existing SoundEffects should subscribe to AudioSettings, and update their volume
