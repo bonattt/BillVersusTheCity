@@ -1692,6 +1692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fee782d2b85a54cb323e0fd88b9006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  init_spawner_config: {fileID: 0}
   enemy_spawners:
   - {fileID: 624613897}
   - {fileID: 2090926537}
@@ -1769,67 +1770,6 @@ MonoBehaviour:
   base_enemy_name: Enemy
   log_spawns: 0
   spawn_on_start: 0
---- !u!1001 &638508607
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 112494599611690591, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_Name
-      value: AmmoPickupDynamic(handgun)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 44.099995
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -23.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7551653352255501350, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: target_equipment_slot
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
 --- !u!1001 &653133806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2020,67 +1960,6 @@ MonoBehaviour:
   base_enemy_name: Enemy
   log_spawns: 0
   spawn_on_start: 0
---- !u!1001 &699369006
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 112494599611690591, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_Name
-      value: AmmoPickupDynamic(rifle)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 44.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -25.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111735427754407767, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7551653352255501350, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
-      propertyPath: ammo_amount_multiplier
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dffa3bb59fc8ced4fb363f6ba39f45de, type: 3}
 --- !u!1001 &713550380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2333,7 +2212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  dialogue_file_path: empty
+  dialogue_file_path: Level-Grocery/second_wave
 --- !u!4 &791975069
 Transform:
   m_ObjectHideFlags: 0
@@ -3438,6 +3317,7 @@ GameObject:
   - component: {fileID: 1341887160}
   - component: {fileID: 1341887162}
   - component: {fileID: 1341887163}
+  - component: {fileID: 1341887165}
   - component: {fileID: 1341887164}
   m_Layer: 10
   m_Name: ObjectiveInteraction
@@ -3463,7 +3343,7 @@ MonoBehaviour:
   interaction_enabled: 1
   interaction_order:
   - {fileID: 926563574}
-  - {fileID: 1341887164}
+  - {fileID: 1139635122}
   debug_distance_to_interactor: 0
 --- !u!4 &1341887161
 Transform:
@@ -3543,6 +3423,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73582e857f5050d4499f13fb823a1e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1341887165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341887158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 528b21aa1d9e7cc41a1e3ff9f3a693a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enable_combat: 1
+  level: {fileID: 1425793105}
 --- !u!1001 &1349650925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3804,7 +3698,7 @@ PrefabInstance:
       objectReference: {fileID: 418725346}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: next_level
-      value: Demo001--level4
+      value: Demo001--test
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: victory_type
@@ -3812,16 +3706,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: level_weapons
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: _combat_enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_starting_rifle
       value: 
-      objectReference: {fileID: 11400000, guid: a3ccd283039b36a43bb5016561c32786, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_starting_handgun
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 27a66971e4046a449b4d0ee6eae73fa0, type: 2}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_start_level
       value: 
@@ -3836,7 +3734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: dialogue_file_objectives_complete
-      value: 
+      value: Level-Grocery/complete_objective
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: additive_scene_loads.Array.data[0]
@@ -4191,6 +4089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fee782d2b85a54cb323e0fd88b9006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  init_spawner_config: {fileID: 11400000, guid: cc8f254bf5fb7c649b9adbbf08f1cd22, type: 2}
   enemy_spawners:
   - {fileID: 384504918}
   - {fileID: 505923203}
@@ -4325,7 +4224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  dialogue_file_path: empty
+  dialogue_file_path: Level-Grocery/first_wave
 --- !u!1001 &1564782432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6438,8 +6337,6 @@ SceneRoots:
   - {fileID: 418725345}
   - {fileID: 2093243585}
   - {fileID: 1376931691}
-  - {fileID: 699369006}
-  - {fileID: 638508607}
   - {fileID: 1602186003}
   - {fileID: 1381296275}
   - {fileID: 1564782432}

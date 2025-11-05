@@ -1,0 +1,5 @@
+enter bill left
+
+say bill Is that all of them?
+emote bill stress; break;
+say bill I guess I should go wait for the cops by my truck again.

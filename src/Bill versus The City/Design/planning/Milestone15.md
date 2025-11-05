@@ -27,7 +27,7 @@ PLANNED FEATURES
     [+] Configure 2 waves of enemies
     [ ] Add dialogue and choreography for enemy waves
     [ ] combat balance and level design
-    [ ] Add custom objective text for getting groceries
+    [ ] Add custom objective text for getting groceries8
 
 PLANNED BUGFIXES
 [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
@@ -52,3 +52,5 @@ UNPLANNED BUGFIXES
      - carryover from previous sprint; I couldn't figure out how to reproduce this (still can't)
 [ ] BUG: crouch-dive doesn't change cancel aiming
 [ ] BUG: crouch-dive and Jump don't cancel reload
+[ ] BUG: FleeFromThreatsBehavior line 117 null pointer
+    - I think this is caused by spawned enemies not having a reference to the player, but I haven't investigated

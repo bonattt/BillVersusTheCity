@@ -8,7 +8,6 @@ public abstract class AbstractPercentSpeedAction : IMoveAction {
             float percent = GetPercent();
             if (percent > 1f || percent < 0f) { Debug.LogWarning($"percent should be a value between 0 and 1, but it was {percent}"); }
             float result = (base_movement_speed * (1 - percent)) + (blended_speed * percent);
-            Debug.LogWarning($"({base_movement_speed} * {1 - percent}) + ({blended_speed} * {percent}): {(base_movement_speed * (1 - percent)) + (blended_speed * percent)}");
             return result;
         }
     }

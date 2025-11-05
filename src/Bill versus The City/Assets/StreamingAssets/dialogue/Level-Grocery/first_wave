@@ -1,0 +1,20 @@
+alias gangsta1 as gangsta show gangsta
+alias gangsta2 as gangsta show gangsta
+alias gangsta3 as gangsta show gangsta
+alias gangsta4 as gangsta show gangsta
+
+enter gangsta1 far-left facing right
+enter gangsta2 center-left facing left
+enter gangsta3 center-right facing left
+enter gangsta4 far-right facing left
+
+say gangsta1 Hey man, that was him! Call Dob
+say gangsta3 Imma ice that fool!
+
+exit gangsta1
+exit gangsta2
+exit gangsta3
+exit gangsta4
+
+enter bill left facing right
+say bill Shit, all I have is my carry gun!

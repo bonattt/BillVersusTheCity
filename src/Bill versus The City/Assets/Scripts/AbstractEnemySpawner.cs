@@ -5,6 +5,10 @@ using UnityEngine;
 
 
 public interface IEnemySpawnConfig {
+
+    public bool? drop_weapon { get; } // sets whether the enemy will drop it's weapon on death. if null, leave unchanged from the prefab
+    public bool? drop_ammo { get; } // sets whether the enemy will drop it's ammo on death. if null, leave unchanged from the prefab
+
     public GameObject GetPrefab() {
         return null; // null tells the spawner to use default setting
     }
@@ -27,7 +31,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
     public GameObject enemy_prefab;
     public Transform spawn_location;
     public ScriptableObject init_spawner_config;
-    private IEnemySpawnConfig spawner_config;
+    public IEnemySpawnConfig spawner_config;
 
     public bool override_default_behavior = false;
     public BehaviorMode default_behavior = BehaviorMode.searching;
@@ -90,6 +94,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         }
 
         ConfigureEnemyBehavior(enemy_ctrl.GetComponent<EnemyBehavior>());
+        ConfigureEnemyDrops(enemy_ctrl.GetComponent<DropItemPickups>());
         // TODO --- apply behaviors // --- I think this is handled?
         LogSpawn(enemy_ctrl);
         return enemy;
@@ -120,6 +125,27 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
             spawned_enemy.use_initial_movement_target = true;
         } else {
             spawned_enemy.use_initial_movement_target = false;
+        }
+    }
+
+    public virtual void ConfigureEnemyDrops(DropItemPickups item_drops) {
+        if (item_drops == null) {
+            Debug.LogWarning("No `DropItemPickups` script found, skipping drops configuration!");
+            return;
+        }
+        if (spawner_config.drop_ammo == null) {
+            // do nothing, preserve prefab setting
+        } else if (spawner_config.drop_ammo.Value) {
+            item_drops.drop_ammo = true;
+        } else if (!spawner_config.drop_ammo.Value) {
+            item_drops.drop_ammo = false;
+        }
+        if (spawner_config.drop_weapon == null) {
+            // do nothing, preserve prefab setting
+        } else if (spawner_config.drop_weapon.Value) {
+            item_drops.drop_weapon = true;
+        } else if (!spawner_config.drop_weapon.Value) {
+            item_drops.drop_weapon = false;
         }
     }
     
