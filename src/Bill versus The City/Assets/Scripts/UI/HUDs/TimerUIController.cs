@@ -45,7 +45,6 @@ public class TimerUIController : MonoBehaviour
     }
 
     public void AttachTimer(ITimer new_timer) {
-        Debug.LogWarning($"timer {new_timer} attached!");
         this.timer = new_timer;
         if (this.timer == null) {
             Debug.LogWarning("AttachTimer set to null. use DetachTimer instead!");

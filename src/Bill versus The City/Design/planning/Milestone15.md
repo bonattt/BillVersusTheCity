@@ -1,10 +1,11 @@
 
 =====================
-=== MILESTONE 014 ===
+=== MILESTONE 015 ===
 =====================
 
 Planned on 2025-10-18
-Started on 2025-10-28
+Started on 2025-10-28 to 2025-11-05
+Resumed on 2025-12-13...
 Finished on 2025-??????
 
 PLANNED FEATURES
@@ -54,3 +55,4 @@ UNPLANNED BUGFIXES
 [ ] BUG: crouch-dive and Jump don't cancel reload
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer
     - I think this is caused by spawned enemies not having a reference to the player, but I haven't investigated
+[ ] BUG: `ArgumentException: This VisualElement is not my child` when removing a Dialogue Portrait

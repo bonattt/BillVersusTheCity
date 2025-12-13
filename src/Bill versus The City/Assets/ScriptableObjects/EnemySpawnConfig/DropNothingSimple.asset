@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58f83a2aeff7e8c469a495750b717029, type: 3}
-  m_Name: DropAmmo
+  m_Name: DropNothingSimple
   m_EditorClassIdentifier: 
   drop_config: 2
   rare_weapon_chance: 0

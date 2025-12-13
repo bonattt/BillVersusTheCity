@@ -66,8 +66,9 @@ public class CountdownEnemySpawner : AbstractEnemySpawner
         return cached_spawn_point;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (Time.time > next_spawn_at) {
             (cached_spawn_point, next_spawn_at) = GetNextSpawnAndTime();
             SpawnEnemy();

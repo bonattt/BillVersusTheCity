@@ -12,6 +12,5 @@ public class SetCombatEnabledEvent : AbstractInteractionGameEvent {
             level = LevelConfig.inst;
         }
         level.combat_enabled = enable_combat;
-        Debug.LogWarning($"Combat enabled? {enable_combat}"); // TODO --- remove debug
     }
 }

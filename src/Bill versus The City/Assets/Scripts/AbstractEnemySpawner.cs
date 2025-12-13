@@ -72,7 +72,11 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
 
     protected virtual void InitializeSpawner() {
         if (spawn_location == null) { spawn_location = transform; }
-        spawner_config = (IEnemySpawnConfig) init_spawner_config;
+        if (spawner_config == null && init_spawner_config != null) {
+            spawner_config = (IEnemySpawnConfig) init_spawner_config;
+        } else if (spawner_config != null && init_spawner_config != null) {
+            Debug.LogWarning($"{gameObject.name}: default spawner config '{init_spawner_config}' overwritten by '{spawner_config}' via script");
+        }
         InitializeSpawnPoints();
     }
 
@@ -176,4 +180,22 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
     public IArmor GetArmor() {
         return spawner_config != null ? spawner_config.GetArmor() : null;
     }
+
+    protected virtual void Update() {
+        UpdateDebug();
+    }
+
+    public EnemySpawnerDebug debug_spawner;
+    private void UpdateDebug() {
+        if (spawner_config == null) {
+            debug_spawner.spawner_config = "null";
+        } else {
+            debug_spawner.spawner_config = $"{spawner_config}";
+        }
+    }
+}
+
+[Serializable]
+public class EnemySpawnerDebug {
+    public string spawner_config;
 }

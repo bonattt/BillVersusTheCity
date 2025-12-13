@@ -1,25 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class InteractableUI : MonoBehaviour
-{
+public class InteractableUI : MonoBehaviour {
 
     public GameObject target;
     protected Interaction target_manager;
     protected UIDocument ui_doc;
     protected VisualElement root, background_pannel;
-    protected Label interaction_label; 
-    public string name_header = "name"; 
+    protected Label interaction_label;
+    public string name_header = "name";
+    [Tooltip("The UI will not be shown until the first time the interaction gets enabled. After, the interaction will continue to be shown, even if disabled again.")]
     public bool hide_until_enabled = false;
+    [Tooltip("The UI will never be shown if the interaction is disabled.")]
+    public bool always_hide_when_disabled = false;
 
     public float hover_opacity = 1f;
     public float default_opacity = 0.5f;
 
-    void Start()
-    {
+    protected bool interaction_enabled {
+        get => target_manager.interaction_enabled;
+    }
+
+    void Start() {
         Configure();
         SetLabels();
         UpdateVisibility();
@@ -36,7 +42,7 @@ public class InteractableUI : MonoBehaviour
         background_pannel = root.Q<VisualElement>("Panel");
         // background_pannel.RegisterCallback<MouseEnterEvent>(evnt => SetAsTargeted());
         // background_pannel.RegisterCallback<MouseLeaveEvent>(evnt => SetAsNotTargeted());
-        
+
         interaction_label = root.Q<Label>("InteractionLabel");
     }
 
@@ -47,6 +53,7 @@ public class InteractableUI : MonoBehaviour
 
     void Update() {
         UpdateVisibility();
+        UpdateDebug();
     }
 
     public void SetAsTargeted() {
@@ -69,11 +76,11 @@ public class InteractableUI : MonoBehaviour
     }
 
     protected void UpdateVisibility() {
-        if (hide_until_enabled && target_manager.enabled) {
+        if (hide_until_enabled && interaction_enabled) {
             // Debug.Log($"clear hide until enabled on {gameObject.name} for {target_manager.gameObject.name}");
             hide_until_enabled = false;
         }
-        if(IsVisible()) {
+        if (IsVisible()) {
             root.style.visibility = Visibility.Visible;
             if (IsTargeted()) {
                 SetAsTargeted();
@@ -88,9 +95,10 @@ public class InteractableUI : MonoBehaviour
     }
 
     protected bool IsVisible() {
-        return !hide_until_enabled && target_manager.interaction_tracked;
+        // hide_until_enabled is automatically set to false on enable
+        return !hide_until_enabled && !(always_hide_when_disabled && !interaction_enabled) && target_manager.interaction_tracked;
     }
-     
+
     protected bool IsTargeted() {
         return target_manager.interaction_targeted;
     }
@@ -108,4 +116,18 @@ public class InteractableUI : MonoBehaviour
 
         interaction_label.text = $"{name_header} {interaction_input}";
     }
+
+    public DebugInteractableUI debug;
+    private void UpdateDebug() {
+        debug.is_visible = IsVisible();
+        debug.hide_when_disabled = always_hide_when_disabled;
+        debug.interaction_enabled = interaction_enabled;
+        debug.both = !(always_hide_when_disabled && !interaction_enabled);
+    }
+}
+
+[Serializable]
+public class DebugInteractableUI {
+    public bool is_visible = false;
+    public bool hide_when_disabled, interaction_enabled, both;
 }
