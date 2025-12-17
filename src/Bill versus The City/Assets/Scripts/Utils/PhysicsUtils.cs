@@ -12,8 +12,8 @@ public static class PhysicsUtils {
     
 
     private const float float_equality_threshold = 0.001f;
-    private static bool FloatThresholdEqual(float a, float b) {
-        return Mathf.Abs(a - b) < float_equality_threshold;
+    private static bool FloatThresholdEqual(float a, float b, float threshhold=float_equality_threshold) {
+        return Mathf.Abs(a - b) < threshhold;
     }
 
     public static bool VectorEquals(Vector3 a, Vector3 b) {

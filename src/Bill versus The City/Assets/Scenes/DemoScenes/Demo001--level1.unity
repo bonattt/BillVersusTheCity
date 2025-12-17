@@ -1174,37 +1174,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4f490c9d7e38d4468bbf1d7f0780147, type: 3}
---- !u!1 &575067795
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 575067796}
-  m_Layer: 0
-  m_Name: TriggerDialogueTODO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &575067796
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 575067795}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1278330610}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &579431961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2519,6 +2488,8 @@ MonoBehaviour:
   init_spawn_points: []
   base_enemy_name: Enemy
   log_spawns: 0
+  debug_spawner:
+    spawner_config: 
   spawn_on_start: 0
 --- !u!4 &1064678468 stripped
 Transform:
@@ -3189,7 +3160,6 @@ Transform:
   m_Children:
   - {fileID: 1950380911}
   - {fileID: 483775600}
-  - {fileID: 575067796}
   - {fileID: 691147819}
   - {fileID: 1159389208}
   - {fileID: 1542168562}
@@ -3250,6 +3220,8 @@ MonoBehaviour:
   init_spawn_points: []
   base_enemy_name: EnemyReinforecment
   log_spawns: 0
+  debug_spawner:
+    spawner_config: 
   spawn_on_start: 0
 --- !u!1 &1293012407
 GameObject:
@@ -3936,6 +3908,8 @@ MonoBehaviour:
   init_spawn_points: []
   base_enemy_name: Enemy
   log_spawns: 0
+  debug_spawner:
+    spawner_config: 
   spawn_on_start: 0
 --- !u!1 &1542168561
 GameObject:
