@@ -11,7 +11,6 @@ public abstract class AbstractChoreographyStep : MonoBehaviour, IChoreographySte
     public bool active {
         get => _active;
         private set {
-            Debug.LogWarning($"{gameObject.name}.active set to {value}"); // TODO --- remove debug
             _active = value;
         }
     }
@@ -43,6 +42,8 @@ public interface IChoreography : IGameEventEffect, IInteractionEffect {
     public Transform camera_follow_target { get; set; }
     public Vector3 camera_offset { get; set; }
     public ChoreographyCameraMode camera_mode { get; set; }
+    public Camera GetCamera();
+    public CameraFollowZoom GetCameraScript();
     public void Activate();
 
 }

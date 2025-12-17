@@ -3852,7 +3852,7 @@ Transform:
   m_GameObject: {fileID: 1464551219}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 22.89, y: 0, z: -22.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3872,9 +3872,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 0
   _choreography_complete: 0
-  destination: {fileID: 0}
-  slerp: 0
+  destination: {fileID: 1464551220}
+  lerp: 0.1
   zoom: 0
+  debug:
+    frames_count: 0
+    move_start_time: 0
+    move_end_time: 0
+    move_duration: 0
 --- !u!1001 &1480582573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4973,6 +4978,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7142368050665729870, guid: 8bb54dc0d5e70b948861e4f8ffbb9cf1, type: 3}
   m_PrefabInstance: {fileID: 1755906925}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1764547669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764547670}
+  - component: {fileID: 1764547671}
+  m_Layer: 0
+  m_Name: Wait
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1764547670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764547669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2009045515}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1764547671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764547669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcced76dae0c07340ba3b18815c3818f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _active: 0
+  _choreography_complete: 0
+  wait_for_seconds: 0.25
 --- !u!1001 &1787305480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5554,6 +5606,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1498269577}
+  - {fileID: 1764547670}
   - {fileID: 1464551220}
   - {fileID: 1547606359}
   m_Father: {fileID: 0}
@@ -5581,6 +5634,8 @@ MonoBehaviour:
   _complete: 0
   choreography_steps:
   - {fileID: 1498269579}
+  - {fileID: 1764547671}
+  - {fileID: 1464551221}
   - {fileID: 1547606360}
   debug__cached_combat_enabled: 0
 --- !u!1001 &2021975882

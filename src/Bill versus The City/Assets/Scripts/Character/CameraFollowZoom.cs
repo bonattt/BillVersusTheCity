@@ -35,7 +35,7 @@ public class CameraFollowZoom : MonoBehaviour
 
     public float un_zoomed_height = 15f;
     public float zoomed_height = 25f;
-    public float slerp = 0.85f;
+    public float lerp = 0.5f;
     [Tooltip("percentage between the mouse and player the camera is positioned. 1 follows just the mouse, 0 follows just the player")]
     public float follow_mouse_percent = 0.5f;
     public float max_vision_range = 6f;
@@ -44,6 +44,10 @@ public class CameraFollowZoom : MonoBehaviour
     public AttackController attack_controller;
 
     private Vector3 last_mouse_position = new Vector3(0f, 0f, 0f);
+
+    public Camera GetCamera() {
+        return GetComponent<Camera>();    
+    }
     
     private float desired_camera_height {
         get {
@@ -91,7 +95,7 @@ public class CameraFollowZoom : MonoBehaviour
     public void UpdateCameraPosition(Vector3 new_position) {
         new_position = AdjustCameraHeight(new_position);
         new_position += camera_offset;
-        transform.position = Vector3.Slerp(transform.position, new_position, slerp);
+        transform.position = Vector3.Slerp(transform.position, new_position, lerp);
     }
 
     private Vector3 AdjustCameraHeight(Vector3 horizontal_position) {

@@ -94,6 +94,9 @@ public class Choreography : MonoBehaviour, IChoreography {
     public void ActivateEffect() => Activate();
     public void Interact(GameObject actor) => Activate();
 
+    public Camera GetCamera() => camera_script.GetCamera();
+    public CameraFollowZoom GetCameraScript() => camera_script;
+
     private SequentialChoreographyStep sequential_choreography;
 
     void Start() {
