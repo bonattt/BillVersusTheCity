@@ -8,4 +8,17 @@ public static class PhysicsUtils {
             (point.y >= box_center.y - half.y && point.y <= box_center.y + half.y) &&
             (point.z >= box_center.z - half.z && point.z <= box_center.z + half.z);
     }
+
+    
+
+    private const float float_equality_threshold = 0.001f;
+    private static bool FloatThresholdEqual(float a, float b) {
+        return Mathf.Abs(a - b) < float_equality_threshold;
+    }
+
+    public static bool VectorEquals(Vector3 a, Vector3 b) {
+        return FloatThresholdEqual(a.x, b.x)
+            && FloatThresholdEqual(a.y, b.y)
+            && FloatThresholdEqual(a.z, b.z); 
+    }
 }

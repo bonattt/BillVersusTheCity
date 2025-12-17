@@ -14,8 +14,6 @@ public class MoveCameraChoreographyStep : AbstractChoreographyStep
     [Tooltip("change in Y coordinates from base camera height")]
     public float zoom;
 
-    private float equality_threshold = 0.001f;
-
     private Camera camera_;
     private Vector3 original_position;
     private ChoreographyCameraMode original_mode;
@@ -55,14 +53,8 @@ public class MoveCameraChoreographyStep : AbstractChoreographyStep
         camera_.transform.position = Vector3.Lerp(camera_.transform.position, target_position, lerp);
     }
 
-    private bool FloatThresholdEqual(float a, float b) {
-        return Mathf.Abs(a - b) < equality_threshold;
-    }
-
     public bool HasReachedTarget() {
-        return FloatThresholdEqual(target_position.x, camera_.transform.position.x) 
-            && FloatThresholdEqual(target_position.y, camera_.transform.position.y) 
-            && FloatThresholdEqual(target_position.z, camera_.transform.position.z); 
+        return PhysicsUtils.VectorEquals(target_position, camera_.transform.position);
     }
 
     void Update() {
