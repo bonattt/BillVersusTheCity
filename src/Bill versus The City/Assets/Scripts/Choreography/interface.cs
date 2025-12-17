@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-public abstract class AbstractChoreographyStep : MonoBehaviour {
+public abstract class AbstractChoreographyStep : MonoBehaviour, IChoreographyStep {
     // interface for a single step of choreography
 
     [SerializeField]
@@ -28,6 +28,9 @@ public abstract class AbstractChoreographyStep : MonoBehaviour {
         this.choreography = choreography;
     }
     public virtual void Complete() { choreography_complete = true; }
+    
+    public virtual void OnChoreographyStart(IChoreography choreography) { /* do nothing by default */ }
+    public virtual void OnChoreographyComplete(IChoreography choreography) { /* do nothing by default */ }
 
     protected virtual void Start() {
         // do nothing. Setting active and complete in start risks overwriting these values set from another Start method that runs first
@@ -42,4 +45,16 @@ public interface IChoreography : IGameEventEffect, IInteractionEffect {
     public ChoreographyCameraMode camera_mode { get; set; }
     public void Activate();
 
+}
+
+
+public interface IChoreographyStep {
+    public bool active { get; }
+
+    public bool choreography_complete { get; }
+
+    public void Activate(IChoreography choreography);
+    public void Complete();
+    public void OnChoreographyStart(IChoreography choreography);
+    public void OnChoreographyComplete(IChoreography choreography);
 }

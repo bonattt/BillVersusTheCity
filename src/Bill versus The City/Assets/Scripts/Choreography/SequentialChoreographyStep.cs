@@ -31,4 +31,10 @@ public class SequentialChoreographyStep : AbstractChoreographyStep {
     public bool OnFinalStep() {
         return choreography_index == choreography_steps.Count - 1;
     }
+
+    public IEnumerable<IChoreographyStep> AllSteps() {
+        foreach (IChoreographyStep step in choreography_steps) {
+            yield return step; 
+        }
+    }
 }

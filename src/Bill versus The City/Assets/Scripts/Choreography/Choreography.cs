@@ -81,6 +81,7 @@ public class Choreography : MonoBehaviour, IChoreography {
         SetCameraMode();
 
         debug__cached_combat_enabled = cached_combat_enabled;
+        OnChoreographyStart();
     }
     public void Complete() {
         inst = null;
@@ -88,6 +89,7 @@ public class Choreography : MonoBehaviour, IChoreography {
         player_controls.controls_locked = false;
         level.combat_enabled = cached_combat_enabled;
         UnsetCameraMode();
+        OnChoreographyComplete();
     }
     public void ActivateEffect() => Activate();
     public void Interact(GameObject actor) => Activate();
@@ -161,6 +163,17 @@ public class Choreography : MonoBehaviour, IChoreography {
         }
         if (camera_script != null) {
             camera_script.override_camera_follow = false;
+        }
+    }
+    
+    protected void OnChoreographyStart() {
+        foreach (IChoreographyStep step in sequential_choreography.AllSteps()) {
+            step.OnChoreographyStart(this);
+        }
+    }
+    protected void OnChoreographyComplete() {
+        foreach (IChoreographyStep step in sequential_choreography.AllSteps()) {
+            step.OnChoreographyComplete(this);
         }
     }
 
