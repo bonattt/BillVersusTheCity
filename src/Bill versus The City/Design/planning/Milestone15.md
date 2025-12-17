@@ -29,6 +29,7 @@ PLANNED FEATURES
     [ ] Add dialogue and choreography for enemy waves
     [ ] combat balance and level design
     [ ] Add custom objective text for getting groceries8
+    [ ] Stop Police timer once objective is complete
 
 PLANNED BUGFIXES
 [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
