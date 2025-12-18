@@ -41,6 +41,13 @@ public class CountdownCondition : AbstractLevelCondition, ITimer {
     public override bool ConditionMet() {
         return _countdown <= 0f;
     }
+    
+    public void Pause() {
+        throw new NotImplementedException("CountdownCondition does not yet implement manual `Pause` and `Unpause`");
+    }
+    public void Unpause() {
+        throw new NotImplementedException("CountdownCondition does not yet implement manual `Pause` and `Unpause`");
+    }
 
     //////////////////// DEBUG FIELDS ///////////////////////
     public float debug_remaining_time;

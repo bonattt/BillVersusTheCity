@@ -29,7 +29,7 @@ PLANNED FEATURES
     [ ] Add dialogue and choreography for enemy waves
     [ ] combat balance and level design
     [ ] Add custom objective text for getting groceries8
-    [ ] Stop Police timer once objective is complete
+    [+] Stop Police timer once objective is complete
 
 PLANNED BUGFIXES
 [ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
@@ -54,6 +54,7 @@ UNPLANNED BUGFIXES
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer
     - I think this is caused by spawned enemies not having a reference to the player, but I haven't investigated
 [ ] BUG: `ArgumentException: This VisualElement is not my child` when removing a Dialogue Portrait
+[ ] BUG: police timer counts down during choreography
 [ ] I was able to die, then X out of the death dialogue somehow to move around the level as a dead guy (on the grenades tutorial)
     Steps to reproduce:
      - carryover from previous sprint; I couldn't figure out how to reproduce this (still can't)

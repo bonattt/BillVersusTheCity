@@ -46,7 +46,8 @@ public class LevelConfig : MonoBehaviour {
             _combat_enabled = value;
         }
     }
-
+    [Tooltip("If level objectives are complete and the player only needs to reach the exit, the police timer will be paused.")]
+    public bool stop_police_timer_when_objectives_complete = false;
     private int sequential_conditions_index = 0;
     public string level_music_name;
     private ISFXSounds level_music;
@@ -93,7 +94,19 @@ public class LevelConfig : MonoBehaviour {
     public GameObject prefab_countdown_timer_condition, prefab_clear_enemies_condition;
 
     [SerializeField]
-    public ITimer countdown { get; protected set; }
+    private PoliceTimer police_timer;
+    private ITimer _countdown;
+    public ITimer countdown { 
+        get {
+            if (_countdown == null && police_timer != null) {
+                _countdown = police_timer;
+            }
+            return _countdown;
+        }
+        protected set {
+            _countdown = value;
+        }
+    }
     public bool has_countdown { get => countdown != null; }
 
     void Awake() {
@@ -226,9 +239,9 @@ public class LevelConfig : MonoBehaviour {
         }
     }
 
-    public bool ShouldExitBeEnabled() {
-        return false;
-    }
+    // public bool ShouldExitBeEnabled() {
+    //     return false;
+    // }
 
     public bool ShouldExitBeDisabled() {
         // should the level exit be explicitly disabled at the start of the level.
@@ -395,6 +408,17 @@ public class LevelConfig : MonoBehaviour {
         }
         level_exit.interaction_enabled = true;
         level_exit.gameObject.SetActive(true);
+        if (stop_police_timer_when_objectives_complete) {
+            PauseLevelTimer();
+        }
+    }
+
+    public void PauseLevelTimer() {
+        if (has_countdown) {
+            countdown.Pause();
+        } else {
+            Debug.LogError("tried to pause level timer, but level has no timer!");
+        }        
     }
 
     public void LevelObjectivesCleared() {

@@ -10,4 +10,7 @@ public interface ITimer {
     // returns the seconds left in the current minute
     public int remaining_seconds_remainder { get { return (int) (Mathf.Round(remaining_time) - (remaining_minutes * 60)); }}
     public int remaining_seconds_full { get { return (int) Mathf.Round(remaining_time); }}
+
+    public void Pause();
+    public void Unpause();
 }

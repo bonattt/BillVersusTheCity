@@ -4231,6 +4231,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01f9aa4e8def6f44782c0888bffb331e, type: 3}
+--- !u!114 &1389239009 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1353345360559072328, guid: 46299add723d5ba4d8fc4c60125bb649, type: 3}
+  m_PrefabInstance: {fileID: 160049163132566854}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e461848e1a8022d45b2fbf6cc3dce628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1406362582
 GameObject:
   m_ObjectHideFlags: 0
@@ -4300,6 +4311,10 @@ PrefabInstance:
       value: Demo001--test
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: police_timer
+      value: 
+      objectReference: {fileID: 1389239009}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: victory_type
       value: 0
       objectReference: {fileID: 0}
@@ -4338,6 +4353,10 @@ PrefabInstance:
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: additive_scene_loads.Array.data[0]
       value: map--bills-house
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: stop_police_timer_when_objectives_complete
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_extra_sequential_level_conditions.Array.size
