@@ -53,7 +53,7 @@ public class NavMeshCharacterChoreographyStep : AbstractChoreographyStep {
         character_controller.nav_mesh_agent.updateRotation = true;
     }
 
-    protected void SkipStep() {
+    protected override void ImplementSkip() {
         character_controller.TeleportTo(destination.position);
     }
 
