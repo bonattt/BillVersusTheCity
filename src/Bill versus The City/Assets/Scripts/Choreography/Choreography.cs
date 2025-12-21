@@ -127,9 +127,6 @@ public class Choreography : MonoBehaviour, IChoreography {
         sequential_choreography = gameObject.AddComponent<SequentialChoreographyStep>();
         sequential_choreography.choreography_steps = choreography_steps;
         _cached_camera_offset = camera_script.camera_offset;
-        if (camera_script != null) {
-            SetCameraMode();
-        }
     }
 
 
@@ -190,7 +187,7 @@ public class Choreography : MonoBehaviour, IChoreography {
     }
     protected void UnsetCameraMode() {
         camera_script.camera_offset = _cached_camera_offset;
-        camera_script.time_scale_setting = TimeScaleSetting.unscaled_time;
+        camera_script.time_scale_setting = TimeScaleSetting.scaled_time;
         if (camera_script != null && cached_camera_follow_target != null) {
             camera_script.target = cached_camera_follow_target;
             cached_camera_follow_target = null;

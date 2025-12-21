@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -167,6 +168,7 @@ public class CameraFollowZoom : MonoBehaviour, IChangableTimeScale
 
     void Start()
     {
+        time_scale_setting = TimeScaleSetting.scaled_time;
         transform.position = new Vector3(target.position.x, desired_camera_height, target.position.z);
         last_mouse_position = target.position;
         UpdatePosition();
@@ -180,9 +182,10 @@ public class CameraFollowZoom : MonoBehaviour, IChangableTimeScale
         SetDebug();
     }
 
-    public Vector3 debug_last_mouse_pos;
+    public CameraFollowDebug debug;
     private void SetDebug() {
-        debug_last_mouse_pos = last_mouse_position;
+        debug.last_mouse_pos = last_mouse_position;
+        debug.time_scale_setting = time_scale_setting;
     }
 }
 
@@ -192,4 +195,10 @@ public enum CameraFollowMode {
     target,
     stationary,
     choreography, // camera will be moved by choreography
+}
+
+[Serializable]
+public class CameraFollowDebug {
+    public Vector3 last_mouse_pos;
+    public TimeScaleSetting time_scale_setting;
 }
