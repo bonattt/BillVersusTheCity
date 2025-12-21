@@ -11,7 +11,7 @@ using UnityEngine;
 // centered vision [up/down]: 11
 // fully retracted vision [up/down]: 5
 
-public class CameraFollowZoom : MonoBehaviour
+public class CameraFollowZoom : MonoBehaviour, IChangableTimeScale
 {
     public const CameraFollowMode DEFAULT_FOLLOW_MODE = CameraFollowMode.player_and_mouse;
     [Tooltip("setting that overrides the normal camera follow mode, iff `override_camera_follow` is set to true")]
@@ -45,6 +45,18 @@ public class CameraFollowZoom : MonoBehaviour
 
     private Vector3 last_mouse_position = new Vector3(0f, 0f, 0f);
 
+    public TimeScaleSetting time_scale_setting { get; set; }
+    public float GetDeltaTime() {
+        if (time_scale_setting == TimeScaleSetting.scaled_time) {
+            return Time.deltaTime;
+        } else if (time_scale_setting == TimeScaleSetting.unscaled_time) {
+            return Time.unscaledDeltaTime;
+        } else {
+            Debug.LogError($"Unhandled TimeScaleSetting '{time_scale_setting}'"); 
+            return Time.deltaTime;;
+        }
+    }
+
     public Camera GetCamera() {
         return GetComponent<Camera>();    
     }
@@ -57,7 +69,7 @@ public class CameraFollowZoom : MonoBehaviour
     }
 
     private void UpdatePosition() {
-        if (MenuManager.inst.paused) { return; } // freeze camera while paused
+        if (GetDeltaTime() == 0) { return; } // freeze camera while paused
         switch (camera_follow_mode) {
             case CameraFollowMode.player_and_mouse:
                 UpdatePositionMouseAndPlayer();

@@ -5,6 +5,8 @@ public class UpdateCameraChoreographyStep : AbstractChoreographyStep {
     public ChoreographyCameraMode camera_mode = ChoreographyCameraMode.manual;
     public Vector3 camera_offset = new Vector2(0, 0);
     public Transform camera_target = null;
+
+    public override bool activate_when_skipped { get => false; }
     public override void Activate(IChoreography choreography) {
         base.Activate(choreography);
         choreography.camera_mode = camera_mode;

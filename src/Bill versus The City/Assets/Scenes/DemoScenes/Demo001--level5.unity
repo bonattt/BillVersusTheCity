@@ -4356,7 +4356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: stop_police_timer_when_objectives_complete
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_extra_sequential_level_conditions.Array.size
@@ -6945,7 +6945,7 @@ MonoBehaviour:
   base_movement_speed: 20
   start_acceleration: 2
   stop_deceleration: 15
-  start_profile: 1
+  start_profile: 0
   stop_profile: 1
   debug:
     speed: 0

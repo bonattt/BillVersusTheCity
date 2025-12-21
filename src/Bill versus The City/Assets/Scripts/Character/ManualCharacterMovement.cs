@@ -109,13 +109,13 @@ public class ManualCharacterMovement : CharCtrl {
             _last_move += new Vector3(0, GRAVITY, 0);
         }
         _last_move_flat = new Vector2(_last_move.x, _last_move.z);
-        controller.Move(_last_move * Time.deltaTime);
+        controller.Move(_last_move * GetDeltaTime());
         debug.move_direction = _last_move;
     }
 
     private void RemoveOldMoveAction() {
         if (move_action == null) { return; }
-        move_action.duration -= Time.deltaTime;
+        move_action.duration -= GetDeltaTime();
         if (move_action.duration <= 0) {
             move_action = null;
         }
@@ -191,11 +191,14 @@ public class ManualCharacterMovement : CharCtrl {
         return ActionCode.crouch;
     }
 
+    public static void TeleportCharacterController(CharacterController character, Vector3 destination) {
+        character.enabled = false;
+        character.transform.position = destination;
+        character.enabled = true;
+    }
+
     public override void TeleportTo(Vector3 position) {
-        CharacterController char_ctrl = GetComponent<CharacterController>();
-        char_ctrl.enabled = false;
-        transform.position = position;
-        char_ctrl.enabled = true;
+        TeleportCharacterController(controller, position);
     }
 
     public override Vector3 GetVelocity() {

@@ -8,6 +8,8 @@ public class CreateProfileMenuCtrl : MonoBehaviour, ISubMenu {
     private TextField text_entry;
     private Button confirm_button, cancel_button;
 
+    public GameObject menuObject { get => gameObject; }
+
     public ProfileEditMenuMode menu_mode = ProfileEditMenuMode.create;
 
     public SelectProfileMenuCtrl select_profile_menu;

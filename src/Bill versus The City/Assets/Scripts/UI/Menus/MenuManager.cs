@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,7 +9,8 @@ using UnityEngine.UIElements;
 public class MenuManager : MonoBehaviour
 {
     public GameObject debug_action_menu_prefab, dialogue_prefab, pause_menu_prefab, settings_menu_prefab, tutorial_popup_prefab, 
-            weapon_menu_prefab, yes_no_popup_prefab, select_save_file_prefab, create_new_save_profile_prefab, hub_travel_menu_prefab;
+            weapon_menu_prefab, yes_no_popup_prefab, select_save_file_prefab, create_new_save_profile_prefab, hub_travel_menu_prefab,
+            choreography_menu_prefab;
 
     private Stack<GameObject> sub_menus = new Stack<GameObject>();
 
@@ -91,6 +93,32 @@ public class MenuManager : MonoBehaviour
         MenuManager.inst.CloseMenu();
     }
 
+    public bool IsMenuOpen(ISubMenu menu) {
+        // returns true if the given menu is open somewhere in the stack
+        return sub_menus.Contains(menu.menuObject);
+    }
+
+    public bool IsMenuPrimary(ISubMenu menu) {
+        // returns true if the given menu is on top of the sub_menu stack
+        if (sub_menus.Peek() == null) {
+            return false;
+        }
+        return sub_menus.Peek().Equals(menu.menuObject);
+    }
+
+    public bool CloseMenu(AbstractCloseEventMenu menu) {
+        if (! sub_menus.Contains(menu.gameObject)) {
+            Debug.LogError($"cannot close menu {menu}, it isn't open!");
+            return false;
+        }
+        if (sub_menus.Peek() != menu.gameObject) {
+            Debug.LogError($"cannot close menu {menu}, it isn't on top of the stack!");
+            return false;
+        }
+        CloseMenu();
+        return true;
+    }
+
     public void CloseMenu() {
         // closes the top menu in the sub-menu manager
         if (sub_menus.Count == 0) {
@@ -158,6 +186,16 @@ public class MenuManager : MonoBehaviour
         obj.name = $"Dialogue {++dialogue_counter} ({file_name})";
         DialogueController ctrl = obj.GetComponent<DialogueController>();
         ctrl.StartDialogue(file_name);
+        return ctrl;
+    }
+
+    public ChoreographyMenuCtrl OpenChoreography(IChoreography choreography) {
+        GameObject obj = OpenSubMenuPrefab(choreography_menu_prefab);
+        obj.name = $"Choreography Menu ({choreography})";
+        
+        ChoreographyMenuCtrl ctrl = obj.GetComponent<ChoreographyMenuCtrl>();
+        ctrl.choreography = choreography;
+
         return ctrl;
     }
 
@@ -278,4 +316,22 @@ public class MenuManager : MonoBehaviour
     public HubTravelMenuCtrl OpenHubTravelMenu() {
         return OpenSubMenuPrefab(hub_travel_menu_prefab).GetComponent<HubTravelMenuCtrl>();
     }
+
+    
+#if UNITY_EDITOR
+    public MenuManagerDebugger debug;
+    private void UpdateDebug() {
+        debug.submenu_stack = new List<string>();
+        foreach (GameObject menu in sub_menus) {
+            debug.submenu_stack.Add($"{menu}");
+        }
+    }
+#endif
 }
+
+#if UNITY_EDITOR
+[Serializable]
+public class MenuManagerDebugger {
+    public List<string> submenu_stack;
+}
+#endif

@@ -14,6 +14,7 @@ public class SequentialChoreographyStep : AbstractChoreographyStep {
         private set { _choreography_index = value; }
     }
 
+    public override bool activate_when_skipped { get => false; }
     void Update() {
         if (!active || choreography_complete) { return; }
 
@@ -21,14 +22,23 @@ public class SequentialChoreographyStep : AbstractChoreographyStep {
         if (!step.active) { step.Activate(this.choreography); }
 
         if (step.choreography_complete) {
-            if (OnFinalStep()) {
+            if (IsOnFinalStep()) {
                 Complete();
             } else {
                 choreography_index += 1;
             }
         }
     }
-    public bool OnFinalStep() {
+
+    protected override void ImplementSkip() {
+        base.ImplementSkip(); 
+        foreach (AbstractChoreographyStep step in choreography_steps) {
+            if (step.choreography_complete) { continue; } // don't call skip on steps already completed
+            step.SkipStep(this.choreography);
+        }
+    }
+
+    public bool IsOnFinalStep() {
         return choreography_index == choreography_steps.Count - 1;
     }
 

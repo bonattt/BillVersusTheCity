@@ -16,14 +16,18 @@ public class ManualCharacterChoreographyStep : AbstractChoreographyStep {
     void Update() {
         if (!active || choreography_complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
 
-        debug__distance_to_destination = FlatDistance(character_controller.transform.position, destination.position);
-        if (FlatDistance(character_controller.transform.position, destination.position) < arrival_threashold) {
+        debug__distance_to_destination = PhysicsUtils.FlatDistance(character_controller.transform.position, destination.position);
+        if (PhysicsUtils.FlatDistance(character_controller.transform.position, destination.position) < arrival_threashold) {
             Complete();
             return;
         }
-
         Vector3 move_direction = destination.position - character_controller.transform.position;
         character_controller.MoveCharacter(move_direction, look_direction: move_direction, sprint: false, crouch: false, walk: true);
+    }
+
+    public override void Activate(IChoreography choreography) {
+        base.Activate(choreography);
+        character_controller.time_scale_setting = TimeScaleSetting.unscaled_time;
     }
 
     public override void Complete() {
@@ -31,18 +35,15 @@ public class ManualCharacterChoreographyStep : AbstractChoreographyStep {
         // character animation continues to play until a zero'd move is called, because MoveCharacter is expected to be called on every Update loop
         Vector3 move_direction = destination.position - character_controller.transform.position;
         character_controller.MoveCharacter(Vector3.zero, look_direction: move_direction, sprint: false, crouch: false, walk: true);
+        character_controller.time_scale_setting = TimeScaleSetting.scaled_time;
     }
 
+    protected override void ImplementSkip() {
+        base.ImplementSkip();
+        character_controller.TeleportTo(destination.position);
+    }
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(destination.position, 0.4f);
     }
-
-    public static float FlatDistance(Vector3 first, Vector3 second) {
-        // negates the Y-axis component before finding the distance between two points
-        first = new Vector3(first.x, 0f, first.z);
-        second = new Vector3(second.x, 0f, second.z);
-        return Vector3.Distance(first, second);
-    }
-
 }

@@ -9,7 +9,7 @@ public enum CharacterActionKey {
     sprint,
 }
 
-public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager, ICharacterMovement, ISettingsObserver {
+public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscriber, IReloadManager, ICharacterMovement, ISettingsObserver, IChangableTimeScale {
     // list of codes which don't correspond to actual actions, and should be reset to ActionCode.none
     public readonly HashSet<ActionCode> NON_ACTIONABLE_CODES = new HashSet<ActionCode> { ActionCode.cancel_aim, ActionCode.cancel_reload, ActionCode.sprint };
 
@@ -208,6 +208,18 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
+    public virtual TimeScaleSetting time_scale_setting { get; set; }
+    public float GetDeltaTime() {
+        if (time_scale_setting == TimeScaleSetting.scaled_time) {
+            return Time.deltaTime;
+        } else if (time_scale_setting == TimeScaleSetting.unscaled_time) {
+            return Time.unscaledDeltaTime;
+        } else {
+            Debug.LogError($"Unhandled TimeScaleSetting '{time_scale_setting}'"); 
+            return Time.deltaTime;;
+        }
+    }
+
     // ////////// debug fields /////////
     // public ActionCode debug_action_input = ActionCode.none;
     // public bool debug_attack_input, debug_can_attack, debug_weapon_isnull, debug_full_auto, debug_reloading, debug_sprint_input, debug_pause_blocked;
@@ -383,23 +395,24 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void UpdateCrouch(bool crouch) {
+        float deltaTime = GetDeltaTime(); 
         if (crouch_locked_remaining > 0) {
             crouch = true;
-            crouch_locked_remaining -= Time.deltaTime;
+            crouch_locked_remaining -= deltaTime;
         }
         if (crouch_dive_remaining > 0) {
-            crouch_dive_remaining -= Time.deltaTime;
+            crouch_dive_remaining -= deltaTime;
             crouch_percent = 1f;
         } else if (vault_over_remaining > 0) {
-            vault_over_remaining -= Time.deltaTime;
+            vault_over_remaining -= deltaTime;
             if (vault_over_remaining <= 0f) {
                 FinishVaultOver();
             }
         } else if (crouch) {
-            if (crouch_locked_remaining > 0) { crouch_locked_remaining -= Time.deltaTime; }
-            crouch_percent += crouch_rate * Time.deltaTime;
+            if (crouch_locked_remaining > 0) { crouch_locked_remaining -= deltaTime; }
+            crouch_percent += crouch_rate * deltaTime;
         } else {
-            crouch_percent -= uncrouch_rate * Time.deltaTime;
+            crouch_percent -= uncrouch_rate * deltaTime;
         }
         float current_height = (crouch_height * crouch_percent) + (uncrouched_height * (1 - crouch_percent));
         crouch_target.position = new Vector3(crouch_target.position.x, current_height, crouch_target.position.z);
@@ -582,7 +595,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected void UpdatePauseAttackLock() {
-        _attack_paused_locked_for -= Time.deltaTime;
+        _attack_paused_locked_for -= GetDeltaTime();
         if (_attack_paused_locked_for <= 0f) {
             _attack_paused_locked_for = 0f;
         }

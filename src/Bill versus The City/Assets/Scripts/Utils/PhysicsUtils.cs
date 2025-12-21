@@ -21,4 +21,11 @@ public static class PhysicsUtils {
             && FloatThresholdEqual(a.y, b.y)
             && FloatThresholdEqual(a.z, b.z); 
     }
+    
+    public static float FlatDistance(Vector3 first, Vector3 second) {
+        // negates the Y-axis component before finding the distance between two points
+        first = new Vector3(first.x, 0f, first.z);
+        second = new Vector3(second.x, 0f, second.z);
+        return Vector3.Distance(first, second);
+    }
 }

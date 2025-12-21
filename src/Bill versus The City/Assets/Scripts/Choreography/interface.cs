@@ -28,6 +28,26 @@ public abstract class AbstractChoreographyStep : MonoBehaviour, IChoreographySte
     }
     public virtual void Complete() { choreography_complete = true; }
     
+    public virtual bool activate_when_skipped { get => false; }
+    public void SkipStep(IChoreography choreography) {
+        if (!active) {
+            if (activate_when_skipped) {
+                Activate(choreography);
+            } else {
+                active = true;
+                this.choreography = choreography;
+            }
+        }
+        ImplementSkip();
+        if (!choreography_complete) {
+            Complete();
+        }
+    }
+
+    protected virtual void ImplementSkip() {
+        // do nothing by default
+    }
+    
     public virtual void OnChoreographyStart(IChoreography choreography) { /* do nothing by default */ }
     public virtual void OnChoreographyComplete(IChoreography choreography) { /* do nothing by default */ }
 
@@ -56,6 +76,7 @@ public interface IChoreographyStep {
 
     public void Activate(IChoreography choreography);
     public void Complete();
+    public void SkipStep(IChoreography choreography);
     public void OnChoreographyStart(IChoreography choreography);
     public void OnChoreographyComplete(IChoreography choreography);
 }

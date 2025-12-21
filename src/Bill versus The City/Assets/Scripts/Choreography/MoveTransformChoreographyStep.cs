@@ -16,7 +16,7 @@ public class MoveTransformChoreographyStep : AbstractChoreographyStep {
     void Update() {
         if (!active || choreography_complete) { return; } // if the choreography step has not yet been activated, or was already completed, do nothing.
 
-        float dist = FlatDistance(destination.position, moved_character.position);
+        float dist = PhysicsUtils.FlatDistance(destination.position, moved_character.position);
         if (dist <= arrival_threashold) {
             Complete();
             return;
@@ -25,12 +25,11 @@ public class MoveTransformChoreographyStep : AbstractChoreographyStep {
         Debug.LogWarning($"TODO --- implement rotation???"); // TODO --- remove debug
         Vector3 move_direction = destination.position - moved_character.transform.position;
         move_direction = new Vector3(move_direction.x, 0f, move_direction.z).normalized;
-        moved_character.position += move_direction * speed * Time.deltaTime;
+        moved_character.position += move_direction * speed * Time.unscaledDeltaTime;
     }
 
-    private float FlatDistance(Vector3 a, Vector3 b) {
-        a = new Vector3(a.x, 0, a.z);
-        b = new Vector3(b.x, 0, b.z);
-        return Vector3.Distance(a, b);
+    protected override void ImplementSkip() {
+        base.ImplementSkip();
+        moved_character.position = destination.position;
     }
 }

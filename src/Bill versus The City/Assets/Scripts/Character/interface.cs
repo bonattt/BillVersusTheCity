@@ -296,3 +296,24 @@ public interface IReloadSubscriber {
     public void ReloadFinished(IReloadManager manager, IFirearm weapon);
     public void ReloadCancelled(IReloadManager manager, IFirearm weapon);
 }
+
+
+public interface IChangableTimeScale {
+
+    public TimeScaleSetting time_scale_setting { get; set; }
+    public float GetDeltaTime() {
+        if (time_scale_setting == TimeScaleSetting.scaled_time) {
+            return Time.deltaTime;
+        } else if (time_scale_setting == TimeScaleSetting.unscaled_time) {
+            return Time.unscaledDeltaTime;
+        } else {
+            Debug.LogError($"Unhandled TimeScaleSetting '{time_scale_setting}'"); 
+            return Time.deltaTime;;
+        }
+    }
+}
+
+public enum TimeScaleSetting {
+    scaled_time,
+    unscaled_time,
+}

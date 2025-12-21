@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Choreography : MonoBehaviour, IChoreography {
@@ -33,6 +34,8 @@ public class Choreography : MonoBehaviour, IChoreography {
             SetCameraMode();
         }
     }
+
+    public ChoreographyMenuCtrl menu_ctrl { get; private set; }
 
     private Vector2 _cached_camera_offset = new Vector2(0, 0); // cached value from camera before choreography starts, so it can be restored
     private Vector2 _camera_offset = new Vector2(0, 0);
@@ -71,6 +74,8 @@ public class Choreography : MonoBehaviour, IChoreography {
     }
     private bool cached_combat_enabled;
     public bool debug__cached_combat_enabled;
+
+    public bool debug__skip_choreography;
     public void Activate() {
         inst = this;
         active = true;
@@ -80,8 +85,12 @@ public class Choreography : MonoBehaviour, IChoreography {
         sequential_choreography.Activate(this);
         SetCameraMode();
 
-        debug__cached_combat_enabled = cached_combat_enabled;
+        // Open Menu
+        menu_ctrl = MenuManager.inst.OpenChoreography(this);
+
+        // update steps through observer patern
         OnChoreographyStart();
+        debug__cached_combat_enabled = cached_combat_enabled;
     }
     public void Complete() {
         inst = null;
@@ -90,7 +99,20 @@ public class Choreography : MonoBehaviour, IChoreography {
         level.combat_enabled = cached_combat_enabled;
         UnsetCameraMode();
         OnChoreographyComplete();
+        CloseMenus();
     }
+
+    public void CloseMenus() {
+        // closes any menus subject to this Choreography
+        while(MenuManager.inst.IsMenuOpen(menu_ctrl)) {
+            MenuManager.inst.CloseMenu();
+        }
+    }
+    public void SkipChoreography() {
+        sequential_choreography.SkipStep(this);
+        Complete();
+    }
+
     public void ActivateEffect() => Activate();
     public void Interact(GameObject actor) => Activate();
 
@@ -112,6 +134,11 @@ public class Choreography : MonoBehaviour, IChoreography {
 
 
     void Update() {
+        if (debug__skip_choreography) {
+            debug__skip_choreography = false;
+            SkipChoreography();
+            return;
+        }
         if (play_on_start) {
             Activate();
             play_on_start = false;
@@ -141,6 +168,7 @@ public class Choreography : MonoBehaviour, IChoreography {
                 camera_script.override_camera_follow = true;
                 camera_script.camera_follow_override = CameraFollowMode.target;
                 camera_script.camera_offset = camera_offset;
+                camera_script.time_scale_setting = TimeScaleSetting.unscaled_time;
                 break;
 
             case ChoreographyCameraMode.follow_target:
@@ -149,17 +177,20 @@ public class Choreography : MonoBehaviour, IChoreography {
                 cached_camera_follow_target = camera_script.target;
                 camera_script.target = camera_follow_target;
                 camera_script.camera_offset = camera_offset;
+                camera_script.time_scale_setting = TimeScaleSetting.unscaled_time;
                 break;
 
             case ChoreographyCameraMode.manual:
                 camera_script.override_camera_follow = true;
                 camera_script.camera_follow_override = CameraFollowMode.choreography;
                 camera_script.camera_offset = camera_offset;
+                camera_script.time_scale_setting = TimeScaleSetting.unscaled_time;
                 break;
         }
     }
     protected void UnsetCameraMode() {
         camera_script.camera_offset = _cached_camera_offset;
+        camera_script.time_scale_setting = TimeScaleSetting.unscaled_time;
         if (camera_script != null && cached_camera_follow_target != null) {
             camera_script.target = cached_camera_follow_target;
             cached_camera_follow_target = null;

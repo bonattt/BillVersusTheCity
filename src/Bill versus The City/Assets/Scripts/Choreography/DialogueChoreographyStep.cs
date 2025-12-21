@@ -5,6 +5,8 @@ public class DialogueChoreographyStep : AbstractChoreographyStep, IGameEventEffe
     public string dialogue_file_path;
 
     private DialogueController opened_dialogue = null;
+    
+    public override bool activate_when_skipped { get => false; }
 
     public override void Activate(IChoreography choreography) {
         base.Activate(choreography);

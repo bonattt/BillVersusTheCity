@@ -9,6 +9,7 @@ public class SimultaneousChoreographyStep : AbstractChoreographyStep {
 
     public int debug__completed = -1;
 
+    public override bool activate_when_skipped { get => false; }
     public override void Activate(IChoreography choreography_) {
         base.Activate(choreography_);
         foreach (AbstractChoreographyStep step in choreography_steps) {
@@ -19,12 +20,20 @@ public class SimultaneousChoreographyStep : AbstractChoreographyStep {
     void Update() {
         if (!active || choreography_complete) { return; }
 
-        if (AllStepsComplete()) {
+        if (AreAllStepsComplete()) {
             Complete();
         }
     }
 
-    public bool AllStepsComplete() {
+    protected override void ImplementSkip() {
+        base.ImplementSkip(); 
+        foreach (AbstractChoreographyStep step in choreography_steps) {
+            if (step.choreography_complete) { continue; } // don't call skip on steps already completed
+            step.SkipStep(this.choreography);
+        }
+    }
+
+    public bool AreAllStepsComplete() {
         debug__completed = 0;
         foreach (AbstractChoreographyStep step in choreography_steps) {
             if (!step.choreography_complete) { return false; }

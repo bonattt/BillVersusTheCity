@@ -58,7 +58,7 @@ public class MoveVehicleStep : AbstractChoreographyStep
         float distance_to = DistanceToDestination();
         if (stop_profile == VehicleMovementProfile.acceleration && _stopping_distance >= distance_to) {
             // nearing target, start decellerating
-            delta_v = movement_direction * stop_deceleration * Time.deltaTime;
+            delta_v = movement_direction * stop_deceleration * Time.unscaledDeltaTime;
             if (delta_v.magnitude > velocity.magnitude) {
                 velocity = Vector3.zero;
                 debug.movement_stage = "stopped";
@@ -70,7 +70,7 @@ public class MoveVehicleStep : AbstractChoreographyStep
         }
         else if (start_profile == VehicleMovementProfile.acceleration && velocity.magnitude < base_movement_speed) {
             // accelerate up to target speed
-            delta_v = movement_direction * start_acceleration * Time.deltaTime;
+            delta_v = movement_direction * start_acceleration * Time.unscaledDeltaTime;
             velocity += delta_v;
             debug.movement_stage = "acceleration";
             _stopping_distance = CalculateStoppingDistance(velocity.magnitude);
@@ -80,8 +80,13 @@ public class MoveVehicleStep : AbstractChoreographyStep
             debug.movement_stage = "move";
         } 
         Debug.DrawRay(target_to_move.position, movement_direction * 5, Color.red);
-        target_to_move.position += velocity * Time.deltaTime;
+        target_to_move.position += velocity * Time.unscaledDeltaTime;
         // TODO --- implement acceleration
+    }
+
+    protected override void ImplementSkip() {
+        base.ImplementSkip();
+        target_to_move.position = destination.position;
     }
 
     private float CalculateStoppingDistance() => CalculateStoppingDistance(base_movement_speed);

@@ -8,6 +8,11 @@ public class GameEventChoreographyStep : AbstractChoreographyStep {
     public MonoBehaviour init_game_event;
     private IGameEventEffect game_event;
 
+    [Tooltip("")]
+    [SerializeField]
+    private bool _activate_when_skipped = true;
+    public override bool activate_when_skipped { get => _activate_when_skipped; }
+
     protected override void Start() {
         base.Start();
         game_event = init_game_event.GetComponent<IGameEventEffect>();
