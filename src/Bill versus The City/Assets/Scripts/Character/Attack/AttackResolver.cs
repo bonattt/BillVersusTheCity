@@ -130,6 +130,7 @@ public static class AttackResolver {
     public static float RandomDamage(IAttack attack, Vector3 hit_location) {
         float random_damage = UnityEngine.Random.Range(attack.attack_damage_min, attack.attack_damage_max);
         float falloff = GetDamageFalloff(attack, hit_location);
+        Debug.LogWarning($"DAMAGE FALLOFF '{falloff}'"); // TODO --- remove debug
         random_damage -= falloff;
         return Mathf.Max(1f, random_damage);
     }
@@ -147,7 +148,42 @@ public static class AttackResolver {
         return GetDamageFalloff(attack, distance);
     }
     public static float GetDamageFalloff(IAttack attack, float distance) {
-        return 0; 
+        switch (attack.damage_falloff_function) {
+            case DecayFunction.none:
+                return 0f;
+
+            case DecayFunction.constant:
+                return _ConstantDamageFalloff(attack.damage_falloff_rate, distance);
+
+            case DecayFunction.logrithmic:
+                return _LogrithmicDamageFalloff(attack.damage_falloff_rate, distance);
+
+            case DecayFunction.linear:
+                return _LinearDamageFalloff(attack.damage_falloff_rate, distance);
+
+            case DecayFunction.exponential:
+                return _ExponentialDamageFalloff(attack.damage_falloff_rate, distance);
+
+            default:
+                Debug.LogError($"unhandled damage falloff function '{attack.damage_falloff_function}'");
+                return 0f;
+        }
+    }
+
+    public static float _LinearDamageFalloff(float rate, float distance) {
+        return distance * rate; // TODO ---    
+    }
+
+    public static float _LogrithmicDamageFalloff(float rate, float distance) {
+        return Mathf.Log(distance, rate); // TODO ---    
+    }
+
+    public static float _ExponentialDamageFalloff(float rate, float distance) {
+        return Mathf.Pow(distance, rate); // TODO ---    
+    }
+
+    public static float _ConstantDamageFalloff(float rate, float distance) {
+        return rate;   
     }
 
     public static float CalculateDamageSplit(IAttack attack, IArmor armor, Vector3 hit_location) {
@@ -206,7 +242,7 @@ public static class AttackResolver {
 
     public static void ResolveArmorBreak(IAttack attack, 
             ICharacterStatus status, Vector3 hit_location) {
-        // Debug.Log($"Armor '{status.armor}' Broken by {attack}!!!");
+        Debug.Log($"Armor '{status.armor}' Broken by {attack}!!!");
         // TODO !
     }
 
