@@ -213,7 +213,7 @@ public static class DifficultyTemplates {
         {DifficultySettings.PLAYER_HEALTH, 0.75f},
         {DifficultySettings.PLAYER_RELOAD_SPEED, 1f},
         {DifficultySettings.ENEMY_ARMOR, 3f},
-        {DifficultySettings.ENEMY_HEALTH, 1.5f},
+        {DifficultySettings.ENEMY_HEALTH, 1.25f},
         {DifficultySettings.ENEMY_REACTION_TIME, 0.5f},
         {DifficultySettings.ENEMY_RUN_SPEED, 1f},
         {DifficultySettings.ENEMY_RELOAD_SPEED, 1f},

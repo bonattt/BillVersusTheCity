@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: FragExplosion
   m_EditorClassIdentifier: 
   explosion_volume: 10
-  explosion_radius: 5
+  explosion_radius: 6
   explosion_effects:
   - {fileID: 2772534263611651985, guid: 398af651258f8ef48976783a0179738e, type: 3}
   _damage_falloff: 30
-  _attack_damage_min: 125
-  _attack_damage_max: 125
+  _attack_damage_min: 200
+  _attack_damage_max: 200
   _armor_effectiveness: 1
   _ignore_armor: 0
+  _damage_falloff_rate: 25
+  _damage_falloff_function: 2
   _item_id: frag_explosion
   _item_name: frag explosion
   _item_icon: {fileID: 0}

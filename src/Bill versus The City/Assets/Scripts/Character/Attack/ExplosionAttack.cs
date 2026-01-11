@@ -8,7 +8,9 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "Explosion", menuName = "Data/Explosion")]
 public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
 
+    [Tooltip("The volume of the game-sound that enemies may hear when the explosion detonates.")]
     public float explosion_volume = 10f;
+    [Tooltip("Max-radius the explosion may damage at.")]
     public float explosion_radius;
     public List<GameObject> explosion_effects;
 
@@ -34,7 +36,7 @@ public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
     [FormerlySerializedAs("_damage_falloff")]
     public float _damage_falloff_rate;
     public float damage_falloff_rate => _damage_falloff_rate;
-    public DecayFunction _damage_falloff_function { get; }
+    public DecayFunction _damage_falloff_function;
     public DecayFunction damage_falloff_function => _damage_falloff_function;
 
     // implement IWeapon

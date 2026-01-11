@@ -80,6 +80,7 @@ public class Explosion : MonoBehaviour, IGameEventEffect
     }
     private void DealExplosionDamage()
     {
+        explosion_attack.attack_from = raycast_from.position;
         foreach (IAttackTarget target in GetExplosionHits()) {
             AttackResolver.ResolveAttackHit(explosion_attack, target, target.GetHitTarget().transform.position);
         }

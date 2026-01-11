@@ -127,12 +127,27 @@ public static class AttackResolver {
         return attack_damage;
     }
 
+    public static float MinDamage(IAttack attack, Vector3 hit_location) {
+        // returns the mean value of the attack's damage.
+        float damage = attack.attack_damage_min;
+        return ApplyFalloffToDamage(damage, attack, hit_location);
+    }
+
+    public static float MeanDamage(IAttack attack, Vector3 hit_location) {
+        // returns the mean value of the attack's damage.
+        float damage = (attack.attack_damage_min + attack.attack_damage_max) / 2;
+        return ApplyFalloffToDamage(damage, attack, hit_location);
+    }
+
+    public static float MaxDamage(IAttack attack, Vector3 hit_location) {
+        // returns the mean value of the attack's damage.
+        float damage = attack.attack_damage_max;
+        return ApplyFalloffToDamage(damage, attack, hit_location);
+    }
+
     public static float RandomDamage(IAttack attack, Vector3 hit_location) {
         float random_damage = UnityEngine.Random.Range(attack.attack_damage_min, attack.attack_damage_max);
-        float falloff = GetDamageFalloff(attack, hit_location);
-        Debug.LogWarning($"DAMAGE FALLOFF '{falloff}'"); // TODO --- remove debug
-        random_damage -= falloff;
-        return Mathf.Max(1f, random_damage);
+        return ApplyFalloffToDamage(random_damage, attack, hit_location);
     }
     // public static float RandomDamage(IAttack attack) {
     //     return RandomDamage(attack, distance:0f);
@@ -143,8 +158,15 @@ public static class AttackResolver {
     //     return Mathf.Max(1f, random_damage);
     // } 
 
+    public static float ApplyFalloffToDamage(float base_damage, IAttack attack, Vector3 hit_location) {
+        float falloff = GetDamageFalloff(attack, hit_location);
+        Debug.LogWarning($"DAMAGE FALLOFF '{falloff}'"); // TODO --- remove debug
+        return Mathf.Max(1f, base_damage - falloff);
+    }
+
     public static float GetDamageFalloff(IAttack attack, Vector3 hit_location) {
         float distance = PhysicsUtils.FlatDistance(attack.attack_from, hit_location);
+        Debug.LogWarning($"GetDamageFalloff {attack.attack_from} --> {hit_location}");// TODO --- remove debug
         return GetDamageFalloff(attack, distance);
     }
     public static float GetDamageFalloff(IAttack attack, float distance) {
