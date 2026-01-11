@@ -153,10 +153,12 @@ public class LevelConfig : MonoBehaviour {
             return null; // no objective override
         }
         try {
+            if ("".Equals(override_objective_display[objective_display_index])) {
+                return null;
+            }
             return override_objective_display[objective_display_index];
         } catch (IndexOutOfRangeException) {
-            string objectives_msg = "";
-            Debug.LogError($"invalid objective override index {objective_display_index}. objectives: {objectives_msg}");
+            // no more overrides for objective, use default objectives.
             return null;
         }
     }
@@ -169,11 +171,6 @@ public class LevelConfig : MonoBehaviour {
             objective_display_index = 0;
         }
         objective_display_index += 1;
-
-        if (objective_display_index >= override_objective_display.Count) {
-            Debug.LogWarning($"objective override display index overflow, reset to max value {objective_display_index}");
-            objective_display_index = override_objective_display.Count - 1;
-        }
     }
 
     private ISFXSounds LoadLevelMusic() {
@@ -483,7 +480,15 @@ public class LevelConfig : MonoBehaviour {
         }
     }
 
-    public bool has_objective_display_override => override_objective_display != null && override_objective_display.Count > 0;
+    public bool has_objective_display_override { 
+        get {
+            if (override_objective_display == null) return false; // no overrides at all
+            if (override_objective_display.Count <= objective_display_index) return false; // out of range, no more overrides left
+            string override_msg = override_objective_display[objective_display_index];
+            if (override_msg == null || override_msg.Equals("")) return false; // skip empty overrides
+            return true;
+        }
+    }
 
     public bool sequential_conditions_completed {
         get {

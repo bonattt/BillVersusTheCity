@@ -277,6 +277,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 61197463}
+  _activate_when_skipped: 1
 --- !u!1 &161634486
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,6 +2131,7 @@ MonoBehaviour:
   - {fileID: 1227932959}
   - {fileID: 1734763219}
   debug__cached_combat_enabled: 0
+  debug__skip_choreography: 0
 --- !u!1001 &983368390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2462,10 +2464,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 338529279}
-    - target: {fileID: 7771750986634287957, guid: 0549c8575058e5444a97a8d118c709c6, type: 3}
-      propertyPath: default_behavior
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2675,6 +2673,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 1227932960}
+  _activate_when_skipped: 1
 --- !u!114 &1227932960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3729,6 +3728,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 1734763218}
+  _activate_when_skipped: 1
 --- !u!1 &1759687221
 GameObject:
   m_ObjectHideFlags: 0

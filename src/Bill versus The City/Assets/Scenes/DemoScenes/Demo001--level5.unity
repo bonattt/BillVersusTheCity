@@ -2458,6 +2458,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 813334247}
+  _activate_when_skipped: 1
 --- !u!1001 &818346225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3225,6 +3226,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 1048802207}
+  _activate_when_skipped: 1
 --- !u!1 &1051668088
 GameObject:
   m_ObjectHideFlags: 0
@@ -4355,6 +4357,22 @@ PrefabInstance:
       value: map--bills-house
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: override_objective_display.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: override_objective_display.Array.data[0]
+      value: get groceries
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: override_objective_display.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
+      propertyPath: override_objective_display.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: stop_police_timer_when_objectives_complete
       value: 0
       objectReference: {fileID: 0}
@@ -4550,6 +4568,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 1457482128}
+  _activate_when_skipped: 1
 --- !u!1 &1464551219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4854,6 +4873,7 @@ MonoBehaviour:
   _active: 0
   _choreography_complete: 0
   init_game_event: {fileID: 1498269578}
+  _activate_when_skipped: 1
 --- !u!1001 &1509369551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6346,6 +6366,7 @@ MonoBehaviour:
   - {fileID: 1048802208}
   - {fileID: 434725011}
   debug__cached_combat_enabled: 0
+  debug__skip_choreography: 0
 --- !u!1001 &1894753421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6688,6 +6709,7 @@ MonoBehaviour:
   - {fileID: 1547606360}
   - {fileID: 950211401}
   debug__cached_combat_enabled: 0
+  debug__skip_choreography: 0
 --- !u!1001 &2021975882
 PrefabInstance:
   m_ObjectHideFlags: 0
