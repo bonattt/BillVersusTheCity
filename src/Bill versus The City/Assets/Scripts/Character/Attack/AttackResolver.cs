@@ -171,15 +171,19 @@ public static class AttackResolver {
     }
 
     public static float _LinearDamageFalloff(float rate, float distance) {
-        return distance * rate; // TODO ---    
+        return distance * rate; 
     }
 
     public static float _LogrithmicDamageFalloff(float rate, float distance) {
-        return Mathf.Log(distance, rate); // TODO ---    
+        if (distance < 1) { return 0; } // return 0 if log would be negative
+        float e = Mathf.Exp(1f); // constant `e` for Natural Log
+        return Mathf.Log(distance, e) * rate;
     }
 
     public static float _ExponentialDamageFalloff(float rate, float distance) {
-        return Mathf.Pow(distance, rate); // TODO ---    
+        float e = Mathf.Exp(1f); // constant `e` for Natural exponent
+        Debug.LogWarning($"ExponentialDamageFalloff(rate:{rate}, distance:{distance}) => {Mathf.Pow(distance, e) * rate}"); // TODO --- remove debug
+        return Mathf.Pow(e, distance) * rate;
     }
 
     public static float _ConstantDamageFalloff(float rate, float distance) {
