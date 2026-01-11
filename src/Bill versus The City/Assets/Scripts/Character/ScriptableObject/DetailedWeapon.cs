@@ -10,24 +10,24 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     public AttackStartPosition attack_start_position { get => AttackStartPosition.bullet; }
     public string _name;
     public string _item_id;
-    public string item_id { get => _item_id; }
+    public string item_id => _item_id;
     public Sprite _item_icon;
     
     public WeaponSlot _weapon_slot;
-    public WeaponSlot weapon_slot { get { return _weapon_slot; } }
+    public WeaponSlot weapon_slot => _weapon_slot; 
     public WeaponClass _weapon_class;
-    public WeaponClass weapon_class { get { return _weapon_class; }}
+    public WeaponClass weapon_class => _weapon_class;
 
     public WeaponSetting[] _weapon_settings;
     private int current_setting = 0;
-    public WeaponSetting weapon_setting { get { return _weapon_settings[current_setting]; }}
+    public WeaponSetting weapon_setting => _weapon_settings[current_setting];
 
     public BulletAttributes bullet_effect;
 
     public int _ammo_capacity = 30;
     public int _reload_amount = 30;
     public float _reload_time;
-    public bool is_consumable { get => false; }
+    public bool is_consumable => false; 
 
     // accuracy
     public float _time_to_aim = 1f;
@@ -44,111 +44,55 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     // effects
     public string _gunshot_sound, _empty_gunshot_sound, _reload_start_sound, _reload_complete_sound;
 
-    public GameObject bullet_prefab { get => bullet_effect.bullet_prefab; }
-    public string item_name { get => _name; }
-    public Sprite item_icon { get => _item_icon; }
+    public GameObject bullet_prefab => bullet_effect.bullet_prefab;
+    public string item_name => _name;
+    public Sprite item_icon => _item_icon;
 
-    public AmmoType ammo_type { 
-        get { return bullet_effect.ammo_type; } 
-    }
+    public AmmoType ammo_type => bullet_effect.ammo_type; 
     
-    public int ammo_drop_size { 
-        get { return bullet_effect.ammo_drop_size; }
-    }
-    public int ammo_capacity { 
-        get { return _ammo_capacity; } 
-    }
-    public int reload_amount { 
-        get { return _reload_amount; } 
-    }
-    public float reload_time { 
-        get { return _reload_time; } 
-    }
+    public int ammo_drop_size => bullet_effect.ammo_drop_size;
+    public int ammo_capacity => _ammo_capacity; 
+    public int reload_amount => _reload_amount; 
+    public float reload_time => _reload_time; 
     public int current_ammo { get; set; }
 
     // rate of fire
-    public FiringMode firing_mode { 
-        get { return weapon_setting.firing_mode; }
-    }
-    public bool auto_fire { 
-        // check ammo to prevent fully-auto "empty weapon" click
-        get { return firing_mode == FiringMode.full_auto && current_ammo > 0; }
-    }
-    public float semi_auto_fire_rate { 
-        get { return weapon_setting.fire_rate; }
-    }
-    public float full_auto_fire_rate { 
-        get { return weapon_setting.fire_rate; }
-    }
-    public int n_shots {
-        get { return bullet_effect.n_shots; }
-    }
+    public FiringMode firing_mode => weapon_setting.firing_mode;
+    // check ammo to prevent fully-auto "empty weapon" click
+    public bool auto_fire => firing_mode == FiringMode.full_auto && current_ammo > 0;
+    public float semi_auto_fire_rate => weapon_setting.fire_rate;
+    public float full_auto_fire_rate => weapon_setting.fire_rate;
+    public int n_shots=> bullet_effect.n_shots;
 
     // accuracy
-    public float aimed_inaccuracy { 
-        get { return bullet_effect.aimed_inaccuracy; }
-    }
-    public float initial_inaccuracy { 
-        get { return bullet_effect.initial_inaccuracy; }
-    }
-    public float time_to_aim { 
-        get { return _time_to_aim; }
-    }
-    public float recoil_inaccuracy { 
-        get { return _recoil_inaccuracy; }
-    }
-    public float recoil_max { 
-        get { return _recoil_max; }
-    }
-    public float recoil_recovery { 
-        get { return _recoil_recovery; }
-    }
-    public float recoil_shake { 
-        get { return _recoil_shake; }
-    }
+    public float aimed_inaccuracy => bullet_effect.aimed_inaccuracy;
+    public float initial_inaccuracy => bullet_effect.initial_inaccuracy;
+    public float time_to_aim => _time_to_aim;
+    public float recoil_inaccuracy => _recoil_inaccuracy;
+    public float recoil_max => _recoil_max;
+    public float recoil_recovery => _recoil_recovery;
+    public float recoil_shake => _recoil_shake;
     // aiming
-    public float aim_zoom {
-        get { return _aim_zoom; }
-    }
-    public float aim_move_speed { 
-        get { return _aim_move_speed; }
-    }
-    public float max_zoom_range { 
-        get { return _max_zoom_range; }
-    }
+    public float aim_zoom => _aim_zoom;
+    public float aim_move_speed => _aim_move_speed;
+    public float max_zoom_range => _max_zoom_range;
     
     // damage
-    public float bullet_speed { 
-        get { return bullet_effect.bullet_speed; }
-    }
-    public float weapon_damage_min { 
-        get { return bullet_effect.weapon_damage_min; }
-    }
-    public float weapon_damage_max { 
-        get { return bullet_effect.weapon_damage_max; }
-    }
-    public float armor_effectiveness { 
-        get { return bullet_effect.armor_effectiveness; }
-    }
-    public float damage_falloff_rate {
-        get { return bullet_effect.damage_falloff_rate; }
-    }
+    public float bullet_speed => bullet_effect.bullet_speed;
+    public float weapon_damage_min => bullet_effect.weapon_damage_min;
+    public float weapon_damage_max => bullet_effect.weapon_damage_max;
+    public float armor_effectiveness => bullet_effect.armor_effectiveness; 
+    public float damage_falloff_rate => bullet_effect.damage_falloff_rate; 
+    public DecayFunction damage_falloff_function => bullet_effect.damage_falloff_function; 
+    public Vector3 attack_from { get; set; }
 
-    public string attack_sound {
-        get { return _gunshot_sound; }
-    }
+    public string attack_sound => _gunshot_sound;
     
-    public string empty_gunshot_sound { 
-        get { return _empty_gunshot_sound; }
-    }
+    public string empty_gunshot_sound => _empty_gunshot_sound;
 
-    public string reload_start_sound {
-        get { return _reload_start_sound; }
-    }
+    public string reload_start_sound => _reload_start_sound;
 
-    public string reload_complete_sound {
-        get { return _reload_complete_sound; }
-    }
+    public string reload_complete_sound => _reload_complete_sound;
 
     public override string ToString() {
         return $"DetailedWeapon<{_name}>";
@@ -199,8 +143,6 @@ public class DetailedWeapon : ScriptableObject, IFirearm
             bullet.weapon = this;
             bullet.attack_damage_max = weapon_damage_max;
             bullet.attack_damage_min = weapon_damage_min;
-            bullet.armor_effectiveness = armor_effectiveness;
-            bullet.damage_falloff_rate = damage_falloff_rate;
             bullet.attacker = attacker;
         }
         current_ammo -= 1;

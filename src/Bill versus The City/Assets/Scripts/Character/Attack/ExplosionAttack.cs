@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Explosion", menuName = "Data/Explosion")]
 public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
@@ -14,8 +15,10 @@ public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
     // implements IAttack
     public IAttackTarget attacker { get; set; }
     public IWeapon weapon { get => this; }
+    
+    [Obsolete("use _damage_falloff_rate")]
+    [HideInInspector]
     public float _damage_falloff;
-    public float damage_falloff { get => _damage_falloff; }
     public float _attack_damage_min;
     public float attack_damage_min { get => _attack_damage_min; }
     public float _attack_damage_max;
@@ -26,7 +29,13 @@ public class ExplosionAttack : ScriptableObject, IAttack, IWeapon {
     public bool ignore_armor { get => _ignore_armor; }
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
-
+    
+    public Vector3 attack_from { get; set; }
+    [FormerlySerializedAs("_damage_falloff")]
+    public float _damage_falloff_rate;
+    public float damage_falloff_rate => _damage_falloff_rate;
+    public DecayFunction _damage_falloff_function { get; }
+    public DecayFunction damage_falloff_function => _damage_falloff_function;
 
     // implement IWeapon
     public string _item_id = "explosion";

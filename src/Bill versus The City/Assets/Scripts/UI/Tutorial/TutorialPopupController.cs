@@ -79,7 +79,7 @@ public class TutorialPopupController : AbstractCloseEventMenu
         }
     }
 
-    public void CloseMenu() {
+    public override void CloseMenu() {
         if (skip_this_tutorial.value) {
             GameSettings.inst.general_settings.skipped_tutorials.Add(tutorial_name);
         }
@@ -87,10 +87,9 @@ public class TutorialPopupController : AbstractCloseEventMenu
             GameSettings.inst.general_settings.skip_all_tutorials = true;
         }
         SaveProfile.inst.save_file.SaveSettings(); // skip-tutorials is stored in settings
-        MenuManager.inst.CloseMenu();
+        base.CloseMenu();
     }
 }
-
 
 public struct TutorialConfig {
     // struct for containing tutorial data

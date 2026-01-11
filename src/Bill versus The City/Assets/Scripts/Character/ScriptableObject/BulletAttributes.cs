@@ -26,6 +26,7 @@ public class BulletAttributes : ScriptableObject {
     public float weapon_damage_max = 50f;
     public float armor_effectiveness = 1f;
     public float damage_falloff_rate = 0.25f;
+    public DecayFunction damage_falloff_function = DecayFunction.linear;
     public GameObject bullet_prefab;
     
 

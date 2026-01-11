@@ -34,14 +34,15 @@ public interface IAttack {
     // TODO
     public IAttackTarget attacker { get; }
     public IWeapon weapon { get; }
-    public float damage_falloff { get; }
+    public float damage_falloff_rate { get => weapon.damage_falloff_rate; }
+    public DecayFunction damage_falloff_function { get => weapon.damage_falloff_function; }
+    public Vector3 attack_from { get; set; } // where distance to target should be calculated from
     public float attack_damage_min { get; }
     public float attack_damage_max { get; }
     public float armor_effectiveness { get; }
     public bool ignore_armor { get; }
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
-
 }
 
 public class MeleeAttack : IAttack {
@@ -59,7 +60,9 @@ public class MeleeAttack : IAttack {
     public bool ignore_armor { get; set; }
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
-    public float damage_falloff { get => 0; }
+    public float damage_falloff_rate { get => 0; }
+    public DecayFunction damage_falloff_function { get => DecayFunction.constant; }
+    public Vector3 attack_from { get; set; }
 
     private HashSet<IAttackTarget> _hit_targets = new HashSet<IAttackTarget>();
     public HashSet<IAttackTarget> hit_targets { get => _hit_targets; }
@@ -84,6 +87,7 @@ public class FirearmAttack : IAttack
     public float final_health_damage { get; set; }
     public float final_armor_damage { get; set; }
     public float damage_falloff { get; set; }
+    public Vector3 attack_from { get; set; }
 }
 
 public interface IArmor : IItem, IDifficultyAdjusted {
@@ -137,6 +141,9 @@ public interface IWeapon : IItem {
     public float weapon_damage_max { get; }
     public float armor_effectiveness { get; }
     public string attack_sound { get; }
+    public float damage_falloff_rate { get; }
+    public DecayFunction damage_falloff_function { get; }
+    
 
     public bool AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker); // returns if shot fired
     public bool AttackHold(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker); // returns if shot fired
@@ -209,7 +216,6 @@ public interface IFirearm : IWeapon
     // public float weapon_damage_min { get; } // moved to IWeapon from IFirearm
     // public float weapon_damage_max { get; } // moved to IWeapon from IFirearm
     // public float armor_effectiveness { get; } // moved to IWeapon from IFirearm
-    public float damage_falloff_rate { get; }
 
     // aiming
     public float aim_zoom { get; }
@@ -311,6 +317,14 @@ public interface IChangableTimeScale {
             return Time.deltaTime;;
         }
     }
+}
+
+public enum DecayFunction {
+    none,
+    constant,
+    linear,
+    logrithmic,
+    exponential,
 }
 
 public enum TimeScaleSetting {

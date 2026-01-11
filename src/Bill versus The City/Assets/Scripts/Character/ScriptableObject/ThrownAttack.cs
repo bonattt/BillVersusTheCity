@@ -60,7 +60,9 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     // public float weapon_damage_min { get; } // moved to IWeapon from IFirearm
     // public float weapon_damage_max { get; } // moved to IWeapon from IFirearm
     // public float armor_effectiveness { get; } // moved to IWeapon from IFirearm
-    public float damage_falloff_rate { get => 0f; }
+    public float damage_falloff_rate => 0f; // NOTE: no damage fall off because thrown weapons are for grenades, not something like throwing knives
+    public DecayFunction damage_falloff_function => DecayFunction.none; // NOTE: no damage fall off because thrown weapons are for grenades
+    public Vector3 attack_from { get; set; }
 
     // aiming
     public float aim_zoom { get => 0f; }

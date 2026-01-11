@@ -44,6 +44,10 @@ public class MeleeWeapon : ScriptableObject, IMeleeWeapon
 
     public float _attack_cooldown;
     public float attack_cooldown { get => _attack_cooldown; }
+    
+    public float damage_falloff_rate => 0; 
+    public DecayFunction damage_falloff_function => DecayFunction.none; 
+    public Vector3 attack_from { get; set; }
 
     
     public bool AttackClicked(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {

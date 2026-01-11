@@ -16,9 +16,12 @@ public class Bullet : MonoBehaviour, IBullet
         }
     }
     public IFirearm firearm { get; set; }
+    public Vector3 attack_from { get; set; } // where distance to target should be calculated from
+    public float damage_falloff_rate => firearm.damage_falloff_rate;
+    public DecayFunction damage_falloff_function => firearm.damage_falloff_function;
     public float attack_damage_min { get; set; }
     public float attack_damage_max { get; set; }
-    public float armor_effectiveness { get; set; }
+    public float armor_effectiveness => firearm.armor_effectiveness;
     // public float armor_damage { get; set; }
     public bool ignore_armor { get { return false; }}
     public float final_health_damage { get; set; }
@@ -27,21 +30,20 @@ public class Bullet : MonoBehaviour, IBullet
     public float time_to_live = 30f;
     private float start_time;
     protected Rigidbody rb; 
-    public float damage_falloff_rate = 0f;
-    private Vector3 start_position;
-    public float damage_falloff {
-        get {
-            float distance_from_start = Vector3.Distance(start_position, transform.position);
-            return damage_falloff_rate * distance_from_start;
-        }
-    }
+    // public float damage_falloff_rate = 0f;
+    // public float damage_falloff {
+    //     get {
+    //         float distance_from_start = Vector3.Distance(start_position, transform.position);
+    //         return damage_falloff_rate * distance_from_start;
+    //     }
+    // }
 
     protected static ulong bullet_count = 0;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        start_position = transform.position;
+        attack_from = transform.position;
         start_time = Time.time;
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;

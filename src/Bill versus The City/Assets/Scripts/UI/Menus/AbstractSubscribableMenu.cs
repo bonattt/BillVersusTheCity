@@ -15,7 +15,7 @@ public abstract class AbstractCloseEventMenu : MonoBehaviour, ISubMenu, ICloseEv
     public void AddCloseCallback(IGameEventEffect new_callback) => callbacks.Add(new_callback);
     public abstract void MenuNavigation();
 
-    public void CloseMenu() {
+    public virtual void CloseMenu() {
         MenuManager.inst.CloseMenu(this);
     }
 

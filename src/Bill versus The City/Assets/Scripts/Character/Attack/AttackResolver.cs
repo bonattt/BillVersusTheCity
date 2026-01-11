@@ -57,10 +57,10 @@ public static class AttackResolver {
         float armor_damage = 0f;
         
         if (attack.ignore_armor || status.armor == null) {
-            health_damage = ResolveGunDamageUnarmored(attack, status);
+            health_damage = ResolveGunDamageUnarmored(attack, status, hit_location);
         }
         else if (status.armor.armor_durability <= 0) {
-            health_damage = ResolveGunDamageUnarmored(attack, status);
+            health_damage = ResolveGunDamageUnarmored(attack, status, hit_location);
         }
         else {
             (health_damage, armor_damage) = ResolveGunDamageArmored(attack, status, hit_location);
@@ -121,20 +121,37 @@ public static class AttackResolver {
     }
 
     public static float ResolveGunDamageUnarmored(IAttack attack, 
-            ICharacterStatus status) {
-        float attack_damage = RandomDamage(attack);
+            ICharacterStatus status, Vector3 hit_location) {
+        float attack_damage = RandomDamage(attack, hit_location);
         status.health -= attack_damage;
         return attack_damage;
     }
 
-    public static float RandomDamage(IAttack attack) {
+    public static float RandomDamage(IAttack attack, Vector3 hit_location) {
         float random_damage = UnityEngine.Random.Range(attack.attack_damage_min, attack.attack_damage_max);
-        random_damage -= attack.damage_falloff;
+        float falloff = GetDamageFalloff(attack, hit_location);
+        random_damage -= falloff;
         return Mathf.Max(1f, random_damage);
-    } 
+    }
+    // public static float RandomDamage(IAttack attack) {
+    //     return RandomDamage(attack, distance:0f);
+    // }
+    // {
+    //     
+    //     random_damage -= attack.damage_falloff;
+    //     return Mathf.Max(1f, random_damage);
+    // } 
 
-    public static float CalculateDamageSplit(IAttack attack, IArmor armor) {
-        float og_split = armor.armor_protection - attack.armor_effectiveness;
+    public static float GetDamageFalloff(IAttack attack, Vector3 hit_location) {
+        float distance = PhysicsUtils.FlatDistance(attack.attack_from, hit_location);
+        return GetDamageFalloff(attack, distance);
+    }
+    public static float GetDamageFalloff(IAttack attack, float distance) {
+        return 0; 
+    }
+
+    public static float CalculateDamageSplit(IAttack attack, IArmor armor, Vector3 hit_location) {
+        float og_split = Mathf.Max(0, armor.armor_protection - attack.armor_effectiveness);
         float split = Mathf.Max(0.95f, Mathf.Min(0.05f, og_split));
         if (og_split != split) {
             // Debug.LogWarning($"unbalanced damage split: {og_split} => {split}");  // TODO --- uncomment warning!
@@ -142,9 +159,9 @@ public static class AttackResolver {
         return split;
     }
 
-    public static (float, float, float) CalculateArmorDamage(IAttack attack, IArmor armor) {
-        float total_attack_damage = RandomDamage(attack);
-        float damage_split = CalculateDamageSplit(attack, armor);
+    public static (float, float, float) CalculateArmorDamage(IAttack attack, IArmor armor, Vector3 hit_location) {
+        float total_attack_damage = RandomDamage(attack, hit_location);
+        float damage_split = CalculateDamageSplit(attack, armor, hit_location);
         float attack_damage = total_attack_damage * (1 - damage_split);
         float base_armor_damage = total_attack_damage * damage_split;
         float armor_damage = base_armor_damage * attack.armor_effectiveness;
@@ -162,7 +179,7 @@ public static class AttackResolver {
 
     public static (float, float) ResolveGunDamageArmored(IAttack attack, 
             ICharacterStatus status, Vector3 hit_location) {
-        (float total_attack_damage, float health_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor);
+        (float total_attack_damage, float health_damage, float armor_damage) = CalculateArmorDamage(attack, status.armor, hit_location);
         float overflow_damage;
         float armor_before = status.armor.armor_durability; // TODO --- remove debug code
         float final_armor_damage, final_health_damage; // actual damage dealt, returned for displaying effects
@@ -193,34 +210,35 @@ public static class AttackResolver {
         // TODO !
     }
 
-    public static void AttackMiss(IAttack attack, Vector3 location) {
+    public static void AttackMiss(IAttack attack, Vector3 hit_location) {
 
         foreach (IAttackMissEffect effect in GetMissEffects()) {
-            effect.DisplayEffect(location, attack);
+            effect.DisplayEffect(hit_location, attack);
         }
     }
 
-    public static void AttackEmpty(IFirearm weapon, Vector3 location) {
+    public static void AttackEmpty(IFirearm weapon, Vector3 hit_location) {
         foreach (IFirearmEffect effect in GetEmptyShotEffects()) {
-            effect.DisplayFirearmEffect(location, weapon);
+            effect.DisplayFirearmEffect(hit_location, weapon);
         }
     }
 
-    public static void AttackStart(IAttack attack, Vector3 attack_direction, Vector3 location, bool is_melee_attack = false)
+    public static void AttackStart(IAttack attack, Vector3 attack_direction, Vector3 attack_from, bool is_melee_attack = false)
     {
+        attack.attack_from = attack_from;
         // Displays attack effects for firing a weapon
         if (is_melee_attack)
         {
             foreach (IMeleeAttackEffect effect in GetMeleeEffects())
             {
-                effect.DisplayMeleeEffect(location, attack_direction, attack);
+                effect.DisplayMeleeEffect(attack_from, attack_direction, attack);
             }
         }
         else
         {
             foreach (IAttackShootEffect effect in GetShootEffects())
             {
-                effect.DisplayEffect(location, attack);
+                effect.DisplayEffect(attack_from, attack);
             }
         }
     }
