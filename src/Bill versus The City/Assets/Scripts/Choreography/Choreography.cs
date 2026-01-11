@@ -93,6 +93,7 @@ public class Choreography : MonoBehaviour, IChoreography {
         debug__cached_combat_enabled = cached_combat_enabled;
     }
     public void Complete() {
+        if (complete) { return; } // make complete idempotent
         inst = null;
         complete = true;
         player_controls.controls_locked = false;
