@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class SFXSystem : MonoBehaviour, ISettingsObserver
 { 
@@ -93,10 +94,10 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             Debug.LogWarning("empty sound effect");
             return null;
         }
-        return PlaySound(sound.clip, target, GetVolume(sound));
+        return PlaySound(sound.clip, sound.default_category, target, GetVolume(sound));
     }
 
-    public AudioSource PlaySound(AudioClip audio_clip, Vector3 target, float volume) {
+    public AudioSource PlaySound(AudioClip audio_clip, SoundCategory sound_category, Vector3 target, float volume) {
         if (audio_clip == null) {
             Debug.LogWarning("empty sound effect");
             return null;
@@ -105,6 +106,9 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         audio_source.Play();
         // destroy when sound finishes  
         float clip_length = audio_source.clip.length;
+        VolumeSettingsUpdater updater = audio_source.gameObject.AddComponent<VolumeSettingsUpdater>();
+        updater.sound_category = sound_category;
+        updater.audio_source = audio_source;
         Destroy(audio_source.gameObject, clip_length);
         // NOTE: audio_sources created while paused will linger because this uses unscaled time. There's not easy fix for this, and it's not REALLY a problem, so I'm letting that issue stick around
         return audio_source;
@@ -121,7 +125,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
 
     public void PlayRandomClip(AudioClip[] audio_clips, Vector3 target, float volume) {
         int rand = Random.Range(0, audio_clips.Length);
-        PlaySound(audio_clips[rand], target, volume);
+        PlaySound(audio_clips[rand], SoundCategory.sound_effect, target, volume);
     }
 
     public void PlayRandomClip(ISFXSounds sound_set, Vector3 target) {

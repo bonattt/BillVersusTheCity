@@ -144,6 +144,27 @@ public class MenuManager : MonoBehaviour
     void Update()
     {
         MenuNavigation();
+        HandleFrameUnpause();
+    }
+
+    private bool frame_unpause = false;
+    public void FrameUnpause() {
+        // unpauses the game at a very low timescale for a single frame.
+        // this is a hackfix to update volume levels while still in the setting menu
+        if (paused) {
+            Debug.LogWarning($"Frame Unpause at time '{Time.time}'"); // TODO --- remove debug
+            frame_unpause = true;
+            Time.timeScale = 0.001f;
+        }
+    }
+
+    private void HandleFrameUnpause() {
+        // undoes FrameUnpause
+        if (frame_unpause) {
+            Debug.LogWarning($"Frame Repause at time '{Time.time}'"); // TODO --- remove debug
+            frame_unpause = false;
+            paused = true;
+        }
     }
 
     public void TryOpenPauseMenu() {

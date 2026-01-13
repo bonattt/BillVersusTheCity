@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5637590974488604821}
   - component: {fileID: 4807346359093195185}
-  - component: {fileID: 2696516159888223433}
   - component: {fileID: 6552781015089437835}
   m_Layer: 0
   m_Name: Main Camera
@@ -85,14 +84,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2696516159888223433
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787007929812641498}
-  m_Enabled: 1
 --- !u!114 &6552781015089437835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,9 +100,11 @@ MonoBehaviour:
   override_camera_follow: 0
   un_zoomed_height: 20
   zoomed_height: 30
-  slerp: 0.85
+  lerp: 0.5
   follow_mouse_percent: 0.25
   max_vision_range: 6
   target: {fileID: 0}
   attack_controller: {fileID: 0}
-  debug_last_mouse_pos: {x: 0, y: 0, z: 0}
+  debug:
+    last_mouse_pos: {x: 0, y: 0, z: 0}
+    time_scale_setting: 0
