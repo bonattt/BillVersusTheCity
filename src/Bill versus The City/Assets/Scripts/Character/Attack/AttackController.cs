@@ -87,6 +87,10 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         }
     }
 
+    [SerializeField] // TODO --- remove debug
+    private bool _could_shoot_last_frame = true;
+    private float _shot_availible_after = -1f;
+
     // tracks when the last shot was fired, for handling rate-of-fire
     private float _last_shot_at = 0f;
 
@@ -167,6 +171,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     }
 
     protected virtual void Update() {
+        
         if (!is_active) { return; } // do nothing while controller disabled
 
         attacker = GetComponent<CharCtrl>();
@@ -175,6 +180,23 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         }
         UpdateRecoil();
         UpdateDebugFields();
+        HandleNextShotAvailiblilty();
+    }
+
+    private void HandleNextShotAvailiblilty() {
+        // plays effects on the frame shooting becomes availible again
+        bool can_shoot_this_frame = _shot_availible_after <= Time.time;
+        if (can_shoot_this_frame & ! _could_shoot_last_frame) {
+            OnNextShotReady();
+            Debug.LogWarning("next shot availible");
+        }
+        _could_shoot_last_frame = can_shoot_this_frame;
+    }
+
+    private void OnNextShotReady() {
+        if (current_gun.next_shot_ready_sound != null && !current_gun.next_shot_ready_sound.Equals("")) {
+            AttackResolver.PlayNextAttackReadyEffect(transform.position, current_weapon);
+        }
     }
 
     private void UpdateRecoil() {
@@ -219,7 +241,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
     public void StartAttack(Vector3 attack_direction) {
         // fires an attack with the current weapon
         if (
-            (_last_shot_at + shot_cooldown <= Time.time)
+            (_shot_availible_after <= Time.time)
             && (!InputSystem.IsNullPoint(attack_direction))
         ) {
             if (HasAmmo()) {
@@ -232,7 +254,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
 
     public void AttackHold(Vector3 attack_direction) {
         if (
-            (_last_shot_at + shot_cooldown <= Time.time)
+            (_shot_availible_after <= Time.time)
             && (!InputSystem.IsNullPoint(attack_direction))
         ) {
             if (HasAmmo()) {
@@ -249,6 +271,7 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
 
     private void _FireAttack(Vector3 attack_direction, bool hold = false) {
         _last_shot_at = Time.time;
+        _shot_availible_after = _last_shot_at + shot_cooldown;
 
         float inaccuracy = current_inaccuracy + current_recoil;
         bool attack_fired;

@@ -33,3 +33,7 @@ public interface IFirearmEffect {
     // visual effect which doesn't require an attack
     public void DisplayFirearmEffect(Vector3 point, IFirearm weapon);
 }
+
+public interface INextAttackReadyEffect {
+    public void DisplayNextAttackReadyEffect(Vector3 point, IWeapon weapon);
+}

@@ -21,6 +21,7 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     public float armor_effectiveness { get => 1; }
     public string _attack_sound;
     public string attack_sound { get => _attack_sound; }
+    public string next_shot_ready_sound => null; // thrown weapons don't make a sound when the next shot is ready
     public GameObject grenade_prefab;
     private GameObject grenade;
     public bool is_consumable { get => true; }

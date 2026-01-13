@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SoundEffect : IAttackHitEffect, IAttackShootEffect, 
+public class SoundEffect : IAttackHitEffect, IAttackShootEffect, INextAttackReadyEffect,
         IAttackMissEffect, IWeaponEffect, IFirearmEffect, IMeleeAttackEffect {
     
     // private string sound_path;
@@ -16,6 +16,7 @@ public class SoundEffect : IAttackHitEffect, IAttackShootEffect,
     public void DisplayMeleeEffect(Vector3 position, Vector3 attack_direction, IAttack attack) => PlaySound(position, attack.weapon);
     public void DisplayFirearmEffect(Vector3 point, IFirearm weapon) => PlaySound(point, weapon);
     public void DisplayEffect(Vector3 hit_location, IAttack attack) => PlaySound(hit_location, attack.weapon);
+    public void DisplayNextAttackReadyEffect(Vector3 location, IWeapon weapon) => PlaySound(location, weapon);
 
     protected virtual string GetAttackSoundPath(IWeapon attack) {
         // gets the NON default sound from the attack. 
@@ -105,6 +106,23 @@ public class EmptyGunshotSoundEffect : SoundEffect {
     protected override string GetAttackSoundPath(IWeapon weapon) {
         try {
             return ((IFirearm) weapon).empty_gunshot_sound;
+        }
+        catch (InvalidCastException)
+        {
+            Debug.LogError($"{this.GetType()} was given a non-firearm weapon: {weapon}");
+            return null;
+        }
+    }
+}
+
+public class NextShotReadySoundEffect : SoundEffect {
+    
+
+    public NextShotReadySoundEffect() : base (null) { /* do nothing */ }
+
+    protected override string GetAttackSoundPath(IWeapon weapon) {
+        try {
+            return ((IFirearm) weapon).next_shot_ready_sound;
         }
         catch (InvalidCastException)
         {

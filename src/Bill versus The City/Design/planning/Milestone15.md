@@ -16,9 +16,9 @@ PLANNED FEATURES
     [+] add aiming as a move action
     [+] Factor crouch_percent and aim_percent into movement speed for actions
     [+] Make crouch speed blend as you stand up
-    [ ] extract code from CharCtrl that will never be used by enemies
-    [ ] REVIEW: Choreography movement seems to maybe be messed up by changes to ManualCharacterMovement
-[ ] Refactor: make EnemyManager utilize AbstractEnemyGroup
+    [X] extract code from CharCtrl that will never be used by enemies
+    [+] REVIEW: Choreography movement seems to maybe be messed up by changes to ManualCharacterMovement
+[X] Refactor: make EnemyManager utilize AbstractEnemyGroup
 [ ] Implement next_shot_ready feedback sound for pump shotguns
 [+] Balance Grenade damage
     [~] base damage on grenades should be deadlier

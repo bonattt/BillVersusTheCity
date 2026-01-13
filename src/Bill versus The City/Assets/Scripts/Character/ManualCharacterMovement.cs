@@ -128,7 +128,6 @@ public class ManualCharacterMovement : CharCtrl {
         }
         if (aiming) {
             is_sprinting = false;
-            Debug.LogWarning($"aim action!");
             move_action = AimAction();
         } else if (GetStartVaultThisFrame(move_direction, look_direction)) {
             VaultOverCoverZone zone = StartVaultOver(move_direction, look_direction);

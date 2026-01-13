@@ -42,7 +42,7 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     public float _max_zoom_range = 5f;
 
     // effects
-    public string _gunshot_sound, _empty_gunshot_sound, _reload_start_sound, _reload_complete_sound;
+    public string _gunshot_sound, _next_shot_ready_sound, _empty_gunshot_sound, _reload_start_sound, _reload_complete_sound;
 
     public GameObject bullet_prefab => bullet_effect.bullet_prefab;
     public string item_name => _name;
@@ -87,11 +87,9 @@ public class DetailedWeapon : ScriptableObject, IFirearm
     public Vector3 attack_from { get; set; }
 
     public string attack_sound => _gunshot_sound;
-    
+    public string next_shot_ready_sound => _next_shot_ready_sound; 
     public string empty_gunshot_sound => _empty_gunshot_sound;
-
     public string reload_start_sound => _reload_start_sound;
-
     public string reload_complete_sound => _reload_complete_sound;
 
     public override string ToString() {

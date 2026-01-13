@@ -226,6 +226,7 @@ public interface IFirearm : IWeapon
     // public string attack_sound { get; } // moved to IWeapon from IFirearm
     public GameObject bullet_prefab { get; }
     public string empty_gunshot_sound { get; }
+    public string next_shot_ready_sound { get; }
     public string reload_start_sound { get; }
     public string reload_complete_sound { get; }
 

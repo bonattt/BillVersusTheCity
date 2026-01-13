@@ -31,7 +31,13 @@ public static class AttackResolver {
         // new AlertEnemiesLineOfSightEffect()
     };
 
+
     private static IAttackShootEffect[] DEBUG_SHOOT_EFFECTS = new IAttackShootEffect[] { };
+
+    private static INextAttackReadyEffect[] NEXT_ATTACK_READY_EFFECTS = new INextAttackReadyEffect[] {
+        new NextShotReadySoundEffect()
+    };
+    private static INextAttackReadyEffect[] DEBUG_NEXT_ATTACK_READY_EFFECTS = new INextAttackReadyEffect[]{};
 
     private static IMeleeAttackEffect[] MELEE_EFFECTS = new IMeleeAttackEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_MELEE_EFFECTS_PREFAB), // TODO --- implement rotation in effects, so this can be an effect again
@@ -67,13 +73,17 @@ public static class AttackResolver {
         }
         attack.final_health_damage = health_damage;
         attack.final_armor_damage = armor_damage;
-        foreach (IAttackHitEffect effect in GetDamageEffects()) {
-            effect.DisplayDamageEffect(
-                target.GetHitTarget(), hit_location, attack);
-        }
+        PlayDamageEffects(attack, target, hit_location);
         target.OnAttackHitRecieved(attack);
         if (attack.attacker != null) {
             attack.attacker.OnAttackHitDealt(attack, target);
+        }
+    }
+
+    public static void PlayDamageEffects(IAttack attack, IAttackTarget target, Vector3 hit_location) {
+        foreach (IAttackHitEffect effect in GetDamageEffects()) {
+            effect.DisplayDamageEffect(
+                target.GetHitTarget(), hit_location, attack);
         }
     }
 
@@ -82,6 +92,19 @@ public static class AttackResolver {
             return DAMAGE_EFFECTS;
         }
         return ConcatinateArrays(DAMAGE_EFFECTS, DEBUG_DAMAGE_EFFECTS);
+    }
+
+    public static void PlayNextAttackReadyEffect(Vector3 position, IWeapon weapon) {
+        foreach(INextAttackReadyEffect effect in GetNextAttackReadyEffects()) {
+            effect.DisplayNextAttackReadyEffect(position, weapon);
+        }
+    }
+
+    private static INextAttackReadyEffect[] GetNextAttackReadyEffects() {
+        if (!GameSettings.inst.debug_settings.GetBool("show_damage_numbers")) {
+            return NEXT_ATTACK_READY_EFFECTS;
+        }
+        return ConcatinateArrays(NEXT_ATTACK_READY_EFFECTS, DEBUG_NEXT_ATTACK_READY_EFFECTS);
     }
 
     private static IAttackShootEffect[] GetShootEffects() {
@@ -160,13 +183,11 @@ public static class AttackResolver {
 
     public static float ApplyFalloffToDamage(float base_damage, IAttack attack, Vector3 hit_location) {
         float falloff = GetDamageFalloff(attack, hit_location);
-        Debug.LogWarning($"DAMAGE FALLOFF '{falloff}'"); // TODO --- remove debug
         return Mathf.Max(1f, base_damage - falloff);
     }
 
     public static float GetDamageFalloff(IAttack attack, Vector3 hit_location) {
         float distance = PhysicsUtils.FlatDistance(attack.attack_from, hit_location);
-        Debug.LogWarning($"GetDamageFalloff {attack.attack_from} --> {hit_location}");// TODO --- remove debug
         return GetDamageFalloff(attack, distance);
     }
     public static float GetDamageFalloff(IAttack attack, float distance) {
@@ -204,7 +225,6 @@ public static class AttackResolver {
 
     public static float _ExponentialDamageFalloff(float rate, float distance) {
         float e = Mathf.Exp(1f); // constant `e` for Natural exponent
-        Debug.LogWarning($"ExponentialDamageFalloff(rate:{rate}, distance:{distance}) => {Mathf.Pow(distance, e) * rate}"); // TODO --- remove debug
         return Mathf.Pow(e, distance) * rate;
     }
 
