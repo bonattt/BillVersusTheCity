@@ -90,7 +90,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         get {
             
             if (current_firearm == null) {
-                Debug.LogWarning("Aim speed without a weapon!");
+                Debug.LogWarning("AimAction speed without a weapon!");
                 return 0.75f;
             } else {
                 return current_firearm.aim_move_speed;
@@ -424,6 +424,12 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     }
 
     protected virtual void StartCrouchDive(Vector3 move_direction) {
+        if (reloading) {
+            CancelReload();
+        }
+        if (aiming) {
+            aiming = false; // stop aiming
+        }
         crouch_dive_remaining = crouch_dive_duration;
         crouch_dive_direction = move_direction.normalized;
         crouch_percent = 1f;

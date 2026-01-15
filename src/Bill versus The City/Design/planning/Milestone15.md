@@ -52,8 +52,8 @@ UNPLANNED FEATURES
 
 UNPLANNED BUGFIXES
 [+] BUG: Police Timer appears in a broken state on levels without a police timer
-[ ] BUG: crouch-dive doesn't change cancel aiming
-[ ] BUG: crouch-dive and Jump don't cancel reload
+[+] BUG: crouch-dive doesn't cancel aiming
+[+] BUG: crouch-dive and Jump don't cancel reload
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer
     - I think this is caused by spawned enemies not having a reference to the player, but I haven't investigated
 [ ] BUG: `ArgumentException: This VisualElement is not my child` when removing a Dialogue Portrait
