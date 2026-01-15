@@ -25,15 +25,24 @@ public class TimerUIController : MonoBehaviour
         return $"{number}";
     }
 
-    // // Start is called before the first frame update
-    // void Start()
-    // {
-    //     if (init_timer == null) {
-    //         DetachTimer();
-    //     } else {
-    //         AttachTimer((ITimer) init_timer);
-    //     }
-    // }
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (timer == null) {
+            // this will handle hiding the clock if the level doesn't have a clock
+            DetachTimer();
+        } 
+    }
+
+
+    private VisualElement GetCountdownElement() {
+        return ui_doc.rootVisualElement.Q<VisualElement>("CountdownWrapper");
+    }
+
+
+    private Label GetClockText() {
+        return ui_doc.rootVisualElement.Q<Label>("CountdownText");
+    }
 
     void Update() {
         UpdateClock();
@@ -51,7 +60,8 @@ public class TimerUIController : MonoBehaviour
             DetachTimer();
             return;
         }
-        digital_clock = ui_doc.rootVisualElement.Q<Label>("CountdownText");
+        GetCountdownElement().visible = true;
+        digital_clock = GetClockText();
         digital_clock.style.color = text_color;
         CombatHUDManager.inst.has_countdown = true;
         UpdateClock();
@@ -61,5 +71,7 @@ public class TimerUIController : MonoBehaviour
         timer = null;
         digital_clock = null;
         CombatHUDManager.inst.has_countdown = false;
+        GetCountdownElement().visible = false;
+
     }
 }

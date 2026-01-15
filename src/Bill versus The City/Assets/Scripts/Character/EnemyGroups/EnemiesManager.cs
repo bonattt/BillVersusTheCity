@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 // using System.Collections.Generic.SortedList;
 using System.Collections.Generic;
@@ -22,9 +23,10 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
 
     [Tooltip("number of seconds to wait before revaluating which enemies are closest to the player.")]
     public float evaluation_period;
-    private float last_nearest_enemy_at = -1; // time when the nearest enemy was last evaluated
+    private float next_nearest_enemy_at = -1; // time when the nearest enemy will next be evaluated
 
     [Tooltip("(TODO: reactivate this field) max number of enemies that will directly fight the player at once; other enemies will retreat to cover.")]
+    [HideInInspector]
     [SerializeField]
     private int _max_engaged_enemies = 5;
     public const int MAX_ENGAGED_ENEMIES = 3;
@@ -39,8 +41,9 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     }
 
     void Update() {
-        if (Time.time >= last_nearest_enemy_at + evaluation_period) {
+        if (Time.time >= next_nearest_enemy_at) {
             EvaluateNearestEnemies();
+            next_nearest_enemy_at = Time.time + evaluation_period;
         }
         UpdateDebug();
     }
@@ -48,15 +51,40 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     private void EvaluateNearestEnemies() {
         SortedList<float, NavMeshAgentMovement> sorted_enemies = GetEnemyDistance();
         int i = 0;
+        debug.engaged_enemies = 0;
+        debug.reserved_enemies = 0;
         // iterate in sorted order
         foreach (NavMeshAgentMovement enemy in sorted_enemies.Values) {
             // use loop counter to track how many enemies were already set to engaged.
-            if (i++ < max_engaged_enemies) {
+            if (i < max_engaged_enemies && EnemyCannotEngagePlayer(enemy, PlayerCharacter.inst.player_transform)) {
+                enemy.managed_enemy_state = ManagedEnemyState.reserve;
+                debug.reserved_enemies += 1;
+                continue;
+            }
+            i += 1;
+            if (i < max_engaged_enemies) {
                 enemy.managed_enemy_state = ManagedEnemyState.engaged;
+                debug.engaged_enemies += 1;
+                Debug.DrawLine(PlayerCharacter.inst.player_transform.position, enemy.transform.position, new Color(1f, 0.65f, 0f), evaluation_period); // ORANGE
             } else {
                 enemy.managed_enemy_state = ManagedEnemyState.reserve;
+                debug.reserved_enemies += 1;
             }
         }
+    }
+
+    public static bool EnemyCannotEngagePlayer(NavMeshAgentMovement enemy, Transform player) {
+        if(!enemy.perception.is_alert) return true; // if the enemy is not alert, they cannot engage the player.
+        // using hearing like this blocks the enemies from ever persuing the player through a closed door... so I need another solution
+        // HearingHit hit = EnemyHearingManager.inst.GetHearingHitWithNavMesh(GetSound(player), enemy.perception);
+        // return hit == null; // no hearing hit means the enemy is blocked from engaging
+        return false;
+    }
+
+    private static ISound GetSound(Transform player) {
+        // sound used to check when enemies are blocked from engaging the player
+        GameSound sound = new GameSound(player.position, float.PositiveInfinity, 0);
+        return sound;
     }
 
     private SortedList<float, NavMeshAgentMovement> GetEnemyDistance() => GetEnemyDistance(
@@ -184,25 +212,33 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     }
 
 
-    public List<string> debug_enemies, debug_enemeis_defeated, debug_enemies_remaining;
-
+    public EnemiesManagerDebugger debug;
     private void UpdateDebug() {
-        debug_enemies = new List<string>();
-        debug_enemies_remaining = new List<string>();
-        debug_enemeis_defeated = new List<string>();
+# if UNITY_EDITOR
+        debug.enemies = new List<string>();
+        debug.enemies_remaining = new List<string>();
+        debug.enemeis_defeated = new List<string>();
         foreach (NavMeshAgentMovement e in enemies) {
-            debug_enemies.Add($"{e}");
+            debug.enemies.Add($"{e}");
         }
         foreach (NavMeshAgentMovement e in enemies_defeated) {
-            debug_enemeis_defeated.Add($"{e}");
+            debug.enemeis_defeated.Add($"{e}");
         }
         foreach (NavMeshAgentMovement e in GetRemainingEnemies()) {
-            debug_enemies_remaining.Add($"{e}");
+            debug.enemies_remaining.Add($"{e}");
         }
+# endif
     }
 }
 
 public enum ManagedEnemyState {
     engaged,
     reserve,
+}
+
+[Serializable]
+public class EnemiesManagerDebugger {
+    public int engaged_enemies = -1;
+    public int reserved_enemies = -1;
+    public List<string> enemies, enemeis_defeated, enemies_remaining;
 }

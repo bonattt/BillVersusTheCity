@@ -91,7 +91,7 @@ MonoBehaviour:
   blocks_enemy_line_of_sight:
     serializedVersion: 2
     m_Bits: 0
-  evaluation_period: 0
+  evaluation_period: 0.05
   _max_engaged_enemies: 4
   debug_enemies: []
   debug_enemeis_defeated: []

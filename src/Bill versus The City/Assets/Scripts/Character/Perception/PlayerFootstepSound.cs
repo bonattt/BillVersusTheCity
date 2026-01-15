@@ -66,7 +66,7 @@ public class PlayerFootstepSound : MonoBehaviour {
             return;
         } else if (distance_traveled >= max_travel_distance) {
             if (!make_sound_over_movement_threshold) {
-                Debug.LogWarning($"skipped making sound because distance '{distance_traveled}' exceeded maximum '{max_travel_distance}'");
+                Debug.Log($"skipped making sound because distance '{distance_traveled}' exceeded maximum '{max_travel_distance}'");
                 return;
             }
             Debug.LogWarning("creating max footstep sound!");

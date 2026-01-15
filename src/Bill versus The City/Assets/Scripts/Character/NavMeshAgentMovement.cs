@@ -9,17 +9,18 @@ using UnityEngine.AI;
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
 
-    public bool saw_target { get { return perception.saw_target_last_frame; } } // saw the target last frame
-    public bool seeing_target { get { return perception.seeing_target; }  } // seeing the target last frame
+    public bool saw_target { get { return _perception.saw_target_last_frame; } } // saw the target last frame
+    public bool seeing_target { get { return _perception.seeing_target; }  } // seeing the target last frame
 
     public bool use_full_auto = false;
 
-    private EnemyPerception perception;
+    private EnemyPerception _perception;
+    public EnemyPerception perception => _perception;
     private EnemyBehavior behavior;
 
     protected override void Start() {
         base.Start();
-        perception = GetComponent<EnemyPerception>();
+        _perception = GetComponent<EnemyPerception>();
         behavior = GetComponent<EnemyBehavior>();
         EnemiesManager.inst.AddEnemy(this);
     }

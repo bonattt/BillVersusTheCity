@@ -183,7 +183,6 @@ public abstract class AbstractSettingsModule : ISettingsModule {
     }
 
     public void UpdateSubscribers(string field) {
-        Debug.LogWarning($"{this.GetType()} settings updated for field '{field}'"); // TODO --- remove debug
         foreach (ISettingsObserver sub in subscribers) {
             sub.SettingsUpdated(this, field);
         }

@@ -7,7 +7,7 @@ Planned on 2025-10-18
 Started on 2025-10-28 to 2025-11-05
 Resumed on 2025-12-13...
 Resumed on 2026-01-11...
-Finished on 2025-??????
+Finished on 2026-??????
 
 PLANNED FEATURES
 
@@ -33,7 +33,7 @@ PLANNED FEATURES
     [X] combat balance and level design
 
 PLANNED BUGFIXES
-[ ] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
+[~] FIX: enemies manager is counting enemies through walls that aren't even aware as "closest" for max engaged enemies
 [~] FIX: existing SoundEffects should subscribe to AudioSettings, and update their volume
     STEPS TO REPRODUCE:
         - equip grenades and click to hold a grenade: fuse sound shouls start playing
@@ -51,7 +51,7 @@ UNPLANNED FEATURES
 
 
 UNPLANNED BUGFIXES
-[ ] BUG: Police Timer appears in a broken state on levels without a police timer
+[+] BUG: Police Timer appears in a broken state on levels without a police timer
 [ ] BUG: crouch-dive doesn't change cancel aiming
 [ ] BUG: crouch-dive and Jump don't cancel reload
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer

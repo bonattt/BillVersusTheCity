@@ -32,12 +32,12 @@ Act three has 3 ongoing plot threads, which need to intertwine
 # Act Four [Finale]
     - with the gangs crippled, Bill thinks he's through the worst of things
     - unfortunately, the law is doubling down on him.
-
-    - Bill has to survive an attack by a SWAT team. The SWAT team is corrupt, and in on the whole conspiracy, and this plot thread needs to be introduced earlier. The SWAT team is serving a no-knock warrant over the whole lawn situation.
+    - Police show up and try to stop Bill talking to a witness, and they kill said witness.
+    - Bill has to survive an attack by a SWAT team. The SWAT team is corrupt, and in on the whole conspiracy, and this plot thread needs to be introduced earlier. (The SWAT team is serving a no-knock warrant over the whole lawn situation???)
 
 
 # Act Five [Epilogue]
-1) the Governor of the state pardons bill for his crimes (Billgate)
+1) the Governor of the state pardons bill for his crimes, because of his heroic actions to expose the city's corruption (the Billgate scandal)
 
 
 # Gangs Plot Thread
