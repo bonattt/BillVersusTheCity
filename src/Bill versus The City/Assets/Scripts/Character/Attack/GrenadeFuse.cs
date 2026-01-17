@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using UnityEngine;
 
 public class GrenadeFuse : MonoBehaviour {
-    public Explosion explosion;
+    public AbstractExplosion explosion;
     public float fuse_length_seconds = 5f;
     public bool start_fuse_on_start = true;
     private float fuse_started_at = float.PositiveInfinity;
@@ -43,7 +43,12 @@ public class GrenadeFuse : MonoBehaviour {
         sound_playing.transform.parent = transform;
         sound_playing.spatialBlend = 1f;
         sound_playing.minDistance = 1f;
-        sound_playing.maxDistance = explosion.explosion_attack.explosion_radius * 25f;
+        if (explosion.explosion_attack != null) { // TODO --- this if/else should probably not be needed. Consider refactoring
+            sound_playing.maxDistance = explosion.explosion_attack.explosion_radius * 25f;
+        } else {
+            Debug.LogWarning("// TODO --- implement sound radius without explosion radius");
+            sound_playing.maxDistance = 150f;
+        }
         sound_playing.loop = true;
     }
 

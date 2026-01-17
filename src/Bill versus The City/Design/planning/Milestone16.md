@@ -3,15 +3,30 @@
 === MILESTONE 016 ===
 =====================
 
-Planned on 2026-01-???
-Started on 2026-01-???
+Planned on 2026-01-17
+Started on 2026-01-17
 Finished on 2026-??????
 
 PLANNED FEATURES
- - writing?
- - bugs?
- - visuals?
- - combat?
+[ ] Explore Unity Audio Mixer
+[ ] Explore more Grenade options
+    [+] REFACTOR: extract explosion interface to support grenade variety
+    [ ] Incindiary Grenade
+    [ ] Smoke Grenade???
+    [ ] Flashbang
+    [ ] Grenade Enemies
+[ ] Try to make Grocery Store level more fun
+    [ ] FIX: enemies hanging back
+    [ ] Add weapon veriety
+[ ] OUTLINE: Explore more levely type concepts
+    - room clear (standard)
+        - interupt drug deal
+        - clear gang house
+    - wave survival 
+        - survive gang attack
+        - survive swat attack
+    - flight/escape
+[ ] play with particle effects
 
 PLANNED BUGFIXES
 
@@ -20,9 +35,6 @@ LOW PRIORITY TASKS
 [ ] REFACTOR: extract code from CharCtrl that will never be used by enemies
 
 UNPLANNED BUGFIXES
-[ ] BUG: Police Timer appears in a broken state on levels without a police timer
-[ ] BUG: crouch-dive doesn't change cancel aiming
-[ ] BUG: crouch-dive and Jump don't cancel reload
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer
     - I think this is caused by spawned enemies not having a reference to the player, but I haven't investigated
 [ ] BUG: `ArgumentException: This VisualElement is not my child` when removing a Dialogue Portrait

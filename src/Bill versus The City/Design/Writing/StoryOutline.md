@@ -22,12 +22,14 @@
 1) Somehow, Bill is able to find evidence linking the Gangs to the corrupt city Government ????
     
 
-# Act Three [Conflict]
+# Act Three [Bill Strikes back]
 Act three has 3 ongoing plot threads, which need to intertwine
     - Bill gets in some incidental fights with the gangs, eventually resulting in a frontal assault to criple the gang that has been harassing him
     - Bill looks into the city government, eventually finding some form of proof of the corruption
         - evidence????
     - Bill has to fight the lawn charges in court
+        - Bill talks to other people in the area, and he finds others are facing similar issues with the 
+            (not immediate neighbors but a couple blocks away)
 
 # Act Four [Finale]
     - with the gangs crippled, Bill thinks he's through the worst of things

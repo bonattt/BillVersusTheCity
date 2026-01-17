@@ -56,6 +56,25 @@
 [ ] Milestone ???: Better tutorials
 
 
+ - writing?
+ - bugs?
+ - interface
+    - hold E to skip dialogue
+    - hold E to skip choreography
+    - add sprites for key-codes
+    - Dialogue anti-buffering (block inputs for a short time after dialogue opens, to prevent playes 
+        skipping dialogue if it opens while they're shooting)
+ - visuals?
+    - add actual particle effects
+    - add character jiggle feature in dialogue
+ - combat?
+    - simplify armor
+    - add armor pickups 
+    - improve behavior
+    - enemy distinguisher labels
+    - add pointers to enemies that are off screen
+
+
 =============================
 ==== Unplanned features =====
 =============================
@@ -67,7 +86,7 @@
     [ ] FIX: allow save files to assume defaults for missing fields in save file
     [ ] Allow fields to be added from a type-based config of some sort?
 [ ] Speed-run dialogue mode (hold to click through fast)
-[ ] Additional controls to advance dialogue (press-e)
+[+] Additional controls to advance dialogue (press-e)
 [ ] Dialogue anti-buffering (block inputs for a short time after dialogue opens, to prevent playes skipping dialogue if it opens while they're shooting)
 
 [?] "swarm intelligence" ememy AI

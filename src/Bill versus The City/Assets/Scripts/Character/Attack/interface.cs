@@ -37,3 +37,12 @@ public interface IFirearmEffect {
 public interface INextAttackReadyEffect {
     public void DisplayNextAttackReadyEffect(Vector3 point, IWeapon weapon);
 }
+
+
+public interface IExplosion : IGameEventEffect {
+    // interface for any area effect which triggers when a grenade detonates.
+    public bool destroy_on_explode { get; set; }
+    public float explosion_radius { get; }
+    public ExplosionAttack explosion_attack { get; } // NOTE: can be null
+    public void Explode();
+}
