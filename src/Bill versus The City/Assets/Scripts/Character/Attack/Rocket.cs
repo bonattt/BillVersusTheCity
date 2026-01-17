@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rocket : Bullet {
-    public Explosion explosion;
+    public DamageExplosion explosion;
 
     protected override void Start() {
         base.Start();

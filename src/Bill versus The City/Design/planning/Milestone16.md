@@ -11,9 +11,9 @@ PLANNED FEATURES
 [ ] Explore Unity Audio Mixer
 [ ] Explore more Grenade options
     [+] REFACTOR: extract explosion interface to support grenade variety
-    [ ] Incindiary Grenade
     [ ] Smoke Grenade???
     [ ] Flashbang
+    [ ] Incindiary Grenade
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun
     [ ] FIX: enemies hanging back
