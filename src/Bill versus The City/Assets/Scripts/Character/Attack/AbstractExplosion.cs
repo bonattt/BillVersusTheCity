@@ -101,7 +101,7 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
 
     protected IEnumerable<IAttackTarget> GetExplosionHits() {
         Vector3 raycast_start = GetRaycastStart();
-        Collider[] hits = Physics.OverlapSphere(raycast_start, explosion_attack.explosion_radius);
+        Collider[] hits = Physics.OverlapSphere(raycast_start, explosion_radius);
         foreach (Collider c in hits) {
             IAttackTarget target = c.gameObject.GetComponentInParent<IAttackTarget>();
             if (target != null) {
@@ -121,7 +121,7 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(GetRaycastStart(), explosion_attack.explosion_radius);
+        Gizmos.DrawWireSphere(GetRaycastStart(), explosion_radius);
     }
 
     public bool ExplosionBlocked(IAttackTarget target) {
