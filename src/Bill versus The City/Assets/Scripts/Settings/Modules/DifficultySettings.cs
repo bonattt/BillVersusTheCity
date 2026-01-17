@@ -10,15 +10,17 @@ public class DifficultySettings : AbstractSettingsModule {
     public const string PLAYER_ARMOR = "player_armor";
     public const string PLAYER_HEALTH = "player_health";
     public const string PLAYER_RELOAD_SPEED = "player_reload_speed";
+    public const string PLAYER_FLASHBANG_EFFECTIVENESS = "player_flashbang_effectiveness";
     public const string ENEMY_ARMOR = "enemy_armor";
     public const string ENEMY_HEALTH = "enemy_health";
     public const string ENEMY_REACTION_TIME = "enemy_reaction_time";
     public const string ENEMY_RUN_SPEED = "enemy_run_speed";
     public const string ENEMY_RELOAD_SPEED = "enemy_reload_speed";
+    public const string ENEMY_FLASHBANG_EFFECTIVENESS = "enemy_flashbang_effectiveness";
 
 
-    public override List<string> float_field_names { get => FIELDS; }
-    public override List<string> other_field_names { get => new List<string>() {DIFFICULTY_LEVEL}; }
+    public override List<string> float_field_names  => FIELDS;
+    public override List<string> other_field_names  => new List<string>() {DIFFICULTY_LEVEL};
     public static readonly List<string> FIELDS = new List<string>(){
         PLAYER_ARMOR,
         PLAYER_HEALTH,
@@ -28,6 +30,8 @@ public class DifficultySettings : AbstractSettingsModule {
         ENEMY_REACTION_TIME,
         ENEMY_RUN_SPEED,
         ENEMY_RELOAD_SPEED,
+        ENEMY_FLASHBANG_EFFECTIVENESS,
+        PLAYER_FLASHBANG_EFFECTIVENESS,
     };
     
     // public DifficultySettings() {
@@ -76,31 +80,37 @@ public class DifficultySettings : AbstractSettingsModule {
             {PLAYER_ARMOR, 3f},
             {PLAYER_HEALTH, 3f},
             {PLAYER_RELOAD_SPEED, 3f},
+            {PLAYER_FLASHBANG_EFFECTIVENESS, 3f},
             {ENEMY_ARMOR, 3f},
             {ENEMY_HEALTH, 3f},
             {ENEMY_REACTION_TIME, 3f},
             {ENEMY_RUN_SPEED, 1.7f},
             {ENEMY_RELOAD_SPEED, 3f},
+            {ENEMY_FLASHBANG_EFFECTIVENESS, 3f},
         };
         float_fields_min = new Dictionary<string, float>() {
             {PLAYER_ARMOR, 0.25f},
             {PLAYER_HEALTH, 0.25f},
             {PLAYER_RELOAD_SPEED, 0.25f},
+            {PLAYER_FLASHBANG_EFFECTIVENESS, 0.25f},
             {ENEMY_ARMOR, 0.25f},
             {ENEMY_HEALTH, 0.25f},
             {ENEMY_REACTION_TIME, 0.25f},
             {ENEMY_RUN_SPEED, 0.75f},
             {ENEMY_RELOAD_SPEED, 0.25f},
+            {ENEMY_FLASHBANG_EFFECTIVENESS, 0.25f},
         };
         float_fields_default = new Dictionary<string, float>() {
             {PLAYER_ARMOR, 1f},
             {PLAYER_HEALTH, 1f},
             {PLAYER_RELOAD_SPEED, 1f},
+            {PLAYER_FLASHBANG_EFFECTIVENESS, 1f},
             {ENEMY_ARMOR, 1f},
             {ENEMY_HEALTH, 1f},
             {ENEMY_REACTION_TIME, 1f},
             {ENEMY_RUN_SPEED, 1f},
             {ENEMY_RELOAD_SPEED, 1f},
+            {ENEMY_FLASHBANG_EFFECTIVENESS, 1f},
         };
     }
     
@@ -189,22 +199,26 @@ public static class DifficultyTemplates {
         {DifficultySettings.PLAYER_ARMOR, 2f},
         {DifficultySettings.PLAYER_HEALTH, 2f},
         {DifficultySettings.PLAYER_RELOAD_SPEED, 1f},
+        {DifficultySettings.PLAYER_FLASHBANG_EFFECTIVENESS, 1f},
         {DifficultySettings.ENEMY_ARMOR, 1f},
         {DifficultySettings.ENEMY_HEALTH, 0.5f},
         {DifficultySettings.ENEMY_REACTION_TIME, 2f},
         {DifficultySettings.ENEMY_RUN_SPEED, 1f},
         {DifficultySettings.ENEMY_RELOAD_SPEED, 1f},
+        {DifficultySettings.ENEMY_FLASHBANG_EFFECTIVENESS, 1.15f},
     };
 
     public static readonly Dictionary<string, float> MEDIUM_TEMPLATE = new Dictionary<string, float>(){
         {DifficultySettings.PLAYER_ARMOR, 1f},
         {DifficultySettings.PLAYER_HEALTH, 1f},
         {DifficultySettings.PLAYER_RELOAD_SPEED, 1f},
+        {DifficultySettings.PLAYER_FLASHBANG_EFFECTIVENESS, 1f},
         {DifficultySettings.ENEMY_ARMOR, 1f},
         {DifficultySettings.ENEMY_HEALTH, 1f},
         {DifficultySettings.ENEMY_REACTION_TIME, 1f},
         {DifficultySettings.ENEMY_RUN_SPEED, 1f},
         {DifficultySettings.ENEMY_RELOAD_SPEED, 1f},
+        {DifficultySettings.ENEMY_FLASHBANG_EFFECTIVENESS, 1f},
     };
     
 
@@ -212,11 +226,13 @@ public static class DifficultyTemplates {
         {DifficultySettings.PLAYER_ARMOR, 0.5f},
         {DifficultySettings.PLAYER_HEALTH, 0.75f},
         {DifficultySettings.PLAYER_RELOAD_SPEED, 1f},
+        {DifficultySettings.PLAYER_FLASHBANG_EFFECTIVENESS, 1f},
         {DifficultySettings.ENEMY_ARMOR, 3f},
         {DifficultySettings.ENEMY_HEALTH, 1.25f},
         {DifficultySettings.ENEMY_REACTION_TIME, 0.5f},
         {DifficultySettings.ENEMY_RUN_SPEED, 1f},
         {DifficultySettings.ENEMY_RELOAD_SPEED, 1f},
+        {DifficultySettings.ENEMY_FLASHBANG_EFFECTIVENESS, 0.85f},
     };
 
     public static Dictionary<string, float> GetTemplate(DifficultyLevel level) {

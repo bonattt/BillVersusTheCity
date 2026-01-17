@@ -93,6 +93,10 @@ using UnityEngine.AI;
     protected void EnableCollision() {
         GetComponent<CapsuleCollider>().enabled = true;
     }
+
+    public override void FlashBangHit(float intensity) {
+        Debug.LogWarning($"flash bang hit: '{intensity}'");
+    }
 }
 
 public enum AimingTarget {

@@ -23,6 +23,7 @@ public class GunRangeTarget : MonoBehaviour, IAttackTarget, ICharacterStatus {
 
     }
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target) { /* do nothing */ }
+    public void FlashBangHit(float intensity) { /* do nothing */ }
     
     ///////////////////////////////////
     /// implements ICharacterStatus ///

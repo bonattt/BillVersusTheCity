@@ -134,6 +134,11 @@ using UnityEngine.AI;
         Destroy(gameObject);
     }
 
+    public override void FlashBangHit(float intensity) {
+        Debug.LogWarning($"flash bang hit: '{intensity}'");
+        Debug.LogError($"TODO: implement FlashBangHit for {this.GetType()}"); // TODO ---
+    }
+
 }
 
 public enum MovementTarget {

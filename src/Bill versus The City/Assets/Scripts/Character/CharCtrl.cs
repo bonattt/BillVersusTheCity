@@ -695,6 +695,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
+    public abstract void FlashBangHit(float intensity);
+
     public void SetHitStun(IAttack attack) {
         hit_stun_until = Time.time + 0.25f;
     }

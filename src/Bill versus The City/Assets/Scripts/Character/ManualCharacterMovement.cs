@@ -278,6 +278,11 @@ public class ManualCharacterMovement : CharCtrl {
         action.name = "jump";
         return action;
     }
+    
+    public override void FlashBangHit(float intensity) {
+        Debug.LogWarning($"flash bang hit: '{intensity}'");
+        Debug.LogError($"TODO: implement FlashBangHit for {this.GetType()}"); // TODO ---
+    }
 
     public ManualCharacterMovementDebugger debug_subclass = new ManualCharacterMovementDebugger();
     protected override void UpdateDebug() {
@@ -285,7 +290,6 @@ public class ManualCharacterMovement : CharCtrl {
         if (move_action == null) { debug_subclass.move_action = "<null>"; }
         else { debug_subclass.move_action = move_action.ToString(); }
     }
-    
 }
 
 

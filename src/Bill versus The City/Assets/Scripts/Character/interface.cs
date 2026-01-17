@@ -127,6 +127,7 @@ public interface IAttackTarget {
     public Transform GetAimTarget(); // return a transform to aim at when the character is targetted with attacks
     public void OnAttackHitRecieved(IAttack attack);
     public void OnAttackHitDealt(IAttack attack, IAttackTarget target);
+    public void FlashBangHit(float intensity);
 }
 
 public interface IItem {

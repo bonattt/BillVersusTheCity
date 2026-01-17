@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressionObserver
 {
@@ -15,7 +16,17 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 
     public int max_vision_nodes = 1; // max number of visible nodes that will add to how quickly the player is noticed
     [Tooltip("multiplier that effects how quickly an enemy will detect the player.")]
-    public float notice_player_rate = 2f;
+    [FormerlySerializedAs("notice_player_rate")]
+    [SerializeField]
+    private float _notice_player_rate = 2f;
+    public float notice_player_rate {
+        get {
+            if (is_flashbang_dazed) {
+                return _notice_player_rate / 2;
+            }
+            return _notice_player_rate;
+        }
+    }
     public float forget_player_rate = 0.25f;
     
     [SerializeField]
@@ -37,12 +48,26 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     [Tooltip("if the enemy is offscreen, notice rate is miltiplied by this value")]
     public float offscreen_notice_multiplier = 0.05f;
 
+    [Tooltip("multiplies the duration of flashbang effects")]
+    [SerializeField]
+    private float _flashbang_effectiveness = 2f;
+    public float flashbang_effectiveness {
+        get {
+            float difficulty_mod = GameSettings.inst.difficulty_settings.GetFloat("enemy_flashbang_effectiveness");
+            return _flashbang_effectiveness * difficulty_mod;
+        }
+    }
+
     private Camera visiblity_camera;
 
     public float _reaction_time = 0.1f;
     public float reaction_time {
         get {
-            return _reaction_time * GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.ENEMY_REACTION_TIME);
+            float total_reaction_time = _reaction_time * GameSettings.inst.difficulty_settings.GetMultiplier(DifficultySettings.ENEMY_REACTION_TIME);
+            if (is_flashbang_dazed) {
+                total_reaction_time = total_reaction_time * 2;
+            }
+            return total_reaction_time;
         }
     }
     private float reaction_time_passed = 0f;
@@ -131,6 +156,11 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     }
     public bool last_seen_at_investigated = false;
     private bool updated_this_frame = false; // used to avoid calculating visibility more than once per frame
+
+    public bool is_flashbang_blinded => Time.time < _flashbang_blinded_until; 
+    public bool is_flashbang_dazed => Time.time < _flashbang_dazed_until; 
+    private float _flashbang_blinded_until = -1f;
+    private float _flashbang_dazed_until = -1f;
 
     void Start() {
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
@@ -242,6 +272,11 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         }
         if (! updated_this_frame) {
             _saw_target_last_frame = _seeing_target;
+            if (is_flashbang_blinded) {
+                _seeing_target = false;
+                updated_this_frame = true;
+                return; // blinded by flashbang, don't check for visibility
+            }
             visible_nodes_this_frame = VisibleNodes().Count;
             if (visible_nodes_this_frame > max_vision_nodes) {
                 visible_nodes_this_frame = max_vision_nodes;
@@ -363,6 +398,10 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 
     public void HearSound(HearingHit hit)
     {
+        if (is_flashbang_blinded) { 
+            Debug.Log($"{gameObject.name} ignored sound while deafened by flashbang.");
+            return; 
+        } // cannot hear while blind and deff from a flashbang
         if (hit.enemy != this) { Debug.LogWarning($"Enemy {gameObject.name} heard HearingHit not for itself, intended for {hit.enemy.gameObject.name}!"); }
         if (!LevelConfig.inst.combat_enabled || disable_hearing) { return; } 
         float alert_level = hit.sound.alarm_level * notice_player_rate;
@@ -378,7 +417,19 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
             _last_seen_at = hit.sound.origin;
             // LosePlayer(); 
         }
-
+    }
+    public void FlashBangHit(Vector3 flashbang_position, float intensity) {
+        if(state == PerceptionState.dead) { return; } // cannot be flashbanged if dead
+        intensity *= flashbang_effectiveness;
+        if (!is_alert) {
+            Alert();
+        }
+        if (!seeing_target) {
+            last_seen_at = flashbang_position;
+        }
+        LosePlayer();
+        _flashbang_blinded_until = intensity + Time.time;
+        _flashbang_dazed_until = (3 * intensity) + Time.time;
     }
 
     // void OnDrawGizmos()
@@ -388,15 +439,29 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     // }
 
     /////////////////////////////// DEBUG FIELDS //////////////////////////////////
-
-    public bool debug_knows_player_location, debug_player_noticed, debug_on_screen;
-    public float debug_distance_from_player;
+    
+    public bool debug__flashbang_now = false;
+    public EnemyPerceptionDebugger debug;
     public void SetDebugData() {
-        debug_knows_player_location = knows_player_location;
-        debug_player_noticed = player_noticed;
-        debug_on_screen = IsOnScreen();
-        debug_distance_from_player = DistanceToPlayer(PlayerCharacter.inst.vision_nodes[0]);
+        if(debug__flashbang_now) {
+            debug__flashbang_now = false;
+            FlashBangHit(transform.position, 4f);
+        }
+        debug.knows_player_location = knows_player_location;
+        debug.player_noticed = player_noticed;
+        debug.on_screen = IsOnScreen();
+        debug.distance_from_player = DistanceToPlayer(PlayerCharacter.inst.vision_nodes[0]);
+        debug.is_flashbang_blinded = is_flashbang_blinded;
+        debug.is_flashbang_dazed = is_flashbang_dazed;
+        debug.flashbang_blinded_until = _flashbang_blinded_until;
+        debug.flashbang_dazed_until = _flashbang_dazed_until;
     }
+}
+
+[Serializable]
+public class EnemyPerceptionDebugger {
+    public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded;
+    public float distance_from_player, flashbang_blinded_until, flashbang_dazed_until;
 }
 
 public enum PerceptionState {
