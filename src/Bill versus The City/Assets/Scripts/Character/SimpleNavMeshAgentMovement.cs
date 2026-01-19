@@ -94,7 +94,7 @@ using UnityEngine.AI;
         GetComponent<CapsuleCollider>().enabled = true;
     }
 
-    public override void FlashBangHit(float intensity) {
+    public override void FlashBangHit(Vector3 flashbang_position, float intensity) {
         Debug.LogWarning($"flash bang hit: '{intensity}'");
     }
 }

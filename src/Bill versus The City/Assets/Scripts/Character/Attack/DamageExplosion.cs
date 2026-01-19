@@ -4,7 +4,15 @@ using UnityEngine.Serialization;
 
 public class DamageExplosion : AbstractExplosion
 {
+    [FormerlySerializedAs("explosion_attack")]
+    [SerializeField]
+    private ExplosionAttack _explosion_attack;
+    public override ExplosionAttack explosion_attack => _explosion_attack;
+    public override string attack_sound_path => "";
+    public override IEnumerable<GameObject> explosion_effects => explosion_attack.explosion_effects;
     public override float explosion_radius { get => explosion_attack.explosion_radius; }
+    public override float explosion_volume { get => explosion_attack.explosion_volume; }
+
     public override void Explode()
     {
         if (has_exploded) { return; } // only explode once

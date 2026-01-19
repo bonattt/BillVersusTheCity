@@ -133,10 +133,9 @@ using UnityEngine.AI;
         base.OnDeathCleanup(status);
         Destroy(gameObject);
     }
-
-    public override void FlashBangHit(float intensity) {
+    public override void FlashBangHit(Vector3 flashbang_position, float intensity) {
         Debug.LogWarning($"flash bang hit: '{intensity}'");
-        Debug.LogError($"TODO: implement FlashBangHit for {this.GetType()}"); // TODO ---
+        perception.FlashBangHit(flashbang_position, intensity);
     }
 
 }

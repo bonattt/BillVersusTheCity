@@ -161,6 +161,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     public bool is_flashbang_dazed => Time.time < _flashbang_dazed_until; 
     private float _flashbang_blinded_until = -1f;
     private float _flashbang_dazed_until = -1f;
+    [SerializeField] private Transform daze_particles_follow;
 
     void Start() {
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
@@ -430,6 +431,15 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         LosePlayer();
         _flashbang_blinded_until = intensity + Time.time;
         _flashbang_dazed_until = (3 * intensity) + Time.time;
+        DisplayFlashbangHit();
+    }
+
+    private void DisplayFlashbangHit() {
+        GameObject particles_prefab = Resources.Load<GameObject>("FlashbangDazeParticles");
+        GameObject daze_particles = Instantiate(particles_prefab);
+        FlashbangDazeParticles particles_script = daze_particles.GetComponent<FlashbangDazeParticles>();
+        particles_script.perception = this;
+        particles_script.follow = daze_particles_follow;
     }
 
     // void OnDrawGizmos()

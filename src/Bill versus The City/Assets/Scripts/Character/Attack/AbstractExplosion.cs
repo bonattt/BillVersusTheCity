@@ -21,14 +21,9 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
             _has_exploded = value;
         }
     }
-
-    [FormerlySerializedAs("explosion_attack")]
-    [SerializeField]
-    private ExplosionAttack _explosion_attack;
-    public ExplosionAttack explosion_attack => _explosion_attack;
     public Transform raycast_from;
     [Tooltip("set to any non-NaN float to lock the Y-position of `raycast_from` to this value.")]
-    public float raycast_fixed_height = float.NaN;
+    public float raycast_fixed_height = 0.9f;
 
     public bool effect_completed { get => has_exploded; }
     protected HashSet<IAttackTarget> targets_hit;
@@ -49,12 +44,16 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
         Explode();
     }
 
+    public abstract ExplosionAttack explosion_attack { get; }
+    public abstract string attack_sound_path { get; }
+    public abstract IEnumerable<GameObject> explosion_effects { get; }
+    public abstract float explosion_volume { get; }
     public abstract float explosion_radius { get; }
     public abstract void Explode();
 
     public void MakeGameSound() {
         // triggers game sound that enemies can hear
-        float volume = explosion_attack.explosion_volume * 2;
+        float volume = explosion_volume * 2;
         GameSound new_sound = new GameSound(transform.position, range:volume, alarm_level:volume);
         new_sound.sound_name = "Explosion";
         new_sound.alerts_police = true;
@@ -62,7 +61,7 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
     }
 
     public void MakeSoundEffect() {
-        ISFXSounds explosion_sfx = SFXLibrary.LoadSound(explosion_attack.attack_sound);
+        ISFXSounds explosion_sfx = SFXLibrary.LoadSound(attack_sound_path);
         SFXSystem.inst.PlaySound(explosion_sfx, transform.position);
     }
 
@@ -73,7 +72,7 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
 
     protected void SpawnExplosionEffects()
     {
-        foreach (GameObject prefab in explosion_attack.explosion_effects) {
+        foreach (GameObject prefab in explosion_effects) {
             GameObject effect = Instantiate(prefab);
             effect.transform.position = transform.position;
 

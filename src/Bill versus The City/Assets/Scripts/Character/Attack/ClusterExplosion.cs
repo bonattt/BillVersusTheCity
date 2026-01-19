@@ -21,9 +21,15 @@ public class ClusterExplosion : AbstractExplosion
     public float secondary_fuse_seconds_min = 0.9f;
     public float secondary_fuse_seconds_max = 1.1f;
 
-    [SerializeField]
-    private float _explosion_radius;
+    public override ExplosionAttack explosion_attack => null;
+    public override string attack_sound_path => "gunshot_sound";
+    public override IEnumerable<GameObject> explosion_effects => new List<GameObject>();
+
+    [SerializeField] private float _explosion_radius;
     public override float explosion_radius => _explosion_radius;
+    
+    [SerializeField] private float _explosion_volume;
+    public override float explosion_volume => _explosion_volume;
     public override void Explode()
     {
         foreach (Vector3 direction in GetDirections(n_explosions)) {

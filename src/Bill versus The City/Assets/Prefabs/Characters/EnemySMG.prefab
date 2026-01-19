@@ -140,6 +140,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8241027428916574625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4455380044235570213
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8053552313850837049}
+  m_Layer: 0
+  m_Name: daze_particles_follow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8053552313850837049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455380044235570213}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8241027428916574625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7636100687923735762
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +219,7 @@ Transform:
   - {fileID: 7494676117244481231}
   - {fileID: 4407993598705714311}
   - {fileID: 2891701816792940742}
+  - {fileID: 8053552313850837049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &724037430045444187
@@ -227,13 +259,14 @@ MonoBehaviour:
     m_Bits: 375
   raycast_start: {fileID: 7494676117244481231}
   max_vision_nodes: 1
-  notice_player_rate: 2
+  _notice_player_rate: 2
   forget_player_rate: 0.25
   _disable_spot: 0
   _disable_hearing: 0
   alert_by_script: 0
   on_screen_test_offset: -0.5
   offscreen_notice_multiplier: 0.05
+  _flashbang_effectiveness: 2
   _reaction_time: 0.25
   max_alert_vision_range: 28
   max_notice_range: 22
@@ -241,10 +274,17 @@ MonoBehaviour:
   _percent_noticed: 0
   _last_seen_at: {x: 0, y: 0, z: 0}
   last_seen_at_investigated: 0
-  debug_knows_player_location: 0
-  debug_player_noticed: 0
-  debug_on_screen: 0
-  debug_distance_from_player: 0
+  daze_particles_follow: {fileID: 8053552313850837049}
+  debug__flashbang_now: 0
+  debug:
+    knows_player_location: 0
+    player_noticed: 0
+    on_screen: 0
+    is_flashbang_dazed: 0
+    is_flashbang_blinded: 0
+    distance_from_player: 0
+    flashbang_blinded_until: 0
+    flashbang_dazed_until: 0
 --- !u!114 &437746924962861259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +394,7 @@ MonoBehaviour:
   _throw_from: {fileID: 4407993598705714311}
   _default_bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}
   inaccuracy_modifier: 0
+  _could_shoot_last_frame: 1
   _current_recoil: 0
   debug_ammo_count: 0
 --- !u!114 &8064780152047872351

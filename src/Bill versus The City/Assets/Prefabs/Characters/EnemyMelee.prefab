@@ -78,6 +78,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: -50, y: -50}
   TransformToFollow: {fileID: 6372002721478199582}
+--- !u!1 &821477748094808804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476135968447690457}
+  m_Layer: 0
+  m_Name: daze_particles_follow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1476135968447690457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821477748094808804}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 31.520998, y: 1.8, z: 9.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6372002721478199582}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1505927797627387282
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +156,7 @@ Transform:
   - {fileID: 2857373686001436190}
   - {fileID: 4280276152886177003}
   - {fileID: 7962656628606315061}
+  - {fileID: 1476135968447690457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4597022462186920448
@@ -164,13 +196,14 @@ MonoBehaviour:
     m_Bits: 375
   raycast_start: {fileID: 4280276152886177003}
   max_vision_nodes: 1
-  notice_player_rate: 2
+  _notice_player_rate: 2
   forget_player_rate: 0.25
   _disable_spot: 0
   _disable_hearing: 0
   alert_by_script: 0
   on_screen_test_offset: -0.5
   offscreen_notice_multiplier: 0.05
+  _flashbang_effectiveness: 2
   _reaction_time: 0.25
   max_alert_vision_range: 28
   max_notice_range: 22
@@ -178,10 +211,17 @@ MonoBehaviour:
   _percent_noticed: 0
   _last_seen_at: {x: 0, y: 0, z: 0}
   last_seen_at_investigated: 0
-  debug_knows_player_location: 0
-  debug_player_noticed: 0
-  debug_on_screen: 0
-  debug_distance_from_player: 0
+  daze_particles_follow: {fileID: 1476135968447690457}
+  debug__flashbang_now: 0
+  debug:
+    knows_player_location: 0
+    player_noticed: 0
+    on_screen: 0
+    is_flashbang_dazed: 0
+    is_flashbang_blinded: 0
+    distance_from_player: 0
+    flashbang_blinded_until: 0
+    flashbang_dazed_until: 0
 --- !u!114 &3396656997431563555
 MonoBehaviour:
   m_ObjectHideFlags: 0
