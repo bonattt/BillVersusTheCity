@@ -279,9 +279,22 @@ public class ManualCharacterMovement : CharCtrl {
         return action;
     }
     
+    private float _flashbang_effectiveness = 1f;
+    public float flashbang_effectiveness {
+        get {
+            float difficulty_adjustment = GameSettings.inst.difficulty_settings.GetFloat(DifficultySettings.PLAYER_FLASHBANG_EFFECTIVENESS);
+            return _flashbang_effectiveness * difficulty_adjustment; 
+        }
+    }
+    private float max_blind_duration = 3f;
+
     public override void FlashBangHit(Vector3 flashbang_position, float intensity) {
-        Debug.LogWarning($"flash bang hit: '{intensity}'");
-        Debug.LogError($"TODO: implement FlashBangHit for {this.GetType()}"); // TODO ---
+        float distance = PhysicsUtils.FlatDistance(flashbang_position, transform.position);
+        intensity = intensity / distance;
+        Debug.LogWarning($"flash bang hit: '{intensity}' (max: {max_blind_duration})");
+        intensity = Mathf.Min(intensity, max_blind_duration);
+        intensity = intensity * flashbang_effectiveness;
+        FlashbangedUI.inst.FlashbangUntil(intensity);
     }
 
     public ManualCharacterMovementDebugger debug_subclass = new ManualCharacterMovementDebugger();

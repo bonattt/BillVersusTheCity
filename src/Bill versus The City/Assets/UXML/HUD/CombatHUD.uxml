@@ -3,6 +3,7 @@
     <Style src="project://database/Assets/UXML/Menus/WeaponStyles.uss?fileID=7433441132597879392&amp;guid=721f8e00ba5706b4ab9468197f5cee65&amp;type=3#WeaponStyles" />
     <Style src="project://database/Assets/UXML/HUD/AmmoBeltStyle.uss?fileID=7433441132597879392&amp;guid=e1b4ac47f875826429524622d65b4936&amp;type=3#AmmoBeltStyle" />
     <Style src="project://database/Assets/UXML/HUD/HUD.uss?fileID=7433441132597879392&amp;guid=a46c2bbd60e3b254cb8b414c0fb6f096&amp;type=3#HUD" />
+    <ui:VisualElement name="flashbang" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0);" />
     <ui:VisualElement name="root" style="align-self: center; position: relative; width: 100%; height: 100%;">
         <ui:VisualElement name="UpperRightCorner" style="flex-grow: 1; position: absolute; left: 0; top: 0;">
             <ui:VisualElement name="HealthBars" style="flex-grow: 1;">

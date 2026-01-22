@@ -162,6 +162,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     private float _flashbang_blinded_until = -1f;
     private float _flashbang_dazed_until = -1f;
     [SerializeField] private Transform daze_particles_follow;
+    private const float max_flashbang_blind_duration = 4f;
 
     void Start() {
         last_seen_at = new Vector3(float.NaN, float.NaN, float.NaN);
@@ -421,7 +422,12 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     }
     public void FlashBangHit(Vector3 flashbang_position, float intensity) {
         if(state == PerceptionState.dead) { return; } // cannot be flashbanged if dead
-        intensity *= flashbang_effectiveness;
+        float distance = PhysicsUtils.FlatDistance(flashbang_position, transform.position);
+        intensity = intensity / distance;
+        Debug.LogWarning($"flash bang hit: '{intensity}' (max: {max_flashbang_blind_duration})");
+        intensity = Mathf.Min(max_flashbang_blind_duration, intensity);
+        // apply flashbang effectiveness AFTER max duration, to effectively adjust MAX by the difficulty
+        intensity *= flashbang_effectiveness; 
         if (!is_alert) {
             Alert();
         }
@@ -465,13 +471,15 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         debug.is_flashbang_dazed = is_flashbang_dazed;
         debug.flashbang_blinded_until = _flashbang_blinded_until;
         debug.flashbang_dazed_until = _flashbang_dazed_until;
+        debug.blind_remaining = Mathf.Max(0, _flashbang_blinded_until - Time.time);
+        debug.dazed_remaining = Mathf.Max(0, _flashbang_dazed_until - Time.time);
     }
 }
 
 [Serializable]
 public class EnemyPerceptionDebugger {
     public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded;
-    public float distance_from_player, flashbang_blinded_until, flashbang_dazed_until;
+    public float distance_from_player, flashbang_blinded_until, flashbang_dazed_until, blind_remaining, dazed_remaining;
 }
 
 public enum PerceptionState {

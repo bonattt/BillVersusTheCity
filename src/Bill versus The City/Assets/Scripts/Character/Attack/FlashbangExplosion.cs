@@ -12,9 +12,24 @@ public class FlashbangExplosion : AbstractExplosion
     public override float explosion_radius => _explosion_radius;
     public override ExplosionAttack explosion_attack => null;
     public override string attack_sound_path => "gunshot_sound";
-    public override IEnumerable<GameObject> explosion_effects => new List<GameObject>();
+    public override IEnumerable<GameObject> explosion_effects {
+        get {
+            if (_explosion_effects == null) {
+                InitExplosionEffects();
+            }
+            return _explosion_effects;
+        }
+    }
     [SerializeField] private float _explosion_volume;
     public override float explosion_volume => _explosion_volume;
+
+    private static List<GameObject> _explosion_effects = null;
+
+    private void InitExplosionEffects() {
+        _explosion_effects = new List<GameObject>();
+        GameObject effect_prefab = Resources.Load<GameObject>("FlashBangEffect");
+        _explosion_effects.Add(effect_prefab);
+    }
     public override void Explode()
     {
         foreach (IAttackTarget target in GetExplosionHits()) {
