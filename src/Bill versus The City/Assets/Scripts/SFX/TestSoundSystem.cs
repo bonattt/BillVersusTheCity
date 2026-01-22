@@ -15,7 +15,8 @@ public class TestSoundSystem : MonoBehaviour
             ISFXSounds sound = SFXLibrary.LoadSound(sound_path);
             SFXSystem.inst.PlaySound(sound, transform.position);
         } else {
-            SFXSystem.inst.PlaySound(clip, SoundCategory.sound_effect, transform.position, volume);
+            Debug.LogError("NOT IMPLEMENTED use sound path for testing..."); 
+            // SFXSystem.inst.PlaySound(clip, SoundCategory.sound_effect, transform.position, volume);
         }
         Destroy(gameObject);
     }

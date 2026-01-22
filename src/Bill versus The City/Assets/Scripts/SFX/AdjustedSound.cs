@@ -13,33 +13,25 @@ public class AdjustedSound : ScriptableObject, ISingleSFXSound, ISFXSounds
     public SoundCategory _default_category = SoundCategory.sound_effect;
     
     public string sound_name { 
-        get {
-            return _sound_name;
-        }
+        get => _sound_name;
         set {
             _sound_name = value;
         }
     }
     public AudioClip clip {
-        get {
-            return _clip;
-        }
+        get =>_clip;
         set {
             _clip = value;
         }
     }
     public float volume { 
-        get {
-            return _volume; 
-        }
+        get => _volume; 
         set {
             _volume = value;
         }
     }
     public SoundCategory default_category { 
-        get {
-            return _default_category;
-        }
+        get => _default_category;
         set {
             _default_category = value;
         }

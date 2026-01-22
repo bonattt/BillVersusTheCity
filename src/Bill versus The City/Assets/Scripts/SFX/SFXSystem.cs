@@ -81,35 +81,36 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
     }
 
-    public AudioSource PlaySound(ISFXSounds sound, Vector3 target) {
+    public AudioSource PlaySound(ISFXSounds sound, Vector3 target, bool loop=false) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
         }
-        return PlaySound(sound.GetRandomSound(), target);
+        return PlaySound(sound.GetRandomSound(), target, loop:loop);
     }
 
-    public AudioSource PlaySound(ISingleSFXSound sound, Vector3 target) {
+    public AudioSource PlaySound(ISingleSFXSound sound, Vector3 target, bool loop=false) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
         }
-        return PlaySound(sound.clip, sound.default_category, target, GetVolume(sound));
-    }
+    //     return PlaySound(sound.clip, sound.default_category, target, GetVolume(sound), loop:loop);
+    // }
 
-    public AudioSource PlaySound(AudioClip audio_clip, SoundCategory sound_category, Vector3 target, float volume) {
+    // public AudioSource PlaySound(AudioClip audio_clip, SoundCategory sound_category, Vector3 target, float volume, bool loop=false) {
+        AudioClip audio_clip = sound.clip;
+        SoundCategory sound_category = sound.default_category;
+        float volume = GetVolume(sound);
         if (audio_clip == null) {
             Debug.LogWarning("empty sound effect");
             return null;
         }
         AudioSource audio_source = CreatePlayer(audio_clip, target, volume);
-        audio_source.Play();
+        // audio_source.Play();
         // destroy when sound finishes  
-        float clip_length = audio_source.clip.length;
-        VolumeSettingsUpdater updater = audio_source.gameObject.AddComponent<VolumeSettingsUpdater>();
-        updater.sound_category = sound_category;
-        updater.audio_source = audio_source;
-        Destroy(audio_source.gameObject, clip_length);
+        PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
+        instance_manager.StartPlayback(sound, loop);
+        instance_manager.sound_category = sound_category;
         // NOTE: audio_sources created while paused will linger because this uses unscaled time. There's not easy fix for this, and it's not REALLY a problem, so I'm letting that issue stick around
         return audio_source;
     }
@@ -123,10 +124,10 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         
     }
 
-    public void PlayRandomClip(AudioClip[] audio_clips, Vector3 target, float volume) {
-        int rand = Random.Range(0, audio_clips.Length);
-        PlaySound(audio_clips[rand], SoundCategory.sound_effect, target, volume);
-    }
+    // public void PlayRandomClip(AudioClip[] audio_clips, Vector3 target, float volume) {
+    //     int rand = Random.Range(0, audio_clips.Length);
+    //     PlaySound(audio_clips[rand], SoundCategory.sound_effect, target, volume);
+    // }
 
     public void PlayRandomClip(ISFXSounds sound_set, Vector3 target) {
         PlaySound(sound_set.GetRandomSound(), target);

@@ -93,9 +93,12 @@ MonoBehaviour:
     m_Bits: 0
   evaluation_period: 0.05
   _max_engaged_enemies: 4
-  debug_enemies: []
-  debug_enemeis_defeated: []
-  debug_enemies_remaining: []
+  debug:
+    engaged_enemies: -1
+    reserved_enemies: -1
+    enemies: []
+    enemeis_defeated: []
+    enemies_remaining: []
 --- !u!1 &2665482373796785951
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +264,7 @@ GameObject:
   - component: {fileID: 1265077634166389551}
   - component: {fileID: 2371446720847656667}
   m_Layer: 0
-  m_Name: SoundGizmos
+  m_Name: GameSoundGizmos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
