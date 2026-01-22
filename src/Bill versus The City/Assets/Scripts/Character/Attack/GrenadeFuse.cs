@@ -11,7 +11,7 @@ public class GrenadeFuse : MonoBehaviour {
 
     public string fuse_sound_name = "WeaponEffects/GrenadeFuse";
     private ISFXSounds fuse_sound;
-    private AudioSource sound_playing;
+    private IPlayingSound sound_playing;
 
     public float fuse_progress {
         get {
@@ -37,19 +37,18 @@ public class GrenadeFuse : MonoBehaviour {
     }
 
     private void PlayFuseSound() {
-        sound_playing = SFXSystem.inst.PlaySound(fuse_sound, transform.position);
+        sound_playing = SFXSystem.inst.PlaySound(fuse_sound, transform.position, loop:true);
         if (sound_playing == null) { Debug.LogError("playing sound returned null!"); return; }
 
-        sound_playing.transform.parent = transform;
-        sound_playing.spatialBlend = 1f;
-        sound_playing.minDistance = 1f;
+        sound_playing.audio_source.transform.parent = transform;
+        sound_playing.audio_source.spatialBlend = 1f;
+        sound_playing.audio_source.minDistance = 1f;
         if (explosion.explosion_attack != null) { // TODO --- this if/else should probably not be needed. Consider refactoring
-            sound_playing.maxDistance = explosion.explosion_radius * 25f;
+            sound_playing.audio_source.maxDistance = explosion.explosion_radius * 25f;
         } else {
             Debug.LogWarning("// TODO --- implement sound radius without explosion radius");
-            sound_playing.maxDistance = 150f;
+            sound_playing.audio_source.maxDistance = 150f;
         }
-        sound_playing.loop = true;
     }
 
     private void StopFuseSound() {
@@ -57,9 +56,7 @@ public class GrenadeFuse : MonoBehaviour {
             Debug.LogWarning("StopFuseSound called with no sound playing!");
             return;
         }
-        sound_playing.Stop();
-        Destroy(sound_playing);
-        sound_playing = null;
+        sound_playing.StopPlayback();
     }
 
     public void StartFuse() {

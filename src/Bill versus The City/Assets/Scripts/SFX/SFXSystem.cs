@@ -81,7 +81,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
     }
 
-    public AudioSource PlaySound(ISFXSounds sound, Vector3 target, bool loop=false) {
+    public IPlayingSound PlaySound(ISFXSounds sound, Vector3 target, bool loop=false) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
@@ -89,15 +89,11 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         return PlaySound(sound.GetRandomSound(), target, loop:loop);
     }
 
-    public AudioSource PlaySound(ISingleSFXSound sound, Vector3 target, bool loop=false) {
+    public IPlayingSound PlaySound(ISingleSFXSound sound, Vector3 target, bool loop=false) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
         }
-    //     return PlaySound(sound.clip, sound.default_category, target, GetVolume(sound), loop:loop);
-    // }
-
-    // public AudioSource PlaySound(AudioClip audio_clip, SoundCategory sound_category, Vector3 target, float volume, bool loop=false) {
         AudioClip audio_clip = sound.clip;
         SoundCategory sound_category = sound.default_category;
         float volume = GetVolume(sound);
@@ -106,13 +102,10 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             return null;
         }
         AudioSource audio_source = CreatePlayer(audio_clip, target, volume);
-        // audio_source.Play();
-        // destroy when sound finishes  
         PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
         instance_manager.StartPlayback(sound, loop);
         instance_manager.sound_category = sound_category;
-        // NOTE: audio_sources created while paused will linger because this uses unscaled time. There's not easy fix for this, and it's not REALLY a problem, so I'm letting that issue stick around
-        return audio_source;
+        return instance_manager;
     }
 
     private AudioSource CreatePlayer(AudioClip audio_clip, Vector3 target, float volume) {

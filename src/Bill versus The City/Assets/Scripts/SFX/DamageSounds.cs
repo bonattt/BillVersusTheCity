@@ -85,8 +85,8 @@ public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
         } else {
             sounds = damage_grunts;
         }
-        AudioSource source = SFXSystem.inst.PlaySound(sounds, transform.position);
-        current_damage_sounds = source.gameObject;
+        IPlayingSound source = SFXSystem.inst.PlaySound(sounds, transform.position);
+        current_damage_sounds = source.audio_source.gameObject; // gameObject will == null once this manager destroys itself
     }
 
 

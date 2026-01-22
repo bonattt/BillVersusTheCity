@@ -52,6 +52,8 @@ public class PlayingSoundInterface : MonoBehaviour, ISettingsObserver, IPlayingS
         if (loop) {
             // do nothing. Looping sounds clean themselves up once stopped.
         } else {
+            // NOTE: audio_sources created while paused will linger because this uses unscaled time. There's not easy fix for this, and it's not REALLY a problem, so I'm letting that issue stick around
+            /// ????? idk what the above means. This comment was moved here in a refactor
             Destroy(gameObject, sound_playing.clip.length); // clean up once sound is finished
         }
         GameSettings.inst.audio_settings.Subscribe(this);
