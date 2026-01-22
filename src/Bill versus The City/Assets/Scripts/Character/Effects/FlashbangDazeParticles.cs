@@ -21,6 +21,7 @@ public class FlashbangDazeParticles : MonoBehaviour {
     }
 
     private void FollowTarget() {
+        if (follow == null) { return; } // target destroyed
         transform.position = follow.position;
         transform.rotation = follow.rotation;
     }
@@ -48,7 +49,7 @@ public class FlashbangDazeParticles : MonoBehaviour {
     }
     private void SetParticlesNone() {
         particles.Stop();
-        Destroy(gameObject, 15f); // give particles time to disappear naturally, before cleaning up the particle system.
+        Destroy(gameObject, 25f); // give particles time to disappear naturally, before cleaning up the particle system.
     }
 
     

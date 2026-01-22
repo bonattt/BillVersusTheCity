@@ -15,5 +15,5 @@ MonoBehaviour:
   sound_name: flashbang tinnitus
   sounds:
   - {fileID: 8300000, guid: 721608d2e97554042a592bd2fefe4d29, type: 3}
-  volume: 1
+  volume: 0.5
   default_category: 0

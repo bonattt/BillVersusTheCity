@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class FlashbangedUI : MonoBehaviour {
     
     public UIDocument ui_doc;
+    private float _flashbanged_at = float.NegativeInfinity;
     public float blind_until { get; private set; }
     public float dazed_until { get; private set; }
 
@@ -52,7 +53,7 @@ public class FlashbangedUI : MonoBehaviour {
     }
 
     private void UpdateOpacity() {
-        Color c =  new Color(1f, 1f, 1f, GetPercent());
+        Color c =  new Color(1f, 1f, 1f, GetBlindPercent());
         panel.style.backgroundColor = c;
     }
 
@@ -61,7 +62,7 @@ public class FlashbangedUI : MonoBehaviour {
             Debug.LogWarning($"cannot update volume, no tinnitus sound is set!!");
             return;
         }
-        float percent =  GetPercent();
+        float percent =  GetDeafPercent();
         if (percent <= 0f) {
             tinnitus_sound.StopPlayback();
         } else {
@@ -69,7 +70,18 @@ public class FlashbangedUI : MonoBehaviour {
         }
     }
 
-    private float GetPercent() {
+    private float GetDeafPercent() {
+        if(!active) { return 0f; }
+        if (dazed_until <= Time.time) { return 0f; }
+        
+        float time_recovering = Time.time - _flashbanged_at; // seconds after blind starts fading
+        float period = dazed_until - _flashbanged_at; // time it takes to go from fully opaque at the midpoint to fully transparent
+
+        float percent = (period - time_recovering) / period;
+        return percent;
+    }
+
+    private float GetBlindPercent() {
         if(!active) { return 0f; }
         if (blind_until >= Time.time) { return 1f; }
         if (dazed_until <= Time.time) { return 0f; }
@@ -83,6 +95,7 @@ public class FlashbangedUI : MonoBehaviour {
 
     public void FlashbangUntil(float blind_duration) {
         Debug.LogWarning($"blind duration: {blind_duration}");
+        _flashbanged_at = Time.time;
         blind_until = Time.time + blind_duration;
         dazed_until = Time.time + (blind_duration * 3);
         StartFlashbangSound();
@@ -99,7 +112,7 @@ public class FlashbangedUI : MonoBehaviour {
 
     public FlashbangedUIDebugger debug;
     private void UpdateDebug() {
-        debug.percent_blind = GetPercent();
+        debug.percent_blind = GetBlindPercent();
         debug.blind_until = blind_until;
         debug.dazed_until = dazed_until;
         debug.blind_remaining = Mathf.Max(0, blind_until - Time.time);
