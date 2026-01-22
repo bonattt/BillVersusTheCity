@@ -15,7 +15,15 @@ public class PlayingSoundInterface : MonoBehaviour, ISettingsObserver, IPlayingS
     public SoundCategory sound_category { get; set; }
     public AudioSource audio_source => _audio_source;
 
-    public float volume_setting { get; set; } // 1-0 volume setting, which will be multiplied against the volume of `sound_playing` before it is applied to the audio_source
+    private float _volume_setting = 1f;
+    // 1-0 volume setting, which will be multiplied against the volume of `sound_playing` before it is applied to the audio_source
+    public float volume_setting { 
+        get => _volume_setting;
+        set {
+            _volume_setting = value;
+            UpdateVolume();
+        }
+    }
     public bool loop { 
         get => audio_source.loop = loop;
         set {
@@ -62,7 +70,9 @@ public class PlayingSoundInterface : MonoBehaviour, ISettingsObserver, IPlayingS
     public void StopPlayback() {
         // manually stop playing a sound. Normally only used for looping sounds; 
         //   non-looping sounds should clean themselves up automatically when they finish
-        audio_source.Stop();
+        if (audio_source != null) {
+            audio_source.Stop();
+        }
         _stopped = true;
         Destroy(gameObject);
     }
@@ -78,8 +88,7 @@ public class PlayingSoundInterface : MonoBehaviour, ISettingsObserver, IPlayingS
 
     private void UpdateVolume() {
         if (_stopped) { return; }
-        float new_volume = SFXSystem.GetVolume(sound_playing);
-        Debug.LogWarning($"{gameObject.name}: volume updated {audio_source.volume} --> {new_volume}"); // TODO --- remove debug
+        float new_volume = _volume_setting * SFXSystem.GetVolume(sound_playing);
         audio_source.volume = new_volume;
         
     }

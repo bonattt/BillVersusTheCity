@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d73897c23901c8478f9d68e6e920202, type: 3}
+  m_Script: {fileID: 11500000, guid: 316e498e6a4421a4e9d34348fb704497, type: 3}
   m_Name: flashbang_tinnitus
   m_EditorClassIdentifier: 
-  _sound_name: flashbang tinnitus
-  _clip: {fileID: 8300000, guid: 721608d2e97554042a592bd2fefe4d29, type: 3}
-  _volume: 0.4
-  _default_category: 0
+  sound_name: flashbang tinnitus
+  sounds:
+  - {fileID: 8300000, guid: 721608d2e97554042a592bd2fefe4d29, type: 3}
+  volume: 1
+  default_category: 0

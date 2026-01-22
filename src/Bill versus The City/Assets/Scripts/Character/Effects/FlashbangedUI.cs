@@ -15,6 +15,18 @@ public class FlashbangedUI : MonoBehaviour {
 
     public bool active => true;
 
+    public string tinnitus_sound_path = "WeaponEffects/flashbang_tinnitus";
+    private ISFXSounds _sound = null;
+    private ISFXSounds sound {
+        get {
+            if (_sound == null) {
+                _sound = SFXLibrary.LoadSound(tinnitus_sound_path);
+            }
+            return _sound;
+        }
+    }
+    private IPlayingSound tinnitus_sound = null;
+
 
     public static FlashbangedUI inst { get; private set; }
     void Awake() {
@@ -28,7 +40,8 @@ public class FlashbangedUI : MonoBehaviour {
 
     void Update() {
         if (active) {
-            UpdateOpacity();
+            UpdateOpacity(); // blind effect
+            UpdateTinnitusVolume(); // tinnitus effect
         }
         UpdateDebug();
     }
@@ -40,8 +53,20 @@ public class FlashbangedUI : MonoBehaviour {
 
     private void UpdateOpacity() {
         Color c =  new Color(1f, 1f, 1f, GetPercent());
-        Debug.LogWarning("UpdateOpacity"); // TODO --- remove debug
         panel.style.backgroundColor = c;
+    }
+
+    private void UpdateTinnitusVolume() {
+        if (tinnitus_sound == null) { 
+            Debug.LogWarning($"cannot update volume, no tinnitus sound is set!!");
+            return;
+        }
+        float percent =  GetPercent();
+        if (percent <= 0f) {
+            tinnitus_sound.StopPlayback();
+        } else {
+            tinnitus_sound.volume_setting = percent;
+        }
     }
 
     private float GetPercent() {
@@ -60,8 +85,15 @@ public class FlashbangedUI : MonoBehaviour {
         Debug.LogWarning($"blind duration: {blind_duration}");
         blind_until = Time.time + blind_duration;
         dazed_until = Time.time + (blind_duration * 3);
-        UpdateDebug(); // TODO --- remove debug
-        EditorApplication.isPaused = true; // TODO --- remove debug
+        StartFlashbangSound();
+    }
+
+    private void StartFlashbangSound() {
+        if (tinnitus_sound != null && tinnitus_sound.audio_source != null) {
+            Debug.LogWarning("clearing old tinnitus_sound");
+            tinnitus_sound.StopPlayback();
+        }
+        tinnitus_sound = SFXSystem.inst.PlaySound(sound, transform.position, loop:true);
     }
 
 
@@ -72,11 +104,16 @@ public class FlashbangedUI : MonoBehaviour {
         debug.dazed_until = dazed_until;
         debug.blind_remaining = Mathf.Max(0, blind_until - Time.time);
         debug.daze_remaining =  Mathf.Max(0, dazed_until - Time.time);
+        debug.tinnitus_volume = tinnitus_sound == null ? -1 : tinnitus_sound.volume_setting;
     }
 
 }
 
 [Serializable]
 public class FlashbangedUIDebugger {
-    public float percent_blind, blind_until, dazed_until, blind_remaining, daze_remaining;
+    [Header("audio")]
+    public float tinnitus_volume;
+    [Header("durations")]
+    public float percent_blind; // only place header once
+    public float blind_until, dazed_until, blind_remaining, daze_remaining;
 }

@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui_doc: {fileID: 3992093689662693590}
+  tinnitus_sound_path: WeaponEffects/flashbang_tinnitus
   debug:
     percent_blind: 0
     blind_until: 0
