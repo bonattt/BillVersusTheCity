@@ -12,7 +12,7 @@ PLANNED FEATURES
 [ ] Explore more Grenade options
     [+] REFACTOR: extract explosion interface to support grenade variety
     [ ] Smoke Grenade???
-    [ ] Flashbang
+    [+] Flashbang
     [ ] Incindiary Grenade
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun
