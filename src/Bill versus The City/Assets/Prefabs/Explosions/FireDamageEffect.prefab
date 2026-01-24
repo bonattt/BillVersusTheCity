@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3402505553146423064}
   - component: {fileID: 5286512088207593998}
   - component: {fileID: 4628610861191815414}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: FireDamageEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,6 +82,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 765217015798065811, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 3880781908809371709, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -121,6 +125,14 @@ PrefabInstance:
     - target: {fileID: 3880781908809371709, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199756908386060244, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475838716000928594, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7568306016413094873, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
       propertyPath: ShapeModule.angle

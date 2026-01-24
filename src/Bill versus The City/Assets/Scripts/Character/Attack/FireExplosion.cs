@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FireExplosion : AbstractExplosion
+{
+    // an IExplosion which spawns a damaging area
+    [Tooltip("Prefab grenade spawned when this explosion explodes.")]
+    public GameObject flame_prefab;
+
+
+    public override ExplosionAttack explosion_attack => null;
+    public override string attack_sound_path => "gunshot_sound";
+    public override IEnumerable<GameObject> explosion_effects => new List<GameObject>();
+
+    public float damage_per_second = 20f;
+
+    [SerializeField] private float flame_radius;
+    public override float explosion_radius => flame_radius;
+    
+    [SerializeField] private float _explosion_volume = 1f;
+    public override float explosion_volume => _explosion_volume;
+    public override void Explode()
+    {
+        SpawnFlame();
+        if (destroy_on_explode) {
+            Destroy(gameObject);
+        }
+    }
+
+    public static IEnumerable<Vector3> GetDirections(int n) {
+        // iterable method to return vectors pointing in N directions
+        for (int k = 0; k < n; k++) {
+            yield return GetDirection(n, k);
+        }
+    }
+
+
+    private static Vector3 GetDirection(int n, int k) {
+        // n: length of sequence
+        // k: sequence index
+        float angle = 2 * Mathf.PI * k / n;
+        return new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+    }
+
+
+    protected GameObject SpawnFlame() {
+        GameObject flame_area = Instantiate(flame_prefab);
+        flame_area.transform.position = transform.position;
+        flame_area.transform.localScale = new Vector3(explosion_radius, 1, explosion_radius);
+
+        AreaDamage damage = flame_area.GetComponentInChildren<AreaDamage>();
+        damage.damage_rate = damage_per_second;
+
+        return flame_area;
+    }
+}

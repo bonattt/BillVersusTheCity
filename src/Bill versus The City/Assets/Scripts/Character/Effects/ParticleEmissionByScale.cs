@@ -33,11 +33,19 @@ public class ParticleEmissionByScale : MonoBehaviour
 
     void Start() {
         SetBaseline();
+        UpdateEmission();
+        # if UNITY_EDITOR
+        UpdateDebug();
+        # endif
     }
 
     void Update() {
         if (!update_at_runtime) { return; } // only run scaling at runtime of this bool is checked.
         UpdateEmission();
+        
+        # if UNITY_EDITOR
+        UpdateDebug();
+        # endif
     }
 
     private void UpdateEmission() {
@@ -47,13 +55,22 @@ public class ParticleEmissionByScale : MonoBehaviour
     }
 
 
-    private void SetBaseline() {
+    private bool baseline_set = false;
+    public void SetBaseline() {
         // stores the initial values of the particle system's emission and volume, so it can be scaled dynamically
-        current_volume = GetTransformVolume();
+        // method is IDEMPOTENT, so it can be called before Start, when spawning this from a script (the standard way to use this)
+        if (baseline_set) { return; }  // don't overwrite the baseline if it was already set
+        baseline_set = true;
+        current_volume = IdentityVolume(); // assumes the initial config of the particle system are set for particles at a scale of <1,1,1>
         base_rate_over_time = rate_over_time / current_volume;
         base_max_particles = (int) (max_particles / current_volume);
     }
-
+    
+    public static float IdentityVolume() {
+        // returns the volume when the object is not scaled (scale.<x, y, z> = <1, 1, 1>)
+        float radius_squared = 1/4; // 1/2 squared, for r^2 * Pi
+        return radius_squared * Mathf.PI;
+    }
 
     public float GetTransformVolume() {
         // gets the scaled volume of the transform. Assumes the shape is a circle
@@ -63,6 +80,7 @@ public class ParticleEmissionByScale : MonoBehaviour
 
     }
 
+# if UNITY_EDITOR
     public ParticleEmissionByScaleDebugger debug;
     private void UpdateDebug() {
         debug.base_rate_over_time = base_rate_over_time; 
@@ -71,11 +89,12 @@ public class ParticleEmissionByScale : MonoBehaviour
         debug.max_particles = max_particles; 
         debug.current_volume = GetTransformVolume();
     }
-
-
+#endif
 }
 
+# if UNITY_EDITOR
 [Serializable]
 public class ParticleEmissionByScaleDebugger {
     public float base_rate_over_time, base_max_particles, rate_over_time, max_particles, current_volume;
 }
+#endif

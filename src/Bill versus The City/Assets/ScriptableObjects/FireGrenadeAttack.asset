@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23145e648f0fc06488fe5ae88ad5cb31, type: 3}
+  m_Name: FireGrenadeAttack
+  m_EditorClassIdentifier: 
+  _item_id: fire_grenade
+  _item_name: incendiary grenade
+  _item_icon: {fileID: 21300000, guid: 152418c5600bd0b4e9891304f26a53a3, type: 3}
+  _attack_sound: melee_default
+  grenade_prefab: {fileID: 2701627596137562284, guid: c73f915c5eb615e4ab5340446107b372, type: 3}
+  _ammo_capacity: 5
+  _ammo_drop_size: 3

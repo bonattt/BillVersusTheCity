@@ -78,7 +78,8 @@ public class AreaDamage : MonoBehaviour
 
     private void DealAreaDamageToTarget(IAttackTarget target) {
         if (target.GetStatus().health <= 0) {
-            targets_in_area.Remove(target); // remove dead targets
+            remove_targets.Add(target); // remove dead targets
+            return;
         }
         if (already_hit.Contains(target)) { return; } // skip already damaged targets;
 
