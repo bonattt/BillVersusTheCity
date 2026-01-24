@@ -150,6 +150,12 @@ public static class AttackResolver {
         return attack_damage;
     }
 
+
+    public static void ResolveDamageOverTime(IAttackTarget target, float damage_rate, float delta_time) {
+        ICharacterStatus status = target.GetStatus();
+        status.health -= damage_rate * delta_time;
+    }
+
     public static float MinDamage(IAttack attack, Vector3 hit_location) {
         // returns the mean value of the attack's damage.
         float damage = attack.attack_damage_min;
