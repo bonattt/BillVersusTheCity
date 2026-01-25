@@ -56,6 +56,13 @@ public class AreaDamage : MonoBehaviour
         TryRemovingCollider(c);
     }
 
+    void OnDrawGizmos() {
+        
+        Vector3 collider_center = collider_.center + transform.position;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(collider_center, scaled_radius);
+    }
+
     private void TryAddingCollider(Collider c) {
         IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
         if (t != null) {
@@ -70,10 +77,12 @@ public class AreaDamage : MonoBehaviour
         }
     }
 
+    public float scaled_radius => transform.localScale.x * collider_.radius;
+
     public Collider[] GetCurrentOverlap() {
         Vector3 collider_center = collider_.center + transform.position;
         Debug.LogWarning($"Physics.OverlapSphere(position: {collider_center}, radius: {collider_.radius})"); // TODO --- remove debug
-        return Physics.OverlapSphere(collider_center, collider_.radius);
+        return Physics.OverlapSphere(collider_center, scaled_radius);
     }
 
     private void DealAreaDamageToTarget(IAttackTarget target) {

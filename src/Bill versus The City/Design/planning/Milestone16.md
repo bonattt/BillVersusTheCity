@@ -12,8 +12,14 @@ PLANNED FEATURES
 [ ] Explore more Grenade options
     [+] REFACTOR: extract explosion interface to support grenade variety
     [ ] Smoke Grenade???
-    [+] Flashbang
-    [ ] Incindiary Grenade
+    [~] Flashbang
+        [+] AoE damage effect
+        [+] AoE spawned by grenade
+        [ ] FIX: Flashbang UI flashes white on editor mode play
+        [+] Add: flame duration
+        [ ] FIX: Flame spreads through walls
+    [+] Incindiary Grenade
+        [ ] FIX: particles don't scale correctly when spawned by grenade
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun
     [ ] FIX: enemies hanging back

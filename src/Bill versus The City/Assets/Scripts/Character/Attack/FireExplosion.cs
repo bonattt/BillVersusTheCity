@@ -13,7 +13,8 @@ public class FireExplosion : AbstractExplosion
     public override string attack_sound_path => "gunshot_sound";
     public override IEnumerable<GameObject> explosion_effects => new List<GameObject>();
 
-    public float damage_per_second = 20f;
+    public float damage_per_second = 50f;
+    public float burn_duration_seconds = 8f;
 
     [SerializeField] private float flame_radius;
     public override float explosion_radius => flame_radius;
@@ -23,6 +24,7 @@ public class FireExplosion : AbstractExplosion
     public override void Explode()
     {
         SpawnFlame();
+        SpawnExplosionEffects();
         if (destroy_on_explode) {
             Destroy(gameObject);
         }
@@ -52,6 +54,13 @@ public class FireExplosion : AbstractExplosion
         AreaDamage damage = flame_area.GetComponentInChildren<AreaDamage>();
         damage.damage_rate = damage_per_second;
 
+        ParticlesSoftKillTimer kill_timer = flame_area.AddComponent<ParticlesSoftKillTimer>();
+        kill_timer.duration = burn_duration_seconds;
+        ParticleSystem[] all_particles = flame_area.GetComponentsInChildren<ParticleSystem>();
+        if (all_particles != null) {
+            kill_timer.AddParticleSystems(all_particles);
+        }
+        
         return flame_area;
     }
 }

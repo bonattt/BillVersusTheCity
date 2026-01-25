@@ -12,6 +12,9 @@ public static class AttackResolver {
     public const string DEFAULT_GUNSHOT = "gunshot_default";
     public const string DEFAULT_MELEE_SOUND = "melee_default";
 
+    public const string DEFAULT_EXPLOSION_EFFECT = "TODO";
+    public const string DEFAULT_EXPLOSION_PARTICLES_BURST = "TODO";
+
     private static IAttackHitEffect[] DAMAGE_EFFECTS = new IAttackHitEffect[]{
         new SpawnPrefabEffect(PLACEHOLDER_ATTACK_HIT_PREFAB),
         new SoundEffect(PLACEHOLDER_DAMAGE_SOUND_EFFECT),
@@ -149,7 +152,6 @@ public static class AttackResolver {
         status.health -= attack_damage;
         return attack_damage;
     }
-
 
     public static void ResolveDamageOverTime(IAttackTarget target, float damage_rate, float delta_time) {
         ICharacterStatus status = target.GetStatus();
