@@ -57,6 +57,7 @@ public class ParticleEmissionByScale : MonoBehaviour
 
     private bool baseline_set = false;
     public void SetBaseline() {
+        Debug.LogWarning("SetBaseline"); // TODO --- remove debug
         // stores the initial values of the particle system's emission and volume, so it can be scaled dynamically
         // method is IDEMPOTENT, so it can be called before Start, when spawning this from a script (the standard way to use this)
         if (baseline_set) { return; }  // don't overwrite the baseline if it was already set
@@ -68,7 +69,7 @@ public class ParticleEmissionByScale : MonoBehaviour
     
     public static float IdentityVolume() {
         // returns the volume when the object is not scaled (scale.<x, y, z> = <1, 1, 1>)
-        float radius_squared = 1/4; // 1/2 squared, for r^2 * Pi
+        float radius_squared = 1f/4f; // 1/2 squared, for r^2 * Pi
         return radius_squared * Mathf.PI;
     }
 
@@ -88,6 +89,7 @@ public class ParticleEmissionByScale : MonoBehaviour
         debug.rate_over_time = rate_over_time; 
         debug.max_particles = max_particles; 
         debug.current_volume = GetTransformVolume();
+        debug.identity_volume = IdentityVolume();
     }
 #endif
 }
@@ -95,6 +97,6 @@ public class ParticleEmissionByScale : MonoBehaviour
 # if UNITY_EDITOR
 [Serializable]
 public class ParticleEmissionByScaleDebugger {
-    public float base_rate_over_time, base_max_particles, rate_over_time, max_particles, current_volume;
+    public float base_rate_over_time, base_max_particles, rate_over_time, max_particles, current_volume, identity_volume;
 }
 #endif

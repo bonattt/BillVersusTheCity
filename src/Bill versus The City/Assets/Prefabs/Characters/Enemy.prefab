@@ -192,6 +192,8 @@ MonoBehaviour:
     distance_from_player: 0
     flashbang_blinded_until: 0
     flashbang_dazed_until: 0
+    blind_remaining: 0
+    dazed_remaining: 0
 --- !u!114 &3396656997431563555
 MonoBehaviour:
   m_ObjectHideFlags: 0

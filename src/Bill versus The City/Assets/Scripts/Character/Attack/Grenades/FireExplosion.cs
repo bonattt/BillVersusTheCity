@@ -47,20 +47,33 @@ public class FireExplosion : AbstractExplosion
 
 
     protected GameObject SpawnFlame() {
-        GameObject flame_area = Instantiate(flame_prefab);
-        flame_area.transform.position = transform.position;
-        flame_area.transform.localScale = new Vector3(explosion_radius, 1, explosion_radius);
+        Debug.LogWarning("SpawnFlame START");
+        GameObject flame_spawner = new GameObject();
+        flame_spawner.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        AreaEffectSpawner spawner_script = flame_spawner.AddComponent<AreaEffectSpawner>();
+        spawner_script.area_radius = flame_radius;
+        spawner_script.area_effect_duration = burn_duration_seconds;
+        spawner_script.spawn_on_start = false;
+        spawner_script.effect_prefab = flame_prefab;
+        spawner_script.blocks_propegation = blocks_explosion;
+        spawner_script.SpawnAsRoot();
 
-        AreaDamage damage = flame_area.GetComponentInChildren<AreaDamage>();
-        damage.damage_rate = damage_per_second;
 
-        ParticlesSoftKillTimer kill_timer = flame_area.AddComponent<ParticlesSoftKillTimer>();
-        kill_timer.duration = burn_duration_seconds;
-        ParticleSystem[] all_particles = flame_area.GetComponentsInChildren<ParticleSystem>();
-        if (all_particles != null) {
-            kill_timer.AddParticleSystems(all_particles);
-        }
+        // GameObject flame_area = Instantiate(flame_prefab);
+        // flame_area.transform.position = transform.position;
+        // flame_area.transform.localScale = new Vector3(explosion_radius, 1, explosion_radius);
+
+        // AreaDamage damage = flame_area.GetComponentInChildren<AreaDamage>();
+        // damage.damage_rate = damage_per_second;
+
+        // ParticlesSoftKillTimer kill_timer = flame_area.AddComponent<ParticlesSoftKillTimer>();
+        // kill_timer.duration = burn_duration_seconds;
+        // ParticleSystem[] all_particles = flame_area.GetComponentsInChildren<ParticleSystem>();
+        // if (all_particles != null) {
+        //     kill_timer.AddParticleSystems(all_particles);
+        // }
         
-        return flame_area;
+        Debug.LogWarning("SpawnFlame END");
+        return flame_spawner;
     }
 }

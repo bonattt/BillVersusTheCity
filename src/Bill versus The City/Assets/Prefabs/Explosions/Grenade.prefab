@@ -78,12 +78,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explode_on_start: 0
   _destroy_on_explode: 1
-  _explosion_attack: {fileID: 11400000, guid: 1428f80c78a864347ada449ed47eca99, type: 2}
   raycast_from: {fileID: 6168678105717745203}
   raycast_fixed_height: 0.9
   blocks_explosion:
     serializedVersion: 2
     m_Bits: 1
+  _explosion_attack: {fileID: 11400000, guid: 1428f80c78a864347ada449ed47eca99, type: 2}
 --- !u!114 &222067629913530333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bc4988713635e4890299a49592d1ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 8816146853372471068}
+  explosions:
+  - {fileID: 8816146853372471068}
   fuse_length_seconds: 5
   start_fuse_on_start: 1
   fuse_sound_name: WeaponEffects/GrenadeFuse

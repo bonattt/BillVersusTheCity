@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaDamage : MonoBehaviour
+public class AreaDamage : MonoBehaviour, IAreaEffect
 {
     // deals damage in an area
 
@@ -16,21 +16,59 @@ public class AreaDamage : MonoBehaviour
     private HashSet<IAttackTarget> targets_in_area = new HashSet<IAttackTarget>();
     private HashSet<IAttackTarget> remove_targets = new HashSet<IAttackTarget>();
 
-    private SphereCollider _collider;
-    public SphereCollider collider_ {
-        get {
-            if (_collider == null) {
-                _collider = GetComponent<SphereCollider>();
-            }
-            return _collider;
+    // private SphereCollider _collider;
+    // public SphereCollider collider_ {
+    //     get {
+    //         if (_collider == null) {
+    //             _collider = GetComponent<SphereCollider>();
+    //         }
+    //         return _collider;
+    //     }
+    // }
+    public SphereCollider collider_;
+
+    private float _area_radius;
+
+    public float area_radius
+    {
+        get => _area_radius;
+        set
+        {
+            _area_radius = value;
+            collider_.radius = _area_radius;
         }
     }
+    
+    private float _area_effect_duration;
+    public float area_effect_duration { 
+        get => _area_effect_duration;
+        set {
+            _area_effect_duration = value;
+            if (kill_timer != null) {
+                kill_timer.duration = value;
+            }
+        }
+    }
+    
+    public LayerMask blocks_propegation { get; set; }
+
+    private ParticlesSoftKillTimer kill_timer;
 
     void Start() {
         // on start, set anything already inside the area as tracked
         targets_in_area = new HashSet<IAttackTarget>();
         foreach (Collider c in GetCurrentOverlap()) {
             TryAddingCollider(c);
+        }
+        AddDuration();
+    }
+
+    private void AddDuration() {
+        kill_timer = gameObject.AddComponent<ParticlesSoftKillTimer>();
+        kill_timer.duration = area_effect_duration;
+        ParticleSystem[] all_particles = GetComponentsInChildren<ParticleSystem>();
+        if (all_particles != null) {
+            kill_timer.AddParticleSystems(all_particles);
         }
     }
 
@@ -65,9 +103,22 @@ public class AreaDamage : MonoBehaviour
 
     private void TryAddingCollider(Collider c) {
         IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
-        if (t != null) {
+        if (t != null && !IsBlockedByWall(c)) {
             targets_in_area.Add(t);
         }
+    }
+
+    private const float raycast_height = 0.5f;
+    private bool IsBlockedByWall(Collider c) {
+        Vector3 start = PhysicsUtils.PositionAtHeight(transform.position, raycast_height);
+        Vector3 end = PhysicsUtils.PositionAtHeight(c.transform.position, raycast_height);
+        Vector3 direction = end - start;
+        RaycastHit hit;
+        if (Physics.Raycast(start, direction.normalized, out hit, direction.magnitude, blocks_propegation)) {
+            Debug.LogWarning($"{c.gameObject.name} not added because raycast blocks path!"); // TODO --- remove debug
+            return true;
+        }
+        return false;
     }
 
     private void TryRemovingCollider(Collider c) {
@@ -81,7 +132,7 @@ public class AreaDamage : MonoBehaviour
 
     public Collider[] GetCurrentOverlap() {
         Vector3 collider_center = collider_.center + transform.position;
-        Debug.LogWarning($"Physics.OverlapSphere(position: {collider_center}, radius: {collider_.radius})"); // TODO --- remove debug
+        // Debug.LogWarning($"Physics.OverlapSphere(position: {collider_center}, radius: {collider_.radius})"); // TODO --- remove debug
         return Physics.OverlapSphere(collider_center, scaled_radius);
     }
 
@@ -103,6 +154,7 @@ public class AreaDamage : MonoBehaviour
         foreach (IAttackTarget t in targets_in_area) {
             debug.tracked_targets.Add($"{t}");
         }
+        debug.blocks_propegation = blocks_propegation;
         # endif
     }
 }
@@ -110,4 +162,5 @@ public class AreaDamage : MonoBehaviour
 [Serializable]
 public class AreaDamageDebugger {
     public List<string> tracked_targets;
+    public LayerMask blocks_propegation;
 }

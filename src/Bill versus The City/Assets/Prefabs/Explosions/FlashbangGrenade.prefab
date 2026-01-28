@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bc4988713635e4890299a49592d1ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 816008887048060035}
+  explosions:
+  - {fileID: 816008887048060035}
   fuse_length_seconds: 5
   start_fuse_on_start: 1
   fuse_sound_name: WeaponEffects/GrenadeFuse

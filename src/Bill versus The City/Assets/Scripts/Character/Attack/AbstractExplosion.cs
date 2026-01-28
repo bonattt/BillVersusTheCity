@@ -84,14 +84,20 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
     }
     protected void DealExplosionDamage()
     {
-        explosion_attack.attack_from = raycast_from.position;
+        explosion_attack.attack_from = GetRaycastStart();
         foreach (IAttackTarget target in GetExplosionHits()) {
             AttackResolver.ResolveAttackHit(explosion_attack, target, target.GetHitTarget().transform.position);
         }
     }
 
     public Vector3 GetRaycastStart() {
-        Vector3 v = raycast_from.position;
+        Vector3 v;
+        if (raycast_from == null) {
+            v = transform.position;
+        } else {
+            v = raycast_from.position;
+        }
+
         if (!float.IsNaN(raycast_fixed_height)) {
             v = new Vector3(v.x, raycast_fixed_height, v.z);
         }

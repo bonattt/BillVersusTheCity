@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5286512088207593998}
   - component: {fileID: 4628610861191815414}
   m_Layer: 18
-  m_Name: FireDamageEffect
+  m_Name: FireDamageEffectScaleable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage_rate: 20
-  collider_: {fileID: 4628610861191815414}
   debug:
     tracked_targets: []
 --- !u!135 &4628610861191815414
@@ -175,9 +174,7 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8983934330845042941, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
-    - {fileID: 2889735069757447574, guid: 0b03593546c56e74f9742022d05a5219, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

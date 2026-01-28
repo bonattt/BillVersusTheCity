@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class PhysicsUtils {
@@ -27,5 +28,19 @@ public static class PhysicsUtils {
         first = new Vector3(first.x, 0f, first.z);
         second = new Vector3(second.x, 0f, second.z);
         return Vector3.Distance(first, second);
+    }
+
+    public static Vector3 PositionAtHeight(Vector3 base_position, float height) {
+        return new Vector3(base_position.x, height, base_position.z);
+    }
+    public static string LayerMaskToString(LayerMask mask) {
+        List<string> layers = new List<string> ();
+        for (int i = 0; i < 32; i++)
+        {
+            if ((mask.value & (1 << i)) != 0)
+                layers.Add(LayerMask.LayerToName(i));
+        }
+
+        return string.Join(", ", layers);
     }
 }

@@ -16,10 +16,16 @@ PLANNED FEATURES
         [+] AoE damage effect
         [+] AoE spawned by grenade
         [ ] FIX: Flashbang UI flashes white on editor mode play
-        [+] Add: flame duration
-        [ ] FIX: Flame spreads through walls
     [+] Incindiary Grenade
-        [ ] FIX: particles don't scale correctly when spawned by grenade
+        [+] FIX: particles don't scale correctly when spawned by grenade
+        [+] Add: flame duration
+        [~] FIX: Flame spreads through walls
+            - break the flame effect into sections
+            [+] Damage AoE should be blocked by walls
+            [ ] FIX: particle area too large
+            [ ] FIX: damage areas overlapping stacks damage (it shouldn't)
+        [ ] IMPROVE: add initial particle effect to allow flames to scale up
+        [ ] FIX: no damage numbers
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun
     [ ] FIX: enemies hanging back

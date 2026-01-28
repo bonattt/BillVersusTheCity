@@ -4,7 +4,8 @@ using System.Runtime.Serialization;
 using UnityEngine;
 
 public class GrenadeFuse : MonoBehaviour {
-    public AbstractExplosion explosion;
+    public List<AbstractExplosion> explosions;
+    public AbstractExplosion primary_explosion => explosions[0]; // TODO --- maybe don't hack this
     public float fuse_length_seconds = 5f;
     public bool start_fuse_on_start = true;
     private float fuse_started_at = float.PositiveInfinity;
@@ -26,7 +27,9 @@ public class GrenadeFuse : MonoBehaviour {
         if (start_fuse_on_start) {
             StartFuse();
         }
-        explosion.destroy_on_explode = true;
+        foreach (AbstractExplosion e in explosions) {
+            e.destroy_on_explode = true;
+        }
     }
 
     private void LoadSounds() {
@@ -43,8 +46,9 @@ public class GrenadeFuse : MonoBehaviour {
         sound_playing.audio_source.transform.parent = transform;
         sound_playing.audio_source.spatialBlend = 1f;
         sound_playing.audio_source.minDistance = 1f;
-        if (explosion.explosion_attack != null) { // TODO --- this if/else should probably not be needed. Consider refactoring
-            sound_playing.audio_source.maxDistance = explosion.explosion_radius * 25f;
+
+        if (primary_explosion.explosion_attack != null) { // TODO --- this if/else should probably not be needed. Consider refactoring
+            sound_playing.audio_source.maxDistance = primary_explosion.explosion_radius * 25f;
         } else {
             Debug.LogWarning("// TODO --- implement sound radius without explosion radius");
             sound_playing.audio_source.maxDistance = 150f;
@@ -67,7 +71,9 @@ public class GrenadeFuse : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (fuse_started_at + fuse_length_seconds < Time.time) {
-            explosion.Explode();
+            foreach (AbstractExplosion e in explosions) {
+                e.Explode();
+            }
             StopFuseSound();
         }
         UpdateDebug();
