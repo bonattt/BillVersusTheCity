@@ -24,6 +24,7 @@ PLANNED FEATURES
             [+] Damage AoE should be blocked by walls
             [ ] FIX: particle area too large
             [ ] FIX: damage areas overlapping stacks damage (it shouldn't)
+            [ ] FIX: leaving the damage area during a jump doesn't trigger OnTriggerExit (because of the jump teleport)
         [ ] IMPROVE: add initial particle effect to allow flames to scale up
         [ ] FIX: no damage numbers
     [ ] Grenade Enemies
