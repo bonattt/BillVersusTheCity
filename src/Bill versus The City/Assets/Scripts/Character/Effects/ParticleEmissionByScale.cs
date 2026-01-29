@@ -57,7 +57,6 @@ public class ParticleEmissionByScale : MonoBehaviour
 
     private bool baseline_set = false;
     public void SetBaseline() {
-        Debug.LogWarning("SetBaseline"); // TODO --- remove debug
         // stores the initial values of the particle system's emission and volume, so it can be scaled dynamically
         // method is IDEMPOTENT, so it can be called before Start, when spawning this from a script (the standard way to use this)
         if (baseline_set) { return; }  // don't overwrite the baseline if it was already set

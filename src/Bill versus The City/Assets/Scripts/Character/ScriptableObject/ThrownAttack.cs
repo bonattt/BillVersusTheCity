@@ -160,13 +160,11 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         if (denominator <= 0) return Vector3.zero; // No valid solution
 
         float speed = Mathf.Sqrt(numerator / denominator);
-        // Debug.LogWarning($"CALCULATE THROW VELOCITY speed: {Mathf.Sqrt(numerator / denominator)} = sqrt({numerator} / {denominator})"); // TODO --- remove debug
 
         // Decompose velocity into vector form
         Vector3 dir = horizontal.normalized;
         Vector3 velocity = dir * speed * cos;
         velocity.y = speed * sin;
-        // Debug.LogWarning($"CALCULATE THROW VELOCITY dir: {dir} velocity {velocity}, velocity.y = {speed * sin} (speed * sin = {speed} * {sin})"); // TODO --- remove debug
         return velocity;
     }
     

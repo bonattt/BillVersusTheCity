@@ -143,7 +143,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
         Vector3 direction = end - start;
         RaycastHit hit;
         if (Physics.Raycast(start, direction.normalized, out hit, direction.magnitude, blocks_propegation)) {
-            Debug.LogWarning($"{c.gameObject.name} not added because raycast blocks path!"); // TODO --- remove debug
             return true;
         }
         return false;
@@ -160,7 +159,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
 
     public Collider[] GetCurrentOverlap() {
         Vector3 collider_center = collider_.center + transform.position;
-        // Debug.LogWarning($"Physics.OverlapSphere(position: {collider_center}, radius: {collider_.radius})"); // TODO --- remove debug
         return Physics.OverlapSphere(collider_center, scaled_radius);
     }
 

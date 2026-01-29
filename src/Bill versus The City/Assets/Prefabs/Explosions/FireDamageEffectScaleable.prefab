@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3402505553146423064}
   - component: {fileID: 5286512088207593998}
   - component: {fileID: 4628610861191815414}
+  - component: {fileID: 3547201056618011484}
   m_Layer: 18
   m_Name: FireDamageEffectScaleable
   m_TagString: Untagged
@@ -75,6 +76,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3547201056618011484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78300222669400994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1302df34fcd7a8249baddf93646d033b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _threat_level: 20
 --- !u!1001 &4410347673357967292
 PrefabInstance:
   m_ObjectHideFlags: 0

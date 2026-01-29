@@ -68,7 +68,6 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
     public void SpawnAsRoot()
     {
         spawned_effect = SpawnLeafEffect();
-        Debug.LogWarning($"ROOT: LayerMask: {PhysicsUtils.LayerMaskToString(blocks_propegation)}"); // TODO --- remove debug
         // spawns as the center of a spawn propigation.
         this.root = this;
         foreach (Vector3 spawn_direction in GetSpawnDirections()) {
@@ -79,14 +78,12 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
     private bool SpawnAsBranch(Vector3 direction)
     {
         /* spawns as a node in the spawning */
-        Debug.LogWarning($"branch: LayerMask: {PhysicsUtils.LayerMaskToString(blocks_propegation)}"); // TODO --- remove debug
         if (Vector3.Distance(transform.position, root.transform.position) > area_radius) {
             // outside the radius of effect, so do nothing (Recursive base-case)
             return false;
         }
         AreaEffectSpawner other = EffectExistsWithinDistance(chunk_distance / 2f);
         if (other != null) {
-            Debug.LogWarning($"cancel spawning at '{transform.position}', effect already spawned at {other.transform.position}'"); // TODO --- remove debug
             return false; // an area was already spawned too close to this one.
         }
         if (ExpansionBlocked()) {
@@ -108,12 +105,8 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
         Vector3 direction = end - start;
         RaycastHit hit;
         if (Physics.Raycast(start, direction.normalized, out hit, direction.magnitude, blocks_propegation)) {
-            Debug.LogWarning($"Area propegation blocked by '{hit.collider.gameObject.name}'"); // TODO --- remove debug
-            Debug.DrawRay(start, direction, Color.red, 2f);
             return true;
         }
-        Debug.LogWarning($"blocks_propegation: '{PhysicsUtils.LayerMaskToString(blocks_propegation)}'");
-        Debug.DrawRay(start, direction, Color.green, 2f);
         return false;
     }
 
@@ -158,7 +151,6 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
         AreaEffectSpawner area_spawner = clone.GetComponent<AreaEffectSpawner>();
         area_spawner.spawn_on_start = false;
         // clone_area.root = this.root;
-        if (direction.magnitude != 1) { Debug.LogError($"magnitude of {direction} should be 1, but was {direction.magnitude}"); } // TODO --- remove debug
         clone.transform.position = transform.position + direction;
         area_spawner.root = this.root;
         area_spawner.blocks_propegation = blocks_propegation;

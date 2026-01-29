@@ -26,7 +26,7 @@ PLANNED FEATURES
             [+] FIX: missing AOE damage at center
             [ ] FIX: damage areas overlapping stacks damage (it shouldn't)
             [ ] FIX: leaving the damage area during a jump doesn't trigger OnTriggerExit (because of the jump teleport)
-            [ ] ADD: add area enemies will try to avoid in fire bombs
+            [~] ADD: add area enemies will try to avoid in fire bombs
             [+] ADD: parenting to fire damage effects, to avoid cluttering the inspector
         [ ] IMPROVE: add initial particle effect to allow flames to scale up
         [ ] FIX: no damage numbers
