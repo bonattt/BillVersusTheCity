@@ -111,7 +111,16 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
             }
             remove_targets = new HashSet<IAttackTarget>();
         }
+        already_hit_reset = false;
         UpdateDebug();
+    }
+
+    private bool already_hit_reset = false;
+    void LateUpdate() {
+        if (!already_hit_reset) {
+            already_hit = new HashSet<IAttackTarget>();
+        }
+        already_hit_reset = true;
     }
 
     void OnTriggerEnter(Collider c) {
@@ -167,8 +176,11 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
             remove_targets.Add(target); // remove dead targets
             return;
         }
-        if (already_hit.Contains(target)) { return; } // skip already damaged targets;
-
+        if (already_hit.Contains(target)) { 
+            Debug.LogWarning($"skip damage on {target}, target was already hit once this frame!");
+            return; 
+        } // skip already damaged targets;
+        already_hit.Add(target);
         AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
     }
 
