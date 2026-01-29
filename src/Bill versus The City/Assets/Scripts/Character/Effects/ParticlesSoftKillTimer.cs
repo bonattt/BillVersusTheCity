@@ -32,10 +32,15 @@ public class ParticlesSoftKillTimer : MonoBehaviour
 
     private void SoftKill() {
         foreach (ParticleSystem p in particle_systems) {
-            p.Stop();
+            SoftKillOne(p);
         }
-        gameObject.transform.parent = GarbageBin.transform;
-        Destroy(gameObject, particle_wind_down_buffer_time);
+        Destroy(gameObject);
+    }
+
+    private void SoftKillOne(ParticleSystem particles) {
+        particles.Stop();
+        particles.transform.parent = GarbageBin.transform;
+        Destroy(particles.gameObject, particle_wind_down_buffer_time);
     }
 
     public void AddParticleSystems(IEnumerable<ParticleSystem> new_systems) {
