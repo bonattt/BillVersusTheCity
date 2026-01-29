@@ -6,8 +6,16 @@ using UnityEngine;
 
 public class AreaDamage : MonoBehaviour, IAreaEffect
 {
-    // deals damage in an area
-
+    /* deals damage in an area */
+    [Tooltip("Affects method of scaling the area-damage effect. This may impact interaction with other scripts. (EG. Particle System scaling)")]
+    [SerializeField] private AreaDamageScalingMode _scaling_mode = AreaDamageScalingMode.transform;
+    public AreaDamageScalingMode scaling_mode {
+        get => _scaling_mode;
+        set {
+            _scaling_mode = value;
+            _UpdateScaling();
+        }
+    }
     // Static HashSet used to prevent 2 instances of overlapping AoE from stacking damage
     private static HashSet<IAttackTarget> already_hit = new HashSet<IAttackTarget>();
 
@@ -35,7 +43,27 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
         set
         {
             _area_radius = value;
-            collider_.radius = _area_radius;
+            _UpdateScaling();
+        }
+    }
+
+    private Transform scaling_transform => transform;
+
+    private void _UpdateScaling() {
+        switch (scaling_mode) {
+            case AreaDamageScalingMode.transform:
+                scaling_transform.localScale = new Vector3(area_radius, area_radius, area_radius);
+                collider_.radius = 1f;
+                break;
+
+            case AreaDamageScalingMode.collider:
+                scaling_transform.localScale = new Vector3(1f, 1f, 1f);
+                collider_.radius = area_radius;
+                break;
+
+            default:
+                Debug.LogError($"unhandled scaling mode '{scaling_mode}'");
+                break;
         }
     }
     
@@ -163,4 +191,10 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
 public class AreaDamageDebugger {
     public List<string> tracked_targets;
     public LayerMask blocks_propegation;
+}
+
+
+public enum AreaDamageScalingMode {
+    collider,
+    transform,
 }

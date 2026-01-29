@@ -25,6 +25,7 @@ PLANNED FEATURES
             [ ] FIX: particle area too large
             [ ] FIX: damage areas overlapping stacks damage (it shouldn't)
             [ ] FIX: leaving the damage area during a jump doesn't trigger OnTriggerExit (because of the jump teleport)
+            [ ] ADD: add area enemies will try to avoid in fire bombs
         [ ] IMPROVE: add initial particle effect to allow flames to scale up
         [ ] FIX: no damage numbers
     [ ] Grenade Enemies

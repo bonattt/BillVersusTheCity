@@ -84,7 +84,7 @@ MonoBehaviour:
   blocks_explosion:
     serializedVersion: 2
     m_Bits: 1
-  flame_prefab: {fileID: 78300222669400994, guid: 40b96f51ef9234144a7867aeba50078d, type: 3}
+  flame_prefab: {fileID: 78300222669400994, guid: 324356f42e0153749ac62ee4dfc5a72c, type: 3}
   damage_per_second: 20
   burn_duration_seconds: 8
   flame_radius: 4

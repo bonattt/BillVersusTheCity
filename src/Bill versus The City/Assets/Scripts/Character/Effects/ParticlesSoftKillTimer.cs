@@ -12,7 +12,7 @@ public class ParticlesSoftKillTimer : MonoBehaviour
     [Tooltip("time before this object destroys itself")]
     public float duration = 5f;
     [Tooltip("Once duration expires, particles will have this many seconds to fade out naturally before the ParticleSystem is destroyed.")]
-    public float particle_wind_down_buffer_time = 15f;
+    public float particle_wind_down_buffer_time = 5f;
 
     public List<ParticleSystem> particle_systems = new List<ParticleSystem>();
 

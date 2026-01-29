@@ -54,6 +54,11 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
         }
     }
 
+    void LateUpdate() {
+        // self destruct after the first frame. 
+        Destroy(gameObject);
+    }
+
     // NOTE: 
     // root = Central AreaEffectSpawner
     // branch = AreaEffectSpawner that is not the root
