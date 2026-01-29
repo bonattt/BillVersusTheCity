@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6168678105717745203}
   - component: {fileID: 899988842368151382}
-  - component: {fileID: -6098479809921667564}
   - component: {fileID: 222067629913530333}
-  - component: {fileID: 2215213099628210952}
+  - component: {fileID: -6098479809921667564}
   - component: {fileID: 6263728512213166507}
+  - component: {fileID: 2215213099628210952}
   m_Layer: 16
   m_Name: FireGrenade
   m_TagString: Untagged
@@ -65,6 +65,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &222067629913530333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2701627596137562284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37bc4988713635e4890299a49592d1ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosions:
+  - {fileID: -6098479809921667564}
+  - {fileID: 6263728512213166507}
+  fuse_length_seconds: 5
+  start_fuse_on_start: 1
+  fuse_sound_name: WeaponEffects/GrenadeFuse
+  debug__fuse_progress: -1
 --- !u!114 &-6098479809921667564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,38 +108,6 @@ MonoBehaviour:
   burn_duration_seconds: 8
   flame_radius: 4
   _explosion_volume: 0.5
---- !u!114 &222067629913530333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2701627596137562284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37bc4988713635e4890299a49592d1ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosions:
-  - {fileID: -6098479809921667564}
-  - {fileID: 6263728512213166507}
-  fuse_length_seconds: 5
-  start_fuse_on_start: 1
-  fuse_sound_name: WeaponEffects/GrenadeFuse
-  debug__fuse_progress: -1
---- !u!114 &2215213099628210952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2701627596137562284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1302df34fcd7a8249baddf93646d033b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _threat_level: 20
 --- !u!114 &6263728512213166507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +128,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _explosion_attack: {fileID: 11400000, guid: f9fcbfe9b534b7540abf74f6c97425c8, type: 2}
+--- !u!114 &2215213099628210952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2701627596137562284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1302df34fcd7a8249baddf93646d033b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _threat_level: 20
 --- !u!1 &8022208558355323143
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: FireExplosionDamage
   m_EditorClassIdentifier: 
   explosion_volume: 6
-  explosion_radius: 4
+  explosion_radius: 2
   explosion_effects:
-  - {fileID: 2772534263611651985, guid: 398af651258f8ef48976783a0179738e, type: 3}
+  - {fileID: 7447248247499165600, guid: 1039874c3b082814b92e407623d95143, type: 3}
   _damage_falloff: 30
   _attack_damage_min: 25
   _attack_damage_max: 25

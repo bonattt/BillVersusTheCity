@@ -11,7 +11,7 @@ public class FlashbangExplosion : AbstractExplosion
     [SerializeField] private float _explosion_radius;
     public override float explosion_radius => _explosion_radius;
     public override ExplosionAttack explosion_attack => null;
-    public override string attack_sound_path => "gunshot_sound";
+    public override string attack_sound_path => "gunshot_shotgun";
     public override IEnumerable<GameObject> explosion_effects {
         get {
             if (_explosion_effects == null) {

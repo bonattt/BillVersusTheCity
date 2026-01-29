@@ -188,7 +188,6 @@ public class AttackController : MonoBehaviour, IWeaponManager, IAttackController
         bool can_shoot_this_frame = _shot_availible_after <= Time.time;
         if (can_shoot_this_frame & ! _could_shoot_last_frame) {
             OnNextShotReady();
-            Debug.LogWarning("next shot availible");
         }
         _could_shoot_last_frame = can_shoot_this_frame;
     }

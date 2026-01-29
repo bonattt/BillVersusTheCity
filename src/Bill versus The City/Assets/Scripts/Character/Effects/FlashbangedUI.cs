@@ -14,7 +14,7 @@ public class FlashbangedUI : MonoBehaviour {
 
     private VisualElement panel;
 
-    public bool active => true;
+    public bool active = true;
 
     public string tinnitus_sound_path = "WeaponEffects/flashbang_tinnitus";
     private ISFXSounds _sound = null;
@@ -40,10 +40,10 @@ public class FlashbangedUI : MonoBehaviour {
     }
 
     void Update() {
-        if (active) {
+        // if (active) {
             UpdateOpacity(); // blind effect
             UpdateTinnitusVolume(); // tinnitus effect
-        }
+        // }
         UpdateDebug();
     }
 
@@ -113,6 +113,7 @@ public class FlashbangedUI : MonoBehaviour {
     public FlashbangedUIDebugger debug;
     private void UpdateDebug() {
         debug.percent_blind = GetBlindPercent();
+        debug.percent_deaf = GetDeafPercent();
         debug.blind_until = blind_until;
         debug.dazed_until = dazed_until;
         debug.blind_remaining = Mathf.Max(0, blind_until - Time.time);
@@ -128,5 +129,5 @@ public class FlashbangedUIDebugger {
     public float tinnitus_volume;
     [Header("durations")]
     public float percent_blind; // only place header once
-    public float blind_until, dazed_until, blind_remaining, daze_remaining;
+    public float percent_deaf, blind_until, dazed_until, blind_remaining, daze_remaining;
 }

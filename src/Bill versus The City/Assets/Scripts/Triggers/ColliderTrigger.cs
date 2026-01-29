@@ -33,7 +33,7 @@ public class ColliderTrigger : MonoBehaviour {
             _event_effect.ActivateEffect();
             has_triggered = true;
         } else {
-            Debug.LogWarning($"event collider did NOT trigger for {obj.name}"); // TODO --- remove debug
+            // Debug.LogWarning($"event collider did NOT trigger for {obj.name}"); // TODO --- remove debug
         }
     }
 

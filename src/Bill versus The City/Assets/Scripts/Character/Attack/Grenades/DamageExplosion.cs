@@ -8,7 +8,7 @@ public class DamageExplosion : AbstractExplosion
     [SerializeField]
     private ExplosionAttack _explosion_attack;
     public override ExplosionAttack explosion_attack => _explosion_attack;
-    public override string attack_sound_path => "";
+    public override string attack_sound_path => explosion_attack.attack_sound;
     public override IEnumerable<GameObject> explosion_effects => explosion_attack.explosion_effects;
     public override float explosion_radius { get => explosion_attack.explosion_radius; }
     public override float explosion_volume { get => explosion_attack.explosion_volume; }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class FireExplosion : AbstractExplosion
@@ -28,6 +29,8 @@ public class FireExplosion : AbstractExplosion
         if (destroy_on_explode) {
             Destroy(gameObject);
         }
+
+        // EditorApplication.isPaused = true; // TODO --- remove debug
     }
 
     public static IEnumerable<Vector3> GetDirections(int n) {
@@ -47,7 +50,6 @@ public class FireExplosion : AbstractExplosion
 
 
     protected GameObject SpawnFlame() {
-        Debug.LogWarning("SpawnFlame START");
         GameObject flame_spawner = new GameObject();
         flame_spawner.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
         AreaEffectSpawner spawner_script = flame_spawner.AddComponent<AreaEffectSpawner>();
@@ -57,23 +59,6 @@ public class FireExplosion : AbstractExplosion
         spawner_script.effect_prefab = flame_prefab;
         spawner_script.blocks_propegation = blocks_explosion;
         spawner_script.SpawnAsRoot();
-
-
-        // GameObject flame_area = Instantiate(flame_prefab);
-        // flame_area.transform.position = transform.position;
-        // flame_area.transform.localScale = new Vector3(explosion_radius, 1, explosion_radius);
-
-        // AreaDamage damage = flame_area.GetComponentInChildren<AreaDamage>();
-        // damage.damage_rate = damage_per_second;
-
-        // ParticlesSoftKillTimer kill_timer = flame_area.AddComponent<ParticlesSoftKillTimer>();
-        // kill_timer.duration = burn_duration_seconds;
-        // ParticleSystem[] all_particles = flame_area.GetComponentsInChildren<ParticleSystem>();
-        // if (all_particles != null) {
-        //     kill_timer.AddParticleSystems(all_particles);
-        // }
-        
-        Debug.LogWarning("SpawnFlame END");
         return flame_spawner;
     }
 }
