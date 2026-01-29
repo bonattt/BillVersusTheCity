@@ -19,16 +19,16 @@ PLANNED FEATURES
     [+] Incindiary Grenade
         [+] FIX: particles don't scale correctly when spawned by grenade
         [+] Add: flame duration
-        [~] FIX: Flame spreads through walls
+        [+] FIX: Flame spreads through walls
             - break the flame effect into sections
             [+] Damage AoE should be blocked by walls
             [+] FIX: particle area too large
-            [+] FIX: missing AOE damage at center
-            [+] FIX: damage areas overlapping stacks damage (it shouldn't)
-            [ ] FIX: leaving the damage area during a jump doesn't trigger OnTriggerExit (because of the jump teleport)
-            [~] ADD: add area enemies will try to avoid in fire bombs
-            [+] ADD: parenting to fire damage effects, to avoid cluttering the inspector
-        [ ] IMPROVE: add initial particle effect to allow flames to scale up
+        [+] FIX: missing AOE damage at center
+        [+] FIX: damage areas overlapping stacks damage (it shouldn't)
+        [+] FIX: leaving the damage area during a jump doesn't trigger OnTriggerExit (because of the jump teleport)
+        [~] ADD: add area enemies will try to avoid in fire bombs
+        [+] ADD: parenting to fire damage effects, to avoid cluttering the inspector
+        [ ] ADD: add initial particle effect to allow flames to scale up
         [ ] FIX: no damage numbers
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun

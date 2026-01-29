@@ -21,20 +21,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
 
     public float damage_rate = 20f;
 
-    private HashSet<IAttackTarget> targets_in_area = new HashSet<IAttackTarget>();
-    private HashSet<IAttackTarget> remove_targets = new HashSet<IAttackTarget>();
-
-    // private SphereCollider _collider;
-    // public SphereCollider collider_ {
-    //     get {
-    //         if (_collider == null) {
-    //             _collider = GetComponent<SphereCollider>();
-    //         }
-    //         return _collider;
-    //     }
-    // }
-    public SphereCollider collider_;
-
     private float _area_radius;
 
     public float area_radius
@@ -53,12 +39,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
         switch (scaling_mode) {
             case AreaDamageScalingMode.transform:
                 scaling_transform.localScale = new Vector3(area_radius, area_radius, area_radius);
-                collider_.radius = 1f;
-                break;
-
-            case AreaDamageScalingMode.collider:
-                scaling_transform.localScale = new Vector3(1f, 1f, 1f);
-                collider_.radius = area_radius;
                 break;
 
             default:
@@ -82,15 +62,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
 
     private ParticlesSoftKillTimer kill_timer;
 
-    void Start() {
-        // on start, set anything already inside the area as tracked
-        targets_in_area = new HashSet<IAttackTarget>();
-        foreach (Collider c in GetCurrentOverlap()) {
-            TryAddingCollider(c);
-        }
-        AddDuration();
-    }
-
     private void AddDuration() {
         kill_timer = gameObject.AddComponent<ParticlesSoftKillTimer>();
         kill_timer.duration = area_effect_duration;
@@ -100,19 +71,23 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
         }
     }
 
+    void Start() {
+        AddDuration();
+    }
+
     void Update() {
-        foreach (IAttackTarget t in targets_in_area) {
-            DealAreaDamageToTarget(t);
-        }
-        if (remove_targets.Count > 0) {
-            // remove targets that are already dead,
-            foreach(IAttackTarget t in remove_targets) {
-                targets_in_area.Remove(t);
+        foreach (Collider c in GetCurrentOverlap()) {
+            IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
+            if (IsValidHit(t, c)) {
+                DealAreaDamageToTarget(t);
             }
-            remove_targets = new HashSet<IAttackTarget>();
         }
         already_hit_reset = false;
         UpdateDebug();
+    }
+
+    private bool IsValidHit(IAttackTarget target, Collider collider) {
+        return target != null && !already_hit.Contains(target) && !IsBlockedByWall(collider);
     }
 
     private bool already_hit_reset = false;
@@ -123,26 +98,9 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
         already_hit_reset = true;
     }
 
-    void OnTriggerEnter(Collider c) {
-        TryAddingCollider(c);
-    }
-
-    void OnTriggerExit(Collider c) {
-        TryRemovingCollider(c);
-    }
-
     void OnDrawGizmos() {
-        
-        Vector3 collider_center = collider_.center + transform.position;
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(collider_center, scaled_radius);
-    }
-
-    private void TryAddingCollider(Collider c) {
-        IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
-        if (t != null && !IsBlockedByWall(c)) {
-            targets_in_area.Add(t);
-        }
+        Gizmos.DrawWireSphere(transform.position, area_radius);
     }
 
     private const float raycast_height = 0.5f;
@@ -157,29 +115,12 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
         return false;
     }
 
-    private void TryRemovingCollider(Collider c) {
-        IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
-        if (t != null) {
-            targets_in_area.Remove(t);
-        }
-    }
-
-    public float scaled_radius => transform.localScale.x * collider_.radius;
-
     public Collider[] GetCurrentOverlap() {
-        Vector3 collider_center = collider_.center + transform.position;
-        return Physics.OverlapSphere(collider_center, scaled_radius);
+        Vector3 collider_center = transform.position;
+        return Physics.OverlapSphere(collider_center, area_radius);
     }
 
     private void DealAreaDamageToTarget(IAttackTarget target) {
-        if (target.GetStatus().health <= 0) {
-            remove_targets.Add(target); // remove dead targets
-            return;
-        }
-        if (already_hit.Contains(target)) { 
-            Debug.LogWarning($"skip damage on {target}, target was already hit once this frame!");
-            return; 
-        } // skip already damaged targets;
         already_hit.Add(target);
         AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
     }
@@ -188,10 +129,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
     public AreaDamageDebugger debug;
     private void UpdateDebug() {
         # if UNITY_EDITOR
-        debug.tracked_targets = new List<string>();
-        foreach (IAttackTarget t in targets_in_area) {
-            debug.tracked_targets.Add($"{t}");
-        }
         debug.blocks_propegation = blocks_propegation;
         # endif
     }
@@ -199,12 +136,11 @@ public class AreaDamage : MonoBehaviour, IAreaEffect
 
 [Serializable]
 public class AreaDamageDebugger {
-    public List<string> tracked_targets;
+    // public List<string> tracked_targets;
     public LayerMask blocks_propegation;
 }
 
 
 public enum AreaDamageScalingMode {
-    collider,
     transform,
 }

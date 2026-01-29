@@ -484,8 +484,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         // do nothing by default
     }
 
-    public virtual void TeleportTo(Vector3 position) {
-        transform.position = position;
+    public virtual void TeleportTo(Vector3 new_position) {
+        transform.position = new_position;
     }
 
     protected virtual void FinishVaultOver() {
