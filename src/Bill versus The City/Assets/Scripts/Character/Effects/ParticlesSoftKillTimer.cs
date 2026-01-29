@@ -18,6 +18,7 @@ public class ParticlesSoftKillTimer : MonoBehaviour
 
     private float destroy_after = float.PositiveInfinity;
 
+
     void Start() {
         destroy_after = Time.time + duration;
     }
@@ -31,15 +32,10 @@ public class ParticlesSoftKillTimer : MonoBehaviour
 
     private void SoftKill() {
         foreach (ParticleSystem p in particle_systems) {
-            SoftKillOne(p);
+            p.Stop();
         }
-        Destroy(gameObject);
-    }
-
-    private void SoftKillOne(ParticleSystem particles) {
-        particles.gameObject.transform.parent = null;
-        particles.Stop();
-        Destroy(particles.gameObject, particle_wind_down_buffer_time);
+        gameObject.transform.parent = GarbageBin.transform;
+        Destroy(gameObject, particle_wind_down_buffer_time);
     }
 
     public void AddParticleSystems(IEnumerable<ParticleSystem> new_systems) {

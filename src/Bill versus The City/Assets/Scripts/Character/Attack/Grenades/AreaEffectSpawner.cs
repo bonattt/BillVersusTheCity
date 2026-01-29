@@ -39,7 +39,9 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
     public LayerMask blocks_propegation { get; set; }
 
     protected List<AreaEffectSpawner> already_spawned = new List<AreaEffectSpawner>();
-    
+
+    protected GameObject spawned_effect = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,7 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
     // leaf = IAreaEffect spawned by a branch
     public void SpawnAsRoot()
     {
+        spawned_effect = SpawnLeafEffect();
         Debug.LogWarning($"ROOT: LayerMask: {PhysicsUtils.LayerMaskToString(blocks_propegation)}"); // TODO --- remove debug
         // spawns as the center of a spawn propigation.
         this.root = this;
@@ -91,7 +94,8 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
             return false;
         }
 
-        SpawnLeafEffect();
+        spawned_effect = SpawnLeafEffect();
+        spawned_effect.transform.parent = root.spawned_effect.transform;
         foreach(Vector3 spawn_direction in GetSpawnDirections(direction)) {
             SpawnBranchInDirection(spawn_direction);
         }
