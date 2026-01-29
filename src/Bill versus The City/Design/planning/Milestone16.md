@@ -28,7 +28,7 @@ PLANNED FEATURES
         [+] FIX: leaving the damage area during a jump doesn't trigger OnTriggerExit (because of the jump teleport)
         [~] ADD: add area enemies will try to avoid in fire bombs
         [+] ADD: parenting to fire damage effects, to avoid cluttering the inspector
-        [ ] ADD: add initial particle effect to allow flames to scale up
+        [+] ADD: add initial particle effect to allow flames to scale up
         [ ] FIX: no damage numbers
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun
