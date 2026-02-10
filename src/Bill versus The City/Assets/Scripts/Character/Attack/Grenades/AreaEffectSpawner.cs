@@ -3,12 +3,16 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
+public class AreaEffectSpawner : MonoBehaviour
 {
     [Tooltip("area effect actually spawned by the area spawner")]
     public GameObject effect_prefab;
+
     public bool spawn_on_start = false;
     public AreaEffectSpawner root { get; protected set; }
+
+    private IAreaEffectRegion region;
+    private GameObject region_obj;
 
     public bool is_root => root == null || root == this;
 
@@ -42,6 +46,9 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
 
     protected GameObject spawned_effect = null;
 
+    [Tooltip("This name is given to the spawned parent gameObject for the area effect.")]
+    public string area_effect_name = "AreaEffectRegion";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +74,7 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
     // leaf = IAreaEffect spawned by a branch
     public void SpawnAsRoot()
     {
+        SpawnRegionParent();
         spawned_effect = SpawnLeafEffect();
         // spawns as the center of a spawn propigation.
         this.root = this;
@@ -92,7 +100,7 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
         }
 
         spawned_effect = SpawnLeafEffect();
-        spawned_effect.transform.parent = root.spawned_effect.transform;
+        // spawned_effect.transform.parent = root.spawned_effect.transform;
         foreach(Vector3 spawn_direction in GetSpawnDirections(direction)) {
             SpawnBranchInDirection(spawn_direction);
         }
@@ -161,13 +169,33 @@ public class AreaEffectSpawner : MonoBehaviour, IAreaEffect
         return area_spawner;
     }
 
+    private void SpawnRegionParent() {
+        /* spawns a GameObject to parent all sub-regions of the area effect to, and adds a script that manages all the area-effect scripts. */
+        region_obj = new GameObject(area_effect_name);
+        region = region_obj.AddComponent<AreaDamageRegion>();
+        
+        region_obj.transform.position = transform.position;
+        region_obj.transform.rotation = transform.rotation;
+        
+        region.area_radius = area_radius;
+        region.area_effect_duration = area_effect_duration;
+    }
+
     private GameObject SpawnLeafEffect() {
         GameObject leaf = Instantiate(effect_prefab);
+        IAreaEffectPartial area_effect = leaf.GetComponent<IAreaEffectPartial>();
+        area_effect.sub_area_radius = this.chunk_radius;
+
         leaf.transform.position = transform.position;
         leaf.transform.rotation = transform.rotation;
-        IAreaEffect area_effect = leaf.GetComponent<IAreaEffect>();
-        area_effect.area_radius = this.chunk_radius;
-        area_effect.area_effect_duration = area_effect_duration;
+        if (is_root) {
+            leaf.transform.parent = region_obj.transform;
+            region.AddChild(area_effect);
+        } else {
+            leaf.transform.parent = root.region_obj.transform;
+            root.region.AddChild(area_effect);
+        }
+        // area_effect.area_effect_duration = area_effect_duration;
         return leaf;
     }
 

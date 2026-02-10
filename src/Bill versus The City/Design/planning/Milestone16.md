@@ -59,3 +59,4 @@ UNPLANNED BUGFIXES
      - carryover from a previous sprint; I couldn't figure out how to reproduce this (still can't)
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
     --> do this later, the interaction UI needs to be replaced anyways
+[ ] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 

@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaDamage : MonoBehaviour, IAreaEffectPartial
+public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
 {
-    /* represents a smaller area of 
     /* deals damage in an area */
     [Tooltip("Affects method of scaling the area-damage effect. This may impact interaction with other scripts. (EG. Particle System scaling)")]
     [SerializeField] private AreaDamageScalingMode _scaling_mode = AreaDamageScalingMode.transform;
@@ -17,7 +16,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
             _UpdateScaling();
         }
     }
-    public IAreaEffectRegion parent { get; set; }
     // Static HashSet used to prevent 2 instances of overlapping AoE from stacking damage
     private static HashSet<IAttackTarget> already_hit = new HashSet<IAttackTarget>();
 
@@ -25,7 +23,7 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
 
     private float _area_radius;
 
-    public float sub_area_radius
+    public float area_radius
     {
         get => _area_radius;
         set
@@ -40,7 +38,7 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
     private void _UpdateScaling() {
         switch (scaling_mode) {
             case AreaDamageScalingMode.transform:
-                scaling_transform.localScale = new Vector3(sub_area_radius, sub_area_radius, sub_area_radius);
+                scaling_transform.localScale = new Vector3(area_radius, area_radius, area_radius);
                 break;
 
             default:
@@ -62,47 +60,75 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
     
     public LayerMask blocks_propegation { get; set; }
 
-    private ParticlesSoftKillTimer kill_timer;
+    private ParticlesSoftKillTimer _kill_timer;
+    protected ParticlesSoftKillTimer kill_timer {
+        get {
+            if (_kill_timer == null) {
+                AddKillTimer();
+            }
+            return _kill_timer;
+        }
+    }
+    private float _destroy_after;
 
-    private void AddDuration() {
-        kill_timer = gameObject.AddComponent<ParticlesSoftKillTimer>();
-        kill_timer.duration = area_effect_duration;
+    private void AddKillTimer() {
+        _kill_timer = gameObject.AddComponent<ParticlesSoftKillTimer>();
+        _kill_timer.duration = area_effect_duration;
         ParticleSystem[] all_particles = GetComponentsInChildren<ParticleSystem>();
         if (all_particles != null) {
-            kill_timer.AddParticleSystems(all_particles);
+            _kill_timer.AddParticleSystems(all_particles);
         }
+        _destroy_after = Time.time + area_effect_duration;
+        // Destroy(gameObject, area_effect_duration + 0.1f); 
+    }
+
+    private List<IAreaEffectPartial> children = new List<IAreaEffectPartial>();
+    public void AddChild(IAreaEffectPartial new_child) {
+        children.Add(new_child);
+        new_child.parent = this;
+        ParticlesSoftKiller killer = ((MonoBehaviour) new_child).GetComponent<ParticlesSoftKiller>(); 
+        kill_timer.AddChild(killer);
+    }
+
+    public void RemoveChild(IAreaEffectPartial new_child) {
+        children.Remove(new_child);
     }
 
     void Start() {
-        AddDuration();
+        AddKillTimer();
     }
 
     void Update() {
-        foreach (Collider c in GetCurrentOverlap()) {
-            IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
-            if (IsValidHit(t, c)) {
-                DealAreaDamageToTarget(t);
-            }
+        if (_destroy_after <= Time.time) {
+            kill_timer.SoftKill(); // must detatch particles before Destroying
+            Destroy(gameObject);
+            return;
         }
-        already_hit_reset = false;
+        // foreach (Collider c in GetCurrentOverlap()) {
+        //     IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
+        //     if (IsValidHit(t, c)) {
+        //         DealAreaDamageToTarget(t);
+        //     }
+        // }
+        Debug.LogWarning("TODO --- update damage on any tracked targets");
         UpdateDebug();
+    }
+
+    public void TargetInArea(IAttackTarget t, float at_time) {
+        Debug.LogWarning("TODO: implement TargetInArea");
     }
 
     private bool IsValidHit(IAttackTarget target, Collider collider) {
         return target != null && !already_hit.Contains(target) && !IsBlockedByWall(collider);
     }
 
-    private bool already_hit_reset = false;
     void LateUpdate() {
-        if (!already_hit_reset) {
-            already_hit = new HashSet<IAttackTarget>();
-        }
-        already_hit_reset = true;
+        
     }
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, sub_area_radius);
+        Gizmos.DrawWireSphere(transform.position, area_radius);
     }
 
     private const float raycast_height = 0.5f;
@@ -119,7 +145,7 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
 
     public Collider[] GetCurrentOverlap() {
         Vector3 collider_center = transform.position;
-        return Physics.OverlapSphere(collider_center, sub_area_radius);
+        return Physics.OverlapSphere(collider_center, area_radius);
     }
 
     private void DealAreaDamageToTarget(IAttackTarget target) {
@@ -128,7 +154,7 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
     }
 
 
-    public AreaDamageDebugger debug;
+    public AreaDamageRegionDebugger debug = new AreaDamageRegionDebugger();
     private void UpdateDebug() {
         # if UNITY_EDITOR
         debug.blocks_propegation = blocks_propegation;
@@ -137,7 +163,7 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
 }
 
 [Serializable]
-public class AreaDamageDebugger {
+public class AreaDamageRegionDebugger {
     // public List<string> tracked_targets;
     public LayerMask blocks_propegation;
 }

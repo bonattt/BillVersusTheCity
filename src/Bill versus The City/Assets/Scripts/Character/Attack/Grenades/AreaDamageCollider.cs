@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaDamage : MonoBehaviour, IAreaEffectPartial
+public class AreaDamageCollider : MonoBehaviour, IAreaEffectPartial
 {
-    /* represents a smaller area of 
-    /* deals damage in an area */
+    /* represents a smaller instance area among many areas within a larger AreaDamageRegion */
+
+    public IAreaEffectRegion parent { get; set; }
+
     [Tooltip("Affects method of scaling the area-damage effect. This may impact interaction with other scripts. (EG. Particle System scaling)")]
     [SerializeField] private AreaDamageScalingMode _scaling_mode = AreaDamageScalingMode.transform;
     public AreaDamageScalingMode scaling_mode {
@@ -17,9 +19,8 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
             _UpdateScaling();
         }
     }
-    public IAreaEffectRegion parent { get; set; }
     // Static HashSet used to prevent 2 instances of overlapping AoE from stacking damage
-    private static HashSet<IAttackTarget> already_hit = new HashSet<IAttackTarget>();
+    // private static HashSet<IAttackTarget> already_hit = new HashSet<IAttackTarget>();
 
     public float damage_rate = 20f;
 
@@ -49,56 +50,67 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
         }
     }
     
-    private float _area_effect_duration;
-    public float area_effect_duration { 
-        get => _area_effect_duration;
-        set {
-            _area_effect_duration = value;
-            if (kill_timer != null) {
-                kill_timer.duration = value;
-            }
-        }
-    }
+    // private float _area_effect_duration;
+    // public float area_effect_duration { 
+    //     get => _area_effect_duration;
+    //     set {
+    //         _area_effect_duration = value;
+    //     }
+    // }
     
     public LayerMask blocks_propegation { get; set; }
 
-    private ParticlesSoftKillTimer kill_timer;
+    private ParticlesSoftKiller _particle_soft_kill;
+    // private ParticlesSoftKiller particle_soft_kill {
+    //     get {
+    //         if (_particle_soft_kill == null) {
+    //             _particle_soft_kill = GetComponent<ParticlesSoftKiller>();
+    //             if (_particle_soft_kill == null) {
+    //                 // if GetComponent doesn't find the script, add it manually.
+    //                 _AddParticlesSoftKiller();
+    //             }
+    //         }
+    //         return _particle_soft_kill;
+    //     }
+    // }
+    void Start() {
+        _AddParticlesSoftKiller();
+    }
 
-    private void AddDuration() {
-        kill_timer = gameObject.AddComponent<ParticlesSoftKillTimer>();
-        kill_timer.duration = area_effect_duration;
+    private void _AddParticlesSoftKiller() {
+        _particle_soft_kill = gameObject.AddComponent<ParticlesSoftKiller>();
         ParticleSystem[] all_particles = GetComponentsInChildren<ParticleSystem>();
         if (all_particles != null) {
-            kill_timer.AddParticleSystems(all_particles);
+            _particle_soft_kill.AddParticleSystems(all_particles);
         }
     }
 
-    void Start() {
-        AddDuration();
+    void OnDestroy() {
+        _particle_soft_kill.SoftKill();
     }
 
     void Update() {
         foreach (Collider c in GetCurrentOverlap()) {
             IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
             if (IsValidHit(t, c)) {
-                DealAreaDamageToTarget(t);
+                parent.TargetInArea(t, Time.time);
             }
         }
-        already_hit_reset = false;
+        // already_hit_reset = false;
         UpdateDebug();
     }
 
     private bool IsValidHit(IAttackTarget target, Collider collider) {
-        return target != null && !already_hit.Contains(target) && !IsBlockedByWall(collider);
+        return target != null && !IsBlockedByWall(collider); // && !already_hit.Contains(target);
     }
 
-    private bool already_hit_reset = false;
-    void LateUpdate() {
-        if (!already_hit_reset) {
-            already_hit = new HashSet<IAttackTarget>();
-        }
-        already_hit_reset = true;
-    }
+    // private bool already_hit_reset = false;
+    // void LateUpdate() {
+    //     if (!already_hit_reset) {
+    //         already_hit = new HashSet<IAttackTarget>();
+    //     }
+    //     already_hit_reset = true;
+    // }
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
@@ -122,13 +134,13 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
         return Physics.OverlapSphere(collider_center, sub_area_radius);
     }
 
-    private void DealAreaDamageToTarget(IAttackTarget target) {
-        already_hit.Add(target);
-        AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
-    }
+    // private void DealAreaDamageToTarget(IAttackTarget target) {
+    //     already_hit.Add(target);
+    //     AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
+    // }
 
 
-    public AreaDamageDebugger debug;
+    public AreaDamageColliderDebugger debug;
     private void UpdateDebug() {
         # if UNITY_EDITOR
         debug.blocks_propegation = blocks_propegation;
@@ -137,7 +149,8 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
 }
 
 [Serializable]
-public class AreaDamageDebugger {
+public class AreaDamageColliderDebugger {
     // public List<string> tracked_targets;
     public LayerMask blocks_propegation;
 }
+
