@@ -144,8 +144,6 @@ public class AreaEffectSpawner : MonoBehaviour
         float base_angle_degrees = 45f;
         return new Vector3[] {
             // start_direction,
-            // Quaternion.Euler(0f, 45f, 0f) * start_direction,  // rotated 45 degrees from start_direction
-            // Quaternion.Euler(0f, -45f, 0f) * start_direction, // rotated -45 degrees from start_direction
             Quaternion.Euler(0f, base_angle_degrees/2f, 0f) * start_direction, 
             Quaternion.Euler(0f, -base_angle_degrees/2f, 0f) * start_direction,
         };
@@ -195,7 +193,6 @@ public class AreaEffectSpawner : MonoBehaviour
             leaf.transform.parent = root.region_obj.transform;
             root.region.AddChild(area_effect);
         }
-        // area_effect.area_effect_duration = area_effect_duration;
         return leaf;
     }
 

@@ -18,7 +18,7 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
     }
 
     [Tooltip("How long does it take to deal damage once.")]
-    public float damage_period_seconds = 2f;
+    public float damage_period_seconds = 0.33f;
 
     [Tooltip("How much damage is dealt each period.")]
     public float damage_rate = 20f;
@@ -106,12 +106,6 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
             Destroy(gameObject);
             return;
         }
-        // foreach (Collider c in GetCurrentOverlap()) {
-        //     IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
-        //     if (IsValidHit(t, c)) {
-        //         DealAreaDamageToTarget(t);
-        //     }
-        // }
         UpdateDebug();
     }
 
@@ -123,10 +117,6 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
             tracked_targets[t] = new AreaDamageTracking(t, first_hit_at:Time.time);
         }
     }
-
-    // private bool IsValidHit(IAttackTarget target, Collider collider) {
-    //     return target != null && !already_hit.Contains(target) && !IsBlockedByWall(collider);
-    // }
 
     void LateUpdate() {
         if (gameObject == null) { return; } // destroyed during `Update`, so do nothing
@@ -159,7 +149,6 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
                 }
                 continue;
             }
-            // else { continue; } // unnecessary
         }
 
         foreach (IAttackTarget t in targets_removed) {
@@ -183,23 +172,6 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, area_radius);
     }
-
-    // private const float raycast_height = 0.5f;
-    // private bool IsBlockedByWall(Collider c) {
-    //     Vector3 start = PhysicsUtils.PositionAtHeight(transform.position, raycast_height);
-    //     Vector3 end = PhysicsUtils.PositionAtHeight(c.transform.position, raycast_height);
-    //     Vector3 direction = end - start;
-    //     RaycastHit hit;
-    //     if (Physics.Raycast(start, direction.normalized, out hit, direction.magnitude, blocks_propegation)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    // public Collider[] GetCurrentOverlap() {
-    //     Vector3 collider_center = transform.position;
-    //     return Physics.OverlapSphere(collider_center, area_radius);
-    // }
 
     public AreaDamageRegionDebugger debug = new AreaDamageRegionDebugger();
     private void UpdateDebug() {

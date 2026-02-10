@@ -50,29 +50,9 @@ public class AreaDamageCollider : MonoBehaviour, IAreaEffectPartial
         }
     }
     
-    // private float _area_effect_duration;
-    // public float area_effect_duration { 
-    //     get => _area_effect_duration;
-    //     set {
-    //         _area_effect_duration = value;
-    //     }
-    // }
-    
     public LayerMask blocks_propegation { get; set; }
 
     private ParticlesSoftKiller _particle_soft_kill;
-    // private ParticlesSoftKiller particle_soft_kill {
-    //     get {
-    //         if (_particle_soft_kill == null) {
-    //             _particle_soft_kill = GetComponent<ParticlesSoftKiller>();
-    //             if (_particle_soft_kill == null) {
-    //                 // if GetComponent doesn't find the script, add it manually.
-    //                 _AddParticlesSoftKiller();
-    //             }
-    //         }
-    //         return _particle_soft_kill;
-    //     }
-    // }
     void Start() {
         _AddParticlesSoftKiller();
     }
@@ -96,21 +76,12 @@ public class AreaDamageCollider : MonoBehaviour, IAreaEffectPartial
                 parent.TargetInArea(t, Time.time);
             }
         }
-        // already_hit_reset = false;
         UpdateDebug();
     }
 
     private bool IsValidHit(IAttackTarget target, Collider collider) {
         return target != null && !IsBlockedByWall(collider); // && !already_hit.Contains(target);
     }
-
-    // private bool already_hit_reset = false;
-    // void LateUpdate() {
-    //     if (!already_hit_reset) {
-    //         already_hit = new HashSet<IAttackTarget>();
-    //     }
-    //     already_hit_reset = true;
-    // }
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
@@ -134,12 +105,6 @@ public class AreaDamageCollider : MonoBehaviour, IAreaEffectPartial
         return Physics.OverlapSphere(collider_center, sub_area_radius);
     }
 
-    // private void DealAreaDamageToTarget(IAttackTarget target) {
-    //     already_hit.Add(target);
-    //     AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
-    // }
-
-
     public AreaDamageColliderDebugger debug;
     private void UpdateDebug() {
         # if UNITY_EDITOR
@@ -150,7 +115,6 @@ public class AreaDamageCollider : MonoBehaviour, IAreaEffectPartial
 
 [Serializable]
 public class AreaDamageColliderDebugger {
-    // public List<string> tracked_targets;
     public LayerMask blocks_propegation;
 }
 
