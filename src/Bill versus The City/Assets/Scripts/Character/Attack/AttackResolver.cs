@@ -191,7 +191,6 @@ public static class AttackResolver {
 
     public static float ApplyFalloffToDamage(float base_damage, IAttack attack, Vector3 hit_location) {
         float falloff = GetDamageFalloff(attack, hit_location);
-        Debug.LogWarning($"base:{base_damage} - falloff:{falloff} = {base_damage - falloff}"); // TODO --- remove debug 
         return Mathf.Max(1f, base_damage - falloff);
     }
 

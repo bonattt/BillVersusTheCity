@@ -18,7 +18,7 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
     }
 
     [Tooltip("How long does it take to deal damage once.")]
-    public float damage_period_seconds = 0.25f;
+    public float damage_period_seconds = 2f;
 
     [Tooltip("How much damage is dealt each period.")]
     public float damage_rate = 20f;
@@ -146,7 +146,6 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
                 // deal damage immediately on the first frame a target enters the area
                 targets_damaged[item.target] = Time.time;
                 DamageTarget(item.target);
-                Debug.LogWarning($"deal first instance of damage immediately! '{item.target}'"); // TODO --- remove debug
                 continue;
             }
             else if (Time.time >= item.last_resolved_at + damage_period_seconds) {
@@ -154,9 +153,7 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
                 if (item.most_recent_hit_at + (damage_period_seconds/4) <= Time.time) {
                     // target hasn't been tracked recently, so they have left the area since last damage instance
                     targets_removed.Add(item.target);
-                    Debug.LogWarning($"un-track target: '{item.target}'"); // TODO --- remove debug
                 } else {
-                    Debug.LogWarning($"damage target: '{item.target}', {item.last_resolved_at} => {item.last_resolved_at + damage_period_seconds} (at {Time.time})"); // TODO --- remove debug
                     targets_damaged[item.target] = item.last_resolved_at + damage_period_seconds;
                     DamageTarget(item.target);
                 }
@@ -166,11 +163,9 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
         }
 
         foreach (IAttackTarget t in targets_removed) {
-            Debug.LogWarning($"removed {t}");
             tracked_targets.Remove(t);
         }
         foreach (IAttackTarget t in targets_damaged.Keys) {
-            Debug.LogWarning($"update resolved to '{targets_damaged[t]}' (time:{Time.time} + period:{damage_period_seconds}) for '{t}'"); // TODO --- remove debug
             tracked_targets[t] = tracked_targets[t].UpdateResolvedAt(targets_damaged[t]);
         }
     }
