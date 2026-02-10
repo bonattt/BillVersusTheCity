@@ -61,7 +61,6 @@ public abstract class AbstractExplosion : MonoBehaviour, IExplosion
     }
 
     public void MakeSoundEffect() {
-        Debug.LogWarning($"MakeSoundEffect('{attack_sound_path}')"); // TODO --- remove debug
         ISFXSounds explosion_sfx = SFXLibrary.LoadSound(attack_sound_path);
         SFXSystem.inst.PlaySound(explosion_sfx, transform.position);
     }

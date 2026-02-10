@@ -81,7 +81,8 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
         foreach (Collider c in GetCurrentOverlap()) {
             IAttackTarget t = c.gameObject.GetComponent<IAttackTarget>();
             if (IsValidHit(t, c)) {
-                DealAreaDamageToTarget(t);
+                Debug.LogError("DealAreaDamageToTarget has been removed!!");
+                // DealAreaDamageToTarget(t);
             }
         }
         already_hit_reset = false;
@@ -121,12 +122,6 @@ public class AreaDamage : MonoBehaviour, IAreaEffectPartial
         Vector3 collider_center = transform.position;
         return Physics.OverlapSphere(collider_center, sub_area_radius);
     }
-
-    private void DealAreaDamageToTarget(IAttackTarget target) {
-        already_hit.Add(target);
-        AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
-    }
-
 
     public AreaDamageDebugger debug;
     private void UpdateDebug() {

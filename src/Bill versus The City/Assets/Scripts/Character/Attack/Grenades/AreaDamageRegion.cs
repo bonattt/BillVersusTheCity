@@ -16,9 +16,11 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
             _UpdateScaling();
         }
     }
-    // Static HashSet used to prevent 2 instances of overlapping AoE from stacking damage
-    private static HashSet<IAttackTarget> already_hit = new HashSet<IAttackTarget>();
 
+    [Tooltip("How long does it take to deal damage once.")]
+    public float damage_period_seconds = 0.25f;
+
+    [Tooltip("How much damage is dealt each period.")]
     public float damage_rate = 20f;
 
     private float _area_radius;
@@ -110,20 +112,76 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
         //         DealAreaDamageToTarget(t);
         //     }
         // }
-        Debug.LogWarning("TODO --- update damage on any tracked targets");
         UpdateDebug();
     }
 
+    private Dictionary<IAttackTarget, AreaDamageTracking> tracked_targets = new Dictionary<IAttackTarget, AreaDamageTracking>();
     public void TargetInArea(IAttackTarget t, float at_time) {
-        Debug.LogWarning("TODO: implement TargetInArea");
+        if (tracked_targets.ContainsKey(t)) {
+            tracked_targets[t] = tracked_targets[t].UpdateMostRecentHit(Time.time);
+        } else {
+            tracked_targets[t] = new AreaDamageTracking(t, first_hit_at:Time.time);
+        }
     }
 
-    private bool IsValidHit(IAttackTarget target, Collider collider) {
-        return target != null && !already_hit.Contains(target) && !IsBlockedByWall(collider);
-    }
+    // private bool IsValidHit(IAttackTarget target, Collider collider) {
+    //     return target != null && !already_hit.Contains(target) && !IsBlockedByWall(collider);
+    // }
 
     void LateUpdate() {
-        
+        if (gameObject == null) { return; } // destroyed during `Update`, so do nothing
+        if (Time.timeScale == 0) { 
+            Debug.LogWarning("TODO: find a better way to avoid damage while paused");
+            return; 
+        }
+        // run damage resolution in LateUpdate to guarantee colliders all resolve before resolving damage
+        ResolveDamageOverTime();
+    }
+
+    private void ResolveDamageOverTime() {
+        Dictionary<IAttackTarget, float> targets_damaged = new Dictionary<IAttackTarget, float>();
+        HashSet<IAttackTarget> targets_removed = new HashSet<IAttackTarget>();
+        foreach (AreaDamageTracking item in tracked_targets.Values) {
+            if (float.IsNaN(item.last_resolved_at)) {
+                // deal damage immediately on the first frame a target enters the area
+                targets_damaged[item.target] = Time.time;
+                DamageTarget(item.target);
+                Debug.LogWarning($"deal first instance of damage immediately! '{item.target}'"); // TODO --- remove debug
+                continue;
+            }
+            else if (Time.time >= item.last_resolved_at + damage_period_seconds) {
+                // enough time has passed to deal damage
+                if (item.most_recent_hit_at + (damage_period_seconds/4) <= Time.time) {
+                    // target hasn't been tracked recently, so they have left the area since last damage instance
+                    targets_removed.Add(item.target);
+                    Debug.LogWarning($"un-track target: '{item.target}'"); // TODO --- remove debug
+                } else {
+                    Debug.LogWarning($"damage target: '{item.target}', {item.last_resolved_at} => {item.last_resolved_at + damage_period_seconds} (at {Time.time})"); // TODO --- remove debug
+                    targets_damaged[item.target] = item.last_resolved_at + damage_period_seconds;
+                    DamageTarget(item.target);
+                }
+                continue;
+            }
+            // else { continue; } // unnecessary
+        }
+
+        foreach (IAttackTarget t in targets_removed) {
+            Debug.LogWarning($"removed {t}");
+            tracked_targets.Remove(t);
+        }
+        foreach (IAttackTarget t in targets_damaged.Keys) {
+            Debug.LogWarning($"update resolved to '{targets_damaged[t]}' (time:{Time.time} + period:{damage_period_seconds}) for '{t}'"); // TODO --- remove debug
+            tracked_targets[t] = tracked_targets[t].UpdateResolvedAt(targets_damaged[t]);
+        }
+    }
+
+    private void DamageTarget(IAttackTarget target) {
+        Vector3 target_position = ((MonoBehaviour) target).transform.position;
+        AttackResolver.ResolveAttackHit(GetAttack(), target, target_position);
+    }
+
+    private IAttack GetAttack() {
+        return new AreaDamageAttack(this);
     }
 
     void OnDrawGizmos() {
@@ -131,34 +189,64 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
         Gizmos.DrawWireSphere(transform.position, area_radius);
     }
 
-    private const float raycast_height = 0.5f;
-    private bool IsBlockedByWall(Collider c) {
-        Vector3 start = PhysicsUtils.PositionAtHeight(transform.position, raycast_height);
-        Vector3 end = PhysicsUtils.PositionAtHeight(c.transform.position, raycast_height);
-        Vector3 direction = end - start;
-        RaycastHit hit;
-        if (Physics.Raycast(start, direction.normalized, out hit, direction.magnitude, blocks_propegation)) {
-            return true;
-        }
-        return false;
-    }
+    // private const float raycast_height = 0.5f;
+    // private bool IsBlockedByWall(Collider c) {
+    //     Vector3 start = PhysicsUtils.PositionAtHeight(transform.position, raycast_height);
+    //     Vector3 end = PhysicsUtils.PositionAtHeight(c.transform.position, raycast_height);
+    //     Vector3 direction = end - start;
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(start, direction.normalized, out hit, direction.magnitude, blocks_propegation)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public Collider[] GetCurrentOverlap() {
-        Vector3 collider_center = transform.position;
-        return Physics.OverlapSphere(collider_center, area_radius);
-    }
-
-    private void DealAreaDamageToTarget(IAttackTarget target) {
-        already_hit.Add(target);
-        AttackResolver.ResolveDamageOverTime(target, damage_rate, Time.deltaTime);
-    }
-
+    // public Collider[] GetCurrentOverlap() {
+    //     Vector3 collider_center = transform.position;
+    //     return Physics.OverlapSphere(collider_center, area_radius);
+    // }
 
     public AreaDamageRegionDebugger debug = new AreaDamageRegionDebugger();
     private void UpdateDebug() {
         # if UNITY_EDITOR
         debug.blocks_propegation = blocks_propegation;
+        debug.tracked_targets = new List<string>();
+        foreach (AreaDamageTracking item in tracked_targets.Values) {
+            string target_name;
+            try {
+                target_name = ((MonoBehaviour) item.target).gameObject.name;
+            } catch (InvalidCastException) {
+                target_name = $"{item.target}";
+            }
+            debug.tracked_targets.Add($"{target_name}: (last_resolved; {item.last_resolved_at}, first_hit; {item.first_hit_at} recent_hit; {item.most_recent_hit_at})");
+        }
         # endif
+    }
+}
+
+public struct AreaDamageTracking {
+    public IAttackTarget target;
+    public float first_hit_at;
+    public float most_recent_hit_at;
+    public float last_resolved_at;
+
+    public AreaDamageTracking(IAttackTarget target, float first_hit_at)
+        : this(target, first_hit_at, first_hit_at) { /* do nothing */ }
+    public AreaDamageTracking(IAttackTarget target, float first_hit_at, float most_recent_hit_at) 
+        : this(target, first_hit_at, most_recent_hit_at, float.NaN) { /* do nothing */ }
+    public AreaDamageTracking(IAttackTarget target, float first_hit_at, float most_recent_hit_at, float last_resolved_at) {
+        this.target = target;
+        this.first_hit_at = first_hit_at;
+        this.most_recent_hit_at = most_recent_hit_at;
+        this.last_resolved_at = last_resolved_at; // not never resolved yet
+    }
+
+    public AreaDamageTracking UpdateMostRecentHit(float new_most_recent) {
+        return new AreaDamageTracking(this.target, this.first_hit_at, new_most_recent, this.last_resolved_at);
+    }
+
+    public AreaDamageTracking UpdateResolvedAt(float new_resolved_at) {
+        return new AreaDamageTracking(this.target, this.first_hit_at, this.most_recent_hit_at, new_resolved_at);
     }
 }
 
@@ -166,4 +254,5 @@ public class AreaDamageRegion : MonoBehaviour, IAreaEffectRegion
 public class AreaDamageRegionDebugger {
     // public List<string> tracked_targets;
     public LayerMask blocks_propegation;
+    public List<string> tracked_targets;
 }

@@ -59,7 +59,8 @@ public class FlashbangedUI : MonoBehaviour {
 
     private void UpdateTinnitusVolume() {
         if (tinnitus_sound == null) { 
-            Debug.LogWarning($"cannot update volume, no tinnitus sound is set!!");
+            // TODO --- remove debug (uncomment warning)
+            // Debug.LogWarning($"cannot update volume, no tinnitus sound is set!!");
             return;
         }
         float percent =  GetDeafPercent();

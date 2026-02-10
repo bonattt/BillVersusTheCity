@@ -50,7 +50,7 @@ public class GrenadeFuse : MonoBehaviour {
         if (primary_explosion.explosion_attack != null) { // TODO --- this if/else should probably not be needed. Consider refactoring
             sound_playing.audio_source.maxDistance = primary_explosion.explosion_radius * 25f;
         } else {
-            Debug.LogWarning("// TODO --- implement sound radius without explosion radius");
+            // Debug.LogWarning("// TODO --- implement sound radius without explosion radius"); // TODO --- remove debug
             sound_playing.audio_source.maxDistance = 150f;
         }
     }
