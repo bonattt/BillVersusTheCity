@@ -5,17 +5,17 @@
 
 Planned on 2026-01-17
 Started on 2026-01-17
-Finished on 2026-??????
+Finished on 2026-02-10
 
 PLANNED FEATURES
 [ ] Explore Unity Audio Mixer
-[ ] Explore more Grenade options
+[+] Explore more Grenade options
     [+] REFACTOR: extract explosion interface to support grenade variety
-    [ ] Smoke Grenade???
-    [~] Flashbang
+    [X] Smoke Grenade???
+    [+] Flashbang
         [+] AoE damage effect
         [+] AoE spawned by grenade
-        [ ] FIX: Flashbang UI flashes white on editor mode play
+        [+] FIX: Flashbang UI flashes white on editor mode play
     [+] Incindiary Grenade
         [+] FIX: particles don't scale correctly when spawned by grenade
         [+] Add: flame duration
@@ -29,7 +29,9 @@ PLANNED FEATURES
         [~] ADD: add area enemies will try to avoid in fire bombs
         [+] ADD: parenting to fire damage effects, to avoid cluttering the inspector
         [+] ADD: add initial particle effect to allow flames to scale up
-        [ ] FIX: no damage numbers
+        [>] 2+ instances of AOE that overlap stack damage. This should not stack
+            - to do this, I need to move the tracking of Damage-over-time onto the target, not the AOE. However,
+              I'm timeboxing that and pusing it to later. I'm not even sure AOE will be in the final game.
     [ ] Grenade Enemies
 [ ] Try to make Grocery Store level more fun
     [ ] FIX: enemies hanging back
@@ -60,3 +62,4 @@ UNPLANNED BUGFIXES
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
     --> do this later, the interaction UI needs to be replaced anyways
 [ ] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
+[ ] BUG: if a grenade blows up in your hands, it does not use ammo.

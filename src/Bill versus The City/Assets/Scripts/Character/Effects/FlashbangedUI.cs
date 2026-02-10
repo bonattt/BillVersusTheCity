@@ -35,6 +35,8 @@ public class FlashbangedUI : MonoBehaviour {
     }
 
     void Start() {
+        blind_until = float.NegativeInfinity; // set initial value to prevent screen being white for 1 frame on game start
+        dazed_until = float.NegativeInfinity; // set initial value to prevent screen being white for 1 frame on game start
         Init();
         UpdateOpacity();
     }
