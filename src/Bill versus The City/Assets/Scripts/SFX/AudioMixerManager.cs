@@ -87,4 +87,20 @@ public class AudioMixerManager : MonoBehaviour {
         }
         return mixers[0];
     }
+
+    public float GetGroupVolume(SoundCategory category) {
+        /* gets the volume setting on a specific audio mixer, (not the total playback volume for that AudioMixerGroup) */
+        _audio_mixer.GetFloat(CategoryToVolumeField(category), out float mixer_setting);
+        return mixer_setting;
+    }
+
+    public float GetEffectiveVolume(SoundCategory category) {
+        /* gets the effective volume setting on a specific audio mixer, incorperating parent volume levels */
+        float mixer_level = GetGroupVolume(category);
+        if (category == SoundCategory.master) {
+            return mixer_level; // if it's the master volume, don't apply master to the volume.
+        }
+        float master_level = GetGroupVolume(SoundCategory.master);
+        return mixer_level + master_level;
+    }
 }

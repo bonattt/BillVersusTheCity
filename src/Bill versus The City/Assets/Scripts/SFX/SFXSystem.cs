@@ -82,15 +82,18 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
     }
 
-    public IPlayingSound PlaySound(ISFXSounds sound, Vector3 target, bool loop=false) {
+    public AudioSource PlaySound(ISFXSounds sound, Vector3 target, bool loop=false) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
         }
-        return PlaySound(sound.GetRandomSound(), target, loop:loop);
+        AudioSource audio_source =  PlaySound(sound.GetRandomSound(), target, loop:loop);
+        SoundInstanceData instance_data = audio_source.gameObject.GetComponent<SoundInstanceData>();
+        instance_data.sound_set = sound;
+        return audio_source;
     }
 
-    public IPlayingSound PlaySound(ISingleSFXSound sound, Vector3 target, bool loop=false) {
+    public AudioSource PlaySound(ISingleSFXSound sound, Vector3 target, bool loop=false) {
         if (sound == null) {
             Debug.LogWarning("empty sound effect");
             return null;
@@ -104,13 +107,19 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             return null;
         }
         AudioSource audio_source = CreatePlayer(audio_clip, target, volume);
-        PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
-        instance_manager.StartPlayback(sound, loop);
-        instance_manager.sound_category = sound_category;
+        // PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
+        // instance_manager.StartPlayback(sound, loop);
+        // instance_manager.sound_category = sound_category;
+
+        SoundInstanceData instance_data = audio_source.gameObject.AddComponent<SoundInstanceData>();
+        instance_data.sound = sound;
+        instance_data.audio_source = audio_source;
+        instance_data.category = sound_category;
 
         AudioMixerGroup mixer = sound.GetMixerGroup(sound_category);
         audio_source.outputAudioMixerGroup = mixer;
-        return instance_manager;
+        audio_source.Play();
+        return audio_source;
     }
 
     private AudioSource CreatePlayer(AudioClip audio_clip, Vector3 target, float volume) {

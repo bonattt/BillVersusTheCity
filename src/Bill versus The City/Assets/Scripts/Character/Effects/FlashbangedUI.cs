@@ -26,7 +26,7 @@ public class FlashbangedUI : MonoBehaviour {
             return _sound;
         }
     }
-    private IPlayingSound tinnitus_sound = null;
+    private AudioSource tinnitus_sound = null;
 
 
     public static FlashbangedUI inst { get; private set; }
@@ -66,9 +66,9 @@ public class FlashbangedUI : MonoBehaviour {
         }
         float percent =  GetDeafPercent();
         if (percent <= 0f) {
-            tinnitus_sound.StopPlayback();
+            tinnitus_sound.Stop();
         } else {
-            tinnitus_sound.volume_setting = percent;
+            tinnitus_sound.volume = percent;
         }
     }
 
@@ -104,9 +104,9 @@ public class FlashbangedUI : MonoBehaviour {
     }
 
     private void StartFlashbangSound() {
-        if (tinnitus_sound != null && tinnitus_sound.audio_source != null) {
+        if (tinnitus_sound != null) {
             Debug.LogWarning("clearing old tinnitus_sound");
-            tinnitus_sound.StopPlayback();
+            tinnitus_sound.Stop();
         }
         tinnitus_sound = SFXSystem.inst.PlaySound(sound, transform.position, loop:true);
     }
@@ -120,7 +120,7 @@ public class FlashbangedUI : MonoBehaviour {
         debug.dazed_until = dazed_until;
         debug.blind_remaining = Mathf.Max(0, blind_until - Time.time);
         debug.daze_remaining =  Mathf.Max(0, dazed_until - Time.time);
-        debug.tinnitus_volume = tinnitus_sound == null ? -1 : tinnitus_sound.volume_setting;
+        debug.tinnitus_volume = tinnitus_sound == null ? -1 : tinnitus_sound.volume;
     }
 
 }
