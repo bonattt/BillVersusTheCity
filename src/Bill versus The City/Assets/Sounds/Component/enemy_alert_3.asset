@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: enemy alert 3
   _clip: {fileID: 8300000, guid: 7ff623a411633394199612dcfc021a81, type: 3}
   _volume: 1
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: default gunshot
   _clip: {fileID: 8300000, guid: bcd580fd7c386494299bb448f1edd60a, type: 3}
   _volume: 0.15
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

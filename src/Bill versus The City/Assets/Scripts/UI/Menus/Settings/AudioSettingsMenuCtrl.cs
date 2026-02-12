@@ -14,7 +14,7 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
     private Dictionary<string, Label> volume_slider_labels = new Dictionary<string, Label>();
 
     public readonly string[] sound_category_ordering = new string[]{
-        AudioSettings.MASTER_VOLUME,
+        AudioSettings.CategoryToString(SoundCategory.master),
         AudioSettings.CategoryToString(SoundCategory.sound_effect),
         AudioSettings.CategoryToString(SoundCategory.music),
         AudioSettings.CategoryToString(SoundCategory.menu),
@@ -102,13 +102,12 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
     // }
 
     public static string DisplayValue(string category) {
-        if (AudioSettings.MASTER_VOLUME.Equals(category)) {
-            return "Master Volume";
-        }
         return DisplayValue(AudioSettings.CategoryFromString(category));
     }
     public static string DisplayValue(SoundCategory category) {
         switch (category) {
+            case SoundCategory.master:
+                return "Master";
             case SoundCategory.menu:
                 return "Menu";
             case SoundCategory.music:

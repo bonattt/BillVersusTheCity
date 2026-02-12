@@ -16,4 +16,4 @@ MonoBehaviour:
   sounds:
   - {fileID: 8300000, guid: df9635a95cbd52d4581f47f537d4c834, type: 3}
   volume: 0.75
-  default_category: 0
+  default_category: 1

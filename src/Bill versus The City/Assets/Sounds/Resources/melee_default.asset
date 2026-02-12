@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: melee attack default
   _clip: {fileID: 8300000, guid: 6bedeb959cb64a3458e1222862d798ae, type: 3}
   _volume: 1
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

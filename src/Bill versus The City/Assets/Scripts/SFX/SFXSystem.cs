@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.PlayerLoop;
 
 public class SFXSystem : MonoBehaviour, ISettingsObserver
@@ -96,6 +97,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         }
         AudioClip audio_clip = sound.clip;
         SoundCategory sound_category = sound.default_category;
+
         float volume = GetVolume(sound);
         if (audio_clip == null) {
             Debug.LogWarning("empty sound effect");
@@ -105,6 +107,9 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
         instance_manager.StartPlayback(sound, loop);
         instance_manager.sound_category = sound_category;
+
+        AudioMixerGroup mixer = sound.GetMixerGroup(sound_category);
+        audio_source.outputAudioMixerGroup = mixer;
         return instance_manager;
     }
 
@@ -127,9 +132,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
     }
 
     public static float GetVolume(ISingleSFXSound sound) {
-        // gets the volume level (0-1 percent) by applying the master volume, category volume, and clip volume
-        AudioSettings settings = GameSettings.inst.audio_settings;
-        return sound.volume * settings.GetVolume(sound.default_category);
+        return sound.volume; // * settings.GetVolume(sound.default_category); // volume now handled with a unity AudioMixer
     }
 
     public void SettingsUpdated(ISettingsModule updated, string field) {
@@ -154,11 +157,11 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             Debug.LogError("Cannot update music volume; music player exists, but current music is not set!");
             return;
         }
-        music_player.volume = GetVolume(current_music);
     }
 }
 
 public enum SoundCategory {
+    master,
     sound_effect,
     music,
     menu

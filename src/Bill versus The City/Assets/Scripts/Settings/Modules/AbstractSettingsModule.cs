@@ -37,50 +37,50 @@ public abstract class AbstractSettingsModule : ISettingsModule {
         InitializeMinMaxAndDefaults();
     }
 
-    public float GetFloat(string field) {
+    public virtual float GetFloat(string field) {
         if (!float_fields.ContainsKey(field)) {
             Debug.LogWarning($"Setting field '{field}' from default value '{float_fields_default[field]}'!");
             float_fields[field] = float_fields_default[field];
         }
         return float_fields[field];
     }
-    public float GetMaxFloat(string field) {
+    public virtual float GetMaxFloat(string field) {
         return float_fields_max[field];
     }
-    public float GetMinFloat(string field) {
+    public virtual float GetMinFloat(string field) {
         return float_fields_min[field];
     }
-    public void SetFloat(string field, float value) {
+    public virtual void SetFloat(string field, float value) {
         float_fields[field] = Mathf.Clamp(value, float_fields_min[field], float_fields_max[field]);
         UpdateSubscribers(field);
     }
 
-    public int GetInt(string field) {
+    public virtual int GetInt(string field) {
         if (!int_fields.ContainsKey(field)) {
             Debug.LogWarning($"Setting field '{field}' from default value '{int_fields_default[field]}'!");
             int_fields[field] = int_fields_default[field];
         }
         return int_fields[field];
     }
-    public int GetMaxInt(string field) {
+    public virtual int GetMaxInt(string field) {
         return int_fields_max[field];
     }
-    public int GetMinInt(string field) {
+    public virtual int GetMinInt(string field) {
         return int_fields_min[field];
     }
-    public void SetInt(string field, int value) {
+    public virtual void SetInt(string field, int value) {
         int_fields[field] =  Mathf.Clamp(value, int_fields_min[field], int_fields_max[field]);
         UpdateSubscribers(field);
     }
 
-    public bool GetBool(string field) {
+    public virtual bool GetBool(string field) {
         if (!bool_fields.ContainsKey(field)) {
             Debug.LogWarning($"Setting field '{field}' from default value '{bool_fields_default[field]}'!");
             bool_fields[field] = bool_fields_default[field];
         }
         return bool_fields[field];
     }
-    public void SetBool(string field, bool value) {
+    public virtual void SetBool(string field, bool value) {
         bool_fields[field] = value;
         UpdateSubscribers(field);
     }

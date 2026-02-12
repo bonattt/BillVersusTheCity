@@ -7,12 +7,17 @@ using UnityEngine;
 
 public class AudioSettings : AbstractSettingsModule {
     
-    public const string MASTER_VOLUME = "master_volume";
     public float master_volume {
-        get { return GetFloat(MASTER_VOLUME); }
+        get { return GetFloat(CategoryToString(SoundCategory.master)); }
         set {
-            SetFloat(MASTER_VOLUME, value);
+            SetFloat(CategoryToString(SoundCategory.master), value);
         }
+    }
+
+    public override void SetFloat(string field, float value) {
+        base.SetFloat(field, value);
+        SoundCategory category = CategoryFromString(field);
+        AudioMixerManager.inst.SetMixerVolume(category, value);
     }
 
     public float GetVolume(SoundCategory category) {
@@ -20,9 +25,6 @@ public class AudioSettings : AbstractSettingsModule {
     }
 
     public float GetVolumeSetting(string category) {
-        if (MASTER_VOLUME.Equals(category)) {
-            return master_volume;
-        }
         return GetVolumeSetting(CategoryFromString(category));
 
     }
@@ -48,7 +50,7 @@ public class AudioSettings : AbstractSettingsModule {
     public override List<string> float_field_names {
         get {
             if (_volume_fields == null) {
-                _volume_fields = new List<string>(){MASTER_VOLUME};
+                _volume_fields = new List<string>(){};
                 foreach (SoundCategory category in Enum.GetValues(typeof(SoundCategory))) {
                     _volume_fields.Add(CategoryToString(category));
                 }
@@ -75,6 +77,8 @@ public class AudioSettings : AbstractSettingsModule {
 
     public static SoundCategory CategoryFromString(string category) {
         switch (category) {
+            case "master":
+                return SoundCategory.master;
             case "sound_effect":
                 return SoundCategory.sound_effect;
             case "music":

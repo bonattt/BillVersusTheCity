@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 public interface ISingleSFXSound {
@@ -8,6 +9,8 @@ public interface ISingleSFXSound {
     public AudioClip clip { get; set; }
     public float volume { get; set; }
     public SoundCategory default_category { get; set; }
+    public AudioMixerGroup GetMixerGroup() => GetMixerGroup(default_category);
+    public AudioMixerGroup GetMixerGroup(SoundCategory category);
 }
 
 

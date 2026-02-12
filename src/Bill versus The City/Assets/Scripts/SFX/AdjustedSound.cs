@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName ="New Sound", menuName ="Data/Sound")]
 public class AdjustedSound : ScriptableObject, ISingleSFXSound, ISFXSounds
@@ -35,6 +36,16 @@ public class AdjustedSound : ScriptableObject, ISingleSFXSound, ISFXSounds
         set {
             _default_category = value;
         }
+    }
+    
+    [Tooltip("If set, this will override the default audio mixer for the sound's SoundCategory.")]
+    public AudioMixerGroup _override_mixer_group = null;
+    public AudioMixerGroup GetMixerGroup(SoundCategory category) {
+        if (_override_mixer_group == null) {
+            return AudioMixerManager.inst.GetMixerGroup(category);
+        }
+        return _override_mixer_group;
+        
     }
     
     public List<ISingleSFXSound> GetSounds() {

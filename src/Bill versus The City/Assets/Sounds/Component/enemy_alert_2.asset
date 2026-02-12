@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: enemy alert 2
   _clip: {fileID: 8300000, guid: acbe1525237e48a448f0dda8aee6f49c, type: 3}
   _volume: 1
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

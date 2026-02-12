@@ -15,4 +15,4 @@ MonoBehaviour:
   sound_name: reload finish
   sounds: []
   volume: 0.75
-  default_category: 0
+  default_category: 1

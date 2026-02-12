@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: menu error
   _clip: {fileID: 8300000, guid: 180b0e3e52f2ec344ac54c612852a6ff, type: 3}
   _volume: 0.75
-  _default_category: 2
+  _default_category: 3
+  _override_mixer_group: {fileID: 0}

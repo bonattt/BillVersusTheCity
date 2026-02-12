@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: menu click
   _clip: {fileID: 8300000, guid: 60935873920a1424ba432f499cfb0dd9, type: 3}
   _volume: 0.75
-  _default_category: 2
+  _default_category: 3
+  _override_mixer_group: {fileID: 0}

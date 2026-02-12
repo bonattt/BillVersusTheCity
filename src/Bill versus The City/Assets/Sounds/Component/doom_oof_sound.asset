@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: doom_oof
   _clip: {fileID: 8300000, guid: dff6bae3cce9da545b2167ebcf28112d, type: 3}
   _volume: 1
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

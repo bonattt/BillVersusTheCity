@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: weapon mode switch
   _clip: {fileID: 8300000, guid: ee5c7cb6424a1a6419f69cbe95f8d92c, type: 3}
   _volume: 0.75
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

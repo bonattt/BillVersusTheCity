@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: enemy lose 1
   _clip: {fileID: 8300000, guid: 54c185497115d4b48b7a122a16df6312, type: 3}
   _volume: 0.4
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}

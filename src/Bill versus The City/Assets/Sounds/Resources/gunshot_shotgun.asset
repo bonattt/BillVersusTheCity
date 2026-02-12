@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: shotgun blast
   _clip: {fileID: 8300000, guid: 1130ce1802b23a24a9b4968c27b8e78b, type: 3}
   _volume: 0.75
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}
