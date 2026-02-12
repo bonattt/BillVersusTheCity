@@ -8,7 +8,8 @@ Started on 2026-02-11
 Finished on 2026-??????
 
 PLANNED FEATURES
-[ ] Explore Unity Audio Mixer
+[+] Explore Unity Audio Mixer
+    - added a unity audio mixer, and changed AudioSettings to apply volumes through the AudioMixer
 [ ] Implement Grenade Enemies
 [ ] Try to make Grocery Store level more fun
     [ ] FIX: enemies hanging back
@@ -42,3 +43,5 @@ UNPLANNED BUGFIXES
     --> do this later, the interaction UI needs to be replaced anyways
 [ ] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
 [ ] BUG: if a grenade blows up in your hands, it does not use ammo.
+[ ] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
+[ ] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)

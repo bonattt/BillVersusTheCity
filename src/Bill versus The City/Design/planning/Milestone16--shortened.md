@@ -63,5 +63,3 @@ UNPLANNED BUGFIXES
     --> do this later, the interaction UI needs to be replaced anyways
 [ ] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
 [ ] BUG: if a grenade blows up in your hands, it does not use ammo.
-[ ] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
-[ ] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
