@@ -107,6 +107,7 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             return null;
         }
         AudioSource audio_source = CreatePlayer(audio_clip, target, volume);
+        audio_source.loop = loop;
         // PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
         // instance_manager.StartPlayback(sound, loop);
         // instance_manager.sound_category = sound_category;
