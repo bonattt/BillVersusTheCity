@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: Level 3 Music
   _clip: {fileID: 8300000, guid: 69c6ddd5d7bef294fb28aa7af57c6a7b, type: 3}
   _volume: 0.5
-  _default_category: 1
+  _default_category: 2
+  _override_mixer_group: {fileID: 0}

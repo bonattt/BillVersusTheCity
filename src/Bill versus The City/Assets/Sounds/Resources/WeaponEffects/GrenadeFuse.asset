@@ -15,4 +15,5 @@ MonoBehaviour:
   _sound_name: GrenadeFuse
   _clip: {fileID: 8300000, guid: d905fef0da810774691aa5b7ab78ae6a, type: 3}
   _volume: 1
-  _default_category: 0
+  _default_category: 1
+  _override_mixer_group: {fileID: 0}
