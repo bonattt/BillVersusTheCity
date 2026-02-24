@@ -20,14 +20,14 @@ public class SoundEffectDraw : MonoBehaviour, IGlobalSoundsObserver
 
     public void UpdateSound(ISound sound)
     {
-        GameObject display = new GameObject();
+        GameObject display = new GameObject("Sound Gizmo");
         SoundGizmo gizmo = display.AddComponent<SoundGizmo>();
         gizmo.color = color;
         gizmo.sound = sound;
         gizmo.transform.parent = transform;
         Vector3 gizmo_pos = new Vector3(sound.origin.x, draw_height, sound.origin.z);
         gizmo.transform.position = gizmo_pos;
-        Destroy(gizmo, sound_duration);
+        Destroy(display, sound_duration);
     }
     
 }
