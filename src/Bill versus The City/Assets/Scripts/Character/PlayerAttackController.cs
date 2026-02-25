@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -138,6 +139,10 @@ public class PlayerAttackController : AttackController
             }
             _current_slot = slot;
             current_gun = weapon_slots[slot];
+            try {
+                Debug.LogWarning("this is not a good solution to making sure player always throws grenades at the mouse pos"); // TODO --- come up with something better
+                ((ThrownAttack) current_gun).throw_target_position = ThrowTargetPosition.mouse_position;
+            } catch (InvalidCastException) { /* do nothing */ }
             UpdateSubscribers();
             return true;
         }

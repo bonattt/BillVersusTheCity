@@ -181,6 +181,7 @@ public interface IMeleeWeapon : IWeapon
 
 public interface IFirearm : IWeapon
 {
+    public GameObject last_projectile { get; } // most recent projectile fired from this weapon
     public AttackStartPosition attack_start_position { get; }
     // equipment
     public WeaponSlot weapon_slot { get; }

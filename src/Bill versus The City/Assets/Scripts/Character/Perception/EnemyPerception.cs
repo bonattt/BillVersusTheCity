@@ -404,7 +404,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
             Debug.Log($"{gameObject.name} ignored sound while deafened by flashbang.");
             return; 
         } // cannot hear while blind and deff from a flashbang
-        if (hit.enemy != this) { Debug.LogWarning($"Enemy {gameObject.name} heard HearingHit not for itself, intended for {hit.enemy.gameObject.name}!"); }
+        if (hit.enemy != this) { Debug.LogError($"Enemy {gameObject.name} heard HearingHit not for itself, intended for {hit.enemy.gameObject.name}!"); }
         if (!LevelConfig.inst.combat_enabled || disable_hearing) { return; } 
         float alert_level = hit.sound.alarm_level * notice_player_rate;
         if (hit.sound.adjust_alarm_based_on_distance)
@@ -424,7 +424,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         if(state == PerceptionState.dead) { return; } // cannot be flashbanged if dead
         float distance = PhysicsUtils.FlatDistance(flashbang_position, transform.position);
         intensity = intensity / distance;
-        Debug.LogWarning($"flash bang hit: '{intensity}' (max: {max_flashbang_blind_duration})");
         intensity = Mathf.Min(max_flashbang_blind_duration, intensity);
         // apply flashbang effectiveness AFTER max duration, to effectively adjust MAX by the difficulty
         intensity *= flashbang_effectiveness; 

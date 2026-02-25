@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Thrown Weapon", menuName = "Data/ThrownAttack")]
 public class ThrownAttack : ScriptableObject, IFirearm {
 
+    public GameObject last_projectile { get; protected set; }// most recent projectile fired from this weapon
     public AttackStartPosition attack_start_position { get => AttackStartPosition.thrown; }
     /////////////////// implements IItem ///////////////////
     public string _item_id;
@@ -23,7 +24,7 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     public string attack_sound { get => _attack_sound; }
     public string next_shot_ready_sound => null; // thrown weapons don't make a sound when the next shot is ready
     public GameObject grenade_prefab;
-    private GameObject grenade;
+    private GameObject grenade; // the grenade currently held in hand, cooking, and ready to throw.
     public bool is_consumable { get => true; }
 
 
@@ -77,6 +78,8 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     public string reload_start_sound { get => ""; }
     public string reload_complete_sound { get => ""; }
 
+    public ThrowTargetPosition throw_target_position = ThrowTargetPosition.player_position;
+
     public bool HasWeaponSettings() => false;
     public void NextWeaponSetting() { /* do nothing */ }
     public void PreviousWeaponSetting() { /* do nothing */ }
@@ -117,22 +120,38 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         }
         rb.useGravity = true;
         // Vector3 mouse_pos = attack_start_point + (attack_direction.normalized * 3);
-        Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
-        if (float.IsNaN(mouse_pos.x)) {
-            Debug.LogError("mouse position is NaN!");
-        }
-        Vector3 throw_velocity = CalculateThrowVelocity(attack_start_point, mouse_pos);
+        // Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
+        // if (float.IsNaN(mouse_pos.x)) {
+        //     Debug.LogError("mouse position is NaN!");
+        // }
+        Vector3 target_pos = GetThrowTarget(attack_direction, attack_start_point);
+        Vector3 throw_velocity = CalculateThrowVelocity(attack_start_point, target_pos);
         // float MAX_THROW_FORCE = 15f;
         // if (throw_velocity.magnitude > MAX_THROW_FORCE) {
         //     throw_velocity = throw_velocity.normalized * MAX_THROW_FORCE;
         // }
         rb.AddForce(throw_velocity, ForceMode.VelocityChange);
+        last_projectile = grenade;
         grenade = null;
         if (!GameSettings.inst.debug_settings.GetBool("no_reload")) {
             // if reload is disabled, guns don't decriment ammo, they just shoot forever
             current_ammo -= 1;
         }
         return true;
+    }
+
+    public virtual Vector3 GetThrowTarget(Vector3 attack_direction, Vector3 attack_start_point) {
+        if (throw_target_position == ThrowTargetPosition.mouse_position) {
+            Vector3 mouse_pos = InputSystem.inst.MouseWorldPosition();
+            if (float.IsNaN(mouse_pos.x)) {
+                Debug.LogError("mouse position is NaN!");
+            }
+            return mouse_pos;
+        } else if (throw_target_position == ThrowTargetPosition.player_position) {
+            return PlayerCharacter.inst.player_transform.position;
+        } 
+        Debug.LogError($"unhandled ThrowTargetPosition '{throw_target_position}'");
+        return Vector3.zero;
     }
 
     // public float GetThrowForce(Vector3 throw_from, Vector3 target_position) {
@@ -210,4 +229,10 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     public IWeapon CopyWeapon() {
         return Instantiate(this);
     }
+}
+
+
+public enum ThrowTargetPosition {
+    mouse_position,
+    player_position,    
 }

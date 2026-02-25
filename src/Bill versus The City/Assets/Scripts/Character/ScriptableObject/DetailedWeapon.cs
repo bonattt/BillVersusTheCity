@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Detailed Weapon", menuName ="Data/DetailedWeapon")]
 public class DetailedWeapon : ScriptableObject, IFirearm
 {
-    
+    public GameObject last_projectile { get; protected set; } // most recent projectile fired from this weapon
     public AttackStartPosition attack_start_position { get => AttackStartPosition.bullet; }
     public string _name;
     public string _item_id;
@@ -145,6 +145,7 @@ public class DetailedWeapon : ScriptableObject, IFirearm
         }
         current_ammo -= 1;
         if (bullet != null) {
+            last_projectile = bullet.gameObject;
             AttackResolver.AttackStart(bullet, attack_direction, attack_start_point, is_melee_attack: false); // Only create a shot effects once for a shotgun
         } else {
             Debug.LogWarning("bullet is null!");
