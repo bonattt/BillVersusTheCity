@@ -137,14 +137,14 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
             Debug.LogWarning("No `DropItemPickups` script found, skipping drops configuration!");
             return;
         }
-        if (spawner_config.drop_ammo == null) {
+        if (spawner_config == null || spawner_config.drop_ammo == null) {
             // do nothing, preserve prefab setting
         } else if (spawner_config.drop_ammo.Value) {
             item_drops.drop_ammo = true;
         } else if (!spawner_config.drop_ammo.Value) {
             item_drops.drop_ammo = false;
         }
-        if (spawner_config.drop_weapon == null) {
+        if (spawner_config == null || spawner_config.drop_weapon == null) {
             // do nothing, preserve prefab setting
         } else if (spawner_config.drop_weapon.Value) {
             item_drops.drop_weapon = true;
