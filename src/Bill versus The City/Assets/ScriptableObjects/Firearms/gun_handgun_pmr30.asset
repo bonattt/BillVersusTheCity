@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f8ad3a7aa0a78a47aa29aa323e56728, type: 3}
-  m_Name: gun_handgun_piercing
+  m_Name: gun_handgun_pmr30
   m_EditorClassIdentifier: 
-  _name: Handgun
-  _item_id: handgun_test_armor_piercing
+  _name: Handgun (PPR 31)
+  _item_id: handgun_standard
   _item_icon: {fileID: 21300000, guid: 1419e43d1f456314aa821b180bec4a72, type: 3}
   _weapon_slot: 0
   _weapon_class: 0
   _weapon_settings:
   - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
-  bullet_effect: {fileID: 11400000, guid: 3aab88251adae734b8bbfb5ba3c0b014, type: 2}
-  _ammo_capacity: 17
-  _reload_amount: 17
+  bullet_effect: {fileID: 11400000, guid: 8ebc6d38bc880e0438d76a176368121f, type: 2}
+  _ammo_capacity: 30
+  _reload_amount: 30
   _reload_time: 1
   _time_to_aim: 0.75
   _recoil_inaccuracy: 10
@@ -32,6 +32,7 @@ MonoBehaviour:
   _aim_move_speed: 0.8
   _max_zoom_range: 2.5
   _gunshot_sound: 
+  _next_shot_ready_sound: 
   _empty_gunshot_sound: 
   _reload_start_sound: 
   _reload_complete_sound: 

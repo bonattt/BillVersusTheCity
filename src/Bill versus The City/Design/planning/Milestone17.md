@@ -46,3 +46,9 @@ UNPLANNED BUGFIXES
 [ ] BUG: if a grenade blows up in your hands, it does not use ammo.
 [ ] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
 [ ] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
+[ ] BUG: ending a level with a pickup item seems to cause it to show up selected already when you open the weapon select menu
+    (needs more testing. When I implemented the PMR-30 and used it as a pickup, it caused the conventional handgun and the PMR-30 to both 
+    appear selected when I opened the gunstore scene.)
+[ ] BUG: ~~Switching weapons at the gun store for the first time enables combat~~, and allows you to shoot while not on the gun range. Going
+    on the range then leaving will remove this, and switching weapons again will not reenable combat.
+     - actually, combat just doesn't start disabled like it should. Once you interact with the disable/enable zone, it works as intended.

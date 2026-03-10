@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9198be484ac57a9409f789c857d798ef, type: 3}
-  m_Name: bullet_handgun(ineffective armor)
+  m_Name: bullet_crossbow
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
-  _name: handgun 9mm (armor ineffective)
-  ammo_type: 0
-  ammo_drop_size: 17
+  _name: crossbow bolt
+  ammo_type: 1
+  ammo_drop_size: 5
   n_shots: 1
-  aimed_inaccuracy: 2
-  initial_inaccuracy: 3
-  bullet_speed: 35
-  weapon_damage_min: 35
-  weapon_damage_max: 45
-  armor_effectiveness: 0.5
+  aimed_inaccuracy: 0
+  initial_inaccuracy: 4
+  bullet_speed: 15
+  weapon_damage_min: 115
+  weapon_damage_max: 150
+  armor_effectiveness: 0.1
   damage_falloff_rate: 0.25
+  damage_falloff_function: 2
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}

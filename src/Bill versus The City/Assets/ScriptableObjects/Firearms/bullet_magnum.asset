@@ -18,9 +18,10 @@ MonoBehaviour:
   n_shots: 1
   aimed_inaccuracy: 2
   initial_inaccuracy: 3
-  bullet_speed: 55
-  weapon_damage_min: 85
-  weapon_damage_max: 105
+  bullet_speed: 60
+  weapon_damage_min: 95
+  weapon_damage_max: 135
   armor_effectiveness: 1.25
   damage_falloff_rate: 0.25
+  damage_falloff_function: 2
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}

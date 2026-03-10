@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9198be484ac57a9409f789c857d798ef, type: 3}
-  m_Name: bullet_handgun(armor piercing)
+  m_Name: bullet_handgun_22_mag
   m_EditorClassIdentifier: Assembly-CSharp::BulletEffect
-  _name: handgun 9mm (armor piercing)
+  _name: handgun .22 mag
   ammo_type: 0
-  ammo_drop_size: 17
+  ammo_drop_size: 20
   n_shots: 1
-  aimed_inaccuracy: 2
-  initial_inaccuracy: 3
-  bullet_speed: 35
-  weapon_damage_min: 35
-  weapon_damage_max: 45
-  armor_effectiveness: 1.5
-  damage_falloff_rate: 0.25
+  aimed_inaccuracy: 2.5
+  initial_inaccuracy: 4
+  bullet_speed: 45
+  weapon_damage_min: 45
+  weapon_damage_max: 10
+  armor_effectiveness: 1
+  damage_falloff_rate: 0.35
+  damage_falloff_function: 2
   bullet_prefab: {fileID: 6142857927618689121, guid: d647a64f07b91154599c0a0cfbae4ba9, type: 3}

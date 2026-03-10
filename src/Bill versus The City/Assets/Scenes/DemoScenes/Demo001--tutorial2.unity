@@ -1461,7 +1461,7 @@ PrefabInstance:
     - target: {fileID: 90436643173117265, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
       propertyPath: unity_weapon
       value: 
-      objectReference: {fileID: 11400000, guid: eb07868bb4081fe4cb08c8d80144bd39, type: 2}
+      objectReference: {fileID: 11400000, guid: 1001b09c5e021b347b9aafd78b1a0a73, type: 2}
     - target: {fileID: 112494599611690591, guid: 1e5e8dc7c893ff64b9168cf04ce7cc51, type: 3}
       propertyPath: m_Name
       value: GlockSwitchPickup
