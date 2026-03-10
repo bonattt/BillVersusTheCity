@@ -19,7 +19,7 @@ MonoBehaviour:
   _weapon_class: 0
   _weapon_settings:
   - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
-  bullet_effect: {fileID: 11400000, guid: 8ebc6d38bc880e0438d76a176368121f, type: 2}
+  bullet_effect: {fileID: 11400000, guid: 8795597f9d0670643b099bcd64429f50, type: 2}
   _ammo_capacity: 20
   _reload_amount: 20
   _reload_time: 1

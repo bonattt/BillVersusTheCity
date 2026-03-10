@@ -20,7 +20,7 @@ MonoBehaviour:
   _weapon_settings:
   - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
   - {fileID: 11400000, guid: e8af099c21c2fe74c97706492d5dbd46, type: 2}
-  bullet_effect: {fileID: 11400000, guid: 8ebc6d38bc880e0438d76a176368121f, type: 2}
+  bullet_effect: {fileID: 11400000, guid: 8795597f9d0670643b099bcd64429f50, type: 2}
   _ammo_capacity: 40
   _reload_amount: 40
   _reload_time: 1
@@ -33,6 +33,7 @@ MonoBehaviour:
   _aim_move_speed: 0.7
   _max_zoom_range: 4
   _gunshot_sound: gunshot_quite
+  _next_shot_ready_sound: 
   _empty_gunshot_sound: 
   _reload_start_sound: 
   _reload_complete_sound: 

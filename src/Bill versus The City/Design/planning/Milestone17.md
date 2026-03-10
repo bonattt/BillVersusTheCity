@@ -52,3 +52,4 @@ UNPLANNED BUGFIXES
 [ ] BUG: ~~Switching weapons at the gun store for the first time enables combat~~, and allows you to shoot while not on the gun range. Going
     on the range then leaving will remove this, and switching weapons again will not reenable combat.
      - actually, combat just doesn't start disabled like it should. Once you interact with the disable/enable zone, it works as intended.
+[ ] Aiming magnum revolver gives you super-speed
