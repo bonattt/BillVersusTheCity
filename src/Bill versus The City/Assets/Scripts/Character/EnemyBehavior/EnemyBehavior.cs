@@ -7,7 +7,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 {
     public NavMeshAgentMovement controller;
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
-
+    [Tooltip("If true, this enemy will be locked to the default_behavior setting until they are killed.")]
+    public bool lock_default_behavior = false;
     [Tooltip("If true, the enemy will sprint when trying to get closer to the player, otherwise, they will shoot while closing distance.")]
     public bool sprint_to_chase = false;
     [Tooltip("if within this range, the enemy will switch to attack more aggressively.")]
@@ -42,7 +43,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     //////////////////////////////
     
     public CharCtrl ctrl_target;
-    public bool ctrl_will_shoot = true;  // set by behavior, determines if the character will shoot if able
+    public bool ctrl_always_shoot = false;  // set by behavior, determines if the character will shoot if able, even if the target isn't seen
+    public bool ctrl_will_shoot = true;  // set by behavior, determines if the character will shoot if able, and seeing the player
     public Vector3 ctrl_waypoint;  // arbitrary movement-target setable by behaviors
     public MovementTarget ctrl_move_mode = MovementTarget.stationary; // used by Behavior to instruct the controller how to move
     public AimingTarget ctrl_aim_mode = AimingTarget.target; // used by Behavior to instruct the controller how to aim
@@ -138,6 +140,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
             // {BehaviorMode.routed, new FleeToCoverBehavior(fights_when_cornered: false)},
             {BehaviorMode.routed, new FleeFromThreatsBehavior(fights_when_cornered: false)},
             {BehaviorMode.dead, new DeadBehavior()},
+            {BehaviorMode.guard, new GuardBehavior()},
+            {BehaviorMode.berserk, new StandAndShootBehavior()},
         };
         if (sprint_to_chase)
         {
@@ -248,7 +252,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     
     public bool AttackInput() {
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-        if (perception.seeing_target && ctrl_will_shoot && !controller.reloading) {
+        if (controller.reloading) { return false; } // can't shoot while reloading
+        if (ctrl_always_shoot) {return true; }
+        if (perception.seeing_target && ctrl_will_shoot) {
             if (perception.saw_target_last_frame) {
                 if (controller.use_full_auto) { return true; }
                 return Time.time >= (controller.last_attack_time + ctrl_shooting_rate);
@@ -326,15 +332,17 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     protected void SetBehaviorMode() {
-        if (lock_to_passive) {
+        if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) {
+            return; // routed enemies should run away forever. Dead enemies should stay dead. For temporary retreat, use BehaviorMode.retreating.
+        } else if (lock_to_passive) {
             behavior_mode = BehaviorMode.passive;
             return;
-        }
-
-        // routed is permanent, and the enemy will run away forever
-        else if (behavior_mode == BehaviorMode.routed || behavior_mode == BehaviorMode.dead) {
+        } else if (lock_default_behavior) {
+            behavior_mode = default_behavior;
             return;
-        } else if (threat_tracking.is_suppressed) {
+        }
+        ////////////////////////
+        if (threat_tracking.is_suppressed) {
             behavior_mode = BehaviorMode.suppressed;
             return;
         }
@@ -348,11 +356,13 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                 if (controller.seeing_target && dist < optimal_attack_range) {
                     behavior_mode = BehaviorMode.engaged;
                 } else {
+                    Debug.LogWarning("POOTIS 1"); // TODO --- remove debug
                     behavior_mode = BehaviorMode.persuing;
                 }
                 break;
 
             case PerceptionState.alert:
+                Debug.LogWarning("POOTIS 2"); // TODO --- remove debug
                 behavior_mode = BehaviorMode.persuing;
                 break;
 
@@ -404,6 +414,8 @@ public enum BehaviorMode {
     wondering,  // enemy is unaware of the player, and wonders idly 
     routed,  // enemy is paniced and will run away forever. (probably mostly for testing retreat behaviors and pathfinding)
     suppressed, // enemy will retreat to cover until recovering from suppressed
-    dead // enemy is dead
+    dead, // enemy is dead
+    guard, // manually set to stand and shoot on sight
+    berserk, // manually set to just stand and shoot, even if you don't see the target
 
 }

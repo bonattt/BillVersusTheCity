@@ -77,9 +77,9 @@ using UnityEngine.AI;
     //     return new Vector3(0f, 0f, 0f); // don't move
     // }
 
-    public override Vector3 GetShootVector() {
-        return ShootTarget() - attack_controller.shoot_from.position; //  DirectionFromLookTarget(ShootTarget());
-    }
+    // public override Vector3 GetShootVector() {
+    //     return ShootTarget() - attack_controller.shoot_from.position; //  DirectionFromLookTarget(ShootTarget());
+    // }
 
     private Vector3 ShootTarget() {
         return behavior.ctrl_target.GetAimTarget().position;

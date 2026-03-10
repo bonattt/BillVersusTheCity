@@ -14,7 +14,7 @@ PLANNED FEATURES
 [ ] Try to make Grocery Store level more fun
     [ ] FIX: enemies hanging back
     [ ] Add weapon veriety
-[ ] OUTLINE: Explore more levely type concepts
+[ ] OUTLINE: Explore more level type concepts
     - room clear (standard)
         - interupt drug deal
         - clear gang house
