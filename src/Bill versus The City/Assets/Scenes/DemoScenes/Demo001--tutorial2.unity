@@ -3813,12 +3813,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: level_weapons
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_starting_rifle
       value: 
-      objectReference: {fileID: 11400000, guid: a3ccd283039b36a43bb5016561c32786, type: 2}
+      objectReference: {fileID: 11400000, guid: e052952577085ff48b2a4e92aa7b7497, type: 2}
     - target: {fileID: 3996872148488299349, guid: 3fba37ec9eee7f242a3b380d2fea24c0, type: 3}
       propertyPath: init_starting_handgun
       value: 

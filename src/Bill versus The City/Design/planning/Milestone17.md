@@ -44,9 +44,13 @@ UNPLANNED BUGFIXES
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
     --> do this later, the interaction UI needs to be replaced anyways
 [ ] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
-[ ] BUG: if a grenade blows up in your hands, it does not use ammo.
-[ ] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
+[+] BUG: if a grenade blows up in your hands, it does not use ammo.
+[+] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
+[ ] BUG: if you grab a different weapon in the same slot while holding a grenade, the grenade cannot be thrown anymore.
+    - same thing occurs if you switch to a different weapon slot
+    - in both cases, if you switch back to the weapon, you can then throw the grenade.
 [ ] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
+    - NOTE: I saw several other methods of freezing the reload UI, but I didn't note the steps to reproduce.
 [ ] BUG: ending a level with a pickup item seems to cause it to show up selected already when you open the weapon select menu
     (needs more testing. When I implemented the PMR-30 and used it as a pickup, it caused the conventional handgun and the PMR-30 to both 
     appear selected when I opened the gunstore scene.)

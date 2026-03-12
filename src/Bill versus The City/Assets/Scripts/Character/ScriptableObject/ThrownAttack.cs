@@ -133,11 +133,17 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         rb.AddForce(throw_velocity, ForceMode.VelocityChange);
         last_projectile = grenade;
         grenade = null;
+        
+        // DecrimentAmmo();
+        return true;
+    }
+
+    private void DecrimentAmmo() {
         if (!GameSettings.inst.debug_settings.GetBool("no_reload")) {
             // if reload is disabled, guns don't decriment ammo, they just shoot forever
             current_ammo -= 1;
         }
-        return true;
+        
     }
 
     public virtual Vector3 GetThrowTarget(Vector3 attack_direction, Vector3 attack_start_point) {
@@ -211,6 +217,10 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     // }
 
     private GameObject SpawnNewGrenade(Vector3 attack_start_point, IAttackTarget attacker) {
+        if (grenade != null) {
+            Debug.LogError("Tried to spawn a grenade while already holding one!");
+            return grenade;
+        }
         grenade = Instantiate(grenade_prefab);
         grenade.transform.position = attack_start_point;
         // grenade.transform.rotation = attacker.GetHitTarget().transform.rotation;
@@ -222,7 +232,7 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         }
         GrenadeFuseUI fuse_ui = grenade.GetComponentInChildren<GrenadeFuseUI>();
         fuse_ui.SetVisibility(GrenadeFuseUI.ShowFuseUIWhenHeld());
-
+        DecrimentAmmo();
         return grenade;
     }
 
