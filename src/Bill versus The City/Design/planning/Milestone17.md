@@ -40,10 +40,10 @@ UNPLANNED BUGFIXES
 [ ] BUG: `ArgumentException: This VisualElement is not my child` when removing a Dialogue Portrait
 [ ] I was able to die, then X out of the death dialogue somehow to move around the level as a dead guy (on the grenades tutorial)
     Steps to reproduce:
-     - carryover from a previous sprint; I couldn't figure out how to reproduce this (still can't)
+     - carryover from a previous sprint; I couldn't figure out how to reproduce this (still can't (still still can't))
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
     --> do this later, the interaction UI needs to be replaced anyways
-[ ] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
+[+] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
 [+] BUG: if a grenade blows up in your hands, it does not use ammo.
 [+] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
 [ ] BUG: if you grab a different weapon in the same slot while holding a grenade, the grenade cannot be thrown anymore.
@@ -51,9 +51,10 @@ UNPLANNED BUGFIXES
     - in both cases, if you switch back to the weapon, you can then throw the grenade.
 [ ] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
     - NOTE: I saw several other methods of freezing the reload UI, but I didn't note the steps to reproduce.
-[ ] BUG: ending a level with a pickup item seems to cause it to show up selected already when you open the weapon select menu
+[+] BUG: ending a level with a pickup item seems to cause it to show up selected already when you open the weapon select menu
     (needs more testing. When I implemented the PMR-30 and used it as a pickup, it caused the conventional handgun and the PMR-30 to both 
     appear selected when I opened the gunstore scene.)
+    - I was wrong about the cause of this, the Glock and PMR30 guns had a duplicate item_id, so they both got selected.
 [ ] BUG: ~~Switching weapons at the gun store for the first time enables combat~~, and allows you to shoot while not on the gun range. Going
     on the range then leaving will remove this, and switching weapons again will not reenable combat.
      - actually, combat just doesn't start disabled like it should. Once you interact with the disable/enable zone, it works as intended.

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: gun_handgun_pmr30
   m_EditorClassIdentifier: 
   _name: Handgun (PPR 31)
-  _item_id: handgun_standard
+  _item_id: handgun_ppr31
   _item_icon: {fileID: 21300000, guid: 1419e43d1f456314aa821b180bec4a72, type: 3}
   _weapon_slot: 0
   _weapon_class: 0
