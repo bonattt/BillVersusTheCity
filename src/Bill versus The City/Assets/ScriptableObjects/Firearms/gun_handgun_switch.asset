@@ -18,15 +18,15 @@ MonoBehaviour:
   _weapon_slot: 0
   _weapon_class: 0
   _weapon_settings:
-  - {fileID: 11400000, guid: b9fae827013d9b24fbf49498384d5e30, type: 2}
-  bullet_effect: {fileID: 11400000, guid: 8795597f9d0670643b099bcd64429f50, type: 2}
-  _ammo_capacity: 20
-  _reload_amount: 20
+  - {fileID: 11400000, guid: 53e3752f8a2e7b341abbafab93b3ae04, type: 2}
+  bullet_effect: {fileID: 11400000, guid: a4f75018fc61c1046aca1a9e522e7309, type: 2}
+  _ammo_capacity: 17
+  _reload_amount: 17
   _reload_time: 1
   _time_to_aim: 0.75
-  _recoil_inaccuracy: 10
-  _recoil_max: 15
-  _recoil_recovery: 30
+  _recoil_inaccuracy: 2000
+  _recoil_max: 3000
+  _recoil_recovery: 0.15
   _recoil_shake: 0.1
   _aim_zoom: 0.75
   _aim_move_speed: 0.8
