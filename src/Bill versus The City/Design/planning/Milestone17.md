@@ -57,4 +57,10 @@ UNPLANNED BUGFIXES
 [ ] BUG: ~~Switching weapons at the gun store for the first time enables combat~~, and allows you to shoot while not on the gun range. Going
     on the range then leaving will remove this, and switching weapons again will not reenable combat.
      - actually, combat just doesn't start disabled like it should. Once you interact with the disable/enable zone, it works as intended.
-[ ] Aiming magnum revolver gives you super-speed
+[+] Aiming magnum revolver gives you super-speed
+[ ] BUG: cover doesn't work
+    - I think this was caused by the changes I made to make it possible for StandAndShootBehavior to shoot at something OTHER than the player. 
+    - Enemies are shooting on a flat trajectory, even when the player crouches.
+    - I am going to solve this by making cover detect when the player is nearby and crouching, and invisibly grow larger for the player. I 
+      kinda hate this, but I think it will work.
+
