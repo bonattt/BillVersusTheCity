@@ -22,7 +22,7 @@ PLANNED FEATURES
         - survive gang attack
         - survive swat attack
     - flight/escape
-[ ] play with particle effects
+[+] play with particle effects
 
 PLANNED BUGFIXES
 
@@ -33,7 +33,8 @@ LOW PRIORITY TASKS
     - to do this, I need to move the tracking of Damage-over-time onto the target, not the AOE. However, I already spent too much time on this feature that may not stick around.
 
 UNPLANNED BUGFIXES
-[ ] BUG: Countdown UI doesn't work on wave survival level (countdown still triggers the mission victory conditions)
+[X] BUG: Countdown UI doesn't work on wave survival level (countdown still triggers the mission victory conditions)
+    --> cannot reproduce
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer
     - I think this is caused by spawned enemies not having a reference to the player, but I haven't investigated
 [ ] BUG: `ArgumentException: This VisualElement is not my child` when removing a Dialogue Portrait
