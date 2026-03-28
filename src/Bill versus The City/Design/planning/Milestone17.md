@@ -60,9 +60,13 @@ UNPLANNED BUGFIXES
      - actually, combat just doesn't start disabled like it should. Once you interact with the disable/enable zone, it works as intended.
      This was all WAY simpler than I thought; the level config had "combat enabled" set to true 🤦‍♂️
 [+] Aiming magnum revolver gives you super-speed
-[ ] BUG: cover doesn't work
+[+] BUG: cover doesn't work
     - I think this was caused by the changes I made to make it possible for StandAndShootBehavior to shoot at something OTHER than the player. 
     - Enemies are shooting on a flat trajectory, even when the player crouches.
     - I am going to solve this by making cover detect when the player is nearby and crouching, and invisibly grow larger for the player. I 
       kinda hate this, but I think it will work.
-
+[ ] BUG: null pointer in ReloadSounds line 60 in cancel reload sound
+[ ] BUG: level music volume (at least on the "test" level) scales only with "master" volume, but not with "music" volume
+    - there was some additional weirdness where, the volume was not applied initially until I went into settings and hit "apply settings"
+    - the above also effects sound effects for some reason. my best guess rn is that the volume from settings isn't applied to the AudioMixer on start up, and is only applied when I update in the settings menu. (also, music is playing on master instead of music, which is a seperate bug)
+[ ] BUG: Aiming while crouched increases movement speed
