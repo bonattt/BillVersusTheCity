@@ -66,6 +66,7 @@ UNPLANNED BUGFIXES
     - I am going to solve this by making cover detect when the player is nearby and crouching, and invisibly grow larger for the player. I 
       kinda hate this, but I think it will work.
 [ ] BUG: null pointer in ReloadSounds line 60 in cancel reload sound
+    --> i suspect this is responsible for the busted reload UI when you cancel a reload
 [ ] BUG: level music volume (at least on the "test" level) scales only with "master" volume, but not with "music" volume
     - there was some additional weirdness where, the volume was not applied initially until I went into settings and hit "apply settings"
     - the above also effects sound effects for some reason. my best guess rn is that the volume from settings isn't applied to the AudioMixer on start up, and is only applied when I update in the settings menu. (also, music is playing on master instead of music, which is a seperate bug)
