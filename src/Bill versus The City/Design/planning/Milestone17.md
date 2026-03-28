@@ -55,9 +55,10 @@ UNPLANNED BUGFIXES
     (needs more testing. When I implemented the PMR-30 and used it as a pickup, it caused the conventional handgun and the PMR-30 to both 
     appear selected when I opened the gunstore scene.)
     - I was wrong about the cause of this, the Glock and PMR30 guns had a duplicate item_id, so they both got selected.
-[ ] BUG: ~~Switching weapons at the gun store for the first time enables combat~~, and allows you to shoot while not on the gun range. Going
+[+] BUG: ~~Switching weapons at the gun store for the first time enables combat~~, and allows you to shoot while not on the gun range. Going
     on the range then leaving will remove this, and switching weapons again will not reenable combat.
      - actually, combat just doesn't start disabled like it should. Once you interact with the disable/enable zone, it works as intended.
+     This was all WAY simpler than I thought; the level config had "combat enabled" set to true 🤦‍♂️
 [+] Aiming magnum revolver gives you super-speed
 [ ] BUG: cover doesn't work
     - I think this was caused by the changes I made to make it possible for StandAndShootBehavior to shoot at something OTHER than the player. 
