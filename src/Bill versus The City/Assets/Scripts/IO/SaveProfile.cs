@@ -1,5 +1,6 @@
 
 
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -13,13 +14,20 @@ public class SaveProfile {
         private set
         {
             _save_file = value;
+            Action LoadAction;
             if (_save_file == null)
             {
-                GameSettings.inst.RestoreToDefaults();
+                LoadAction = GameSettings.inst.RestoreToDefaults;
             }
             else
             {
-                LoadSettingsData();
+                LoadAction = LoadSettingsData;
+            }
+
+            if (ManagersManager.inst.statics_loaded) {
+                LoadAction();
+            } else {
+                ManagersManager.inst.AddPostLoadAction(LoadAction);
             }
         }
     }

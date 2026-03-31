@@ -10,8 +10,8 @@ public class LoadStaticsIfNotLoaded : MonoBehaviour
     void Awake() {
         if (ManagersManager.inst == null)
         {
-            LoadSaveFile();
             Instantiate(managers_prefab);
+            LoadSaveFile();
         }
         Destroy(gameObject);
     }

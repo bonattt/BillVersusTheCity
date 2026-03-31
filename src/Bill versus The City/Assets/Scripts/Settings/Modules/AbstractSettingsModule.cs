@@ -109,17 +109,17 @@ public abstract class AbstractSettingsModule : ISettingsModule {
         foreach (string key in float_field_names) {
             float? float_value = module_save_data.GetFloat(key);
             if (float_value == null) { continue; }
-            float_fields[key] = float_value.Value;
+            SetFloat(key, float_value.Value);
         }
         foreach (string key in int_field_names) {
             int? int_value = module_save_data.GetInt(key);
             if (int_value == null) { continue; }
-            int_fields[key] = int_value.Value;
+            SetInt(key, int_value.Value);
         }
         foreach (string key in bool_field_names) {
             bool? bool_value = module_save_data.GetBool(key);
             if (bool_value == null) { continue; }
-            bool_fields[key] = bool_value.Value;
+            SetBool(key, bool_value.Value);
         }
         // NOTE: other_field_names needs custom handling by subclasses, overrwrite this method
         if (update_subscribers) {
@@ -182,7 +182,7 @@ public abstract class AbstractSettingsModule : ISettingsModule {
         AllFieldsUpdated();
     }
 
-    public void UpdateSubscribers(string field) {
+    public virtual void UpdateSubscribers(string field) {
         foreach (ISettingsObserver sub in subscribers) {
             sub.SettingsUpdated(this, field);
         }

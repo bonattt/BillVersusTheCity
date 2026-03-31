@@ -6,9 +6,6 @@ using UnityEngine.UIElements;
 
 public class AudioSettingsDebugger : MonoBehaviour {
 
-    public bool write = false;
-    public bool read = false;
-
     public float master_volume = 1f;
     public float menu_volume = 1f;
     public float music_volume = 1f;
@@ -16,18 +13,10 @@ public class AudioSettingsDebugger : MonoBehaviour {
     
     void Update() {
         AudioSettings settings = GameSettings.inst.audio_settings;
-        if (write) {
-            write = false;
-            settings.master_volume = this.master_volume;
-            settings.SetVolumeSetting(SoundCategory.menu, this.menu_volume);
-            settings.SetVolumeSetting(SoundCategory.music, this.music_volume);
-            settings.SetVolumeSetting(SoundCategory.sound_effect, this.sfx_volume);
-        } else if (read) {
-            master_volume = settings.master_volume;
-            menu_volume = settings.GetVolumeSetting(SoundCategory.menu);
-            music_volume = settings.GetVolumeSetting(SoundCategory.music);
-            sfx_volume = settings.GetVolumeSetting(SoundCategory.sound_effect);
-        }
+        master_volume = settings.master_volume;
+        menu_volume = settings.GetVolumeSetting(SoundCategory.menu);
+        music_volume = settings.GetVolumeSetting(SoundCategory.music);
+        sfx_volume = settings.GetVolumeSetting(SoundCategory.sound_effect);
             
     }
 }

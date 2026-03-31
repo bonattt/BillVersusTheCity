@@ -16,8 +16,10 @@ public class AudioSettings : AbstractSettingsModule {
 
     public override void SetFloat(string field, float value) {
         base.SetFloat(field, value);
-        SoundCategory category = CategoryFromString(field);
-        AudioMixerManager.inst.SetMixerVolume(category, value);
+        if (AudioMixerManager.inst != null) {
+            SoundCategory category = CategoryFromString(field);
+            AudioMixerManager.inst.SetMixerVolume(category, value);
+        }
     }
 
     public float GetVolume(SoundCategory category) {

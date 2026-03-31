@@ -48,6 +48,9 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             Debug.LogWarning("empty music argument");
             return;
         }
+        if (sound.default_category != SoundCategory.music) {
+            Debug.LogWarning("Playing music with non-music sound category!");
+        }
         _PlayMusic(sound, target);
     }
 

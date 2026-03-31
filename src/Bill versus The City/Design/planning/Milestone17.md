@@ -71,3 +71,9 @@ UNPLANNED BUGFIXES
     - there was some additional weirdness where, the volume was not applied initially until I went into settings and hit "apply settings"
     - the above also effects sound effects for some reason. my best guess rn is that the volume from settings isn't applied to the AudioMixer on start up, and is only applied when I update in the settings menu. (also, music is playing on master instead of music, which is a seperate bug)
 [ ] BUG: Aiming while crouched increases movement speed
+[ ] BUG: New cover-system blocks throwing grenades while crouched.
+    - this should be a fairly easy fix using physics layers.
+
+[ ] FIX: given the changes to cover, I have some ideas to fix diving;
+    [ ] DON'T lockt the player into a crouch after a dive, and make the player stand up much faster to peak cover.
+    [ ] Lock the player out of diving repeatedly
