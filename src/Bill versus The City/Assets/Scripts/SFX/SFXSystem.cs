@@ -64,6 +64,8 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             start_pos = new Vector3(0, 0, 0);
         }
         music_player = CreatePlayer(sound.clip, start_pos, GetVolume(sound));
+        AudioMixerGroup mixer = sound.GetMixerGroup(SoundCategory.music);
+        music_player.outputAudioMixerGroup = mixer;
         music_player.Play();
         music_player.loop = true;
         current_music = sound;
