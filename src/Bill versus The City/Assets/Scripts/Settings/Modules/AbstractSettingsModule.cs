@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class AbstractSettingsModule : ISettingsModule {
     // implements ISettingsModule for settings modules    
-    
     public virtual List<string> float_field_names { get => new List<string>(); }
     public virtual List<string> int_field_names { get => new List<string>(); }
     public virtual List<string> bool_field_names { get => new List<string>(); }
@@ -126,27 +125,6 @@ public abstract class AbstractSettingsModule : ISettingsModule {
             AllFieldsUpdated();
         }
     }
-
-    // public float GetFloat(string field) {
-    //     return float_fields[field];
-    // }
-    // public int GetInt(string field) {
-    //     return int_fields[field];
-    // }
-    // public bool GetBool(string field) {
-    //     return bool_fields[field];
-    // }
-
-    // public void SetFloat(string field, float value) {
-    //     float_fields[field] = value;
-    // }
-    // public void SetInt(string field, int value) {
-    //     int_fields[field] = value;
-    // }
-    // public void SetBool(string field, bool value) {
-    //     bool_fields[field] = value;
-    // }
-
 
     protected virtual float GetDefaultFloat(string field_name) => 1f;
     protected virtual int GetDefaultInt(string field_name) => 0;
