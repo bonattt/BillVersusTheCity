@@ -19,27 +19,13 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
         AudioSettings.CategoryToString(SoundCategory.music),
         AudioSettings.CategoryToString(SoundCategory.menu),
     };
-    // public AudioSettingsMenuCtrl() {
-    //     // do nothing
-    // }
-    // public void RestoreToDefaultsClicked() {
-    //     Debug.LogError("AudioSettingsMenuCtrl should extend AbstractSettingsMenuCtrl, instead of implementing from scratch!"); // TODO --- remove debug
-    // }
 
     // return the SettingsModule this controller targets
     public override ISettingsModule settings_module { get { return GameSettings.inst.audio_settings; } }
     
     // takes the root element of the sub-menu, and configures the menu's controller
     public override void Initialize(VisualElement root) {
-        // this.root = root;
-        // settings_pannel = root.Q<VisualElement>("List");
-        // buttons_pannel = root.Q<VisualElement>("Controlls");
-        // header_label = root.Q<Label>("HeaderText");
-        // header_label.text = "Audio Settings";
-
-        // settings_pannel.Clear();
         LoadSettingsUXML(root);
-        // (master_volume, master_volume_label) = AddVolumeSlider("Master Volume");
         for (int i = 0; i < sound_category_ordering.Length; i++) {
             string category = sound_category_ordering[i];
             (Slider new_slider, Label slider_label) = AddVolumeSlider(DisplayValue(category));
@@ -55,13 +41,12 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
         CustomSettingsSlider slider_element = SettingsMenuUtil.CreatePercentSlider(slider_label);
         settings_pannel.Add(slider_element);
         slider_element.UpdateValueLabel();
-        return SettingsMenuUtil.UnpackSlider(slider_element);  // (slider_element.Q<Slider>(), slider_element.Q<Label>(SettingsMenuUtil.SLIDER_VALUE_LABEL));
+        return SettingsMenuUtil.UnpackSlider(slider_element); 
     }
 
     public override void SaveSettings() {
         // Saves the menu's changes to settings    
         AudioSettings settings = GameSettings.inst.audio_settings;
-        // settings.master_volume = master_volume.value;
         foreach (string category in sound_category_ordering) {
             settings.SetVolumeSetting(category, volume_sliders[category].value);
         }
@@ -70,7 +55,6 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
     public override void LoadSettings() {
         // sets the UI's elements to match what is stored in settings (reverting any changes)
         AudioSettings settings = GameSettings.inst.audio_settings;
-        // master_volume.value = settings.master_volume;
         foreach (string category in sound_category_ordering) {
             volume_sliders[category].value = settings.GetVolumeSetting(category);
         }
@@ -93,14 +77,6 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
         return false;
     }
 
-    // public override void UpdateUI() {
-    //     // // updates the UI
-    //     // SettingsMenuUtil.UpdateSliderValueDisplay(master_volume, master_volume_label);
-    //     // foreach (SoundCategory key in volume_sliders.Keys) {
-    //     //     SettingsMenuUtil.UpdateSliderValueDisplay(volume_sliders[key], volume_slider_labels[key]);
-    //     // }
-    // }
-
     public static string DisplayValue(string category) {
         return DisplayValue(AudioSettings.CategoryFromString(category));
     }
@@ -120,9 +96,4 @@ public class AudioSettingsMenuCtrl : AbstractSettingsModuleMenu {
                 return $"{category}";
         }
     }
-
-    // public override void CleanUp() {
-    //     // disposes of any resources that need to be cleaned when the sub-menu is closed
-    //     // nothing to do here
-    // }
 }

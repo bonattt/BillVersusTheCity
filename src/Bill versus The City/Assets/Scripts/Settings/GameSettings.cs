@@ -86,11 +86,7 @@ public class GameSettings {
         }
     }
     
-    private GameSettings() {
-        // if (inst != null) { Debug.LogWarning("overwriting existing settings!"); }
-        // inst = this;
-    }
-
+    private GameSettings() { /* do nothing */ }
 
     private void ReplaceModule(ISettingsModule old_module, ISettingsModule new_module) {
         // add `old_module`s subscribers to `new_module` so the old module can be replaced seemlessly
@@ -126,14 +122,11 @@ public class GameSettings {
     }
 
     public void LoadFromJson(DuckDict data) {
-        // Debug.LogWarning($"GameSettings.LoadFromJson, data: {data.Jsonify()}"); // TODO --- remove debug
-        // Debug.LogWarning($"GameSettings.LoadFromJson, data: {data.GetObject("general")}"); // TODO --- remove debug
         general_settings.LoadFromJson(data.GetObject("general"));
         difficulty_settings.LoadFromJson(data.GetObject("difficulty"));
         game_play_settings.LoadFromJson(data.GetObject("gameplay"));
         graphics_settings.LoadFromJson(data.GetObject("graphics"));
         audio_settings.LoadFromJson(data.GetObject("audio"));
         debug_settings.LoadFromJson(data.GetObject("debug"));
-        // videos_settings.LoadFromJson(data); // TODO --- implement graphics settings
     }
 }

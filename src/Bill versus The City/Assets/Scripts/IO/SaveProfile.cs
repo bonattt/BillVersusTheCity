@@ -156,18 +156,4 @@ public class SaveProfile {
     public static void DeleteProfile(int profile_number) {
         SaveFile.DeleteSave(GetSaveFileName(profile_number));
     }
-
-    // public static void Initialize() {
-        
-    //     SaveFile.SetupDirectory();
-    //     // sets and mutates settings singleton
-    //     try {
-    //         SaveFile current_save = SaveFile.Load(SaveProfile.GetSaveName(1));
-    //     } catch (FileNotFoundException) {
-    //         Debug.LogWarning($"no save at {SaveProfile.GetSaveName(1)}, creating a new save");
-    //         // DirectoryNotFoundException: Could not find a part of the path "C:\MY-documents\git-repos\BillVersusTheCity\src\Bill versus The City\Build\Bill versus The City_Data\.save_files\save_1".
-    //         SaveProfile.GetSaveName(1) = SaveFile.NewSave(SaveProfile.GetSaveName(1));
-    //     }
-
-    // }
 }

@@ -135,11 +135,6 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         
     }
 
-    // public void PlayRandomClip(AudioClip[] audio_clips, Vector3 target, float volume) {
-    //     int rand = Random.Range(0, audio_clips.Length);
-    //     PlaySound(audio_clips[rand], SoundCategory.sound_effect, target, volume);
-    // }
-
     public void PlayRandomClip(ISFXSounds sound_set, Vector3 target) {
         PlaySound(sound_set.GetRandomSound(), target);
     }
