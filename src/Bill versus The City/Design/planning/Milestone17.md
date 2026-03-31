@@ -67,9 +67,10 @@ UNPLANNED BUGFIXES
       kinda hate this, but I think it will work.
 [ ] BUG: null pointer in ReloadSounds line 60 in cancel reload sound
     --> i suspect this is responsible for the busted reload UI when you cancel a reload
-[ ] BUG: level music volume (at least on the "test" level) scales only with "master" volume, but not with "music" volume
+[+] BUG: level music volume (at least on the "test" level) scales only with "master" volume, but not with "music" volume
     - there was some additional weirdness where, the volume was not applied initially until I went into settings and hit "apply settings"
     - the above also effects sound effects for some reason. my best guess rn is that the volume from settings isn't applied to the AudioMixer on start up, and is only applied when I update in the settings menu. (also, music is playing on master instead of music, which is a seperate bug)
+    --> after switching to audioMixers, I needed to explicitly apply volume settings to the AudioMixer on start up (previously, I polled volume level when a sound was played). The "PlayMusic" method circumvented the code that was setting the audioMixerGroup on sounds, so I needed to implement that. This was actually two unrelated bugs caused by the same change.
 [ ] BUG: Aiming while crouched increases movement speed
 [ ] BUG: New cover-system blocks throwing grenades while crouched.
     - this should be a fairly easy fix using physics layers.
