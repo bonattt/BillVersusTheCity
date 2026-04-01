@@ -65,7 +65,7 @@ public class PlayerCharacter : ISaveProgress {
         }
     }
 
-    private PlayerCombat combat = null;
+    public PlayerCombat combat { get; private set; }
     private PlayerInventory _inventory; // = new PlayerInventory();
     public PlayerInventory inventory { get { return _inventory; }}
 

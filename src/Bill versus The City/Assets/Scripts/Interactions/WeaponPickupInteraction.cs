@@ -92,6 +92,7 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
                 dropped_weapon = null;
             }
             PlayerCharacter.inst.inventory.pickup = pickup_weapon;
+            PlayerCharacter.inst.combat.movement.CancelReload();
             pickup_weapon = dropped_weapon;
         }
         MenuManager.PlayMenuSound("menu_click");

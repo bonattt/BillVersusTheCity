@@ -63,7 +63,7 @@ UNPLANNED BUGFIXES
     - Enemies are shooting on a flat trajectory, even when the player crouches.
     - I am going to solve this by making cover detect when the player is nearby and crouching, and invisibly grow larger for the player. I 
       kinda hate this, but I think it will work.
-[~] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
+[+] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
     - NOTE: I saw several other methods of freezing the reload UI, but I didn't note the steps to reproduce.
     - I fixed the null-pointer below, which fixed this, but now instead, reload will carry over onto whatever weapon you picked up
 [+] BUG: null pointer in ReloadSounds line 60 in cancel reload sound
