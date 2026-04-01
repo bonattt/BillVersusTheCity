@@ -93,6 +93,8 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             return null;
         }
         AudioSource audio_source =  PlaySound(sound.GetRandomSound(), target, loop:loop);
+        if (audio_source == null) { return audio_source; }
+        
         SoundInstanceData instance_data = audio_source.gameObject.GetComponent<SoundInstanceData>();
         instance_data.sound_set = sound;
         return audio_source;

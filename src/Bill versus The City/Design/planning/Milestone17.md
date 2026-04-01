@@ -49,8 +49,6 @@ UNPLANNED BUGFIXES
 [ ] BUG: if you grab a different weapon in the same slot while holding a grenade, the grenade cannot be thrown anymore.
     - same thing occurs if you switch to a different weapon slot
     - in both cases, if you switch back to the weapon, you can then throw the grenade.
-[ ] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
-    - NOTE: I saw several other methods of freezing the reload UI, but I didn't note the steps to reproduce.
 [+] BUG: ending a level with a pickup item seems to cause it to show up selected already when you open the weapon select menu
     (needs more testing. When I implemented the PMR-30 and used it as a pickup, it caused the conventional handgun and the PMR-30 to both 
     appear selected when I opened the gunstore scene.)
@@ -65,7 +63,10 @@ UNPLANNED BUGFIXES
     - Enemies are shooting on a flat trajectory, even when the player crouches.
     - I am going to solve this by making cover detect when the player is nearby and crouching, and invisibly grow larger for the player. I 
       kinda hate this, but I think it will work.
-[ ] BUG: null pointer in ReloadSounds line 60 in cancel reload sound
+[~] BUG: picking up a weapon while reloading breaks the reload UI (a frozen reload UI displays until a new reload is started)
+    - NOTE: I saw several other methods of freezing the reload UI, but I didn't note the steps to reproduce.
+    - I fixed the null-pointer below, which fixed this, but now instead, reload will carry over onto whatever weapon you picked up
+[+] BUG: null pointer in ReloadSounds line 60 in cancel reload sound
     --> i suspect this is responsible for the busted reload UI when you cancel a reload
 [+] BUG: level music volume (at least on the "test" level) scales only with "master" volume, but not with "music" volume
     - there was some additional weirdness where, the volume was not applied initially until I went into settings and hit "apply settings"
