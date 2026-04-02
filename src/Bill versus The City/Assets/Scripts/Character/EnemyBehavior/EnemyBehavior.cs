@@ -53,6 +53,9 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public bool ctrl_cancel_reload = false; // used by Behavior to instruct the controller to sprint
     public float ctrl_shooting_rate = 0.75f;
 
+    [Tooltip("If true, bullets should have their shooting vector flattened on the Y-axis.")]
+    public bool ctrl_shoot_flat = true;
+
     //////////////////////////////
     
 
@@ -302,6 +305,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         ctrl_start_reload = false;
         ctrl_cancel_reload = false;
         ctrl_sprint = false;
+        ctrl_shoot_flat = false;
     }
 
     public float DistanceToTarget() {

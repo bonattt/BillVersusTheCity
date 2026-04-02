@@ -1719,10 +1719,6 @@ PrefabInstance:
       propertyPath: default_behavior
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 7494676117244481231, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.35
-      objectReference: {fileID: 0}
     - target: {fileID: 7636100687923735762, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
       propertyPath: m_Name
       value: EnemySMG
@@ -2623,10 +2619,6 @@ PrefabInstance:
     - target: {fileID: 6370269484560877643, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
       propertyPath: throw_on_next_sighting
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7494676117244481231, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 7636100687923735762, guid: 8143b1e9856082744bd9e304531d8b40, type: 3}
       propertyPath: m_Name
