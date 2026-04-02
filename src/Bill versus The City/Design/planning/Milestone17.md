@@ -46,9 +46,6 @@ UNPLANNED BUGFIXES
 [+] a bunch of empty game objects are spawned named: "Global Managers > GameSoundGizmos > New Game Object" 
 [+] BUG: if a grenade blows up in your hands, it does not use ammo.
 [+] BUG: if you pause while holding a grenade, you cannot drop/throw that grenade 
-[ ] BUG: if you grab a different weapon in the same slot while holding a grenade, the grenade cannot be thrown anymore.
-    - same thing occurs if you switch to a different weapon slot
-    - in both cases, if you switch back to the weapon, you can then throw the grenade.
 [+] BUG: ending a level with a pickup item seems to cause it to show up selected already when you open the weapon select menu
     (needs more testing. When I implemented the PMR-30 and used it as a pickup, it caused the conventional handgun and the PMR-30 to both 
     appear selected when I opened the gunstore scene.)
@@ -72,10 +69,17 @@ UNPLANNED BUGFIXES
     - there was some additional weirdness where, the volume was not applied initially until I went into settings and hit "apply settings"
     - the above also effects sound effects for some reason. my best guess rn is that the volume from settings isn't applied to the AudioMixer on start up, and is only applied when I update in the settings menu. (also, music is playing on master instead of music, which is a seperate bug)
     --> after switching to audioMixers, I needed to explicitly apply volume settings to the AudioMixer on start up (previously, I polled volume level when a sound was played). The "PlayMusic" method circumvented the code that was setting the audioMixerGroup on sounds, so I needed to implement that. This was actually two unrelated bugs caused by the same change.
-[ ] BUG: Aiming while crouched increases movement speed
-[ ] BUG: New cover-system blocks throwing grenades while crouched.
+[+] BUG: New cover-system blocks throwing grenades while crouched.
     - this should be a fairly easy fix using physics layers.
 
+[ ] BUG: Aiming while crouched increases movement speed
 [ ] FIX: given the changes to cover, I have some ideas to fix diving;
     [ ] DON'T lockt the player into a crouch after a dive, and make the player stand up much faster to peak cover.
     [ ] Lock the player out of diving repeatedly
+- BUG: last grenade cannot be thrown (Out of ammo error)
+    - note, add an out of ammo click to throwing grenade without ammo
+- BUG: if you grab a different weapon in the same slot while holding a grenade, the grenade cannot be thrown anymore.
+    - same thing occurs if you switch to a different weapon slot
+    - in both cases, if you switch back to the weapon, you can then throw the grenade.
+[ ] REFACTOR: make a script for "HeldGrenade" which will persist, even if the current weapon is switched, and move
+     controls for actually throwing the grenade into this class, instead of the current ThrownAttack class

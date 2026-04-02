@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 1198894952505448468}
   - component: {fileID: 539884710880522559}
   - component: {fileID: 3584633710207884101}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: InvisibleCover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
