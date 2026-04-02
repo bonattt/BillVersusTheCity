@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 3733396367829252955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0.65}
+  m_LocalPosition: {x: 0, y: 1.35, z: 0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -356,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 437746924962861259}
   default_behavior: 5
+  lock_default_behavior: 0
   sprint_to_chase: 0
   optimal_attack_range: 10
   use_initial_movement_target: 0
@@ -365,6 +366,7 @@ MonoBehaviour:
   lock_to_passive: 0
   _shooting_rate: 1
   ctrl_target: {fileID: 0}
+  ctrl_always_shoot: 0
   ctrl_will_shoot: 1
   ctrl_waypoint: {x: 0, y: 0, z: 0}
   ctrl_move_mode: 0

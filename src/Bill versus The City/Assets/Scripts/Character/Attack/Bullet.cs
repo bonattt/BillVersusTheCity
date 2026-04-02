@@ -75,6 +75,7 @@ public class Bullet : MonoBehaviour, IBullet
     }
 
     public void ResolveCollision(GameObject hit, Vector3 hit_location) {
+        Debug.LogWarning($"{gameObject.name} hit {hit.name}"); // TODO --- remove debug
         IAttackTarget target = hit.GetComponent<IAttackTarget>();
         if (target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
