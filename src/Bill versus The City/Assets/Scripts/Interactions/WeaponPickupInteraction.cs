@@ -63,6 +63,12 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
     }
 
     public void Interact(GameObject actor) {
+        if (InputSystem.inst.AttackClickInput() || InputSystem.inst.AttackHoldInput() || InputSystem.inst.AttackReleasedInput()) {
+            // don't pick up new weapons while in the middle of attacking 
+            Debug.Log("cannot pickup weapon while attack inputs pressed!");
+            return;
+        }
+
         if (pickup_weapon == null) {
             Debug.LogError("either `unity_weapon` or `pickup_weapon` must be set!");
             return;
