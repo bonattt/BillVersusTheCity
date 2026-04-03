@@ -96,10 +96,6 @@ public class ThrownAttack : ScriptableObject, IFirearm {
     }
 
     public bool AttackReleased(Vector3 attack_direction, Vector3 attack_start_point, float inaccuracy, IAttackTarget attacker) {
-        if (current_ammo < 1) {
-            Debug.LogError("grenade attack without ammo!");
-            return false;
-        }
         return ThrowGrenade(attack_direction, attack_start_point);
     }
 
@@ -220,6 +216,10 @@ public class ThrownAttack : ScriptableObject, IFirearm {
         if (grenade != null) {
             Debug.LogError("Tried to spawn a grenade while already holding one!");
             return grenade;
+        }
+        if (current_ammo < 1) {
+            Debug.LogError("grenade attack without ammo!");
+            return null;
         }
         grenade = Instantiate(grenade_prefab);
         grenade.transform.position = attack_start_point;
