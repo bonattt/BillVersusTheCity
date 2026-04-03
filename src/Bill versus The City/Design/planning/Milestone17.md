@@ -71,9 +71,9 @@ UNPLANNED BUGFIXES
     --> after switching to audioMixers, I needed to explicitly apply volume settings to the AudioMixer on start up (previously, I polled volume level when a sound was played). The "PlayMusic" method circumvented the code that was setting the audioMixerGroup on sounds, so I needed to implement that. This was actually two unrelated bugs caused by the same change.
 [+] BUG: New cover-system blocks throwing grenades while crouched.
     - this should be a fairly easy fix using physics layers.
-[ ] FIX: Actually, I still hate the invisibleCover system. idk why i didn't just change the collider height while crouched.
-    [ ] Implement this feature
-    [ ] Add distinction in attack code for whether to shoot flat in a direction, or actually shoot directly at the target.
+[+] FIX: Actually, I still hate the invisibleCover system. idk why i didn't just change the collider height while crouched.
+    [+] Implement this feature
+    [+] Add distinction in attack code for whether to shoot flat in a direction, or actually shoot directly at the target.
 
 [ ] BUG: Aiming while crouched increases movement speed
 [ ] FIX: given the changes to cover, I have some ideas to fix diving;
