@@ -65,7 +65,7 @@ public class WeaponPickupInteraction : MonoBehaviour, IInteractionEffect {
     public void Interact(GameObject actor) {
         if (InputSystem.inst.AttackClickInput() || InputSystem.inst.AttackHoldInput() || InputSystem.inst.AttackReleasedInput()) {
             // don't pick up new weapons while in the middle of attacking 
-            Debug.Log("cannot pickup weapon while attack inputs pressed!");
+            MenuManager.PlayMenuErrorClick(); // feedback so player knows the interaction failed.
             return;
         }
 
