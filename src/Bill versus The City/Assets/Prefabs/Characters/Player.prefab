@@ -273,16 +273,18 @@ MonoBehaviour:
   _sprint_multiplier: 1.75
   crouched_speed: 1.5
   crouch_rate: 4
-  uncrouch_rate: 1
+  uncrouch_rate: 4
   crouch_height: 0.4
   uncrouched_height: 1.2
   keep_reloading: 1
   start_reload_at: 0
   animatior_controller_ref: {fileID: 7783136410653839400}
   crouch_dive_duration: 0.5
-  crouch_lock_duration: 1
+  crouch_lock_duration: 0
+  crouch_dive_cooldown_duration: 1
   crouch_dive_remaining: 0
   crouch_locked_remaining: 0
+  crouch_dive_cooldown_remaining: 0
   _crouch_percent: 0
   debug:
     message: 

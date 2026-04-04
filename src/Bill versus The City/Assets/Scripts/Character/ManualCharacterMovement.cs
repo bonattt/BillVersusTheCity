@@ -128,7 +128,11 @@ public class ManualCharacterMovement : CharCtrl {
         }
         if (aiming) {
             is_sprinting = false;
-            move_action = AimAction();
+            if (crouch) {
+                move_action = AimAndCrouchAction();
+            } else {
+                move_action = AimAction();
+            }
         } else if (GetStartVaultThisFrame(move_direction, look_direction)) {
             VaultOverCoverZone zone = StartVaultOver(move_direction, look_direction);
             move_action = JumpAction(zone);
@@ -259,6 +263,13 @@ public class ManualCharacterMovement : CharCtrl {
         action.look_direction = MoveActionLookDirection.look_direction;
         string name = current_firearm == null ? "" : $"({current_firearm.item_id})";
         action.name = $"aim {name}";
+        return action;
+    }
+
+    private IMoveAction AimAndCrouchAction() {
+        CrouchAction action = new CrouchAction(this, walk_speed, crouched_speed * aim_move_multiplier, 0f);
+        action.look_direction = MoveActionLookDirection.look_direction;
+        action.name = "crouch and aim";
         return action;
     }
 

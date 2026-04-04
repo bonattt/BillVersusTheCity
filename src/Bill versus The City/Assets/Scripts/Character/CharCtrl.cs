@@ -120,8 +120,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
-    public float crouch_dive_duration = 1f; // how long does a crouch dive last
-    public float crouch_lock_duration = 1f; // how long does a player remain crouched after a crouch dive
+    [Tooltip("how long does a crouch dive last")]
+    public float crouch_dive_duration = 0.5f;
+    
+    [Tooltip("how long does a player remain crouched after a crouch dive")]
+    public float crouch_lock_duration = 0f; 
+
+    [Tooltip("How many seconds must pass after the character finishes a crouch-dive before they can crouch dive again.")]
+    public float crouch_dive_cooldown_duration = 1f;
     protected Vector3 crouch_dive_direction = new Vector3(0, 0, 0);
 
     protected Vector3 vault_over_direction = new Vector3(0, 0, 0);
@@ -132,6 +138,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     
     [Tooltip("How many seconds are left until the player can stand up after a crouch dive.")]
     [SerializeField] protected float crouch_locked_remaining = 0f; // 
+
+    [Tooltip("How many seconds are left until the player can crouch dive again.")]
+    [SerializeField] protected float crouch_dive_cooldown_remaining = 0f; // 
 
     public virtual bool is_sprinting { get; protected set; }
 
@@ -210,6 +219,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public virtual TimeScaleSetting time_scale_setting { get; set; }
     public float GetDeltaTime() {
+        /* in order for Choreography to move characters while the game is paused, it needs to be able to set characters to 
+           move on unscaled time, instead of scaled time. THEREFORE Time.deltaTime cannot be used directly, and must instead by gotten through this
+           method. */
         if (time_scale_setting == TimeScaleSetting.scaled_time) {
             return Time.deltaTime;
         } else if (time_scale_setting == TimeScaleSetting.unscaled_time) {
@@ -400,6 +412,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             crouch = true;
             crouch_locked_remaining -= deltaTime;
         }
+        if (crouch_dive_cooldown_remaining > 0) {
+            crouch_dive_cooldown_remaining -= deltaTime;
+        }
         if (crouch_dive_remaining > 0) {
             crouch_dive_remaining -= deltaTime;
             crouch_percent = 1f;
@@ -420,7 +435,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public bool GetStartCrouchDiveThisFrame(bool crouch, Vector3 move_direction) {
         // returns true if a crouch dive should start, AND isn't already started
         // move_direction = new Vector3(move_direction.x, 0, move_direction.y); // don't crouch dive from gravity...
-        return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0;
+        return crouch && move_direction != Vector3.zero && !_crouch_last_frame && crouch_dive_remaining <= 0 && crouch_dive_cooldown_remaining <= 0;
     }
 
     protected virtual void StartCrouchDive(Vector3 move_direction) {
@@ -432,6 +447,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
         crouch_dive_remaining = crouch_dive_duration;
         crouch_dive_direction = move_direction.normalized;
+        crouch_dive_cooldown_remaining = crouch_dive_duration + crouch_dive_cooldown_duration; // cooldown is time AFTER crouch dive finishes, so add that too
         crouch_percent = 1f;
         PlayCrouchDiveEffects();
     }
@@ -504,34 +520,35 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     protected bool is_crouch_diving {
         get => crouch_dive_remaining > 0f && crouch_dive_direction != Vector3.zero;
     }
-    public virtual void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
-        bool is_moving = move_direction.magnitude > 0;
-        is_sprinting = sprint && CanSprint() && is_moving;
-        if (crouch_locked_remaining > 0) { crouch = true; }
-        if (is_crouch_diving) {
-            // if crouch diving, continue in that direction for the duration of the crouch dive
-            move_direction = crouch_dive_direction;
-            crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
-        } else if (is_vaulting) {
-            move_direction = vault_over_direction.normalized;
-        } else if (GetStartVaultThisFrame(move_direction, look_direction)) {
-            StartVaultOver(move_direction, look_direction);
-        } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
-            StartCrouchDive(move_direction);
-        } else {
-            if (crouch) {
-                // cannot crouch and sprint at the same time, if there is no crouch dive
-                is_sprinting = false;
-            }
-        }
-        if (is_crouch_diving || is_vaulting || is_sprinting) {
-            // always face forward during crouch dive or sprint!
-            look_direction = move_direction;
-        }
-        UpdateCrouch(crouch);
-        SetCharacterLookDirection(look_direction);
-        _crouch_last_frame = crouch;
-    }
+    public abstract void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false);
+    // public virtual void MoveCharacter(Vector3 move_direction, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk = false) {
+    //     bool is_moving = move_direction.magnitude > 0;
+    //     is_sprinting = sprint && CanSprint() && is_moving;
+    //     if (crouch_locked_remaining > 0) { crouch = true; }
+    //     if (is_crouch_diving) {
+    //         // if crouch diving, continue in that direction for the duration of the crouch dive
+    //         move_direction = crouch_dive_direction;
+    //         crouch_locked_remaining = crouch_lock_duration + crouch_dive_duration;
+    //     } else if (is_vaulting) {
+    //         move_direction = vault_over_direction.normalized;
+    //     } else if (GetStartVaultThisFrame(move_direction, look_direction)) {
+    //         StartVaultOver(move_direction, look_direction);
+    //     } else if (GetStartCrouchDiveThisFrame(crouch, move_direction)) {
+    //         StartCrouchDive(move_direction);
+    //     } else {
+    //         if (crouch) {
+    //             // cannot crouch and sprint at the same time, if there is no crouch dive
+    //             is_sprinting = false;
+    //         }
+    //     }
+    //     if (is_crouch_diving || is_vaulting || is_sprinting) {
+    //         // always face forward during crouch dive or sprint!
+    //         look_direction = move_direction;
+    //     }
+    //     UpdateCrouch(crouch);
+    //     SetCharacterLookDirection(look_direction);
+    //     _crouch_last_frame = crouch;
+    // }
 
     public virtual bool CanSprint() {
         return true;

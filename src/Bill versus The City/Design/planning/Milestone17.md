@@ -75,10 +75,10 @@ UNPLANNED BUGFIXES
     [+] Implement this feature
     [+] Add distinction in attack code for whether to shoot flat in a direction, or actually shoot directly at the target.
 
-[ ] BUG: Aiming while crouched increases movement speed
-[ ] FIX: given the changes to cover, I have some ideas to fix diving;
-    [ ] DON'T lockt the player into a crouch after a dive, and make the player stand up much faster to peak cover.
-    [ ] Lock the player out of diving repeatedly
+[+] BUG: Aiming while crouched increases movement speed
+[+] FIX: given the changes to cover, I have some ideas to fix diving;
+    [+] DON'T lockt the player into a crouch after a dive, and make the player stand up much faster to peak cover.
+    [+] Lock the player out of diving repeatedly
 [+] BUG: last grenade cannot be thrown (Out of ammo error)
     - note, add an out of ammo click to throwing grenade without ammo
 [+] BUG: if you grab a different weapon in the same slot while holding a grenade, the grenade cannot be thrown anymore.
@@ -87,3 +87,6 @@ UNPLANNED BUGFIXES
 [X] REFACTOR: make a script for "HeldGrenade" which will persist, even if the current weapon is switched, and move
      controls for actually throwing the grenade into this class, instead of the current ThrownAttack class
      --> this method would have created some complexity around enemies throwing grenades, so I just blocked you ability to pickup weapons while firing a weapon already
+[ ] BUG: Enemy throws grenade after it has been killed.
+    --> do NOT fix this on the grenade script. The perception script has triggered "notincing" the player sounds for a long time. I should 
+        fix this issue there.
