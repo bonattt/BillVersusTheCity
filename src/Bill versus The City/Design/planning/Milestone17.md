@@ -92,3 +92,5 @@ UNPLANNED BUGFIXES
     --> do NOT fix this on the grenade script. The perception script has triggered "notincing" the player sounds for a long time. I should 
         fix this issue there.
         - becoming "suppressed" was still able to alert enemies, even while dead.
+[ ] NullReferenceException: Object reference not set to an instance of an object --> whenev
+        EnemiesManager.GetEnemyDistance () (at Assets/Scripts/Character/EnemyGroups/EnemiesManager.cs:90)

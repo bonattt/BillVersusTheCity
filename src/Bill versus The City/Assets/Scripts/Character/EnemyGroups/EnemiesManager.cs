@@ -87,8 +87,12 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         return sound;
     }
 
-    private SortedList<float, NavMeshAgentMovement> GetEnemyDistance() => GetEnemyDistance(
-            PlayerCharacter.inst.player_transform.position, GetRemainingEnemies());
+    private SortedList<float, NavMeshAgentMovement> GetEnemyDistance() {
+        if (PlayerCharacter.inst.player_transform == null) {
+            return new SortedList<float, NavMeshAgentMovement>(); // no player position, return an empty list
+        }
+        return GetEnemyDistance(PlayerCharacter.inst.player_transform.position, GetRemainingEnemies());
+    } 
     private SortedList<float, NavMeshAgentMovement> GetEnemyDistance(Vector3 position, HashSet<NavMeshAgentMovement> remaining_enemies) {
         SortedList<float, NavMeshAgentMovement> dist = new SortedList<float, NavMeshAgentMovement>();
         foreach (NavMeshAgentMovement enemy in remaining_enemies) {
