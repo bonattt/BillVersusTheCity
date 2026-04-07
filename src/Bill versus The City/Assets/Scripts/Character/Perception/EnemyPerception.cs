@@ -173,6 +173,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     }
 
     public void Alert() {
+        if (state == PerceptionState.dead) { return; } // you are already dead
         // alerts the enemy
         alert_by_script = false;
         _percent_noticed += 0.5f;

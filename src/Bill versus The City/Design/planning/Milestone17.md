@@ -87,6 +87,8 @@ UNPLANNED BUGFIXES
 [X] REFACTOR: make a script for "HeldGrenade" which will persist, even if the current weapon is switched, and move
      controls for actually throwing the grenade into this class, instead of the current ThrownAttack class
      --> this method would have created some complexity around enemies throwing grenades, so I just blocked you ability to pickup weapons while firing a weapon already
-[ ] BUG: Enemy throws grenade after it has been killed.
+     --> this method would have created some complexity around enemies throwing grenades, so I just blocked you ability to pickup weapons while firing a weapon already
+[+] BUG: Enemy throws grenade after it has been killed.
     --> do NOT fix this on the grenade script. The perception script has triggered "notincing" the player sounds for a long time. I should 
         fix this issue there.
+        - becoming "suppressed" was still able to alert enemies, even while dead.
