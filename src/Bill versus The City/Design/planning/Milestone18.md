@@ -1,4 +1,4 @@
-
+ 
 =====================
 === MILESTONE 016 ===
 =====================
@@ -13,8 +13,11 @@ PLANNED FEATURES
 [ ] implement trial levels with new level types
     [ ] Drug-bust level
     [ ] Flight level
+    - <stretch> gun-store level where NPCs fight on your side
 [ ] Update Unity version
 [ ] implement enemies taking cover
+ - <stretch> NPC civilian bystanders
+ - <stretch> NPC ally combatants
 
 PLANNED BUGFIXES (pre-existing bugs I planned to fix this sprint)
 [ ] NullReferenceException: Object reference not set to an instance of an object --> whenev
