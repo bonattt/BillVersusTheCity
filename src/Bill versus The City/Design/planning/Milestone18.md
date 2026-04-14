@@ -10,10 +10,18 @@ Finished on 2026-??????
 PLANNED FEATURES
 [ ] Finish story outline
 [ ] Start writing
-[ ] Select a level to design, and build it.
+[ ] implement trial levels with new level types
+    [ ] Drug-bust level
+    [ ] Flight level
 [ ] Update Unity version
+[ ] implement enemies taking cover
 
-PLANNED BUGFIXES
+PLANNED BUGFIXES (pre-existing bugs I planned to fix this sprint)
+[ ] NullReferenceException: Object reference not set to an instance of an object --> whenev
+        EnemiesManager.GetEnemyDistance () (at Assets/Scripts/Character/EnemyGroups/EnemiesManager.cs:90)
+
+SPRINT BUGS (bugs found this sprint and fixed)
+[ ] -
 
 
 LOW PRIORITY TASKS
@@ -21,7 +29,7 @@ LOW PRIORITY TASKS
 [ ] FIX: 2+ instances of AOE that overlap stack damage. This should not stack
     - to do this, I need to move the tracking of Damage-over-time onto the target, not the AOE. However, I already spent too much time on this feature that may not stick around.
 
-UNPLANNED BUGFIXES
+UNPLANNED BUGFIXES (Known bugs I don't plan to fix yet)
 [ ] BUG: Countdown UI doesn't work on wave survival level (countdown still triggers the mission victory conditions)
     --> cannot reproduce
 [ ] BUG: FleeFromThreatsBehavior line 117 null pointer
@@ -32,5 +40,3 @@ UNPLANNED BUGFIXES
      - carryover from a previous sprint; I couldn't figure out how to reproduce this (still can't (still still can't))
 [ ] FIX: Truck's "Finish Level" interaction header text is not centered!
     --> do this later, the interaction UI needs to be replaced anyways
-[ ] NullReferenceException: Object reference not set to an instance of an object --> whenev
-        EnemiesManager.GetEnemyDistance () (at Assets/Scripts/Character/EnemyGroups/EnemiesManager.cs:90)
