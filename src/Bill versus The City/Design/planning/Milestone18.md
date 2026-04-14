@@ -11,6 +11,7 @@ PLANNED FEATURES
 [ ] Finish story outline
 [ ] Start writing
 [ ] Select a level to design, and build it.
+[ ] Update Unity version
 
 PLANNED BUGFIXES
 
