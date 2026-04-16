@@ -1,0 +1,11 @@
+- clicking on a new save, which hasn't been created yet, then clicking rename, opens the name a save dialogue, but it is non-functional because the save doesn't exist
+- "I wish clicking enter would confirm" in naming save profile
+- "too many ways to start the game"
+- "unsaved changes" when entering then exiting difficulty without changing anything
+- revert to defaults sets "easy" difficulty to medium values
+- still doesn't like the momentum of the contols
+
+- had trouble ending the level in tutorial 2
+	- I think she may not have been quite close enough to the interaction, not sure
+	- she said it immediately skipped a bunch of dialouge on the text level
+- "I'm calling the 911" typo on tutorial 3
