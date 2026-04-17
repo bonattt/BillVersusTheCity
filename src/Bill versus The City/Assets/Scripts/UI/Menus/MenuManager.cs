@@ -257,7 +257,17 @@ public class MenuManager : MonoBehaviour
         return script;
     }
 
-    public YesNoPopupController PlayerDefeatPopup() => _GenericDefeatPolicePopup(
+    public YesNoPopupController PlayerDefeatPopup(LevelFailureReason reason) {
+        switch (reason) {
+            case LevelFailureReason.police_timeout:
+                return DefeatedByPolicePopup();
+
+            default:
+                return PlayerDefeatDefaultPopup();
+        }
+    }
+
+    public YesNoPopupController PlayerDefeatDefaultPopup() => _GenericDefeatPopup(
         header: "Defeat!",
         content: "You have been killed!",
         restart_text: "Restart Level",
@@ -279,14 +289,14 @@ public class MenuManager : MonoBehaviour
     //     return popup;
     // }
 
-    public YesNoPopupController DefeatedByPolicePopup() => _GenericDefeatPolicePopup(
-        header: "Defeat!",
-        content: "You have been arrested!",
+    public YesNoPopupController DefeatedByPolicePopup() => _GenericDefeatPopup(
+        header: "Police Arrived!",
+        content: "You have been arrested by the Police!",
         restart_text: "Restart Level",
         exit_text: "Exit to Title"
     );
     
-    private YesNoPopupController _GenericDefeatPolicePopup(string header, string content, string restart_text, string exit_text) {
+    private YesNoPopupController _GenericDefeatPopup(string header, string content, string restart_text, string exit_text) {
         // click event for when the restart level button is clicked
         CloseAllMenus();
         YesNoPopupController popup = OpenNewPopup();

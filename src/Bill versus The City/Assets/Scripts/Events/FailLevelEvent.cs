@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FailLevelEvent : AbstractInteractionGameEvent
 {
+    public LevelFailureReason failure_reson = LevelFailureReason.none;
     protected override void Effect() {
-        LevelConfig.inst.FailLevel();
+        LevelConfig.inst.FailLevel(failure_reson);
     }
 }

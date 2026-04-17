@@ -225,7 +225,7 @@ public class ManualCharacterMovement : CharCtrl {
 
     public override void DelayedOnDeath(ICharacterStatus status) {
         base.DelayedOnDeath(status);
-        LevelConfig.inst.FailLevel();
+        LevelConfig.inst.FailLevel(LevelFailureReason.killed);
         // TODO --- this should live somewhere player related 
     }
 

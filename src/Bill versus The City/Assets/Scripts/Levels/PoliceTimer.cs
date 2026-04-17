@@ -83,7 +83,7 @@ public class PoliceTimer : MonoBehaviour, IGlobalSoundsObserver, ITimer {
 
     private void TriggerTimer() {
         has_triggered = true;
-        level_config.FailLevel();
+        level_config.FailLevel(reason: LevelFailureReason.police_timeout);
     }
     
     void UpdateDebug() {

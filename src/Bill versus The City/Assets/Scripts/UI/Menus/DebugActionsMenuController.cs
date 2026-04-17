@@ -90,7 +90,7 @@ public class DebugActionsMenuController : MonoBehaviour, IPlayerObserver {
 
     public void FailLevelClicked() {
         Close();
-        LevelConfig.inst.FailLevel();
+        LevelConfig.inst.FailLevel(LevelFailureReason.debug);
     }
 
     public void CompleteObjectiveClicked() {

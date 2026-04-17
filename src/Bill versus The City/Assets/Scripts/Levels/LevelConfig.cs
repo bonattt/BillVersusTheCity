@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public enum LevelVictoryType {
@@ -70,7 +71,11 @@ public class LevelConfig : MonoBehaviour {
     public ScriptableObject init_starting_rifle, init_starting_handgun, init_starting_pickup;
     private IFirearm starting_rifle, starting_handgun, starting_pickup;
 
-    public string dialogue_file_start_level, dialogue_file_objectives_complete, dialogue_file_level_failed, dialogue_file_level_finished;
+    public string dialogue_file_start_level, dialogue_file_objectives_complete, dialogue_file_level_finished;
+
+    [FormerlySerializedAs("dialogue_file_level_failed")]
+    public string dialogue_file_level_failed_default;
+    public string dialogue_file_level_failed_police, dialogue_file_level_failed_npc_killed;
 
     public float preset_config_countdown_timer_seconds = 75;
 
@@ -462,22 +467,33 @@ public class LevelConfig : MonoBehaviour {
         ScenesUtil.NextLevel(next_level);
     }
 
-    public void FailLevel(bool police=false) {
+    public void FailLevel(LevelFailureReason reason=LevelFailureReason.none) {
 #if UNITY_EDITOR
         EditorApplication.isPaused = pause_on_level_failure;
 #endif
-        Action defeat_callback;
-        if (police) {
-            defeat_callback = () => MenuManager.inst.PlayerDefeatPopup();
-        } else {
-            defeat_callback = () => MenuManager.inst.PlayerDefeatPopup();
-        }
-        DialogueController ctrl = OpenDialogueIfDefined(dialogue_file_level_failed);
+        Action defeat_callback = () => MenuManager.inst.PlayerDefeatPopup(reason);
+        string dialogue_file = GetLevelFailedDialogue(reason);
+        DialogueController ctrl = OpenDialogueIfDefined(dialogue_file);
         if (ctrl == null) {
             defeat_callback();
         } else {
             ctrl.AddDialogueCallback(new SimpleActionEvent(defeat_callback));
         }
+    }
+
+    private static bool StringBlank(string s) {
+        return s == null || s.Equals("");
+    }
+
+    public string GetLevelFailedDialogue(LevelFailureReason reason) {
+        if (reason == LevelFailureReason.police_timeout && ! StringBlank(dialogue_file_level_failed_police)) {
+            return dialogue_file_level_failed_police;
+        } else if (reason == LevelFailureReason.npc_killed && !StringBlank(dialogue_file_level_failed_npc_killed)) {
+            return dialogue_file_level_failed_npc_killed;
+        } else {
+            return dialogue_file_level_failed_default;
+        }
+
     }
 
     public bool has_objective_display_override { 
@@ -597,4 +613,13 @@ public class LevelConfig : MonoBehaviour {
 public class LevelConfigDebugger {
     public bool sequential_conditions_completed = false;
     public List<string> sequential_conditions;
+}
+
+public enum LevelFailureReason {
+    none,
+    police_timeout,
+    killed,
+    npc_killed,
+    conditions_failed,
+    debug,
 }
