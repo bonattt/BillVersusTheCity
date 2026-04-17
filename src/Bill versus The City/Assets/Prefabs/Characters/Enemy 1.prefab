@@ -223,7 +223,7 @@ MonoBehaviour:
   uncrouched_height: 1.1
   keep_reloading: 1
   start_reload_at: 0
-  animatior_controller_ref: {fileID: 0}
+  animatior_controller_ref: {fileID: 7047603838670989609}
   crouch_dive_duration: 0.5
   crouch_lock_duration: 0
   crouch_dive_cooldown_duration: 1
@@ -241,7 +241,7 @@ MonoBehaviour:
     vault_over_speed: 0
     move_direction: {x: 0, y: 0, z: 0}
     move_action_dir: {x: 0, y: 0, z: 0}
-  nav_mesh_agent: {fileID: 0}
+  nav_mesh_agent: {fileID: 2365366885385776978}
   choreography_movement: 0
   debug__look_direction: {x: 0, y: 0, z: 0}
   managed_enemy_state: 0
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4334b2cbcebe945856cdc351c5a087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target_character: {fileID: 0}
+  target_character: {fileID: 3396656997431563555}
   only_death_sounds: 1
 --- !u!114 &6825292087101829779
 MonoBehaviour:
@@ -650,5 +650,10 @@ PrefabInstance:
 --- !u!4 &2857373686001436190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1031028589790486591, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
+  m_PrefabInstance: {fileID: 3020117856073410081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7047603838670989609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5199268784748629768, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
   m_PrefabInstance: {fileID: 3020117856073410081}
   m_PrefabAsset: {fileID: 0}

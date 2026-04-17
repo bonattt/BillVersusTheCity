@@ -24,7 +24,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
     protected ICharacterStatus char_status;
+    [Tooltip("Transform which this character should look at.")]
     public Transform aim_target;
+    [Tooltip("A transform which will be set to the current crouch height as the character crouches and uncrouches. (should be the aim target for enemies to shoot at).")]
     public Transform crouch_target; // moves up and down when the character crouches
     public VaultingAreaDetector vaulting_area_detector;
 

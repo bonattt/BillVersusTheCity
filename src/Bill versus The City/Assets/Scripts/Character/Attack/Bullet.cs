@@ -80,9 +80,12 @@ public class Bullet : MonoBehaviour, IBullet
         if (target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
             // Debug.LogWarning("bullet ignores collision with the one who shot it!");
+            Debug.LogWarning("A"); // TODO --- remove debug
         } else if (target != null) {
+            Debug.LogWarning("B"); // TODO --- remove debug
             ResolveAttackHit(hit, hit_location, target);
         } else {
+            Debug.LogWarning("C"); // TODO --- remove debug
             ResolveAttackMiss(hit, hit_location, target);
         }
     }

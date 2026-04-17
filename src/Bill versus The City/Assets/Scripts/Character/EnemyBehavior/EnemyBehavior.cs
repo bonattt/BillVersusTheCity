@@ -95,7 +95,15 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private PlayerCombat player_combat;
-    private EnemyThreatTracking threat_tracking;
+    private EnemyThreatTracking _threat_tracking;
+    private EnemyThreatTracking threat_tracking {
+        get {
+            if (_threat_tracking == null) {
+                _threat_tracking = GetComponent<EnemyThreatTracking>();
+            }
+            return _threat_tracking;
+        }
+    }
     private IReloadManager reload_manager;
 
     private Dictionary<BehaviorMode, ISubBehavior> behaviors;
@@ -171,7 +179,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         player_combat = PlayerCharacter.inst.GetPlayerCombat(this);
         reload_manager = GetComponent<IReloadManager>();
         reload_manager.Subscribe(this);
-        threat_tracking = GetComponent<EnemyThreatTracking>();
 
         behavior_mode = default_behavior; // sets previous_behavior
         behavior_mode = default_behavior;
