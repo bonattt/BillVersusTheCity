@@ -268,29 +268,21 @@ public class MenuManager : MonoBehaviour
     }
 
     public YesNoPopupController PlayerDefeatDefaultPopup() => _GenericDefeatPopup(
-        header: "Defeat!",
+        header: "Failure!",
         content: "You have been killed!",
         restart_text: "Restart Level",
         exit_text: "Exit to Title"
     );
-    // public YesNoPopupController PlayerDefeatPopup() {
-    //     // click event for when the restart level button is clicked
-    //     CloseAllMenus();
-    //     YesNoPopupController popup = OpenNewPopup();
-    //     popup.header_text = "Defeat!";
-    //     popup.content_text = "You have been killed";
-    //     popup.confirm_text = "Restart Level";
-    //     popup.reject_text = "Exit to Title";
-    //     popup.allow_escape = false;
 
-    //     popup.confirm_button.clicked += ScenesUtil.RestartLevel;
-    //     popup.cancel_button.clicked += ScenesUtil.ExitToMainMenu;  // TODO --- move this helper somewhere more appropriate
-    //     popup.UpdateLabels();
-    //     return popup;
-    // }
+    public YesNoPopupController DefeatPopupCivilianKilled() => _GenericDefeatPopup(
+        header: "Failure!",
+        content: "A civilian was killed in the crossfire!!",
+        restart_text: "Restart Level",
+        exit_text: "Exit to Title"
+    );
 
     public YesNoPopupController DefeatedByPolicePopup() => _GenericDefeatPopup(
-        header: "Police Arrived!",
+        header: "Failure!",
         content: "You have been arrested by the Police!",
         restart_text: "Restart Level",
         exit_text: "Exit to Title"
