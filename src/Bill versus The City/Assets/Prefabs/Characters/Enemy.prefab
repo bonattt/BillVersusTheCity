@@ -203,7 +203,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1505927797627387282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f6a98283f43bb34fab5dd6b8760ee16, type: 3}
+  m_Script: {fileID: 11500000, guid: 18e1f7cff4db7b14dba9e34c6efa42fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aim_target: {fileID: 0}
@@ -212,9 +212,9 @@ MonoBehaviour:
   rotation_degrees_per_second: 400
   rotation_speed: 0.85
   current_action: 0
-  reload_rate: 0.7
+  reload_rate: 1
   reload_move_multiplier: 0.33
-  walk_speed: 6
+  walk_speed: 4
   _sprint_multiplier: 1.75
   crouched_speed: 0.25
   crouch_rate: 4
@@ -223,11 +223,13 @@ MonoBehaviour:
   uncrouched_height: 1.1
   keep_reloading: 1
   start_reload_at: 0
-  animatior_controller_ref: {fileID: 7047603838670989609}
-  crouch_dive_duration: 1
-  crouch_lock_duration: 1
+  animatior_controller_ref: {fileID: 0}
+  crouch_dive_duration: 0.5
+  crouch_lock_duration: 0
+  crouch_dive_cooldown_duration: 1
   crouch_dive_remaining: 0
   crouch_locked_remaining: 0
+  crouch_dive_cooldown_remaining: 0
   _crouch_percent: 0
   debug:
     message: 
@@ -239,14 +241,14 @@ MonoBehaviour:
     vault_over_speed: 0
     move_direction: {x: 0, y: 0, z: 0}
     move_action_dir: {x: 0, y: 0, z: 0}
-  nav_mesh_agent: {fileID: 2365366885385776978}
+  nav_mesh_agent: {fileID: 0}
   choreography_movement: 0
   debug__look_direction: {x: 0, y: 0, z: 0}
   managed_enemy_state: 0
-  shoot_inaccuracy: 2
+  shoot_inaccuracy: 1
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   use_full_auto: 0
 --- !u!114 &7771750986634287957
 MonoBehaviour:
@@ -262,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3396656997431563555}
   default_behavior: 5
+  lock_default_behavior: 0
   sprint_to_chase: 0
   optimal_attack_range: 5
   use_initial_movement_target: 0
@@ -271,6 +274,7 @@ MonoBehaviour:
   lock_to_passive: 0
   _shooting_rate: 1
   ctrl_target: {fileID: 0}
+  ctrl_always_shoot: 0
   ctrl_will_shoot: 1
   ctrl_waypoint: {x: 0, y: 0, z: 0}
   ctrl_move_mode: 0
@@ -279,6 +283,7 @@ MonoBehaviour:
   ctrl_start_reload: 0
   ctrl_cancel_reload: 0
   ctrl_shooting_rate: 0.75
+  ctrl_shoot_flat: 1
   _needs_reload: 0
   debug_distance_to_target: 0
   debug_distance_to_waypoint: 0
@@ -425,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4334b2cbcebe945856cdc351c5a087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target_character: {fileID: 3396656997431563555}
+  target_character: {fileID: 0}
   only_death_sounds: 1
 --- !u!114 &6825292087101829779
 MonoBehaviour:
@@ -645,10 +650,5 @@ PrefabInstance:
 --- !u!4 &2857373686001436190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1031028589790486591, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
-  m_PrefabInstance: {fileID: 3020117856073410081}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7047603838670989609 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5199268784748629768, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
   m_PrefabInstance: {fileID: 3020117856073410081}
   m_PrefabAsset: {fileID: 0}

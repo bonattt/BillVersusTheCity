@@ -8,8 +8,8 @@ using UnityEngine;
 
 public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStatusSubscriber {
 
-    protected HashSet<NavMeshAgentMovement> all_enemies = new HashSet<NavMeshAgentMovement>();
-    protected HashSet<NavMeshAgentMovement> enemies_defeated = new HashSet<NavMeshAgentMovement>();
+    protected HashSet<EnemyNavMeshMovement> all_enemies = new HashSet<EnemyNavMeshMovement>();
+    protected HashSet<EnemyNavMeshMovement> enemies_defeated = new HashSet<EnemyNavMeshMovement>();
 
     /// 
     /// IEnemyGroup
@@ -21,7 +21,7 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
     protected abstract void InitializeEnemies(); // populate all_enemies
 
     public void AlertAll() {
-        foreach (NavMeshAgentMovement enemy in RemainingEnemies()) {
+        foreach (EnemyNavMeshMovement enemy in RemainingEnemies()) {
             EnemyPerception perception = enemy.GetComponent<EnemyPerception>();
             if (perception == null) {
                 Debug.LogError($"EnemyPerception is null for '{enemy.gameObject.name}'!");
@@ -30,18 +30,18 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
             perception.Alert();
         }
     }
-    public virtual IEnumerable<NavMeshAgentMovement> AllEnemies() {
-        foreach (NavMeshAgentMovement e in all_enemies) {
+    public virtual IEnumerable<EnemyNavMeshMovement> AllEnemies() {
+        foreach (EnemyNavMeshMovement e in all_enemies) {
             yield return e;
         }
     }
-    public virtual IEnumerable<NavMeshAgentMovement> DefeatedEnemies() {
-        foreach (NavMeshAgentMovement e in enemies_defeated) {
+    public virtual IEnumerable<EnemyNavMeshMovement> DefeatedEnemies() {
+        foreach (EnemyNavMeshMovement e in enemies_defeated) {
             yield return e;
         }
     }
-    public virtual IEnumerable<NavMeshAgentMovement> RemainingEnemies() {
-        foreach (NavMeshAgentMovement e in all_enemies) {
+    public virtual IEnumerable<EnemyNavMeshMovement> RemainingEnemies() {
+        foreach (EnemyNavMeshMovement e in all_enemies) {
             if (enemies_defeated.Contains(e)) {
                 continue;
             }
@@ -60,7 +60,7 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
     public void OnDeathCleanup(ICharacterStatus status) { /* do nothing by default */ } // triggers some time after death to despawn the character
 
     private void TrackAsDefeated(ICharacterStatus status) {
-        NavMeshAgentMovement e = GetEnemyFromStatus(status);
+        EnemyNavMeshMovement e = GetEnemyFromStatus(status);
         if (e == null) {
             Debug.LogError($"defeated enemy '{((MonoBehaviour)status).gameObject.name}' not found in tracked enemies!");
             return;
@@ -72,8 +72,8 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
         EnemyDefeated();
     }
 
-    protected NavMeshAgentMovement GetEnemyFromStatus(ICharacterStatus status) {
-        foreach (NavMeshAgentMovement e in AllEnemies()) {
+    protected EnemyNavMeshMovement GetEnemyFromStatus(ICharacterStatus status) {
+        foreach (EnemyNavMeshMovement e in AllEnemies()) {
             if (e.GetStatus() == status) {
                 return e;
             }
@@ -92,13 +92,13 @@ public abstract class AbstractEnemyGroup : MonoBehaviour, IEnemyGroup, ICharStat
 
     protected virtual void Start() {
         InitializeEnemies();
-        foreach (NavMeshAgentMovement e in AllEnemies()) {
+        foreach (EnemyNavMeshMovement e in AllEnemies()) {
             e.GetStatus().Subscribe(this);
         }
     }
 
     protected virtual void OnDestroy() {
-        foreach (NavMeshAgentMovement e in AllEnemies()) {
+        foreach (EnemyNavMeshMovement e in AllEnemies()) {
             e.GetStatus().Unsubscribe(this);
         }
     }
@@ -127,5 +127,5 @@ public class EnemyGroupDebug {
     public bool update_debug = true;
     public float debug_interval_seconds = 0.25f;
     public float last_updated_time = -1f;
-    public List<NavMeshAgentMovement> all_enemies, enemies_remaining, enemies_defeated;
+    public List<EnemyNavMeshMovement> all_enemies, enemies_remaining, enemies_defeated;
 }

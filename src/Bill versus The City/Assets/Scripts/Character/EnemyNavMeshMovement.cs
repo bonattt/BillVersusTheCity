@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Scripting.APIUpdating;
 
- public class NavMeshAgentMovement : SimpleNavMeshAgentMovement
+[MovedFrom(true, null, null, "NavMeshAgentMovement")]
+public class EnemyNavMeshMovement : SimpleNavMeshAgentMovement
 {
     public ManagedEnemyState managed_enemy_state;
     public float shoot_inaccuracy = 1f;

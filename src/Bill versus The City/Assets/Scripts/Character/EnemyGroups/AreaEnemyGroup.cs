@@ -7,11 +7,11 @@ public class AreaEnemyGroup : AbstractEnemyGroup {
     public Color gizmo_color = Color.green;
     protected override void InitializeEnemies() {
         // looks for every enemy within a collision box
-        enemies_defeated = new HashSet<NavMeshAgentMovement>();
-        all_enemies = new HashSet<NavMeshAgentMovement>();
+        enemies_defeated = new HashSet<EnemyNavMeshMovement>();
+        all_enemies = new HashSet<EnemyNavMeshMovement>();
         Vector3 half_extents = new Vector3(size.x / 2, size.y / 2, size.z / 2);
         foreach (Collider c in Physics.OverlapBox(transform.position, half_extents)) {
-            NavMeshAgentMovement enemy = c.gameObject.GetComponent<NavMeshAgentMovement>();
+            EnemyNavMeshMovement enemy = c.gameObject.GetComponent<EnemyNavMeshMovement>();
             if (enemy == null) { continue; }
 
             all_enemies.Add(enemy);

@@ -85,7 +85,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
         GameObject enemy = Instantiate(prefab);
         enemy.name = GetNextEnemyName();
 
-        NavMeshAgentMovement enemy_ctrl = enemy.GetComponent<NavMeshAgentMovement>();
+        EnemyNavMeshMovement enemy_ctrl = enemy.GetComponent<EnemyNavMeshMovement>();
         enemy_ctrl.TeleportTo(GetSpawnPoint().GetSpawnPosition());
         IFirearm weapon = GetWeapon();
         if (weapon != null) {
@@ -105,7 +105,7 @@ public abstract class AbstractEnemySpawner : MonoBehaviour, ISpawnPoint
     }
 
     public bool log_spawns = false;
-    private void LogSpawn(NavMeshAgentMovement enemy_ctrl) {
+    private void LogSpawn(EnemyNavMeshMovement enemy_ctrl) {
         // logs that a new enemy was spawned
         if (log_spawns) {
             string spawned_at_str = transform.parent == null ? "" : $"at {transform.parent.gameObject.name}";

@@ -7,8 +7,8 @@ using UnityEngine;
 
 
 public class EnemiesManager : MonoBehaviour, IGenericObservable {
-    protected HashSet<NavMeshAgentMovement> enemies = new HashSet<NavMeshAgentMovement>();
-    protected HashSet<NavMeshAgentMovement> enemies_defeated = new HashSet<NavMeshAgentMovement>();
+    protected HashSet<EnemyNavMeshMovement> enemies = new HashSet<EnemyNavMeshMovement>();
+    protected HashSet<EnemyNavMeshMovement> enemies_defeated = new HashSet<EnemyNavMeshMovement>();
 
     public int remaining_enemy_count {
         get {
@@ -49,12 +49,12 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     }
 
     private void EvaluateNearestEnemies() {
-        SortedList<float, NavMeshAgentMovement> sorted_enemies = GetEnemyDistance();
+        SortedList<float, EnemyNavMeshMovement> sorted_enemies = GetEnemyDistance();
         int i = 0;
         debug.engaged_enemies = 0;
         debug.reserved_enemies = 0;
         // iterate in sorted order
-        foreach (NavMeshAgentMovement enemy in sorted_enemies.Values) {
+        foreach (EnemyNavMeshMovement enemy in sorted_enemies.Values) {
             // use loop counter to track how many enemies were already set to engaged.
             if (i < max_engaged_enemies && EnemyCannotEngagePlayer(enemy, PlayerCharacter.inst.player_transform)) {
                 enemy.managed_enemy_state = ManagedEnemyState.reserve;
@@ -73,7 +73,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         }
     }
 
-    public static bool EnemyCannotEngagePlayer(NavMeshAgentMovement enemy, Transform player) {
+    public static bool EnemyCannotEngagePlayer(EnemyNavMeshMovement enemy, Transform player) {
         if(!enemy.perception.is_alert) return true; // if the enemy is not alert, they cannot engage the player.
         // using hearing like this blocks the enemies from ever persuing the player through a closed door... so I need another solution
         // HearingHit hit = EnemyHearingManager.inst.GetHearingHitWithNavMesh(GetSound(player), enemy.perception);
@@ -87,15 +87,15 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         return sound;
     }
 
-    private SortedList<float, NavMeshAgentMovement> GetEnemyDistance() {
+    private SortedList<float, EnemyNavMeshMovement> GetEnemyDistance() {
         if (PlayerCharacter.inst.player_transform == null) {
-            return new SortedList<float, NavMeshAgentMovement>(); // no player position, return an empty list
+            return new SortedList<float, EnemyNavMeshMovement>(); // no player position, return an empty list
         }
         return GetEnemyDistance(PlayerCharacter.inst.player_transform.position, GetRemainingEnemies());
     } 
-    private SortedList<float, NavMeshAgentMovement> GetEnemyDistance(Vector3 position, HashSet<NavMeshAgentMovement> remaining_enemies) {
-        SortedList<float, NavMeshAgentMovement> dist = new SortedList<float, NavMeshAgentMovement>();
-        foreach (NavMeshAgentMovement enemy in remaining_enemies) {
+    private SortedList<float, EnemyNavMeshMovement> GetEnemyDistance(Vector3 position, HashSet<EnemyNavMeshMovement> remaining_enemies) {
+        SortedList<float, EnemyNavMeshMovement> dist = new SortedList<float, EnemyNavMeshMovement>();
+        foreach (EnemyNavMeshMovement enemy in remaining_enemies) {
             dist.Add(Vector3.Distance(position, enemy.transform.position), enemy);
         }
         return dist;
@@ -110,18 +110,18 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         }
     }
     
-    public IEnumerable<NavMeshAgentMovement> Iterator() {
-        foreach (NavMeshAgentMovement e in enemies_defeated) {
+    public IEnumerable<EnemyNavMeshMovement> Iterator() {
+        foreach (EnemyNavMeshMovement e in enemies_defeated) {
             yield return e;
         }
     }
 
-    private HashSet<NavMeshAgentMovement> _enemies_remaining = null;
-    public HashSet<NavMeshAgentMovement> GetRemainingEnemies() {
+    private HashSet<EnemyNavMeshMovement> _enemies_remaining = null;
+    public HashSet<EnemyNavMeshMovement> GetRemainingEnemies() {
         // returns a new HashSet containing all the enemies in the current scene
         if (_enemies_remaining == null) {
-            _enemies_remaining = new HashSet<NavMeshAgentMovement>(enemies);
-            foreach (NavMeshAgentMovement e in enemies_defeated) {
+            _enemies_remaining = new HashSet<EnemyNavMeshMovement>(enemies);
+            foreach (EnemyNavMeshMovement e in enemies_defeated) {
                 if (_enemies_remaining.Contains(e)) {
                     _enemies_remaining.Remove(e);
                 }
@@ -139,7 +139,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         UpdateSubscribers();
     }
 
-    public void AddEnemy(NavMeshAgentMovement enemy) {
+    public void AddEnemy(EnemyNavMeshMovement enemy) {
         enemies.Add(enemy);
         UpdateSubscribers();
     }
@@ -152,12 +152,12 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
 
     public void DebugKillAll() {
         // debug action to kill all enemies
-        foreach (NavMeshAgentMovement e in enemies) {
+        foreach (EnemyNavMeshMovement e in enemies) {
             e.GetStatus().health = -999;
         }
     }
 
-    public void KillEnemy(NavMeshAgentMovement enemy) {
+    public void KillEnemy(EnemyNavMeshMovement enemy) {
         // only add enemy to defeated enemies if it's actually in the scene
         // if the enemy is not in the scene, it's being cleaned up on a scene load
         if (enemies.Contains(enemy)) {
@@ -168,7 +168,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
 
     public void AlertAll() {
         // alerts all enemies currently in the map
-        foreach (NavMeshAgentMovement ctrl in GetRemainingEnemies()) {
+        foreach (EnemyNavMeshMovement ctrl in GetRemainingEnemies()) {
             EnemyPerception perception = ctrl.GetComponent<EnemyPerception>();
             if (perception == null) {
                 Debug.LogError($"EnemyPerception is null for '{ctrl.gameObject}'!");
@@ -180,7 +180,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
 
     public void AlertEnemiesNear(Vector3 start) {
         // Alerts all nearby enemies to the given point
-        foreach (NavMeshAgentMovement ctrl in GetRemainingEnemies()) {
+        foreach (EnemyNavMeshMovement ctrl in GetRemainingEnemies()) {
             TryAlertOneEnemyNear(start, ctrl.GetComponent<EnemyPerception>());
         }
     }
@@ -222,13 +222,13 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         debug.enemies = new List<string>();
         debug.enemies_remaining = new List<string>();
         debug.enemeis_defeated = new List<string>();
-        foreach (NavMeshAgentMovement e in enemies) {
+        foreach (EnemyNavMeshMovement e in enemies) {
             debug.enemies.Add($"{e}");
         }
-        foreach (NavMeshAgentMovement e in enemies_defeated) {
+        foreach (EnemyNavMeshMovement e in enemies_defeated) {
             debug.enemeis_defeated.Add($"{e}");
         }
-        foreach (NavMeshAgentMovement e in GetRemainingEnemies()) {
+        foreach (EnemyNavMeshMovement e in GetRemainingEnemies()) {
             debug.enemies_remaining.Add($"{e}");
         }
 # endif

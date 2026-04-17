@@ -25,7 +25,7 @@ public class EnemyHearingManager : IGenericObserver {
 
     public void UpdateObserver(IGenericObservable _) {
         perception = new List<EnemyPerception>();
-        foreach (NavMeshAgentMovement enemy in EnemiesManager.inst.GetRemainingEnemies()) {
+        foreach (EnemyNavMeshMovement enemy in EnemiesManager.inst.GetRemainingEnemies()) {
             EnemyPerception new_perception = enemy.GetComponent<EnemyPerception>();
             if (new_perception == null) {
                 Debug.LogError("Enemy without perception!!");

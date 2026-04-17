@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 {
-    public NavMeshAgentMovement controller;
+    public EnemyNavMeshMovement controller;
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
     [Tooltip("If true, this enemy will be locked to the default_behavior setting until they are killed.")]
     public bool lock_default_behavior = false;
@@ -176,7 +176,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         behavior_mode = default_behavior; // sets previous_behavior
         behavior_mode = default_behavior;
         if (controller == null) {
-            controller = GetComponent<NavMeshAgentMovement>();
+            controller = GetComponent<EnemyNavMeshMovement>();
         }
     }
 
