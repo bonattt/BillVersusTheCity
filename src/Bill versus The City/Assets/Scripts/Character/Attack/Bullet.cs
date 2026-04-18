@@ -75,17 +75,17 @@ public class Bullet : MonoBehaviour, IBullet
     }
 
     public void ResolveCollision(GameObject hit, Vector3 hit_location) {
-        Debug.LogWarning($"{gameObject.name} hit {hit.name}"); // TODO --- remove debug
+        // Debug.LogWarning($"{gameObject.name} hit {hit.name}"); // TODO --- remove debug
         IAttackTarget target = hit.GetComponent<IAttackTarget>();
         if (target != null && target == this.attacker) {
             // do nothing, don't collide with the attacker
             // Debug.LogWarning("bullet ignores collision with the one who shot it!");
-            Debug.LogWarning("A"); // TODO --- remove debug
+            // Debug.LogWarning($"A: {gameObject.name} hit {hit.name}"); // TODO --- remove debug
         } else if (target != null) {
-            Debug.LogWarning("B"); // TODO --- remove debug
+            // Debug.LogWarning($"B: {gameObject.name} hit {hit.name}"); // TODO --- remove debug
             ResolveAttackHit(hit, hit_location, target);
         } else {
-            Debug.LogWarning("C"); // TODO --- remove debug
+            // Debug.LogWarning($"C: {gameObject.name} hit {hit.name}"); // TODO --- remove debug
             ResolveAttackMiss(hit, hit_location, target);
         }
     }

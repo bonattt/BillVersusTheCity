@@ -11,6 +11,17 @@ public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
     public const string DEATH_PLAYER_SOUND_PATH = "death_grunt_player";
     // private ISoundSet reload_start_sound, reload_complete_sound;
     private static ISFXSounds damage_grunts, damage_grunts_player, death_grunts, death_grunts_player;
+
+    public string override_death_sounds_path = null;
+    private ISFXSounds _override_death_sounds_file = null;
+    private ISFXSounds override_death_sounds_file {
+        get {
+            if (_override_death_sounds_file == null && override_death_sounds_path != null && !override_death_sounds_path.Equals("")) {
+                _override_death_sounds_file = SFXLibrary.LoadSound(override_death_sounds_path);
+            }
+            return _override_death_sounds_file;
+        }
+    }
     private ICharacterStatus status;
     public CharCtrl target_character;
     private bool is_player = false;
@@ -92,7 +103,11 @@ public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
 
     private void PlayDeathSound() {
         ISFXSounds sounds;
-        if (is_player) {
+        Debug.LogWarning("refactor this trash code..."); // TODO --- 
+        if (override_death_sounds_file != null) {
+            sounds = override_death_sounds_file;
+        }
+        else if (is_player) {
             sounds = death_grunts_player;
         } else {
             sounds = death_grunts;

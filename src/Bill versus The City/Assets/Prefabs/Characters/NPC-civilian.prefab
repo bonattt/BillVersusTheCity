@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3466306800112800121}
   - component: {fileID: 2839091165939531404}
   - component: {fileID: 1856348101331695573}
+  - component: {fileID: 6647519251419788926}
   m_Layer: 14
   m_Name: NPC-civilian
   m_TagString: Untagged
@@ -88,7 +89,7 @@ MonoBehaviour:
   uncrouched_height: 1.1
   keep_reloading: 1
   start_reload_at: 0
-  animatior_controller_ref: {fileID: 0}
+  animatior_controller_ref: {fileID: 2268539339801914102}
   crouch_dive_duration: 1
   crouch_lock_duration: 0
   crouch_dive_cooldown_duration: 1
@@ -144,8 +145,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4334b2cbcebe945856cdc351c5a087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  override_death_sounds_path: 
   target_character: {fileID: 3466306800112800121}
   only_death_sounds: 1
+--- !u!136 &6647519251419788926
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942751571209755427}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!1 &3015107161771491047
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1406225730276891801
 Transform:
   m_ObjectHideFlags: 0
@@ -316,7 +341,7 @@ PrefabInstance:
     - target: {fileID: 6589630929290752803, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a69644b0d0873a74ba58b408fce9c20e, type: 2}
+      objectReference: {fileID: 9100000, guid: 2d05bd9cace604a4a966a0e5a18ad05f, type: 2}
     - target: {fileID: 6589630929300095105, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -679,7 +704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7253767703810587300, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -692,6 +717,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
+--- !u!1 &2268539339801914102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5199268784748629768, guid: bff9f218a5291f541a3ef347adad318d, type: 3}
+  m_PrefabInstance: {fileID: 6295183366117156350}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6418202182002640321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1031028589790486591, guid: bff9f218a5291f541a3ef347adad318d, type: 3}

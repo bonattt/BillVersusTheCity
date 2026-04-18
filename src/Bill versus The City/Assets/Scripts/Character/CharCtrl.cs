@@ -182,7 +182,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public virtual IFirearm current_firearm {
         get {
-            return attack_controller.current_gun;
+            return attack_controller != null ? attack_controller.current_gun : null;
         }
         set {
             attack_controller.current_gun = value;
@@ -279,6 +279,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             Debug.LogWarning($"{gameObject.name} initialized animator facade to null!");
         }
     }
+    protected virtual void Update() {
+        if (!is_active) { return; } // do nothing while controller disabled
+        HandleAnimation();
+
+    }
 
     void LateUpdate() {
         attack_last_frame = attack_this_frame;
@@ -295,7 +300,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     //     TryToAttack();
     //     SetDebugData();
     //     UpdatePauseAttackLock();
-    //     PostUpdate();
     //     HandleAnimation();
     // }
 
@@ -315,8 +319,13 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         _animator_facade.right_direction = this.transform.right;
         _animator_facade.move_velocity = GetVelocity();
         _animator_facade.action = AnimationActionType.idle;
-        _animator_facade.weapon_class = current_firearm != null ? current_firearm.weapon_class : WeaponClass.empty;
-        _animator_facade.aim_percent = attack_controller.aim_percent;
+        if (attack_controller == null) {
+            _animator_facade.weapon_class = WeaponClass.empty;
+            _animator_facade.aim_percent = 0;
+        } else {
+            _animator_facade.weapon_class = current_firearm != null ? current_firearm.weapon_class : WeaponClass.empty;
+            _animator_facade.aim_percent = attack_controller.aim_percent;
+        }
         _animator_facade.shot_at = last_attack_time;
         _animator_facade.crouch_percent = 0f;
         _animator_facade.crouch_dive = false;
@@ -330,12 +339,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         Quaternion desired_rotation = Quaternion.LookRotation(look_direction, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, desired_rotation, rotation_speed);
     }
-
-    protected virtual void PostUpdate() {
-        // TODO --- investigate if this can be removed
-        // do nothing. Extension hook for subclasses.
-    }
-
 
     public void StartReload() {
         // initiate a reload

@@ -260,9 +260,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 878177195708716765, guid: 5b5d03571fbd8e4499c91e88aa8c712d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2d05bd9cace604a4a966a0e5a18ad05f, type: 2}
     - target: {fileID: 2942751571209755427, guid: 5b5d03571fbd8e4499c91e88aa8c712d, type: 3}
       propertyPath: m_Name
       value: NPC-civilian (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744308372519313242, guid: 5b5d03571fbd8e4499c91e88aa8c712d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7231611474296727704, guid: 5b5d03571fbd8e4499c91e88aa8c712d, type: 3}
       propertyPath: m_LocalPosition.x

@@ -61,10 +61,10 @@ public class ManualCharacterMovement : CharCtrl {
         base.Start();
     }
 
-    void Update() {
+    protected override void Update() {
+        base.Update();
         if (!is_active) { return; } // do nothing while controller disabled
         UpdateReload();
-        HandleAnimation();
         UpdatePauseAttackLock();
         PostUpdate();
     }
@@ -208,7 +208,7 @@ public class ManualCharacterMovement : CharCtrl {
         return _last_move;
     }
 
-    protected override void PostUpdate() {
+    protected void PostUpdate() {
         if (InputSystem.inst.NextWeaponModeInput()) {
             attack_controller.current_gun.NextWeaponSetting();
             if (attack_controller.current_gun.HasWeaponSettings()) {

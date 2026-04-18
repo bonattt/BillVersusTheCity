@@ -20,6 +20,12 @@ using UnityEngine.AI;
     public bool choreography_movement = false;
     
     public Vector3 debug__look_direction;
+    
+    protected override void Update() {
+        base.Update();
+        if (!is_active) { return; } // do nothing while controller disabled
+        HandleAnimation();
+    }
     public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk=false) {
         // TODO --- crouch not implemented 
         SetCharacterLookDirection(look_direction);
@@ -41,7 +47,6 @@ using UnityEngine.AI;
         } else if (move_target != nav_mesh_agent.destination) {
             nav_mesh_agent.SetDestination(move_target);
         }
-        HandleAnimation();
     }
 
     public override void TeleportTo(Vector3 new_position) {
@@ -56,31 +61,6 @@ using UnityEngine.AI;
         return MoveDirection() * movement_speed;
     }
 
-    // public Vector3 GetMoveDestination() {
-    //     switch (behavior.ctrl_move_mode) {
-    //         case MovementTarget.stationary:
-    //             return transform.position;
-
-    //         case MovementTarget.target:
-    //             if (behavior.ctrl_target != null) {
-    //                 return behavior.ctrl_target.transform.position;
-    //             }
-    //             break;
-
-    //         case MovementTarget.waypoint:
-    //             if (behavior.ctrl_waypoint != null) {
-    //                 return behavior.ctrl_waypoint;
-    //             }
-    //             break;
-
-    //         default:
-    //             Debug.LogWarning($"movement for {behavior.ctrl_move_mode} is not implemented!");
-    //             break;
-    //     }
-    //     Debug.LogWarning("Don't move (not implemented correctly!)");
-    //     return new Vector3(0f, 0f, 0f); // don't move
-    // }
-
     public virtual Vector3 GetLookTarget() {
         Vector3 look_direction = nav_mesh_agent.destination - transform.position;
         return new Vector3(look_direction.x, 0, look_direction.z).normalized;
@@ -92,6 +72,17 @@ using UnityEngine.AI;
     }
     protected void EnableCollision() {
         GetComponent<CapsuleCollider>().enabled = true;
+    }
+
+    public override void OnDeath(ICharacterStatus status) {
+        base.OnDeath(status);
+        DisableCollision();
+        nav_mesh_agent.enabled = false;
+    }
+
+    public override void OnDeathCleanup(ICharacterStatus status) {
+        base.OnDeathCleanup(status);
+        Destroy(gameObject);
     }
 
     public override void FlashBangHit(Vector3 flashbang_position, float intensity) {
