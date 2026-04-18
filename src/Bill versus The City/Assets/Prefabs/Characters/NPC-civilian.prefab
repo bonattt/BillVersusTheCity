@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7231611474296727704}
   - component: {fileID: 4027750390275126528}
-  - component: {fileID: 3466306800112800121}
+  - component: {fileID: 771756453647870026}
   - component: {fileID: 2839091165939531404}
   - component: {fileID: 1856348101331695573}
   - component: {fileID: 6647519251419788926}
@@ -60,7 +60,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3466306800112800121
+--- !u!114 &771756453647870026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2942751571209755427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5b2ee74a4260b7498cea2324908a7e7, type: 3}
+  m_Script: {fileID: 11500000, guid: e993108f4cfe89f4182969f2a78d0b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aim_target: {fileID: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
   keep_reloading: 1
   start_reload_at: 0
   animatior_controller_ref: {fileID: 2268539339801914102}
-  crouch_dive_duration: 1
+  crouch_dive_duration: 0.5
   crouch_lock_duration: 0
   crouch_dive_cooldown_duration: 1
   crouch_dive_remaining: 0
@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4334b2cbcebe945856cdc351c5a087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  override_death_sounds_path: 
-  target_character: {fileID: 3466306800112800121}
+  override_death_sounds_path: death_npc
+  target_character: {fileID: 771756453647870026}
   only_death_sounds: 1
 --- !u!136 &6647519251419788926
 CapsuleCollider:

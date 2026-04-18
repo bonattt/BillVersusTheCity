@@ -11,6 +11,8 @@ public class GunRangeTarget : MonoBehaviour, IAttackTarget, ICharacterStatus {
     /// implements IAttackTarget ///
     ////////////////////////////////
     public bool is_player { get => false; }
+    public bool is_enemy { get => false; }
+    public bool is_civilian { get => false; }
     public ICharacterStatus GetStatus() { return this; } // TODO --- remove this, make ICharacterStatus extend this interface instead. 
     public GameObject GetHitTarget() { return gameObject; }
     public Transform GetAimTarget() { return transform; }

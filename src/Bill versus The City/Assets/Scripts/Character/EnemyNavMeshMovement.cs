@@ -11,6 +11,7 @@ public class EnemyNavMeshMovement : SimpleNavMeshAgentMovement
     public float shoot_inaccuracy = 1f;
     public LayerMask obstacleMask;
 
+    public override bool is_enemy { get => true; }
     public bool saw_target { get { return _perception.saw_target_last_frame; } } // saw the target last frame
     public bool seeing_target { get { return _perception.seeing_target; }  } // seeing the target last frame
 

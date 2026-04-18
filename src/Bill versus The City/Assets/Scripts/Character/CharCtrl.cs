@@ -71,6 +71,9 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     private float hit_stun_until = -1f;
 
     public virtual bool is_player { get { return false; } }
+    public virtual bool is_enemy { get { return false; } }
+    public virtual bool is_civilian { get { return false; } }
+
     private bool _is_alive = true;
     public bool is_alive { get { return _is_alive; } }
     private bool _is_active = true;
@@ -760,7 +763,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public ICharacterStatus GetStatus() {
         if (char_status == null) {
-            char_status = GetComponent<CharacterStatus>();
+            char_status = GetComponent<ICharacterStatus>();
         }
         return this.char_status;
     }

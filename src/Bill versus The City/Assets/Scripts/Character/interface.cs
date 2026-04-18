@@ -122,6 +122,8 @@ public interface ICharacterMovement {
 public interface IAttackTarget {
     // TODO
     public bool is_player { get; }
+    public bool is_enemy { get; }
+    public bool is_civilian { get; }
     public ICharacterStatus GetStatus(); // TODO --- remove this, make ICharacterStatus extend this interface instead. 
     public GameObject GetHitTarget(); // game object for handling effects when a target is hit
     public Transform GetAimTarget(); // return a transform to aim at when the character is targetted with attacks

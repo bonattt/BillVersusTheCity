@@ -262,6 +262,9 @@ public class MenuManager : MonoBehaviour
             case LevelFailureReason.police_timeout:
                 return DefeatedByPolicePopup();
 
+            case LevelFailureReason.npc_killed:
+                return DefeatPopupCivilianKilled();
+
             default:
                 return PlayerDefeatDefaultPopup();
         }

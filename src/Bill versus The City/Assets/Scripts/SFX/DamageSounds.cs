@@ -5,26 +5,19 @@ using UnityEngine;
 
 public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
 {
-    public const string DAMAGE_SOUND_PATH = "damage_chiptone";
+    public const string DAMAGE_ENEMY_SOUND_PATH = "damage_chiptone";
+    public const string DAMAGE_NPC_SOUND_PATH = "damage_chiptone";
     public const string DAMAGE_PLAYER_SOUND_PATH = "damage_grunt_player";
     public const string DEATH_SOUND_PATH = "death_grunt";
     public const string DEATH_PLAYER_SOUND_PATH = "death_grunt_player";
+    public const string DEATH_NPC_SOUND_PATH = "death_npc";
     // private ISoundSet reload_start_sound, reload_complete_sound;
-    private static ISFXSounds damage_grunts, damage_grunts_player, death_grunts, death_grunts_player;
+    private static ISFXSounds damage_grunts_enemy, damage_grunts_npc, damage_grunts_player, death_grunts_enemy, death_grunts_player, death_grunts_npc;
 
-    public string override_death_sounds_path = null;
-    private ISFXSounds _override_death_sounds_file = null;
-    private ISFXSounds override_death_sounds_file {
-        get {
-            if (_override_death_sounds_file == null && override_death_sounds_path != null && !override_death_sounds_path.Equals("")) {
-                _override_death_sounds_file = SFXLibrary.LoadSound(override_death_sounds_path);
-            }
-            return _override_death_sounds_file;
-        }
-    }
     private ICharacterStatus status;
     public CharCtrl target_character;
-    private bool is_player = false;
+
+    public bool cancel_damage_sound_on_death = true;
 
     private GameObject current_damage_sounds = null;
 
@@ -32,10 +25,12 @@ public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
     public bool only_death_sounds = true;
 
     void Awake() {
-        damage_grunts = SFXLibrary.LoadSound(DAMAGE_SOUND_PATH);
+        damage_grunts_enemy = SFXLibrary.LoadSound(DAMAGE_ENEMY_SOUND_PATH);
+        damage_grunts_npc = SFXLibrary.LoadSound(DAMAGE_NPC_SOUND_PATH);
         damage_grunts_player = SFXLibrary.LoadSound(DAMAGE_PLAYER_SOUND_PATH);
-        death_grunts = SFXLibrary.LoadSound(DEATH_SOUND_PATH);
+        death_grunts_enemy = SFXLibrary.LoadSound(DEATH_SOUND_PATH);
         death_grunts_player = SFXLibrary.LoadSound(DEATH_PLAYER_SOUND_PATH);
+        death_grunts_npc = SFXLibrary.LoadSound(DEATH_NPC_SOUND_PATH);
     }
 
     // Start is called before the first frame update
@@ -43,12 +38,16 @@ public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
     {
         status = target_character.GetStatus();
         status.Subscribe(this);
-        try {
-            ManualCharacterMovement _ = (ManualCharacterMovement) target_character;
-            is_player = true;
-        } catch (InvalidCastException) {
-            is_player = false;
-        }
+
+
+        // try {
+        //     ManualCharacterMovement _ = (ManualCharacterMovement) target_character;
+        //     is_player = true;
+
+        // } catch (InvalidCastException) {
+        //     is_player = false;
+        // }
+
         // reload_start_sound = SFXLibrary.LoadSound(reload_start_sound_path);
         // if (reload_start_sound == null) {
         //     Debug.LogWarning($"Reload Start Sound null for {gameObject}");
@@ -90,29 +89,44 @@ public class DamageSoundEffect : MonoBehaviour, ICharStatusSubscriber
     private void PlayDamageSound() {
         // NOTE: gameObject == null if the gameObject was Destroyed 
         if (current_damage_sounds != null) { return; } // damage sound already playing
-        ISFXSounds sounds;
-        if (is_player) {
-            sounds = damage_grunts_player;
-        } else {
-            sounds = damage_grunts;
-        }
+        ISFXSounds sounds = GetDamageSound();
         AudioSource source = SFXSystem.inst.PlaySound(sounds, transform.position);
         current_damage_sounds = source.gameObject; // gameObject will == null once this manager destroys itself
     }
 
 
     private void PlayDeathSound() {
-        ISFXSounds sounds;
-        Debug.LogWarning("refactor this trash code..."); // TODO --- 
-        if (override_death_sounds_file != null) {
-            sounds = override_death_sounds_file;
-        }
-        else if (is_player) {
-            sounds = death_grunts_player;
-        } else {
-            sounds = death_grunts;
-        }
+        if (current_damage_sounds != null && cancel_damage_sound_on_death) {
+            AudioSource source = current_damage_sounds.GetComponent<AudioSource>();
+            source.Stop();
+        } 
+        ISFXSounds sounds = GetDeathSound();
         SFXSystem.inst.PlaySound(sounds, transform.position);
+    }
+
+    private ISFXSounds GetDamageSound() {
+        if (target_character.is_player) {
+            return damage_grunts_player;
+        } else if (target_character.is_enemy) {
+            return damage_grunts_enemy;
+        } else if (target_character.is_civilian) {
+            return damage_grunts_npc;
+        } else {
+            Debug.LogWarning($"{gameObject.name} took damage, but is not a player, enemy, or civilian!!");
+            return null;
+        }
+    }
+    private ISFXSounds GetDeathSound() {
+        if (target_character.is_player) {
+            return death_grunts_player;
+        } else if (target_character.is_enemy) {
+            return death_grunts_enemy;
+        } else if (target_character.is_civilian) {
+            return death_grunts_npc;
+        } else {
+            Debug.LogWarning($"{gameObject.name} died, but is not a player, enemy, or civilian!!");
+            return null;
+        }
     }
 
 }
