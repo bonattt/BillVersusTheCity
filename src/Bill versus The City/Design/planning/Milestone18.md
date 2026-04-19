@@ -24,7 +24,7 @@ PLANNED BUGFIXES (pre-existing bugs I planned to fix this sprint)
         EnemiesManager.GetEnemyDistance () (at Assets/Scripts/Character/EnemyGroups/EnemiesManager.cs:90)
 
 SPRINT BUGS (bugs found this sprint and fixed)
-[ ] -
+[~] Error closing game: menus are trying to close from the choreography, and getting an error because the menu isn't open...
 
 
 LOW PRIORITY TASKS

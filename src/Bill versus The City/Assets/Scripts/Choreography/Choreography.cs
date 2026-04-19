@@ -72,6 +72,8 @@ public class Choreography : MonoBehaviour, IChoreography {
         get => _complete;
         private set { _complete = value; }
     }
+
+    public bool canceled { get; private set; }
     private bool cached_combat_enabled;
     public bool debug__cached_combat_enabled;
 
@@ -96,16 +98,29 @@ public class Choreography : MonoBehaviour, IChoreography {
         if (complete) { return; } // make complete idempotent
         inst = null;
         complete = true;
+        _CloseChoreography();
+        OnChoreographyComplete();
+    }
+
+    public void Cancel() {
+        if (canceled || complete || !active) { return; } // make cancel idempotent
+        inst = null;
+        canceled = true;
+        _CloseChoreography();
+        OnChoreographyCanceled();
+    }
+
+    private void _CloseChoreography() {
         player_controls.controls_locked = false;
         level.combat_enabled = cached_combat_enabled;
         UnsetCameraMode();
-        OnChoreographyComplete();
         CloseMenus();
     }
 
     public void CloseMenus() {
         // closes any menus subject to this Choreography
         while(MenuManager.inst.IsMenuOpen(menu_ctrl)) {
+            Debug.LogWarning($"menu_ctrl {menu_ctrl} is open!"); // TODO --- remove debug
             MenuManager.inst.CloseMenu();
         }
     }
@@ -208,9 +223,15 @@ public class Choreography : MonoBehaviour, IChoreography {
             step.OnChoreographyComplete(this);
         }
     }
+    
+    protected void OnChoreographyCanceled() {
+        foreach (IChoreographyStep step in sequential_choreography.AllSteps()) {
+            step.OnChoreographyCanceled(this);
+        }
+    }
 
     void OnDestroy() {
-        Complete(); // unlock player and camera 
+        Cancel(); // unlock player and camera 
     }
 
     // public bool HasNextStep() {

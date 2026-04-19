@@ -50,6 +50,7 @@ public abstract class AbstractChoreographyStep : MonoBehaviour, IChoreographySte
     
     public virtual void OnChoreographyStart(IChoreography choreography) { /* do nothing by default */ }
     public virtual void OnChoreographyComplete(IChoreography choreography) { /* do nothing by default */ }
+    public virtual void OnChoreographyCanceled(IChoreography choreography) { /* do nothing by default */ }
 
     protected virtual void Start() {
         // do nothing. Setting active and complete in start risks overwriting these values set from another Start method that runs first
@@ -79,4 +80,5 @@ public interface IChoreographyStep {
     public void SkipStep(IChoreography choreography);
     public void OnChoreographyStart(IChoreography choreography);
     public void OnChoreographyComplete(IChoreography choreography);
+    public void OnChoreographyCanceled(IChoreography choreography);
 }
