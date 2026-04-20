@@ -10,21 +10,25 @@ Finished on 2026-??????
 PLANNED FEATURES
 [ ] Finish story outline
 [ ] Start writing
-[ ] implement trial levels with new level types
-    [ ] Drug-bust level
+[~] implement trial levels with new level types
+    [+] Drug-bust level
     [ ] Flight level
+    - <stretch> NPC ally combatants
     - <stretch> gun-store level where NPCs fight on your side
 [ ] Update Unity version
-[ ] implement enemies taking cover
-[ ] NPC civilian bystanders
- - <stretch> NPC ally combatants
+[+] implement enemies taking cover
+    [ ] FIX: enemy behvior to take cover should be changed to actually use low cover that can be crouched under
+    [ ] FIX: enemy perception should see through low cover, and try to shoot at cover. OR implement a bool for this.
+[+] NPC civilian bystanders
 
 PLANNED BUGFIXES (pre-existing bugs I planned to fix this sprint)
 [ ] NullReferenceException: Object reference not set to an instance of an object --> whenev
         EnemiesManager.GetEnemyDistance () (at Assets/Scripts/Character/EnemyGroups/EnemiesManager.cs:90)
 
 SPRINT BUGS (bugs found this sprint and fixed)
-[~] Error closing game: menus are trying to close from the choreography, and getting an error because the menu isn't open...
+[?] Error closing game: menus are trying to close from the choreography, and getting an error because the menu isn't open...
+    --> working towards fixing this, I added a cancel to Choreography, which shouldn't have fixed this by-itself because it still calls `MenuManager.inst.CloseMenu`
+    however, with this change, I can no longer reproduce this error.
 
 
 LOW PRIORITY TASKS
