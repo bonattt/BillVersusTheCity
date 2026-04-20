@@ -27,19 +27,25 @@ using UnityEngine.AI;
         HandleAnimation();
     }
     public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk=false) {
+        Debug.LogWarning($"{gameObject.name}.MoveCharacter(crouch: {crouch})"); // TODO --- remove debug
         SetCharacterLookDirection(look_direction);
         if (time_scale_setting == TimeScaleSetting.unscaled_time) { Debug.LogError("paused movement is not implemented for NavMeshAgents!"); }
         // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);
         if (walk) { Debug.LogError("NavMeshAgent walk=true not implemented!"); } // TODO --- remove debug
         debug__look_direction = look_direction;
 
-        if (crouch) { Debug.LogWarning("enemy crouch not implemented!"); }
+        if (sprint && crouch) { Debug.LogError($"{gameObject.name} cannot spint and crouch at the same time!!"); }
         _is_sprinting = sprint;
         if (sprint) {
             nav_mesh_agent.speed = walk_speed * sprint_multiplier;
+            crouch = false;
+        } else if (crouch) {
+            Debug.LogWarning("CROUCH!");
+            nav_mesh_agent.speed = walk_speed * crouched_speed_multiplier;
         } else {
             nav_mesh_agent.speed = walk_speed;
         }
+        UpdateCrouch(crouch);
 
         if (is_hit_stunned) {
             nav_mesh_agent.SetDestination(transform.position);

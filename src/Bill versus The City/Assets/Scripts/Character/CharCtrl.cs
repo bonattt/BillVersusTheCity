@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum CharacterActionKey {
     attack,
@@ -53,8 +54,14 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             return _sprint_multiplier * difficulty_multiplier;
         }
     }
-    public float crouched_speed = 0.25f;
+    [FormerlySerializedAs("crouched_speed")]
+    [Tooltip("Multiplies movement speed while crouched.")]
+    public float crouched_speed_multiplier = 0.25f;
+    
+    [Tooltip("How fast the character can go from uncrouched to fully crouched.")]
     public float crouch_rate = 4f;
+    
+    [Tooltip("How fast the character can go from crouched to fully uncrouched.")]
     public float uncrouch_rate = 4f;
     public float crouch_height = 0.5f;
     public float uncrouched_height = 1.1f;
@@ -330,7 +337,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
             _animator_facade.aim_percent = attack_controller.aim_percent;
         }
         _animator_facade.shot_at = last_attack_time;
-        _animator_facade.crouch_percent = 0f;
+        _animator_facade.crouch_percent = crouch_percent;
         _animator_facade.crouch_dive = false;
         _animator_facade.is_sprinting = this.is_sprinting;
         _animator_facade.is_reloading = this.reloading;

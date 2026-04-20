@@ -251,7 +251,7 @@ public class ManualCharacterMovement : CharCtrl {
     }
 
     private IMoveAction CrouchAction() {
-        CrouchAction action = new CrouchAction(this, walk_speed, crouched_speed, 0f);
+        CrouchAction action = new CrouchAction(this, walk_speed, crouched_speed_multiplier, 0f);
         action.look_direction = MoveActionLookDirection.look_direction;
         action.name = "crouch";
         return action;
@@ -267,7 +267,7 @@ public class ManualCharacterMovement : CharCtrl {
     }
 
     private IMoveAction AimAndCrouchAction() {
-        CrouchAction action = new CrouchAction(this, walk_speed, crouched_speed * aim_move_multiplier, 0f);
+        CrouchAction action = new CrouchAction(this, walk_speed, crouched_speed_multiplier * aim_move_multiplier, 0f);
         action.look_direction = MoveActionLookDirection.look_direction;
         action.name = "crouch and aim";
         return action;
