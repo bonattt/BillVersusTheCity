@@ -39,8 +39,14 @@ public class FleeToCoverBehavior : ISubBehavior  {
             parent.ctrl_will_shoot = false;
             parent.ctrl_aim_mode = AimingTarget.movement_direction;
         }
+
+        if (has_los_to_player) {
+            parent.ctrl_crouch = false;
+        } else {
+            parent.ctrl_crouch = true;
+        }
         Color color = is_cornered ? Color.red : Color.green;
-        Debug.DrawLine(parent.controller.transform.position, parent.ctrl_waypoint, color);
+        Debug.DrawLine(parent.movement_script.transform.position, parent.ctrl_waypoint, color);
     }
 
     private void UpdateIsCornered(EnemyBehavior parent, ManualCharacterMovement player) {
@@ -56,10 +62,10 @@ public class FleeToCoverBehavior : ISubBehavior  {
         UpdateIsCornered(parent, player);
         if (!has_los_to_player) {
             // player has no LoS, wherever you are is good
-            return parent.controller.transform.position;
+            return parent.movement_script.transform.position;
         }
 
-        Vector3 start_pos = parent.controller.transform.position;
+        Vector3 start_pos = parent.movement_script.transform.position;
         if (is_cornered) {
             Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
             return destination;
@@ -87,13 +93,14 @@ public class FleeToCoverBehavior : ISubBehavior  {
     }
 
     private bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player) {
-        if (is_cornered) { return false; } // already cornered, don't BECOME cornered
+    //     if (is_cornered) { return false; } // already cornered, don't BECOME cornered
         
-        Vector3 travel_direction = parent.controller.nav_mesh_agent.velocity.normalized;
-        Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
+    //     Vector3 travel_direction = parent.controller.nav_mesh_agent.velocity.normalized;
+    //     Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
 
-        float dot = Vector3.Dot(toward_player, travel_direction);
-        return dot >= towards_player_threshold;
+    //     float dot = Vector3.Dot(toward_player, travel_direction);
+    //     return dot >= towards_player_threshold;
+        return NavMeshUtils.WillBecomeCornered(parent, player, towards_player_threshold);
     }
 
     public string GetDebugMessage(EnemyBehavior parent) {

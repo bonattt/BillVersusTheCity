@@ -15,7 +15,7 @@ public class StandAndShootBehavior : ISubBehavior  {
         parent.ctrl_sprint = false;
         parent.ctrl_target = player;
         parent.ctrl_waypoint = parent.initial_movement_target;
-        if (parent.controller.seeing_target) {
+        if (parent.movement_script.seeing_target) {
             parent.ctrl_aim_mode = AimingTarget.target;
             parent.ctrl_shoot_flat = false;
             parent.ctrl_target = player;

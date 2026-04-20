@@ -13,7 +13,7 @@ public class ChasePlayerSprintBehavior : ISubBehavior  {
         parent.ctrl_target = player;
         parent.ctrl_will_shoot = false;
         parent.ctrl_move_mode = MovementTarget.target;
-        if (parent.controller.seeing_target) {
+        if (parent.movement_script.seeing_target) {
             parent.ctrl_aim_mode = AimingTarget.target;
         }
         else {

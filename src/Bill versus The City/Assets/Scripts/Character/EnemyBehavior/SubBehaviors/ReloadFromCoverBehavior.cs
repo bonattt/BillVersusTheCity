@@ -29,18 +29,20 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
             parent.ctrl_move_mode = MovementTarget.waypoint;
             parent.ctrl_aim_mode = AimingTarget.target;
             parent.ctrl_start_reload = true;
+            parent.ctrl_crouch = true;
             parent.ctrl_cancel_reload = false;
 
         } else {
             Debug.Log("Player has LoS, retreat before reload");
             // player has a shot at the enemy, so retreat to cover
             parent.ctrl_start_reload = false;
+            parent.ctrl_crouch = false;
             parent.ctrl_cancel_reload = cancel_reload_to_retreat;
             parent.ctrl_sprint = true;
             parent.ctrl_move_mode = MovementTarget.waypoint;
             parent.ctrl_aim_mode = AimingTarget.movement_direction;
 
-            Vector3 start = parent.controller.transform.position;
+            Vector3 start = parent.movement_script.transform.position;
             Vector3 cover_from = player.transform.position;
 
             Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start, cover_from);

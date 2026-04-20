@@ -1,12 +1,17 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 {
-    public EnemyNavMeshMovement controller;
+    [FormerlySerializedAs("controller")]
+    public EnemyNavMeshMovement movement_script;
     public BehaviorMode default_behavior = BehaviorMode.wondering;  // the behavior this unit will exhibit before the player is noticed
+    [Tooltip("Defines when the character will use cover.")]
+    public CoverBehaviour cover_behavior = CoverBehaviour.controlled_by_behavior;
     [Tooltip("If true, this enemy will be locked to the default_behavior setting until they are killed.")]
     public bool lock_default_behavior = false;
     [Tooltip("If true, the enemy will sprint when trying to get closer to the player, otherwise, they will shoot while closing distance.")]
@@ -38,6 +43,28 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
+    public bool is_crouching {
+        get {
+            switch(cover_behavior) {
+                case CoverBehaviour.controlled_by_behavior:
+                    if (ctrl_crouch) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                case CoverBehaviour.never:
+                    return false;
+
+                case CoverBehaviour.always:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    }
+
     //////////////////////////////
     /// Behavior controls ////////
     //////////////////////////////
@@ -52,6 +79,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     public bool ctrl_start_reload = false; // used by Behavior to instruct the controller to sprint
     public bool ctrl_cancel_reload = false; // used by Behavior to instruct the controller to sprint
     public float ctrl_shooting_rate = 0.75f;
+    public bool ctrl_crouch = false;
 
     [Tooltip("If true, bullets should have their shooting vector flattened on the Y-axis.")]
     public bool ctrl_shoot_flat = true;
@@ -118,7 +146,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     public bool is_reserve {
-        get => controller.managed_enemy_state == ManagedEnemyState.reserve;
+        get => movement_script.managed_enemy_state == ManagedEnemyState.reserve;
     }
 
 
@@ -182,8 +210,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
         behavior_mode = default_behavior; // sets previous_behavior
         behavior_mode = default_behavior;
-        if (controller == null) {
-            controller = GetComponent<EnemyNavMeshMovement>();
+        if (movement_script == null) {
+            movement_script = GetComponent<EnemyNavMeshMovement>();
         }
     }
 
@@ -197,16 +225,16 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         SetDebug();
 
         /// actively control EnemyController (new refactor)
-        if (! controller.is_active) { return; } 
+        if (! movement_script.is_active) { return; } 
         if (ReloadInput()) {
-            controller.StartReload();
+            movement_script.StartReload();
         } else if (CancelReloadInput()) {
-            controller.CancelReload();
+            movement_script.CancelReload();
         }
-        else if (AttackInput() && controller.attack_controller.CanAttack()) {
-            controller.TryToAttack();
+        else if (AttackInput() && movement_script.attack_controller.CanAttack()) {
+            movement_script.TryToAttack();
         }
-        controller.MoveCharacter(GetMoveTarget(), GetLookDirection(), sprint:ctrl_sprint, crouch:false);
+        movement_script.MoveCharacter(GetMoveTarget(), GetLookDirection(), sprint:ctrl_sprint, crouch:is_crouching);
     }
 
     private Vector3 GetMoveTarget() {
@@ -221,12 +249,12 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                 break;
 
             case MovementTarget.stationary:
-                result = controller.transform.position;
+                result = movement_script.transform.position;
                 break;
 
             default:
                 Debug.LogError($"unknown move mode '{ctrl_move_mode}'");
-                result = controller.transform.position;
+                result = movement_script.transform.position;
                 break;
         }
         if (float.IsNaN(result.x) || float.IsNaN(result.y) || float.IsNaN(result.z)) {
@@ -236,13 +264,13 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
 
     private Vector3 GetLookDirection() {
-        return controller.DirectionFromLookTarget(GetLookTarget());
+        return movement_script.DirectionFromLookTarget(GetLookTarget());
     }
 
     private Vector3 GetLookTarget() {
         switch (ctrl_aim_mode) {
             case AimingTarget.movement_direction:
-                return controller.GetVelocity();
+                return movement_script.GetVelocity();
 
             case AimingTarget.target:
                 return ctrl_target.transform.position;
@@ -258,31 +286,30 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                 return ctrl_waypoint;
         }
     }
-
     
     public bool AttackInput() {
         // Debug.Log($"{Time.time} >= {this.last_attack_time} + {ctrl_shooting_rate}: {Time.time >= (this.last_attack_time + ctrl_shooting_rate)}");
-        if (controller.reloading) { return false; } // can't shoot while reloading
+        if (movement_script.reloading) { return false; } // can't shoot while reloading
         if (ctrl_always_shoot) {return true; }
         if (perception.seeing_target && ctrl_will_shoot) {
             if (perception.saw_target_last_frame) {
-                if (controller.use_full_auto) { return true; }
-                return Time.time >= (controller.last_attack_time + ctrl_shooting_rate);
+                if (movement_script.use_full_auto) { return true; }
+                return Time.time >= (movement_script.last_attack_time + ctrl_shooting_rate);
             }
             else {
                 // start countdown to shoot once target is seen
-                controller.last_attack_time = Time.time;
+                movement_script.last_attack_time = Time.time;
             }
         }
         return false;
     }
     
     public bool ReloadInput() {
-        return ctrl_start_reload && !controller.reloading; 
+        return ctrl_start_reload && !movement_script.reloading; 
     }
 
     public bool CancelReloadInput() {
-        return ctrl_cancel_reload && controller.reloading;
+        return ctrl_cancel_reload && movement_script.reloading;
     }
 
     void OnDestroy() {
@@ -317,14 +344,14 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     public float DistanceToTarget() {
         // TODO --- flatten the Y co-ordinates
-        return Vector3.Distance(controller.transform.position, PlayerCharacter.inst.player_transform.position);  
+        return Vector3.Distance(movement_script.transform.position, PlayerCharacter.inst.player_transform.position);  
     }
 
     protected void TryToStartReload() {
         if (needs_reload) { return; }
-        if (controller.current_firearm != null) {
+        if (movement_script.current_firearm != null) {
             // can only reload if using a firearm
-            needs_reload = controller.current_firearm.current_ammo == 0;
+            needs_reload = movement_script.current_firearm.current_ammo == 0;
         }
     }
 
@@ -336,8 +363,8 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         } 
         if (needs_reload && behavior_mode != BehaviorMode.routed && behavior_mode != BehaviorMode.suppressed) {
             return reload_behavior;
-        } else if (!needs_reload && controller.reloading) {
-            controller.CancelReload();
+        } else if (!needs_reload && movement_script.reloading) {
+            movement_script.CancelReload();
         }
         return behaviors[behavior_mode];
     }
@@ -364,7 +391,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                     break;
                 }
                 float dist = DistanceToTarget();
-                if (controller.seeing_target && dist < optimal_attack_range) {
+                if (movement_script.seeing_target && dist < optimal_attack_range) {
                     behavior_mode = BehaviorMode.engaged;
                 } else {
                     Debug.LogWarning("POOTIS 1"); // TODO --- remove debug
@@ -399,18 +426,30 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         return !float.IsNaN(n) && float.IsFinite(n);
     }
     
-    public float debug_distance_to_target, debug_distance_to_waypoint;
-    public string debug_sub_behavior;
-    public string debug_sub_behavior_message;
-    public BehaviorMode debug_behavior_mode;
+    // public float debug_distance_to_target, debug_distance_to_waypoint;
+    // public string debug_sub_behavior;
+    // public string debug_sub_behavior_message;
+    // public BehaviorMode debug_behavior_mode;
+    public EnemyBehaviorDebugger debug = new EnemyBehaviorDebugger();
     public void SetDebug() {
-        debug_behavior_mode = behavior_mode;
-        debug_distance_to_target = DistanceToTarget();
+        debug.behavior_mode = behavior_mode;
+        debug.distance_to_target = DistanceToTarget();
         // debug_distance_to_waypoint = WaypointSystem.FlattenedDistance(transform.position, move)
         ISubBehavior sub_behavior = GetSubBehavior();
-        debug_sub_behavior = $"{sub_behavior}";
-        debug_sub_behavior_message = sub_behavior.GetDebugMessage(this);
+        debug.sub_behavior = $"{sub_behavior}";
+        debug.sub_behavior_message = sub_behavior.GetDebugMessage(this);
+        debug.crouch = is_crouching;
     }
+}
+
+[Serializable]
+public class EnemyBehaviorDebugger {
+    
+    public float distance_to_target, distance_to_waypoint;
+    public bool crouch = false;
+    public string sub_behavior;
+    public string sub_behavior_message;
+    public BehaviorMode behavior_mode;
 }
 
 public enum BehaviorMode {
@@ -429,4 +468,10 @@ public enum BehaviorMode {
     guard, // manually set to stand and shoot on sight
     berserk, // manually set to just stand and shoot, even if you don't see the target
 
+}
+
+public enum CoverBehaviour {
+    never,
+    controlled_by_behavior,
+    always,
 }

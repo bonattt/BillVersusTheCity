@@ -43,7 +43,7 @@ public class SearchingBehavior : ISubBehavior  {
         parent.ctrl_will_shoot = false;
         parent.ctrl_move_mode = MovementTarget.waypoint;
         parent.ctrl_sprint = false;
-        if (parent.controller.seeing_target) {
+        if (parent.movement_script.seeing_target) {
             parent.ctrl_aim_mode = AimingTarget.target;
         }
         else {

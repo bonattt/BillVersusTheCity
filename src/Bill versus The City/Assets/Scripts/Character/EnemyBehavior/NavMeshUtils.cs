@@ -60,6 +60,17 @@ public static class NavMeshUtils {
         }
     }
 
+    public static bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player, float towards_player_threshold) {
+        // if (is_cornered) { return false; } // already cornered, don't BECOME cornered
+        
+        Vector3 travel_direction = parent.movement_script.nav_mesh_agent.velocity.normalized;
+        Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
+
+        float dot = Vector3.Dot(toward_player, travel_direction);
+        return dot >= towards_player_threshold;
+    }
+
+
 
     // public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from) {
     //     int n_rays = 15;

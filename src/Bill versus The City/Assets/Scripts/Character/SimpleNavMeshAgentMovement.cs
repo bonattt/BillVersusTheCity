@@ -27,7 +27,6 @@ using UnityEngine.AI;
         HandleAnimation();
     }
     public override void MoveCharacter(Vector3 move_target, Vector3 look_direction, bool sprint = false, bool crouch = false, bool walk=false) {
-        // TODO --- crouch not implemented 
         SetCharacterLookDirection(look_direction);
         if (time_scale_setting == TimeScaleSetting.unscaled_time) { Debug.LogError("paused movement is not implemented for NavMeshAgents!"); }
         // Debug.DrawRay(transform.position + Vector3.up, look_direction, Color.yellow);

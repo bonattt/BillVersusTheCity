@@ -45,7 +45,7 @@ public class FleeFromThreatsBehavior : ISubBehavior {
             parent.ctrl_aim_mode = AimingTarget.movement_direction;
         }
         Color color = is_cornered ? Color.red : Color.green;
-        Debug.DrawLine(parent.controller.transform.position, parent.ctrl_waypoint, color);
+        Debug.DrawLine(parent.movement_script.transform.position, parent.ctrl_waypoint, color);
     }
 
     private void RecalculateDestination(EnemyBehavior parent, ManualCharacterMovement player) {
@@ -102,10 +102,10 @@ public class FleeFromThreatsBehavior : ISubBehavior {
     private Vector3 GetDestinationTakeCover(EnemyBehavior parent, ManualCharacterMovement player) {
         if (!has_los_to_player) {
             // player has no LoS, wherever you are is good
-            return parent.controller.transform.position;
+            return parent.movement_script.transform.position;
         }
 
-        Vector3 start_pos = parent.controller.transform.position;
+        Vector3 start_pos = parent.movement_script.transform.position;
         if (is_cornered) {
             Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
             return destination;
@@ -129,7 +129,7 @@ public class FleeFromThreatsBehavior : ISubBehavior {
     private bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player) {
         if (is_cornered) { return false; } // already cornered, don't BECOME cornered
         
-        Vector3 travel_direction = parent.controller.nav_mesh_agent.velocity.normalized;
+        Vector3 travel_direction = parent.movement_script.nav_mesh_agent.velocity.normalized;
         Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
 
         float dot = Vector3.Dot(toward_player, travel_direction);
