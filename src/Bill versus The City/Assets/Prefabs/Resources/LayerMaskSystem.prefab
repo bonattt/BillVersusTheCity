@@ -101,7 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   has_cover_raycast:
     serializedVersion: 2
-    m_Bits: 339
+    m_Bits: 131411
+  soft_cover_raycast:
+    serializedVersion: 2
+    m_Bits: 131072
   blocks_sounds:
     serializedVersion: 2
     m_Bits: 1

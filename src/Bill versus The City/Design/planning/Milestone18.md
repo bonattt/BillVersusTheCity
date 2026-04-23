@@ -31,6 +31,7 @@ SPRINT BUGS (bugs found this sprint and fixed)
     --> working towards fixing this, I added a cancel to Choreography, which shouldn't have fixed this by-itself because it still calls `MenuManager.inst.CloseMenu`
     however, with this change, I can no longer reproduce this error.
 [+] FIX: audio sources not cleaned up.
+[ ] FIX: Player crouching sinks into the floor partially; this causes enemies to shoot down, and hit the floor.
 
 
 LOW PRIORITY TASKS

@@ -134,7 +134,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
     }
     private IReloadManager reload_manager;
 
-    private Dictionary<BehaviorMode, ISubBehavior> behaviors;
+    protected Dictionary<BehaviorMode, ISubBehavior> behaviors;
     private ISubBehavior _reload_behavior = null;
     public ISubBehavior reload_behavior {
         get {
@@ -160,7 +160,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
-    private void InitializeBehaviorsDict()
+    protected virtual void InitializeBehaviorsDict()
     {
         // initializes the `behaviors` dictionary with values
         behaviors = new Dictionary<BehaviorMode, ISubBehavior>() {
@@ -192,7 +192,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         }
     }
 
-    public void Kill() {
+    public virtual void Kill() {
         behavior_mode = BehaviorMode.dead;
     }
 
@@ -217,6 +217,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     void Update()
     {
+        Debug.LogError($"LayerMaskSystem ({LayerMaskSystem.inst}) == null ? {LayerMaskSystem.inst == null}"); // TODO --- remove debug
         if (!LevelConfig.inst.combat_enabled) { return; } // don't initiate actions while combat is disabled
         SetBehaviorMode();
         

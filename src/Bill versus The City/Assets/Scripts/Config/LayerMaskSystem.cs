@@ -20,6 +20,10 @@ public class LayerMaskSystem : MonoBehaviour {
     public LayerMask has_cover_raycast;
 
 
+    [Tooltip("LayerMask used to detect cover that can be crouched behind.")]
+    public LayerMask soft_cover_raycast;
+
+
     [Tooltip("LayerMask used when testing if a sound is audible")]
     public LayerMask blocks_sounds;
 

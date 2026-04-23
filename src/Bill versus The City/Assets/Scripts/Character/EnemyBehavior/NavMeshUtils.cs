@@ -62,7 +62,6 @@ public static class NavMeshUtils {
 
     public static bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player, float towards_player_threshold) {
         // if (is_cornered) { return false; } // already cornered, don't BECOME cornered
-        
         Vector3 travel_direction = parent.movement_script.nav_mesh_agent.velocity.normalized;
         Vector3 toward_player = (player.transform.position - parent.transform.position).normalized;
 
@@ -154,23 +153,33 @@ public static class NavMeshUtils {
         return result;
     }
 
-    public static bool PositionHasCoverFrom(Vector3 cover_from, Vector3 end, bool draw_debug_ray = false) {
+    public static bool PositionHasCoverFrom(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
+        float ray_length = (position - cover_from).magnitude;
+        return _PositionHasCover(cover_from, position, LayerMaskSystem.inst.has_cover_raycast, ray_length, draw_debug_ray:draw_debug_ray);
+    }
+
+    public static bool PositionHasSoftCover(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
+        // determines if `position` has cover from `cover_from` while crouching.
+        // `cover` should be near the `position` for it to apply.
+        return _PositionHasCover(cover_from, position, LayerMaskSystem.inst.soft_cover_raycast, ray_length:4f, draw_debug_ray:draw_debug_ray);
+    }
+
+    private static bool _PositionHasCover(Vector3 cover_from, Vector3 position, LayerMask layer_mask, float ray_length, bool draw_debug_ray = false) {
         // move raycast points to position just above the ground to avoid treating the floor as cover
+        Debug.LogError("POOTIS!!!"); // TODO --- remove debug
         cover_from = new Vector3(cover_from.x, 1f, cover_from.z);
-        end = new Vector3(end.x, 1f, end.z);
+        position = new Vector3(position.x, 1f, position.z);
 
-        Vector3 raycast_direction = end - cover_from;
+        Vector3 raycast_direction = position - cover_from;
         RaycastHit hit;
-        float ray_length = raycast_direction.magnitude;
-        LayerMask mask = LayerMaskSystem.inst.has_cover_raycast;
-
+        // float ray_length = raycast_direction.magnitude;
 
         if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, Color.cyan, Time.deltaTime); }
-        if (Physics.Raycast(cover_from, raycast_direction, out hit, raycast_direction.magnitude, mask)) {
+        if (Physics.Raycast(cover_from, raycast_direction, out hit, raycast_direction.magnitude, layer_mask)) {
             // if raycast hits something other than the player
             return !RaycastHitsPlayer(hit);
         }
-        return false; // raycast hit nothing, or hit the player, so there is not cover
+        return false;
     }
 
     public static List<Vector3> GetNDirections(int n) {

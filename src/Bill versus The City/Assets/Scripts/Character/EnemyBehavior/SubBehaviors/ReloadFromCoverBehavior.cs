@@ -7,11 +7,12 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
     public float calculations_per_second = 0.75f;  // controls how frequently the behavior recalculates it's destination
     private float last_calculation_at = -1f;
     private bool cancel_reload_to_retreat = false;
+    private string debug_message = "init";
     
     public ReloadFromCoverBehavior() : this(false) { /* do nothing */ }
     public ReloadFromCoverBehavior(bool cancel_reload_to_retreat) {
         this.cancel_reload_to_retreat = cancel_reload_to_retreat;
-     }
+    }
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
         if (last_calculation_at + calculations_per_second > Time.time) {
@@ -23,7 +24,8 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
 
         bool can_see_player = parent.perception.seeing_target;
         if (!can_see_player) {
-            Debug.Log("in cover, perform reload");
+            debug_message = $"in cover recalculate at: {last_calculation_at + calculations_per_second}";
+            Debug.Log("in cover, perform reload.");
             // player cannot be seen, so just reload
             parent.ctrl_sprint = false;
             parent.ctrl_move_mode = MovementTarget.waypoint;
@@ -31,8 +33,8 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
             parent.ctrl_start_reload = true;
             parent.ctrl_crouch = true;
             parent.ctrl_cancel_reload = false;
-
         } else {
+            debug_message = $"seeking cover. Already reloading? '{parent.movement_script.reloading}'. recalculate at: {last_calculation_at + calculations_per_second}";
             Debug.Log("Player has LoS, retreat before reload");
             // player has a shot at the enemy, so retreat to cover
             parent.ctrl_start_reload = false;
@@ -51,5 +53,9 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
         }
 
         // recalculate destination
+    }
+
+    public string GetDebugMessage(EnemyBehavior parent) {
+        return debug_message;
     }
 }
