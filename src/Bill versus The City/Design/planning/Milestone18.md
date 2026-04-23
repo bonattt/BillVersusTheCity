@@ -18,6 +18,7 @@ PLANNED FEATURES
 [ ] Update Unity version
 [~] implement enemies taking cover
     [+] feature (behavior and movement script support crouching)
+    [ ] My cover-detection logic is way more busted than I realized, I need to fix this
     [ ] FIX: enemy behvior to take cover should be changed to actually use low cover that can be crouched under
     [ ] FIX: enemy perception should see through low cover, and try to shoot at cover. OR implement a bool for this.
 [+] NPC civilian bystanders
