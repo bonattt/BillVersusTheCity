@@ -114,10 +114,8 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
             return null;
         }
         AudioSource audio_source = CreatePlayer(audio_clip, target, volume);
+        audio_source.gameObject.name = ObjectName(sound);
         audio_source.loop = loop;
-        // PlayingSoundInterface instance_manager = audio_source.gameObject.GetComponent<PlayingSoundInterface>();
-        // instance_manager.StartPlayback(sound, loop);
-        // instance_manager.sound_category = sound_category;
 
         SoundInstanceData instance_data = audio_source.gameObject.AddComponent<SoundInstanceData>();
         instance_data.sound = sound;
@@ -127,7 +125,13 @@ public class SFXSystem : MonoBehaviour, ISettingsObserver
         AudioMixerGroup mixer = sound.GetMixerGroup(sound_category);
         audio_source.outputAudioMixerGroup = mixer;
         audio_source.Play();
+        Destroy(audio_source.gameObject, audio_clip.length + 0.1f);
         return audio_source;
+    }
+
+    private string ObjectName(ISingleSFXSound sound) {
+        // gets the name to use on a game object for a sound
+        return $"AudioSource({sound.sound_name})";
     }
 
     private AudioSource CreatePlayer(AudioClip audio_clip, Vector3 target, float volume) {

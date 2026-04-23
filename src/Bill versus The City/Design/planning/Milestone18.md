@@ -16,7 +16,8 @@ PLANNED FEATURES
     - <stretch> NPC ally combatants
     - <stretch> gun-store level where NPCs fight on your side
 [ ] Update Unity version
-[+] implement enemies taking cover
+[~] implement enemies taking cover
+    [+] feature (behavior and movement script support crouching)
     [ ] FIX: enemy behvior to take cover should be changed to actually use low cover that can be crouched under
     [ ] FIX: enemy perception should see through low cover, and try to shoot at cover. OR implement a bool for this.
 [+] NPC civilian bystanders
@@ -29,6 +30,7 @@ SPRINT BUGS (bugs found this sprint and fixed)
 [?] Error closing game: menus are trying to close from the choreography, and getting an error because the menu isn't open...
     --> working towards fixing this, I added a cancel to Choreography, which shouldn't have fixed this by-itself because it still calls `MenuManager.inst.CloseMenu`
     however, with this change, I can no longer reproduce this error.
+[+] FIX: audio sources not cleaned up.
 
 
 LOW PRIORITY TASKS
