@@ -394,13 +394,11 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                 if (movement_script.seeing_target && dist < optimal_attack_range) {
                     behavior_mode = BehaviorMode.engaged;
                 } else {
-                    Debug.LogWarning("POOTIS 1"); // TODO --- remove debug
                     behavior_mode = BehaviorMode.persuing;
                 }
                 break;
 
             case PerceptionState.alert:
-                Debug.LogWarning("POOTIS 2"); // TODO --- remove debug
                 behavior_mode = BehaviorMode.persuing;
                 break;
 

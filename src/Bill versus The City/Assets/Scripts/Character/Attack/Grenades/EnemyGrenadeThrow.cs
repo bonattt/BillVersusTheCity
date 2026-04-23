@@ -36,7 +36,6 @@ public class EnemyGrenadeThrow : MonoBehaviour, IPerceptionSubscriber
     void Start() {
         perception.Subscribe(this);
         grenade_attack.current_ammo = grenade_attack.ammo_capacity;
-        Debug.LogWarning($"ammo: {grenade_attack.current_ammo} / {grenade_attack.ammo_capacity}");
     }
 
     public void UpdatePerceptionState(PerceptionState previous_state, PerceptionState new_state) {
