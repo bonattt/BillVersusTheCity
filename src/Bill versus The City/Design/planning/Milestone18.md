@@ -19,8 +19,9 @@ PLANNED FEATURES
 [~] implement enemies taking cover
     [+] feature (behavior and movement script support crouching)
     [ ] My cover-detection logic is way more busted than I realized, I need to fix this
-        [ ] Prevent enemies selecting un-traversable paths
+        [+] Prevent enemies selecting un-traversable paths
         [ ] Implement distinction between hard and soft cover (based on whether a crouch is required to use cover)
+        [ ] Refactor pathfinding utils to return Vector3's instead of transforms for cover-position calculations
     [ ] FIX: crouching doesn't change the enemy's colliders. Crouching enemies should not "activate" invisible cover, but their collider should shrink so bullets go over them. Enemies should never crouch except behind cover.
 
 [+] NPC civilian bystanders

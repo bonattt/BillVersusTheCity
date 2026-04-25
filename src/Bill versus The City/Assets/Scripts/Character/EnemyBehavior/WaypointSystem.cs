@@ -97,6 +97,10 @@ public class WaypointSystem : MonoBehaviour {
         return (Transform t) => filter_func1(t) && filter_func2(t);
     }
 
+    public IEnumerable<Transform> GetCoverPositionsByDistance(Vector3 start_point, Vector3 cover_from) {
+        // returns an iterable set of positions which have cover from the player, sorted by distance from the current position.
+        return _BestPositionIterable(start_point, GetCurriedCoverDistanceScore(cover_from), GetCoverFromFilter(cover_from));
+    }
     public Transform GetClosestCoverPosition(Vector3 start_point, Vector3 cover_from) {
         // takes a start position and a position for an enemy to take cover from
         // returns the closest by travel distance point from waypoints which cannot raycast to `cover_from`
@@ -112,6 +116,19 @@ public class WaypointSystem : MonoBehaviour {
         return TravelDistanceToPoint(start_pos, destination);
     }
 
+    private IEnumerable<Transform> _BestPositionIterable(Vector3 start_point, Func<Vector3, Vector3, float> score_funct, Func<Transform, bool> filter_func) {
+        // float best_score = float.PositiveInfinity;
+        // Transform best_destination = null;
+        SortedList<float, Transform> sorted_list = new SortedList<float, Transform>();
+        foreach(Transform p in waypoints) {
+            if (! filter_func(p)) { continue; }
+            float distance_score = score_funct(start_point, p.position);
+            sorted_list.Add(distance_score, p);
+        }
+        foreach (KeyValuePair<float, Transform> value_pair  in sorted_list) {
+            yield return value_pair.Value;
+        }
+    }
     private Transform _GetBestPosition(Vector3 start_point, Func<Vector3, Vector3, float> score_funct, Func<Transform, bool> filter_func) {
         // takes a start_point, scoring method, and filtering method.
         // returns the Waypoint with the lowest distance-score which is not excluded by the filter.

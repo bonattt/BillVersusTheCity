@@ -166,7 +166,6 @@ public static class NavMeshUtils {
 
     private static bool _PositionHasCover(Vector3 cover_from, Vector3 position, LayerMask layer_mask, float ray_length, bool draw_debug_ray = false) {
         // move raycast points to position just above the ground to avoid treating the floor as cover
-        Debug.LogError("POOTIS!!!"); // TODO --- remove debug
         cover_from = new Vector3(cover_from.x, 1f, cover_from.z);
         position = new Vector3(position.x, 1f, position.z);
 
@@ -213,6 +212,10 @@ public static class NavMeshUtils {
         } else {
             return parent.transform.position + (-toward_pos * 3);
         }
+    }
+
+    public static bool IsPathBlocked(NavMeshAgent agent) {
+        return agent.pathStatus != NavMeshPathStatus.PathInvalid;
     }
     
 }

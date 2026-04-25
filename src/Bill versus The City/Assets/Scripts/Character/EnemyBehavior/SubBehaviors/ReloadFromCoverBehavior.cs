@@ -8,10 +8,13 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
     private float last_calculation_at = -1f;
     private bool cancel_reload_to_retreat = false;
     private string debug_message = "init";
+
+    private FleeToCoverBehavior flee_to_cover;
     
     public ReloadFromCoverBehavior() : this(false) { /* do nothing */ }
     public ReloadFromCoverBehavior(bool cancel_reload_to_retreat) {
         this.cancel_reload_to_retreat = cancel_reload_to_retreat;
+        this.flee_to_cover = new FleeToCoverBehavior(false);
     }
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
@@ -34,22 +37,9 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
             parent.ctrl_crouch = true;
             parent.ctrl_cancel_reload = false;
         } else {
-            debug_message = $"seeking cover. Already reloading? '{parent.movement_script.reloading}'. recalculate at: {last_calculation_at + calculations_per_second}";
-            Debug.Log("Player has LoS, retreat before reload");
-            // player has a shot at the enemy, so retreat to cover
-            parent.ctrl_start_reload = false;
-            parent.ctrl_crouch = false;
-            parent.ctrl_cancel_reload = cancel_reload_to_retreat;
-            parent.ctrl_sprint = true;
-            parent.ctrl_move_mode = MovementTarget.waypoint;
-            parent.ctrl_aim_mode = AimingTarget.movement_direction;
-
-            Vector3 start = parent.movement_script.transform.position;
-            Vector3 cover_from = player.transform.position;
-
-            Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start, cover_from);
-            parent.ctrl_waypoint = dest.position;
-            Debug.DrawLine(start, parent.ctrl_waypoint, Color.green, Time.deltaTime);
+            // debug_message = $"seeking cover. Already reloading? '{parent.movement_script.reloading}'. recalculate at: {last_calculation_at + calculations_per_second}";
+            debug_message = flee_to_cover.GetDebugMessage(parent);
+            flee_to_cover.SetControllerFlags(parent, player);
         }
 
         // recalculate destination

@@ -73,10 +73,27 @@ public class FleeToCoverBehavior : ISubBehavior  {
         } 
         else {
             Vector3 cover_from = player.transform.position;
-            Transform dest = WaypointSystem.inst.GetClosestCoverPosition(start_pos, cover_from);
+            Transform dest = GetBestCoverPosition(parent, start_pos, cover_from);
+            if (dest == null) {
+                Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
+                return destination;
+            }
             return dest.position;
             // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);
         }
+    }
+
+    private Transform GetBestCoverPosition(EnemyBehavior parent, Vector3 start_pos, Vector3 cover_from) {
+        // TODO --- this should return Vector3s, not Transforms
+        NavMeshAgent agent = parent.movement_script.nav_mesh_agent;
+        foreach(Transform destination in WaypointSystem.inst.GetCoverPositionsByDistance(start_pos, cover_from)) {
+            NavMeshPath path = new NavMeshPath();
+            bool success = agent.CalculatePath(destination.position, path);
+            
+            if (success && path.status == NavMeshPathStatus.PathComplete) { return destination; }
+            else { continue; } 
+        }
+        return null; // no valid cover positions found
     }
 
     private bool has_los_to_player = false; // cached 
