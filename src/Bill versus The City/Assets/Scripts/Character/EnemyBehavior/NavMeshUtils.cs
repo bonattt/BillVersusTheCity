@@ -25,7 +25,7 @@ public static class NavMeshUtils {
         return GetRandomPoint(agent, radius, origin, DEFAULT_MAX_TRIES);
     }
 
-    public static Vector3 GetRandomPoint(NavMeshAgent agent, float radius, Vector3 origin, int max_tries) {
+    public static Vector3 GetRandomPoint(NavMeshAgent agent, float radius, Vector3 origin, int max_tries, int nav_mesh_area_mask = NavMesh.AllAreas) {
         // Gets a random position within a radius which is actually reachable by a navmesh agent.
 
         for (int i = 0; i < max_tries; i++) // Try up to 10 random points
@@ -33,7 +33,7 @@ public static class NavMeshUtils {
             Vector3 randomDirection = Random.insideUnitSphere * radius;
             randomDirection += origin;
             // TODO --- fix this bad ChatGPT code
-            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas)) {
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, nav_mesh_area_mask)) {
                 // Check if the agent can reach the point
                 NavMeshPath path = new NavMeshPath();
                 if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete) {
@@ -41,10 +41,27 @@ public static class NavMeshUtils {
                 }
             }
         }
-
-        // If no valid point is found after 10 attempts, return Vector3.zero
-        return Vector3.zero;
+        // if a random position fails after `max_tries`, try sampling at the origin
+        (bool success, Vector3 origin_pos) = _SamplePosition(agent, origin, radius, nav_mesh_area_mask);
+        if (success) { 
+            return origin_pos; 
+        }
+        else { 
+            return new Vector3(float.NaN, float.NaN, float.NaN); 
+        }
     }
+
+    private static (bool, Vector3) _SamplePosition(NavMeshAgent agent, Vector3 position, float radius, int nav_mesh_area_mask) {
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, radius, nav_mesh_area_mask)) {
+            // Check if the agent can reach the point
+            NavMeshPath path = new NavMeshPath();
+            if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete) {
+                return (true, hit.position);
+            }
+        }
+        return (false, new Vector3(float.NaN, float.NaN, float.NaN));
+    }
+
     public static float GetPathLength(NavMeshPath path) {
         float length = 0f;
         for (int i = 1; i < path.corners.Length; i++)  {
@@ -68,70 +85,6 @@ public static class NavMeshUtils {
         float dot = Vector3.Dot(toward_player, travel_direction);
         return dot >= towards_player_threshold;
     }
-
-
-
-    // public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from) {
-    //     int n_rays = 15;
-    //     return GetRetreatWithCover(start, cover_from, n_rays);
-    // }
-    // public static Vector3 GetRetreatWithCover(Vector3 start, Vector3 cover_from, int n_rays) {
-    //     start = new Vector3(start.x, 0.5f, start.z);
-    //     cover_from = new Vector3(cover_from.x, 0.5f, cover_from.z);
-
-    //     bool start_has_cover = PositionHasCoverFrom(start, cover_from, draw_debug_ray: true);
-    //     if (start_has_cover) { return start; }
-
-    //     List<Vector3> cover_positions = GetCoverPositions(cover_from, n_rays);
-    //     if (cover_positions.Count == 0) {
-    //         return start + (5 * (cover_from - start).normalized); // if there are no cover positions, just try to move away
-    //     }
-    //     float best_distance_score = float.NegativeInfinity;
-    //     Vector3 best_position = cover_positions[0];
-    //     foreach (Vector3 position in cover_positions) {
-    //         float distance_score = CoverDistanceScore(position, start, cover_from);
-    //         if (distance_score > best_distance_score) {
-    //             best_distance_score = distance_score;
-    //             best_position = position;
-    //         }
-    //     }
-    //     return best_position;
-    // }
-
-    // private static float CoverDistanceScore(Vector3 destination, Vector3 start_pos, Vector3 cover_from) {
-    //     // returns a "score" for ranking the best destination point for an agent trying to move from `start_pos` to `destination` while 
-    //     // avoiding `cover_from`.
-    //     // method only factors distance.
-    //     float avoidance_score = Mathf.Sqrt(2 * Vector3.Distance(destination, cover_from)); // score for how far the point to be avoided is from the destination
-    //     float travel_score = Vector3.Distance(destination, cover_from); // score for how far the destination is from the start
-
-    //     // high avoidance score is good, b/c we want to avoid, but high travel_score is bad b/c it means we have to travel a long way to reach safety
-    //     return avoidance_score - travel_score;  
-    // }
-
-    // private static List<Vector3> GetCoverPositions(Vector3 cover_from, int n_rays) {
-    //     // returns a list of Vector3's which have cover from `cover_from` AND are valid positions on a navmesh
-    //     List<Vector3> rays = GetNDirections(n_rays);
-    //     List<Vector3> valid_positions = new List<Vector3>();
-    //     foreach (Vector3 r in rays) {
-    //         if (Physics.Raycast(cover_from, r, out RaycastHit raycast_hit, float.PositiveInfinity)) {
-    //             if (! RaycastHitsPlayer(raycast_hit)) {
-    //                 float radius = 1f;
-    //                 Vector3 point_past_cover = raycast_hit.point + r.normalized * radius; // move `radius` units past the cover
-    //                 if (NavMesh.SamplePosition(point_past_cover, out NavMeshHit navmesh_hit, radius, NavMesh.AllAreas)) { 
-    //                     Vector3 valid_p = navmesh_hit.position;
-    //                     // retest that the navmesh position still has cover
-    //                     if (Physics.Raycast(cover_from, valid_p, out RaycastHit raycast_hit2, float.PositiveInfinity)) {
-    //                         if (! RaycastHitsPlayer(raycast_hit)) {
-    //                             valid_positions.Add(valid_p);
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return valid_positions;
-    // }
 
     public static bool RaycastTowardPlayer(EnemyBehavior enemy, ManualCharacterMovement player, out RaycastHit hit, bool debug_ray = false) {
         Vector3 start_pos = new Vector3(enemy.transform.position.x, 0.85f, enemy.transform.position.z);
@@ -217,5 +170,4 @@ public static class NavMeshUtils {
     public static bool IsPathBlocked(NavMeshAgent agent) {
         return agent.pathStatus != NavMeshPathStatus.PathInvalid;
     }
-    
 }

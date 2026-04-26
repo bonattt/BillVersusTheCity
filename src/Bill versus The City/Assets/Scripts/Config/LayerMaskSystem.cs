@@ -49,7 +49,6 @@ public class LayerMaskSystem : MonoBehaviour {
     private void CaclulateNavMeshAreaMasks() {
         _nav_mesh_sound_area_mask = nav_mesh_agents.sound_propegation.areaMask;
     }
-
 }
 
 [Serializable]

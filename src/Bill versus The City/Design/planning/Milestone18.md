@@ -36,6 +36,7 @@ SPRINT BUGS (bugs found this sprint and fixed)
     however, with this change, I can no longer reproduce this error.
 [+] FIX: audio sources not cleaned up.
 [ ] FIX: Player crouching sinks into the floor partially; this causes enemies to shoot down, and hit the floor.
+[ ] FIX: UnassignedReferenceError in final tutorial; crouch_target
 
 
 LOW PRIORITY TASKS
