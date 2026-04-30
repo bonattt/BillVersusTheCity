@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561174ad1e76248489df03bdb0e34158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  has_cover_raycast:
+  walls_raycast:
     serializedVersion: 2
-    m_Bits: 131411
+    m_Bits: 65
   soft_cover_raycast:
     serializedVersion: 2
     m_Bits: 131072
@@ -111,5 +111,8 @@ MonoBehaviour:
   vault_over_cover_zones:
     serializedVersion: 2
     m_Bits: 131072
+  player_raycast:
+    serializedVersion: 2
+    m_Bits: 256
   nav_mesh_agents:
     sound_propegation: {fileID: 8814507368237487670}

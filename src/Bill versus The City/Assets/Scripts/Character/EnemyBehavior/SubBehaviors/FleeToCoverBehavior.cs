@@ -8,14 +8,15 @@ public class FleeToCoverBehavior : ISubBehavior  {
     public float recalculation_period = 0.1f;  // controls how frequently the behavior recalculates it's destination
     private float last_calculation_at = -1f;
 
-    private bool is_cornered = false; // if the enemy becomes cornered, it will start trying to fight
+    private bool _is_cornered = false; // if the enemy becomes cornered, it will start trying to fight
+    public bool is_cornered => _is_cornered;
 
     private const float towards_player_threshold = 0.75f; // 
     
     public bool fights_when_cornered = false;
     public bool reload = false;
     public FleeToCoverBehavior(bool fights_when_cornered, bool reload=false) {
-        Debug.LogWarning("FleeToCoverBehavior is OBSOLETE, use FleeFromThreatsBehavior"); // TODO --- remove this code
+        // Debug.LogWarning("FleeToCoverBehavior is OBSOLETE, use FleeFromThreatsBehavior"); // For now, at least, flee to cover isn't obsolete, but shouldn't be used as a top-level behavior. I am composing this behavior in ReloadFromCover
         this.fights_when_cornered = fights_when_cornered;
         this.reload = reload;
     }
@@ -30,7 +31,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
 
         parent.ctrl_target = player;
         parent.ctrl_move_mode = MovementTarget.waypoint;
-        if (is_cornered) {
+        if (_is_cornered) {
             parent.ctrl_sprint = false;
             parent.ctrl_will_shoot = fights_when_cornered;
             parent.ctrl_aim_mode = AimingTarget.target;
@@ -40,20 +41,20 @@ public class FleeToCoverBehavior : ISubBehavior  {
             parent.ctrl_aim_mode = AimingTarget.movement_direction;
         }
 
-        if (has_los_to_player) {
-            parent.ctrl_crouch = false;
-        } else {
-            parent.ctrl_crouch = true;
-        }
-        Color color = is_cornered ? Color.red : Color.green;
+        // if (has_los_to_player) {
+        //     parent.ctrl_crouch = false;
+        // } else {
+        //     parent.ctrl_crouch = true;
+        // }
+        Color color = _is_cornered ? Color.red : Color.green;
         Debug.DrawLine(parent.movement_script.transform.position, parent.ctrl_waypoint, color);
     }
 
     private void UpdateIsCornered(EnemyBehavior parent, ManualCharacterMovement player) {
-        if (!is_cornered) {
-            is_cornered = WillBecomeCornered(parent, player);
+        if (!_is_cornered) {
+            _is_cornered = WillBecomeCornered(parent, player);
         }
-        is_cornered = WillStayCornered(parent, player);
+        _is_cornered = WillStayCornered(parent, player);
     }
 
     private Vector3 RecalculatePath(EnemyBehavior parent, ManualCharacterMovement player) {
@@ -66,7 +67,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
         }
 
         Vector3 start_pos = parent.movement_script.transform.position;
-        if (is_cornered) {
+        if (_is_cornered) {
             Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
             return destination;
             // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.red);
@@ -93,10 +94,11 @@ public class FleeToCoverBehavior : ISubBehavior  {
             if (success && path.status == NavMeshPathStatus.PathComplete) { return destination; }
             else { continue; } 
         }
+        Debug.LogWarning($"{parent.gameObject.name}.FleeToCoverBehavior cannot find a valid cover position!");
         return null; // no valid cover positions found
     }
 
-    private bool has_los_to_player = false; // cached 
+    public bool has_los_to_player { get; private set; } // cached 
     private void UpdatePlayerRaycast(EnemyBehavior parent, ManualCharacterMovement player) {
         has_los_to_player = parent.perception.seeing_target;
     }
@@ -106,7 +108,7 @@ public class FleeToCoverBehavior : ISubBehavior  {
     }
 
     private bool WillStayCornered(EnemyBehavior parent, ManualCharacterMovement player) {
-        return is_cornered && has_los_to_player; 
+        return _is_cornered && has_los_to_player; 
     }
 
     private bool WillBecomeCornered(EnemyBehavior parent, ManualCharacterMovement player) {
@@ -122,6 +124,6 @@ public class FleeToCoverBehavior : ISubBehavior  {
 
     public string GetDebugMessage(EnemyBehavior parent) {
         ManualCharacterMovement player = PlayerCharacter.inst.player_transform.gameObject.GetComponent<ManualCharacterMovement>();
-        return $"is_cornered: {is_cornered}, destination: {parent.ctrl_waypoint}";
+        return $"FleeToCoverBehavior: is_cornered: {_is_cornered}, destination: {parent.ctrl_waypoint}";
     }
 }

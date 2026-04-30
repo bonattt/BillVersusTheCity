@@ -44,9 +44,11 @@ public static class NavMeshUtils {
         // if a random position fails after `max_tries`, try sampling at the origin
         (bool success, Vector3 origin_pos) = _SamplePosition(agent, origin, radius, nav_mesh_area_mask);
         if (success) { 
+            Debug.LogWarning($"Defaulting to sampling the origin! ({agent.gameObject.name})"); // TODO --- remove debug
             return origin_pos; 
         }
         else { 
+            Debug.LogWarning($"Defaulting to Vector3.NaN! ({agent.gameObject.name})"); // TODO --- remove debug
             return new Vector3(float.NaN, float.NaN, float.NaN); 
         }
     }
@@ -93,7 +95,7 @@ public static class NavMeshUtils {
         if (debug_ray) {
             Debug.DrawRay(start_pos, towards_player, Color.red, 0.25f);
         }
-        return Physics.Raycast(start_pos, towards_player, out hit, towards_player.magnitude, LayerMaskSystem.inst.has_cover_raycast);
+        return Physics.Raycast(start_pos, towards_player, out hit, towards_player.magnitude, LayerMaskSystem.inst.walls_raycast);
     }
 
     public static bool RaycastHitsPlayer(RaycastHit hit) {
@@ -106,28 +108,53 @@ public static class NavMeshUtils {
         return result;
     }
 
+    public static bool EnemyInCoverFromPlayer(Vector3 player_position, Vector3 enemy_position, float cover_distance, bool draw_debug_ray = false) {
+        // calculates if the enemy will consider itself "behind cover", which works slightly different from detecting if a position has cover.
+        float ray_length = (enemy_position - player_position).magnitude;
+        bool walls_result = _PositionHasCover(player_position, enemy_position, LayerMaskSystem.inst.walls_raycast, ray_length, draw_debug_ray:draw_debug_ray);
+        if (walls_result) { return true; } // Enemy is "in cover" if there is a wall anywhere between them and the player.
+
+        bool soft_cover_result = _PositionHasCover(player_position, enemy_position, LayerMaskSystem.inst.soft_cover_raycast, ray_length, out RaycastHit raycast_hit, draw_debug_ray:draw_debug_ray);
+        if (!soft_cover_result) { return false; } // no hit, therefore not in cover
+
+        Vector3 hit_position = raycast_hit.point;
+        float dist_to_player = Vector3.Distance(hit_position, player_position);
+        float dist_to_enemy = Vector3.Distance(hit_position, enemy_position);
+
+        // enemy must be closer to soft cover than the player is to count as "in cover"
+        Debug.LogWarning($"dist_to_player: {dist_to_player}, dist_to_enemy: {dist_to_enemy}"); // TODO --- remove debug
+        if (dist_to_enemy <= dist_to_player) {
+            return true;
+        }
+        return false;
+    }
+
     public static bool PositionHasCoverFrom(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
         float ray_length = (position - cover_from).magnitude;
         return _PositionHasCover(cover_from, position, LayerMaskSystem.inst.has_cover_raycast, ray_length, draw_debug_ray:draw_debug_ray);
     }
 
-    public static bool PositionHasSoftCover(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
-        // determines if `position` has cover from `cover_from` while crouching.
-        // `cover` should be near the `position` for it to apply.
-        return _PositionHasCover(cover_from, position, LayerMaskSystem.inst.soft_cover_raycast, ray_length:4f, draw_debug_ray:draw_debug_ray);
-    }
+    // public static bool PositionHasSoftCover(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
+    //     // determines if `position` has cover from `cover_from` while crouching.
+    //     // `cover` should be near the `position` for it to apply.
+    //     return _PositionHasCover(cover_from, position, LayerMaskSystem.inst.soft_cover_raycast, ray_length:4f, draw_debug_ray:draw_debug_ray);
+    // }
 
     private static bool _PositionHasCover(Vector3 cover_from, Vector3 position, LayerMask layer_mask, float ray_length, bool draw_debug_ray = false) {
+        // preserve old signature without `out RaycastHit hit` arguments
+        RaycastHit _; 
+        return _PositionHasCover(cover_from, position, layer_mask, ray_length, out _, draw_debug_ray);
+    }
+    private static bool _PositionHasCover(Vector3 cover_from, Vector3 position, LayerMask layer_mask, float ray_length, out RaycastHit hit, bool draw_debug_ray = false) {
         // move raycast points to position just above the ground to avoid treating the floor as cover
         cover_from = new Vector3(cover_from.x, 1f, cover_from.z);
         position = new Vector3(position.x, 1f, position.z);
 
         Vector3 raycast_direction = position - cover_from;
-        RaycastHit hit;
         // float ray_length = raycast_direction.magnitude;
 
         if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, Color.cyan, Time.deltaTime); }
-        if (Physics.Raycast(cover_from, raycast_direction, out hit, raycast_direction.magnitude, layer_mask)) {
+        if (Physics.Raycast(cover_from, raycast_direction, out hit, ray_length, layer_mask)) {
             // if raycast hits something other than the player
             return !RaycastHitsPlayer(hit);
         }

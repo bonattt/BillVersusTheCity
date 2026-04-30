@@ -341,6 +341,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
         ctrl_cancel_reload = false;
         ctrl_sprint = false;
         ctrl_shoot_flat = false;
+        ctrl_crouch = false;
     }
 
     public float DistanceToTarget() {

@@ -13,16 +13,19 @@ PLANNED FEATURES
 [~] implement trial levels with new level types
     [+] Drug-bust level
     [ ] Flight level
-    - <stretch> NPC ally combatants
-    - <stretch> gun-store level where NPCs fight on your side
+    [ ] <stretch> NPC ally combatants
+    [ ] <stretch> gun-store level where NPCs fight on your side
 [ ] Update Unity version
 [~] implement enemies taking cover
     [+] feature (behavior and movement script support crouching)
     [ ] My cover-detection logic is way more busted than I realized, I need to fix this
         [+] Prevent enemies selecting un-traversable paths
-        [ ] Implement distinction between hard and soft cover (based on whether a crouch is required to use cover)
+        [+] Implement distinction between hard and soft cover (based on whether a crouch is required to use cover)
         [ ] Refactor pathfinding utils to return Vector3's instead of transforms for cover-position calculations
-    [ ] FIX: crouching doesn't change the enemy's colliders. Crouching enemies should not "activate" invisible cover, but their collider should shrink so bullets go over them. Enemies should never crouch except behind cover.
+        [ ] FIX: Enemies can't see player if crouched behind low cover
+        [ ] FIX: Enemy crouches and uncrouches repeatedly while reloading in cover, making crouch ineffective (crouch_percent stays as zero)
+    [ ] FIX: crouching doesn't change the enemy's colliders. Crouching enemies should not "activate" invisible cover, but their collider 
+        should shrink so bullets go over them. Enemies should never crouch except behind cover.
 
 [+] NPC civilian bystanders
 

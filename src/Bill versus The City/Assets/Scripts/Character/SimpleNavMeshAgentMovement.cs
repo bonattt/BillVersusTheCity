@@ -39,7 +39,6 @@ using UnityEngine.AI;
             nav_mesh_agent.speed = walk_speed * sprint_multiplier;
             crouch = false;
         } else if (crouch) {
-            Debug.LogWarning("CROUCH!");
             nav_mesh_agent.speed = walk_speed * crouched_speed_multiplier;
         } else {
             nav_mesh_agent.speed = walk_speed;

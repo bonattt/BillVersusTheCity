@@ -3,6 +3,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class LayerMaskSystem : MonoBehaviour {
     // class for using the inspector to configure and access globally reusable LayerMasks.
@@ -16,16 +17,24 @@ public class LayerMaskSystem : MonoBehaviour {
         }
     }
 
-    [Tooltip("LayerMask used when performing a raycast to determin if a position has cover or not")]
-    public LayerMask has_cover_raycast;
+    [Tooltip("LayerMask used when performing a raycast to detect walls.")]
+    [FormerlySerializedAs("has_cover_raycast")]
+    public LayerMask walls_raycast;
 
 
     [Tooltip("LayerMask used to detect cover that can be crouched behind.")]
     public LayerMask soft_cover_raycast;
 
+    // returns a layer_mask for detecting any cover, both hard and soft.
+    public LayerMask has_cover_raycast {
+        get => walls_raycast | soft_cover_raycast;
+    }
 
     [Tooltip("LayerMask used when testing if a sound is audible")]
     public LayerMask blocks_sounds;
+
+    [Tooltip("LayerMask for raycasting for any objects that block vision.")]
+    public LayerMask blocks_sight; // TODO --- actually use this somewhere
 
     [Tooltip("Used to detect where the player can vault over nearby cover.")]
     public LayerMask vault_over_cover_zones;
@@ -41,7 +50,9 @@ public class LayerMaskSystem : MonoBehaviour {
             return _nav_mesh_sound_area_mask.Value;
         }
     }
-
+    
+    [Tooltip("Raycast LayerMask to hit the player.")]
+    public LayerMask player_raycast;
 
     [Tooltip("This field contains references to NavMeshAgents used to configure NavMesh AreaMasks. This hack is the best way I could find to get a UI to avoid calculating these myself, without good documentation.")]
     public LayerMaskNavMeshAgents nav_mesh_agents;

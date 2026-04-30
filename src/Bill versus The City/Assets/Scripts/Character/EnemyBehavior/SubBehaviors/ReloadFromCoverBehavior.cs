@@ -25,9 +25,11 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
         parent.ctrl_target = player;
         parent.ctrl_will_shoot = false;
 
-        bool can_see_player = parent.perception.seeing_target;
-        if (!can_see_player) {
-            debug_message = $"in cover recalculate at: {last_calculation_at + calculations_per_second}";
+        // bool can_see_player = parent.perception.seeing_target;
+        bool has_cover_from_player = NavMeshUtils.PositionHasCoverFrom(player.transform.position, parent.movement_script.transform.position);
+        parent.ctrl_crouch = has_cover_from_player;
+        if (has_cover_from_player) {
+            debug_message = $"IN COVER recalculate at: {last_calculation_at + calculations_per_second}";
             Debug.Log("in cover, perform reload.");
             // player cannot be seen, so just reload
             parent.ctrl_sprint = false;
@@ -46,6 +48,6 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
     }
 
     public string GetDebugMessage(EnemyBehavior parent) {
-        return debug_message;
+        return $"ReloadFromCover.{debug_message}";
     }
 }
