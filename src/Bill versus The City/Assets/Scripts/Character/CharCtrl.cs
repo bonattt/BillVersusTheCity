@@ -455,10 +455,10 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         float current_shooting_height = GetHeight(uncrouched_shooting_height, crouched_shooting_height);
         if (Mathf.Abs(_previous_height - current_height) > 0.001f) { // float equals with a threshold for floating point imprecision
             // it's important to only adjust this while changing crouch, b/c moving the colliders around manually fucks up the collision detection and breaks Vault-over detection.
-            UpdateShootFromHeight(current_shooting_height);
             UpdateColliderHeight(current_height);
             _previous_height = current_height;
         }
+        UpdateShootFromHeight(current_shooting_height);
     }
 
     protected float GetHeight(float standing, float crouched) {

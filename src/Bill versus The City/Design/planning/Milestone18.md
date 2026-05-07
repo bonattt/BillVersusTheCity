@@ -38,8 +38,13 @@ SPRINT BUGS (bugs found this sprint and fixed)
     --> working towards fixing this, I added a cancel to Choreography, which shouldn't have fixed this by-itself because it still calls `MenuManager.inst.CloseMenu`
     however, with this change, I can no longer reproduce this error.
 [+] FIX: audio sources not cleaned up.
-[ ] FIX: Player crouching sinks into the floor partially; this causes enemies to shoot down, and hit the floor.
+[+] FIX: Player crouching sinks into the floor partially; this causes enemies to shoot down, and hit the floor.
+    --> actually, enemies should be shooting at the character's "shoot at" target, NOT their position.
+    --> i just needed to move the update target function outside the debouncing case for the character controller, so it is always adjusting 
+        to the correct hight when the CharacterController rebalances the Y-coordinates of the character
 [ ] FIX: UnassignedReferenceError in final tutorial; crouch_target
+[ ] FIX: SMG Enemy can get stuck in a chase behavior, and not use full auto. If player is outside the "optimal attack range". Once you enter
+    optimal attack range, it doesn't matter if you move back outside it...
 
 
 LOW PRIORITY TASKS
