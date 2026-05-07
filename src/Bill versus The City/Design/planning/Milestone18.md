@@ -8,20 +8,20 @@ Started on 2026-04-14
 Finished on 2026-??????
 
 PLANNED FEATURES
-[ ] Finish story outline
-[ ] Start writing
+[X] Finish story outline
+[X] Start writing
 [~] implement trial levels with new level types
     [+] Drug-bust level
     [ ] Flight level
-    [ ] <stretch> NPC ally combatants
-    [ ] <stretch> gun-store level where NPCs fight on your side
+    [-] <stretch> NPC ally combatants
+    [-] <stretch> gun-store level where NPCs fight on your side
 [ ] Update Unity version
 [~] implement enemies taking cover
     [+] feature (behavior and movement script support crouching)
     [ ] My cover-detection logic is way more busted than I realized, I need to fix this
         [+] Prevent enemies selecting un-traversable paths
         [+] Implement distinction between hard and soft cover (based on whether a crouch is required to use cover)
-        [ ] Refactor pathfinding utils to return Vector3's instead of transforms for cover-position calculations
+        [X] Refactor pathfinding utils to return Vector3's instead of transforms for cover-position calculations
         [+] FIX: Enemies can't see player if crouched behind low cover
         [ ] FIX: Enemy crouches and uncrouches repeatedly while reloading in cover, making crouch ineffective (crouch_percent stays as zero)
     [+] FIX: crouching doesn't change the enemy's colliders. Crouching enemies should not "activate" invisible cover, but their collider 
@@ -45,6 +45,7 @@ SPRINT BUGS (bugs found this sprint and fixed)
 [ ] FIX: UnassignedReferenceError in final tutorial; crouch_target
 [ ] FIX: SMG Enemy can get stuck in a chase behavior, and not use full auto. If player is outside the "optimal attack range". Once you enter
     optimal attack range, it doesn't matter if you move back outside it...
+    --> do later
 
 
 LOW PRIORITY TASKS
