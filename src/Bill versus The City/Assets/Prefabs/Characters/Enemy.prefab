@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ad2067ebf705a4fa6aa0a254408cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vision_mask:
+  _vision_mask:
     serializedVersion: 2
     m_Bits: 375
   raycast_start: {fileID: 4280276152886177003}
@@ -216,7 +216,7 @@ MonoBehaviour:
   reload_move_multiplier: 0.33
   walk_speed: 4
   _sprint_multiplier: 1.75
-  crouched_speed: 0.25
+  crouched_speed_multiplier: 0.25
   crouch_rate: 4
   uncrouch_rate: 4
   crouch_height: 0.5
@@ -262,8 +262,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a044a3560ef27e44985f2e1bd40b66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3396656997431563555}
+  movement_script: {fileID: 3396656997431563555}
   default_behavior: 5
+  cover_behavior: 1
   lock_default_behavior: 0
   sprint_to_chase: 0
   optimal_attack_range: 5
@@ -283,13 +284,16 @@ MonoBehaviour:
   ctrl_start_reload: 0
   ctrl_cancel_reload: 0
   ctrl_shooting_rate: 0.75
+  ctrl_crouch: 0
   ctrl_shoot_flat: 1
   _needs_reload: 0
-  debug_distance_to_target: 0
-  debug_distance_to_waypoint: 0
-  debug_sub_behavior: 
-  debug_sub_behavior_message: 
-  debug_behavior_mode: 0
+  debug:
+    distance_to_target: 0
+    distance_to_waypoint: 0
+    crouch: 0
+    sub_behavior: 
+    sub_behavior_message: 
+    behavior_mode: 0
 --- !u!114 &6935893205124348823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,6 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_character: {fileID: 3396656997431563555}
+  cancel_damage_sound_on_death: 1
   only_death_sounds: 1
 --- !u!114 &6825292087101829779
 MonoBehaviour:

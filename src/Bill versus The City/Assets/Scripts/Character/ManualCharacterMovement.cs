@@ -113,6 +113,11 @@ public class ManualCharacterMovement : CharCtrl {
         debug.move_direction = _last_move;
     }
 
+    protected override void UpdateColliderHeight(float height) {
+        // update's the character's collider based on crouch height.
+        controller.height = height;
+    }
+
     private void RemoveOldMoveAction() {
         if (move_action == null) { return; }
         move_action.duration -= GetDeltaTime();

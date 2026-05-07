@@ -11,7 +11,9 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
       * Script controlling if an Enemy can see the player
       */
 
-    public LayerMask vision_mask;
+    [FormerlySerializedAs("vision_mask")]
+    public LayerMask _vision_mask;
+    public LayerMask vision_mask => LayerMaskSystem.inst.blocks_sight | LayerMaskSystem.inst.player_raycast;
     public Transform raycast_start;
 
     public int max_vision_nodes = 1; // max number of visible nodes that will add to how quickly the player is noticed

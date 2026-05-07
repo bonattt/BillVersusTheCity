@@ -25,15 +25,21 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
     protected ICharacterStatus char_status;
-    [Tooltip("Transform which this character should look at.")]
+    [Tooltip("Transform which this character should rotate to look at.")]
     public Transform aim_target;
-    [Tooltip("A transform which will be set to the current crouch height as the character crouches and uncrouches. (should be the aim target for enemies to shoot at).")]
-    public Transform crouch_target; // moves up and down when the character crouches
+    [Tooltip("A transform which will be set to the current crouch height as the character crouches and uncrouches. (should be the aim target for enemies to shoot at). Enemies aim at this point, and fired bullets spawn here.")]
+    [FormerlySerializedAs("crouch_target")]
+    public Transform shoot_from; // moves up and down when the character crouches. ALSO, enemies actually target a child of this transform which is adjusted to not be in-front of the player, but actually where they're standing.
     public VaultingAreaDetector vaulting_area_detector;
 
     public float last_attack_time { get; set; }
     public bool attack_this_frame { get; private set; }
     public bool attack_last_frame { get; private set; }
+
+    public virtual float uncrouched_shooting_height => 1.1f;
+    public virtual float crouched_shooting_height => 0.5f;
+    public virtual float uncrouched_collider_height => 2f;
+    public virtual float crouched_collider_height => 0.4f;
     public float rotation_degrees_per_second = 400;
     public float rotation_speed = 0.85f;
     public ActionCode current_action = ActionCode.none;
@@ -63,8 +69,8 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     
     [Tooltip("How fast the character can go from crouched to fully uncrouched.")]
     public float uncrouch_rate = 4f;
-    public float crouch_height = 0.5f;
-    public float uncrouched_height = 1.1f;
+    // public float crouch_height = 0.5f;
+    // public float uncrouched_height = 1.1f; // TODO --- remove commented code
 
     [Tooltip("if true, the character will reload again if a reload is completed and the gun is not full.")]
     public bool keep_reloading = true;
@@ -421,6 +427,7 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         }
     }
 
+    private float _previous_height = -1f; // cached height of the character's collider from last frame. Used to avoid making changes if the change is small, because it fuck up detecting vault-over
     protected virtual void UpdateCrouch(bool crouch) {
         float deltaTime = GetDeltaTime(); 
         if (crouch_locked_remaining > 0) {
@@ -444,9 +451,27 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         } else {
             crouch_percent -= uncrouch_rate * deltaTime;
         }
-        float current_height = (crouch_height * crouch_percent) + (uncrouched_height * (1 - crouch_percent));
-        crouch_target.position = new Vector3(crouch_target.position.x, current_height, crouch_target.position.z);
+        float current_height = GetHeight(uncrouched_collider_height, crouched_collider_height);
+        float current_shooting_height = GetHeight(uncrouched_shooting_height, crouched_shooting_height);
+        if (Mathf.Abs(_previous_height - current_height) > 0.001f) { // float equals with a threshold for floating point imprecision
+            // it's important to only adjust this while changing crouch, b/c moving the colliders around manually fucks up the collision detection and breaks Vault-over detection.
+            UpdateShootFromHeight(current_shooting_height);
+            UpdateColliderHeight(current_height);
+            _previous_height = current_height;
+        }
     }
+
+    protected float GetHeight(float standing, float crouched) {
+        /** interpolates between an arbitrary min and max float based on current `this.crouch_percent` */
+        return (crouched * crouch_percent) + (standing * (1 - crouch_percent));
+    }
+
+    protected virtual void UpdateShootFromHeight(float height) {
+        // update's the transform used to spawn bullets based on a new height.
+        shoot_from.position = new Vector3(shoot_from.position.x, height, shoot_from.position.z);
+    }
+    protected abstract void UpdateColliderHeight(float height); // update's the character's collider based on crouch height.
+
     public bool GetStartCrouchDiveThisFrame(bool crouch, Vector3 move_direction) {
         // returns true if a crouch dive should start, AND isn't already started
         // move_direction = new Vector3(move_direction.x, 0, move_direction.y); // don't crouch dive from gravity...
@@ -481,13 +506,21 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
     public bool GetCouldStartVaultThisFrame(Vector3 move_direction, Vector3 look_direction) {
         // returns if a crouch input would trigger a jump, without actually checking for the input
         move_direction = new Vector3(move_direction.x, 0, move_direction.z);
-        if (crouch_percent != 0 || is_vaulting || move_direction == Vector3.zero) { return false; }
+        if (crouch_percent != 0 || is_vaulting || move_direction == Vector3.zero) { 
+            debug.could_start_vault_this_frame = "state prohibits vault";
+            return false; 
+        }
         
         VaultOverCoverZone zone = vaulting_area_detector.GetVaultOverCoverZone();
-        if (zone == null) { return false; }
+        if (zone == null) { 
+            debug.could_start_vault_this_frame = "no areas detected";
+            return false; 
+        }
         
         Vector3 direction = move_direction != Vector3.zero ? move_direction : look_direction;
-        return zone.IsInJumpPosition(transform.position, direction);
+        bool in_jump_position = zone.IsInJumpPosition(transform.position, direction);
+        debug.could_start_vault_this_frame = $"in jump position: {in_jump_position}";
+        return in_jump_position;
     }
 
     private float vault_over_margin = 1.1f; // multiplies the length of a jump to ensure you clear the obstacle
@@ -789,11 +822,11 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
 
     public Transform GetCrouchTarget() {
         // gets the transform that needs to be adjusted for crouching
-        if (crouch_target == null) {
+        if (shoot_from == null) {
             Debug.LogWarning($"{this.gameObject.name} using implicit crouch_target!");
             return transform;
         }
-        return crouch_target;
+        return shoot_from;
     }
 
     private List<IReloadSubscriber> _reload_subscribers = new List<IReloadSubscriber>();
@@ -861,6 +894,7 @@ public enum ActionCode {
 public class CharacterControllerDebugInfo {
     [Tooltip("generic message, used for whatever is currently being debugged, or blank if not being used.")]
     public string message = "";
+    public string could_start_vault_this_frame = "";
     public bool can_attack, is_vaulting, is_crouch_diving;
     public float move_action_remaining = -1f, move_speed, vault_over_speed;
     public Vector3 move_direction, move_action_dir;

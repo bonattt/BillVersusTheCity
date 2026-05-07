@@ -20,6 +20,16 @@ using UnityEngine.AI;
     public bool choreography_movement = false;
     
     public Vector3 debug__look_direction;
+
+    private CapsuleCollider _collider;
+    public CapsuleCollider collider_ {
+        get {
+            if (_collider == null) {
+                _collider = GetComponent<CapsuleCollider>();
+            }
+            return _collider;
+        }
+    }
     
     protected override void Update() {
         base.Update();
@@ -50,6 +60,11 @@ using UnityEngine.AI;
         } else if (move_target != nav_mesh_agent.destination) {
             nav_mesh_agent.SetDestination(move_target);
         }
+    }
+    
+    protected override void UpdateColliderHeight(float height) {
+        // update's the character's collider based on crouch height.
+        collider_.height = height;
     }
 
     public override void TeleportTo(Vector3 new_position) {

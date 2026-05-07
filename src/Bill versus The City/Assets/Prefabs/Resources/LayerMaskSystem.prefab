@@ -108,6 +108,9 @@ MonoBehaviour:
   blocks_sounds:
     serializedVersion: 2
     m_Bits: 1
+  blocks_sight:
+    serializedVersion: 2
+    m_Bits: 65
   vault_over_cover_zones:
     serializedVersion: 2
     m_Bits: 131072
