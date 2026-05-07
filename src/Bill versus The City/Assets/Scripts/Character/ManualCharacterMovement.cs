@@ -180,11 +180,6 @@ public class ManualCharacterMovement : CharCtrl {
         SFXSystem.inst.PlaySound(sound, transform.position);
     }
 
-    // public ActionCode GetCrouchAction() {
-    //     ActionCode result = _GetCrouchAction();
-    //     Debug.LogWarning($"crouch_action: {result}, _last_move: {_last_move}, _last_move_flat: {_last_move_flat}"); // TODO --- remove debug
-    //     return result;
-    // }
     public ActionCode GetCrouchAction() {
         // gets the action for the contextual "crouch or jump" control (the spacebar by default)
         if (crouch_percent != 0 || _last_move_flat == Vector2.zero) {
