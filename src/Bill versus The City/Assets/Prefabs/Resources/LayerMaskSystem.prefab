@@ -104,7 +104,7 @@ MonoBehaviour:
     m_Bits: 65
   soft_cover_raycast:
     serializedVersion: 2
-    m_Bits: 131072
+    m_Bits: 655360
   blocks_sounds:
     serializedVersion: 2
     m_Bits: 1

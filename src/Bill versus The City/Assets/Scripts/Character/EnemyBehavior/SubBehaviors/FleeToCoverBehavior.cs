@@ -21,12 +21,19 @@ public class FleeToCoverBehavior : ISubBehavior  {
         this.reload = reload;
     }
     
-    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
-        // parent.ctrl_waypoint = new Vector3(0, 0, 0);
-
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) => 
+        SetControllerFlags(parent, player, force_recaclulation:false);
+    public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player, bool force_recaclulation = false) {
+        if (NavMeshUtils.PointIsNaN(parent.ctrl_waypoint)) { force_recaclulation = true; } 
         // recalculate destination
-        if (last_calculation_at + recalculation_period <= Time.time) {
+        if (force_recaclulation || last_calculation_at + recalculation_period <= Time.time) {
             parent.ctrl_waypoint = RecalculatePath(parent, player);
+            if (NavMeshUtils.PointIsNaN(parent.ctrl_waypoint)) {
+                Debug.LogError($"waypoint set to NaN");
+                # if UNITY_EDITOR
+                Debug.Break();
+                # endif
+            }
         }
 
         parent.ctrl_target = player;
@@ -40,12 +47,6 @@ public class FleeToCoverBehavior : ISubBehavior  {
             parent.ctrl_will_shoot = false;
             parent.ctrl_aim_mode = AimingTarget.movement_direction;
         }
-
-        // if (has_los_to_player) {
-        //     parent.ctrl_crouch = false;
-        // } else {
-        //     parent.ctrl_crouch = true;
-        // }
         Color color = _is_cornered ? Color.red : Color.green;
         Debug.DrawLine(parent.movement_script.transform.position, parent.ctrl_waypoint, color);
     }
@@ -62,25 +63,24 @@ public class FleeToCoverBehavior : ISubBehavior  {
         UpdatePlayerRaycast(parent, player);
         UpdateIsCornered(parent, player);
         if (!has_los_to_player) {
-            // player has no LoS, wherever you are is good
             return parent.movement_script.transform.position;
         }
 
         Vector3 start_pos = parent.movement_script.transform.position;
         if (_is_cornered) {
             Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
+            if (NavMeshUtils.PointIsNaN(destination)) { Debug.LogError("CORNERED: DestinationAwayFromPosition is NaN"); }
             return destination;
-            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.red);
         } 
         else {
             Vector3 cover_from = player.transform.position;
             Transform dest = GetBestCoverPosition(parent, start_pos, cover_from);
             if (dest == null) {
                 Vector3 destination = NavMeshUtils.DestinationAwayFromPosition(parent, player.transform.position);
+                if (NavMeshUtils.PointIsNaN(destination)) { Debug.LogError("not cornered: DestinationAwayFromPosition is NaN"); }
                 return destination;
             }
             return dest.position;
-            // Debug.DrawLine(start_pos, parent.ctrl_waypoint, Color.green);
         }
     }
 

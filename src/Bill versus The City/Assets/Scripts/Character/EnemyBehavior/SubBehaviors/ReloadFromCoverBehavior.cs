@@ -18,9 +18,6 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
     }
     
     public void SetControllerFlags(EnemyBehavior parent, ManualCharacterMovement player) {
-        if (last_calculation_at + calculations_per_second > Time.time) {
-            return;
-        }
         last_calculation_at = Time.time;
         parent.ctrl_target = player;
         parent.ctrl_will_shoot = false;
@@ -33,19 +30,24 @@ public class ReloadFromCoverBehavior : ISubBehavior  {
             Debug.Log("in cover, perform reload.");
             // player cannot be seen, so just reload
             parent.ctrl_sprint = false;
-            parent.ctrl_move_mode = MovementTarget.waypoint;
+            if (NavMeshUtils.PointIsNaN(parent.ctrl_waypoint)) {
+                parent.ctrl_move_mode = MovementTarget.stationary; // if the waypoint is NaN, stay where you are
+            } else {
+                parent.ctrl_move_mode = MovementTarget.waypoint; // otherwise, keep going to your destination.
+            }
             parent.ctrl_aim_mode = AimingTarget.target;
             parent.ctrl_start_reload = true;
             parent.ctrl_crouch = true;
             parent.ctrl_cancel_reload = false;
+            _force_recalculation = true;
         } else {
-            // debug_message = $"seeking cover. Already reloading? '{parent.movement_script.reloading}'. recalculate at: {last_calculation_at + calculations_per_second}";
             debug_message = flee_to_cover.GetDebugMessage(parent);
-            flee_to_cover.SetControllerFlags(parent, player);
+            flee_to_cover.SetControllerFlags(parent, player, force_recaclulation:_force_recalculation);
+            parent.ctrl_cancel_reload = false;
+            _force_recalculation = false;
         }
-
-        // recalculate destination
     }
+    private bool _force_recalculation = false;
 
     public string GetDebugMessage(EnemyBehavior parent) {
         return $"ReloadFromCover.{debug_message}";

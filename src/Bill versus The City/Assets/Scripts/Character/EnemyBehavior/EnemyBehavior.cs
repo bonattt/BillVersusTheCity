@@ -217,7 +217,6 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
 
     void Update()
     {
-        Debug.LogError($"LayerMaskSystem ({LayerMaskSystem.inst}) == null ? {LayerMaskSystem.inst == null}"); // TODO --- remove debug
         if (!LevelConfig.inst.combat_enabled) { return; } // don't initiate actions while combat is disabled
         SetBehaviorMode();
         
@@ -259,7 +258,7 @@ public class EnemyBehavior : MonoBehaviour, IPlayerObserver, IReloadSubscriber
                 break;
         }
         if (float.IsNaN(result.x) || float.IsNaN(result.y) || float.IsNaN(result.z)) {
-            Debug.LogError($"{gameObject.name} move_target is NaN {result}, move_mode: {ctrl_move_mode}");
+            Debug.LogError($"{gameObject.name} move_target is NaN {result}, move_mode: {ctrl_move_mode}. behavior mode: {behavior_mode}, current behavior: {GetSubBehavior()}");
         }
         return result;
     }

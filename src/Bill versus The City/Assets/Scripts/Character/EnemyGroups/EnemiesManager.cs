@@ -186,7 +186,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
     }
 
 
-    private void TryAlertOneEnemyNear(Vector3 start, EnemyPerception perception) {
+    private void TryAlertOneEnemyNear(Vector3 start, EnemyPerception perception, bool draw_debug_ray = false) {
         if (perception == null) {
             Debug.LogError("EnemyPerception is null!");
             return;
@@ -194,7 +194,7 @@ public class EnemiesManager : MonoBehaviour, IGenericObservable {
         RaycastHit hit;
         Vector3 end = perception.raycast_start.position;
         Vector3 direction = end - start;
-        Debug.DrawRay(start, direction, Color.red, 1f); // ray appears for 1 second
+        if (draw_debug_ray) { Debug.DrawRay(start, direction, Color.red, 1f); } // ray appears for 1 second
         if (Physics.Raycast(start, direction, out hit, direction.magnitude, blocks_enemy_line_of_sight)) {
             bool los_to_target = hit.transform == perception.transform;
             if (los_to_target) {
