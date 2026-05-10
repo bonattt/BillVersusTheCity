@@ -30,6 +30,12 @@ using UnityEngine.AI;
             return _collider;
         }
     }
+
+    private Vector3 standing_collider_position;
+    protected override void Start() {
+        base.Start();
+        standing_collider_position = collider_.center;
+    }
     
     protected override void Update() {
         base.Update();
@@ -64,7 +70,13 @@ using UnityEngine.AI;
     
     protected override void UpdateColliderHeight(float height) {
         // update's the character's collider based on crouch height.
+        float height_diff = Mathf.Abs(uncrouched_collider_height - height); // how much shorter has the character gotten
+        float base_height = standing_collider_position.y;
+        float adjusted_height = base_height - (height_diff / 2);
+
+        collider_.center = new Vector3(standing_collider_position.x, adjusted_height, standing_collider_position.z);
         collider_.height = height;
+        nav_mesh_agent.height = height;
     }
 
     public override void TeleportTo(Vector3 new_position) {

@@ -23,7 +23,9 @@ PLANNED FEATURES
         [+] Implement distinction between hard and soft cover (based on whether a crouch is required to use cover)
         [X] Refactor pathfinding utils to return Vector3's instead of transforms for cover-position calculations
         [+] FIX: Enemies can't see player if crouched behind low cover
-        [ ] FIX: Enemy crouches and uncrouches repeatedly while reloading in cover, making crouch ineffective (crouch_percent stays as zero)
+        [+] FIX: Enemy crouches and uncrouches repeatedly while reloading in cover, making crouch ineffective (crouch_percent stays as zero)
+        [+] FIX: Enemy can still be shot while crouching
+        [ ] FIX: Enemy can stay crouched while in line-of-sight
     [+] FIX: crouching doesn't change the enemy's colliders. Crouching enemies should not "activate" invisible cover, but their collider 
         should shrink so bullets go over them. Enemies should never crouch except behind cover.
 

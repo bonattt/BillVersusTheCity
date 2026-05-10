@@ -533,7 +533,6 @@ public abstract class CharCtrl : MonoBehaviour, IAttackTarget, ICharStatusSubscr
         vault_over_remaining = vault_duration;
         Vector3 direction = move_direction != Vector3.zero ? move_direction : look_direction;
         vault_over_direction = zone.GetVaultDirection(direction);
-        Debug.DrawRay(transform.position, vault_over_direction, Color.yellow, 1.5f);
         PlayVaultOverEffects();
         return zone;
     }
