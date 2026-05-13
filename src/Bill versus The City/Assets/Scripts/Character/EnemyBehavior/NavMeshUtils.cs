@@ -140,8 +140,11 @@ public static class NavMeshUtils {
         float ray_length = (position - cover_from).magnitude;
         bool result = _PositionHasCover(cover_from, position, LayerMaskSystem.inst.has_cover_raycast, ray_length, 
                 out RaycastHit hit, include_soft_cover:true, draw_debug_ray:true); // TODO --- restore debug_draw_ray passthrough
-        // TODO --- check if player is closer to the cover than the enemy
-        return result;
+                
+        float distance_to_player = Vector3.Distance(cover_from, hit.point);
+        float distance_to_enemy = Vector3.Distance(position, hit.point);
+        // if the player is closer to the cover than the enemy, the enemy doesn't consider itself to be in cover
+        return distance_to_player > distance_to_enemy;
     }
 
     // public static bool PositionHasSoftCover(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
@@ -163,14 +166,14 @@ public static class NavMeshUtils {
         position = new Vector3(position.x, fixed_height, position.z);
         layer_mask = layer_mask | LayerMaskSystem.inst.player_raycast; // guarantee the raycast can always hit the player
 
-        Vector3 raycast_direction = position - cover_from;
+        Vector3 raycast_direction = cover_from - position;
         // float ray_length = raycast_direction.magnitude;
         if (ray_length > raycast_direction.magnitude) { 
             // Debug.LogWarning("Ray should not be greater than the distance between the player and the target position.");
             ray_length = raycast_direction.magnitude; 
         }
 
-        if (Physics.Raycast(cover_from, raycast_direction, out hit, ray_length, layer_mask)) {
+        if (Physics.Raycast(position, raycast_direction, out hit, ray_length, layer_mask)) {
             // if raycast hits something other than the player
             if (draw_debug_ray) {
                 Debug.DrawLine(cover_from, hit.point, Color.yellow);
