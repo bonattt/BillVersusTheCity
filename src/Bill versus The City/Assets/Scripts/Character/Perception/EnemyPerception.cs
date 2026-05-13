@@ -246,6 +246,15 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         }
     }
 
+    private bool? _has_cover_from_player = null;
+    public bool has_cover_from_player {
+        get {
+            UpdateHasCoverFromPlayer(); // this method checks if the field is already cached, to avoid recalculation
+            return _has_cover_from_player.Value; // _has_cover_from_player should never be null after calling `UpdateHasCoverFromPlayer`
+        }
+        private set { _has_cover_from_player = value; }
+    }
+
     void UpdateNoticePlayer() {
         if (!_seeing_target) {
             percent_noticed -= forget_player_rate * Time.deltaTime;
@@ -262,7 +271,20 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
     }
 
     void LateUpdate() {
+        ResetFrameCache();
+    }
+
+    private void ResetFrameCache() {
+        // resets fields that are calculated once per frame, so they can be updated again. Called on LateUpdate
         updated_this_frame = false;
+        _has_cover_from_player = null;
+    }
+
+    private void UpdateHasCoverFromPlayer() {
+        if (_has_cover_from_player == null) {
+            Vector3 player_pos = PlayerCharacter.inst.player_transform.position;
+            has_cover_from_player = NavMeshUtils.PositionHasCoverFrom(player_pos, transform.position);
+        }
     }
 
     private void UpdateLineOfSight() {
@@ -276,6 +298,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
             return;
         }
         if (! updated_this_frame) {
+            updated_this_frame = true;
             _saw_target_last_frame = _seeing_target;
             if (is_flashbang_blinded) {
                 _seeing_target = false;
@@ -300,7 +323,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
                 _seeing_target = false;
                 reaction_time_passed = 0f;
             }
-            updated_this_frame = true;
         }
     }
 
@@ -471,6 +493,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         debug.distance_from_player = DistanceToPlayer(PlayerCharacter.inst.vision_nodes[0]);
         debug.is_flashbang_blinded = is_flashbang_blinded;
         debug.is_flashbang_dazed = is_flashbang_dazed;
+        debug.has_cover_from_player = has_cover_from_player;
         debug.flashbang_blinded_until = _flashbang_blinded_until;
         debug.flashbang_dazed_until = _flashbang_dazed_until;
         debug.blind_remaining = Mathf.Max(0, _flashbang_blinded_until - Time.time);
@@ -480,7 +503,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 
 [Serializable]
 public class EnemyPerceptionDebugger {
-    public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded;
+    public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded, has_cover_from_player;
     public float distance_from_player, flashbang_blinded_until, flashbang_dazed_until, blind_remaining, dazed_remaining;
 }
 
