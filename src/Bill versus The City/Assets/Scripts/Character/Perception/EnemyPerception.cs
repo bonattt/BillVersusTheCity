@@ -389,7 +389,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         } else {
             vision_range = Mathf.Min(DistanceToPlayer(target_node), max_notice_range);
         }
-        // Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, vision_range, vision_mask)) {
             bool los_to_target = hit.transform == target_node || hit.transform == target;
             if (draw_debug_ray) {
