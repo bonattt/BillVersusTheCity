@@ -282,7 +282,6 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 
     private void UpdateHasCoverFromPlayer() {
         if (_has_cover_from_player == null) {
-            Debug.LogError($"UpdateHasCoverFromPlayer"); // TODO --- remove debug
             Vector3 player_pos = PlayerCharacter.inst.player_transform.position;
             has_cover_from_player = NavMeshUtils.PositionHasCoverFrom(player_pos, transform.position);
         }
@@ -378,7 +377,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         return direction.magnitude;
     }
 
-    private bool CanSeeNode(Transform target_node) {
+    private bool CanSeeNode(Transform target_node, bool draw_debug_ray=false) {
         RaycastHit hit;
         Vector3 start = raycast_start.position;
         Vector3 end = target_node.position;
@@ -393,9 +392,19 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         // Debug.DrawRay(start, direction, Color.red);
         if (Physics.Raycast(start, direction, out hit, vision_range, vision_mask)) {
             bool los_to_target = hit.transform == target_node || hit.transform == target;
+            if (draw_debug_ray) {
+                if (los_to_target) {
+                    Debug.DrawRay(start, direction, Color.green);
+                } else {
+                    DebugUtils.DrawBlockedRay(start, end, hit.point);
+                }
+            }
             return los_to_target;
         }
-        return false;
+        if (draw_debug_ray) { Debug.DrawRay(start, direction, Color.gray); }
+        // if the raycast hits nothing, this should be considered "seeing" the player. The player's collider can be hidden behind cover, 
+        //     while the player should still be seen (top vision node is over the player's collider in this case.)
+        return true; 
 
     }
 
@@ -500,6 +509,8 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         debug.blind_remaining = Mathf.Max(0, _flashbang_blinded_until - Time.time);
         debug.dazed_remaining = Mathf.Max(0, _flashbang_dazed_until - Time.time);
         debug.has_line_of_sight = seeing_target;
+        debug.actual_visible_player_nodes = VisibleNodes();
+        debug.effective_visible_player_nodes = visible_nodes_this_frame;
     }
 }
 
@@ -507,6 +518,8 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 public class EnemyPerceptionDebugger {
     public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded, has_cover_from_player, has_line_of_sight;
     public float distance_from_player, flashbang_blinded_until, flashbang_dazed_until, blind_remaining, dazed_remaining;
+    public int effective_visible_player_nodes;
+    public List<Transform> actual_visible_player_nodes;
 }
 
 public enum PerceptionState {

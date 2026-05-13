@@ -18,14 +18,14 @@ PLANNED FEATURES
 [ ] Update Unity version
 [~] implement enemies taking cover
     [+] feature (behavior and movement script support crouching)
-    [ ] My cover-detection logic is way more busted than I realized, I need to fix this
+    [+] My cover-detection logic is way more busted than I realized, I need to fix this
         [+] Prevent enemies selecting un-traversable paths
         [+] Implement distinction between hard and soft cover (based on whether a crouch is required to use cover)
         [X] Refactor pathfinding utils to return Vector3's instead of transforms for cover-position calculations
         [+] FIX: Enemies can't see player if crouched behind low cover
         [+] FIX: Enemy crouches and uncrouches repeatedly while reloading in cover, making crouch ineffective (crouch_percent stays as zero)
         [+] FIX: Enemy can still be shot while crouching
-        [ ] FIX: Enemy can stay crouched while in line-of-sight
+        [+] FIX: Enemy can stay crouched while in line-of-sight
     [+] FIX: crouching doesn't change the enemy's colliders. Crouching enemies should not "activate" invisible cover, but their collider 
         should shrink so bullets go over them. Enemies should never crouch except behind cover.
 
@@ -48,6 +48,7 @@ SPRINT BUGS (bugs found this sprint and fixed)
 [ ] FIX: SMG Enemy can get stuck in a chase behavior, and not use full auto. If player is outside the "optimal attack range". Once you enter
     optimal attack range, it doesn't matter if you move back outside it...
     --> do later
+[+] FIX: enemies still lose sight of the player when crouched behind cover sometimes
 
 
 LOW PRIORITY TASKS
