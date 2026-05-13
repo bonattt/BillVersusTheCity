@@ -138,7 +138,8 @@ public static class NavMeshUtils {
 
     public static bool PositionHasCoverFrom(Vector3 cover_from, Vector3 position, bool draw_debug_ray = false) {
         float ray_length = (position - cover_from).magnitude;
-        bool result = _PositionHasCover(cover_from, position, LayerMaskSystem.inst.has_cover_raycast, ray_length, out RaycastHit hit, include_soft_cover:true, draw_debug_ray:draw_debug_ray);
+        bool result = _PositionHasCover(cover_from, position, LayerMaskSystem.inst.has_cover_raycast, ray_length, 
+                out RaycastHit hit, include_soft_cover:true, draw_debug_ray:true); // TODO --- restore debug_draw_ray passthrough
         // TODO --- check if player is closer to the cover than the enemy
         return result;
     }
@@ -154,7 +155,8 @@ public static class NavMeshUtils {
         RaycastHit _; 
         return _PositionHasCover(cover_from, position, layer_mask, ray_length, out _, include_soft_cover, draw_debug_ray);
     }
-    private static bool _PositionHasCover(Vector3 cover_from, Vector3 position, LayerMask layer_mask, float ray_length, out RaycastHit hit, bool include_soft_cover = false, bool draw_debug_ray = false) {
+    private static bool _PositionHasCover(Vector3 cover_from, Vector3 position, LayerMask layer_mask, float ray_length, 
+            out RaycastHit hit, bool include_soft_cover = false, bool draw_debug_ray = false) {
         // move raycast points to position just above the ground to avoid treating the floor as cover
         float fixed_height = include_soft_cover ? RAYCAST_THROUGH_SOFT_COVER : RAYCAST_OVER_SOFT_COVER;
         cover_from = new Vector3(cover_from.x, fixed_height, cover_from.z);
@@ -168,19 +170,39 @@ public static class NavMeshUtils {
             ray_length = raycast_direction.magnitude; 
         }
 
-        // if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, Color.cyan, Time.deltaTime); }
         if (Physics.Raycast(cover_from, raycast_direction, out hit, ray_length, layer_mask)) {
             // if raycast hits something other than the player
+            if (draw_debug_ray) {
+                Debug.DrawLine(cover_from, hit.point, Color.yellow);
+                Debug.DrawLine(hit.point, position, Color.red);
+                DrawDebugStar(hit.point, new Color(0.75f, 0.1f, 0.1f, 0.6f));
+                Debug.LogWarning($"cover ray hit '{hit.collider.gameObject.name}'"); // TODO --- remove debug
+            }
             return !RaycastHitsPlayer(hit);
-        }
+        } 
+        else if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, new Color(0f, 0f, 0.5f)); }
 
         if (ray_length >= raycast_direction.magnitude) {
             // if the ray is long enough to hit the player, it should have hit something (the player) above.
             // Debug.LogError($"_PositionHasCover: raycast long enough to hit the player did not hit anything, something is amiss! {cover_from}) --> ({position})");
-            Debug.DrawRay(cover_from, raycast_direction, Color.red, duration:0.1f);
+            // if (draw_debug_ray) { Debug.DrawRay(cover_from, raycast_direction, Color.red, duration:0.1f); }
             Debug.Log("TODO: weird stuff can happen while the player is jumping over cover..."); // TODO --- do something aboot this
         }
         return false; // ray is too short to hit the player, so hitting nothing means you don't have cover
+    }
+
+    public static void DrawDebugStar(Vector3 point, Color c) {
+        Vector3 p = new Vector3(0.5f, 0, 0.5f); 
+        Debug.DrawLine(point + p, point - p, c);
+        
+        p = new Vector3(0.5f, 0, -0.5f);
+        Debug.DrawLine(point + p, point - p, c);
+        
+        p = new Vector3(0.75f, 0, 0f);
+        Debug.DrawLine(point + p, point - p, c);
+        
+        p = new Vector3(0f, 0, 0.75f);
+        Debug.DrawLine(point + p, point - p, c);
     }
 
     public static List<Vector3> GetNDirections(int n) {

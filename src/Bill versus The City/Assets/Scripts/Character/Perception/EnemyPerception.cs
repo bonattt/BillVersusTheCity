@@ -282,6 +282,7 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
 
     private void UpdateHasCoverFromPlayer() {
         if (_has_cover_from_player == null) {
+            Debug.LogError($"UpdateHasCoverFromPlayer"); // TODO --- remove debug
             Vector3 player_pos = PlayerCharacter.inst.player_transform.position;
             has_cover_from_player = NavMeshUtils.PositionHasCoverFrom(player_pos, transform.position);
         }
@@ -498,12 +499,13 @@ public class EnemyPerception : MonoBehaviour, ICharStatusSubscriber, ISuppressio
         debug.flashbang_dazed_until = _flashbang_dazed_until;
         debug.blind_remaining = Mathf.Max(0, _flashbang_blinded_until - Time.time);
         debug.dazed_remaining = Mathf.Max(0, _flashbang_dazed_until - Time.time);
+        debug.has_line_of_sight = seeing_target;
     }
 }
 
 [Serializable]
 public class EnemyPerceptionDebugger {
-    public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded, has_cover_from_player;
+    public bool knows_player_location, player_noticed, on_screen, is_flashbang_dazed, is_flashbang_blinded, has_cover_from_player, has_line_of_sight;
     public float distance_from_player, flashbang_blinded_until, flashbang_dazed_until, blind_remaining, dazed_remaining;
 }
 

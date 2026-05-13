@@ -24,7 +24,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterStatus, ISettingsObserve
                     // allows health to be adjusted for difficulty while invulnerability is turned on
                     _health = max_health;
                 }
-                Debug.LogWarning($"{gameObject.name}: skip damage to player because debug player invulnerability is turned on!");
+                Debug.Log($"{gameObject.name}: skip damage to player because debug player invulnerability is turned on!");
                 return;
             }
             float previous_health = _health;
